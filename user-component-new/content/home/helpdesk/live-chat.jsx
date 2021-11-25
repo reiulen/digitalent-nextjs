@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 import { useRouter } from "next/router";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import SimpleReactValidator from "simple-react-validator";
+import { Container } from "react-bootstrap";
 
 import Sidebar from "../../../components/template/helpdesk/index";
 
 export default function FormPengaduan() {
   const router = useRouter();
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   return (
     <Container fluid className="px-md-30 px-10 py-10 bg-white">
