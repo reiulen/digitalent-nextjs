@@ -176,6 +176,28 @@ const Table = ({ token }) => {
     }
     getWillExpire(token);
   }, [dispatch, token]);
+
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+        width,
+        height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    {}
+  );
+
+  useEffect(() => {
+    function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+    }
+    setWindowDimensions(getWindowDimensions());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  },[allMK])
+
   return (
     <PageWrapper>
       {update ? (
@@ -233,68 +255,68 @@ const Table = ({ token }) => {
         ""
       )}
 
-      <div>
-        <div className="row">
-          {/* card Kerjasama Aktif */}
-          <div className="col-12 col-md-6 col-lg-6 col-xl-4">
-            <CardPage
-            background="bg-light-success "
-            icon="Done-circle1.svg"
+     
+      <div className="row ml-n7 pr-3">
+        {/* card Kerjasama Aktif */}
+        <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+          <CardPage
+          background="bg-light-success "
+          icon="Done-circle1.svg"
+          color="#ffffff"
+          value={allMK.totalDataActive}
+          titleValue=""
+          title="Kerjasama Aktif"
+          publishedVal="1"
+          routePublish={() => dispatch(changeValueStatusCard("active"))}
+          backgroundCard="/assets/icon/clipboard-check-green.svg"
+        />
+        </div>
+
+        {/* card Pengajuan Kerjasama */}
+        <div className="col-12 col-md-6  col-lg-6 col-xl-4">
+          <CardPage
+            background="bg-light-warning"
+            icon="Info-circle.svg"
             color="#ffffff"
-            value={allMK.totalDataActive}
+            value={allMK.totalDataAnother}
             titleValue=""
-            title="Kerjasama Aktif"
+            title="Pengajuan Kerjasama"
             publishedVal="1"
-            routePublish={() => dispatch(changeValueStatusCard("active"))}
-            backgroundCard="/assets/icon/clipboard-check-green.svg"
+            routePublish={() => dispatch(changeValueStatusCard("submission"))}
+            backgroundCard="/assets/icon/clipboard-list-yellow.svg"
           />
-          </div>
+        </div>
 
-          {/* card Pengajuan Kerjasama */}
-          <div className="col-12 col-md-6  col-lg-6 col-xl-4">
-            <CardPage
-              background="bg-light-warning"
-              icon="Info-circle.svg"
-              color="#ffffff"
-              value={allMK.totalDataAnother}
-              titleValue=""
-              title="Pengajuan Kerjasama"
-              publishedVal="1"
-              routePublish={() => dispatch(changeValueStatusCard("submission"))}
-              backgroundCard="/assets/icon/clipboard-list-yellow.svg"
-            />
-          </div>
-
-          {/* card Kerjasama Akan Habis */}
-          <div className="col-12 col-xl-4">
-            <CardPage
-              background="bg-light-danger"
-              icon="Error-circle.svg"
-              color="#ffffff"
-              value={sumWillExpire}
-              titleValue=""
-              title="Kerjasama akan Habis"
-              publishedVal="1"
-              routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
-              backgroundCard="/assets/icon/clipboard-cross-red.svg"
-            />
-          </div>
+        {/* card Kerjasama Akan Habis */}
+        <div className="col-12 col-xl-4">
+          <CardPage
+            background="bg-light-danger"
+            icon="Error-circle.svg"
+            color="#ffffff"
+            value={sumWillExpire}
+            titleValue=""
+            title="Kerjasama akan Habis"
+            publishedVal="1"
+            routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
+            backgroundCard="/assets/icon/clipboard-cross-red.svg"
+          />
         </div>
       </div>
+   
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="d-flex flex-wrap align-items-center px-5 py-4">
             <div className="col-12 col-xl-6">
               <h1 className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1">
-                Kerjasama  xxxxxxxxx
+                Kerjasama
               </h1>
             </div>
             
 
             <div className="col-12 col-xl-6 d-flex justify-content-xl-end">
               <Link href="/partnership/kerjasama/tambah">
-                <a className="btn btn-rounded-full bg-blue-primary text-white mt-4">
+                <a className="btn btn-rounded-full bg-blue-primary text-white mt-4 text-truncate d-block">
                   <IconAdd className="mr-3" width="18" height="16" />
                   Tambah kerjasama
                 </a>
@@ -339,10 +361,10 @@ const Table = ({ token }) => {
                       <div className="d-flex flex-wrap align-items-center justify-content-xl-end mt-2">
                         {/* sortir by modal */}
                         <button
-                          className="avatar item-rtl btn border col-9 col-xl-4 d-flex align-items-center justify-content-between mt-2 mr-8"
+                          className="avatar item-rtl btn border col-12 col-xl-4 d-flex align-items-center justify-content-between mt-2 mr-8"
                           data-toggle="modal"
                           data-target="#exampleModalCenter"
-                          style={{ color: "#464646", minWidth: "230px" }}
+                          style={{ color: "#464646", minWidth: "190px" }}
                         >
                           <div className="d-flex align-items-center">
                             <IconFilter className="mr-3" />
@@ -764,13 +786,15 @@ const Table = ({ token }) => {
                   </table>
                 )}
               </div>
-              <div className="row">
-                <div className="table-pagination col-12 col-md-8">
+              <div 
+                className="row"
+              >
+                <div className="table-pagination col-12 col-md-8 d-flex align-self-center">
                   <Pagination
                     activePage={allMK.page}
                     itemsCountPerPage={allMK?.m_cooporation?.data?.perPage}
                     totalItemsCount={allMK?.m_cooporation?.data?.total}
-                    pageRangeDisplayed={3}
+                    pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}

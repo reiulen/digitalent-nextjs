@@ -36,16 +36,11 @@ const Artikel = () => {
     const [ filterPublish, setFilterPublish ] = useState("")
     const [ sort, setSort ] = useState("")
     const [ category_id, setCategoryId ] = useState("")
-    // const [ category_name, setCategoryName ] = useState("")
     const [ category_academy, setCategoryAcademy ] = useState("")
     const [ tag, setTag ] = useState("")
     const [ showFilter, setShowFilter ] = useState(false)
 
     const getWindowDimensions = () => {
-        // if (typeof window === 'undefined') {
-        //     global.window = {}
-        // }
-
         const { innerWidth: width, innerHeight: height } = window;
         return {
             width,
@@ -54,7 +49,6 @@ const Artikel = () => {
     };
     
     const [windowDimensions, setWindowDimensions] = useState(
-        // getWindowDimensions()
         {}
     );
 
