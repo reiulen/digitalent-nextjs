@@ -231,26 +231,28 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           </Link>
         </div>
         <div>
-          <div
-            className={`${
-              router.pathname === "/peserta/bookmark"
-                ? styles.activeMenuItem
-                : styles.menuItem
-            } d-flex flex-row`}
-          >
-            <div className="p-2">
-              <div
-                className={`${
-                  router.pathname === "/peserta/bookmark"
-                    ? styles.activeIconMenu
-                    : styles.iconMenu
-                } ri-heart-3-line`}
-              ></div>
+          <Link href="/peserta/bookmark" passHref>
+            <div
+              className={`${
+                router.pathname === "/peserta/bookmark"
+                  ? styles.activeMenuItem
+                  : styles.menuItem
+              } d-flex flex-row`}
+            >
+              <div className="p-2">
+                <div
+                  className={`${
+                    router.pathname === "/peserta/bookmark"
+                      ? styles.activeIconMenu
+                      : styles.iconMenu
+                  } ri-heart-3-line`}
+                ></div>
+              </div>
+              <div className="p-2">
+                <td>Bookmark</td>
+              </div>
             </div>
-            <div className="p-2">
-              <td>Bookmark</td>
-            </div>
-          </div>
+          </Link>
         </div>
 
         <div>

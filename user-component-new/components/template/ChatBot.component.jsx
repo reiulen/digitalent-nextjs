@@ -61,8 +61,8 @@ export default function ChatBot() {
         </button>
         <div className={`${style.chatbot_image} justify-content-end`}>
           <Image
-            width={110}
-            height={140}
+            width={100}
+            height={120}
             src={"/assets/media/ChatBot.png"}
             objectFit="cover"
           />

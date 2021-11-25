@@ -21,6 +21,7 @@ import ComeJoin from "./section/ComeJoin.component";
 import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
 
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
+import axios from "axios";
 
 const Beranda = ({ session }) => {
   const dispatch = useDispatch();
@@ -31,7 +32,6 @@ const Beranda = ({ session }) => {
     (state) => state.temaByAkademi
   );
   const { akademi } = useSelector((state) => state.allAkademi);
-
   const [activeTab, setActiveTab] = useState(0);
   const [akademiId, setAkademiId] = useState(null);
 
@@ -119,7 +119,7 @@ const Beranda = ({ session }) => {
 
   const handleAkademiStart = () => {
     if (akademi && akademi.length !== 0) {
-      dispatch(getTemaByAkademi(akademi[0].id));
+      dispatch(getTemaByAkademi(session?.token, akademi[0].id));
       setAkademiId(akademi[0].id);
     }
   };
@@ -127,7 +127,7 @@ const Beranda = ({ session }) => {
   const handleActive = (index, id) => {
     setActiveTab(index);
     setAkademiId(id);
-    dispatch(getTemaByAkademi(id));
+    dispatch(getTemaByAkademi(session?.token, id));
   };
 
   const handleMouseEnter = (indexTema, indexPelatihan) => {
@@ -186,6 +186,7 @@ const Beranda = ({ session }) => {
               deskripsi: tema[i].pelatihan[j].deskripsi,
               status: tema[i].pelatihan[j].status,
               kuota_pendaftar: tema[i].pelatihan[j].kuota_pendaftar,
+              bookmark: tema[i].pelatihan[j].bookmart,
               hover: false,
             };
             obj.pelatihan.push(objPelatihan);
@@ -277,6 +278,57 @@ const Beranda = ({ session }) => {
     return str;
   };
 
+  const test = true;
+  const [bookmark, setBookMark] = useState(false);
+
+  const handleBookmark = async (pelatihan) => {
+    const link = process.env.END_POINT_API_PELATIHAN;
+    const config = {
+      headers: {
+        Authorization: "Bearer " + session.token,
+      },
+    };
+    const body = {
+      pelatihan_id: pelatihan.id,
+    };
+
+    if (!pelatihan.bookmark) {
+      try {
+        const data = await axios.post(
+          `${link}api/v1/bookmart-peserta/create`,
+          body,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "success"
+          );
+          dispatch(getTemaByAkademi(session?.token, akademi[0].id));
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    } else {
+      try {
+        const data = await axios.delete(
+          `${link}api/v1/bookmart-peserta/delete?pelatihan_id=${pelatihan.id}`,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menghapus pelatihan dari bookmark",
+            "success"
+          );
+          dispatch(getTemaByAkademi(session?.token, akademi[0].id));
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    }
+  };
   return (
     <>
       <section className="image-carousel-new mt-10">
@@ -415,9 +467,21 @@ const Beranda = ({ session }) => {
                                                   className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
                                                 >
                                                   <i
-                                                    className="ri-heart-line p-0"
+                                                    className={`${
+                                                      pelatihan[i].pelatihan[j]
+                                                        .bookmark
+                                                        ? "ri-heart-fill text-danger"
+                                                        : "ri-heart-line"
+                                                    }  p-0`}
                                                     style={{
                                                       color: "#6C6C6C",
+                                                    }}
+                                                    onClick={() => {
+                                                      handleBookmark(
+                                                        pelatihan[i].pelatihan[
+                                                          j
+                                                        ]
+                                                      );
                                                     }}
                                                   ></i>
                                                 </Button>
