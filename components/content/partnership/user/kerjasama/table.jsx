@@ -402,17 +402,23 @@ const Table = ({ token }) => {
                 {allCooperationUser.statusLoad === "process" ? (
                   <LoadingTable />
                 ) : (
-                  <table className="table table-separate table-head-custom table-checkable">
+                  <table 
+                    className="table table-separate table-head-custom table-checkable" 
+                  >
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-left">No</th>
-                        {/* <th className="text-left align-middle">Mitra</th> */}
                         <th className="text-left align-middle">Judul Kerjasama</th>
                         <th className="text-left align-middle">Periode</th>
                         <th className="text-left align-middle">Tanggal Awal Kerjasama</th>
                         <th className="text-left align-middle">Tanggal Selesai Kerjasama</th>
                         <th className="text-left align-middle">Status</th>
-                        <th className="text-left align-middle">Aksi</th>
+                        <th 
+                          className="text-left align-middle"
+                          style={{minWidth:"8rem"}}
+                        >
+                          Aksi
+                        </th>
                       </tr>
                     </thead>
 
