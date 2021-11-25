@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-
-import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import Swal from "sweetalert2";
-import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
 
+import Link from "next/link";
+import Swal from "sweetalert2";
+import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
 import styles from "../../../../styles/subvit.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
@@ -16,6 +13,7 @@ import stylesPag from "../../../../styles/pagination.module.css";
 import {
   deleteTriviaQuestionBanks,
   clearErrors,
+  getAllTriviaQuestionBanks,
 } from "../../../../redux/actions/subvit/trivia-question.actions";
 import { DELETE_TRIVIA_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/trivia-question.type";
 
@@ -39,18 +37,13 @@ const ListTrivia = ({ token }) => {
 
   useEffect(() => {
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
-          if (result.isConfirmed) {
-            window.location.reload();
-          }
-        }
-      );
       dispatch({
         type: DELETE_TRIVIA_QUESTION_BANKS_RESET,
       });
+      dispatch(getAllTriviaQuestionBanks(page, "", limit, token));
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [dispatch, isDeleted]);
+  }, [dispatch, isDeleted, token, page, limit]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;

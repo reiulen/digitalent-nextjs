@@ -551,21 +551,27 @@ const StepTwo = ({ token }) => {
                     <div className="col-md-5 col-lg-5 col-xl-7"></div>
                     {/* <div className="col-sm-12 col-md-6 col-lg-6 col-xl-5 buttoon float-right row justify-content-between" style={{border:'1px solid black'}}> */}
                     <div
-                      className={`${styles.btnSave} col-12 col-sm-12 col-md-7 col-lg-7 col-xl-5 buttoon float-right row justify-content-between`}
+                      className={`${styles.btnSave} col-12 col-sm-12 col-md-7 col-lg-7 col-xl-5 buttoon float-right justify-content-between`}
                     >
-                      <button
-                        className={`mt-3 col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 btn btn-light-ghost-rounded-full`}
-                        type="submit"
-                      >
-                        Simpan & Lanjut
-                      </button>
-                      <button
-                        className="mt-3 col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 btn btn-primary-rounded-full"
-                        onClick={saveDraft}
-                        type="button"
-                      >
-                        Simpan Draft
-                      </button>
+                      <div className="d-flex flex-row float-right flex-wrap">
+                        <div className={`p-2`}>
+                          <button
+                            className={`${styles.btnNext} btn btn-light-ghost-rounded-full `}
+                            type="submit"
+                          >
+                            Simpan & Lanjut
+                          </button>
+                        </div>
+                        <div className="p-2">
+                          <button
+                            className=" btn btn-primary-rounded-full"
+                            onClick={saveDraft}
+                            type="button"
+                          >
+                            Simpan Draft
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
