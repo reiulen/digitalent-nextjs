@@ -12,10 +12,10 @@ const Header = ({ breadcrumb }) => {
   const router = useRouter();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
   const { error: errorPelatihan, pelatihan } = useSelector(
-    state => state.getPelatihan
+    (state) => state.getPelatihan
   );
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
@@ -64,7 +64,7 @@ const Header = ({ breadcrumb }) => {
     }, 1000);
   };
 
-  const set = e => {
+  const set = (e) => {
     e = e < 10 ? "0" + e : e;
     return e;
   };
@@ -162,7 +162,7 @@ const Header = ({ breadcrumb }) => {
                         className={`${styles.textCardLeft} d-flex justify-content-between`}
                       >
                         <div
-                          className="d-flex flex-row "
+                          className="d-flex flex-row align-items-center"
                           style={{ float: "left" }}
                         >
                           <div className="p-1">
@@ -186,33 +186,68 @@ const Header = ({ breadcrumb }) => {
                               "Mid Test"
                             ) : router.pathname.includes("form-pendaftaran") ? (
                               <Fragment>
-                                <div style={{ fontSize: "14px" }}>
+                                <div
+                                  className="h-100 align-self-center d-block my-auto"
+                                  style={{ fontSize: "14px" }}
+                                >
                                   <Link href="/" passHref>
-                                    <a>
-                                      <u className="d-none d-lg-inline-block">
+                                    <span className="d-inline-block text-truncate ">
+                                      <span
+                                        style={{
+                                          textDecoration: "underline",
+                                        }}
+                                      >
                                         Beranda
-                                      </u>
-                                      <u className="d-lg-none d-inline-block">
-                                        ...
-                                      </u>
-                                    </a>
+                                      </span>
+                                      <div
+                                        style={{ textDecoration: "none" }}
+                                        className="mx-3 p-0 d-inline-block"
+                                      >
+                                        &gt;
+                                      </div>
+                                    </span>
                                   </Link>
-                                  <span className="mx-3">&gt;</span>
-                                  <u className="d-none d-lg-inline-block">
-                                    {pelatihan?.akademi}
-                                  </u>
-                                  <u className="d-lg-none d-inline-block">
-                                    ...
-                                  </u>
-                                  <span className="mx-3">&gt;</span>
-                                  <u className="d-none d-lg-inline-block">
-                                    {pelatihan?.name}
-                                  </u>
-                                  <u className="d-lg-none d-inline-block">
-                                    ...
-                                  </u>
-                                  <span className="mx-3">&gt;</span>
-                                  <span className="font-weight-bold">
+                                  <span className="d-inline-block text-truncate   max-w-md-100 max-w-45px">
+                                    <span
+                                      style={{
+                                        textDecoration: "underline",
+                                      }}
+                                    >
+                                      {pelatihan?.akademi}
+                                    </span>
+                                    <div
+                                      style={{ textDecoration: "none" }}
+                                      className="mx-3 p-0 d-inline-block"
+                                    >
+                                      &gt;
+                                    </div>
+                                  </span>
+                                  <div
+                                    style={{ textDecoration: "none" }}
+                                    className="mx-3 p-0 d-inline-block text-truncate d-md-none"
+                                  >
+                                    &gt;
+                                  </div>
+                                  <span className="d-inline-block text-truncate max-w-md-100 max-w-45px ">
+                                    <span
+                                      style={{ textDecoration: "underline" }}
+                                    >
+                                      {pelatihan?.name}
+                                    </span>
+                                  </span>
+                                  <div
+                                    style={{ textDecoration: "none" }}
+                                    className="mx-3 p-0 d-inline-block text-truncate d-md-none"
+                                  >
+                                    &gt;
+                                  </div>
+                                  <div
+                                    style={{ textDecoration: "none" }}
+                                    className="mx-3 p-0 text-truncate d-none d-lg-inline-block"
+                                  >
+                                    &gt;
+                                  </div>
+                                  <span className="font-weight-bold text-truncate d-inline-block">
                                     {breadcrumb}
                                   </span>
                                 </div>
