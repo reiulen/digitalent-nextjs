@@ -43,7 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // }
 
       return {
-        props: { session, title: "Ubah Mitra - Paretnership" },
+        props: { session, title: "Ubah Mitra - Partnership" },
       };
     }
 );
