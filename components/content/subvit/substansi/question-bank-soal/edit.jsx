@@ -41,21 +41,27 @@ const EditSoalSubstansi = ({ token }) => {
   );
   let { id } = router.query;
 
-  const [question, setQuestion] = useState(subtance_question_detail.question);
-  const [question_image, setQuestionImage] = useState(
-    subtance_question_detail.question_image
+  const [question, setQuestion] = useState(
+    subtance_question_detail.question || ""
   );
-
+  const [question_image, setQuestionImage] = useState(
+    subtance_question_detail.question_image_preview || ""
+  );
+  const [question_image_preview, setQuestionImagePreview] = useState(
+    subtance_question_detail.question_image_preview &&
+      subtance_question_detail.question_image_preview.split("subtance/images/")
+  );
   const [answer, setAnswer] = useState(
-    JSON.parse(subtance_question_detail.answer)
+    JSON.parse(subtance_question_detail.answer) || ""
   );
 
   const [answer_key, setAnswerKey] = useState(
-    subtance_question_detail.answer_key
+    subtance_question_detail.answer_key || ""
   );
   const [question_type, setQuestionType] = useState(
-    subtance_question_detail.type.id
+    subtance_question_detail.type.id || ""
   );
+  // console.log(process.env.END_POINT_API_IMAGE_SUBVIT + question_image);
   const [status, setStatus] = useState(subtance_question_detail.status);
 
   useEffect(() => {
@@ -71,6 +77,7 @@ const EditSoalSubstansi = ({ token }) => {
   }, [dispatch, success, router]);
 
   const handleSoalImage = (e) => {
+    setQuestionImagePreview(e.target.value.substr(12));
     if (e.target.name === "question_image") {
       const reader = new FileReader();
       reader.onload = () => {
@@ -255,20 +262,29 @@ const EditSoalSubstansi = ({ token }) => {
             </div>
 
             <div className="card-body pt-0">
-              <div className="title row">
+              <div className="title row ">
                 {question_image ? (
-                  <div className="col-md-3">
-                    <Image
-                      src={
-                        process.env.END_POINT_API_IMAGE_SUBVIT +
-                        "subtance/images/" +
-                        question_image
-                      }
-                      alt="logo"
-                      width={204}
-                      height={100}
-                      className="soal-image"
-                    />
+                  <div className="col-md-3 mt-3">
+                    {subtance_question_detail.question_image_preview ? (
+                      <Image
+                        src={
+                          process.env.END_POINT_API_IMAGE_SUBVIT +
+                          question_image
+                        }
+                        alt="logo"
+                        width={300}
+                        height={160}
+                        className="soal-image"
+                      />
+                    ) : (
+                      <img
+                        src={question_image_preview}
+                        alt="logo"
+                        width={300}
+                        height={160}
+                        className="soal-image"
+                      />
+                    )}
                   </div>
                 ) : (
                   ""
@@ -312,8 +328,8 @@ const EditSoalSubstansi = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {subtance_question_detail.question_image
-                        ? question_image
+                      {question_image_preview
+                        ? question_image_preview
                         : "Choose file"}
                     </label>
                   </div>
