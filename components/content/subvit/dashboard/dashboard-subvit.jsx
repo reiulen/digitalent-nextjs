@@ -91,6 +91,10 @@ const DashbardSubvit = ({ token }) => {
 
   const COLORS = ["#4299E1", "#215480", "##4CBDE2"];
 
+  console.log(
+    Math.ceil(parseInt(dashboard_subvit && dashboard_subvit.trivia.total) / 5)
+  );
+
   return (
     <>
       <PageWrapper>
@@ -657,6 +661,21 @@ const DashbardSubvit = ({ token }) => {
                     <button
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={() => handleNextPagination()}
+                      disabled={
+                        Math.ceil(
+                          parseInt(
+                            dashboard_subvit && dashboard_subvit.substansi.total
+                          ) / 5
+                        ) !== 0
+                          ? parseInt(router.query.page_substansi) ===
+                            Math.ceil(
+                              parseInt(
+                                dashboard_subvit &&
+                                  dashboard_subvit.substansi.total
+                              ) / 5
+                            )
+                          : true
+                      }
                     >
                       <i
                         className="ri-arrow-right-s-line"
@@ -751,12 +770,19 @@ const DashbardSubvit = ({ token }) => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={handleNextPaginationTrivia}
                       disabled={
-                        parseInt(router.query.page_trivia)
-                          ? 1
-                          : parseInt(router.query.page_trivia) ===
-                              dashboard_subvit &&
-                            dashboard_subvit.trivia.total / dashboard_subvit &&
-                            dashboard_subvit.trivia.totalFiltered
+                        Math.ceil(
+                          parseInt(
+                            dashboard_subvit && dashboard_subvit.trivia.total
+                          ) / 5
+                        ) !== 0
+                          ? parseInt(router.query.page_trivia) ===
+                            Math.ceil(
+                              parseInt(
+                                dashboard_subvit &&
+                                  dashboard_subvit.trivia.total
+                              ) / 5
+                            )
+                          : true
                       }
                     >
                       <i
@@ -850,12 +876,19 @@ const DashbardSubvit = ({ token }) => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={handleNextPaginationSurvey}
                       disabled={
-                        parseInt(router.query.page_survey)
-                          ? 1
-                          : parseInt(router.query.page_survey) ===
-                              dashboard_subvit &&
-                            dashboard_subvit.survey.total / dashboard_subvit &&
-                            dashboard_subvit.survey.totalFiltered
+                        Math.ceil(
+                          parseInt(
+                            dashboard_subvit && dashboard_subvit.survey.total
+                          ) / 5
+                        ) !== 0
+                          ? parseInt(router.query.page_survey) ===
+                            Math.ceil(
+                              parseInt(
+                                dashboard_subvit &&
+                                  dashboard_subvit.survey.total
+                              ) / 5
+                            )
+                          : true
                       }
                     >
                       <i
