@@ -86,6 +86,7 @@ import {
   GET_EDIT_DATA_TRAINING3,
   GET_FORM_LPJ,
   GET_FORM_EVIDENCE,
+  FAILED_GET_FORM_EVIDENCE,
 } from "../../types/pelatihan/training.type";
 
 import axios from "axios";
@@ -885,7 +886,10 @@ export const getFormEvidence = (token, pelatian_id) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    throw error;
+    dispatch({
+      type: FAILED_GET_FORM_EVIDENCE,
+      payload: [],
+    });
   }
 };
 

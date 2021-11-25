@@ -62,7 +62,6 @@ const EditMitra = ({ token }) => {
     pic_email: "",
   });
 
-
   const [defaultValueProvince, setDefaultValueProvince] = useState("");
   const [defaultValueCitie, setDefaultValueCitie] = useState("");
   const changeProvinces = (e) => {
@@ -84,34 +83,6 @@ const EditMitra = ({ token }) => {
 
     dispatch(getProvinces(token));
   };
-
-
-
-  // const [NamePDF, setNamePDF] = useState(null);
-  // const fileType = ["image/png"];
-  // const fileTypeJpeg = ["image/jpeg"];
-  // const fileMax = 2097152;
-  // const onChangeImage = (e) => {
-  //   let selectedFile = e.target.files[0];
-
-  //   if (selectedFile) {
-  //     if (
-  //       (selectedFile && fileTypeJpeg.includes(selectedFile.type)) ||
-  //       (fileType.includes(selectedFile.type) && selectedFile.size <= fileMax)
-  //     ) {
-  //       let reader = new FileReader();
-  //       reader.readAsDataURL(selectedFile);
-  //       reader.onloadend = (e) => {
-  //         setAgency_logo(e.target.result);
-  //         setNamePDF(selectedFile.name);
-  //       };
-  //     } else {
-  //       Swal.fire("Gagal", `gambar harus PNG dan max size 2mb`, "error")
-  //     }
-  //   } else {
-  //     Swal.fire("Gagal", `upload gambar dulu`, "error")
-  //   }
-  // };
 
   // Image Cropping
   const [ showEditImage, setShowEditImage ] = useState(false)
@@ -313,8 +284,8 @@ const EditMitra = ({ token }) => {
     }
 
     } 
-    setDataSingle(router.query.id,token);
-  }, [router.query.id,token]);
+    setDataSingle(router.query.name,token);
+  }, [router.query.name,token]);
 
   useEffect(() => {
     if (indonesia_provinces_id !== "") {

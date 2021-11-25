@@ -146,10 +146,6 @@ const DetailArtikel = () => {
                       <i className="ri-share-line px-0 py-1"></i>
                   </button>
               </div>
-
-              {/* <button className="btn btn-outline-light rounded-circle mr-3">
-                <i className="ri-heart-line p-0"></i>
-              </button> */}
             </div>
           </div>
         </div>
@@ -213,9 +209,6 @@ const DetailArtikel = () => {
                       </button>
                   </div>
 
-                  {/* <button className="btn btn-outline-light rounded-circle mr-3">
-                    <i className="ri-heart-line p-0"></i>
-                  </button> */}
                 </div>
               </div>
             </div>
@@ -267,9 +260,9 @@ const DetailArtikel = () => {
                     <div>
                       <button
                         className="btn btn-primary-dashboard"
-                        onClick={(e) =>
-                          handleHighlightWords(e, detail.isi_artikel)
-                        }
+                        // onClick={(e) =>
+                        //   handleHighlightWords(e, detail.isi_artikel)
+                        // }
                         style={{
                           borderTopRightRadius: "150px",
                           borderBottomRightRadius: "150px",

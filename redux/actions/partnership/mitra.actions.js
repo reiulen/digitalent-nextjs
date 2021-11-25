@@ -46,6 +46,7 @@ export async function getStatus() {
     `${process.env.END_POINT_API_PARTNERSHIP}api/option/status`
   );
 }
+
 // ============== GET DETAIL FETCH
 
 let debouncedFetchMitra = debounce(getAllMitra, 0);
