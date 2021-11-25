@@ -82,7 +82,6 @@ useEffect(()=> {
     dispatch(
       getAllVideoContent(
         pageNumber,
-        activePage,
         keyword,
         limit,
         filterPublish,
@@ -598,7 +597,7 @@ useEffect(()=> {
 
             {/* PAGINATION */}
             <div className="d-flex justify-content-center">
-              {video && video.total !== 0? (
+              {video && video.total !== 0 && video.total >= 0 ? (
                 <div 
                   className={
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
@@ -609,7 +608,7 @@ useEffect(()=> {
                 >
                   <Pagination
                     activePage={activePage}
-                    itemsCountPerPage={video.perPage}
+                    itemsCountPerPage={6}
                     totalItemsCount={video.total}
                     pageRangeDisplayed={3}
                     onChange={handlePagination}
