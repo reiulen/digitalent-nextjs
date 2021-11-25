@@ -46,8 +46,6 @@ const UbahRole = ({ token }) => {
   const drowpdownProvinsi = useSelector((state) => state.drowpdownProvinsi);
   const drowpdownKabupaten = useSelector((state) => state.drowpdownKabupaten);
 
-  console.log(drowpdownKabupaten);
-
   const btnIconPlus = {
     display: "flex",
     justifyContent: "center",

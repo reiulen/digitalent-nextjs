@@ -30,21 +30,21 @@ const UploadEvidence = ({ token }) => {
   );
 
   const [numberDocument, setNumberDocument] = useState(
-    getFormEvidence.name_dokumen
+    getFormEvidence?.name_dokumen
   );
   const [dateReport, setDateReport] = useState(
-    moment(getFormEvidence.tanggal_laporan).format("YYYY-MM-DD")
+    moment(getFormEvidence?.tanggal_laporan).format("YYYY-MM-DD")
   );
   const [responsible, setResponsible] = useState(
-    getFormEvidence.nama_penanggung_jawab
+    getFormEvidence?.nama_penanggung_jawab
   );
-  const [description, setDescription] = useState(getFormEvidence.deskripsi);
+  const [description, setDescription] = useState(getFormEvidence?.deskripsi);
   const [jabatan, setJabatan] = useState(
-    getFormEvidence.Jabatan_penanggung_jawab
+    getFormEvidence?.Jabatan_penanggung_jawab
   );
   const [image, setImage] = useState(
-    getFormEvidence.gambar.length > 0
-      ? getFormEvidence.gambar.map((item, index) => {
+    getFormEvidence?.gambar?.length > 0
+      ? getFormEvidence?.gambar.map((item, index) => {
 
           return {
             key: 1,
@@ -58,8 +58,8 @@ const UploadEvidence = ({ token }) => {
   );
   const [linkVideo, setLinkVideo] = useState(getFormEvidence.link_video);
   const [teacher, setTeacher] = useState(
-    getFormEvidence.pengajar.length > 0
-      ? getFormEvidence.pengajar.map((item, index) => {
+    getFormEvidence.pengajar?.length > 0
+      ? getFormEvidence.pengajar?.map((item, index) => {
           return {
             key: index + 1,
             name: item.nama_pengajar,
@@ -70,21 +70,6 @@ const UploadEvidence = ({ token }) => {
   );
 
   const [name, setName] = useState("");
-
-  function toDataURL(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function() {
-       var reader = new FileReader();
-       reader.onloadend = function() {
-          callback(reader.result);
-       }
-       reader.readAsDataURL(xhr.response);
-    };
-    xhr.open('GET', url);
-    xhr.responseType = 'blob';
-    xhr.send();
- }
- 
 
 
   useEffect(() => {
@@ -120,7 +105,7 @@ const UploadEvidence = ({ token }) => {
         const reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
         reader.onload = function () {
-          list[index].imageFile = e.target.files[0];
+          list[index].imageFile = reader.result;
           list[index].imagePreview = reader.result;
           list[index].imageName = e.target.files[0].name;
           setImage(list);
@@ -178,7 +163,7 @@ const UploadEvidence = ({ token }) => {
 
     let images = image.map((item) => {
       return {
-        gambar: item.imagePreview,
+        gambar: item.imageFile,
       };
     });
     let teachers = teacher.map((item) => {
