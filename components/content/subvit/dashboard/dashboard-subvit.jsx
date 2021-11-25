@@ -91,10 +91,6 @@ const DashbardSubvit = ({ token }) => {
 
   const COLORS = ["#4299E1", "#215480", "##4CBDE2"];
 
-  console.log(
-    Math.ceil(parseInt(dashboard_subvit && dashboard_subvit.trivia.total) / 5)
-  );
-
   return (
     <>
       <PageWrapper>

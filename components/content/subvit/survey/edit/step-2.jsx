@@ -59,8 +59,6 @@ const StepTwo = ({ token }) => {
   const [status, setStatus] = useState(survey.status);
   const [, forceUpdate] = useState();
 
-  console.log(survey);
-
   const saveDraft = () => {
     if (simpleValidator.current.allValid()) {
       const start_at = moment(startDate).format("YYYY-MM-DD");
