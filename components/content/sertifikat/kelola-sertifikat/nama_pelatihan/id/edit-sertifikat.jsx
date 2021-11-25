@@ -574,7 +574,7 @@ export default function EditSertifikat({ token }) {
             <div className="card-body border-top" style={{ width: "100%" }}>
               <div className="row p-0">
                 {/* START COL */}
-                <div className="border-primary border col-lg-8 col-12 position-relative">
+                <div className="border-primary border col-lg-8 col-12 position-relative p-0">
                   <div className="p-0" ref={divReference}>
                     {localBackground ? (
                       <img
