@@ -94,7 +94,8 @@ import {
   GET_EDIT_DATA_TRAINING2,
   GET_EDIT_DATA_TRAINING3,
   GET_FORM_LPJ,
-  GET_FORM_EVIDENCE
+  GET_FORM_EVIDENCE,
+  FAILED_GET_FORM_EVIDENCE
 } from "../../../types/pelatihan/training.type";
 
 export const allTrainingReducer = (state = { training: [] }, action) => {
@@ -583,6 +584,12 @@ export const getFormEvidenceReducer = (state = {data: {}}, action) => {
       return {
         ...state,
         data: action.payload.data
+      }
+
+      case FAILED_GET_FORM_EVIDENCE:
+      return {
+        ...state,
+        data: {}
       }
     default:
       return state;
