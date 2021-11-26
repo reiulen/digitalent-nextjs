@@ -288,7 +288,7 @@ const DetailAkademi = ({ session }) => {
                 <Col md={10}>
                   <Card.Title className="mb-5">
                     <h2>
-                      {(akademi && akademi.name) || "-"} (
+                      {(akademi && akademi.name) || "Akademi Belum Tersedia"} (
                       {(akademi && akademi.slug) || "-"})
                     </h2>
                   </Card.Title>
