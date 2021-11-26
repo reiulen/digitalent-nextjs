@@ -234,7 +234,7 @@ const Table = ({ token }) => {
       )}
 
       <div>
-        <div className="row">
+        <div className="row ml-n7 pr-3">
           {/* card Kerjasama Aktif */}
           <div className="col-12 col-md-6 col-lg-6 col-xl-4">
             <CardPage
@@ -287,14 +287,14 @@ const Table = ({ token }) => {
           <div className="d-flex flex-wrap align-items-center px-5 py-4">
             <div className="col-12 col-xl-6">
               <h1 className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1">
-                Kerjasama  xxxxxxxxx
+                Kerjasama
               </h1>
             </div>
             
 
             <div className="col-12 col-xl-6 d-flex justify-content-xl-end">
               <Link href="/partnership/kerjasama/tambah">
-                <a className="btn btn-rounded-full bg-blue-primary text-white mt-4">
+                <a className="btn btn-rounded-full bg-blue-primary text-white mt-4 text-truncate d-block">
                   <IconAdd className="mr-3" width="18" height="16" />
                   Tambah kerjasama
                 </a>
@@ -305,11 +305,11 @@ const Table = ({ token }) => {
 
           <div className="card-body pt-0">
             <div className="table-filter">
-              <div className="row align-items-center">
+              <div className="row d-flex align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <div className="row">
+                  <div className="row d-flex align-items-center">
                     <div className="col-12 col-xl-4">
-                      <div className="position-relative overflow-hidden w-100 mt-5">
+                      <div className="position-relative overflow-hidden w-100 mt-3">
                         <IconSearch style={{ left: "10" }} className="left-center-absolute" />
                         <input
                           onKeyPres={(e) => disabledEnter(e)}
@@ -336,13 +336,13 @@ const Table = ({ token }) => {
                     </div>
 
                     <div className="col-12 col-xl-8">
-                      <div className="d-flex flex-wrap align-items-center justify-content-xl-end mt-2">
+                      <div className="d-flex flex-wrap align-items-center justify-content-xl-end mt-2 ">
                         {/* sortir by modal */}
                         <button
-                          className="avatar item-rtl btn border col-9 col-xl-4 d-flex align-items-center justify-content-between mt-2 mr-8"
+                          className="avatar item-rtl btn border col-md-9 col-12 col-xl-4 d-flex align-items-center justify-content-between mt-5 mt-md-2 mr-12"
                           data-toggle="modal"
                           data-target="#exampleModalCenter"
-                          style={{ color: "#464646", minWidth: "230px" }}
+                          style={{ color: "#464646"}}
                         >
                           <div className="d-flex align-items-center">
                             <IconFilter className="mr-3" />
@@ -447,7 +447,7 @@ const Table = ({ token }) => {
 
                         {/* btn export */}
                         <button
-                          className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
+                          className="btn btn-rounded-full bg-blue-secondary text-white mt-5 mt-md-2"
                           type="button"
                           onClick={() => dispatch(exportFileCSV(token))}
                         >
@@ -765,7 +765,7 @@ const Table = ({ token }) => {
                 )}
               </div>
               <div className="row">
-                <div className="table-pagination col-12 col-md-8">
+                <div className="table-pagination col-12 col-md-8 overflow-auto">
                   <Pagination
                     activePage={allMK.page}
                     itemsCountPerPage={allMK?.m_cooporation?.data?.perPage}

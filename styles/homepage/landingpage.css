@@ -266,14 +266,32 @@
 
 .color-primary-primary {
   background-color: #0100be;
+  border: #0100be;
 }
 
 .color-primary-secondary {
   background-color: #2a62ed;
+  border: #2a62ed;
 }
 
 .color-primary-extras {
   background-color: #5ec8f2;
+  border: #5ec8f2;
+}
+
+.color-primary-primary:hover {
+  background-color: #0100be;
+  border: #0100be;
+}
+
+.color-primary-secondary:hover {
+  background-color: #2a62ed;
+  border: #2a62ed;
+}
+
+.color-primary-extras:hover {
+  background-color: #5ec8f2;
+  border: #2a62ed;
 }
 
 .color-primary-primary:hover {

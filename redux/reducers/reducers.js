@@ -1,5 +1,26 @@
 import { combineReducers } from "redux";
 
+// DASHBOARD KABADAN
+// DASHBOARD
+import {
+  digitalentTotalPenggunaReducer,
+  digitalentStatistikAkademiReducer,
+  digitalentStatistikMitraReducer,
+  digitalentTablePendaftaranReducer,
+  digitalentPesertaWilayahReducer,
+  digitalentProvinsiReducer,
+  digitalentUmurReducer,
+  digitalentJenisKelaminReducer,
+  digitalentPendidikanReducer,
+} from "./dashboard-kabadan/dashboard/digitalent.reducers";
+// DATA PESERTA
+import {
+  allBeasiswaKandidatReducer,
+  allBeasiswaFilterReducer,
+} from "./dashboard-kabadan/data-peserta/beasiswa.reducers";
+import { allSimonasKandidatReducer } from "./dashboard-kabadan/data-peserta/simonas.reducers";
+// END DASHBOARD KABADAN
+
 // PUBLIKASI
 import {
   allArtikelReducer,
@@ -269,6 +290,7 @@ import {
   updateRolesReducer,
   deleteRolesReducer,
   allPermissionReducer,
+  allSidebarReducer,
 } from "./site-management/role.reducers";
 
 // ============== unit work ===============
@@ -498,7 +520,27 @@ import {
   updateStatusMasterReducer,
 } from "./pelatihan/admin/master-pendaftaran.reducer";
 
+import { getAllBookmarkPesertaReducer } from "../reducers/pelatihan/peserta/bookmark.reducer";
+
 const reducer = combineReducers({
+  // DASHBOARD KABADAN
+  // ============= DTS ============
+  digitalentTotalPengguna: digitalentTotalPenggunaReducer,
+  digitalentStatistikAkademi: digitalentStatistikAkademiReducer,
+  digitalentStatistikMitra: digitalentStatistikMitraReducer,
+  digitalentTablePendaftaran: digitalentTablePendaftaranReducer,
+  digitalentPesertaWilayah: digitalentPesertaWilayahReducer,
+  digitalentProvinsi: digitalentProvinsiReducer,
+  digitalentUmur: digitalentUmurReducer,
+  digitalentJenisKelamin: digitalentJenisKelaminReducer,
+  digitalentPendidikan: digitalentPendidikanReducer,
+  // ============= BEASISWA ============
+  allBeasiswaKandidat: allBeasiswaKandidatReducer,
+  allBeasiswaFilter: allBeasiswaFilterReducer,
+  // ============= SIMONAS ============
+  allSimonasKandidat: allSimonasKandidatReducer,
+  // END DASHBOARD KABADAN
+
   // PUBLIKASI
   allArtikel: allArtikelReducer,
   allArtikelsPeserta: allArtikelsPesertaReducer,
@@ -731,6 +773,7 @@ const reducer = combineReducers({
   updateRoles: updateRolesReducer,
   deleteRoles: deleteRolesReducer,
   allPermission: allPermissionReducer,
+  allSidebar: allSidebarReducer,
   // ============ PELATIHAN =======
   allPrompt: allPromptReducer,
   // ============ Dashboatd =======
@@ -911,6 +954,8 @@ const reducer = combineReducers({
   newMasterPelatihan: newMasterTrainingReducer,
   updateMasterPelatihan: updateMasterPelatihanReducer,
   updateStatusMaster: updateStatusMasterReducer,
+
+  allBookmark: getAllBookmarkPesertaReducer,
 });
 
 export default reducer;

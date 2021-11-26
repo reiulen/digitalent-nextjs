@@ -50,11 +50,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
         await store.dispatch(
           getDataPribadi(session?.user.user.data.user.token)
         );
+        await store.dispatch(
+          getTemaByAkademi(session?.user.user.data.user.token)
+        );
+      } else {
+        await store.dispatch(getTemaByAkademi());
       }
 
       await store.dispatch(getAllAkademi());
-
-      await store.dispatch(getTemaByAkademi());
 
       await store.dispatch(getAllPublikasi());
 

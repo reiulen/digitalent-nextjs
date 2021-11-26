@@ -173,20 +173,31 @@ export const getAllPenyeleggaraPeserta = () => async (dispatch) => {
 };
 
 // GET TEMA
-export const getTemaByAkademi = (akademi_id) => async (dispatch) => {
+export const getTemaByAkademi = (token, akademi_id) => async (dispatch) => {
   try {
     dispatch({ type: BERANDA_TEMA_REQUEST });
 
     let link =
       process.env.END_POINT_API_PELATIHAN +
       `api/v1/tema/FilterAkademi?akademi_id=${akademi_id}`;
-
-    const { data } = await axios.get(link);
-
-    dispatch({
-      type: BERANDA_TEMA_SUCCESS,
-      payload: data,
-    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    if (token) {
+      const { data } = await axios.get(link, config);
+      dispatch({
+        type: BERANDA_TEMA_SUCCESS,
+        payload: data,
+      });
+    } else {
+      const { data } = await axios.get(link);
+      dispatch({
+        type: BERANDA_TEMA_SUCCESS,
+        payload: data,
+      });
+    }
   } catch (error) {
     dispatch({
       type: BERANDA_TEMA_FAIL,

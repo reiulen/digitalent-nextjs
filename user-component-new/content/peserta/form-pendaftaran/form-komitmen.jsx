@@ -56,8 +56,8 @@ const FormKomitmen = ({
       }
     } else {
       const data = {
-        pelatihan_id: parseInt(id),
-        form_pendaftaran: propsForm,
+        pelatian_id: parseInt(id),
+        form_pendaftaran: dataForm.form_pendaftaran,
       };
       dispatch(newPendaftaranPelatihan(data, token));
     }

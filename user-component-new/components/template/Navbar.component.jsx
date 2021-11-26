@@ -46,6 +46,9 @@ const Navigationbar = ({ session }) => {
     (state) => state.getDataPribadi
   );
 
+  const [secondary, setSecondary] = useState(null);
+  const [warna, setWarna] = useState("secondary");
+
   useEffect(() => {
     if (session) {
       if (
@@ -56,7 +59,33 @@ const Navigationbar = ({ session }) => {
         router.push("/peserta/wizzard");
       }
     }
-  }, []);
+    async function getDataGeneral(token) {
+      try {
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (data) {
+          setSecondary(data.data.color[0].color);
+        }
+      } catch (error) {
+        Swal.fire("Oops !", `${error.response.data.message}`, "error");
+      }
+    }
+    getDataGeneral();
+    if (secondary === "1") {
+      setWarna("primary");
+    } else if (secondary === "2") {
+      setWarna("secondary");
+    } else if (secondary === "3") {
+      setWarna("extras");
+    }
+  }, [secondary, dataPribadi, router, session]);
 
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
@@ -110,7 +139,7 @@ const Navigationbar = ({ session }) => {
   if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
   if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
   if (router.pathname == "/") routerPath = "/";
-
+  console.log(session, "ini session");
   return (
     <>
       <Navbar
@@ -268,24 +297,16 @@ const Navigationbar = ({ session }) => {
                   </a>
                   <div className="dropdown-menu ml-3">
                     <Link href="/berita">
-                      <a className="dropdown-item navdropdown-child">
-                        Berita
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Berita</a>
                     </Link>
                     <Link href="/artikel">
-                      <a className="dropdown-item navdropdown-child">
-                        Artikel
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Artikel</a>
                     </Link>
                     <Link href="/galeri">
-                      <a className="dropdown-item navdropdown-child">
-                        Galeri
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Galeri</a>
                     </Link>
                     <Link href="/video">
-                      <a className="dropdown-item navdropdown-child">
-                        Video
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Video</a>
                     </Link>
                   </div>
                 </div>
@@ -352,7 +373,7 @@ const Navigationbar = ({ session }) => {
               <div>
                 <div className="d-lg-none d-block">
                   <div
-                    className={`wrap-accouts ${style.wrapAccounts}`}
+                    className={`wrap-accouts ${style.wrapAccounts} `}
                     style={{ borderRadius: "20px" }}
                     onClick={() => router.push("/peserta/profile")}
                   >
@@ -382,8 +403,12 @@ const Navigationbar = ({ session }) => {
                 </div>
                 <div className="position-relative d-none d-lg-block">
                   <div
-                    className={`wrap-accouts ${style.wrapAccounts}`}
-                    style={!isShowDropdown ? { borderRadius: "20px" } : {}}
+                    className={`wrap-accouts ${style.wrapAccounts} d-flex justify-content-between`}
+                    style={
+                      !isShowDropdown
+                        ? { borderRadius: "20px", maxWidth: "max-content" }
+                        : {}
+                    }
                     onClick={() =>
                       setIsShowDropdown(isShowDropdown ? false : true)
                     }
@@ -464,9 +489,9 @@ const Navigationbar = ({ session }) => {
                 </Link>
                 <Link href="/register">
                   <a className="mx-2">
-                    <button className="btn btn-sm btn-block btn-register-peserta color-primary m-2 justify-content-center py-3">
+                    <button className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} m-2 justify-content-center py-3`}>
                       {/* <IconRegister className="mr-2 icon-register" /> */}
-                      <i className="ri-user-line mr-2"></i>
+                      <div className="ri-user-line mr-2" style={{fontSize: "15px"}}></div>
                       Daftar
                     </button>
                   </a>
