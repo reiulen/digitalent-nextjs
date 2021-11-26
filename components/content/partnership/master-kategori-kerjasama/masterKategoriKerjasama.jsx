@@ -26,6 +26,7 @@ const Table = ({ token }) => {
   let { success, update } = router.query;
   const [valueSearch, setValueSearch] = useState("");
   const allMKCooporation = useSelector((state) => state.allMKCooporation);
+  const { permission } = useSelector ((state) => state.partnershipPermissions)
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -104,21 +105,29 @@ const Table = ({ token }) => {
                 Master Kategori Kerjasama
               </h3>
             </div>
-            
-            <div className="col-12 col-xl-6 d-flex justify-content-xl-end  mb-5">
-              <div className="card-toolbar mb-5">
-                <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
-                  <a className="btn btn-rounded-full bg-blue-primary text-white w-75 w-md-100">
-                    <IconAdd className="mr-3" width="14" height="14" />
-                    <div 
-                      className="text-truncate d-block"
-                    >
-                      Tambah Kategori Kerjasama
+
+            {
+              permission ? 
+                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                  <div className="col-12 col-xl-6 d-flex justify-content-xl-end  mb-5">
+                    <div className="card-toolbar mb-5">
+                      <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
+                        <a className="btn btn-rounded-full bg-blue-primary text-white w-75 w-md-100">
+                          <IconAdd className="mr-3" width="14" height="14" />
+                          <div 
+                            className="text-truncate d-block"
+                          >
+                            Tambah Kategori Kerjasama
+                          </div>
+                        </a>
+                      </Link>
                     </div>
-                  </a>
-                </Link>
-              </div>
-            </div>
+                  </div>
+                :
+                  null
+              :
+                null
+            }
             
           </div>
 
@@ -174,7 +183,15 @@ const Table = ({ token }) => {
                           Kategori Kerjasama
                         </th>
                         <th className="text-left align-middle">Status</th>
-                        <th className="text-left align-middle">Aksi</th>
+                        {
+                          permission ? 
+                            permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                              <th className="text-left align-middle">Aksi</th>
+                            :
+                              null
+                          :
+                            null
+                        }
                       </tr>
                     </thead>
                     <tbody>
@@ -231,37 +248,47 @@ const Table = ({ token }) => {
                                     </div>
                                   )}
                                 </td>
-                                <td className="text-left align-middle">
-                                  <div className="d-flex align-items-center">
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
-                                      onClick={() =>
-                                        router.push(
-                                          `/partnership/master-kategori-kerjasama/${cooperation_categorie.id}`
-                                        )
-                                      }
-                                    >
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </button>
 
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                      onClick={() =>
-                                        cooperationDelete(
-                                          cooperation_categorie.id
-                                        )
-                                      }
-                                    >
-                                      <IconDelete width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Hapus
-                                      </div>
-                                    </button>
-                                  </div>
-                                </td>
+                                {
+                                  permission ? 
+                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                      <td className="text-left align-middle">
+                                        <div className="d-flex align-items-center">
+                                          <button
+                                            className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
+                                            onClick={() =>
+                                              router.push(
+                                                `/partnership/master-kategori-kerjasama/${cooperation_categorie.id}`
+                                              )
+                                            }
+                                          >
+                                            <IconPencil width="16" height="16" />
+                                            <div className="text-hover-show-hapus">
+                                              Ubah
+                                            </div>
+                                          </button>
+      
+                                          <button
+                                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                            onClick={() =>
+                                              cooperationDelete(
+                                                cooperation_categorie.id
+                                              )
+                                            }
+                                          >
+                                            <IconDelete width="16" height="16" />
+                                            <div className="text-hover-show-hapus">
+                                              Hapus
+                                            </div>
+                                          </button>
+                                        </div>
+                                      </td>
+                                    :
+                                      null
+                                  :
+                                    null
+                                }
+                                
                               </tr>
                             );
                           }
