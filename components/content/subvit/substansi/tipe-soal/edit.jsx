@@ -14,6 +14,7 @@ import { UPDATE_SUBTANCE_QUESTION_TYPE_RESET } from "../../../../../redux/types/
 import PageWrapper from "/components/wrapper/page.wrapper";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
+import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
 const EditTipeSoal = ({ token }) => {
   const dispatch = useDispatch();
@@ -80,6 +81,12 @@ const EditTipeSoal = ({ token }) => {
     setStatus(e.target.value);
   };
 
+  const handleBobot = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setValue(e);
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -143,14 +150,14 @@ const EditTipeSoal = ({ token }) => {
                 <div className="col-sm-12">
                   <span className="font-weight-bold">Bobot Nilai</span>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
                     placeholder="*Contoh: 2"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={(e) => handleBobot(e.target.value)}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("bobot nilai")
                     }
+                    value={value}
                   />
                   {simpleValidator.current.message(
                     "bobot nilai",
