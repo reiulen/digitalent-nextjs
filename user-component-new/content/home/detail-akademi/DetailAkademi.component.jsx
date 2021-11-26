@@ -441,7 +441,7 @@ const DetailAkademi = ({ session }) => {
                               key={i}
                             >
                               <Card className="h-100 shadow-sm">
-                                {el.status !== "Open" ? (
+                                {el.status !== "Dibuka" ? (
                                   <CardPelatihanClose row={el} />
                                 ) : (
                                   <CardPelatihanOpen

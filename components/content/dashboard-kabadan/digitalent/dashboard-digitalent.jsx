@@ -17,7 +17,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import Pagination from "react-js-pagination";
+
+import PaginationDashboard from "../component/pagination-dashbaord.component";
 
 const DashboardDigitalent = () => {
   const MyMap = dynamic(() => import("../component/map-digitalent.component"), {
@@ -256,22 +257,13 @@ const DashboardDigitalent = () => {
                   Jumlah Pendaftaran
                 </p>
                 <ListCardInfo data={dataPendaftar} />
-                <div className="d-flex justify-content-end mt-2">
-                  <div className="table-pagination">
-                    <Pagination
-                      activePage={1}
-                      itemsCountPerPage={3}
-                      totalItemsCount={5}
-                      pageRangeDisplayed={3}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                </div>
+                <PaginationDashboard
+                  total={10}
+                  perPage={5}
+                  title="Pendaftar"
+                  activePage={1}
+                  funcPagination={(value) => {}}
+                />
               </div>
             </div>
           </div>
@@ -282,22 +274,13 @@ const DashboardDigitalent = () => {
                   Jumlah Peserta
                 </p>
                 <ListCardInfo data={dataPendaftar} />
-                <div className="d-flex justify-content-end mt-2">
-                  <div className="table-pagination">
-                    <Pagination
-                      activePage={1}
-                      itemsCountPerPage={3}
-                      totalItemsCount={5}
-                      pageRangeDisplayed={3}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                </div>
+                <PaginationDashboard
+                  total={10}
+                  perPage={5}
+                  title="Peserta"
+                  activePage={1}
+                  funcPagination={(value) => {}}
+                />
               </div>
             </div>
           </div>
@@ -342,20 +325,13 @@ const DashboardDigitalent = () => {
                     </tbody>
                   </table>
                 </div>
-                <div className="table-pagination table-pagination pagination-custom float-right">
-                  <Pagination
-                    activePage={1}
-                    itemsCountPerPage={3}
-                    totalItemsCount={5}
-                    pageRangeDisplayed={3}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
+                <PaginationDashboard
+                  total={10}
+                  perPage={5}
+                  title="Pendaftar"
+                  activePage={1}
+                  funcPagination={(value) => {}}
+                />
               </div>
             </div>
           </div>
@@ -416,22 +392,13 @@ const DashboardDigitalent = () => {
                     </p>
                     <ListCardInfo data={dataProvinsi} />
 
-                    <div className="d-flex justify-content-end mt-2">
-                      <div className="table-pagination">
-                        <Pagination
-                          activePage={1}
-                          itemsCountPerPage={3}
-                          totalItemsCount={5}
-                          pageRangeDisplayed={3}
-                          nextPageText={">"}
-                          prevPageText={"<"}
-                          firstPageText={"<<"}
-                          lastPageText={">>"}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      </div>
-                    </div>
+                    <PaginationDashboard
+                      total={10}
+                      perPage={5}
+                      title="Pendaftar"
+                      activePage={1}
+                      funcPagination={(value) => {}}
+                    />
                   </div>
                 </div>
               </div>
@@ -442,22 +409,13 @@ const DashboardDigitalent = () => {
                       Komposisi Provinsi Peserta
                     </p>
                     <ListCardInfo data={dataProvinsi} />
-                    <div className="d-flex justify-content-end mt-2">
-                      <div className="table-pagination">
-                        <Pagination
-                          activePage={1}
-                          itemsCountPerPage={3}
-                          totalItemsCount={5}
-                          pageRangeDisplayed={3}
-                          nextPageText={">"}
-                          prevPageText={"<"}
-                          firstPageText={"<<"}
-                          lastPageText={">>"}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      </div>
-                    </div>
+                    <PaginationDashboard
+                      total={10}
+                      perPage={5}
+                      title="Peserta"
+                      activePage={1}
+                      funcPagination={(value) => {}}
+                    />
                   </div>
                 </div>
               </div>
