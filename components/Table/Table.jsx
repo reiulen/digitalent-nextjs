@@ -17,9 +17,9 @@ export default function Tables({
           <tbody>{tableBody}</tbody>
         </Table>
       </div>
-      <div className="row mt-3">
-        <div className="table-pagination pagination-custom col-12 col-md-8">{pagination}</div>
-        <div className="table-total col-12 col-md-4 mt-3">
+      <div className="row mt-3 mr-sm-0 mr-2">
+        <div className="table-pagination pagination-custom col-12 col-md-8 overflow-auto">{pagination}</div>
+        <div className="table-total col-12 col-md-4 mt-3 d-flex justify-content-md-end">
           <div className="d-flex align-items-center justify-content-sm-end justify-content-start">
               <select
                 className="form-control select-limit-table"

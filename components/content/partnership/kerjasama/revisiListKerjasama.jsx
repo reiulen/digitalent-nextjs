@@ -107,7 +107,7 @@ function RevisiList({ token }) {
             </ul>
 
             <div className="form-group row mt-10">
-              <div className="col-sm-12 d-flex justify-content-end">
+              <div className="col-sm-12 d-flex justify-content-md-end justify-content-center">
                 <Link
                   href={{
                     pathname: `/partnership/kerjasama`,

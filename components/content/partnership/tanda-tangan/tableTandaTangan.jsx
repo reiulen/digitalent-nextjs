@@ -126,7 +126,7 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
 
-          <div className="card-header border-0">
+          <div className="card-header border-0 mt-10 ml-n5">
             <div className="col-12 col-xl-6">
               <h3
                 className="card-title font-weight-bolder text-dark titles-1"
@@ -135,12 +135,16 @@ const Table = ({ token }) => {
               </h3>
             </div>
             
-            <div className="col-12 col-xl-6 d-flex justify-content-xl-end">
+            <div className="col-12 col-xl-6 d-flex justify-content-xl-end mt-xl-n10">
               <div className="card-toolbar">
                 <Link href="/partnership/tanda-tangan/tambah">
-                  <a className="btn btn-rounded-full bg-blue-primary text-white">
+                  <a className="btn btn-rounded-full bg-blue-primary text-white w-75 w-md-100">
                     <IconAdd className="mr-3" width="14" height="14" />
-                    Tambah Tanda Tangan
+                    <div 
+                      className="text-truncate d-block"
+                    >
+                      Tambah Tanda Tangan
+                    </div>
                   </a>
                 </Link>
               </div>
@@ -152,7 +156,7 @@ const Table = ({ token }) => {
               <div className="table-filter">
                 <div className="row align-items-center">
                   <div className="col-12">
-                    <div className="row w-100 my-5">
+                    <div className="row my-5">
                       <div className="col-12 col-xl-6">
                         <div className="position-relative overflow-hidden">
                           <IconSearch
@@ -321,7 +325,7 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="table-pagination col-12 col-md-8">
+                <div className="table-pagination col-12 col-md-8 overflow-auto">
                   <Pagination
                     activePage={allTandaTangan.page}
                     itemsCountPerPage={
