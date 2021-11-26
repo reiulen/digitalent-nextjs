@@ -517,6 +517,8 @@ import {
   updateStatusMasterReducer,
 } from "./pelatihan/admin/master-pendaftaran.reducer";
 
+import { getAllBookmarkPesertaReducer } from "../reducers/pelatihan/peserta/bookmark.reducer";
+
 const reducer = combineReducers({
   // DASHBOARD KABADAN
   // ============= DTS ============
@@ -948,6 +950,8 @@ const reducer = combineReducers({
   newMasterPelatihan: newMasterTrainingReducer,
   updateMasterPelatihan: updateMasterPelatihanReducer,
   updateStatusMaster: updateStatusMasterReducer,
+
+  allBookmark: getAllBookmarkPesertaReducer,
 });
 
 export default reducer;

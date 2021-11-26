@@ -36,7 +36,7 @@ export default function FormPendaftaran(props) {
   const dispatch = useDispatch();
   const session = props.session.user.user.data.user;
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
-    state => state.getFormBuilder
+    (state) => state.getFormBuilder
   );
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function FormPendaftaran(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);
@@ -85,11 +85,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllAkademi());
 
       await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
-      const data = await store.dispatch(
+      await store.dispatch(
         getFormBuilder(session?.user.user.data.user.token, query.id)
       );
-
-      const data1 = await store.dispatch(
+      await store.dispatch(
         getPelatihan(session?.user.user.data.user.token, query.id)
       );
 

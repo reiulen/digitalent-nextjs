@@ -139,7 +139,7 @@ const Navigationbar = ({ session }) => {
   if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
   if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
   if (router.pathname == "/") routerPath = "/";
-
+  console.log(session, "ini session");
   return (
     <>
       <Navbar
@@ -297,24 +297,16 @@ const Navigationbar = ({ session }) => {
                   </a>
                   <div className="dropdown-menu ml-3">
                     <Link href="/berita">
-                      <a className="dropdown-item navdropdown-child">
-                        Berita
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Berita</a>
                     </Link>
                     <Link href="/artikel">
-                      <a className="dropdown-item navdropdown-child">
-                        Artikel
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Artikel</a>
                     </Link>
                     <Link href="/galeri">
-                      <a className="dropdown-item navdropdown-child">
-                        Galeri
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Galeri</a>
                     </Link>
                     <Link href="/video">
-                      <a className="dropdown-item navdropdown-child">
-                        Video
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Video</a>
                     </Link>
                   </div>
                 </div>
@@ -381,7 +373,7 @@ const Navigationbar = ({ session }) => {
               <div>
                 <div className="d-lg-none d-block">
                   <div
-                    className={`wrap-accouts ${style.wrapAccounts}`}
+                    className={`wrap-accouts ${style.wrapAccounts} `}
                     style={{ borderRadius: "20px" }}
                     onClick={() => router.push("/peserta/profile")}
                   >
@@ -411,8 +403,12 @@ const Navigationbar = ({ session }) => {
                 </div>
                 <div className="position-relative d-none d-lg-block">
                   <div
-                    className={`wrap-accouts ${style.wrapAccounts}`}
-                    style={!isShowDropdown ? { borderRadius: "20px" } : {}}
+                    className={`wrap-accouts ${style.wrapAccounts} d-flex justify-content-between`}
+                    style={
+                      !isShowDropdown
+                        ? { borderRadius: "20px", maxWidth: "max-content" }
+                        : {}
+                    }
                     onClick={() =>
                       setIsShowDropdown(isShowDropdown ? false : true)
                     }
