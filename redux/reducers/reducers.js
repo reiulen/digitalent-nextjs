@@ -471,6 +471,7 @@ import {
   detailBerandaArtikelReducer,
   kategoriBerandaArtikelReducer,
   allTagBerandaArtikelReducer,
+  cekLulusPelatihanReducer,
 } from "../reducers/beranda/artikel.reducers";
 
 // ========== galeri ========
@@ -554,6 +555,7 @@ const reducer = combineReducers({
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
   updatedArtikel: updateArtikelReducer,
+  cekLulusPelatihan:cekLulusPelatihanReducer,
 
   allArtikelPeserta: allArtikelPesertaReducer,
   newArtikelPeserta: newArtikelPesertaReducer,

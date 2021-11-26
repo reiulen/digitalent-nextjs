@@ -5,6 +5,9 @@ import { useRouter } from "next/router";
 import IconArrow2 from "../../components/assets/icon/Arrow2";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/client";
+import { getSidebar } from "../../redux/actions/site-management/role.actions";
+import axios from "axios";
+import LoadingTable from "../LoadingTable";
 
 import {
   IS_ASSIDE_MOBILE_SIDEBAR,
@@ -70,447 +73,454 @@ const Sidebar = ({ session }) => {
     });
   };
 
-  const initializeMenu = [
-    {
-      id: 1,
-      name: "Dashboard",
-      href: "/dashboard",
-      selected: false,
-      icon: "assets/icon/sidebar_temp/Dashboard.svg",
-      child: [
-        {
-          id: 1,
-          name: "Digitalent",
-          href: "/dashboard",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Beasiswa",
-          href: "/dashboard/beasiswa",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 3,
-          name: "Simonas",
-          href: "/dashboard/simonas",
-          selected: false,
-          child: [],
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Daftar Peserta",
-      href: "/daftar-peserta",
-      selected: false,
-      icon: "assets/icon/sidebar_temp/Partnership.svg",
-      child: [
-        {
-          id: 1,
-          name: "Digitalent",
-          href: "/daftar-peserta/digitalent",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Beasiswa",
-          href: "/daftar-peserta/beasiswa",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 3,
-          name: "Simonas",
-          href: "/daftar-peserta/simonas",
-          selected: false,
-          child: [],
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "Pelatihan",
-      href: "",
-      icon: "assets/icon/sidebar_temp/Pelatihan.svg",
-      selected: false,
-      child: [
-        {
-          id: 1,
-          name: "Akademi",
-          href: "/pelatihan/akademi",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Tema",
-          href: "/pelatihan/tema",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Pelatihan",
-          href: "/pelatihan/pelatihan",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Master Pendaftaran",
-          href: "/pelatihan/master-pendaftaran",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Review Pelatihan",
-          href: "/pelatihan/review-pelatihan",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Rekap Pendaftaran",
-          href: "/pelatihan/rekap-pendaftaran",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Report Pelatihan",
-          href: "/pelatihan/report-pelatihan",
-          selected: false,
-          child: [],
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: "Publikasi",
-      href: "",
-      icon: "assets/icon/sidebar_temp/Publikasi.svg",
-      selected: false,
-      child: [
-        {
-          id: 1,
-          name: "Dashboard",
-          href: "/publikasi/dashboard-publikasi",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 1,
-          name: "Artikel",
-          href: "/publikasi/artikel",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Artikel Peserta",
-          href: "/publikasi/artikel-peserta",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Berita",
-          href: "/publikasi/berita",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Video",
-          href: "/publikasi/video",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Galeri",
-          href: "/publikasi/galeri",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Kategori",
-          href: "/publikasi/kategori",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "FAQ",
-          href: "/publikasi/faq",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Imagetron",
-          href: "/publikasi/imagetron",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Pengaturan",
-          href: "/publikasi/pengaturan",
-          selected: false,
-          child: [],
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: "Partnership",
-      href: "",
-      icon: "assets/icon/sidebar_temp/Partnership.svg",
-      selected: false,
-      child: [
-        {
-          id: 1,
-          name: "Dashboard",
-          href: "/partnership/dashboard",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 1,
-          name: "Kerjasama",
-          href: "/partnership/kerjasama",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Mitra",
-          href: "/partnership/mitra",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Master Kategori Kerjasama",
-          href: "/partnership/master-kategori-kerjasama",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Tanda Tangan Digital",
-          href: "/partnership/tanda-tangan",
-          selected: false,
-          child: [],
-        },
-      ],
-    },
-    {
-      id: 6,
-      name: "Sertifikat",
-      href: "",
-      icon: "assets/icon/sidebar_temp/Sertifikat.svg",
-      selected: false,
-      child: [
-        {
-          id: 1,
-          name: "Kelola Sertifikat",
-          href: "/sertifikat/kelola-sertifikat",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "TTE P12",
-          href: "/sertifikat/tte-p12",
-          selected: false,
-          child: [],
-        },
-      ],
-    },
-    {
-      id: 7,
-      name: "Subvit",
-      href: "",
-      icon: "assets/icon/sidebar_temp/Subvit.svg",
-      selected: false,
-      child: [
-        {
-          id: 1,
-          name: "Dashboard",
-          href: "/subvit?page_substansi=1&page_trivia=1&page_survey=1",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Test Substansi",
-          href: "/subvit/substansi",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Survey",
-          href: "/subvit/survey",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "TRIVIA",
-          href: "/subvit/trivia",
-          selected: false,
-          child: [],
-        },
-      ],
-    },
-    {
-      id: 8,
-      name: "Site Management",
-      href: "",
-      icon: "assets/icon/sidebar_temp/SiteManagement.svg",
-      selected: false,
-      child: [
-        {
-          id: 1,
-          name: "Dashboard",
-          href: "/site-management/dashboard",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "User",
-          href: "/site-management/user",
-          selected: false,
-          child: [
-            {
-              id: 2,
-              name: "Peserta DTS",
-              href: "/site-management/user/peserta-dts",
-              selected: false,
-              child: [],
-            },
-            {
-              id: 2,
-              name: "Administrator",
-              href: "/site-management/user/administrator",
-              selected: false,
-              child: [],
-            },
-            {
-              id: 2,
-              name: "Mitra",
-              href: "/site-management/user/mitra",
-              selected: false,
-              child: [],
-            },
-          ],
-        },
-        {
-          id: 2,
-          name: "Role",
-          href: "/site-management/role",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Export Data",
-          href: "/site-management/export-data",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Master Data",
-          href: "/site-management/master-data",
-          selected: false,
-          child: [
-            {
-              id: 2,
-              name: "Master Zonasi",
-              href: "/site-management/master-data/master-zonasi",
-              selected: false,
-              child: [],
-            },
-            {
-              id: 2,
-              name: "Master Satuan Kerja",
-              href: "/site-management/master-data/master-satuan-kerja-penyelenggara",
-              selected: false,
-              child: [],
-            },
-          ],
-        },
-        {
-          id: 2,
-          name: "Data Reference",
-          href: "/site-management/reference",
-          selected: false,
-          child: [],
-        },
-        {
-          id: 2,
-          name: "Setting",
-          href: "/site-management/setting",
-          selected: false,
-          child: [
-            {
-              id: 2,
-              name: "General",
-              href: "/site-management/setting/general",
-              selected: false,
-              child: [],
-            },
-            {
-              id: 2,
-              name: "Page",
-              href: "/site-management/setting/page",
-              selected: false,
-              child: [],
-            },
-            {
-              id: 2,
-              name: "Menu",
-              href: "/site-management/setting/menu",
-              selected: false,
-              child: [],
-            },
-            {
-              id: 2,
-              name: "API",
-              href: "/site-management/setting/api",
-              selected: false,
-              child: [],
-            },
-            {
-              id: 2,
-              name: "Pelatihan",
-              href: "/site-management/setting/pelatihan",
-              selected: false,
-              child: [],
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  let initializeMenu = null;
+
+  let getsidebar = false;
+
+  if (getsidebar) {
+    initializeMenu = [
+      {
+        id: 1,
+        name: "Dashboard",
+        href: "/dashboard",
+        selected: false,
+        icon: "assets/icon/sidebar_temp/Dashboard.svg",
+        child: [
+          {
+            id: 1,
+            name: "Digitalent",
+            href: "/dashboard",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Beasiswa",
+            href: "/dashboard/beasiswa",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 3,
+            name: "Simonas",
+            href: "/dashboard/simonas",
+            selected: false,
+            child: [],
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Daftar Peserta",
+        href: "/daftar-peserta",
+        selected: false,
+        icon: "assets/icon/sidebar_temp/Partnership.svg",
+        child: [
+          {
+            id: 1,
+            name: "Digitalent",
+            href: "/daftar-peserta/digitalent",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Beasiswa",
+            href: "/daftar-peserta/beasiswa",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 3,
+            name: "Simonas",
+            href: "/daftar-peserta/simonas",
+            selected: false,
+            child: [],
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "Pelatihan",
+        href: "",
+        icon: "assets/icon/sidebar_temp/Pelatihan.svg",
+        selected: false,
+        child: [
+          {
+            id: 1,
+            name: "Akademi",
+            href: "/pelatihan/akademi",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Tema",
+            href: "/pelatihan/tema",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Pelatihan",
+            href: "/pelatihan/pelatihan",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Master Pendaftaran",
+            href: "/pelatihan/master-pendaftaran",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Review Pelatihan",
+            href: "/pelatihan/review-pelatihan",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Rekap Pendaftaran",
+            href: "/pelatihan/rekap-pendaftaran",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Report Pelatihan",
+            href: "/pelatihan/report-pelatihan",
+            selected: false,
+            child: [],
+          },
+        ],
+      },
+      {
+        id: 4,
+        name: "Publikasi",
+        href: "",
+        icon: "assets/icon/sidebar_temp/Publikasi.svg",
+        selected: false,
+        child: [
+          {
+            id: 1,
+            name: "Dashboard",
+            href: "/publikasi/dashboard-publikasi",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 1,
+            name: "Artikel",
+            href: "/publikasi/artikel",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Artikel Peserta",
+            href: "/publikasi/artikel-peserta",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Berita",
+            href: "/publikasi/berita",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Video",
+            href: "/publikasi/video",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Galeri",
+            href: "/publikasi/galeri",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Kategori",
+            href: "/publikasi/kategori",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "FAQ",
+            href: "/publikasi/faq",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Imagetron",
+            href: "/publikasi/imagetron",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Pengaturan",
+            href: "/publikasi/pengaturan",
+            selected: false,
+            child: [],
+          },
+        ],
+      },
+      {
+        id: 5,
+        name: "Partnership",
+        href: "",
+        icon: "assets/icon/sidebar_temp/Partnership.svg",
+        selected: false,
+        child: [
+          {
+            id: 1,
+            name: "Dashboard",
+            href: "/partnership/dashboard",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 1,
+            name: "Kerjasama",
+            href: "/partnership/kerjasama",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Mitra",
+            href: "/partnership/mitra",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Master Kategori Kerjasama",
+            href: "/partnership/master-kategori-kerjasama",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Tanda Tangan Digital",
+            href: "/partnership/tanda-tangan",
+            selected: false,
+            child: [],
+          },
+        ],
+      },
+      {
+        id: 6,
+        name: "Sertifikat",
+        href: "",
+        icon: "assets/icon/sidebar_temp/Sertifikat.svg",
+        selected: false,
+        child: [
+          {
+            id: 1,
+            name: "Kelola Sertifikat",
+            href: "/sertifikat/kelola-sertifikat",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "TTE P12",
+            href: "/sertifikat/tte-p12",
+            selected: false,
+            child: [],
+          },
+        ],
+      },
+      {
+        id: 7,
+        name: "Subvit",
+        href: "",
+        icon: "assets/icon/sidebar_temp/Subvit.svg",
+        selected: false,
+        child: [
+          {
+            id: 1,
+            name: "Dashboard",
+            href: "/subvit?page_substansi=1&page_trivia=1&page_survey=1",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Test Substansi",
+            href: "/subvit/substansi",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Survey",
+            href: "/subvit/survey",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "TRIVIA",
+            href: "/subvit/trivia",
+            selected: false,
+            child: [],
+          },
+        ],
+      },
+      {
+        id: 8,
+        name: "Site Management",
+        href: "",
+        icon: "assets/icon/sidebar_temp/SiteManagement.svg",
+        selected: false,
+        child: [
+          {
+            id: 1,
+            name: "Dashboard",
+            href: "/site-management/dashboard",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "User",
+            href: "/site-management/user",
+            selected: false,
+            child: [
+              {
+                id: 2,
+                name: "Peserta DTS",
+                href: "/site-management/user/peserta-dts",
+                selected: false,
+                child: [],
+              },
+              {
+                id: 2,
+                name: "Administrator",
+                href: "/site-management/user/administrator",
+                selected: false,
+                child: [],
+              },
+              {
+                id: 2,
+                name: "Mitra",
+                href: "/site-management/user/mitra",
+                selected: false,
+                child: [],
+              },
+            ],
+          },
+          {
+            id: 2,
+            name: "Role",
+            href: "/site-management/role",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Export Data",
+            href: "/site-management/export-data",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Master Data",
+            href: "/site-management/master-data",
+            selected: false,
+            child: [
+              {
+                id: 2,
+                name: "Master Zonasi",
+                href: "/site-management/master-data/master-zonasi",
+                selected: false,
+                child: [],
+              },
+              {
+                id: 2,
+                name: "Master Satuan Kerja",
+                href: "/site-management/master-data/master-satuan-kerja-penyelenggara",
+                selected: false,
+                child: [],
+              },
+            ],
+          },
+          {
+            id: 2,
+            name: "Data Reference",
+            href: "/site-management/reference",
+            selected: false,
+            child: [],
+          },
+          {
+            id: 2,
+            name: "Setting",
+            href: "/site-management/setting",
+            selected: false,
+            child: [
+              {
+                id: 2,
+                name: "General",
+                href: "/site-management/setting/general",
+                selected: false,
+                child: [],
+              },
+              {
+                id: 2,
+                name: "Page",
+                href: "/site-management/setting/page",
+                selected: false,
+                child: [],
+              },
+              {
+                id: 2,
+                name: "Menu",
+                href: "/site-management/setting/menu",
+                selected: false,
+                child: [],
+              },
+              {
+                id: 2,
+                name: "API",
+                href: "/site-management/setting/api",
+                selected: false,
+                child: [],
+              },
+              {
+                id: 2,
+                name: "Pelatihan",
+                href: "/site-management/setting/pelatihan",
+                selected: false,
+                child: [],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+  } else {
+    initializeMenu = allSidebar.data.data.menu;
+  }
 
   const [menu, setMenu] = useState(initializeMenu);
+  const pathRoute = router.route;
+  const splitRouteToMakingActive = pathRoute.split("/");
 
   useEffect(() => {
-    const pathRoute = router.route;
-    const splitRouteToMakingActive = pathRoute.split("/");
-
     initializeMenu.map((row, index) => {
       if (splitRouteToMakingActive[1] == row.name.toLowerCase()) {
         initializeMenu[index].selected = true;
@@ -518,19 +528,20 @@ const Sidebar = ({ session }) => {
         if (session && session?.user?.user?.data?.user?.roles[0] !== "mitra") {
           if (splitRouteToMakingActive[1] !== "dashboard") {
             const idSubmenuActive = localStorage.getItem("submenuActive");
-            initializeMenu[index].child[idSubmenuActive].selected = true;
+            // initializeMenu[index].child[idSubmenuActive].selected = true;
           }
         }
       }
     });
+
     let _temp = [...initializeMenu];
     setMenu(_temp);
-
+    
     return () => {
       localStorage.removeItem("submenuActive");
     };
-  }, []);
-
+  }, [initializeMenu]);
+  
   const handleOpenMenu = (e, i, condition) => {
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
@@ -547,7 +558,7 @@ const Sidebar = ({ session }) => {
             initializeMenu[i].name.toLowerCase() === splitRouteToMakingActive[1]
           ) {
             const idSubmenuActive = localStorage.getItem("submenuActive");
-            initializeMenu[i].child[idSubmenuActive].selected = true;
+            // initializeMenu[i].child[idSubmenuActive].selected = true;
           }
         }
       }
@@ -720,128 +731,132 @@ const Sidebar = ({ session }) => {
             </ul>
           ) : (
             <ul className="menu-nav">
-              {menu.map((items, index) => {
-                return (
-                  <li
-                    className={`menu-item menu-item-submenu ${
-                      items.selected && "menu-item-open"
-                    }`}
-                    aria-haspopup="true"
-                    data-menu-toggle="hover"
-                    key={index}
-                    id="main-menu"
-                    onClick={(e) => {
-                      handleOpenMenu(e, index, items.selected);
-                    }}
-                  >
-                    <a className="menu-link menu-toggle">
-                      <span className="svg-icon menu-icon d-flex align-items-center">
+              {allSidebar.loading === false ? (
+                menu.map((items, index) => {
+                  return (
+                    <li
+                      className={`menu-item menu-item-submenu ${
+                        items.selected && "menu-item-open"
+                      }`}
+                      aria-haspopup="true"
+                      data-menu-toggle="hover"
+                      key={index}
+                      id="main-menu"
+                      onClick={(e) => {
+                        handleOpenMenu(e, index, items.selected);
+                      }}
+                    >
+                      <a className="menu-link menu-toggle">
+                        {/* <span className="svg-icon menu-icon d-flex align-items-center">
                         <Image
                           alt="icon-sidebar-logo"
                           src={`/${items.icon}`}
                           width={24}
                           height={24}
                         />
-                      </span>
-                      <span className="menu-text ml-4">{items.name}</span>
+                      </span> */}
+                        <span className="menu-text ml-4">{items.name}</span>
 
-                      <i className="menu-arrow"></i>
-                    </a>
+                        <i className="menu-arrow"></i>
+                      </a>
 
-                    {items.child.map((child, i) => {
-                      return (
-                        <div className="menu-submenu" key={i}>
-                          <i className="menu-arrow"></i>
-                          <ul className="menu-subnav">
-                            {child.child.length === 0 ? (
-                              <li
-                                className={`menu-item ${
-                                  child.selected ? "menu-item-active" : ""
-                                }`}
-                                aria-haspopup="true"
-                                onClick={(e) =>
-                                  handleActiveSubmenu(e, index, i)
-                                }
-                              >
-                                <Link href={child.href} passHref>
+                      {items.child.map((child, i) => {
+                        return (
+                          <div className="menu-submenu" key={i}>
+                            <i className="menu-arrow"></i>
+                            <ul className="menu-subnav">
+                              {child.child.length === 0 ? (
+                                <li
+                                  className={`menu-item ${
+                                    child.selected ? "menu-item-active" : ""
+                                  }`}
+                                  aria-haspopup="true"
+                                  onClick={(e) =>
+                                    handleActiveSubmenu(e, index, i)
+                                  }
+                                >
+                                  <Link href={child.href} passHref>
+                                    <a
+                                      className="menu-link"
+                                      style={{ paddingLeft: "5.5rem" }}
+                                    >
+                                      <span className="menu-text">
+                                        {child.name}
+                                      </span>
+                                    </a>
+                                  </Link>
+                                </li>
+                              ) : (
+                                <li
+                                  className={`menu-item menu-item-submenu ${
+                                    child.selected ? "menu-item-open" : ""
+                                  }`}
+                                  aria-haspopup="true"
+                                  data-menu-toggle="hover"
+                                  id="sub-menu"
+                                  onClick={(e) =>
+                                    handleOpenMenuSubMenu(e, index, i)
+                                  }
+                                >
                                   <a
-                                    className="menu-link"
+                                    className="menu-link menu-toggle"
                                     style={{ paddingLeft: "5.5rem" }}
                                   >
                                     <span className="menu-text">
                                       {child.name}
                                     </span>
+                                    <i className="menu-arrow"></i>
                                   </a>
-                                </Link>
-                              </li>
-                            ) : (
-                              <li
-                                className={`menu-item menu-item-submenu ${
-                                  child.selected ? "menu-item-open" : ""
-                                }`}
-                                aria-haspopup="true"
-                                data-menu-toggle="hover"
-                                id="sub-menu"
-                                onClick={(e) =>
-                                  handleOpenMenuSubMenu(e, index, i)
-                                }
-                              >
-                                <a
-                                  className="menu-link menu-toggle"
-                                  style={{ paddingLeft: "5.5rem" }}
-                                >
-                                  <span className="menu-text">
-                                    {child.name}
-                                  </span>
-                                  <i className="menu-arrow"></i>
-                                </a>
-                                <div className="menu-submenu">
-                                  <i className="menu-arrow"></i>
-                                  <ul className="menu-subnav">
-                                    {child.child.map((child2, idx) => {
-                                      return (
-                                        <li
-                                          className={`menu-item ${
-                                            child2.selected &&
-                                            "menu-item-active"
-                                          }`}
-                                          aria-haspopup="true"
-                                          onClick={(e) =>
-                                            handleActiveSubSubmenu(
-                                              e,
-                                              index,
-                                              i,
-                                              idx
-                                            )
-                                          }
-                                          key={idx}
-                                        >
-                                          <Link href={child2.href} passHref>
-                                            <a
-                                              className="menu-link"
-                                              style={{
-                                                paddingLeft: "6.5rem",
-                                              }}
-                                            >
-                                              <span className="menu-text">
-                                                {child2.name}
-                                              </span>
-                                            </a>
-                                          </Link>
-                                        </li>
-                                      );
-                                    })}
-                                  </ul>
-                                </div>
-                              </li>
-                            )}
-                          </ul>
-                        </div>
-                      );
-                    })}
-                  </li>
-                );
-              })}
+                                  <div className="menu-submenu">
+                                    <i className="menu-arrow"></i>
+                                    <ul className="menu-subnav">
+                                      {child.child.map((child2, idx) => {
+                                        return (
+                                          <li
+                                            className={`menu-item ${
+                                              child2.selected &&
+                                              "menu-item-active"
+                                            }`}
+                                            aria-haspopup="true"
+                                            onClick={(e) =>
+                                              handleActiveSubSubmenu(
+                                                e,
+                                                index,
+                                                i,
+                                                idx
+                                              )
+                                            }
+                                            key={idx}
+                                          >
+                                            <Link href={child2.href} passHref>
+                                              <a
+                                                className="menu-link"
+                                                style={{
+                                                  paddingLeft: "6.5rem",
+                                                }}
+                                              >
+                                                <span className="menu-text">
+                                                  {child2.name}
+                                                </span>
+                                              </a>
+                                            </Link>
+                                          </li>
+                                        );
+                                      })}
+                                    </ul>
+                                  </div>
+                                </li>
+                              )}
+                            </ul>
+                          </div>
+                        );
+                      })}
+                    </li>
+                  );
+                })
+              ) : (
+                <LoadingTable />
+              )}
             </ul>
           )}
         </div>
