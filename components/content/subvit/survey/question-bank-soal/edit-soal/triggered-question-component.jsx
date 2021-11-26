@@ -307,6 +307,7 @@ const TriggeredQuestionComponent = ({
                             onChange={(e) =>
                               handleInputChange(e, null, null, i)
                             }
+                            accept="image/png, image/gif, image/jpeg , image/jpg"
                           />
                           <label
                             className="custom-file-label"
