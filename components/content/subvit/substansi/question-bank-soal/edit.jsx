@@ -342,7 +342,6 @@ const EditSoalSubstansi = ({ token }) => {
 
               <div className="answer mt-5">
                 {answer.map((row, i) => {
-                  // console.log(row);
                   return (
                     <>
                       <div className="title row ">
