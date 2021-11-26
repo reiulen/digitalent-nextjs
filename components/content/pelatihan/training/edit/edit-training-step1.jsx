@@ -372,17 +372,17 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     switch (type) {
       case "LOGO":
         setLogoFile("");
-        setLogoBase("");
+        setLogoBase("Belum ada file");
         setLogoName("Belum ada file");
         break;
       case "THUMBNAIL":
         setThumbnailFile("");
-        setThumbnailBase("");
+        setThumbnailBase("Belum ada file");
         setThumbnailName("Belum ada file");
         break;
       case "SILABUS":
         setSilabusFile("");
-        setSilabusBase("");
+        setSilabusBase("Belum ada file");
         setSilabusName("Belum ada file");
         break;
       default:

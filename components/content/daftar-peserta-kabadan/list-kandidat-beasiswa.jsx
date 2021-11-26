@@ -180,39 +180,42 @@ const ListKandidatBeasiswa = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[1, 2, 3, 4, 5].map((row, i) => (
-                        <tr key={i}>
-                          <td className="text-center align-middle">
-                            {limit === null
-                              ? i + 1 * (page * 5) - (5 - 1)
-                              : i + 1 * (page * limit) - (limit - 1)}
-                          </td>
-                          <td className="align-middle">
-                            <p className="mb-0">Dendy</p>
-                          </td>
-                          <td className="align-middle">
-                            <p className="fz-15 mb-0">
-                              Beasiswa Regular Bagi ASN
-                            </p>
-                          </td>
-                          <td className="align-middle">
-                            <p className="font-weight-bolder my-0">
-                              Unversitas Indonesia
-                            </p>
-                            <p className="my-0">
-                              Manajemen Teknologi Informasi
-                            </p>
-                          </td>
-                          <td className="align-middle">
-                            <p className="fz-15 mb-0">Tahap 1</p>
-                          </td>
-                          <td className="align-middle">
-                            <span className="label label-inline label-light-success font-weight-bold py-5">
-                              Menunggu Verifikasi
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
+                      {!kandidat ||
+                      (kandidat && kandidat.list_participant.length === 0) ? (
+                        <td className="align-middle text-center" colSpan={6}>
+                          Data Kosong
+                        </td>
+                      ) : (
+                        kandidat.list_participant.map((row, i) => (
+                          <tr key={i}>
+                            <td className="text-center align-middle">
+                              {limit === null
+                                ? i + 1 * (page * 5) - (5 - 1)
+                                : i + 1 * (page * limit) - (limit - 1)}
+                            </td>
+                            <td className="align-middle">
+                              <p className="mb-0">{row.fullname}</p>
+                            </td>
+                            <td className="align-middle">
+                              <p className="fz-15 mb-0">{row.category}</p>
+                            </td>
+                            <td className="align-middle">
+                              <p className="font-weight-bolder my-0">
+                                {row.university}
+                              </p>
+                              <p className="my-0">{row.study_program}</p>
+                            </td>
+                            <td className="align-middle">
+                              <p className="fz-15 mb-0">{row.stage}</p>
+                            </td>
+                            <td className="align-middle">
+                              <span className="label label-inline label-light-success font-weight-bold py-5">
+                                {row.status}
+                              </span>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 )}
@@ -220,54 +223,58 @@ const ListKandidatBeasiswa = ({ token }) => {
             </div>
 
             <div className="row">
-              <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                <Pagination
-                  activePage={page}
-                  itemsCountPerPage={3}
-                  totalItemsCount={5}
-                  pageRangeDisplayed={3}
-                  onChange={handlePagination}
-                  nextPageText={">"}
-                  prevPageText={"<"}
-                  firstPageText={"<<"}
-                  lastPageText={">>"}
-                  itemClass="page-item"
-                  linkClass="page-link"
-                />
-              </div>
-              <div className="table-total ml-auto">
-                <div className="row">
-                  <div className="col-4 mr-0 p-0 mt-3">
-                    <select
-                      className="form-control"
-                      id="exampleFormControlSelect2"
-                      style={{
-                        width: "65px",
-                        background: "#F3F6F9",
-                        borderColor: "#F3F6F9",
-                        color: "#9E9E9E",
-                      }}
-                      onChange={(e) => handleLimit(e.target.value)}
-                      onBlur={(e) => handleLimit(e.target.value)}
-                      value={limit}
-                    >
-                      <option value="5">5</option>
-                      <option value="10">10</option>
-                      <option value="30">30</option>
-                      <option value="40">40</option>
-                      <option value="50">50</option>
-                    </select>
-                  </div>
-                  <div className="col-8 my-auto pt-3">
-                    <p
-                      className="align-middle mt-3"
-                      style={{ color: "#B5B5C3" }}
-                    >
-                      Total Data 5
-                    </p>
+              {kandidat && kandidat.perPage < kandidat.total && (
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={kandidat.perPage}
+                    totalItemsCount={kandidat.total}
+                    pageRangeDisplayed={3}
+                    onChange={handlePagination}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+              )}
+              {kandidat && kandidat.total > 5 && (
+                <div className="table-total ml-auto">
+                  <div className="row">
+                    <div className="col-4 mr-0 p-0 mt-3">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        onChange={(e) => handleLimit(e.target.value)}
+                        onBlur={(e) => handleLimit(e.target.value)}
+                        value={limit}
+                      >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto pt-3">
+                      <p
+                        className="align-middle mt-3"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data {kandidat.total}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

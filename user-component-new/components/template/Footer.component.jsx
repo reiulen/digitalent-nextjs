@@ -50,7 +50,7 @@ export default function Footer() {
 
   return (
     <div className={`color-secondary-${warna}`}>
-      <Container fluid className="px-xl-35 px-lg-10 px-10">
+      <Container fluid className="px-xl-17 px-lg-10 px-7">
         <Row className="w-100 px-0 mx-0 mb-0 py-5">
           <Col md={2} sm={12}>
             <div className="mt-5">
@@ -108,7 +108,7 @@ export default function Footer() {
         </Row>
       </Container>
       <hr style={{ backgroundColor: "white" }} />
-      <Container fluid className="px-xl-35 px-lg-10 px-15">
+      <Container fluid className="px-xl-21 px-lg-10 px-10">
         <Row className="py-10 ">
           <Col md={4} sm={12}>
             <div>
