@@ -345,6 +345,11 @@ a {
   margin-right: 0px !important;
 }
 
+p > img{
+  width: 85%;
+  margin-left: 55px;
+}
+
 @media screen and (max-width: 576px) {
   .responsive-columns {
     justify-content: center !important;

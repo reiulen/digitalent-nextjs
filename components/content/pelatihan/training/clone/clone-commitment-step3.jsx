@@ -77,7 +77,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
     if (simpleValidator.current.allValid()) {
       const dataStep3 = {
         komitmen: commitment,
-        deskripsi: commitment === "1" ? description : "",
+        deskripsi_komitmen: description,
       };
       dispatch(storeCommitmentStep3(dataStep3));
       const data = {

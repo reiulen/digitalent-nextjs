@@ -114,7 +114,7 @@ export const getListRoles = (token, search = "") => async (dispatch) => {
     const { data } = await axios.get(
       `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
       {
-        params: {cari: search},
+        params: {cari: search, limit: 100},
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -139,6 +139,9 @@ export const getListUnitWorks = (token) => async (dispatch) => {
       `${process.env.END_POINT_API_SITE_MANAGEMENT}api/satuan/all`,
       {
         headers: {
+          params: {
+            limit: 100
+          },
           authorization: `Bearer ${token}`,
         },
       }
