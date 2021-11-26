@@ -192,7 +192,6 @@ const DaftarPesertaPelatihan = ({ token }) => {
                         <th>Berkas</th>
                         <th>Status Peserta</th>
                         <th>Updated</th>
-                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -254,24 +253,6 @@ const DaftarPesertaPelatihan = ({ token }) => {
                               <p className="my-0">
                                 {moment(row.update_time).format("hh:mm:ss")}
                               </p>
-                            </td>
-                            <td>
-                              <div className="d-flex mr-10">
-                                <Link
-                                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${id}&index=${
-                                    i + limit * (page - 1) + 1
-                                  }`}
-                                >
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Detail"
-                                  >
-                                    <i className="ri-eye-fill text-white p-0"></i>
-                                  </a>
-                                </Link>
-                              </div>
                             </td>
                           </tr>
                         ))

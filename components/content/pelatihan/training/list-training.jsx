@@ -265,11 +265,11 @@ const ListTraining = ({ token }) => {
         limit,
         register[0] === "Invalid date" ? "" : register.join(","),
         pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
-        statusSubstansi != null ? statusSubstansi.value : null,
-        statusPelatihan != null ? statusPelatihan.value : null,
-        penyelenggara != null ? penyelenggara.value : null,
-        academy,
-        theme,
+        statusSubstansi != null ? statusSubstansi.label : null,
+        statusPelatihan != null ? statusPelatihan.label : null,
+        penyelenggara != null ? penyelenggara.label : null,
+        academy !== null ? academy.label : null,
+        theme !== null ? theme.label : null,
         token,
         berjalan
       )
@@ -311,11 +311,11 @@ const ListTraining = ({ token }) => {
         limit,
         register[0] === "Invalid date" ? "" : register.join(","),
         pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
-        statusSubstansi != null ? statusSubstansi.value : null,
-        statusPelatihan != null ? statusPelatihan.value : null,
-        penyelenggara != null ? penyelenggara.value : null,
-        academy != null ? academy.value : null,
-        theme != null ? theme.value : null,
+        statusSubstansi != null ? statusSubstansi.label : null,
+        statusPelatihan != null ? statusPelatihan.label : null,
+        penyelenggara != null ? penyelenggara.label : null,
+        academy != null ? academy.label : null,
+        theme != null ? theme.label : null,
         token,
         berjalan
       )
@@ -984,22 +984,23 @@ const ListTraining = ({ token }) => {
                                     <i className="ri-draft-line p-0 text-white"></i>
                                   </button>
                                 )}
-                                {row.program_dts === "1" &&
-                                  row.status_pelatihan !== "review substansi" &&
-                                  row.status_publish !== "0" && (
-                                    <Link
-                                      href={`/pelatihan/pelatihan/tambah-form-lpj/${row.id}`}
+                                {!(
+                                  row.status_pelatihan === "review substansi" ||
+                                  row.status_substansi === "ditolak"
+                                ) && (
+                                  <Link
+                                    href={`/pelatihan/pelatihan/tambah-form-lpj/${row.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Upload LPJ"
                                     >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Upload LPJ"
-                                      >
-                                        <i className="ri-file-text-fill p-0 text-white"></i>
-                                      </a>
-                                    </Link>
-                                  )}
+                                      <i className="ri-file-text-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                )}
                                 {!(
                                   row.status_substansi === "ditolak" ||
                                   row.status_pelatihan === "review substansi" ||
@@ -1034,7 +1035,9 @@ const ListTraining = ({ token }) => {
                                     </a>
                                   </Link>
                                 )}
-                                <Link href={`/pelatihan/pelatihan/clone-pelatihan/${row.id}`}>
+                                <Link
+                                  href={`/pelatihan/pelatihan/clone-pelatihan/${row.id}`}
+                                >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                     data-toggle="tooltip"

@@ -356,11 +356,9 @@ const RegisterUser = () => {
                   )}
                 </div>
 
-                <div className="form-group row mb-4">
-                  <label className="form-auth-label col-sm-4">
-                    Verifikasi dengan
-                  </label>
-                  <div className="col-sm-8 my-auto">
+                <div className="form-group mb-4">
+                  <label className="form-auth-label ">Verifikasi dengan</label>
+                  <div className=" my-auto">
                     <div className="form-check form-check-inline">
                       <input
                         type="radio"
