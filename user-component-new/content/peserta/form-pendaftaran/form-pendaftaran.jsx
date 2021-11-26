@@ -331,7 +331,6 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         form_pendaftaran: dataPendaftaran,
         pelatian_id: +router.query.id,
       };
-      // console.log(token);
       dispatch(newPendaftaranPelatihan(data, token));
     }
   };

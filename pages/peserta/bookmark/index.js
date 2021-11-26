@@ -63,11 +63,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         const dataPribadi = await store.dispatch(
           getDataPribadi(session?.user.user.data.user.token)
         );
-        if (dataPribadi.data.status == false || !dataPribadi.data.status) {
-          success = false;
-        } else {
-          success = true;
-        }
       }
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)

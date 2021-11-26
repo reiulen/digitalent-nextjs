@@ -278,9 +278,6 @@ const Beranda = ({ session }) => {
     return str;
   };
 
-  const test = true;
-  const [bookmark, setBookMark] = useState(false);
-
   const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
@@ -329,6 +326,7 @@ const Beranda = ({ session }) => {
       }
     }
   };
+
   return (
     <>
       <section className="image-carousel-new mt-10">
