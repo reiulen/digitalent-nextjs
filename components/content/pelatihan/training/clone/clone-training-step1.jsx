@@ -1082,7 +1082,6 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   <input
                     type="radio"
                     name="plotRegistration"
-                    disabled
                     className="form-check-input"
                     value="Tes Substansi - Administrasi"
                     checked={
@@ -1103,7 +1102,6 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   <input
                     type="radio"
                     name="plotRegistration"
-                    disabled
                     className="form-check-input"
                     value="Tanpa Tes Substansi & Administrasi"
                     checked={

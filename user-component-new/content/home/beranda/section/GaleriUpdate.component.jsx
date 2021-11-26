@@ -6,7 +6,7 @@ export default function GaleriUpdate({ gambar }) {
   return (
     <div className="galery-update pt-20 pb-10">
       <Row className="my-auto">
-        <Col md={4} className="mb-10 mb-0">
+        <Col xl={4} md={12} className="mb-10 mb-0">
           <h1 className="fw-600" style={{ color: "#1F1F1F" }}>
             Galeri Terupdate dan Terkini
           </h1>
@@ -16,17 +16,20 @@ export default function GaleriUpdate({ gambar }) {
           </p>
           <Link href="/galeri">
             <a>
-              <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-10">
+              <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-20">
                 Lihat Selengkapnya >
               </button>
             </a>
           </Link>
         </Col>
-        <Col md={8}>
-          <Row className="justify-content-end">
+        <Col xl={8} md={12}>
+          <Row className="justify-content-xl-end">
             {gambar &&
               gambar.map((row, i) => (
-                <Col md={4} className="text-right mb-md-0 mb-10">
+                <Col
+                  md={4}
+                  className="text-xl-right text-md-left text-left mb-md-0 mb-10"
+                >
                   <Image
                     src={
                       (row.gambar &&

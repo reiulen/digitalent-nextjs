@@ -32,6 +32,16 @@ export default function MasterPelatihan({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const { permission } = useSelector((state) => state.adminPermission);
+  const [listPermission, setListPermission] = useState([]);
+
+  useEffect(() => {
+    const filterPermission = permission?.permissions?.filter((item) =>
+      item.includes("pelatihan")
+    );
+    setListPermission(filterPermission);
+  }, []);
+
   const { loading, error, list } = useSelector(
     (state) => state.getAllMasterPelatihan
   );
@@ -390,45 +400,59 @@ export default function MasterPelatihan({ token }) {
                                 </div>
                               </td>
                               <td className="align-middle d-flex">
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                  onClick={() =>
-                                    router.push(
-                                      `/pelatihan/master-pendaftaran/edit-form-pendaftaran?id=${item.id}`
-                                    )
-                                  }
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
-                                >
-                                  <i className="ri-pencil-fill p-0 text-white"></i>
-                                </button>
-                                <Link
-                                  href={`/pelatihan/master-pendaftaran/${item.judul_form
-                                    ?.split(" ")
-                                    .join("-")
-                                    .toLowerCase()}?id=${item.id}`}
-                                  passHref
-                                >
-                                  <a
+                                {listPermission.includes(
+                                  "pelatihan.master_pendaftaran.manage"
+                                ) && (
+                                  <button
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                    onClick={() =>
+                                      router.push(
+                                        `/pelatihan/master-pendaftaran/edit-form-pendaftaran?id=${item.id}`
+                                      )
+                                    }
                                     data-toggle="tooltip"
                                     data-placement="bottom"
-                                    title="Detail"
+                                    title="Hapus"
                                   >
-                                    <i className="ri-eye-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white"
-                                  onClick={() => handleDelete(item.id)}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
-                                >
-                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                </button>
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </button>
+                                )}
+
+                                {listPermission.includes(
+                                  "pelatihan.master_pendaftaran.view"
+                                ) && (
+                                  <Link
+                                    href={`/pelatihan/master-pendaftaran/${item.judul_form
+                                      ?.split(" ")
+                                      .join("-")
+                                      .toLowerCase()}?id=${item.id}`}
+                                    passHref
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Detail"
+                                    >
+                                      <i className="ri-eye-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                )}
+                                {listPermission.includes(
+                                  "pelatihan.master_pendaftaran.manage"
+                                ) && (
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary text-white"
+                                    onClick={() => handleDelete(item.id)}
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Hapus"
+                                  >
+                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                  </button>
+                                )}
                               </td>
+
                               {/* END TABLE DATA */}
                             </tr>
                           );

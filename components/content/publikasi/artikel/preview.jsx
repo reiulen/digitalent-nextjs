@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Image from "next/image";
 import moment from "moment";
 import IconFilter from "../../../assets/icon/Filter";
+import imageLogo from "../../../../public/assets/media/logo-default.png"
 
 import { Container } from "react-bootstrap"
 import SubHeaderComponent from "../../../../components/templates/subheader.component"
@@ -126,17 +127,30 @@ const Preview = () => {
                                 <div className="row">
                                     <div className="ml-2">
                                         {/* Insert Logo Image Here */}
-                                        <Image
-                                            src={
-                                                process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                "publikasi/images/" +
-                                                artikel.foto
-                                            }
-                                            width={40}
-                                            height={40}
-                                            alt="Logo Image"
-                                            className="border rounded-circle"
-                                        />
+                                        {
+                                            artikel.role[0].name !== "Peserta" || typeof artikel.role !== "string" ?
+                                                <Image
+                                                    src={
+                                                        imageLogo
+                                                    }
+                                                    width={40}
+                                                    height={40}
+                                                    alt="Logo Image"
+                                                    className="border rounded-circle"
+                                                />
+                                                :
+                                                <Image
+                                                    src={
+                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" +
+                                                        artikel.foto
+                                                    }
+                                                    width={40}
+                                                    height={40}
+                                                    alt="Logo Image"
+                                                    className="border rounded-circle"
+                                                />
+                                        }
                                     </div>
                                     <div className="d-flex flex-column ml-3">
                                         <div className="font-weight-bolder mb-2">
@@ -246,14 +260,14 @@ const Preview = () => {
                                                 <div>
                                                     <button
                                                         className="btn btn-primary-dashboard"
-                                                        onClick={(e) =>
-                                                            handleHighlightWords(e, artikel.isi_artikel)
-                                                        }
+                                                        // onClick={(e) =>
+                                                        //     handleHighlightWords(e, artikel.isi_artikel)
+                                                        // }
                                                         style={{
                                                             borderTopRightRadius: "150px",
                                                             borderBottomRightRadius: "150px",
                                                         }}
-                                                        type="submit"
+                                                        type="button"
                                                     >
                                                         Cari
                                                     </button>

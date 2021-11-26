@@ -177,7 +177,7 @@ export const allPermissionReducer = (state = {}, action) => {
   }
 };
 
-export const allSidebarReducer = (state = {}, action) => {
+export const allSidebarReducer = (state = {loading: true, data: {data: {menu: []}}}, action) => {
   switch (action.type) {
     case GET_SIDEBAR:
       return {

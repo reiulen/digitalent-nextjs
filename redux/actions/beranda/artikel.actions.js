@@ -15,7 +15,8 @@ import {
     TAG_BERANDA_ARTIKEL_SUCCESS,
     TAG_BERANDA_ARTIKEL_FAIL,
 
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    CEK_LULUS_PELATIHAN
 } from "../../types/beranda/artikel.type"
 
 import axios from "axios";
@@ -79,6 +80,21 @@ export const getDetailBerandaArtikel = (id) => async dispatch => {
             type: DETAIL_BERANDA_ARTIKEL_FAIL,
             payload: error.response.data.message
         })
+    }
+}
+
+export const cekLulus = (id) => async dispatch => {
+    try {
+        let link = process.env.END_POINT_API_PELATIHAN + `/api/v1/formPendaftaran/cek-lulus-peserta`
+
+        const { data } = await axios.get(link)
+
+        dispatch ({
+            type: CEK_LULUS_PELATIHAN,
+            payload: data
+        })
+        
+    } catch (error) {
     }
 }
 

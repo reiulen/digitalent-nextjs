@@ -21,6 +21,15 @@ import { set } from "js-cookie";
 const ListReport = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { permission } = useSelector((state) => state.adminPermission);
+  const [listPermission, setListPermission] = useState([]);
+
+  useEffect(() => {
+    const filterPermission = permission?.permissions?.filter((item) =>
+      item.includes("pelatihan")
+    );
+    setListPermission(filterPermission);
+  }, []);
 
   const { data: getDataReportTraining } = useSelector(
     (state) => state.getDataReportTraining
@@ -34,7 +43,9 @@ const ListReport = ({ token }) => {
   const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
     useSelector((state) => state.drowpdownPenyelenggara);
 
-  const drowpdownTemabyAkademi = useSelector(state => state.drowpdownTemabyAkademi)
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
+  );
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(5);
@@ -130,42 +141,54 @@ const ListReport = ({ token }) => {
             </td>
             <td>
               <div className="d-flex">
-                <Link
-                  href={`/pelatihan/report-pelatihan/detail-report-pelatihan/${item.id}`}
-                >
-                  <a
-                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="Detail"
-                    onClick={() => {
-                      localStorage.setItem("slug", item.slug);
-                      localStorage.setItem("slug", item.slug);
-                    }}
+                {listPermission.includes("pelatihan.report_pelatihan.view") && (
+                  <Link
+                    href={`/pelatihan/report-pelatihan/detail-report-pelatihan/${item.id}`}
                   >
-                    <i className="ri-eye-fill text-white p-0"></i>
-                  </a>
-                </Link>
-                <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
-                  <a
-                    className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${item.status_pelatihan === "selesai" ? "" : "disabled"}`}
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="Download As Word"
-                  >
-                    <i className="ri-file-word-fill text-white p-0"></i>
-                  </a>
-                </Link>
-                <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
-                  <a
-                    className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${item.status_pelatihan === "selesai" ? "" : "disabled"}`}
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="Download As PDF"
-                  >
-                    <i className="ri-file-ppt-fill text-white p-0"></i>
-                  </a>
-                </Link>
+                    <a
+                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Detail"
+                      onClick={() => {
+                        localStorage.setItem("slug", item.slug);
+                        localStorage.setItem("slug", item.slug);
+                      }}
+                    >
+                      <i className="ri-eye-fill text-white p-0"></i>
+                    </a>
+                  </Link>
+                )}
+                {listPermission.includes(
+                  "pelatihan.report_pelatihan.manage"
+                ) && (
+                  <div className="d-flex">
+                    <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
+                      <a
+                        className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${
+                          item.status_pelatihan === "selesai" ? "" : "disabled"
+                        }`}
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Download As Word"
+                      >
+                        <i className="ri-file-word-fill text-white p-0"></i>
+                      </a>
+                    </Link>
+                    <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
+                      <a
+                        className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${
+                          item.status_pelatihan === "selesai" ? "" : "disabled"
+                        }`}
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Download As PDF"
+                      >
+                        <i className="ri-file-ppt-fill text-white p-0"></i>
+                      </a>
+                    </Link>
+                  </div>
+                )}
               </div>
             </td>
           </tr>
@@ -485,11 +508,11 @@ const ListReport = ({ token }) => {
             className="btn btn-light-ghost-rounded-full mr-2"
             type="button"
             onClick={() => {
-              setPenyelenggara({ label: "", value: "" })
-              setAcademy({ label: "", value: "" })
-              setTheme({ label: "", value: "" })
-              setDateRegister([null, null])
-              setDatePelaksanaan([null, null])
+              setPenyelenggara({ label: "", value: "" });
+              setAcademy({ label: "", value: "" });
+              setTheme({ label: "", value: "" });
+              setDateRegister([null, null]);
+              setDatePelaksanaan([null, null]);
             }}
           >
             Reset

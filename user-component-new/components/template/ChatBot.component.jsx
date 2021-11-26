@@ -40,11 +40,11 @@ export default function ChatBot() {
                   <i className="ri-question-answer-fill text-primary text-left" />{" "}
                   Live Chat
                 </a>
-                <Link href="/helpdesk/formulir-pengaduan">
-                  <div className={` rounded-full py-2`}>
+                <Link href="/helpdesk/formulir-pengaduan" passHref>
+                  <a className={` rounded-full py-2`}>
                     <i className="ri-draft-fill text-primary" />
                     Form Pengaduan
-                  </div>
+                  </a>
                 </Link>
                 <a className={`rounded-full py-2`} href="tel:0213452841">
                   <i className="ri-phone-fill text-primary" />

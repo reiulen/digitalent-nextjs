@@ -12,11 +12,15 @@ import DatePicker from "react-datepicker";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
+import { SweatAlert } from "../../../../../utils/middleware/helper";
 
 import {
   putTrainingStep1,
+  updateTrainingStep1,
   getEditTrainingStep1,
+  clearErrors,
 } from "../../../../../redux/actions/pelatihan/training.actions";
+import { UPDATE_TRAINING_STEP1_RESET } from "../../../../../redux/types/pelatihan/training.type";
 import {
   dropdownAkademi,
   dropdownLevelPelatihan,
@@ -43,6 +47,11 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   const { data: getEditTraining } = useSelector(
     (state) => state.getEditTraining
   );
+
+  const { loading, error, isUpdated } = useSelector(
+    (state) => state.updateTraining
+  );
+
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
@@ -224,7 +233,17 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     };
 
     setEditorLoaded(true);
-  }, [dispatch, router.query.id, token, academy.value]);
+
+    if (isUpdated) {
+      propsStep(2);
+      dispatch({ type: UPDATE_TRAINING_STEP1_RESET });
+    }
+
+    if (error) {
+      SweatAlert("Gagal", error, "error");
+      dispatch(clearErrors());
+    }
+  }, [dispatch, router.query.id, token, academy.value, isUpdated, error]);
 
   const optionsLevelPelatihan = [];
   for (let index = 0; index < dataLevelPelatihan.data.length; index++) {
@@ -353,17 +372,17 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     switch (type) {
       case "LOGO":
         setLogoFile("");
-        setLogoBase("");
+        setLogoBase("Belum ada file");
         setLogoName("Belum ada file");
         break;
       case "THUMBNAIL":
         setThumbnailFile("");
-        setThumbnailBase("");
+        setThumbnailBase("Belum ada file");
         setThumbnailName("Belum ada file");
         break;
       case "SILABUS":
         setSilabusFile("");
-        setSilabusBase("");
+        setSilabusBase("Belum ada file");
         setSilabusName("Belum ada file");
         break;
       default:
@@ -456,10 +475,8 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         tuna_rungu,
         tuna_daksa,
         pelatian_id: parseInt(router.query.id),
-        pelatihan_id: parseInt(router.query.id),
       };
-      dispatch(putTrainingStep1(token, data));
-      propsStep(2);
+      dispatch(updateTrainingStep1(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
