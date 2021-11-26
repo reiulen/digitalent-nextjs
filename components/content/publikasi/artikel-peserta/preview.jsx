@@ -5,6 +5,7 @@ import Image from "next/image";
 import moment from "moment";
 import IconFilter from "../../../assets/icon/Filter";
 import { Container } from "react-bootstrap";
+import imageLogo from "../../../../public/assets/media/logo-default.png"
 
 import PreviewWrapper from "../../../wrapper/preview.wrapper";
 import Backdrop from "../../../../public/assets/media/backdrop.svg"
@@ -123,17 +124,30 @@ const Preview = () => {
                                 <div className="row">
                                     <div className="ml-2">
                                         {/* Insert Logo Image Here */}
-                                        <Image
-                                            src={
-                                                process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                "publikasi/images/" +
-                                                artikel_peserta.foto
-                                            }
-                                            width={40}
-                                            height={40}
-                                            alt="Logo Image"
-                                            className="border rounded-circle"
-                                        />
+                                        {
+                                            artikel_peserta.role[0].name !== "Peserta" || typeof artikel_peserta.role !== "string" ?
+                                                <Image
+                                                    src={
+                                                        imageLogo
+                                                    }
+                                                    width={40}
+                                                    height={40}
+                                                    alt="Logo Image"
+                                                    className="border rounded-circle"
+                                                />
+                                                :
+                                                <Image
+                                                    src={
+                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" +
+                                                        artikel_peserta.foto
+                                                    }
+                                                    width={40}
+                                                    height={40}
+                                                    alt="Logo Image"
+                                                    className="border rounded-circle"
+                                                />
+                                        }
                                     </div>
                                     <div className="d-flex flex-column ml-3">
                                         <div className="font-weight-bolder mb-2">
@@ -245,14 +259,14 @@ const Preview = () => {
                                                 <div>
                                                     <button
                                                         className="btn btn-primary-dashboard"
-                                                        onClick={(e) =>
-                                                            handleHighlightWords(e, artikel_peserta.isi_artikel)
-                                                        }
+                                                        // onClick={(e) =>
+                                                        //     handleHighlightWords(e, artikel_peserta.isi_artikel)
+                                                        // }
                                                         style={{
                                                             borderTopRightRadius: "150px",
                                                             borderBottomRightRadius: "150px",
                                                         }}
-                                                        type="submit"
+                                                        type="button"
                                                     >
                                                         Cari
                                                     </button>
