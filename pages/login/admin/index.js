@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
   if (session) {
     const data = session.user.user.data;
 
-    if (data.user.roles[0] === "user") {
+    if (data.user.roles === "user") {
       return {
         redirect: {
           destination: "/peserta",
