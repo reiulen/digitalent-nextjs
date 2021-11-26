@@ -287,7 +287,7 @@ const Table = ({ token }) => {
           <div className="d-flex flex-wrap align-items-center px-5 py-4">
             <div className="col-12 col-xl-6">
               <h1 className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1">
-                Kerjasama  xxxxxxxxx
+                Kerjasama
               </h1>
             </div>
             

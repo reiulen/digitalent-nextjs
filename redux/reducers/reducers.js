@@ -287,6 +287,7 @@ import {
   updateRolesReducer,
   deleteRolesReducer,
   allPermissionReducer,
+  allSidebarReducer,
 } from "./site-management/role.reducers";
 
 // ============== unit work ===============
@@ -766,6 +767,7 @@ const reducer = combineReducers({
   updateRoles: updateRolesReducer,
   deleteRoles: deleteRolesReducer,
   allPermission: allPermissionReducer,
+  allSidebar: allSidebarReducer,
   // ============ PELATIHAN =======
   allPrompt: allPromptReducer,
   // ============ Dashboatd =======
