@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Image from "next/image";
 import moment from "moment";
 import IconFilter from "../../../assets/icon/Filter";
+import imageLogo from "../../../../public/assets/media/logo-default.png"
 
 import { Container } from "react-bootstrap"
 
@@ -89,7 +90,7 @@ const Preview = () => {
 
     return (
         <>
-            <Container fluid className="px-md-30 px-10 pb-10 bg-white">
+            <Container fluid className="px-md-30 px-10 py-10 bg-white">
                 <div className="">
 
                     {/* Header */}
@@ -125,17 +126,30 @@ const Preview = () => {
                                 <div className="row">
                                     <div className="ml-2">
                                         {/* Insert Logo Image Here */}
-                                        <Image
-                                            src={
-                                                process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                "publikasi/images/" +
-                                                berita.foto
-                                            }
-                                            width={40}
-                                            height={40}
-                                            alt="Logo Image"
-                                            className="border rounded-circle"
-                                        />
+                                        {
+                                            berita.role[0].name !== "Peserta" || typeof berita.role !== "string" ?
+                                                <Image
+                                                    src={
+                                                        imageLogo
+                                                    }
+                                                    width={40}
+                                                    height={40}
+                                                    alt="Logo Image"
+                                                    className="border rounded-circle"
+                                                />
+                                                :
+                                                <Image
+                                                    src={
+                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" +
+                                                        berita.foto
+                                                    }
+                                                    width={40}
+                                                    height={40}
+                                                    alt="Logo Image"
+                                                    className="border rounded-circle"
+                                                />
+                                        }
                                     </div>
                                     <div className="d-flex flex-column ml-3">
                                         <div className="font-weight-bolder mb-2">
@@ -245,14 +259,14 @@ const Preview = () => {
                                                 <div>
                                                     <button
                                                         className="btn btn-primary-dashboard"
-                                                        onClick={(e) =>
-                                                            handleHighlightWords(e, berita.isi_berita)
-                                                        }
+                                                        // onClick={(e) =>
+                                                        //     handleHighlightWords(e, berita.isi_berita)
+                                                        // }
                                                         style={{
                                                             borderTopRightRadius: "150px",
                                                             borderBottomRightRadius: "150px",
                                                         }}
-                                                        type="submit"
+                                                        type="button"
                                                     >
                                                         Cari
                                                     </button>

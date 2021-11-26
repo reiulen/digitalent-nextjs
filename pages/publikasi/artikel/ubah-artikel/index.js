@@ -2,16 +2,12 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
-// import Layout from "../../../components/templates/layout.component";
-// import EditArtikel from "../../../components/content/publikasi/artikel/edit";
-
 import { getDetailArtikel } from "../../../../redux/actions/publikasi/artikel.actions";
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
-// import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
 
 const EditArtikel = dynamic(
