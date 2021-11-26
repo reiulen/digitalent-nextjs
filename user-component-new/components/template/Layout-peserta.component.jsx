@@ -22,15 +22,12 @@ const Header = dynamic(() => import("./Header.component"), {
   ssr: false,
 });
 
-const Sidebar = dynamic(
-  () => import("../../../user-component/components/template/Sidebar.component"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSidebar />;
-    },
-    ssr: false,
-  }
-);
+const Sidebar = dynamic(() => import("./Sidebar.component"), {
+  loading: function loadingNow() {
+    return <LoadingSidebar />;
+  },
+  ssr: false,
+});
 const Footer = dynamic(() => import("./Footer.component"), {
   loading: function loadingNow() {
     return <LoadingFooter />;

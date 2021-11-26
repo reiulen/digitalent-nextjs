@@ -86,7 +86,7 @@
 }
 
 .responsive-margin-without-background {
-  top: 45px;
+  top: 38px;
 }
 .responsive-margin-peserta-1 {
   top: 45px !important;
@@ -137,7 +137,7 @@
   }
 
   .responsive-margin-without-background {
-    top: 140px;
+    top: 120px;
   }
   .responsive-margin-peserta-1 {
     top: 140px !important;
@@ -216,7 +216,7 @@
   }
 
   .responsive-margin-without-background {
-    top: 125px;
+    top: 110px;
   }
   .responsive-margin-peserta-1 {
     top: 130px !important;
@@ -279,6 +279,6 @@
   }
 
   .responsive-margin-without-background {
-    top: 160px;
+    top: 135px;
   }
 }
