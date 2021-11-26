@@ -21,14 +21,12 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allPage = useSelector((state) => state.allPage);
-  const [page, setPage] = useState("");
 
   const firstPush = () => {
     let _temp = [...array];
     _temp.push({
       name: "",
-      id: "",
-      // child: [],
+      page_id: "",
     });
     setArray(_temp);
   };
@@ -55,35 +53,14 @@ const Table = ({ token }) => {
 
       let datar = [...array]
 
-      datar.forEach((items, index) => {
-        if (!items.name && !items.id) {
-          datar[index] = {
-            ...items,
-          };
-          setArray(datar)
-        }
-        if (items.name && !items.id) {
-          datar[index] = {
-            ...items,
-          };
-          setArray(datar)
-        }
-        if (!items.name && items.id) {
-          setArray(datar)
+      let dataPage = datar.map((row, i) => {
+        return {
+          name: row.name,
+          page_id: row.id
         }
       })
-    } else {
-      simpleValidator.current.showMessages();
-      forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
-    }
 
-    const sendData = { menu: array };
-    if (simpleValidator.current.allValid()) {
+      const sendData = { menu: dataPage };
       let { data } = await axios.post(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/store`,
         sendData,
@@ -200,7 +177,7 @@ const Table = ({ token }) => {
                               name=""
                               id=""
                               className="form-control"
-                              value={parrent.id}
+                              defaultValue={parrent.page_id}
                               onChange={(e) => handleChangeInput(e, i)}
                               onBlur={(e) => {
                                 simpleValidator.current.showMessageFor("halaman");
@@ -216,7 +193,7 @@ const Table = ({ token }) => {
                                 allPage.data.setting_page.map((row) => {
                                   return (
                                     <option key={row.id} value={row.id}>
-                                      {row.name}
+                                      {row.id}
                                     </option>
                                   );
                                 })

@@ -70,7 +70,10 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
-import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
+import {
+  allDashboardPublikasiReducer,
+  allRoleAdminPublikasiReducer
+} from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
 // ============== substansi ===============
@@ -556,6 +559,7 @@ const reducer = combineReducers({
   updateSettingPublikasi: updateSettingPublikasiReducer,
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
+  allRoleAdminPublikasi: allRoleAdminPublikasiReducer,
 
   // allKategoriContent: kategoriVideoContentReducer,
   // allTagContent: allTagReducer,
@@ -828,7 +832,7 @@ const reducer = combineReducers({
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
-  drowpdownYear:drowpdownYearReducers,
+  drowpdownYear: drowpdownYearReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,
@@ -890,8 +894,8 @@ const reducer = combineReducers({
   playVideoContent: playVideoContentReducer,
 
   // ========== faq ========
-  allFaqContent:allFaqContentReducer,
-  kategoriBerandaFaq:kategoriBerandaFaqReducer,
+  allFaqContent: allFaqContentReducer,
+  kategoriBerandaFaq: kategoriBerandaFaqReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========
