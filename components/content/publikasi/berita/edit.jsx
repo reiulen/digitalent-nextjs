@@ -43,6 +43,7 @@ const EditBerita = ({ token, idUser }) => {
 
     useEffect(() => {
         if (quill) {
+            quill.clipboard.dangerouslyPasteHTML(isi_berita);
             quill.on('text-change', (delta, oldDelta, source) => {
                 setIsiBerita(quill.root.innerHTML); // Get innerHTML using quill
 
@@ -376,36 +377,14 @@ const EditBerita = ({ token, idUser }) => {
                                                 <div style={{ width: "100%", height: "300px" }}>
                                                     <div
                                                         ref={quillRef}
-                                                        onChange={(event) => {
-                                                            // const data = editor.getData();
-                                                            // setIsiBerita(data);
-                                                        }}
                                                     />
                                                 </div>
-                                                // <CKEditor
-                                                //     ck-editor__editable
-                                                //     editor={ClassicEditor}
-                                                //     data={isi_berita}
-                                                //     onReady={editor => {
-                                                //         // You can store the "editor" and use when it is needed.
-                                                //     }}
-                                                //     onChange={(event, editor) => {
-                                                //         const data = editor.getData()
-                                                //         setIsiBerita(data);
-                                                //     }}
-                                                //     onBlur={() =>
-                                                //         simpleValidator.current.showMessageFor(
-                                                //             "isi_berita"
-                                                //         )
-                                                //     }
-                                                //     config={{ placeholder: "Tulis Deskripsi" }}
-                                                // /> 
                                                 :
                                                 <p>Tunggu Sebentar</p>}
                                             {simpleValidator.current.message(
                                                 "isi_berita",
                                                 isi_berita,
-                                                "required|min:100|max:12000",
+                                                "required",
                                                 { className: "text-danger" }
                                             )}
                                         </div>
@@ -476,7 +455,7 @@ const EditBerita = ({ token, idUser }) => {
 
                                     <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                                         <p>
-                                            Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
+                                            Resolusi yang direkomendasikan adalah 837 * 640. Fokus visual pada bagian tengah gambar
                                         </p>
 
                                     </div>

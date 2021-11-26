@@ -27,20 +27,19 @@ const TambahBerita = ({ token, id }) => {
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false)
-    
+
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const [, forceUpdate] = useState();
 
-    const { quill, quillRef } = useQuill();
-
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
     const { akademi } = useSelector(state => state.allAkademi);
 
+    const { quill, quillRef } = useQuill();
     const limit = 12000
 
     useEffect(() => {
@@ -297,31 +296,8 @@ const TambahBerita = ({ token, id }) => {
                                             <div style={{ width: "100%", height: "300px" }}>
                                                 <div
                                                     ref={quillRef}
-                                                    onChange={(event) => {
-                                                        // const data = editor.getData();
-                                                        // setIsiBerita(data);
-                                                    }}
                                                 />
                                             </div>
-                                            // <CKEditor
-                                            //     ck-editor__editable
-                                            //     editor={ClassicEditor}
-                                            //     data={isi_berita}
-                                            //     onReady={editor => {
-                                            //         // You can store the "editor" and use when it is needed.
-
-                                            //     }}
-                                            //     onChange={(event, editor) => {
-                                            //         const data = editor.getData()
-                                            //         setIsiBerita(data);
-                                            //     }}
-                                            //     onBlur={() =>
-                                            //         simpleValidator.current.showMessageFor(
-                                            //             "isi_berita"
-                                            //         )
-                                            //     }
-                                            //     config={{ placeholder: "Tulis Deskripsi" }}
-                                            // /> 
                                             :
                                             <p>Tunggu Sebentar</p>}
                                         {simpleValidator.current.message(
@@ -397,9 +373,7 @@ const TambahBerita = ({ token, id }) => {
                                 </div>
 
                                 <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
-                                    <p>
-                                        Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
-                                    </p>
+                                    <p>Resolusi yang direkomendasikan adalah 837 * 640. Fokus visual pada bagian tengah gambar</p>
                                 </div>
                             </div>
 

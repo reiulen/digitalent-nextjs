@@ -5,9 +5,9 @@ import { getSession } from "next-auth/client";
 export default function Dashboard({ session }) {
   return (
     <>
-      <div className="d-flex flex-column flex-root">
+      {/* <div className="d-flex flex-column flex-root">
         <DashboardMasterData session={session} />
-      </div>
+      </div> */}
     </>
   );
 }

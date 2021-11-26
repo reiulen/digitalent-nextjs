@@ -374,7 +374,7 @@ const TambahImagetron = ({ token, id }) => {
 
                 <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                   <p>
-                    Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
+                    Resolusi yang direkomendasikan adalah 1280 * 360. Fokus visual pada bagian tengah gambar
                   </p>
 
                 </div>

@@ -1,18 +1,17 @@
 import dynamic from "next/dynamic";
-import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
-// import EditArtikel from "../../../components/content/publikasi/artikel-peserta/edit";
+// import Tambah from "../../../components/content/publikasi/imagetron/tambah";
 
-import { getDetailArtikelPeserta } from "../../../redux/actions/publikasi/artikel-peserta.actions";
-import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { wrapper } from "../../../redux/store";
+import LoadingPage from "../../../../components/LoadingPage";
+import { getSession } from "next-auth/client";
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+import { wrapper } from "../../../../redux/store";
+import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 
-import LoadingPage from "../../../components/LoadingPage";
-
-const EditArtikel = dynamic(
-  () => import("../../../components/content/publikasi/artikel-peserta/edit"),
+const Tambah = dynamic(
+  () => import("../../../../components/content/publikasi/imagetron/tambah"),
   {
     // suspense: true,
     // loading: () => <LoadingSkeleton />,
@@ -23,12 +22,12 @@ const EditArtikel = dynamic(
   }
 );
 
-export default function EditArtikelPage(props) {
+export default function TambahPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditArtikel token={session.token} />
+        <Tambah token={session.token} id={session.user.id} />
       </div>
     </>
   );
@@ -48,13 +47,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(
-        getDetailArtikelPeserta(params.id, session.user.user.data.token)
-      );
       await store.dispatch(getAllKategori(session.user.user.data.token));
+      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
 
       return {
-        props: { session, title: "Ubah Artikel Peserta - Publikasi" },
+        props: { session, title: "Tambah Imagetron - Publikasi" },
       };
     }
 );

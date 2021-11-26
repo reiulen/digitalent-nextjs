@@ -29,22 +29,10 @@ const DetailReport = ({ token }) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
-  const [sertifikasi, setSertifikasi] = useState({
-    label: "",
-    value: "",
-  });
-  const [statusSubstansi, setStatusSubstansi] = useState({
-    label: "",
-    value: "",
-  });
-  const [statusAdmin, setStatusAdmin] = useState({
-    label: "",
-    value: "",
-  });
-  const [statusPeserta, setStatusPeserta] = useState({
-    label: "",
-    value: "",
-  });
+  const [sertifikasi, setSertifikasi] = useState(null);
+  const [statusSubstansi, setStatusSubstansi] = useState(null);
+  const [statusAdmin, setStatusAdmin] = useState(null);
+  const [statusPeserta, setStatusPeserta] = useState(null);
   const [id, setId] = useState(null);
   const [isLulus, setIsLulus] = useState(null);
 
@@ -135,9 +123,9 @@ const DetailReport = ({ token }) => {
   };
 
   const optionStatusAdministrasi = [
-    { label: "Verified", value: "Verified" },
-    { label: "Unverified", value: "Unverified" },
-    { label: "Incomplete", value: "Incomplete" },
+    { label: "verified", value: "Verified" },
+    { label: "unverified", value: "Unverified" },
+    { label: "incomplete", value: "Incomplete" },
   ];
 
   const optionStatusPeserta = [
@@ -278,7 +266,7 @@ const DetailReport = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              Detail Report Pelatihan - VGA - Android Developers
+              Detail Report Pelatihan - {localStorage.getItem("slug")} - {localStorage.getItem("judul")}
             </h1>
           </div>
 
@@ -311,10 +299,10 @@ const DetailReport = ({ token }) => {
                             page,
                             limit,
                             search,
-                            statusAdmin.label,
-                            statusSubstansi.label,
-                            sertifikasi.value,
-                            statusPeserta.label,
+                            statusAdmin?.label,
+                            statusSubstansi?.label,
+                            sertifikasi?.value,
+                            statusPeserta?.label,
                           )
                         );
                       }}
@@ -326,9 +314,8 @@ const DetailReport = ({ token }) => {
 
                 <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mt-1 w-100"
                     style={{
-                      minWidth: "236px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -386,7 +373,7 @@ const DetailReport = ({ token }) => {
                     activePage={page}
                     itemsCountPerPage={detailReportTraining.perPage}
                     totalItemsCount={detailReportTraining.total}
-                    pageRangeDisplayed={3}
+                    pageRangeDisplayed={2}
                     onChange={(e) => {
                       setPage(e);
                       dispatch(
@@ -489,6 +476,7 @@ const DetailReport = ({ token }) => {
               onChange={(e) =>
                 setStatusAdmin({ value: e.value, label: e.label })
               }
+              value={statusAdmin}
             />
           </div>
           <div className="form-group mb-5">
@@ -498,6 +486,7 @@ const DetailReport = ({ token }) => {
               onChange={(e) =>
                 setStatusSubstansi({ value: e.value, label: e.label })
               }
+              value={statusSubstansi}
             />
           </div>
           <div className="form-group mb-5">
@@ -507,12 +496,14 @@ const DetailReport = ({ token }) => {
               onChange={(e) =>
                 setStatusPeserta({ value: e.value, label: e.label })
               }
+              value={statusPeserta}
             />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Sertifikasi</label>
             <Select
               options={optionSertifikasi}
+              value={sertifikasi}
               onChange={(e) =>
                 setSertifikasi({ value: e.value, label: e.label })
               }
@@ -522,7 +513,14 @@ const DetailReport = ({ token }) => {
         <Modal.Footer>
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
-            type="reset"
+            type="button"
+  
+            onClick={() => {
+              setStatusAdmin(null)
+              setStatusSubstansi(null)
+              setSertifikasi(null)
+              setStatusPeserta(null)
+            }}
           >
             Reset
           </button>
@@ -537,10 +535,10 @@ const DetailReport = ({ token }) => {
                   page,
                   limit,
                   search,
-                  statusAdmin.label,
-                  statusSubstansi.label,
-                  sertifikasi.value,
-                  statusPeserta.label
+                  statusAdmin?.label,
+                  statusSubstansi?.label,
+                  sertifikasi?.value,
+                  statusPeserta?.label
                 )
               );
               setShowModal(false);
