@@ -131,7 +131,9 @@ const Header = () => {
                           "Mid Test"
                         ) : router.pathname.includes("done-mid-tes") ? (
                           "Mid Test"
-                        ) : router.pathname.includes("profile") &&
+                        ) : router.pathname.includes("artikel") ? (
+                          "Artikel"
+                        ): router.pathname.includes("profile") &&
                           localStorage.getItem("btn") === "0" ? (
                           <>
                             <a
@@ -486,7 +488,16 @@ const Header = () => {
                           marginRight: "15px",
                         }}
                       ></i>
-                    ) : router.pathname.includes("profile") &&
+                    ) : router.pathname.includes("artikel") ? (
+                    <i
+                      className="ri-bar-chart-horizontal-line"
+                      style={{
+                        color: "#fff",
+                        fontSize: "20px",
+                        marginRight: "15px",
+                      }}
+                    ></i>
+                  ) : router.pathname.includes("profile") &&
                       localStorage.getItem("btn") === "3" ? (
                       <i
                         className="ri-briefcase-4-line"
@@ -536,6 +547,8 @@ const Header = () => {
                       ? "Pekerjaan"
                       : router.pathname.includes("form-lpj")
                       ? "Form LPJ"
+                      : router.pathname.includes("artikel")
+                      ? "Artikel"
                       : "Dashboard"}
                   </div>
                 </div>
