@@ -428,7 +428,11 @@ import {
   drowpdownTempatLahirReducers,
   drowpdownYearReducers,
 } from "./pelatihan/admin/function.reducers";
-import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
+import {
+  allProvinsiReducer,
+  allKotaReducer,
+  adminPermissionReducer,
+} from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
 
 // BERANDA
@@ -954,6 +958,8 @@ const reducer = combineReducers({
   updateStatusMaster: updateStatusMasterReducer,
 
   allBookmark: getAllBookmarkPesertaReducer,
+
+  adminPermission: adminPermissionReducer,
 });
 
 export default reducer;

@@ -210,6 +210,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
+                onChange={(e) => {}}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -338,6 +339,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
+                onChange={(e) => {}}
               />
               <IconSearch
                 className="left-center-absolute"

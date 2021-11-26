@@ -31,7 +31,7 @@ export const getAllParticipant =
     } catch (error) {
       dispatch({
         type: LIST_PESERTA_FAIL,
-        payload: error.response.data.message || error.message,
+        payload: error?.response.data.message || error.message,
       });
     }
   };
@@ -60,7 +60,7 @@ export const getDetailParticipant =
     } catch (error) {
       dispatch({
         type: DETAIL_LIST_PESERTA_FAIL,
-        payload: error.response.data.message || error.message,
+        payload: error?.response.data.message || error.message,
       });
     }
   };
