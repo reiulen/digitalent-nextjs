@@ -15,12 +15,15 @@ const EditTrainingStep1 = dynamic(() => import("./edit-training-step1"), {
   },
   ssr: false,
 });
-const EditRegistrationStep2 = dynamic(() => import("./edit-registration-step2"), {
-  loading: function loadingNow() {
-    return <LoadingSkeleton />;
-  },
-  ssr: false,
-});
+const EditRegistrationStep2 = dynamic(
+  () => import("./edit-registration-step2"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 const EditCommitmentStep3 = dynamic(() => import("./edit-commitment-step3"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
@@ -35,8 +38,8 @@ const IndexEdit = ({ token }) => {
 
   const [view, setView] = useState(1);
 
-  const { training, loading, success, error } = useSelector(
-    (state) => state.newTraining
+  const { loading, error, isUpdated } = useSelector(
+    (state) => state.updateTraining
   );
 
   const stepView = () => {
@@ -50,7 +53,12 @@ const IndexEdit = ({ token }) => {
         );
         break;
       case 2:
-        return <EditRegistrationStep2 token={token} propsStep={(value) => setView(value)} />;
+        return (
+          <EditRegistrationStep2
+            token={token}
+            propsStep={(value) => setView(value)}
+          />
+        );
         break;
       case 3:
         return (
@@ -79,30 +87,6 @@ const IndexEdit = ({ token }) => {
 
   return (
     <PageWrapper>
-      {error && (
-        <div
-          className="alert alert-cpropsStepustom alert-light-danger fade show mb-5"
-          role="alert"
-        >
-          <div className="alert-icon">
-            <i className="flaticon-warning"></i>
-          </div>
-          <div className="alert-text">{error}</div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={handleResetError}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-      )}
       <StepInputPelatihan
         step={view}
         title1="Edit Pelatihan"
