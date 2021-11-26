@@ -22,6 +22,7 @@ import {
   SEARCH_COORPORATION,
   CLEAR_ERRORS,
   PERMISSION_BY_PARENT,
+  GET_SIDEBAR,
 } from "../../types/site-management/role.type";
 
 import axios from "axios";
@@ -152,18 +153,17 @@ export const getAllPermission = (token) => async (dispatch) => {
         Authorization: "Bearer " + token,
       },
     };
-    
+
     let link =
-    process.env.END_POINT_API_SITE_MANAGEMENT + `api/permission/parent`;
-    
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/permission/parent`;
+
     const { data } = await axios.get(link, config);
-    
+
     dispatch({
       type: PERMISSION_BY_PARENT,
       payload: data,
     });
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
 export const updateRoles = (sendData, token) => async (dispatch) => {
@@ -192,6 +192,26 @@ export const updateRoles = (sendData, token) => async (dispatch) => {
       type: UPDATE_ROLES_FAIL,
     });
   }
+};
+
+export const getSidebar = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://192.168.11.58:8000/api/user/permissions", config
+    );
+
+    // console.log("data nich", data) ( Masih di pake )
+    dispatch({
+      type: GET_SIDEBAR,
+      payload: data,
+    });
+  } catch (error) {}
 };
 
 export const setPage = (page) => {

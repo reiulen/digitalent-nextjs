@@ -16,7 +16,7 @@ import {
 import moment from "moment";
 import Select from "react-select";
 import FormSubmit from "./submitKerjasama";
-import {helperRemoveZeroFromIndex0} from '../../../../utils/middleware/helper/index'
+import { helperRemoveZeroFromIndex0 } from "../../../../utils/middleware/helper/index";
 
 const Tambah = ({ token }) => {
   const dispatch = useDispatch();
@@ -138,10 +138,13 @@ const Tambah = ({ token }) => {
     if (val.match(regex)) {
       setError({ ...error, period: "Masukkan angka" });
       setPeriod("");
-    }else if(e.target.value.toString().charAt(0) === "0"){
-      setError({ ...error, period: "Lama Periode tidak boleh kosong atau angka nol" });
+    } else if (e.target.value.toString().charAt(0) === "0") {
+      setError({
+        ...error,
+        period: "Lama Periode tidak boleh kosong atau angka nol",
+      });
       setPeriod("");
-    }else {
+    } else {
       setPeriod(e.target.value);
     }
   };
@@ -206,6 +209,7 @@ const Tambah = ({ token }) => {
                         Lembaga
                       </label>
                       <select
+                        style={{ zIndex: "999" }}
                         onFocus={() =>
                           setError({ ...error, institution_name: "" })
                         }
@@ -221,7 +225,12 @@ const Tambah = ({ token }) => {
                         name="color"
                         onChange={(e) => changeInstitusi(e.label)}
                         options={allMK?.stateListMitra}
-                      />
+                      >
+                        {allMK?.stateListMitra.map((item, index) => {
+                          return <option value={item.label} key={index}>{item.label}</option>
+                        })}
+                        
+                      </select>
                       {error.institution_name ? (
                         <p className="error-text">{error.institution_name}</p>
                       ) : (
@@ -379,21 +388,18 @@ const Tambah = ({ token }) => {
                 )}
                 <div className="form-group">
                   <div className="d-flex justify-content-end flex-column flex-md-row">
-                    
                     <Link href="/partnership/kerjasama">
                       <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                         Kembali
                       </a>
                     </Link>
-                    
+
                     <button
                       type="submit"
                       className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                     >
                       Lanjut
                     </button>
-                   
-                    
                   </div>
                 </div>
               </form>

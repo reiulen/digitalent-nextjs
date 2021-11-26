@@ -46,6 +46,9 @@ const Navigationbar = ({ session }) => {
     (state) => state.getDataPribadi
   );
 
+  const [secondary, setSecondary] = useState(null);
+  const [warna, setWarna] = useState("secondary");
+
   useEffect(() => {
     if (session) {
       if (
@@ -56,7 +59,33 @@ const Navigationbar = ({ session }) => {
         router.push("/peserta/wizzard");
       }
     }
-  }, []);
+    async function getDataGeneral(token) {
+      try {
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (data) {
+          setSecondary(data.data.color[0].color);
+        }
+      } catch (error) {
+        Swal.fire("Oops !", `${error.response.data.message}`, "error");
+      }
+    }
+    getDataGeneral();
+    if (secondary === "1") {
+      setWarna("primary");
+    } else if (secondary === "2") {
+      setWarna("secondary");
+    } else if (secondary === "3") {
+      setWarna("extras");
+    }
+  }, [secondary, dataPribadi, router, session]);
 
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
@@ -464,9 +493,9 @@ const Navigationbar = ({ session }) => {
                 </Link>
                 <Link href="/register">
                   <a className="mx-2">
-                    <button className="btn btn-sm btn-block btn-register-peserta color-primary m-2 justify-content-center py-3">
+                    <button className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} m-2 justify-content-center py-3`}>
                       {/* <IconRegister className="mr-2 icon-register" /> */}
-                      <i className="ri-user-line mr-2"></i>
+                      <div className="ri-user-line mr-2" style={{fontSize: "15px"}}></div>
                       Daftar
                     </button>
                   </a>
