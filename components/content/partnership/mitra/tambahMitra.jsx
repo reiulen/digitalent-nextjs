@@ -13,6 +13,8 @@ import { Modal } from "react-bootstrap";
 
 const TambahMitra = ({ token }) => {
   const router = useRouter();
+  const defaultImage = "/assets/media/default.jpg"
+
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
@@ -200,39 +202,6 @@ const TambahMitra = ({ token }) => {
     setIndonesia_provinces_id(e.id);
   };
 
-  const [NamePDF, setNamePDF] = useState(null);
-  const fileType = ["image/png"];
-  const fileTypeJpeg = ["image/jpeg"];
-  const fileMax = 2097152;
-  const onChangeImage = (e) => {
-    let selectedFile = e.target.files[0];
-
-    if (selectedFile) {
-      if (
-        (selectedFile && fileTypeJpeg.includes(selectedFile.type)) ||
-        (fileType.includes(selectedFile.type) && selectedFile.size <= fileMax)
-      ) {
-        let reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onloadend = (e) => {
-          setAgency_logo(e.target.result);
-          setShowImage(true);
-          setNamePDF(selectedFile.name);
-        };
-      } else {
-        Swal.fire("Gagal", `gambar harus PNG atau JPG dan max size 2mb`, "error")
-     
-      }
-    } else {
-      Swal.fire("Gagal", `upload gambar dulu`, "error")
-    }
-  };
-
-  // const [showImage, setShowImage] = useState(false);
-  // const hideImage = () => {
-  //   setShowImage(showImage ? false : true);
-  // };
-
   useEffect(() => {
     async function getDataProvinces(token) {
       try {
@@ -352,60 +321,6 @@ const TambahMitra = ({ token }) => {
                 </div>
               </div>
 
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Gambar Logo
-                </label>
-                {!agency_logo ? (
-                  ""
-                ) : (
-                  <div
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                    className="shadow-image-form cursor-pointer position-relative"
-                    style={{
-                      maxWidth: "168px",
-                      maxHeight: "168px",
-                      width: "168px",
-                      height: "168px",
-                    }}
-                  >
-                    <Image
-                      src={agency_logo}
-                      alt="Picture of the author"
-                      layout="fill"
-                      objectFit="fill"
-                    />
-                  </div>
-                )}
-
-                <div className="input-group">
-                  <div className="custom-file">
-                    <input
-                      onFocus={() => setError({ ...error, agency_logo: "" })}
-                      onChange={(e) => onChangeImage(e)}
-                      type="file"
-                      name="logo"
-                      className="custom-file-input cursor-pointer"
-                      id="inputGroupFile04"
-                      accept="image/png,image/jpg"
-                    />
-
-                    <label
-                      className="custom-file-label"
-                      htmlFor="inputGroupFile04"
-                    >
-                      {NamePDF ? NamePDF : "Cari Logo"}
-                    </label>
-                  </div>
-                </div>
-                {error.agency_logo ? (
-                  <p className="error-text">{error.agency_logo}</p>
-                ) : (
-                  ""
-                )}
-              </div> */}
-
               <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Gambar Logo 
@@ -419,14 +334,23 @@ const TambahMitra = ({ token }) => {
                       data-target="#exampleModalCenter"
                     >
                       <Image
-                        src={
-                          process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
+                        src=
+                        {
+                          imageview ?
+                            process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
+                          :
+                            defaultImage
                         }
                         alt="image"
                         width={160}
                         height={160}
                         objectFit="fill"
-                        className="rounded-circle"
+                        className={
+                          imageview.length !== 0 ?
+                            "rounded-circle"
+                          :
+                            null
+                        }
                       />
                     </figure>
     
@@ -483,52 +407,6 @@ const TambahMitra = ({ token }) => {
 
               </div>
 
-              {/* modal image show */}
-              {/* <div
-                className="modal fade"
-                id="exampleModalCenter"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true"
-              >
-                <div
-                  className="modal-dialog modal-dialog-centered"
-                  role="document"
-                >
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="exampleModalLongTitle">
-                        Logo Gambar
-                      </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <IconClose />
-                      </button>
-                    </div>
-
-                    <div
-                      className="modal-body text-left p-0"
-                      style={{ height: "400px" }}
-                    >
-                      {!agency_logo ? (
-                        ""
-                      ) : (
-                        <Image
-                          src={agency_logo}
-                          alt="Picture of the author"
-                          layout="fill"
-                          objectFit="fill"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div> */}
               <div
                 className="modal fade"
                 id="exampleModalCenter"

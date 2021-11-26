@@ -14,6 +14,7 @@ import ReactCrop from "react-image-crop";
 const Tambah = ({ token }) => {
   const router = useRouter();
   const { successInputProfile } = router.query;
+  const defaultImage = "/public/assets/media/default.jpg"
 
   // diambil dari data user ketika pertama kali register (name)
   const [institution_name, setInstitution_name] = useState("");
@@ -425,9 +426,7 @@ const Tambah = ({ token }) => {
                       data-target="#exampleModalCenter"
                     >
                       <Image
-                        src={
-                          process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
-                        }
+                        src= {process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview}
                         alt="image"
                         width={160}
                         height={160}
