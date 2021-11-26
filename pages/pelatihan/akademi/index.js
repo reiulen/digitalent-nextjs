@@ -4,6 +4,7 @@ import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddle
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getAllAcademy } from "../../../redux/actions/pelatihan/academy.actions";
+import { getSidebar } from '../../../redux/actions/site-management/role.actions'
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";

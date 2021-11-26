@@ -205,8 +205,6 @@ export const getSidebar = (token) => async (dispatch) => {
     const { data } = await axios.get(
       "http://192.168.11.58:8000/api/user/permissions", config
     );
-
-    // console.log("data nich", data) ( Masih di pake )
     dispatch({
       type: GET_SIDEBAR,
       payload: data,
