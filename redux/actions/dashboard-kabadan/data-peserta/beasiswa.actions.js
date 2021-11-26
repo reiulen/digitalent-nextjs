@@ -25,8 +25,8 @@ export const getAllBeasiswaKandidat =
     try {
       dispatch({ type: BEASISWA_KANDIDAT_REQUEST });
 
-      let link = process.env.END_POINT_API_BEASISWA + `participant?`;
-      if (page) link = link.concat(`page=${page}`);
+      let link = process.env.END_POINT_API_BEASISWA + `participant`;
+      if (page) link = link.concat(`?page=${page}`);
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       if (type) link = link.concat(`&type=${type}`);
@@ -49,7 +49,7 @@ export const getAllBeasiswaKandidat =
     } catch (error) {
       dispatch({
         type: BEASISWA_KANDIDAT_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -75,7 +75,7 @@ export const getAllBeasiswaFilter = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: BEASISWA_FILTER_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };

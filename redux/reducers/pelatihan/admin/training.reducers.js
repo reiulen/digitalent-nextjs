@@ -95,7 +95,7 @@ import {
   GET_EDIT_DATA_TRAINING3,
   GET_FORM_LPJ,
   GET_FORM_EVIDENCE,
-  FAILED_GET_FORM_EVIDENCE
+  FAILED_GET_FORM_EVIDENCE,
 } from "../../../types/pelatihan/training.type";
 
 export const allTrainingReducer = (state = { training: [] }, action) => {
@@ -284,7 +284,7 @@ export const updateTrainingReducer = (state = {}, action) => {
     case UPDATE_TRAINING_STEP3_SUCCESS:
       return {
         loading: false,
-        isUpdated: action.payload,
+        isUpdated: action.payload.status,
       };
 
     case UPDATE_TRAINING_STEP1_RESET:
@@ -521,76 +521,76 @@ export const updateStatusReducer = (state = { status: {} }, action) => {
   }
 };
 
-export const getEditTrainingReducer = (state = {data: {name: ""}}, action) => {
+export const getEditTrainingReducer = (
+  state = { data: { name: "" } },
+  action
+) => {
   switch (action.type) {
     case GET_EDIT_DATA_TRAINING:
       return {
         ...state,
-        data: action.payload.data
-      }
-
-    
+        data: action.payload.data,
+      };
 
     default:
       return state;
   }
 };
 
-export const getEditTraining2Reducer = (state = {data: {name: ""}}, action) => {
+export const getEditTraining2Reducer = (
+  state = { data: { name: "" } },
+  action
+) => {
   switch (action.type) {
     case GET_EDIT_DATA_TRAINING2:
       return {
         ...state,
-        data: action.payload.data
-      }
-
-    
+        data: action.payload.data,
+      };
 
     default:
       return state;
   }
 };
 
-export const getEditTraining3Reducer = (state = {data: {}}, action) => {
+export const getEditTraining3Reducer = (state = { data: {} }, action) => {
   switch (action.type) {
     case GET_EDIT_DATA_TRAINING3:
       return {
         ...state,
-        data: action.payload.data
-      }
-
-    
+        data: action.payload.data,
+      };
 
     default:
       return state;
   }
 };
 
-export const getFormLPJReducer = (state = {data: {}}, action) => {
+export const getFormLPJReducer = (state = { data: {} }, action) => {
   switch (action.type) {
     case GET_FORM_LPJ:
       return {
         ...state,
-        data: action.payload.data
-      }
+        data: action.payload.data,
+      };
     default:
       return state;
   }
 };
 
-export const getFormEvidenceReducer = (state = {data: {}}, action) => {
+export const getFormEvidenceReducer = (state = { data: {} }, action) => {
   switch (action.type) {
     case GET_FORM_EVIDENCE:
       return {
         ...state,
-        data: action.payload.data
-      }
+        data: action.payload.data,
+      };
 
-      case FAILED_GET_FORM_EVIDENCE:
+    case FAILED_GET_FORM_EVIDENCE:
       return {
         ...state,
-        data: {}
-      }
+        data: {},
+      };
     default:
       return state;
   }

@@ -55,13 +55,13 @@ const RegisterUser = () => {
   };
 
   const handlePassword = (value) => {
-    if (value !== passwordConfirm) {
-      setMessageDontMatch(true);
-      setPassword(value);
-    } else {
-      setMessageDontMatch(false);
-      setPassword(value);
-    }
+    // if (value !== passwordConfirm) {
+    //   setMessageDontMatch(true);
+    //   setPassword(value);
+    // } else {
+    //   setMessageDontMatch(false);
+    // }
+    setPassword(value);
   };
 
   const handlePasswordConfirm = (value) => {
@@ -88,25 +88,28 @@ const RegisterUser = () => {
         capcha: captcha,
         services: verify,
       };
-
-      axios
-        .post(
-          process.env.END_POINT_API_PELATIHAN + `api/v1/auth/register`,
-          data
-        )
-        .then((res) => {
-          setLoading(false);
-          if (res.data.status) {
-            router.push({
-              pathname: "/register/register-otp",
-              query: { email, services: verify },
-            });
-          }
-        })
-        .catch((err) => {
-          setLoading(false);
-          SweatAlert("Gagal", err.response.data.message, "error");
-        });
+      if (!messageDontMatch) {
+        axios
+          .post(
+            process.env.END_POINT_API_PELATIHAN + `api/v1/auth/register`,
+            data
+          )
+          .then((res) => {
+            setLoading(false);
+            if (res.data.status) {
+              router.push({
+                pathname: "/register/register-otp",
+                query: { email, services: verify },
+              });
+            }
+          })
+          .catch((err) => {
+            setLoading(false);
+            SweatAlert("Gagal", err.response.data.message, "error");
+          });
+      } else {
+        SweatAlert("Gagal", "Password Tidak Sama", "error");
+      }
     } else {
       setLoading(false);
       simpleValidator.current.showMessages();
@@ -294,9 +297,6 @@ const RegisterUser = () => {
                     {
                       className: "text-danger",
                     }
-                  )}
-                  {messageDontMatch && (
-                    <p className="text-danger">Password tidak sama</p>
                   )}
                 </div>
                 <div className="form-group">

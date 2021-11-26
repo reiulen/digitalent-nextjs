@@ -31,7 +31,7 @@ export default function InfoVideo({ video }) {
             </p>
             <Link href="/video">
               <a>
-                <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12 mb-5">
+                <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12 mt-20">
                   Lihat Selengkapnya >
                 </button>
               </a>

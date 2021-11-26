@@ -91,7 +91,10 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
-import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
+import {
+  allDashboardPublikasiReducer,
+  allRoleAdminPublikasiReducer
+} from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
 // ============== substansi ===============
@@ -340,6 +343,7 @@ import {
   getFormLPJReducer,
   getFormEvidenceReducer,
   cloneTrainingReducer,
+  updateTrainingReducer,
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -598,6 +602,7 @@ const reducer = combineReducers({
   updateSettingPublikasi: updateSettingPublikasiReducer,
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
+  allRoleAdminPublikasi: allRoleAdminPublikasiReducer,
 
   // allKategoriContent: kategoriVideoContentReducer,
   // allTagContent: allTagReducer,
@@ -808,6 +813,7 @@ const reducer = combineReducers({
   newLPJ: newLPJReducer,
   getFormEvidence: getFormEvidenceReducer,
   cloneTraining: cloneTrainingReducer,
+  updateTraining: updateTrainingReducer,
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
   cardReview: cardReviewReducer,

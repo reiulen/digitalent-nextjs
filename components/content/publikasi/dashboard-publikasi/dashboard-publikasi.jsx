@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useDispatch, useSelector } from "react-redux";
+import { getSession } from "next-auth/client"
 
 import CardDashboard from "../../../CardDashboard";
 import PageWrapper from "../../../wrapper/page.wrapper";
@@ -19,12 +20,21 @@ import LoadingTable from "../../../LoadingTable";
 
 import styles from "../../../../styles/pagination.module.css";
 
+import {
+  IS_SHOW_PROFILE,
+  IS_OVERLAY_PROFILE
+} from "../../../../redux/types/utils/functionals.type"
+
 import { clearErrors } from "../../../../redux/actions/publikasi/dashboard-publikasi.actions";
 
-const DashbardPublikasi = ({ token }) => {
+const DashbardPublikasi = ({ token, user }) => {
   const { loading, error, dashboard_publikasi } = useSelector(
     (state) => state.allDashboardPublikasi
   );
+
+  const { role_publikasi } = useSelector(
+    (state) => state.allRoleAdminPublikasi
+  )
 
   const [totalPublishContent, setTotalPublishContent] = useState(null);
   const [totalUnpublishContent, setTotalUnpublishContent] = useState(null);
@@ -143,7 +153,7 @@ const DashbardPublikasi = ({ token }) => {
                       <div className="col-md-6">
                         <div className="col-md-12 mt-5">
                           <h4 className="font-weight-bolder text-primary">
-                            Halo Admin A
+                            Halo {user.name}
                           </h4>
                         </div>
                         <div className="col-md-10 col-lg-12">
@@ -283,10 +293,12 @@ const DashbardPublikasi = ({ token }) => {
                   className="d-flex align-items-center justify-content-center"
                   style={{ marginTop: "-200px" }}
                 >
-                  <h1 className="font-weight-bolder display-2">133</h1>
+                  <h1 className="font-weight-bolder display-2">
+                    {role_publikasi.total}
+                  </h1>
                 </div>
               </div>
-              <div className="card-body" style={{ marginTop: "18.5vh" }}>
+              <div className="card-body" style={{ marginTop: "160px" }}>
                 <div className="mb-10 flex-column">
                   <div className="row">
                     <div className="col-12 col-sm-12 col-md-6 col-lg-6 d-flex flex-row">
@@ -297,7 +309,9 @@ const DashbardPublikasi = ({ token }) => {
                         alt="publish-pict"
                       />
                       <div className=" ml-3 my-2">
-                        <h3 className="font-weight-bold">200</h3>
+                        <h3 className="font-weight-bold">
+                          {role_publikasi.total_admin_author}
+                        </h3>
 
                         <div className="text-muted">Author</div>
                       </div>
@@ -310,7 +324,9 @@ const DashbardPublikasi = ({ token }) => {
                         alt="publish-pict"
                       />
                       <div className=" ml-3 my-2">
-                        <h3 className="font-weight-bold">200</h3>
+                        <h3 className="font-weight-bold">
+                          {role_publikasi.total_admin_publikasi}
+                        </h3>
 
                         <div className="text-muted">Admin Publikasi</div>
                       </div>
