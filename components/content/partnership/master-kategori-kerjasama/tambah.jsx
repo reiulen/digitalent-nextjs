@@ -133,7 +133,7 @@ const Tambah = ({ token }) => {
                         name={`cooperation${index}`}
                         type="text"
                         onChange={(e) => handleChange(e, index)}
-                        className="form-control mr-6"
+                        className="form-control"
                         value={valueCreateCooporation}
                       />
                       {index === 0 ? (
@@ -142,7 +142,7 @@ const Tambah = ({ token }) => {
                         <button
                           type="button"
                           onClick={() => handleDelete(index)}
-                          className="btn"
+                          className="btn ml-5"
                           style={{ backgroundColor: "#EE2D41" }}
                         >
                           <svg
@@ -164,7 +164,7 @@ const Tambah = ({ token }) => {
                 );
               })}
 
-              <div className="form-group">
+              <div className="form-group d-flex justify-content-center justify-content-md-start">
                 <label htmlFor="staticEmail" className="col-form-label"></label>
 
                 <p
@@ -176,7 +176,9 @@ const Tambah = ({ token }) => {
                   }}
                   onClick={() => handleAddInput()}
                 >
-                  Tambah Form Kerjasama
+                  <div className="text-truncate d-block">
+                    Tambah Form Kerjasama
+                  </div>
                 </p>
               </div>
 

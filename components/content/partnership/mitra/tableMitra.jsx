@@ -148,12 +148,14 @@ const Table = ({ token }) => {
       )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="d-flex  flex-column flex-xl-row flex-wrap align-items-xl-center justify-content-xl-between pl-xl-8 px-6 py-4">
-            <h1 className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1">
+          <div 
+            className="d-flex  flex-column flex-xl-row flex-wrap align-items-xl-center justify-content-xl-between pl-xl-8 pl-10 pr-0 pr-xl-3 py-4"
+          >
+            <h1 className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1 ml-n5 ml-md-0">
               Master Mitra
             </h1>
             
-            <div className="col-12 col-md-5 col-xl-3 ml-n5">
+            <div className="col-12 col-md-5 col-xl-3 ml-md-n6 ml-n10 mt-sm-0 mt-n5">
               <Link href="/partnership/mitra/tambah">
                 <a className="btn btn-rounded-full bg-blue-primary text-white mt-4 d-flex justify-content-center">
                   <IconAdd
@@ -162,7 +164,9 @@ const Table = ({ token }) => {
                     height="16"
                     fill="rgba(255,255,255,1)"
                   />
-                  Tambah Mitra Baru 
+                  <div className="text-truncate">
+                    Tambah Mitra Baru 
+                  </div>
                 </a>
               </Link>
             </div>
@@ -199,7 +203,7 @@ const Table = ({ token }) => {
               </div>
 
               <div className="col-12 col-md-4 col-xl-8 ">
-                <div className="d-flex align-items-center justify-content-md-end justify-content-start mt-2">
+                <div className="d-flex align-items-center justify-content-md-end justify-content-start mt-5  mt-md-2">
                   {/* disini sortir modal */}
 
                   <button

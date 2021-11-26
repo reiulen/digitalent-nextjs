@@ -45,12 +45,13 @@ const EditSoalSubstansi = ({ token }) => {
     subtance_question_detail.question || ""
   );
   const [question_image, setQuestionImage] = useState(
-    subtance_question_detail.question_image_preview || ""
+    subtance_question_detail.question_image
   );
   const [question_image_preview, setQuestionImagePreview] = useState(
-    subtance_question_detail.question_image_preview &&
-      subtance_question_detail.question_image_preview.split("subtance/images/")
+    subtance_question_detail.question_image_preview
   );
+  const [question_preview, setQuestionPreview] = useState(null);
+
   const [answer, setAnswer] = useState(
     JSON.parse(subtance_question_detail.answer) || ""
   );
@@ -61,7 +62,7 @@ const EditSoalSubstansi = ({ token }) => {
   const [question_type, setQuestionType] = useState(
     subtance_question_detail.type.id || ""
   );
-  // console.log(process.env.END_POINT_API_IMAGE_SUBVIT + question_image);
+
   const [status, setStatus] = useState(subtance_question_detail.status);
 
   useEffect(() => {
@@ -87,6 +88,7 @@ const EditSoalSubstansi = ({ token }) => {
       };
       if (e.target.files[0]) {
         reader.readAsDataURL(e.target.files[0]);
+        setQuestionPreview(URL.createObjectURL(e.target.files[0]));
       }
     }
   };
@@ -129,8 +131,11 @@ const EditSoalSubstansi = ({ token }) => {
       };
       if (e.target.files[0]) {
         reader.readAsDataURL(e.target.files[0]);
+        list[index]["image_preview"] = URL.createObjectURL(e.target.files[0]);
+        list[index]["image_name"] = e.target.files[0].name;
       }
     }
+
     setAnswer(list);
   };
 
@@ -211,6 +216,7 @@ const EditSoalSubstansi = ({ token }) => {
         answer_key,
         question_type_id: question_type,
       };
+
       dispatch(updateSubtanceQuestionDetail(id, data, token));
     }
   };
@@ -263,28 +269,21 @@ const EditSoalSubstansi = ({ token }) => {
 
             <div className="card-body pt-0">
               <div className="title row ">
-                {question_image ? (
+                {question_image_preview ? (
                   <div className="col-md-3 mt-3">
-                    {subtance_question_detail.question_image_preview ? (
-                      <Image
-                        src={
-                          process.env.END_POINT_API_IMAGE_SUBVIT +
-                          question_image
-                        }
-                        alt="logo"
-                        width={300}
-                        height={160}
-                        className="soal-image"
-                      />
-                    ) : (
-                      <img
-                        src={question_image_preview}
-                        alt="logo"
-                        width={300}
-                        height={160}
-                        className="soal-image"
-                      />
-                    )}
+                    <Image
+                      src={
+                        question_image
+                          ? question_preview
+                          : process.env.END_POINT_API_IMAGE_SUBVIT +
+                            question_image_preview
+                      }
+                      alt="logo"
+                      width={300}
+                      height={160}
+                      quality={100}
+                      className="soal-image"
+                    />
                   </div>
                 ) : (
                   ""
@@ -329,7 +328,9 @@ const EditSoalSubstansi = ({ token }) => {
                     />
                     <label className="custom-file-label" htmlFor="customFile">
                       {question_image_preview
-                        ? question_image_preview
+                        ? !question_image
+                          ? question_image_preview.substr(16)
+                          : question_image_preview
                         : "Choose file"}
                     </label>
                   </div>
@@ -341,26 +342,17 @@ const EditSoalSubstansi = ({ token }) => {
                   return (
                     <>
                       <div className="title row">
-                        {!row.image.includes("data") && row.image ? (
+                        {row.image_preview ? (
                           <div className="col-md-2 p-0 pl-3">
                             <Image
                               src={
-                                process.env.END_POINT_API_IMAGE_SUBVIT +
-                                "subtance/images/" +
                                 row.image
+                                  ? row.image_preview
+                                  : process.env.END_POINT_API_IMAGE_SUBVIT +
+                                    row.image_preview
                               }
                               alt="logo"
-                              width={148}
-                              height={90}
-                              className="soal-image"
-                            />
-                          </div>
-                        ) : row.image ? (
-                          <div className="col-md-2 p-0 pl-3">
-                            <Image
-                              src={row.image}
-                              alt="logo"
-                              width={148}
+                              width={200}
                               height={90}
                               className="soal-image"
                             />
@@ -391,7 +383,11 @@ const EditSoalSubstansi = ({ token }) => {
                               className="custom-file-label"
                               htmlFor="customFile"
                             >
-                              Choose file
+                              {row.image
+                                ? row.image_preview
+                                  ? row.image_name
+                                  : row.image_preview.substr(16)
+                                : "Choose File"}
                             </label>
                           </div>
                         </div>

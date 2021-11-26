@@ -4,20 +4,13 @@ import dynamic from "next/dynamic";
 
 import Header from "../component/header.component";
 import CardTotal from "../component/card-total.component";
-import StatistikWrapper from "../wrapper/statistik.wrapper";
 
 import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
 
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 import Pagination from "react-js-pagination";
+
+import PaginationDashboard from "../component/pagination-dashbaord.component";
 
 const DashboardSimonas = () => {
   const MapDigitalent = dynamic(
@@ -99,22 +92,13 @@ const DashboardSimonas = () => {
                 </p>
                 <ListCardInfo data={dataPekerjaan} />
 
-                <div className="d-flex justify-content-end mt-2">
-                  <div className="table-pagination">
-                    <Pagination
-                      activePage={1}
-                      itemsCountPerPage={3}
-                      totalItemsCount={5}
-                      pageRangeDisplayed={3}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                </div>
+                <PaginationDashboard
+                  total={10}
+                  perPage={5}
+                  title="Pekerjaan"
+                  activePage={1}
+                  funcPagination={(value) => {}}
+                />
               </div>
             </div>
           </div>
@@ -125,22 +109,13 @@ const DashboardSimonas = () => {
                   Jumlah Proyek
                 </p>
                 <ListCardInfo data={dataPekerjaan} />
-                <div className="d-flex justify-content-end mt-2">
-                  <div className="table-pagination">
-                    <Pagination
-                      activePage={1}
-                      itemsCountPerPage={3}
-                      totalItemsCount={5}
-                      pageRangeDisplayed={3}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                </div>
+                <PaginationDashboard
+                  total={10}
+                  perPage={5}
+                  title="Proyek"
+                  activePage={1}
+                  funcPagination={(value) => {}}
+                />
               </div>
             </div>
           </div>
@@ -177,22 +152,13 @@ const DashboardSimonas = () => {
                 </p>
                 <ListCardInfo data={dataPekerjaan} />
 
-                <div className="d-flex justify-content-end mt-2">
-                  <div className="table-pagination">
-                    <Pagination
-                      activePage={1}
-                      itemsCountPerPage={3}
-                      totalItemsCount={5}
-                      pageRangeDisplayed={3}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                </div>
+                <PaginationDashboard
+                  total={10}
+                  perPage={5}
+                  title="Pekerjaan"
+                  activePage={1}
+                  funcPagination={(value) => {}}
+                />
               </div>
             </div>
           </div>
@@ -203,22 +169,13 @@ const DashboardSimonas = () => {
                   Jumlah Pelamar Proyek
                 </p>
                 <ListCardInfo data={dataPekerjaan} />
-                <div className="d-flex justify-content-end mt-2">
-                  <div className="table-pagination">
-                    <Pagination
-                      activePage={1}
-                      itemsCountPerPage={3}
-                      totalItemsCount={5}
-                      pageRangeDisplayed={3}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                </div>
+                <PaginationDashboard
+                  total={10}
+                  perPage={5}
+                  title="Proyek"
+                  activePage={1}
+                  funcPagination={(value) => {}}
+                />
               </div>
             </div>
           </div>
@@ -270,26 +227,17 @@ const DashboardSimonas = () => {
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
-                      Asal Provinsi Pendaftar
+                      Asal Provinsi Pelamar
                     </p>
                     <ListCardInfo data={dataProvinsi} />
 
-                    <div className="d-flex justify-content-end mt-2">
-                      <div className="table-pagination">
-                        <Pagination
-                          activePage={1}
-                          itemsCountPerPage={3}
-                          totalItemsCount={5}
-                          pageRangeDisplayed={3}
-                          nextPageText={">"}
-                          prevPageText={"<"}
-                          firstPageText={"<<"}
-                          lastPageText={">>"}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      </div>
-                    </div>
+                    <PaginationDashboard
+                      total={10}
+                      perPage={5}
+                      title="Pelamar"
+                      activePage={1}
+                      funcPagination={(value) => {}}
+                    />
                   </div>
                 </div>
               </div>
@@ -300,22 +248,13 @@ const DashboardSimonas = () => {
                       Asal Provinsi Pelamar yang direkrut
                     </p>
                     <ListCardInfo data={dataProvinsi} />
-                    <div className="d-flex justify-content-end mt-2">
-                      <div className="table-pagination">
-                        <Pagination
-                          activePage={1}
-                          itemsCountPerPage={3}
-                          totalItemsCount={5}
-                          pageRangeDisplayed={3}
-                          nextPageText={">"}
-                          prevPageText={"<"}
-                          firstPageText={"<<"}
-                          lastPageText={">>"}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      </div>
-                    </div>
+                    <PaginationDashboard
+                      total={10}
+                      perPage={5}
+                      title="Direkrut"
+                      activePage={1}
+                      funcPagination={(value) => {}}
+                    />
                   </div>
                 </div>
               </div>

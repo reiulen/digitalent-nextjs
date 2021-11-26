@@ -6,6 +6,8 @@ import Image from "next/image";
 import { getAllFaq } from "../../../../redux/actions/beranda/faq-content.actions";
 import PulseLoaderRender from "../../../../user-component-new/components/loader/PulseLoader";
 import SubHeaderComponent from "../../../../user-component/components/template/Subheader.component";
+// import styles from "../../../../user-component/components/template/Sidebar.module.css";
+import styles from "../faq/faq.module.css"
 
 const FaqPage = () => {
     const dispatch = useDispatch();
@@ -112,7 +114,7 @@ const FaqPage = () => {
                             Kategori Pertanyaan
                         </h4>
                         <div>
-                            <div className="d-flex flex-row">
+                            <div className={`d-flex flex-row ${styles.menuItem}`}>
                                 <div
                                     className="d-flex align-items-center my-5 font-weight-bolder"
 
@@ -124,7 +126,7 @@ const FaqPage = () => {
                                     }
                                     onClick={() => handlePinnedFaq()}
                                 >
-                                    <i
+                                    <div
                                         className="fas fa-arrow-right mr-3"
                                         style=
                                         {title === "Pertanyaan Populer" ?
@@ -145,19 +147,19 @@ const FaqPage = () => {
                                         <div
                                             key={i}
                                         >
-                                            <div className="d-flex flex-row">
+                                            <div className={`d-flex flex-row ${styles.menuItem}`}>
                                                 <div
                                                     className="d-flex align-items-center my-5 font-weight-bolder"
                                                     style=
                                                     {title === el.nama_kategori ?
-                                                        { cursor: "pointer", color: "#007CFF" }
+                                                        ({ cursor: "pointer", color: "#007CFF" })
                                                         :
-                                                        { cursor: "pointer", color: "#6C6C6C" }
+                                                        ({ cursor: "pointer", color: "#6C6C6C" })
                                                     }
+    
                                                     onClick={() => handleCategoryFaq(el.nama_kategori)}
-
                                                 >
-                                                    <i
+                                                    <div
                                                         className="fas fa-arrow-right mr-3"
                                                         style=
                                                         {title === el.nama_kategori ?
@@ -317,14 +319,39 @@ const FaqPage = () => {
                                     faq?.faq.map((row, i) => {
                                         return (
 
-                                            <div className="accordion" id="selector" key={i}>
+                                            <div 
+                                                className="accordion" 
+                                                id="selector" 
+                                                key={i}
+                                            >
                                                 <div
                                                     className="accordion-item"
                                                     style={{
                                                         marginTop: "30px",
                                                         borderRadius: "6px",
                                                         border: "1px solid #D7E1EA",
+                                                        cursor:"pointer"
                                                     }}
+                                                    onClick={() => {
+                                                        setContent(
+                                                            content.filter((item) => {
+                                                                if (row.id === item.id) {
+                                                                    row.isShow = !row.isShow;
+                                                                }
+                                                                return item;
+                                                            })
+                                                        );
+                                                    }}
+                                                    data-toggle="collapse"
+                                                    data-target={
+                                                        i === 0
+                                                            ? "#collapseExample"
+                                                            : `#collapseExample${i}`
+                                                    }
+                                                    key={i}
+                                                    data-parent="#selector"
+                                                    aria-expanded="false"
+                                                    aria-controls="collapseExample"
                                                 >
                                                     <div
                                                         className={
@@ -338,27 +365,7 @@ const FaqPage = () => {
                                                         <h6 style={{ fontWeight: "700" }}>{row.judul}</h6>
                                                         <button
                                                             className="accordion-button btn"
-                                                            onClick={() => {
-                                                                setContent(
-                                                                    content.filter((item) => {
-                                                                        if (row.id === item.id) {
-                                                                            row.isShow = !row.isShow;
-                                                                        }
-                                                                        return item;
-                                                                    })
-                                                                );
-                                                            }}
                                                             type="button"
-                                                            data-toggle="collapse"
-                                                            data-target={
-                                                                i === 0
-                                                                    ? "#collapseExample"
-                                                                    : `#collapseExample${i}`
-                                                            }
-                                                            key={i}
-                                                            data-parent="#selector"
-                                                            aria-expanded="false"
-                                                            aria-controls="collapseExample"
                                                         >
                                                             <i
                                                                 className={

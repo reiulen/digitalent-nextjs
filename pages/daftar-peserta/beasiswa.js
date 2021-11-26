@@ -4,6 +4,10 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 import { wrapper } from "../../redux/store";
+import {
+  getAllBeasiswaFilter,
+  getAllBeasiswaKandidat,
+} from "../../redux/actions/dashboard-kabadan/data-peserta/beasiswa.actions";
 
 const ListKandidatBeasiswa = dynamic(
   () =>
@@ -42,6 +46,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getAllBeasiswaKandidat(session.user.user.data.token)
+      );
+      await store.dispatch(getAllBeasiswaFilter(session.user.user.data.token));
 
       return {
         props: { session, title: "Daftar Kandidat - Beasiswa" },

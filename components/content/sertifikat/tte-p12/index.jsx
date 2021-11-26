@@ -1,234 +1,70 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { Card, Form, Col, Row, Button } from "react-bootstrap";
-import SimpleReactValidator from "simple-react-validator";
 import { SweatAlert } from "../../../../utils/middleware/helper/index";
+import EditTTEP12 from "./edit";
+
 export default function TTEP12({ token }) {
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-  const [name, setName] = useState("");
-  const [position, setPosition] = useState("");
-  const [fileUpload, setFileUpload] = useState("");
-  const [password, setPassword] = useState("");
-  const [hidePassword, setHidePassword] = useState(true);
+  const [ubah, setUbah] = useState(false);
+  const [data, setData] = useState("");
 
-  const [fileName, setFileName] = useState("");
-  const [filePreview, setFilePreview] = useState("");
-
-  const onChangeFile = (e) => {
-    const type = ["application/x-pkcs12"];
-    if (e.target.files[0]) {
-      if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 5000000) {
-          e.target.value = null;
-          Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setFileUpload(reader.result);
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-          setFilePreview(e.target.files[0]);
-          setFileName(e.target.files[0].name);
-        }
-      } else {
-        e.target.value = null;
-        Swal.fire(
-          "Gagal !",
-          "Data yang bisa dimasukkan hanya berupa data P12",
-          "error"
-        );
-      }
-    }
+  const handleUbah = () => {
+    setUbah(true);
   };
-
-  const handleSubmit = () => {
-    if (true) {
-      SweatAlert(
-        "File p12 Tidak Sesuai",
-        "Maaf, file yang diunggah terdapat perbedaan. Pastikan file yang Anda unggah sudah sesuai dengan ketentuan",
-        "error"
-      );
-    }
-  };
-
   return (
     <PageWrapper>
-      <Card>
-        <Card.Title className="mx-10 my-8">
-          <p>
-            <h1 className="fz-24">TTE P12</h1>
-          </p>
-          <p style={{ color: "#6C6C6C" }}>
-            Anda belum memiliki file p12, silahkan unggah file sesuai dengan
-            ketentuan
-          </p>
-        </Card.Title>
-        <hr className="p-0 m-0" />
-        <Card.Body>
-          <Row className=" fz-16">
-            <Col>
-              <Form>
-                <Form.Group className="mb-8 text-capitalize">
-                  <Form.Label>Nama</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Nama"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  {simpleValidator.current.message("nama", name, "required", {
-                    className: "text-danger",
-                  })}
-                </Form.Group>
-              </Form>
-            </Col>
-            <Col>
-              <Form>
-                <Form.Group className="mb-8 text-capitalize">
-                  <Form.Label>Jabatan</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Jabatan"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  {simpleValidator.current.message(
-                    "Jabatan",
-                    position,
-                    "required",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
-                </Form.Group>
-              </Form>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form>
-                <Form.Group className="mb-8 text-capitalize">
-                  <Form.Label>Unggah File</Form.Label>
-                  <div className="d-flex">
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        className="custom-file-input"
-                        name="question_image"
-                        onChange={onChangeFile}
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor("file")
-                        }
-                      />
-                      <label
-                        className="custom-file-label text-truncate"
-                        htmlFor="customFile"
-                      >
-                        {fileName}
-                      </label>
-                      <label style={{ marginTop: "15px" }}>
-                        {simpleValidator.current.message(
-                          "file",
-                          fileUpload,
-                          fileUpload === null ? "required" : "",
-                          {
-                            className: "text-danger",
-                          }
-                        )}
-                      </label>
-                    </div>
-                  </div>
-                </Form.Group>
-              </Form>
-            </Col>
-            <Col>
-              <Form>
-                <Form.Group className="mb-8 text-capitalize">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type={!hidePassword ? "text" : "password"}
-                    placeholder="Password"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  {!hidePassword ? (
-                    <i
-                      className="ri-eye-fill right-center-absolute cursor-pointer mr-5"
-                      style={{ right: "10px" }}
-                      onClick={() => setHidePassword(!hidePassword)}
-                    />
-                  ) : (
-                    <i
-                      className="ri-eye-off-fill right-center-absolute cursor-pointer mr-5"
-                      style={{ right: "10px" }}
-                      onClick={() => setHidePassword(!hidePassword)}
-                    />
-                  )}
-                  {simpleValidator.current.message("nama", name, "required", {
-                    className: "text-danger",
-                  })}
-                </Form.Group>
-              </Form>
-            </Col>
-          </Row>
-          <div className="d-flex justify-content-end">
-            <Button
-              className="rounded-full px-10 py-4"
-              variant="primary"
-              onClick={handleSubmit}
-            >
-              Simpan
-            </Button>
-          </div>
-        </Card.Body>
-      </Card>
-      <Card>
-        <Card.Title className="mx-10 my-8">
-          <p>
-            <h1 className="fz-24">TTE P12</h1>
-          </p>
-        </Card.Title>
-        <Card.Body>
-          <Row className=" fz-14">
-            <Col>
-              <Form>
-                <Form.Group className="mb-8 text-capitalize">
-                  <Form.Label>Nama</Form.Label>
-                  <p className="fz-16">Ahmad Firaz</p>
-                </Form.Group>
-              </Form>
-            </Col>
-            <Col>
-              <Form>
-                <Form.Group className="mb-8 text-capitalize">
-                  <Form.Label>Jabatan</Form.Label>
-                  <p className="fz-16">Direktur</p>
-                </Form.Group>
-              </Form>
-            </Col>
-          </Row>
-          <Form>
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label className="fz-14">File p12</Form.Label>
-              <p className="fz-16">fileKominfo.p12</p>
-            </Form.Group>
-          </Form>
-          <Form>
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label className="fz-16">Tasnggal Unggah File</Form.Label>
-              <p className="fz-14">22 November 2012</p>
-            </Form.Group>
-          </Form>
-          <div className="d-flex justify-content-end">
-            <Button
-              className="rounded-full px-10 py-4"
-              variant="outline-primary"
-              onClick={handleSubmit}
-            >
-              Ubah File
-            </Button>
-          </div>
-        </Card.Body>
-      </Card>
+      {ubah ? (
+        <EditTTEP12 setUbah={setUbah} data={data} />
+      ) : (
+        <Card>
+          <Card.Title className="mx-10 my-8">
+            <p>
+              <h1 className="fz-24">TTE P12</h1>
+            </p>
+          </Card.Title>
+          <Card.Body>
+            <Row className=" fz-14">
+              <Col>
+                <Form>
+                  <Form.Group className="mb-8 text-capitalize">
+                    <Form.Label>Nama</Form.Label>
+                    <p className="fz-16">Ahmad Firaz</p>
+                  </Form.Group>
+                </Form>
+              </Col>
+              <Col>
+                <Form>
+                  <Form.Group className="mb-8 text-capitalize">
+                    <Form.Label>Jabatan</Form.Label>
+                    <p className="fz-16">Direktur</p>
+                  </Form.Group>
+                </Form>
+              </Col>
+            </Row>
+            <Form>
+              <Form.Group className="mb-8 text-capitalize">
+                <Form.Label className="fz-14">File p12</Form.Label>
+                <p className="fz-16">fileKominfo.p12</p>
+              </Form.Group>
+            </Form>
+            <Form>
+              <Form.Group className="mb-8 text-capitalize">
+                <Form.Label className="fz-16">Tasnggal Unggah File</Form.Label>
+                <p className="fz-14">22 November 2012</p>
+              </Form.Group>
+            </Form>
+            <div className="d-flex justify-content-end">
+              <Button
+                className="rounded-full px-10 py-4"
+                variant="outline-primary"
+                onClick={handleUbah}
+              >
+                Ubah File
+              </Button>
+            </div>
+          </Card.Body>
+        </Card>
+      )}
     </PageWrapper>
   );
 }
