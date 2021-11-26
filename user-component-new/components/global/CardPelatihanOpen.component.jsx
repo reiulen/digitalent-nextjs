@@ -60,7 +60,7 @@ const CardPelatihanOpen = ({
                   ></i>
                 </Button>
                 <ShareOverlay
-                  url={`${process.env.PATH_URL}/detail/pelatihan/${row.id}`}
+                  url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
                   quote={row.name}
                 >
                   <Button
