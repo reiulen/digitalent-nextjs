@@ -93,6 +93,7 @@ const ObjectiveComponent = ({
                         type="file"
                         className="custom-file-input"
                         name="question_image"
+                        accept="image/png, image/gif, image/jpeg , image/jpg"
                       />
                       <label className="custom-file-label" htmlFor="customFile">
                         Choose file

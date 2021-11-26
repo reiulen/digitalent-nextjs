@@ -31,9 +31,6 @@ const ListReport = ({ token }) => {
     setListPermission(filterPermission);
   }, []);
 
-  useEffect(() => {
-    console.log(listPermission);
-  }, [listPermission]);
   const { data: getDataReportTraining } = useSelector(
     (state) => state.getDataReportTraining
   );

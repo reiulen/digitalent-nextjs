@@ -24,7 +24,6 @@ export default function EditTTEP12({ setUbah, data }) {
           Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
         } else {
           setFileUpload(e.target.files[0]);
-          // console.log(e.target.files[0]);
           // const reader = new FileReader();
           // reader.onload = () => {
           //   if (reader.readyState === 2) {
@@ -63,7 +62,6 @@ export default function EditTTEP12({ setUbah, data }) {
     formData.append("position", position);
     formData.append("p12", fileUpload);
 
-    // console.log(fileUpload, "ini file upload");
     const link = `http://192.168.1.78:8000/api/tte-p12/store`;
     const body = {
       name,

@@ -2,14 +2,9 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-// import Layout from "../../../components/templates/layout.component";
-// import Berita from "../../../components/content/publikasi/berita/berita";
-
-import { getAllDashboardPublikasi } from "../../../redux/actions/publikasi/dashboard-publikasi.actions";
+import { getAllDashboardPublikasi, getRoleAdmin } from "../../../redux/actions/publikasi/dashboard-publikasi.actions";
 import { wrapper } from "../../../redux/store";
-// import { getSession } from "next-auth/client";
 
-// import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const DashboardPublikasi = dynamic(
@@ -30,7 +25,7 @@ export default function DashboardPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DashboardPublikasi token={session.token} />
+        <DashboardPublikasi token={session.token} user={session.user} />
       </div>
     </>
   );
@@ -53,6 +48,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getAllDashboardPublikasi(session.user.user.data.token)
       );
+
+      await store.dispatch(
+        getRoleAdmin(session.user.user.data.token)
+      );
+      
       return {
         props: { session, title: "Dashboard - Publikasi" },
       };

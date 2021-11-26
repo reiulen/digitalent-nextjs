@@ -1126,10 +1126,16 @@ const Galeri = ({ token }) => {
                                             galeri.gallery.length !== 0 &&
                                             index_galleri !== null ? (
                                             <>
+
                                                 <div
                                                     className="mb-1 justify-content-between"
-                                                    style={{ display: "flex", marginLeft: "-12px" }}
+                                                    style={{ marginLeft: "-12px" }}
                                                 >
+                                                    <div className="mb-5" style={{}}>
+                                                        <span className="label label-inline label-light-success font-weight-bold">
+                                                            {(galeri.gallery[index_galleri].nama_kategori).toUpperCase()}
+                                                        </span>
+                                                    </div>
                                                     <h3
                                                         className="col-10"
                                                         style={{
@@ -1141,29 +1147,53 @@ const Galeri = ({ token }) => {
                                                         {galeri.gallery[index_galleri].judul}
                                                     </h3>
                                                 </div>
-                                                <div className="row justify-content-between mb-4 p-1">
-                                                    <div className="">
-                                                        <div className={styles["subMenuPreview"]}>
-                                                            {
-                                                                galeri.gallery[index_galleri].publish === 0 ? null :
-                                                                    <div className="mb-1 p-0 d-flex align-items-center">
-                                                                        <div className={styles["iconPreview"]}>
-                                                                            <i className="flaticon2-calendar-4"></i>
-                                                                        </div>
-                                                                        <span className="ml-2">
-                                                                            Publish:{" "}
-                                                                            {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
-                                                                        </span>
+                                                <div className="row mb-4 p-1">
+                                                    <div className={styles["subMenuPreview"]}>
+                                                        {
+                                                            galeri.gallery[index_galleri].publish === 0 ? 
+                                                                <div className="mb-1 p-0 d-flex align-items-center">
+                                                                    <div className={styles["iconPreview"]}>
+                                                                        <i className="flaticon2-calendar-4"></i>
                                                                     </div>
-                                                            }
+                                                                    <span className="ml-2">
+                                                                        Publish : Belum dipublish
+                                                                    </span>
+                                                                </div>
+                                                                :
+                                                                <div className="mb-1 p-0 d-flex align-items-center">
+                                                                    <div className={styles["iconPreview"]}>
+                                                                        <i className="flaticon2-calendar-4"></i>
+                                                                    </div>
+                                                                    <span className="ml-2">
+                                                                        Publish:{" "}
+                                                                        {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
+                                                                    </span>
+                                                                </div>
+                                                        }
 
-                                                        </div>
                                                     </div>
 
-                                                    <div className="" style={{}}>
-                                                        <span className="label label-inline label-light-success font-weight-bold p-2">
-                                                            {(galeri.gallery[index_galleri].nama_kategori).toUpperCase()}
-                                                        </span>
+                                                    <div className={styles["subMenuPreview"]}>
+                                                        {
+                                                            galeri.gallery[index_galleri].dibaca === undefined ?
+                                                                <span className="mb-1 p-0 d-flex align-items-center">
+                                                                    <div className={`${styles.iconPreview} mr-1 ml-8`}>
+                                                                        <i className="ri-eye-line"></i>
+                                                                    </div>
+                                                                    <span className="ml-2">
+                                                                        Dibaca 0
+                                                                    </span>
+                                                                </span>
+                                                                :
+                                                                <span className="mb-1 p-0 d-flex align-items-center">
+                                                                    <div className={`${styles.iconPreview} mr-1 ml-8`}>
+                                                                        <i className="ri-eye-line"></i>
+                                                                    </div>
+                                                                    <span className="ml-2">
+                                                                        Dibaca {galeri.gallery[index_galleri].dibaca}
+                                                                    </span>
+                                                                </span>
+                                                        }
                                                     </div>
                                                 </div>
                                                 <hr className={styles["strip"]} />

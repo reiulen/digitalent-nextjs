@@ -85,7 +85,7 @@ const CardPelatihanQuickView = ({
                     </button>
 
                     <ShareOverlay
-                      url={`${process.env.PATH_URL}/detail/pelatihan/${row.id}`}
+                      url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
                       quote={row.name}
                     >
                       <button className="roundedss-border btn btn-white mx-6">
