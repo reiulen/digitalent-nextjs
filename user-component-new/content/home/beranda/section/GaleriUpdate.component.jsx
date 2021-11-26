@@ -16,7 +16,7 @@ export default function GaleriUpdate({ gambar }) {
           </p>
           <Link href="/galeri">
             <a>
-              <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-10">
+              <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-20">
                 Lihat Selengkapnya >
               </button>
             </a>

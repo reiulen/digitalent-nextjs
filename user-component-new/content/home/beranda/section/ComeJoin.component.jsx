@@ -5,7 +5,7 @@ export default function ComeJoin() {
   return (
     <div className="py-20 come-join">
       <Row>
-        <Col md={4}>
+        <Col md={4} className="p-0">
           <div>
             <h1 className="fw-600" style={{ color: "#6C6C6C" }}>
               Ayo Bergabung, Jadi Jagoan Digital!
