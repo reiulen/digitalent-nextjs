@@ -3,6 +3,10 @@ import {
   DASHBOARD_PUBLIKASI_SUCCESS,
   DASHBOARD_PUBLIKASI_FAIL,
 
+  ROLE_ADMIN_REQUEST,
+  ROLE_ADMIN_SUCCESS,
+  ROLE_ADMIN_FAIL,
+  
   CLEAR_ERRORS
 } from '../../types/publikasi/dashboard-publikasi.type'
 
@@ -35,6 +39,34 @@ export const getAllDashboardPublikasi = (token) =>
       });
     }
   };
+
+export const getRoleAdmin = (token) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ROLE_ADMIN_REQUEST });
+
+      const config = {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        }
+      };
+
+      
+      let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/publikasi`;
+      
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: ROLE_ADMIN_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ROLE_ADMIN_FAIL,
+        payload: error.response.data.message
+      })
+    }
+  }
 
 // Clear Error
 export const clearErrors = () => async (dispatch) => {

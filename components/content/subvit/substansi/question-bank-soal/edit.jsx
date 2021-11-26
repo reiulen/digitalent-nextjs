@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
@@ -47,14 +46,26 @@ const EditSoalSubstansi = ({ token }) => {
   const [question_image, setQuestionImage] = useState(
     subtance_question_detail.question_image
   );
-  const [question_image_preview, setQuestionImagePreview] = useState(
-    subtance_question_detail.question_image_preview
-  );
-  const [question_preview, setQuestionPreview] = useState(null);
+  // const [question_image_preview, setQuestionImagePreview] = useState(
+  //   subtance_question_detail.question_image_preview
+  // );
+  // const [question_preview, setQuestionPreview] = useState(null);
 
-  const [answer, setAnswer] = useState(
-    JSON.parse(subtance_question_detail.answer) || ""
+  const [question_image_preview, setQuestionImagePreview] = useState(
+    process.env.END_POINT_API_IMAGE_SUBVIT +
+      subtance_question_detail.question_image_preview
   );
+  const [question_image_name, setQuestionImageName] = useState(
+    (subtance_question_detail.question_image_preview &&
+      subtance_question_detail.question_image_preview.substr(16)) ||
+      "Pilih Gambar"
+  );
+
+  const initialAnswer = JSON.parse(
+    subtance_question_detail && subtance_question_detail.answer
+  );
+
+  const [answer, setAnswer] = useState(initialAnswer || "");
 
   const [answer_key, setAnswerKey] = useState(
     subtance_question_detail.answer_key || ""
@@ -78,17 +89,22 @@ const EditSoalSubstansi = ({ token }) => {
   }, [dispatch, success, router]);
 
   const handleSoalImage = (e) => {
-    setQuestionImagePreview(e.target.value.substr(12));
     if (e.target.name === "question_image") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setQuestionImage(reader.result);
+      if (e.target.files[0].size > 5000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+      } else {
+        if (e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setQuestionImage(reader.result);
+            }
+          };
+          setQuestionImagePreview(URL.createObjectURL(e.target.files[0]));
+          setQuestionImageName(e.target.files[0].name);
+          reader.readAsDataURL(e.target.files[0]);
         }
-      };
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
-        setQuestionPreview(URL.createObjectURL(e.target.files[0]));
       }
     }
   };
@@ -123,19 +139,18 @@ const EditSoalSubstansi = ({ token }) => {
     const list = [...answer];
     list[index][name] = value;
     if (name === "question_image") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          list[index]["image"] = reader.result;
-        }
-      };
       if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
         list[index]["image_preview"] = URL.createObjectURL(e.target.files[0]);
         list[index]["image_name"] = e.target.files[0].name;
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            list[index]["image"] = reader.result;
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
       }
     }
-
     setAnswer(list);
   };
 
@@ -227,6 +242,8 @@ const EditSoalSubstansi = ({ token }) => {
     }
   };
 
+  console.log(question_image_preview);
+
   return (
     <PageWrapper>
       {error ? (
@@ -262,31 +279,27 @@ const EditSoalSubstansi = ({ token }) => {
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Soal {subtance_question_detail.bank_soal + 1}
+                Soal{" "}
+                {subtance_question_detail
+                  ? subtance_question_detail.bank_soal + 1
+                  : 0}
               </h3>
               <div className="card-toolbar ml-auto"></div>
             </div>
 
             <div className="card-body pt-0">
               <div className="title row ">
-                {question_image_preview ? (
-                  <div className="col-md-3 mt-3">
+                {question_image_preview !=
+                  "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/" && (
+                  <div className="col-md-3 mt-4 text-center">
                     <Image
-                      src={
-                        question_image
-                          ? question_preview
-                          : process.env.END_POINT_API_IMAGE_SUBVIT +
-                            question_image_preview
-                      }
+                      src={question_image_preview}
                       alt="logo"
-                      width={300}
-                      height={160}
-                      quality={100}
-                      className="soal-image"
+                      width={210}
+                      height={150}
+                      objectFit="fill"
                     />
                   </div>
-                ) : (
-                  ""
                 )}
                 <div className="col-md-9 pt-2">
                   <span className="font-weight-bold ">Tipe Soal</span>
@@ -327,103 +340,102 @@ const EditSoalSubstansi = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {question_image_preview
-                        ? !question_image
-                          ? question_image_preview.substr(16)
-                          : question_image_preview
-                        : "Choose file"}
+                      {question_image_name}
                     </label>
+                    <span className="text-muted">
+                      (Maksimal ukuran file 5 MB)
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div className="answer mt-5">
-                {answer.map((row, i) => {
-                  return (
-                    <>
-                      <div className="title row">
-                        {row.image_preview ? (
-                          <div className="col-md-2 p-0 pl-3">
-                            <Image
-                              src={
-                                row.image
-                                  ? row.image_preview
-                                  : process.env.END_POINT_API_IMAGE_SUBVIT +
-                                    row.image_preview
-                              }
-                              alt="logo"
-                              width={200}
-                              height={90}
-                              className="soal-image"
-                            />
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                        <div className="col-md-6 pt-2">
-                          <input
-                            type="text"
-                            name="option"
-                            className="form-control"
-                            placeholder={`Jawaban ` + row.key}
-                            value={row.option}
-                            onChange={(e) => handleInputChange(e, i)}
-                            autoComplete="off"
-                          />
-                          <div className="custom-file mt-2">
-                            <span>Gambar Pertanyaan (Opsional)</span>
-                            <input
-                              type="file"
-                              className="custom-file-input"
-                              name="question_image"
-                              accept="image/png, image/gif, image/jpeg , image/jpg"
-                              onChange={(e) => handleInputChange(e, i)}
-                            />
-                            <label
-                              className="custom-file-label"
-                              htmlFor="customFile"
-                            >
-                              {row.image
-                                ? row.image_preview
-                                  ? row.image_name
-                                  : row.image_preview.substr(16)
-                                : "Choose File"}
-                            </label>
-                          </div>
-                        </div>
-                        <div className="col-md-4 d-flex justify-content-start my-auto pt-3">
-                          <button
-                            className="btn btn-link-action bg-danger text-white"
-                            type="button"
-                            onClick={() => handleRemoveClick(i)}
-                          >
-                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                          </button>
-                          <div className="ml-3">
-                            <SwitchButton
-                              checked={row.is_right}
-                              onlabel=" "
-                              onstyle="primary"
-                              offlabel=" "
-                              offstyle="secondary"
-                              size="sm"
-                              width={20}
-                              height={10}
-                              onChange={(checked) => handleAnswer(checked, i)}
-                            />
-                          </div>
-                          {row.is_right ? (
-                            <span className="ml-2">
-                              Pilihan Kunci yang benar
-                            </span>
+                {answer &&
+                  answer.map((row, i) => {
+                    console.log(row);
+                    return (
+                      <>
+                        <div className="title row ">
+                          {row.image_preview != "" ? (
+                            <div className="col-md-2 p-0 pl-3 text-center">
+                              <Image
+                                src={
+                                  row.image_preview.includes("blob")
+                                    ? row.image_preview
+                                    : process.env.END_POINT_API_IMAGE_SUBVIT +
+                                      row.image_preview
+                                }
+                                alt="logo"
+                                width={150}
+                                height={90}
+                                objectFit="fill"
+                              />
+                            </div>
                           ) : (
                             ""
                           )}
+                          <div className="col-md-6 pt-2">
+                            <input
+                              type="text"
+                              name="option"
+                              className="form-control"
+                              placeholder={`Jawaban ` + row.key}
+                              value={row.option}
+                              onChange={(e) => handleInputChange(e, i)}
+                              autoComplete="off"
+                            />
+                            <div className="custom-file mt-2">
+                              <span>Gambar Pertanyaan (Opsional)</span>
+                              <input
+                                type="file"
+                                className="custom-file-input"
+                                name="question_image"
+                                accept="image/png, image/gif, image/jpeg , image/jpg"
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                              <label
+                                className="custom-file-label"
+                                htmlFor="customFile"
+                              >
+                                {row.image_name ||
+                                  row.image_preview.substr(16) ||
+                                  "Pilih Gambar"}
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-md-4 d-flex justify-content-start my-auto pt-3">
+                            <button
+                              className="btn btn-link-action bg-danger text-white"
+                              type="button"
+                              onClick={() => handleRemoveClick(i)}
+                            >
+                              <i className="ri-delete-bin-fill p-0 text-white"></i>
+                            </button>
+                            <div className="ml-3">
+                              <SwitchButton
+                                checked={row.is_right}
+                                onlabel=" "
+                                onstyle="primary"
+                                offlabel=" "
+                                offstyle="secondary"
+                                size="sm"
+                                width={20}
+                                height={10}
+                                onChange={(checked) => handleAnswer(checked, i)}
+                              />
+                            </div>
+                            {row.is_right ? (
+                              <span className="ml-2">
+                                Pilihan Kunci yang benar
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </>
-                  );
-                })}
+                      </>
+                    );
+                  })}
               </div>
 
               {answer.length < 6 ? (
