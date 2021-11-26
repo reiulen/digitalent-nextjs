@@ -23,7 +23,6 @@ export default function Bookmark({ session }) {
   const el = pelatihan?.list[0] || [];
 
   const handleBookmark = async (pelatihan) => {
-    console.log(pelatihan);
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -72,7 +71,6 @@ export default function Bookmark({ session }) {
       }
     }
   };
-  console.log(allBookmark.bookmark.list);
 
   return (
     <PesertaWrapper>
