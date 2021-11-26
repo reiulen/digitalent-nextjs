@@ -24,6 +24,7 @@ import {
   CLEAR_ERRORS,
   RELOAD_TABLE,
   PERMISSION_BY_PARENT,
+  GET_SIDEBAR,
 } from "../../types/site-management/role.type";
 
 const statuslist = {
@@ -166,6 +167,19 @@ export const detailRolesReducer = (state = { role: {} }, action) => {
 export const allPermissionReducer = (state = {}, action) => {
   switch (action.type) {
     case PERMISSION_BY_PARENT:
+      return {
+        loading: false,
+        data: action.payload
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allSidebarReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_SIDEBAR:
       return {
         loading: false,
         data: action.payload
