@@ -377,7 +377,7 @@ export const newTrainingStep3 = (dataTraining, token) => async (dispatch) => {
 
 //UPDATE TRAINING
 export const updateTrainingStep1 =
-  (id, dataTraining, token) => async (dispatch) => {
+  (dataTraining, token) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_TRAINING_STEP1_REQUEST,
@@ -390,14 +390,14 @@ export const updateTrainingStep1 =
       };
 
       const { data } = await axios.post(
-        process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`,
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-satu`,
         dataTraining,
         config
       );
 
       dispatch({
         type: UPDATE_TRAINING_STEP1_SUCCESS,
-        payload: data.status,
+        payload: data,
       });
     } catch (error) {
       dispatch({

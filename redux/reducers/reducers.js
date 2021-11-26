@@ -340,6 +340,7 @@ import {
   getFormLPJReducer,
   getFormEvidenceReducer,
   cloneTrainingReducer,
+  updateTrainingReducer,
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -808,6 +809,7 @@ const reducer = combineReducers({
   newLPJ: newLPJReducer,
   getFormEvidence: getFormEvidenceReducer,
   cloneTraining: cloneTrainingReducer,
+  updateTraining: updateTrainingReducer,
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
   cardReview: cardReviewReducer,
