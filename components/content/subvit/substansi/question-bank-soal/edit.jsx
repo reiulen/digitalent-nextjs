@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
@@ -52,9 +51,11 @@ const EditSoalSubstansi = ({ token }) => {
   );
   const [question_preview, setQuestionPreview] = useState(null);
 
-  const [answer, setAnswer] = useState(
-    JSON.parse(subtance_question_detail.answer) || ""
+  const initialAnswer = JSON.parse(
+    subtance_question_detail && subtance_question_detail.answer
   );
+
+  const [answer, setAnswer] = useState(initialAnswer || "");
 
   const [answer_key, setAnswerKey] = useState(
     subtance_question_detail.answer_key || ""
@@ -131,11 +132,10 @@ const EditSoalSubstansi = ({ token }) => {
       };
       if (e.target.files[0]) {
         reader.readAsDataURL(e.target.files[0]);
-        list[index]["image_preview"] = URL.createObjectURL(e.target.files[0]);
-        list[index]["image_name"] = e.target.files[0].name;
+        list[index]["image_name"] = URL.createObjectURL(e.target.files[0]);
+        // list[index]["image_name"] = e.target.files[0].name;
       }
     }
-
     setAnswer(list);
   };
 
@@ -262,7 +262,10 @@ const EditSoalSubstansi = ({ token }) => {
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Soal {subtance_question_detail.bank_soal + 1}
+                Soal{" "}
+                {subtance_question_detail
+                  ? subtance_question_detail.bank_soal + 1
+                  : 0}
               </h3>
               <div className="card-toolbar ml-auto"></div>
             </div>
@@ -339,21 +342,21 @@ const EditSoalSubstansi = ({ token }) => {
 
               <div className="answer mt-5">
                 {answer.map((row, i) => {
+                  // console.log(row);
                   return (
                     <>
-                      <div className="title row">
+                      <div className="title row ">
                         {row.image_preview ? (
-                          <div className="col-md-2 p-0 pl-3">
+                          <div className="col-md-2 p-0 pl-3 mt-2">
                             <Image
                               src={
-                                row.image
-                                  ? row.image_preview
-                                  : process.env.END_POINT_API_IMAGE_SUBVIT +
-                                    row.image_preview
+                                row.image_name ||
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  row.image_preview
                               }
                               alt="logo"
                               width={200}
-                              height={90}
+                              height={85}
                               className="soal-image"
                             />
                           </div>
@@ -383,11 +386,9 @@ const EditSoalSubstansi = ({ token }) => {
                               className="custom-file-label"
                               htmlFor="customFile"
                             >
-                              {row.image
-                                ? row.image_preview
-                                  ? row.image_name
-                                  : row.image_preview.substr(16)
-                                : "Choose File"}
+                              {(row.question_image &&
+                                row.question_image.substr(12)) ||
+                                row.image_preview.substr(16)}
                             </label>
                           </div>
                         </div>
