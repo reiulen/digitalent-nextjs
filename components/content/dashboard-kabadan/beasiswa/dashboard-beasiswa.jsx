@@ -19,6 +19,8 @@ import {
 } from "recharts";
 import Pagination from "react-js-pagination";
 
+import PaginationDashboard from "../component/pagination-dashbaord.component";
+
 const DashboardBeasiswa = () => {
   const MapDigitalent = dynamic(
     () => import("../component/map-digitalent.component"),
@@ -277,22 +279,13 @@ const DashboardBeasiswa = () => {
                     </p>
                     <ListCardInfo data={dataProvinsi} />
 
-                    <div className="d-flex justify-content-end mt-2">
-                      <div className="table-pagination">
-                        <Pagination
-                          activePage={1}
-                          itemsCountPerPage={3}
-                          totalItemsCount={5}
-                          pageRangeDisplayed={3}
-                          nextPageText={">"}
-                          prevPageText={"<"}
-                          firstPageText={"<<"}
-                          lastPageText={">>"}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      </div>
-                    </div>
+                    <PaginationDashboard
+                      total={10}
+                      perPage={5}
+                      title="Pendaftar"
+                      activePage={1}
+                      funcPagination={(value) => {}}
+                    />
                   </div>
                 </div>
               </div>
@@ -303,22 +296,13 @@ const DashboardBeasiswa = () => {
                       Asal Provinsi Awardee Beasiswa
                     </p>
                     <ListCardInfo data={dataProvinsi} />
-                    <div className="d-flex justify-content-end mt-2">
-                      <div className="table-pagination">
-                        <Pagination
-                          activePage={1}
-                          itemsCountPerPage={3}
-                          totalItemsCount={5}
-                          pageRangeDisplayed={3}
-                          nextPageText={">"}
-                          prevPageText={"<"}
-                          firstPageText={"<<"}
-                          lastPageText={">>"}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      </div>
-                    </div>
+                    <PaginationDashboard
+                      total={10}
+                      perPage={5}
+                      title="Awardee"
+                      activePage={1}
+                      funcPagination={(value) => {}}
+                    />
                   </div>
                 </div>
               </div>
@@ -332,22 +316,13 @@ const DashboardBeasiswa = () => {
                       funcFilterYear={(value) => {}}
                     />
                     <ListCardInfo data={dataUniversitasDalam} />
-                    <div className="d-flex justify-content-end mt-2">
-                      <div className="table-pagination">
-                        <Pagination
-                          activePage={1}
-                          itemsCountPerPage={3}
-                          totalItemsCount={5}
-                          pageRangeDisplayed={3}
-                          nextPageText={">"}
-                          prevPageText={"<"}
-                          firstPageText={"<<"}
-                          lastPageText={">>"}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      </div>
-                    </div>
+                    <PaginationDashboard
+                      total={10}
+                      perPage={5}
+                      title="Perguruan Tinggi"
+                      activePage={1}
+                      funcPagination={(value) => {}}
+                    />
                   </div>
                 </div>
               </div>
@@ -359,22 +334,13 @@ const DashboardBeasiswa = () => {
                       funcFilterYear={(value) => {}}
                     />
                     <ListCardInfo data={dataUniversitasDalam} />
-                    <div className="d-flex justify-content-end mt-2">
-                      <div className="table-pagination">
-                        <Pagination
-                          activePage={1}
-                          itemsCountPerPage={3}
-                          totalItemsCount={5}
-                          pageRangeDisplayed={3}
-                          nextPageText={">"}
-                          prevPageText={"<"}
-                          firstPageText={"<<"}
-                          lastPageText={">>"}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      </div>
-                    </div>
+                    <PaginationDashboard
+                      total={10}
+                      perPage={5}
+                      title="Universitas"
+                      activePage={1}
+                      funcPagination={(value) => {}}
+                    />
                   </div>
                 </div>
               </div>
