@@ -14,7 +14,7 @@ import {
   dropdownTema,
   dropdownPenyelenggara,
 } from "../../../redux/actions/pelatihan/function.actions";
-
+import { getAllPermission } from "../../../redux/actions/utils/utils.actions";
 
 const ListReport = dynamic(
   () => import("../../../components/content/pelatihan/report/list-report"),
@@ -51,11 +51,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-        await store.dispatch(listsReportTraining(session.user.user.data.token))
-        await store.dispatch(dropdownAkademi(session.user.user.data.token));
-        await store.dispatch(dropdownTema(session.user.user.data.token));
-        await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
-        
+      await store.dispatch(listsReportTraining(session.user.user.data.token));
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      await store.dispatch(dropdownTema(session.user.user.data.token));
+      await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
+      await store.dispatch(getAllPermission(session.user.user.data.token));
+
       return {
         props: { session, title: "List Report - Pelatihan" },
       };
