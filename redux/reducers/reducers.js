@@ -14,7 +14,10 @@ import {
   digitalentPendidikanReducer,
 } from "./dashboard-kabadan/dashboard/digitalent.reducers";
 // DATA PESERTA
-import { allBeasiswaKandidatReducer } from "./dashboard-kabadan/data-peserta/beasiswa.reducers";
+import {
+  allBeasiswaKandidatReducer,
+  allBeasiswaFilterReducer,
+} from "./dashboard-kabadan/data-peserta/beasiswa.reducers";
 import { allSimonasKandidatReducer } from "./dashboard-kabadan/data-peserta/simonas.reducers";
 // END DASHBOARD KABADAN
 
@@ -527,6 +530,7 @@ const reducer = combineReducers({
   digitalentPendidikan: digitalentPendidikanReducer,
   // ============= BEASISWA ============
   allBeasiswaKandidat: allBeasiswaKandidatReducer,
+  allBeasiswaFilter: allBeasiswaFilterReducer,
   // ============= SIMONAS ============
   allSimonasKandidat: allSimonasKandidatReducer,
   // END DASHBOARD KABADAN
