@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-// import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
+import { getAllPage } from "../../../../redux/actions/site-management/settings/page.actions";
 import { wrapper } from "../../../../redux/store";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
@@ -37,6 +37,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      
+      await store.dispatch(getAllPage(session.user.user.data.token));
 
       // await store.dispatch(
       //   getAllArtikel(

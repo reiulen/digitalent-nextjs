@@ -476,12 +476,12 @@ const GeneralPage = ({ token }) => {
                           (Maksimal ukuran file 5 MB)
                         </span>
 
-                        {simpleValidator.current.message(
+                        {/* {simpleValidator.current.message(
                           "logoHeader",
                           imageLogo,
                           "required",
                           { className: "text-danger" }
-                        )}
+                        )} */}
                       </div>
                     </div>
 
@@ -556,12 +556,12 @@ const GeneralPage = ({ token }) => {
                           (Maksimal ukuran file 5 MB)
                         </span>
 
-                        {simpleValidator.current.message(
+                        {/* {simpleValidator.current.message(
                           "logoFooter",
                           imageLogo2,
                           "required",
                           { className: "text-danger" }
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -935,9 +935,9 @@ const GeneralPage = ({ token }) => {
                           onChange={(e) => setColorPrimary(e.target.value)}
                           value={colorPrimary}
                         >
-                          <option value="1">primary</option>
-                          <option value="2">secondary</option>
-                          <option value="3">extras</option>
+                          <option value="1">primary (#0100BE)</option>
+                          <option value="2">secondary (#2A62ED)</option>
+                          <option value="3">extras (#5EC8F2)</option>
                         </select>
                       </div>
 
@@ -950,9 +950,9 @@ const GeneralPage = ({ token }) => {
                           onChange={(e) => setColorSecondary(e.target.value)}
                           value={colorSecondary}
                         >
-                          <option value="1">primary</option>
-                          <option value="2">secondary</option>
-                          <option value="3">extras</option>
+                          <option value="1">primary (#0100BE)</option>
+                          <option value="2">secondary (#2A62ED)</option>
+                          <option value="3">extras (#5EC8F2)</option>
                         </select>
                       </div>
 
@@ -965,9 +965,9 @@ const GeneralPage = ({ token }) => {
                           onChange={(e) => setColorExtras(e.target.value)}
                           value={colorExtras}
                         >
-                          <option value="1">primary</option>
-                          <option value="2">secondary</option>
-                          <option value="3">extras</option>
+                          <option value="1">primary (#0100BE)</option>
+                          <option value="2">secondary (#2A62ED)</option>
+                          <option value="3">extras (#5EC8F2)</option>
                         </select>
                       </div>
                     </div>
