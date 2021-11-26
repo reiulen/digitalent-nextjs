@@ -242,8 +242,6 @@ const EditSoalSubstansi = ({ token }) => {
     }
   };
 
-  console.log(question_image_preview);
-
   return (
     <PageWrapper>
       {error ? (
@@ -352,7 +350,6 @@ const EditSoalSubstansi = ({ token }) => {
               <div className="answer mt-5">
                 {answer &&
                   answer.map((row, i) => {
-                    console.log(row);
                     return (
                       <>
                         <div className="title row ">

@@ -50,6 +50,7 @@ const Beranda = ({ session }) => {
   const [cardPendaftaranMulai, setCardPendaftaranMulai] = useState(null);
   const [cardPendaftaranSelesai, setCardPendaftaranSelesai] = useState(null);
   const [cardMetode, setCardMetode] = useState(null);
+  const [cardBookmark, setCardBookmark] = useState(null);
   const textToTrim = 325;
 
   const optionsSplide = {
@@ -216,7 +217,8 @@ const Beranda = ({ session }) => {
     pendaftaran_mulai,
     pendaftaran_selesai,
     id,
-    metode_pelatihan
+    metode_pelatihan,
+    bookmark
   ) => {
     let obj = [...pelatihan];
 
@@ -239,6 +241,7 @@ const Beranda = ({ session }) => {
     setCardPendaftaranMulai(pendaftaran_mulai);
     setCardPendaftaranSelesai(pendaftaran_selesai);
     setCardMetode(metode_pelatihan);
+    setCardBookmark(bookmark);
   };
 
   const handleCloseQuickView = (indexTema) => {
@@ -326,7 +329,6 @@ const Beranda = ({ session }) => {
       }
     }
   };
-
   return (
     <>
       <section className="image-carousel-new mt-10">
@@ -696,7 +698,12 @@ const Beranda = ({ session }) => {
                                                   className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
                                                 >
                                                   <i
-                                                    className="ri-heart-line p-0"
+                                                    className={
+                                                      pelatihan[i].pelatihan[j]
+                                                        .bookmark
+                                                        ? "ri-heart-fill p-0 text-danger"
+                                                        : "ri-heart-line p-0"
+                                                    }
                                                     style={{
                                                       color: "#6C6C6C",
                                                     }}

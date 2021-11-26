@@ -20,7 +20,6 @@ const Sidebar = ({ session }) => {
   const allFunctionls = useSelector((state) => state.allFunctionls);
   const allSidebar = useSelector((state) => state.allSidebar);
   const router = useRouter();
-  
 
   // mitra partnership sementara
   const [menuItem9, setMenuItem9] = useState("");

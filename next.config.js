@@ -51,6 +51,8 @@ module.exports = {
 
     //sertifikat
     END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
+    // END_POINT_API_SERTIFIKAT: "http://http://192.168.11.96:8000/",
+
     END_POINT_API_IMAGE_SERTIFIKAT:
       "https://dts-sertifikat-dev.s3.ap-southeast-1.amazonaws.com/",
 

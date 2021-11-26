@@ -81,7 +81,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               />
             </div>
             <div className="p-2">
-              <td>Digital Talent Schoolarship</td>
+              <div>Digital Talent Schoolarship</div>
             </div>
           </div>
         </div>
@@ -105,7 +105,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 ></div>
               </div>
               <div className="p-2">
-                <td>Dashboard</td>
+                <div>Dashboard</div>
               </div>
             </div>
           </Link>
@@ -129,7 +129,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 ></div>
               </div>
               <div className="p-2">
-                <td>Administrasi</td>
+                <div>Administrasi</div>
               </div>
             </div>
           </Link>
@@ -165,7 +165,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 ></div>
               </div>
               <div className="p-2">
-                <td>Test Substansi</td>
+                <div>Test Substansi</div>
               </div>
             </div>
           </Link>
@@ -189,7 +189,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 ></div>
               </div>
               <div className="p-2">
-                <td>Survey</td>
+                <div>Survey</div>
               </div>
             </div>
           </Link>
@@ -213,7 +213,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 ></div>
               </div>
               <div className="p-2">
-                <td>TRIVIA</td>
+                <div>TRIVIA</div>
               </div>
             </div>
           </Link>
@@ -237,7 +237,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 ></div>
               </div>
               <div className="p-2">
-                <td>Riwayat Pelatihan</td>
+                <div>Riwayat Pelatihan</div>
               </div>
             </div>
           </Link>
@@ -261,7 +261,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 ></div>
               </div>
               <div className="p-2">
-                <td>Bookmark</td>
+                <div>Bookmark</div>
               </div>
             </div>
           </Link>
@@ -288,7 +288,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 ></div>
               </div>
               <div className="p-2">
-                <td>Artikel</td>
+                <div>Artikel</div>
               </div>
             </div>
           </Link>
@@ -303,7 +303,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               <Image src={Simonas} alt="" className={styles.img} />
             </div>
             <div className="p-2">
-              <td>SIMONAS</td>
+              <div>SIMONAS</div>
             </div>
           </div>
         </div>
@@ -316,7 +316,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               <Image src={Beasiswa} alt="" className={styles.img} />
             </div>
             <div className="p-2">
-              <td>Beasiswa</td>
+              <div>Beasiswa</div>
             </div>
           </div>
         </div>
@@ -342,7 +342,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                   ></div>
                 </div>
                 <div className="p-2">
-                  <td>Profile</td>
+                  <div>Profile</div>
                 </div>
               </div>
             </div>
@@ -356,7 +356,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 <div className="ri-settings-4-line"></div>
               </div>
               <div className="p-2">
-                <td>Pengaturan</td>
+                <div>Pengaturan</div>
               </div>
             </div>
           </div>
@@ -370,10 +370,10 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
         >
           <div className="d-flex flex-row">
             <div className="p-2">
-              <d className="ri-logout-circle-line"></d>
+              <div className="ri-logout-circle-line"></div>
             </div>
             <div className="p-2">
-              <td>Logout</td>
+              <div>Logout</div>
             </div>
           </div>
         </div>
