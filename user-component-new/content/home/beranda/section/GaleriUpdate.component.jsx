@@ -28,7 +28,7 @@ export default function GaleriUpdate({ gambar }) {
               gambar.map((row, i) => (
                 <Col
                   md={4}
-                  className="text-xl-right text-md-center text-center mb-md-0 mb-10"
+                  className="text-xl-right text-md-left text-left mb-md-0 mb-10"
                 >
                   <Image
                     src={
