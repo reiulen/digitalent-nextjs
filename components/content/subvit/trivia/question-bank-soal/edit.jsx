@@ -233,10 +233,6 @@ const EditSoalTrivia = ({ token }) => {
     }
   };
 
-  console.log(JSON.parse(trivia_question_detail.answer));
-
-  console.log(trivia_question_detail);
-
   return (
     <PageWrapper>
       {error ? (
