@@ -329,7 +329,7 @@ const TambahMitra = ({ token }) => {
                 {!agency_logo ? (
                   <div className="ml-4 row">
                     <figure
-                      className="avatar item-rtl position-relative shadow-sm rounded-circle"
+                      className="avatar item-rtl position-relative"
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
                     >
@@ -346,10 +346,10 @@ const TambahMitra = ({ token }) => {
                         height={160}
                         objectFit="fill"
                         className={
-                          imageview.length !== 0 ?
+                          imageview ?
                             "rounded-circle"
                           :
-                            null
+                            ""
                         }
                       />
                     </figure>
