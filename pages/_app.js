@@ -18,6 +18,7 @@ import "../styles/sitemanagement/pelatihan.css";
 import "../styles/peserta/dashboards.css";
 // import "../styles/peserta/galeri.module.css"
 import "../styles/homepage/landingpage.css";
+import React, { useState, useEffect } from "react";
 import "../styles/dashboard/style.css";
 import SimpleReactValidator from "simple-react-validator";
 import { wrapper } from "../redux/store";
@@ -70,8 +71,12 @@ function MyApp({ Component, pageProps }) {
     url: "Harus :attribute yang valid.",
     // url: ":attribute harus berupa url.",
   });
-  moment.locale("id");
+
   const dispatch = useDispatch();
+  dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token))
+  useEffect(() => {
+  }, [dispatch, pageProps?.session?.user?.user?.data?.token])
+  moment.locale("id");
   
  
   return (
