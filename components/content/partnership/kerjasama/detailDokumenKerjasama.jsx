@@ -236,9 +236,9 @@ const DetailDokumenKerjasama = ({ token }) => {
               {/* loop end loop*/}
 
               <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+                <div className="col-sm-12 d-flex justify-content-md-end justify-content-center">
                   <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary d-flex justify-content-center">
                       Kembali
                     </a>
                   </Link>

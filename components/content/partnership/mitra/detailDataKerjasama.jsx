@@ -221,7 +221,7 @@ const DetailDataKerjasama = ({ token }) => {
           <div className="card-body pt-0">
             <div className="row">
               <div className="col-12 col-xl-6">
-                <div className="position-relative overflow-hidden w-100 mt-5">
+                <div className="position-relative overflow-hidden w-100 mt-0 mt-sm-5">
                   <IconSearch
                     style={{ left: "10" }}
                     className="left-center-absolute"
@@ -230,7 +230,7 @@ const DetailDataKerjasama = ({ token }) => {
                     id="kt_datatable_search_query"
                     type="text"
                     className="form-control pl-10"
-                    placeholder="Ketik disini untuk Pencarian..."
+                    placeholder="Cari..."
                     onChange={(e) => setKeyWord(e.target.value)}
                   />
                   <button
@@ -250,10 +250,10 @@ const DetailDataKerjasama = ({ token }) => {
                 <div className="d-flex flex-wrap align-items-center justify-content-xl-end justify-content-start mt-2">
                   {/* disini sortir modal */}
                   <button
-                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2 col-12 col-md-9 col-xl-3 mr-sm-1"
+                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2 col-12 col-md-9 col-xl-3 mr-sm-6 mt-5"
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
-                    style={{ color: "#464646", minWidth: "230px" }}
+                    style={{ color: "#464646"}}
                   >
                     <div className="d-flex align-items-center">
                       <IconFilter className="mr-3" />
@@ -373,7 +373,7 @@ const DetailDataKerjasama = ({ token }) => {
                   <button
                     type="button"
                     onClick={() => dispatch(exportFileCSVDetail(token, getId))}
-                    className="btn btn-rounded-full bg-blue-secondary text-white ml-sm-11  ml-md-6 mt-2"
+                    className="btn btn-rounded-full bg-blue-secondary text-white ml-sm-11  ml-md-6 mt-5"
                     style={{ width: "max-content" }}
                   >
                     Export .xlsx

@@ -1,0 +1,12 @@
+.menuItem {
+    color: #6C6C6C;
+    cursor: pointer;
+}
+
+.menuItem :hover{
+    color:#007CFF;
+}
+
+.menuItem :hover div{
+    color:#007CFF !important;
+}
