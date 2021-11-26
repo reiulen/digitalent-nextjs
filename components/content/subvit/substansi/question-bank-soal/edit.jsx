@@ -387,7 +387,8 @@ const EditSoalSubstansi = ({ token }) => {
                             >
                               {(row.question_image &&
                                 row.question_image.substr(12)) ||
-                                row.image_preview.substr(16)}
+                                (row.image_preview &&
+                                  row.image_preview.substr(16))}
                             </label>
                           </div>
                         </div>
