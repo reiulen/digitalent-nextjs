@@ -15,10 +15,8 @@ import {
 const Sidebar = ({ session }) => {
   const dispatch = useDispatch();
   const allFunctionls = useSelector((state) => state.allFunctionls);
-  const allSidebar = useSelector(state => state.allSidebar)
+  const allSidebar = useSelector((state) => state.allSidebar);
   const router = useRouter();
-
-  // console.log(allSidebar.data.data)
 
   // mitra partnership sementara
   const [menuItem9, setMenuItem9] = useState("");

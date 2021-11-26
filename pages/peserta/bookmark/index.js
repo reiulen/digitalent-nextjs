@@ -36,7 +36,7 @@ export default function BookmarkPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Artikel" session={session}>
+      <Layout title="Favorit" session={session}>
         <Bookmark session={session} success={props.success} />
       </Layout>
     </>
@@ -59,6 +59,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       let success = false;
+
       if (session) {
         const dataPribadi = await store.dispatch(
           getDataPribadi(session?.user.user.data.user.token)
@@ -76,34 +77,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(getDetailAkademi(4));
 
-      await store.dispatch(
-        getAllPelatihanByAkademi(
-          4,
-          query.tema_id,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1
-        )
-      );
-
-      await store.dispatch(
-        getAllBerandaArtikel(
-          query.page,
-          query.keyword,
-          query.limit,
-          query.filterPublish,
-          query.sort,
-          query.category_id,
-          query.category_name,
-          query.category_akademi,
-          query.tag
-        )
-      );
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta", success },
       };

@@ -139,7 +139,7 @@ const Navigationbar = ({ session }) => {
   if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
   if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
   if (router.pathname == "/") routerPath = "/";
-  console.log(session, "ini session");
+
   return (
     <>
       <Navbar
@@ -489,9 +489,14 @@ const Navigationbar = ({ session }) => {
                 </Link>
                 <Link href="/register">
                   <a className="mx-2">
-                    <button className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} m-2 justify-content-center py-3`}>
+                    <button
+                      className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} m-2 justify-content-center py-3`}
+                    >
                       {/* <IconRegister className="mr-2 icon-register" /> */}
-                      <div className="ri-user-line mr-2" style={{fontSize: "15px"}}></div>
+                      <div
+                        className="ri-user-line mr-2"
+                        style={{ fontSize: "15px" }}
+                      ></div>
                       Daftar
                     </button>
                   </a>

@@ -125,8 +125,9 @@ export default function Footer() {
               className={
                 footer &&
                 footer.external_link &&
-                footer.external_link.length > 5 &&
-                `row ml-0`
+                footer.external_link.length > 5
+                  ? `row ml-0`
+                  : undefined
               }
             >
               {footer &&

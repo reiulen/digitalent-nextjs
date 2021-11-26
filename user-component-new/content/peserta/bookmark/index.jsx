@@ -5,22 +5,17 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import style from "../../../../styles/peserta/dashboard.module.css";
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
+import { getAllBookmark } from "../../../../redux/actions/pelatihan/bookmark.action";
+import axios from "axios";
+import { SweatAlert } from "../../../../utils/middleware/helper/index";
+
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 export default function Bookmark({ session }) {
-  const { pelatihan, loading: loadingPelatihan } = useSelector(
-    (state) => state.allPelatihan
-  );
-
+  const dispatch = useDispatch();
+  const router = useRouter();
   const allBookmark = useSelector((state) => state.allBookmark);
-
-  const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
-    useSelector((state) => state.allPenyelenggaraPeserta);
-
-  const i = 1;
-
-  const [show, setShow] = useState([]);
-
-  const el = pelatihan?.list[0] || [];
 
   const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
@@ -30,45 +25,22 @@ export default function Bookmark({ session }) {
       },
     };
 
-    const body = {
-      pelatihan_id: pelatihan.id,
-    };
+    try {
+      const data = await axios.delete(
+        `${link}api/v1/bookmart-peserta/delete?pelatihan_id=${pelatihan.id}`,
+        config
+      );
 
-    if (!pelatihan.bookmark) {
-      try {
-        const data = await axios.post(
-          `${link}api/v1/bookmart-peserta/create`,
-          body,
-          config
+      if (data) {
+        SweatAlert(
+          "Berhasil",
+          "Anda berhasil menghapus pelatihan dari bookmark",
+          "success"
         );
-        if (data) {
-          SweatAlert(
-            "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
-            "success"
-          );
-          // dispatch(getTemaByAkademi(session?.token, akademi[0].id));
-        }
-      } catch (e) {
-        SweatAlert("Gagal", e.message, "error");
+        dispatch(getAllBookmark(session?.token));
       }
-    } else {
-      try {
-        const data = await axios.delete(
-          `${link}api/v1/bookmart-peserta/delete?pelatihan_id=${pelatihan.id}`,
-          config
-        );
-        if (data) {
-          SweatAlert(
-            "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
-            "success"
-          );
-          // dispatch(getTemaByAkademi(session?.token, akademi[0].id));
-        }
-      } catch (e) {
-        SweatAlert("Gagal", e.message, "error");
-      }
+    } catch (e) {
+      SweatAlert("Gagal", e.message, "error");
     }
   };
 
@@ -117,10 +89,15 @@ export default function Bookmark({ session }) {
                 </div>
                 <Button
                   variant="transparent"
-                  disabled={el.status == "Dibuka" ? false : true}
-                  className={`p-0 mb-0 ${
-                    el.status == "Dibuka" ? "" : style.btn_disabled_tema
-                  }`}
+                  disabled={!el.status == "Dibuka" ? false : true}
+                  className={
+                    el.status == "Dibuka"
+                      ? "p-0 mb-0"
+                      : `${style.btn_disabled_tema} p-0 mb-0 `
+                  }
+                  onClick={() => {
+                    router.push(`/detail/pelatihan/${el.id}`);
+                  }}
                 >
                   <div
                     style={{
@@ -132,9 +109,10 @@ export default function Bookmark({ session }) {
                     <Image
                       className={`${style.image_dashboard}`}
                       src={
-                        "/assets/media/default-card.png" ||
                         (el.gambar &&
-                          process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar)
+                          process.env.END_POINT_API_IMAGE_BEASISWA +
+                            el.gambar) ||
+                        "/assets/media/default-card.png" //NEED TO BE FIXED
                       }
                       layout="fill"
                       objectFit="cover"
@@ -146,7 +124,7 @@ export default function Bookmark({ session }) {
                       {el.metode_pelatihan !== "Offline" && (
                         <Badge
                           bg={` py-3 px-4 ${style.badge_card}`}
-                          className="d-flex d-none d-md-block"
+                          className=" d-none d-md-flex"
                         >
                           Pelatihan {el.metode_pelatihan}
                         </Badge>
@@ -193,7 +171,6 @@ export default function Bookmark({ session }) {
                         height={60}
                         objectFit="cover"
                         thumbnail
-                        roundedCircle
                         className={`${style.image_card_pelatihan} img-fluild`}
                         alt="Image Mitra"
                       />

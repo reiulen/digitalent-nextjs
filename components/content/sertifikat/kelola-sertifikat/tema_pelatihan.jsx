@@ -104,11 +104,11 @@ export default function NamaPelatihan({ token }) {
   };
 
   useEffect(() => {
-    console.log("certificate", certificate);
+    // console.log("certificate", certificate);
   }, [certificate]);
 
   useEffect(() => {
-    console.log(allCertificates);
+    // console.log(allCertificates);
   }, [allCertificates]);
 
   useEffect(() => {
