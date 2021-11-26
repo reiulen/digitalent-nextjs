@@ -389,8 +389,6 @@ export default function EditSertifikat({ token }) {
           );
         }
 
-        console.log(signature);
-
         if (certificate_type == "2 lembar") {
           if (status == 1) {
             const dataSyllabus = await convertDivToPng(

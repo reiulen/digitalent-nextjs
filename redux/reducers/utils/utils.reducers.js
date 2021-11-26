@@ -9,6 +9,9 @@ import {
   KOTA_SUCCESS,
   KOTA_FAIL,
   //   CLEAR_ERRORS,
+  GET_SUPERADMIN_PERMISSION_REQUEST,
+  GET_SUPERADMIN_PERMISSION_FAIL,
+  GET_SUPERADMIN_PERMISSION_SUCCESS,
 } from "../../types/utils/utils.type";
 
 export const allProvinsiReducer = (state = { allProvinsi: [] }, action) => {
@@ -64,6 +67,27 @@ export const allKotaReducer = (state = { allKota: [] }, action) => {
     //     error: null,
     //   };
 
+    default:
+      return state;
+  }
+};
+
+export const adminPermissionReducer = (state = { permission: {} }, action) => {
+  switch (action.type) {
+    case GET_SUPERADMIN_PERMISSION_REQUEST:
+      return {
+        loading: true,
+      };
+    case GET_SUPERADMIN_PERMISSION_SUCCESS:
+      return {
+        loading: false,
+        permission: action.payload.data,
+      };
+    case GET_SUPERADMIN_PERMISSION_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

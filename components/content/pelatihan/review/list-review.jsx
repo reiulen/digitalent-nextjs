@@ -28,6 +28,16 @@ const ListReview = ({ token }) => {
   let { success } = router.query;
   // page = Number(page);
 
+  const { permission } = useSelector((state) => state.adminPermission);
+  const [listPermission, setListPermission] = useState([]);
+
+  useEffect(() => {
+    const filterPermission = permission?.permissions?.filter((item) =>
+      item.includes("pelatihan")
+    );
+    setListPermission(filterPermission);
+  }, []);
+
   const { loading, error, review } = useSelector(
     (state) => state.allListReview
   );
@@ -517,18 +527,22 @@ const ListReview = ({ token }) => {
                             <td className="align-middle">
                               {row.status_substansi === "review" && (
                                 <div className="d-flex mr-10">
-                                  <Link
-                                    href={`/pelatihan/review-pelatihan/view-pelatihan/${row.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="Detail"
+                                  {listPermission.includes(
+                                    "pelatihan.review_pelatihan.view"
+                                  ) && (
+                                    <Link
+                                      href={`/pelatihan/review-pelatihan/view-pelatihan/${row.id}`}
                                     >
-                                      <i className="ri-eye-fill text-white p-0"></i>
-                                    </a>
-                                  </Link>
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Detail"
+                                      >
+                                        <i className="ri-eye-fill text-white p-0"></i>
+                                      </a>
+                                    </Link>
+                                  )}
                                 </div>
                               )}
                             </td>

@@ -7,6 +7,7 @@ import { getAllAcademy } from "../../../redux/actions/pelatihan/academy.actions"
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+import { getAllPermission } from "../../../redux/actions/utils/utils.actions";
 
 const ListAcademy = dynamic(
   () => import("../../../components/content/pelatihan/academy/list-academy"),
@@ -51,6 +52,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(getAllPermission(session.user.user.data.token));
 
       return {
         props: { session, title: "List Akademi - Pelatihan" },
