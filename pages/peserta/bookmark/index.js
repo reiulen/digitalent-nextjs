@@ -2,18 +2,9 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
 import LoadingContent from "../../../user-component/content/peserta/components/loader/LoadingContent";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
-import {
-  getAllBerandaArtikel,
-  getKategoriBerandaArtikel,
-  getTagBerandaArtikel,
-} from "../../../redux/actions/beranda/artikel.actions";
-import {
-  getAllPelatihanByAkademi,
-  getDetailAkademi,
-} from "../../../redux/actions/beranda/detail-akademi.actions";
+
 import { getAllBookmark } from "../../../redux/actions/pelatihan/bookmark.action";
 
 const Bookmark = dynamic(
@@ -58,27 +49,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      let success = false;
 
-      if (session) {
-        const dataPribadi = await store.dispatch(
-          getDataPribadi(session?.user.user.data.user.token)
-        );
-      }
-      await store.dispatch(
-        getDashboardPeserta(session?.user.user.data.user.token)
-      );
+      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
 
       const data = await store.dispatch(
         getAllBookmark(session?.user.user.data.user.token)
       );
 
-      await store.dispatch(getDataPribadi(session));
-
-      await store.dispatch(getDetailAkademi(4));
-
       return {
-        props: { data: "auth", session, title: "Dashboard - Peserta", success },
+        props: { data: "auth", session, title: "Dashboard - Peserta" },
       };
     }
 );

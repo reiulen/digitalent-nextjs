@@ -45,7 +45,6 @@ const Navigationbar = ({ session }) => {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
 
