@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 import IconClose from "../../../assets/icon/Close";
 import Image from "next/image";
+import ReactCrop from "react-image-crop";
+import { Modal } from "react-bootstrap";
 
 const TambahMitra = ({ token }) => {
   const router = useRouter();
@@ -15,6 +17,7 @@ const TambahMitra = ({ token }) => {
   const [email, setEmail] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
   const [wesite, setWesite] = useState("");
+  const [imageview, setImageview] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
@@ -128,6 +131,69 @@ const TambahMitra = ({ token }) => {
     }
   };
 
+  // Image Cropping
+  const [ showEditImage, setShowEditImage ] = useState(false)
+  const [upImg, setUpImg] = useState();
+  const imgRef = useRef(null);
+  const previewCanvasRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
+  const [completedCrop, setCompletedCrop] = useState(null);
+
+  const onSelectFile = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+
+    const image = imgRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+  }, [completedCrop]);
+
+  const onHandleHideModal = () => {
+    setShowEditImage(false)
+    setUpImg(null)
+  }
+
+  const onSubmitEditImage = () => {
+    setShowEditImage(false)
+    setUpImg(null)
+    setAgency_logo(previewCanvasRef.current.toDataURL("image/png"))
+  }
  
 
   const onChangeProvinces = (e) => {
@@ -162,10 +228,10 @@ const TambahMitra = ({ token }) => {
     }
   };
 
-  const [showImage, setShowImage] = useState(false);
-  const hideImage = () => {
-    setShowImage(showImage ? false : true);
-  };
+  // const [showImage, setShowImage] = useState(false);
+  // const hideImage = () => {
+  //   setShowImage(showImage ? false : true);
+  // };
 
   useEffect(() => {
     async function getDataProvinces(token) {
@@ -286,7 +352,7 @@ const TambahMitra = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Gambar Logo
                 </label>
@@ -338,9 +404,87 @@ const TambahMitra = ({ token }) => {
                 ) : (
                   ""
                 )}
+              </div> */}
+
+              <div className="form-group mb-0 mb-sm-4">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Gambar Logo 
+                </label>
+
+                {!agency_logo ? (
+                  <div className="ml-4 row">
+                    <figure
+                      className="avatar item-rtl position-relative shadow-sm rounded-circle"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src={
+                          process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
+                        }
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="fill"
+                        className="rounded-circle"
+                      />
+                    </figure>
+    
+                    <div className="position-relative">
+                      <label 
+                        className="circle-top" 
+                        onClick={() => setShowEditImage(true)}
+                      >
+                        <i className="ri-add-line text-dark"></i>
+                      </label>
+                    </div>
+                  </div>
+
+                  
+                ) : (
+                  <div className="ml-4 row">
+                    <figure
+                      className="avatar item-rtl position-relative shadow-sm rounded-circle"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src={agency_logo}
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="fill"
+                        className="rounded-circle"
+                      />
+
+                    </figure>
+                    <div className="position-relative">
+                      <label 
+                        className="circle-top" 
+                        onClick={() => setShowEditImage(true)}
+                      >
+                        <i className="ri-add-line text-dark"></i>
+                      </label>
+                    </div>
+                  </div>
+                )}
+
+                {agency_logo && imageview ? (
+                  <button
+                    className="btn btn-primary btn-sm my-3 mr-3"
+                    type="button"
+                    onClick={() => setAgency_logo("")}
+                  >
+                    Batal ubah
+                  </button>
+                ) : (
+                  ""
+                )}
+
               </div>
+
               {/* modal image show */}
-              <div
+              {/* <div
                 className="modal fade"
                 id="exampleModalCenter"
                 tabIndex="-1"
@@ -373,6 +517,59 @@ const TambahMitra = ({ token }) => {
                     >
                       {!agency_logo ? (
                         ""
+                      ) : (
+                        <Image
+                          src={agency_logo}
+                          alt="Picture of the author"
+                          layout="fill"
+                          objectFit="fill"
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+              <div
+                className="modal fade"
+                id="exampleModalCenter"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+              >
+                <div
+                  className="modal-dialog modal-dialog-centered"
+                  role="document"
+                >
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalLongTitle">
+                        Logo Gambar
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <IconClose />
+                      </button>
+                    </div>
+
+                    <div
+                      className="modal-body text-left p-0"
+                      style={{ height: "400px" }}
+                    >
+                      {!agency_logo ? (
+                        <Image
+                          src={
+                            process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                            imageview
+                          }
+                          alt="Picture of the author"
+                          layout="fill"
+                          objectFit="fill"
+                        />
                       ) : (
                         <Image
                           src={agency_logo}
@@ -579,6 +776,106 @@ const TambahMitra = ({ token }) => {
           </div>
         </div>
       </div>
+
+      {/* Modal Edit Image  */}
+      <Modal
+        show={showEditImage}
+        onHide={() => onHandleHideModal() }
+      >
+        <Modal.Header>
+          <Modal.Title>Ganti Logo Lembaga</Modal.Title>
+
+          <button
+            type="button"
+            className="close"
+            onClick={() => onHandleHideModal()}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+
+        </Modal.Header>
+
+        <Modal.Body>
+          <div>
+            Logo Lembaga
+          </div>
+
+          <div className="my-5">
+              <button 
+                className="btn btn-rounded-full btn-sm bg-blue-primary text-white d-flex justify-content-center"
+                onClick={() => {
+                  document.getElementById("edit-image").click();
+                }}
+              >
+                <i className="ri-upload-2-fill text-white"></i> Pilih Logo Lembaga
+              </button>
+
+              <input
+                type="file"
+                name="gambar"
+                className="custom-file-input"
+                id="edit-image"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={onSelectFile}
+              />
+
+              <div className="row mt-5">
+                <div className="col-12 col-md-6">
+                  <ReactCrop 
+                    src={upImg}
+                    onImageLoaded={onLoad}
+                    crop={crop}
+                    onChange={(c) => setCrop(c)}
+                    onComplete={(c) => setCompletedCrop(c)}
+                  />
+                </div>
+
+                <div className="col-12 col-md-6">
+                    {
+                      upImg ?
+                        <div>
+                          <div>
+                            Pratinjau
+                          </div>
+                          <canvas
+                            ref={previewCanvasRef}
+                            style={{
+                              width: Math.round(completedCrop?.width ?? 0),
+                              height: Math.round(completedCrop?.height ?? 0),
+                              borderRadius: "50%",
+                            }}
+                          />
+                        </div>
+                      :
+                        null
+                    }
+                </div>
+              </div>
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <div className="row">
+            <div className="d-flex justify-content-between align-items-center">
+                  <button
+                    className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center"
+                    onClick={() => onHandleHideModal()}
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
+                    onClick={() => onSubmitEditImage()}
+                  >
+                    Simpan
+                  </button>
+            </div>
+          </div>
+        </Modal.Footer>
+
+      </Modal>
+      {/* End of Modal Edit Image */}
     </PageWrapper>
   );
 };

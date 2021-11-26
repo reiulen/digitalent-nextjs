@@ -152,6 +152,7 @@ const Tambah = ({ token }) => {
       });
     }
   };
+  
   // Image Cropping
   const [ showEditImage, setShowEditImage ] = useState(false)
   const [upImg, setUpImg] = useState();
