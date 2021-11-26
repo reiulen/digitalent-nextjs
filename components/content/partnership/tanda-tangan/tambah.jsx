@@ -193,7 +193,7 @@ const TambahTandaTangan = ({ token }) => {
                     <button
                       type="button"
                       onClick={clear}
-                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mt-5"
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mt-3"
                     >
                       Buat Ulang Tanda Tangan
                     </button>
@@ -201,16 +201,16 @@ const TambahTandaTangan = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group ">
-                <div className="d-flex flex-column flex-row justify-content-end">
+              <div className="form-group">
+                <div className="d-flex flex-column flex-md-row justify-content-end">
                   <Link href="/partnership/tanda-tangan">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary d-flex justify-content-center">
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="submit"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center ml-0 ml-md-5 mt-md-0 mt-5"
                   >
                     Simpan
                   </button>

@@ -76,6 +76,11 @@ const DetailDokumenKerjasama = ({ token }) => {
         ...error,
         period: "Lama periode kerjasama tidak boleh kosong atau nol",
       });
+    } else if (period.length > 5) {
+      setError({
+        ...error,
+        period: "Maksimum 5 karakter",
+      });
     } else if (periodUnit === "") {
       setError({ ...error, periodUnit: "Period unit tidak boleh kosong" });
     } else if (AllCooperation === "") {

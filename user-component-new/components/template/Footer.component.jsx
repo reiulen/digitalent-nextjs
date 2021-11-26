@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getBerandaFooter } from "../../../redux/actions/beranda/beranda.actions";
 import { Row, Col, Container } from "react-bootstrap";
@@ -11,12 +12,45 @@ export default function Footer() {
   const dispatch = useDispatch();
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
+  const [secondary, setSecondary] = useState("1");
+  const [warna, setWarna] = useState("primary");
+
   useEffect(() => {
     dispatch(getBerandaFooter());
   }, [dispatch]);
+
+  useEffect(() => {
+    async function getDataGeneral(token) {
+      try {
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (data) {
+          setSecondary(data.data.color[1].color);
+        }
+      } catch (error) {
+        Swal.fire("Oops !", `${error.response.data.message}`, "error");
+      }
+    }
+    getDataGeneral();
+    if (secondary === "1") {
+      setWarna("primary");
+    } else if (secondary === "2") {
+      setWarna("secondary");
+    } else if (secondary === "3") {
+      setWarna("extras");
+    }
+  }, [secondary]);
+
   return (
-    <div className="color-secondary-secondary">
-      <Container fluid className="px-md-25">
+    <div className={`color-secondary-${warna}`}>
+      <Container fluid className="px-xl-37 px-lg-10 px-10">
         <Row className="w-100 px-0 mx-0 mb-0 py-5">
           <Col md={2} sm={12}>
             <div className="mt-5">
@@ -49,7 +83,7 @@ export default function Footer() {
                   footer.social_media &&
                   footer.social_media.length !== 0 &&
                   footer.social_media.map((row, i) => (
-                    <a href={row.link_social_media} target="_blank">
+                    <a href={row.link_social_media} target="_blank" key={i}>
                       <div className="cursor-pointer mx-md-0 px-2">
                         <Image
                           key={i}
@@ -74,7 +108,7 @@ export default function Footer() {
         </Row>
       </Container>
       <hr style={{ backgroundColor: "white" }} />
-      <Container fluid className="px-md-25 px-10">
+      <Container fluid className="px-xl-37 px-lg-10 px-10 px-10">
         <Row className="py-10 ">
           <Col md={4} sm={12}>
             <div>
@@ -105,6 +139,7 @@ export default function Footer() {
                         ? `col-md-6 pl-0`
                         : `col-md-12 pl-0`
                     }
+                    key={i}
                   >
                     <Link href={row.link}>
                       <a className="text-white fw-500" target="_blank">

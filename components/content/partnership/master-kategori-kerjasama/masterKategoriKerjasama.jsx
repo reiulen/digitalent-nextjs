@@ -96,7 +96,7 @@ const Table = ({ token }) => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0 px-4 px-sm-6">
+          <div className="card-header border-0 mt-10 ml-sm-n5 ml-n5">
             <div className="col-12 col-xl-6">
               <h3
                 className="card-title font-weight-bolder text-dark titles-1"
@@ -105,12 +105,16 @@ const Table = ({ token }) => {
               </h3>
             </div>
             
-            <div className="col-12 col-xl-6 d-flex justify-content-xl-end">
+            <div className="col-12 col-xl-6 d-flex justify-content-xl-end  mb-5">
               <div className="card-toolbar mb-5">
                 <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
-                  <a className="btn btn-rounded-full bg-blue-primary text-white">
+                  <a className="btn btn-rounded-full bg-blue-primary text-white w-75 w-md-100">
                     <IconAdd className="mr-3" width="14" height="14" />
-                    Tambah Kategori Kerjasama
+                    <div 
+                      className="text-truncate d-block"
+                    >
+                      Tambah Kategori Kerjasama
+                    </div>
                   </a>
                 </Link>
               </div>
@@ -118,48 +122,46 @@ const Table = ({ token }) => {
             
           </div>
 
-          <div className="card-body pt-0 px-4 px-sm-6 mb-10">
+          <div className="card-body pt-0 px-sm-6 mb-10">
             <div className="table-filter">
-              <div className="row align-items-center">
+              <div className="row d-flex align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <div
-                    className="d-flex align-items-center w-100"
+                    className="row d-flex align-items-center"
                   >
-                    <div className="row w-100">
-                      <div className="col-12 col-xl-4">
-                        <div className="position-relative overflow-hidden w-100">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Cari.."
-                            onChange={(e) =>
-                              handleChangeValueSearch(e.target.value)
-                            }
-                          />
-                          <button
-                            type="button"
-                            onClick={(e)=>handleSubmit(e)}
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
-                        </div>
+                    <div className="col-12 col-xl-4 ">
+                      <div className="position-relative overflow-hidden">
+                        <IconSearch
+                          style={{ left: "10" }}
+                          className="left-center-absolute"
+                        />
+                        <input
+                          id="kt_datatable_search_query"
+                          type="text"
+                          className="form-control pl-10"
+                          placeholder="Cari.."
+                          onChange={(e) =>
+                            handleChangeValueSearch(e.target.value)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={(e)=>handleSubmit(e)}
+                          className="btn bg-blue-primary text-white right-center-absolute"
+                          style={{
+                            borderTopLeftRadius: "0",
+                            borderBottomLeftRadius: "0",
+                          }}
+                        >
+                          Cari
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="table-page mt-14 mt-sm-5">
+            <div className="table-page mt-10 mt-sm-5">
               <div className="table-responsive">
                 {allMKCooporation.status === "process" ? (
                   <LoadingTable />
@@ -271,7 +273,7 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="table-pagination paginate-cs col-12 col-md-8">
+                <div className="table-pagination paginate-cs col-12 col-md-8 overflow-auto">
                   <Pagination
                     activePage={allMKCooporation.page}
                     itemsCountPerPage={
