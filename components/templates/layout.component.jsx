@@ -43,6 +43,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
   const allFunctionls = useSelector((state) => state.allFunctionls);
   const [user, setUser] = useState();
   const [session, setSession] = useState();
+  const [sideBar, setSidebar] = useState([])
   const handlerLogout = () => {
     signOut();
     // {
@@ -62,6 +63,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
     getSession().then((session) => {
       setUser(session.user.user.data.user);
       setSession(session);
+      
     });
   }, []);
 
@@ -122,7 +124,14 @@ const Layout = ({ children, title = "Dashboard" }) => {
               >
                 {(user && user.name) || ""}
               </a>
-              <div className="text-muted mt-1">Admin</div>
+              <div className="text-muted mt-1">
+                {
+                  user && user.mitra_profile ?
+                    "Mitra"
+                  :
+                    "Admin"
+                }
+              </div>
               <div className="navi mt-2">
                 <a href="#" className="navi-item">
                   <span className="navi-link p-0 pb-2">

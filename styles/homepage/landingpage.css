@@ -139,6 +139,7 @@
   box-sizing: border-box;
   font-weight: 600;
   font-size: 14px;
+  border-radius: 30px !important;
 }
 
 .btn-quick-view-new:hover {

@@ -55,13 +55,13 @@ const RegisterUser = () => {
   };
 
   const handlePassword = (value) => {
-    if (value !== passwordConfirm) {
-      setMessageDontMatch(true);
-      setPassword(value);
-    } else {
-      setMessageDontMatch(false);
-      setPassword(value);
-    }
+    // if (value !== passwordConfirm) {
+    //   setMessageDontMatch(true);
+    //   setPassword(value);
+    // } else {
+    //   setMessageDontMatch(false);
+    // }
+    setPassword(value);
   };
 
   const handlePasswordConfirm = (value) => {
@@ -88,25 +88,28 @@ const RegisterUser = () => {
         capcha: captcha,
         services: verify,
       };
-
-      axios
-        .post(
-          process.env.END_POINT_API_PELATIHAN + `api/v1/auth/register`,
-          data
-        )
-        .then((res) => {
-          setLoading(false);
-          if (res.data.status) {
-            router.push({
-              pathname: "/register/register-otp",
-              query: { email, services: verify },
-            });
-          }
-        })
-        .catch((err) => {
-          setLoading(false);
-          SweatAlert("Gagal", err.response.data.message, "error");
-        });
+      if (!messageDontMatch) {
+        axios
+          .post(
+            process.env.END_POINT_API_PELATIHAN + `api/v1/auth/register`,
+            data
+          )
+          .then((res) => {
+            setLoading(false);
+            if (res.data.status) {
+              router.push({
+                pathname: "/register/register-otp",
+                query: { email, services: verify },
+              });
+            }
+          })
+          .catch((err) => {
+            setLoading(false);
+            SweatAlert("Gagal", err.response.data.message, "error");
+          });
+      } else {
+        SweatAlert("Gagal", "Password Tidak Sama", "error");
+      }
     } else {
       setLoading(false);
       simpleValidator.current.showMessages();
@@ -295,9 +298,6 @@ const RegisterUser = () => {
                       className: "text-danger",
                     }
                   )}
-                  {messageDontMatch && (
-                    <p className="text-danger">Password tidak sama</p>
-                  )}
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">Konfirmasi Password</label>
@@ -356,11 +356,9 @@ const RegisterUser = () => {
                   )}
                 </div>
 
-                <div className="form-group row mb-4">
-                  <label className="form-auth-label col-sm-4">
-                    Verifikasi dengan
-                  </label>
-                  <div className="col-sm-8 my-auto">
+                <div className="form-group mb-4">
+                  <label className="form-auth-label ">Verifikasi dengan</label>
+                  <div className=" my-auto">
                     <div className="form-check form-check-inline">
                       <input
                         type="radio"

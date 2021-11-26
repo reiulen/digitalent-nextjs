@@ -18,6 +18,7 @@ import {
   newSertifikat,
   updateSertifikat,
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+
 import * as moment from "moment";
 import { Modal } from "react-bootstrap";
 import { SweatAlert } from "../../../../../../utils/middleware/helper/index";
@@ -388,8 +389,6 @@ export default function EditSertifikat({ token }) {
           );
         }
 
-        console.log(signature);
-
         if (certificate_type == "2 lembar") {
           if (status == 1) {
             const dataSyllabus = await convertDivToPng(
@@ -574,7 +573,7 @@ export default function EditSertifikat({ token }) {
             <div className="card-body border-top" style={{ width: "100%" }}>
               <div className="row p-0">
                 {/* START COL */}
-                <div className="border-primary border col-lg-8 col-12 position-relative">
+                <div className="border-primary border col-lg-8 col-12 position-relative p-0">
                   <div className="p-0" ref={divReference}>
                     {localBackground ? (
                       <img
@@ -602,7 +601,7 @@ export default function EditSertifikat({ token }) {
                     <div className="row align-items-center zindex-1">
                       <div className="position-relative">
                         <div
-                          className="m-6 text-center px-4 border-2"
+                          className="mt-10 mx-8 text-center px-4 border-2"
                           style={{ height: "20px" }}
                         >
                           {nomerSertifikat}
@@ -696,7 +695,7 @@ export default function EditSertifikat({ token }) {
                                         signature[i]?.localSignature
                                           ? ""
                                           : "dashed",
-                                      height: "100px",
+                                      height: "80px",
                                     }}
                                   >
                                     {signature[i]?.localSignature ? (
@@ -1262,7 +1261,7 @@ export default function EditSertifikat({ token }) {
               <div className="card-body border-top" style={{ width: "100%" }}>
                 <div className="row p-0">
                   {/* START COL */}
-                  <div className="border-primary p-0 border col-lg-8 col-12 position-relative">
+                  <div className="border-primary p-0 border col-lg-8 col-12 position-relative p-0">
                     <div className="p-0 " ref={divReferenceSilabus}>
                       {localBackgroundSyllabus ? (
                         <img
@@ -1361,7 +1360,7 @@ export default function EditSertifikat({ token }) {
                                             signatureSyllabus[i]?.localSignature
                                               ? ""
                                               : "dashed",
-                                          height: "100px",
+                                          height: "80px",
                                         }}
                                       >
                                         {signatureSyllabus[i]

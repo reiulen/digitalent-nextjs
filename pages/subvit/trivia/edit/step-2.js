@@ -32,9 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDetailTriviaQuestionBanks(query.id, session.user.user.data.token)
       );
-      const middleware = middlewareAuthAdminSession(
-        middlewareAuthAdminSessionsession
-      );
+      const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {
           redirect: {

@@ -415,7 +415,10 @@ const Dashboard = ({ session, success }) => {
                       objectFit="cover"
                     />
                     <Card.ImgOverlay>
-                      <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
+                      <Badge
+                        bg={` rounded-xl py-3 px-4 ${style.badge_card}`}
+                        className="d-none d-lg-inline-block"
+                      >
                         Pelatihan {pelatihan.pelatihan_selesi.metode_pelatihan}
                       </Badge>
                     </Card.ImgOverlay>

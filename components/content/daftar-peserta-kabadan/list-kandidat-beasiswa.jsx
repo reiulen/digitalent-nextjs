@@ -3,39 +3,107 @@ import PageWrapper from "../../wrapper/page.wrapper";
 import { Modal } from "react-bootstrap";
 import Select from "react-select";
 import Pagination from "react-js-pagination";
+import { useDispatch, useSelector } from "react-redux";
+import LoadingTable from "../../LoadingTable";
+import {
+  getAllBeasiswaKandidat,
+  clearErrors,
+} from "../../../redux/actions/dashboard-kabadan/data-peserta/beasiswa.actions";
 
-const ListKandidatBeasiswa = () => {
+const ListKandidatBeasiswa = ({ token }) => {
+  const dispatch = useDispatch();
+
+  const { loading, error, kandidat } = useSelector(
+    (state) => state.allBeasiswaKandidat
+  );
+
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  // FILTER BEASISWA
+  const [type, setType] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [stage, setStage] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
 
   const handleSearch = () => {
     setPage(1);
+    dispatch(getAllBeasiswaKandidat(token, 1, search));
   };
 
   const handleFilter = () => {
     setShowModal(false);
     setPage(1);
+    dispatch(
+      getAllBeasiswaKandidat(
+        token,
+        1,
+        search,
+        limit,
+        type !== null ? type.value : null,
+        category !== null ? category.value : null,
+        destination !== null ? destination.value : null,
+        stage !== null ? stage.value : null
+      )
+    );
   };
 
   const handleReset = () => {
+    setPage(1);
+    setType(null);
+    setCategory(null);
+    setDestination(null);
+    setStage(null);
     setShowModal(false);
+    dispatch(getAllBeasiswaKandidat(token, 1));
   };
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
+    dispatch(getAllBeasiswaKandidat(token, pageNumber));
   };
 
   const handleLimit = (val) => {
     setLimit(val);
     setPage(1);
+    dispatch(getAllBeasiswaKandidat(token, 1, search, val));
+  };
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
   };
 
   const options = [{ label: "Buahh", value: "Buah" }];
   return (
     <PageWrapper>
+      {error && (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-strech gutter-b">
           <div className="card-header border-0 mt-3">
@@ -92,109 +160,121 @@ const ListKandidatBeasiswa = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table
-                  className="table table-separate table-head-custom table-checkable"
-                  style={{
-                    WebkitColumnWidth: "100%",
-                    MozColumnWidth: "100%",
-                  }}
-                >
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-center ">No</th>
-                      <th>Nama Lengkap</th>
-                      <th>Kategori Beasiswa</th>
-                      <th>Beasiswa Tujuan</th>
-                      <th>Tahap Seleksi</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[1, 2, 3, 4, 5].map((row, i) => (
-                      <tr key={i}>
-                        <td className="text-center align-middle">
-                          {limit === null
-                            ? i + 1 * (page * 5) - (5 - 1)
-                            : i + 1 * (page * limit) - (limit - 1)}
-                        </td>
-                        <td className="align-middle">
-                          <p className="mb-0">Dendy</p>
-                        </td>
-                        <td className="align-middle">
-                          <p className="fz-15 mb-0">
-                            Beasiswa Regular Bagi ASN
-                          </p>
-                        </td>
-                        <td className="align-middle">
-                          <p className="font-weight-bolder my-0">
-                            Unversitas Indonesia
-                          </p>
-                          <p className="my-0">Manajemen Teknologi Informasi</p>
-                        </td>
-                        <td className="align-middle">
-                          <p className="fz-15 mb-0">Tahap 1</p>
-                        </td>
-                        <td className="align-middle">
-                          <span className="label label-inline label-light-success font-weight-bold py-5">
-                            Menunggu Verifikasi
-                          </span>
-                        </td>
+                <LoadingTable loading={loading} />
+                {loading !== true && (
+                  <table
+                    className="table table-separate table-head-custom table-checkable"
+                    style={{
+                      WebkitColumnWidth: "100%",
+                      MozColumnWidth: "100%",
+                    }}
+                  >
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-center ">No</th>
+                        <th>Nama Lengkap</th>
+                        <th>Kategori Beasiswa</th>
+                        <th>Beasiswa Tujuan</th>
+                        <th>Tahap Seleksi</th>
+                        <th>Status</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {!kandidat ||
+                      (kandidat && kandidat.list_participant.length === 0) ? (
+                        <td className="align-middle text-center" colSpan={6}>
+                          Data Kosong
+                        </td>
+                      ) : (
+                        kandidat.list_participant.map((row, i) => (
+                          <tr key={i}>
+                            <td className="text-center align-middle">
+                              {limit === null
+                                ? i + 1 * (page * 5) - (5 - 1)
+                                : i + 1 * (page * limit) - (limit - 1)}
+                            </td>
+                            <td className="align-middle">
+                              <p className="mb-0">{row.fullname}</p>
+                            </td>
+                            <td className="align-middle">
+                              <p className="fz-15 mb-0">{row.category}</p>
+                            </td>
+                            <td className="align-middle">
+                              <p className="font-weight-bolder my-0">
+                                {row.university}
+                              </p>
+                              <p className="my-0">{row.study_program}</p>
+                            </td>
+                            <td className="align-middle">
+                              <p className="fz-15 mb-0">{row.stage}</p>
+                            </td>
+                            <td className="align-middle">
+                              <span className="label label-inline label-light-success font-weight-bold py-5">
+                                {row.status}
+                              </span>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                )}
               </div>
             </div>
 
             <div className="row">
-              <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                <Pagination
-                  activePage={page}
-                  itemsCountPerPage={3}
-                  totalItemsCount={5}
-                  pageRangeDisplayed={3}
-                  onChange={handlePagination}
-                  nextPageText={">"}
-                  prevPageText={"<"}
-                  firstPageText={"<<"}
-                  lastPageText={">>"}
-                  itemClass="page-item"
-                  linkClass="page-link"
-                />
-              </div>
-              <div className="table-total ml-auto">
-                <div className="row">
-                  <div className="col-4 mr-0 p-0 mt-3">
-                    <select
-                      className="form-control"
-                      id="exampleFormControlSelect2"
-                      style={{
-                        width: "65px",
-                        background: "#F3F6F9",
-                        borderColor: "#F3F6F9",
-                        color: "#9E9E9E",
-                      }}
-                      onChange={(e) => handleLimit(e.target.value)}
-                      onBlur={(e) => handleLimit(e.target.value)}
-                      value={limit}
-                    >
-                      <option value="5">5</option>
-                      <option value="10">10</option>
-                      <option value="30">30</option>
-                      <option value="40">40</option>
-                      <option value="50">50</option>
-                    </select>
-                  </div>
-                  <div className="col-8 my-auto pt-3">
-                    <p
-                      className="align-middle mt-3"
-                      style={{ color: "#B5B5C3" }}
-                    >
-                      Total Data 5
-                    </p>
+              {kandidat && kandidat.perPage < kandidat.total && (
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={kandidat.perPage}
+                    totalItemsCount={kandidat.total}
+                    pageRangeDisplayed={3}
+                    onChange={handlePagination}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+              )}
+              {kandidat && kandidat.total > 5 && (
+                <div className="table-total ml-auto">
+                  <div className="row">
+                    <div className="col-4 mr-0 p-0 mt-3">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        onChange={(e) => handleLimit(e.target.value)}
+                        onBlur={(e) => handleLimit(e.target.value)}
+                        value={limit}
+                      >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto pt-3">
+                      <p
+                        className="align-middle mt-3"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data {kandidat.total}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

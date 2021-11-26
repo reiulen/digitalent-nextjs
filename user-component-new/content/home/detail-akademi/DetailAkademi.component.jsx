@@ -288,7 +288,7 @@ const DetailAkademi = ({ session }) => {
                 <Col md={10}>
                   <Card.Title className="mb-5">
                     <h2>
-                      {(akademi && akademi.name) || "-"} (
+                      {(akademi && akademi.name) || "Akademi Belum Tersedia"} (
                       {(akademi && akademi.slug) || "-"})
                     </h2>
                   </Card.Title>
@@ -441,7 +441,7 @@ const DetailAkademi = ({ session }) => {
                               key={i}
                             >
                               <Card className="h-100 shadow-sm">
-                                {el.status !== "Open" ? (
+                                {el.status !== "Dibuka" ? (
                                   <CardPelatihanClose row={el} />
                                 ) : (
                                   <CardPelatihanOpen

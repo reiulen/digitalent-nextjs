@@ -8,51 +8,46 @@ export default function ChatBot() {
   const [clicked, setClicked] = useState(false);
 
   return (
-    <div
-      className={`${style.Chatbot_container} shadow`}
-      onClick={() => {
-        setClicked(!clicked);
-      }}
-    >
+    <div className={`${style.Chatbot_container} shadow`}>
       <div
         className={`${style.chatbot_box} ${style.one} d-flex justify-content-end `}
         style={clicked ? { width: "280px" } : {}}
       >
         <button
-          className={`btn btn-block text-primary rounded-full shadow-sm ${
-            style.chatbot_btn_help
-          } ${clicked && style.right_animation}`}
-          // style={
-          //   clicked ? { right: "60px", top: 0, maxHeight: "max-content" } : {}
-          // }
+          className={`btn btn-block  text-primary ${
+            clicked ? "rounded-lg" : "rounded-full"
+          } shadow-sm ${style.chatbot_btn_help} ${
+            clicked && style.right_animation
+          }`}
+          onClick={() => {
+            setClicked(!clicked);
+          }}
         >
-          <div className={`my-3 `}>Butuh Bantuan?</div>
+          <div
+            className={`d-flex justify-content-between ${clicked && "py-2"}`}
+          >
+            <div>Butuh Bantuan?</div>
+            {clicked && <div className="ri-close-line text-gray"></div>}
+          </div>
+
           <div
             className={`${style.helpbtn_active}`}
             style={clicked ? { maxHeight: "200px" } : { maxHeight: "0px" }}
           >
             {clicked && (
-              <div>
-                <a
-                  href="/helpdesk/live-chat"
-                  className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
-                >
-                  <i className="ri-question-answer-fill" /> Live Chat
+              <div className="d-flex flex-column text-left">
+                <a href="/helpdesk/live-chat" className={`py-2 rounded-full `}>
+                  <i className="ri-question-answer-fill text-primary text-left" />{" "}
+                  Live Chat
                 </a>
-                <Link href="/helpdesk/formulir-pengaduan">
-                  <div
-                    className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
-                  >
-                    <i className="ri-draft-fill" />
+                <Link href="/helpdesk/formulir-pengaduan" passHref>
+                  <a className={` rounded-full py-2`}>
+                    <i className="ri-draft-fill text-primary" />
                     Form Pengaduan
-                  </div>
+                  </a>
                 </Link>
-
-                <a
-                  className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
-                  href="tel:0213452841"
-                >
-                  <i className="ri-phone-fill" />
+                <a className={`rounded-full py-2`} href="tel:0213452841">
+                  <i className="ri-phone-fill text-primary" />
                   Hubungi Kami
                 </a>
               </div>
@@ -61,8 +56,8 @@ export default function ChatBot() {
         </button>
         <div className={`${style.chatbot_image} justify-content-end`}>
           <Image
-            width={110}
-            height={140}
+            width={100}
+            height={120}
             src={"/assets/media/ChatBot.png"}
             objectFit="cover"
           />

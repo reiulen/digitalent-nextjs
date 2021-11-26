@@ -26,6 +26,15 @@ const ListSummary = ({ token }) => {
   const router = useRouter();
 
   let { success } = router.query;
+  const { permission } = useSelector((state) => state.adminPermission);
+  const [listPermission, setListPermission] = useState([]);
+
+  useEffect(() => {
+    const filterPermission = permission?.permissions?.filter((item) =>
+      item.includes("pelatihan")
+    );
+    setListPermission(filterPermission);
+  }, []);
 
   const { loading, error, summary } = useSelector((state) => state.allSummary);
   const {
@@ -439,30 +448,38 @@ const ListSummary = ({ token }) => {
                             </td>
                             <td className="align-middle ml-4">
                               <div className="d-flex mr-10">
-                                <Link
-                                  href={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${row.id}`}
-                                >
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="View"
+                                {listPermission.includes(
+                                  "pelatihan.rekap_pendaftaran.view"
+                                ) && (
+                                  <Link
+                                    href={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${row.id}`}
                                   >
-                                    <i className="ri-eye-fill text-white p-0"></i>
-                                  </a>
-                                </Link>
-                                <Link
-                                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
-                                >
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Detail"
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="View"
+                                    >
+                                      <i className="ri-eye-fill text-white p-0"></i>
+                                    </a>
+                                  </Link>
+                                )}
+                                {listPermission.includes(
+                                  "pelatihan.rekap_pendaftaran.manage"
+                                ) && (
+                                  <Link
+                                    href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
                                   >
-                                    <i className="ri-registered-fill text-white p-0"></i>
-                                  </a>
-                                </Link>
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Detail"
+                                    >
+                                      <i className="ri-registered-fill text-white p-0"></i>
+                                    </a>
+                                  </Link>
+                                )}
                               </div>
                             </td>
                           </tr>

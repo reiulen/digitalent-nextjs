@@ -9,6 +9,9 @@ import {
   KOTA_SUCCESS,
   KOTA_FAIL,
   CLEAR_ERRORS,
+  GET_SUPERADMIN_PERMISSION_FAIL,
+  GET_SUPERADMIN_PERMISSION_SUCCESS,
+  GET_SUPERADMIN_PERMISSION_REQUEST,
 } from "../../types/utils/utils.type";
 
 import axios from "axios";
@@ -71,6 +74,34 @@ export const getAllKota = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: KOTA_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const getAllPermission = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_SUPERADMIN_PERMISSION_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/user/permissions`;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: GET_SUPERADMIN_PERMISSION_SUCCESS,
+      payload: data,
+    });
+    return data;
+  } catch (error) {
+    dispatch({
+      type: GET_SUPERADMIN_PERMISSION_FAIL,
       payload: error.message,
     });
   }

@@ -19,7 +19,7 @@ const CardPelatihanOpen = ({
       >
         <div
           className={
-            show[i] !== true && row.status === "Open"
+            show[i] !== true && row.status === "Dibuka"
               ? `parent-image-pelatihan-new`
               : `parent-image-pelatihan-new-hover`
           }
@@ -60,7 +60,7 @@ const CardPelatihanOpen = ({
                   ></i>
                 </Button>
                 <ShareOverlay
-                  url={`${process.env.PATH_URL}/detail/pelatihan/${row.id}`}
+                  url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
                   quote={row.name}
                 >
                   <Button
@@ -105,7 +105,7 @@ const CardPelatihanOpen = ({
             <div className="status align-self-center">
               <p
                 className={`${
-                  row.status === "Open"
+                  row.status === "Dibuka"
                     ? "status-mitra-open-new"
                     : "status-mitra-close-new"
                 } text-uppercase my-0`}

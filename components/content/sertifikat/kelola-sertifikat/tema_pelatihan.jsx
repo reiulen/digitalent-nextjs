@@ -24,6 +24,7 @@ import {
   setValuePage,
   setValueTheme,
 } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+
 import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
 import Cookies from "js-cookie";
 
@@ -34,6 +35,7 @@ export default function NamaPelatihan({ token }) {
   const { loading, error, certificate, academyOptions, themeOptions } =
     useSelector((state) => state.allCertificates);
   const allCertificates = useSelector((state) => state.allCertificates);
+
   const [academy, setAcademy] = useState("");
   const [temaPelatihan, setTemaPelatihan] = useState("");
   const [disable, setDisable] = useState(true);
@@ -54,7 +56,7 @@ export default function NamaPelatihan({ token }) {
   };
 
   useEffect(() => {
-    // console.log(themeOptions, "ini theme options");
+    // UNFINISH!
     // di tema nya di kasih academy id
     // biar gw kalo nge filter itu berdasarkan academy id yang ada di options tema nya
     const filteredTheme = themeOptions.filter(
