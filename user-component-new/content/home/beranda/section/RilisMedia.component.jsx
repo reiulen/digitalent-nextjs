@@ -56,9 +56,7 @@ export default function RilisMedia({ berita }) {
                     }}
                   >
                     <Link href={`/berita/detail/${row.slug}`} passHref>
-                      <a className={`${style.link_rilis}`}>
-                        Lihat Detail &rarr;
-                      </a>
+                      <a className={`${style.link_rilis}`}>Lihat Detail ></a>
                     </Link>
                   </div>
                 </Card.Body>
