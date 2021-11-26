@@ -21,7 +21,7 @@ const CardPage = ({
     newDate.setHours(newDate.getHours() + hours);
     return newDate;
   }
-
+  console.log(isSubvit, "ini is subvit");
   return (
     <>
       <Col md={col} className="mb-4 px-2">
@@ -42,7 +42,7 @@ const CardPage = ({
               style={{
                 fontSize: "16px",
                 fontWeight: "600",
-                width: isSubvit ? "max-content" : "100%",
+                width: isSubvit ? "100%" : "100%",
                 color: color,
               }}
             >

@@ -112,9 +112,21 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
         </div>
         <div>
           <Link href="/peserta/administrasi" passHref>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
+            <div
+              className={`${
+                router.pathname === "/peserta/administrasi"
+                  ? styles.activeMenuItem
+                  : styles.menuItem
+              } d-flex flex-row`}
+            >
               <div className="p-2">
-                <div className={`${styles.iconMenu} ri-survey-line`}></div>
+                <div
+                  className={`${
+                    router.pathname === "/peserta/administrasi"
+                      ? styles.activeIconMenu
+                      : styles.iconMenu
+                  } ri-survey-line`}
+                ></div>
               </div>
               <div className="p-2">
                 <td>Administrasi</td>
@@ -231,26 +243,28 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           </Link>
         </div>
         <div>
-          <div
-            className={`${
-              router.pathname === "/peserta/bookmark"
-                ? styles.activeMenuItem
-                : styles.menuItem
-            } d-flex flex-row`}
-          >
-            <div className="p-2">
-              <div
-                className={`${
-                  router.pathname === "/peserta/bookmark"
-                    ? styles.activeIconMenu
-                    : styles.iconMenu
-                } ri-heart-3-line`}
-              ></div>
+          <Link href="/peserta/bookmark" passHref>
+            <div
+              className={`${
+                router.pathname === "/peserta/bookmark"
+                  ? styles.activeMenuItem
+                  : styles.menuItem
+              } d-flex flex-row`}
+            >
+              <div className="p-2">
+                <div
+                  className={`${
+                    router.pathname === "/peserta/bookmark"
+                      ? styles.activeIconMenu
+                      : styles.iconMenu
+                  } ri-heart-3-line`}
+                ></div>
+              </div>
+              <div className="p-2">
+                <td>Bookmark</td>
+              </div>
             </div>
-            <div className="p-2">
-              <td>Bookmark</td>
-            </div>
-          </div>
+          </Link>
         </div>
 
         <div>
@@ -319,13 +333,13 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
             >
               <div className="d-flex flex-row">
                 <div className="p-2">
-                  <i
+                  <div
                     className={`${
                       router.pathname === "/peserta/profile"
                         ? styles.activeIconMenu
                         : styles.iconMenu
                     } ri-user-line`}
-                  ></i>
+                  ></div>
                 </div>
                 <div className="p-2">
                   <td>Profile</td>
@@ -339,7 +353,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           <div className={styles.akunMenu}>
             <div className="d-flex flex-row">
               <div className="p-2">
-                <i className="ri-settings-4-line"></i>
+                <div className="ri-settings-4-line"></div>
               </div>
               <div className="p-2">
                 <td>Pengaturan</td>
@@ -356,7 +370,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
         >
           <div className="d-flex flex-row">
             <div className="p-2">
-              <i className="ri-logout-circle-line"></i>
+              <d className="ri-logout-circle-line"></d>
             </div>
             <div className="p-2">
               <td>Logout</td>
