@@ -50,7 +50,7 @@ export default function Footer() {
 
   return (
     <div className={`color-secondary-${warna}`}>
-      <Container fluid className="px-xl-37 px-lg-10 px-10">
+      <Container fluid className="px-xl-35 px-lg-10 px-10">
         <Row className="w-100 px-0 mx-0 mb-0 py-5">
           <Col md={2} sm={12}>
             <div className="mt-5">
@@ -78,7 +78,7 @@ export default function Footer() {
           </Col>
           <Col md={2} sm={12} className="my-5">
             <div className="h-100 w-100">
-              <div className="pl-md-20 d-flex border-left-md align-items-md-center justify-content-md-end h-100 w-100">
+              <div className="pl-xl-20 d-flex border-left-md align-items-md-center justify-content-md-end h-100 w-100">
                 {footer &&
                   footer.social_media &&
                   footer.social_media.length !== 0 &&
@@ -108,7 +108,7 @@ export default function Footer() {
         </Row>
       </Container>
       <hr style={{ backgroundColor: "white" }} />
-      <Container fluid className="px-xl-37 px-lg-10 px-10 px-10">
+      <Container fluid className="px-xl-35 px-lg-10 px-15">
         <Row className="py-10 ">
           <Col md={4} sm={12}>
             <div>
