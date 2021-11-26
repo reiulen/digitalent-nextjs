@@ -338,12 +338,12 @@ const TambahArtikel = ({ token, id }) => {
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
-                      {/* {simpleValidator.current.message(
+                      {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100|max:12000",
+                        "required",
                         { className: "text-danger" }
-                      )} */}
+                      )}
                     </div>
                   </div>
                 </div>
@@ -405,7 +405,7 @@ const TambahArtikel = ({ token, id }) => {
 
                   <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                     <p>
-                      Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                      Resolusi yang direkomendasikan adalah 837 * 640. Fokus visual pada bagian tengah gambar.
                     </p>
                   </div>
                 </div>
