@@ -474,7 +474,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         tuna_netra,
         tuna_rungu,
         tuna_daksa,
-        pelatihan_id: parseInt(router.query.id),
+        pelatian_id: parseInt(router.query.id),
       };
       dispatch(updateTrainingStep1(data, token));
     } else {
