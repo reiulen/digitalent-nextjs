@@ -115,7 +115,7 @@ const DashbardSubvit = ({ token }) => {
                       <div className="col-md-6">
                         <div className="col-md-12 mt-5">
                           <h4 className="font-weight-bolder text-primary">
-                            Halo Admin A
+                            Halo {dataPermission.user.name || "Admin "}
                           </h4>
                         </div>
                         <div className="col-md-12">
@@ -770,7 +770,7 @@ const DashbardSubvit = ({ token }) => {
                   })
                 )}
                 <div className={`${styles.rowBottom} row`}>
-                  <div className={`${styles.total} col-sm-6 mt-5`}>
+                  <div className={`${styles.total} col-sm-6 mt-5 `}>
                     Total:{" "}
                     {dashboard_subvit &&
                       dashboard_subvit.trivia &&
