@@ -23,7 +23,6 @@ const Table = ({ token }) => {
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState(null);
 
-  console.log(allListPeserta);
 
   const listPeserta =
     allListPeserta.loading === false ? (
