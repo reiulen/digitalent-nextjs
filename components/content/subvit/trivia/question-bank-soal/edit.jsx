@@ -271,15 +271,18 @@ const EditSoalTrivia = ({ token }) => {
 
             <div className="card-body pt-0">
               <div className="title row mb-5">
-                <div className="col-md-3">
-                  <Image
-                    src={question_image_preview}
-                    alt="logo"
-                    width={204}
-                    height={100}
-                    objectFit="cover"
-                  />
-                </div>
+                {question_image_preview !=
+                  "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/" && (
+                  <div className="col-md-3 mt-4 text-center">
+                    <Image
+                      src={question_image_preview}
+                      alt="logo"
+                      width={210}
+                      height={150}
+                      objectFit="fill"
+                    />
+                  </div>
+                )}
                 <div className="col-md-9 pt-2">
                   <input
                     type="text"
@@ -298,7 +301,9 @@ const EditSoalTrivia = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {question_image_name}
+                      {trivia_question_detail.question_image_preview.substr(
+                        14
+                      ) || question_image_name}
                     </label>
                   </div>
                   <span className="text-muted">

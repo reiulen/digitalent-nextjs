@@ -3,7 +3,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { Card, Form, Col, Row, Button } from "react-bootstrap";
 import SimpleReactValidator from "simple-react-validator";
 import { SweatAlert } from "../../../../utils/middleware/helper/index";
-
+import axios from "axios";
 export default function EditTTEP12({ setUbah, data }) {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [name, setName] = useState("");
@@ -23,14 +23,15 @@ export default function EditTTEP12({ setUbah, data }) {
           e.target.value = null;
           Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
         } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setFileUpload(reader.result);
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-          setFilePreview(e.target.files[0]);
+          setFileUpload(e.target.files[0]);
+          // const reader = new FileReader();
+          // reader.onload = () => {
+          //   if (reader.readyState === 2) {
+          //     setFileUpload(reader.result);
+          //   }
+          // };
+          // reader.readAsDataURL(e.target.files[0]);
+          // setFilePreview(e.target.files[0]);
           setFileName(e.target.files[0].name);
         }
       } else {
@@ -44,8 +45,8 @@ export default function EditTTEP12({ setUbah, data }) {
     }
   };
 
-  const handleSubmit = () => {
-    setUbah(false);
+  const handleSubmit = async (name, position, password, fileUpload) => {
+    // setUbah(false);
     // if (true) {
     // } else {
     //   SweatAlert(
@@ -54,6 +55,21 @@ export default function EditTTEP12({ setUbah, data }) {
     //     "error"
     //   );
     // }
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("password", password);
+    formData.append("position", position);
+    formData.append("p12", fileUpload);
+
+    const link = `http://192.168.1.78:8000/api/tte-p12/store`;
+    const body = {
+      name,
+      position,
+      password,
+      p12: fileUpload,
+    };
+    const test = axios.post(link, formData);
   };
 
   return (
@@ -92,7 +108,7 @@ export default function EditTTEP12({ setUbah, data }) {
                 <Form.Control
                   type="text"
                   placeholder="Jabatan"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setPosition(e.target.value)}
                 />
                 {simpleValidator.current.message(
                   "Jabatan",
@@ -150,7 +166,7 @@ export default function EditTTEP12({ setUbah, data }) {
                 <Form.Control
                   type={!hidePassword ? "text" : "password"}
                   placeholder="Password"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 {!hidePassword ? (
                   <i
@@ -176,7 +192,9 @@ export default function EditTTEP12({ setUbah, data }) {
           <Button
             className="rounded-full px-10 py-4"
             variant="primary"
-            onClick={handleSubmit}
+            onClick={() => {
+              handleSubmit(name, position, password, fileUpload);
+            }}
           >
             Simpan
           </Button>

@@ -13,7 +13,7 @@ export default function TTEP12({ token }) {
   };
   return (
     <PageWrapper>
-      {ubah ? (
+      {!ubah ? (
         <EditTTEP12 setUbah={setUbah} data={data} />
       ) : (
         <Card>

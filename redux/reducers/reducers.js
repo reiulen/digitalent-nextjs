@@ -204,6 +204,8 @@ import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
 // management kerjasama
 import { allMCooporationReducerMK } from "./partnership/managementCooporation.reducer";
 import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
+// permission
+import { partnershipPermissionsReducer } from "./partnership/partnership_permission.reducer"
 // ================== user
 import { authenticationReducer } from "./partnership/user/authentication.reducer";
 import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
@@ -435,7 +437,11 @@ import {
   drowpdownTempatLahirReducers,
   drowpdownYearReducers,
 } from "./pelatihan/admin/function.reducers";
-import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
+import {
+  allProvinsiReducer,
+  allKotaReducer,
+  adminPermissionReducer,
+} from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
 
 // BERANDA
@@ -471,6 +477,7 @@ import {
   detailBerandaArtikelReducer,
   kategoriBerandaArtikelReducer,
   allTagBerandaArtikelReducer,
+  cekLulusPelatihanReducer,
 } from "../reducers/beranda/artikel.reducers";
 
 // ========== galeri ========
@@ -554,6 +561,7 @@ const reducer = combineReducers({
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
   updatedArtikel: updateArtikelReducer,
+  cekLulusPelatihan:cekLulusPelatihanReducer,
 
   allArtikelPeserta: allArtikelPesertaReducer,
   newArtikelPeserta: newArtikelPesertaReducer,
@@ -705,6 +713,8 @@ const reducer = combineReducers({
   allTandaTangan: allTandaTanganReducer,
   // dashboard
   allDashboard: dashboardReducer,
+  // permission
+  partnershipPermissions: partnershipPermissionsReducer,
 
   // ================================= => user
   allCooperationUser: cooperationUserReducer,
@@ -964,6 +974,8 @@ const reducer = combineReducers({
   updateStatusMaster: updateStatusMasterReducer,
 
   allBookmark: getAllBookmarkPesertaReducer,
+
+  adminPermission: adminPermissionReducer,
 });
 
 export default reducer;

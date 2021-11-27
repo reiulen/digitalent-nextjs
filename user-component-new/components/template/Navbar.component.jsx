@@ -45,7 +45,6 @@ const Navigationbar = ({ session }) => {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
 
@@ -139,7 +138,7 @@ const Navigationbar = ({ session }) => {
   if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
   if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
   if (router.pathname == "/") routerPath = "/";
-  console.log(session, "ini session");
+
   return (
     <>
       <Navbar
@@ -164,16 +163,19 @@ const Navigationbar = ({ session }) => {
           <div className="d-flex d-lg-none justify-content-end align-items-center">
             {!isNavOpen && session && session.roles[0] === "user" && (
               <div className="row m-3">
-                <a
-                  className="col-3 col-xl-4 text-center"
-                  onClick={() => setShowSearch(!showSearch)}
-                >
-                  <i className="ri-search-2-line ri-2x mx-3 text-gray"></i>
+                <a className="col-3 col-xl-4 text-center">
+                  <i
+                    className="ri-search-2-line ri-2x mx-3 text-gray"
+                    onClick={() => setShowSearch(!showSearch)}
+                  ></i>
                 </a>
                 <a href="#" className="col-3 col-xl-4 text-center">
                   <i className="ri-customer-service-2-line ri-2x mx-3 text-gray"></i>
                 </a>
-                <a href="#" className="col-3 col-xl-4 text-center">
+                <a
+                  href="/peserta/bookmark"
+                  className="col-3 col-xl-4 text-center"
+                >
                   <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
                 </a>
                 <a href="#" className="col-3 col-xl-4 text-center">
@@ -208,6 +210,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
+                onChange={(e) => {}}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -336,6 +339,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
+                onChange={(e) => {}}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -441,25 +445,43 @@ const Navigationbar = ({ session }) => {
                     <ul className="list-wrap-accounts p-0 d-none d-lg-block py-3">
                       <Link href="/peserta" passHref>
                         <li className="items-lists rounded-0">
-                          <i className="ri-time-line mr-2"></i>DASHBOARD
+                          <div
+                            style={{ fontSize: "16px" }}
+                            className="ri-time-line mr-2"
+                          ></div>
+                          DASHBOARD
                         </li>
                       </Link>
                       <Link href="/peserta/profile" passHref>
                         <li className="items-lists rounded-0">
-                          <i className="ri-user-line mr-2"></i>PROFILE
+                          <div
+                            style={{ fontSize: "16px" }}
+                            className="ri-user-line mr-2"
+                          ></div>
+                          PROFILE
                         </li>
                       </Link>
                       <Link href="/peserta/riwayat-pelatihan" passHref>
                         <li className="items-lists rounded-0">
-                          <i className="ri-book-read-line mr-2"></i>PELATIHAN
+                          <div
+                            style={{ fontSize: "16px" }}
+                            className="ri-book-read-line mr-2"
+                          ></div>
+                          PELATIHAN
                         </li>
                       </Link>{" "}
                       <li className="items-lists rounded-0">
-                        <i className="ri-bar-chart-horizontal-line mr-2"></i>
+                        <div
+                          style={{ fontSize: "16px" }}
+                          className="ri-bar-chart-horizontal-line mr-2"
+                        ></div>
                         ARTIKEL
                       </li>{" "}
                       <li className="items-lists rounded-0">
-                        <i className="ri-settings-4-line mr-2"></i>
+                        <div
+                          style={{ fontSize: "16px" }}
+                          className="ri-settings-4-line mr-2"
+                        ></div>
                         PENGATURAN
                       </li>
                       <li className={`items-lists p-0 p-3`}>
@@ -467,7 +489,12 @@ const Navigationbar = ({ session }) => {
                           className={`btn rounded-full ${style.navbar_btnPrimary} d-flex align-items-center justify-content-center`}
                           onClick={() => handlerLogout()}
                         >
-                          <i className="ri-logout-box-r-line"> </i>
+                          <div
+                            style={{ fontSize: "16px" }}
+                            className="ri-logout-box-r-line mr-2"
+                          >
+                            {" "}
+                          </div>
                           KELUAR
                         </button>
                       </li>
@@ -489,9 +516,14 @@ const Navigationbar = ({ session }) => {
                 </Link>
                 <Link href="/register">
                   <a className="mx-2">
-                    <button className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} m-2 justify-content-center py-3`}>
+                    <button
+                      className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} m-2 justify-content-center py-3`}
+                    >
                       {/* <IconRegister className="mr-2 icon-register" /> */}
-                      <div className="ri-user-line mr-2" style={{fontSize: "15px"}}></div>
+                      <div
+                        className="ri-user-line mr-2"
+                        style={{ fontSize: "15px" }}
+                      ></div>
                       Daftar
                     </button>
                   </a>

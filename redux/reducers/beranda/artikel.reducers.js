@@ -15,7 +15,8 @@ import {
     TAG_BERANDA_ARTIKEL_SUCCESS,
     TAG_BERANDA_ARTIKEL_FAIL,
 
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    CEK_LULUS_PELATIHAN
 } from "../../types/beranda/artikel.type"
 
 export const allBerandaArtikelReducer = (state = { artikel: [] }, action) => {
@@ -129,6 +130,22 @@ export const allTagBerandaArtikelReducer = (state = { tags: [] }, action) => {
             return {
                 error: null
             }
+
+        default:
+            return state
+    }
+}
+
+export const cekLulusPelatihanReducer = (state = {}, action) => {
+    switch (action.type) {
+
+        case CEK_LULUS_PELATIHAN:
+            return {
+                loading: false,
+                tags: action.payload.data
+            }
+
+
 
         default:
             return state

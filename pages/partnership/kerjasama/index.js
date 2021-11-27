@@ -10,6 +10,9 @@ import {
 } from "../../../redux/actions/partnership/managementCooporation.actions";
 
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+
+import { getPartnershipPermissions } from "../../../redux/actions/partnership/partnership_permission.actions"
+
 const Table = dynamic(
   () =>
     import("../../../components/content/partnership/kerjasama/tableKerjasama"),
@@ -55,7 +58,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         fetchListSelectCooperation(session.user.user.data.token)
       );
       await store.dispatch(fetchListSelectStatus(session.user.user.data.token));
-
+      await store.dispatch(getPartnershipPermissions(session.user.user.data.token))
+        
       return {
         props: { session, title: "Kerjasama - Partnership" },
       };

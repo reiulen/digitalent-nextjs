@@ -109,7 +109,7 @@ export const postRoles = (sendData, token) => {
         payload: data,
       });
       Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
-        router.push("/site-management/role");
+        window.location = "/site-management/role";
       });
     } catch (error) {
       dispatch({
@@ -203,10 +203,9 @@ export const getSidebar = (token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      "http://192.168.11.58:8000/api/user/permissions", config
+      process.env.END_POINT_API_SITE_MANAGEMENT + "/api/user/permissions",
+      config
     );
-
-    // console.log("data nich", data) ( Masih di pake )
     dispatch({
       type: GET_SIDEBAR,
       payload: data,

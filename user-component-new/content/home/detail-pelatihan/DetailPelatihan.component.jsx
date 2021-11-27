@@ -112,7 +112,7 @@ const DetailPelatihan = ({ session }) => {
                   <Col md={2} sm={6}>
                     <div className="d-flex align-items-center justify-content-md-end">
                       <ShareOverlay
-                        url={`${process.env.PATH_URL}/detail/pelatihan/${pelatihan.id}`}
+                        url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan.id}`}
                         quote={pelatihan.name}
                       >
                         <button className="btn btn-white roundedss-border mr-4">

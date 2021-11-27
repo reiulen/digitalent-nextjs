@@ -50,7 +50,7 @@ export default function Footer() {
 
   return (
     <div className={`color-secondary-${warna}`}>
-      <Container fluid className="px-xl-35 px-lg-10 px-10">
+      <Container fluid className="px-xl-17 px-lg-10 px-7">
         <Row className="w-100 px-0 mx-0 mb-0 py-5">
           <Col md={2} sm={12}>
             <div className="mt-5">
@@ -83,7 +83,12 @@ export default function Footer() {
                   footer.social_media &&
                   footer.social_media.length !== 0 &&
                   footer.social_media.map((row, i) => (
-                    <a href={row.link_social_media} target="_blank" key={i}>
+                    <a
+                      href={row.link_social_media}
+                      target="_blank"
+                      key={i}
+                      rel="noreferrer"
+                    >
                       <div className="cursor-pointer mx-md-0 px-2">
                         <Image
                           key={i}
@@ -108,7 +113,7 @@ export default function Footer() {
         </Row>
       </Container>
       <hr style={{ backgroundColor: "white" }} />
-      <Container fluid className="px-xl-35 px-lg-10 px-15">
+      <Container fluid className="px-xl-21 px-lg-10 px-10">
         <Row className="py-10 ">
           <Col md={4} sm={12}>
             <div>
@@ -125,8 +130,9 @@ export default function Footer() {
               className={
                 footer &&
                 footer.external_link &&
-                footer.external_link.length > 5 &&
-                `row ml-0`
+                footer.external_link.length > 5
+                  ? `row ml-0`
+                  : undefined
               }
             >
               {footer &&

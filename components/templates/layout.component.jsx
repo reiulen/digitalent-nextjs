@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
+import Image from "next/image";
 
 import { signOut, getSession } from "next-auth/client";
 import { fetchReducerFunc } from "../../redux/actions/utils/functionals.actions";
@@ -43,6 +44,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
   const allFunctionls = useSelector((state) => state.allFunctionls);
   const [user, setUser] = useState();
   const [session, setSession] = useState();
+  const [sideBar, setSidebar] = useState([])
   const handlerLogout = () => {
     signOut();
     // {
@@ -62,6 +64,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
     getSession().then((session) => {
       setUser(session.user.user.data.user);
       setSession(session);
+      
     });
   }, []);
 
@@ -111,8 +114,20 @@ const Layout = ({ children, title = "Dashboard" }) => {
             <div className="symbol symbol-100 mr-5">
               <div
                 className="symbol-label"
-                style={{ backgroundImage: 'url("/assets/media/default.jpg")' }}
-              ></div>
+              >
+                <Image
+                  src={
+                    user && user.mitra_profile?
+                      process.env.END_POINT_API_IMAGE_PARTNERSHIP + user.mitra_profile.agency_logo
+                    :
+                      "/assets/media/default.jpg"
+                  }
+                  width={70}
+                  height={70}
+                  objectFit="cover"
+                />
+                
+              </div>
               <i className="symbol-badge bg-success"></i>
             </div>
             <div className="d-flex flex-column">

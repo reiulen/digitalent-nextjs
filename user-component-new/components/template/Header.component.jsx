@@ -399,7 +399,7 @@ const Header = () => {
                   </Col>
                 </Fragment>
               )}
-              <p className={styles.subText}>
+              <div className={styles.subText}>
                 <div className="d-flex flex-row" style={{ float: "left" }}>
                   <div className="p-1">
                     {router.pathname.includes("substansi") ? (
@@ -539,7 +539,7 @@ const Header = () => {
                       : "Dashboard"}
                   </div>
                 </div>
-              </p>
+              </div>
             </Col>
           </Row>
         </Container>

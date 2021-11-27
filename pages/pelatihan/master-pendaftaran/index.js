@@ -7,6 +7,7 @@ import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddle
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getAllListMasterPelatihan } from "../../../redux/actions/pelatihan/master-pendaftaran.action";
+import { getAllPermission } from "../../../redux/actions/utils/utils.actions";
 
 const MasterTraining = dynamic(
   () =>
@@ -49,6 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getAllListMasterPelatihan(session.user.user.data.token)
       );
+      await store.dispatch(getAllPermission(session.user.user.data.token));
 
       return {
         props: { session, title: "List Pelatihan - Pelatihan" },

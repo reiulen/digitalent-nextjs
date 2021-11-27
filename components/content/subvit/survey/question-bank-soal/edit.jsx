@@ -322,6 +322,7 @@ const EditSoalTrivia = ({ token }) => {
                       className="custom-file-input"
                       name="question_image"
                       onChange={(e) => handleSoalImage(e)}
+                      accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
                       {question_image_name}

@@ -22,6 +22,16 @@ const ListAcademy = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const { permission } = useSelector((state) => state.adminPermission);
+  const [listPermission, setListPermission] = useState([]);
+
+  useEffect(() => {
+    const filterPermission = permission.permissions.filter((item) =>
+      item.includes("pelatihan")
+    );
+    setListPermission(filterPermission);
+  }, []);
+
   const {
     loading: allLoading,
     error: allError,
@@ -304,29 +314,33 @@ const ListAcademy = ({ token }) => {
                               )}
                             </td>
                             <td className="align-middle">
-                              <div className="d-flex">
-                                <Link
-                                  href={`/pelatihan/akademi/edit-akademi?id=${row.id}`}
-                                >
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              {listPermission.includes(
+                                "pelatihan.akademi.manage"
+                              ) && (
+                                <div className="d-flex">
+                                  <Link
+                                    href={`/pelatihan/akademi/edit-akademi?id=${row.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Edit"
+                                    >
+                                      <i className="ri-pencil-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary text-white"
+                                    onClick={() => handleDelete(row.id)}
                                     data-toggle="tooltip"
                                     data-placement="bottom"
-                                    title="Edit"
+                                    title="Hapus"
                                   >
-                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white"
-                                  onClick={() => handleDelete(row.id)}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
-                                >
-                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                </button>
-                              </div>
+                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                  </button>
+                                </div>
+                              )}
                             </td>
                           </tr>
                         ))
