@@ -5,6 +5,7 @@ import { getAllSubtanceQuestionBanksType } from "../../../../redux/actions/subvi
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import { getPermissionSubvit } from "../../../../redux/actions/subvit/subtance.actions";
 
 export default function TipeSoal(props) {
   const session = props.session.user.user.data;
@@ -46,6 +47,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
+
       return {
         props: { session, title: "Tipe Soal Substansi - Subvit" },
       };

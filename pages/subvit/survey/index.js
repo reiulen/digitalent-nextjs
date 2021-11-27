@@ -20,6 +20,7 @@ const ListSurvey = dynamic(
 );
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.actions";
 
 export default function Survey(props) {
   const session = props.session.user.user.data;
@@ -63,6 +64,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
 
       return {
         props: { session, title: "List Survey - Subvit" },

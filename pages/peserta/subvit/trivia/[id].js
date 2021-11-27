@@ -8,7 +8,7 @@ import Layout from "../../../../user-component/components/template/Layout.compon
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 
 const SubtansiUser = dynamic(
-  () => import("../../../../user-component/content/subvit/trivia"),
+  () => import("../../../../user-component-new/content/peserta/subvit/trivia"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

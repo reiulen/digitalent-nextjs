@@ -2,6 +2,9 @@ import {
   SUBTANCE_QUESTION_BANKS_REQUEST,
   SUBTANCE_QUESTION_BANKS_SUCCESS,
   SUBTANCE_QUESTION_BANKS_FAIL,
+  GET_PERMISSIONS_SUBVIT_REQUEST,
+  GET_PERMISSIONS_SUBVIT_SUCCESS,
+  GET_PERMISSIONS_SUBVIT_FAIL,
   NEW_SUBTANCE_QUESTION_BANKS_REQUEST,
   NEW_SUBTANCE_QUESTION_BANKS_SUCCESS,
   NEW_SUBTANCE_QUESTION_BANKS_FAIL,
@@ -38,6 +41,34 @@ import {
 
 import axios from "axios";
 import { getSession } from "next-auth/client";
+
+// GET PERMISSIONS SUBVIT
+export const getPermissionSubvit = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_PERMISSIONS_SUBVIT_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/permissions`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: GET_PERMISSIONS_SUBVIT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_PERMISSIONS_SUBVIT_FAIL,
+      payload: error.message,
+    });
+  }
+};
 
 // get all data
 export const getAllSubtanceQuestionBanks =

@@ -5,6 +5,7 @@ import { getAllSubtanceQuestionBanksType } from "../../../redux/actions/subvit/s
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.actions";
 
 export default function EditSubstansiBankPage(props) {
   const session = props.session.user.user.data;
@@ -51,6 +52,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
 
       return {
         props: { session, title: "Ubah Soal Substansi - Subvit" },

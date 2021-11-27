@@ -19,11 +19,10 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import {
   getRandomSubtanceQuestionDetail,
   postResult,
-} from "../../../../redux/actions/subvit/subtance-question-detail.action";
+} from "../../../../../redux/actions/subvit/subtance-question-detail.action";
 
-import defaultImage from "../../../../public/assets/media/logos/Gambar.png";
+import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 
 const SubtansiUser = ({ token }) => {
   const dispatch = useDispatch();
@@ -41,7 +40,9 @@ const SubtansiUser = ({ token }) => {
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
 
-  const [count, setCount] = useState(data && data.time_left);
+  const [count, setCount] = useState(
+    random_subtance_question_detail && random_subtance_question_detail.time_left
+  );
   const [modalDone, setModalDone] = useState(false);
 
   const [hour, setHour] = useState(0);
@@ -50,10 +51,6 @@ const SubtansiUser = ({ token }) => {
   const [timeLeft, setTimeLeft] = useState(
     sessionStorage.getItem("targetDate")
   );
-
-  // useEffect(() => {
-  //   dispatch(getRandomSubtanceQuestionDetail(token));
-  // }, [dispatch, token]);
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -86,7 +83,7 @@ const SubtansiUser = ({ token }) => {
     setNumberPage(val);
 
     router.push(
-      `/peserta/subvit/mid-test/${parseInt(val.target.innerHTML)}?theme_id=${
+      `/peserta/subvit/substansi/${parseInt(val.target.innerHTML)}?theme_id=${
         router.query.theme_id
       }&training_id=${router.query.training_id}&category=${
         router.query.category
@@ -127,17 +124,12 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      router.push(`/peserta/done-mid-tes`);
+      router.push(`/peserta/done-substansi`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
   useEffect(() => {
-    // axios
-    //   .get(
-    //     "https://fa782c8d-066b-4efd-bc48-71bd832cce08.mock.pstmn.io/api/subtance-question-bank-details/random?training_id=41&theme_id=4&category=Mid%20Test"
-    //   )
-    //   .then((res) => setData(res.data.data));
     setData(random_subtance_question_detail);
   }, [data, random_subtance_question_detail]);
 
@@ -193,7 +185,7 @@ const SubtansiUser = ({ token }) => {
     };
     dispatch(postResult(setData, token));
     localStorage.clear();
-    router.push(`/peserta/done-mid-tes`);
+    router.push(`/peserta/done-substansi`);
   };
 
   const handleCloseModalDone = () => {
@@ -390,6 +382,7 @@ const SubtansiUser = ({ token }) => {
                     </div>
                   </Button>
                 </Col>
+
                 <Col
                   className={styles.btnBottom}
                   style={{ textAlign: "right", margin: "10px " }}
@@ -409,6 +402,7 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleDone}
                       // disabled={!listAnswer.includes(data?.total_questions)}
+                      // MASIH DIPAKE
                     >
                       Selesai
                     </Button>
@@ -461,6 +455,7 @@ const SubtansiUser = ({ token }) => {
                           className={styles.btnNext}
                           onClick={handleDone}
                           // disabled={!listAnswer.includes(data?.total_questions)}
+                          // MASIH DIPAKE
                         >
                           Selesai
                         </Button>
@@ -537,15 +532,13 @@ const SubtansiUser = ({ token }) => {
             ? "Survey"
             : router.pathname.includes("trivia")
             ? "TRIVIA"
-            : router.pathname.includes("mid-test")
-            ? "Mid Test"
             : "Test"}
           <button type="button" className="close" onClick={handleCloseModal}>
             <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
           </button>
         </ModalHeader>
         <ModalBody>
-          {router.pathname.includes("mid-test") ? (
+          {router.pathname.includes("substansi") ? (
             <Card className={styles.cardPanduan}>
               <table>
                 <tr>
@@ -600,25 +593,26 @@ const SubtansiUser = ({ token }) => {
                   <td style={{ position: "absolute" }}>2.</td>
                   <td>&nbsp;</td>
                   <td>
-                    Alokasi waktu yang diberikan untuk mengerjakan Mid Test
-                    sesuai dengan masing-masing tema pelatihan. Informasi
-                    tersebut dapat di akses pada dashboard Mid Test.
+                    Alokasi waktu yang diberikan untuk mengerjakan Test
+                    Substansi sesuai dengan masing-masing tema pelatihan.
+                    Informasi tersebut dapat di akses pada dashboard Test
+                    Substansi.
                   </td>
                 </tr>
                 <tr>
                   <td style={{ position: "absolute" }}>3.</td>
                   <td>&nbsp;</td>
                   <td>
-                    Peserta wajib menjawab seluruh soal Mid Test dan jumlah soal
-                    sesuai dengan masing-masing tema pelatihan. Tidak ada nilai
-                    negatif untuk jawaban yang salah.
+                    Peserta wajib menjawab seluruh soal Test Substansi dan
+                    jumlah soal sesuai dengan masing-masing tema pelatihan.
+                    Tidak ada nilai negatif untuk jawaban yang salah.
                   </td>
                 </tr>
                 <tr>
                   <td style={{ position: "absolute" }}>4.</td>
                   <td>&nbsp;</td>
                   <td>
-                    Setelah Mid Test dimulai, waktu tes tidak dapat
+                    Setelah Test Substansi dimulai, waktu tes tidak dapat
                     diberhentikan dan tes tidak dapat diulang. Setelah waktu
                     habis, halaman soal akan tertutup secara otomatis.
                   </td>
@@ -683,7 +677,7 @@ const SubtansiUser = ({ token }) => {
       {/* Modal Konfirmasi */}
       <Modal show={modalDone} onHide={handleCloseModalDone} size="lg">
         <ModalHeader className={styles.headerKonfirmasi}>
-          Selesai Mid Test
+          Selesai Test Substansi
           <button
             type="button"
             className="close"
@@ -693,13 +687,14 @@ const SubtansiUser = ({ token }) => {
           </button>
         </ModalHeader>
         <ModalBody className={styles.bodyKonfirmasi}>
-          Apakah anda ingin menyelesaikan Mid Test dan mengirim semua hasil
-          jawaban anda?Jika “Ya” maka anda sudah dinyatakan selesai mengikuti
-          Mid Test, dan anda tidak dapat memperbaiki jawaban anda. <br />
+          Apakah anda ingin menyelesaikan Test Substansi dan mengirim semua
+          hasil jawaban anda?Jika “Ya” maka anda sudah dinyatakan selesai
+          mengikuti Test Substansi, dan anda tidak dapat memperbaiki jawaban
+          anda. <br />
           <br />
-          Dengan ini saya menyatakan sudah menyelesaikan Mid Test dengan tidak
-          melakukan kecurangan dalam bentuk apapun. Saya bersedia menerima
-          segala keputusan penyelengara terkait hasil Mid Test.
+          Dengan ini saya menyatakan sudah menyelesaikan Test Substansi dengan
+          tidak melakukan kecurangan dalam bentuk apapun. Saya bersedia menerima
+          segala keputusan penyelengara terkait hasil Test Substansi.
           <br />
           <br />
           <div style={{ textAlign: "right" }}>
