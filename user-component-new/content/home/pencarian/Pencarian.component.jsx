@@ -17,8 +17,10 @@ import CardPelatihanQuickView from "../../../components/global/CardPelatihanQuic
 const Pencarian = () => {
   const router = useRouter();
 
+  const allPencarian = useSelector(state => state.allPencarian);
+  console.log(allPencarian, "ini all pencarian");
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
-    useSelector((state) => state.allPenyelenggaraPeserta);
+    useSelector(state => state.allPenyelenggaraPeserta);
 
   const [filterPenyelenggara, setFilterPenyelenggara] = useState(null);
   const [filterKategori, setFilterKategori] = useState(null);
@@ -44,7 +46,7 @@ const Pencarian = () => {
   }
 
   const customStylesSide = {
-    control: (styles) => ({
+    control: styles => ({
       ...styles,
       borderRadius: "30px",
       paddingLeft: "10px",
@@ -109,23 +111,23 @@ const Pencarian = () => {
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Penyelenggara</Form.Label>
                     <Select
-                      ref={(ref) => (selectRefPenyelenggara = ref)}
+                      ref={ref => (selectRefPenyelenggara = ref)}
                       options={optionsPenyelenggara}
                       styles={customStylesSide}
                       placeholder="Pilih Penyelenggara"
                       isClearable
-                      onChange={(e) => setFilterPenyelenggara(e)}
+                      onChange={e => setFilterPenyelenggara(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Kategori Peserta</Form.Label>
                     <Select
-                      ref={(ref) => (selectRefKategoriPeserta = ref)}
+                      ref={ref => (selectRefKategoriPeserta = ref)}
                       options={optionsKategoriPeserta}
                       styles={customStylesSide}
                       placeholder="Pilih Kategori Peserta"
                       isClearable
-                      onChange={(e) => setFilterKategori(e)}
+                      onChange={e => setFilterKategori(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -137,7 +139,7 @@ const Pencarian = () => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      onChange={e => setStartDate(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -149,7 +151,7 @@ const Pencarian = () => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
+                      onChange={e => setEndDate(e.target.value)}
                     />
                   </Form.Group>
                 </div>
@@ -174,8 +176,8 @@ const Pencarian = () => {
             </Col>
             <Col md={8} className="mb-5">
               <Row>
-                {[1, 2, 3, 4].map((row, i) => (
-                  <Col md={6} className={`col-sm-12 col-md-4 mb-5`}>
+                {allPencarian?.pelatihan?.list?.map((row, i) => (
+                  <Col md={6} className={`col-sm-12 col-md-4 mb-5`} key={i}>
                     <Card className="h-100 shadow-sm" key={i}>
                       <div>
                         <div className={`parent-image-pelatihan-new`}>
@@ -194,7 +196,7 @@ const Pencarian = () => {
                                 bg={`py-3 px-4 badge-card-pelatihan-new`}
                                 classNam="d-flex "
                               >
-                                Pelatihan Online
+                                {row.metode_pelatihan}
                               </Badge>
                             </div>
 

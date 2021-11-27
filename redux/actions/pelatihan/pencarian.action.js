@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   LIST_TRAINING_FAIL,
   LIST_TRAINING_REQUEST,
@@ -50,11 +51,12 @@ export const getPencarian = token => async (dispatch, getState) => {
         Authorization: `Bearer ${token}`,
       },
     };
-
     const { data } = await axios.get(link, config);
+
     if (data) {
       dispatch({ type: LIST_TRAINING_SUCCESS, payload: data });
     }
+    return data;
   } catch (error) {
     dispatch({
       type: LIST_TRAINING_FAIL,

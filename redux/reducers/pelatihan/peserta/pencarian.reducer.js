@@ -34,7 +34,7 @@ export const allPencarianReducer = (state = initialStates, action) => {
     case LIST_TRAINING_SUCCESS:
       return {
         ...state,
-        list: action.payload.data,
+        pelatihan: action.payload.data,
         loading: false,
       };
     case LIST_TRAINING_FAIL:

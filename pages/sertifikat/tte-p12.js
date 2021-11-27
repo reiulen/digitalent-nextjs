@@ -3,11 +3,7 @@ import LoadingSkeleton from "../../components/LoadingSkeleton";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/client";
 import Pagination from "react-js-pagination";
-import {
-  getAllSertifikat,
-  getOptionsAcademy,
-  getOptionsTheme,
-} from "../../redux/actions/sertifikat/kelola-sertifikat.action";
+
 import { wrapper } from "../../redux/store";
 
 const TTEP12 = dynamic(
@@ -33,7 +29,7 @@ export default function KelokaSertifikatPage(props) {
 
 // Function GETSERVERSIDE PROPS
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -44,10 +40,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
-      await store.dispatch(getAllSertifikat(session.user.user.data.token));
-      await store.dispatch(getOptionsAcademy(session.user.user.data.token));
-      await store.dispatch(getOptionsTheme(session.user.user.data.token));
 
       return {
         props: { session, title: "List Akademi - Sertifikat" },

@@ -162,20 +162,43 @@
   background-color: #ffffff;
 }
 
+
+.dashboar_nameBox {
+  max-width: 256px;
+}
+
 @media (max-width: 768px) {
+
+  .dashboar_nameBox {
+    max-width: 200px;
+  }
+
   .text_date_register {
     font-size: 12px;
   }
+
   .media_card {
     font-size: 12px;
   }
+
   .date_rilis {
     font-size: 12px;
   }
+
   .kategori_rilis {
     font-size: 10px;
   }
+
   .link_rilis {
     font-size: 12px;
   }
+}
+
+@media (max-width: 320px) {
+
+  .dashboar_nameBox {
+    max-width: 100px;
+  }
+
+
 }
