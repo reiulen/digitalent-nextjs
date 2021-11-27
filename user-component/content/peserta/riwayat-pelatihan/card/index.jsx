@@ -19,41 +19,28 @@ export default function CardTemplateOriginal({ data, session }) {
   const [label, setLabel] = useState();
 
   useEffect(() => {
-    if (data.status.includes("tidak")) return setLabel("danger");
+    if (data.status.includes("tidak") || data.status.includes("ditolak"))
+      return setLabel("danger");
     if (data.status.includes("menunggu") || data.status.includes("seleksi"))
       return setLabel("warning");
-    if (data.status == "survey belum tersedia") return setLabel("primary");
-    if (data.status == "LPJ belum tersedia") return setLabel("primary");
-    if (data.status.includes("tes substansi")) return setLabel("primary");
-    if (data.status.includes("seleksi administrasi"))
-      return setLabel("warning");
-    if (data.status.includes("lulus") || data.status.includes("Lulus"))
-      return setLabel("success");
-    if (data.status.includes("menunggu") || data.status.includes("seleksi"))
-      return setLabel("warning");
-    if (data.status.includes("tes substansi")) return setLabel("primary");
-    if (data.status.includes("seleksi administrasi"))
-      return setLabel("warning");
-    if (data.status.includes("belum tersedia")) return setLabel("warning");
     if (
+      data.status == "survey belum tersedia" ||
+      data.status == "LPJ belum tersedia" ||
+      data.status.includes("tes substansi") ||
       data.status.includes("pelatihan") ||
       data.status.includes("LPJ") ||
       data.status.includes("survey")
     )
       return setLabel("primary");
-    // if (data.status.includes("pelatihan")) return setLabel("primary");
-
-    // if (data.status.includes("menunggu")) {
-    //   return setLabel("warning");
-    // }
-    // if (data.status.includes("tidak" || "ditolak")) {
-    //   return setLabel("danger");
-    // }
-    // if (data.status.includes("lulus") || data.status.includes("diterima")) {
-    //   return setLabel("success");
-    // }
-    // if (data.status.includes("tes")) return setLabel("primary");
-    // if (data.status.includes("pelatihan")) return setLabel("primary");
+    if (
+      data.status.includes("seleksi administrasi") ||
+      data.status.includes("menunggu") ||
+      data.status.includes("belum tersedia")
+    )
+      return setLabel("warning");
+    if (data.status.includes("lulus") || data.status.includes("Lulus"))
+      return setLabel("success");
+    else return setLabel("success");
   }, []);
 
   const [imageSertifikasi, setImageSertifikasi] = useState();
