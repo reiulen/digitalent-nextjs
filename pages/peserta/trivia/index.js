@@ -12,7 +12,7 @@ import {
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
 const TriviaPage = dynamic(
-  () => import("../../../user-component/content/peserta/trivia"),
+  () => import("../../../user-component-new/content/peserta/trivia"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -50,7 +50,7 @@ export default function TestSubstansiPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);
@@ -71,7 +71,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         if (!data) {
           return (success = false);
         } else {
-          const trivia = data.list.filter(item => item.status === "trivia");
+          const trivia = data.list.filter((item) => item.status === "trivia");
           if (trivia.length > 0) {
             await store.dispatch(
               getDetailRiwayatPelatihan(

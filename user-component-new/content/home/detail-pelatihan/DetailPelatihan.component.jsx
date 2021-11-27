@@ -62,7 +62,7 @@ const DetailPelatihan = ({ session }) => {
           <Col md={8}>
             <div className="rounded my-5">
               <div className="ml-2 mb-3 title-pelatihan">
-                <h1 className="fw-700 fz-36">{pelatihan.name}</h1>
+                <h1 className="fw-700 fz-40">{pelatihan.name}</h1>
 
                 <div className="d-flex align-items-center mt-5 mt-md-1">
                   <p className="mr-6 fz-18 fw-500">{pelatihan.akademi}</p>

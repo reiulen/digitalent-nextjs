@@ -1,13 +1,13 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import Header from "../subvit/header/index";
+import Header from "../../../../user-component/content/subvit/header/index";
 import styles from "./done.module.css";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 
-import doneImage from "../../../public/assets/media/logos/Ilustrasi.png";
-import trainingImage from "../../../public/assets/media/logos/gojek.png";
+import doneImage from "../../../../public/assets/media/logos/Ilustrasi.png";
+
 import Image from "next/dist/client/image";
-import PesertaWrapper from "../../components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
 
 import moment from "moment";
 import "moment/locale/id";

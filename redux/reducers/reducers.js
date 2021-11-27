@@ -93,13 +93,14 @@ import {
 
 import {
   allDashboardPublikasiReducer,
-  allRoleAdminPublikasiReducer
+  allRoleAdminPublikasiReducer,
 } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
 // ============== substansi ===============
 import {
   allSubtanceQuestionBanksReducer,
+  permissionsSubvitReducer,
   newSubtanceQuestionBanksReducer,
   detailSubtanceQuestionBanksReducer,
   updateSubtanceQuestionReducer,
@@ -529,6 +530,7 @@ import {
 } from "./pelatihan/admin/master-pendaftaran.reducer";
 
 import { getAllBookmarkPesertaReducer } from "../reducers/pelatihan/peserta/bookmark.reducer";
+import { allDetailPesertaReducer, allListPesertaReducer } from "./site-management/user/peserta-dts.reducers";
 
 const reducer = combineReducers({
   // DASHBOARD KABADAN
@@ -619,6 +621,7 @@ const reducer = combineReducers({
   // Subvit
   // =============== substansi ==================
   allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
+  permissionsSubvit: permissionsSubvitReducer,
   newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
   deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
   detailSubtanceQuestionBanks: detailSubtanceQuestionBanksReducer,
@@ -795,6 +798,8 @@ const reducer = combineReducers({
   detailExportData: detailExportDataReducer,
   updateExportData: updateExportDataReducer,
   deleteExportData: deleteExportDataReducer,
+  allListPeserta: allListPesertaReducer,
+  allDetailPeserta: allDetailPesertaReducer,
 
   // END SITE MANAGEMENT
 

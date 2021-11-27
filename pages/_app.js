@@ -29,8 +29,11 @@ import App from "next/app";
 import { getSidebar } from "../redux/actions/site-management/role.actions";
 
 import Layout from "../components/templates/layout.component";
+import { allSidebarReducer } from "../redux/reducers/site-management/role.reducers";
 
 function MyApp({ Component, pageProps }) {
+  const allSidebar = useSelector((state) => state.allSidebar);
+
   SimpleReactValidator.addLocale("id", {
     accepted: ":attribute harus diterima.",
     after: ":attribute harus lebih dari :date.",
@@ -73,12 +76,13 @@ function MyApp({ Component, pageProps }) {
   });
 
   const dispatch = useDispatch();
-  dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token))
   useEffect(() => {
-  }, [dispatch, pageProps?.session?.user?.user?.data?.token])
+    if (allSidebar.loading) {
+      dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
+    }
+  }, [dispatch, pageProps?.session?.user?.user?.data?.token, allSidebar.loading]);
   moment.locale("id");
-  
- 
+
   return (
     <>
       {pageProps.data !== "auth" ? (

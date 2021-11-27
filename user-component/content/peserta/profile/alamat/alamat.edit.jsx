@@ -566,6 +566,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         kode_pos: kodePosDomisili,
       };
       dispatch(updateProfileAlamat(data, token));
+      window.scrollTo(0, 0);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
