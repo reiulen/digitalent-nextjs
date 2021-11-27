@@ -659,52 +659,43 @@ const DashbardSubvit = ({ token }) => {
                       dashboard_subvit.substansi.total_participant}{" "}
                     Peserta
                   </div>
-                  {dataPermission &&
-                  dataPermission.roles.includes("Super Admin") &&
-                  dataPermission &&
-                  dataPermission.permissions.includes(
-                    "subvit.manage" && "subvit.dashboard.manage"
-                  ) ? (
-                    <div className="col-sm-6" style={{ textAlign: "right" }}>
-                      <button
-                        className={`${styles.btnNext} btn btn-primary`}
-                        onClick={() => handleBackPagination()}
-                        disabled={parseInt(router.query.page_substansi) === 1}
-                      >
-                        <i
-                          className="ri-arrow-left-s-line"
-                          style={{ padding: "0px" }}
-                        ></i>
-                      </button>
-                      <button
-                        className={`${styles.btnNext} btn btn-primary`}
-                        onClick={() => handleNextPagination()}
-                        disabled={
-                          Math.ceil(
-                            parseInt(
-                              dashboard_subvit &&
-                                dashboard_subvit.substansi.total
-                            ) / 5
-                          ) !== 0
-                            ? parseInt(router.query.page_substansi) ===
-                              Math.ceil(
-                                parseInt(
-                                  dashboard_subvit &&
-                                    dashboard_subvit.substansi.total
-                                ) / 5
-                              )
-                            : true
-                        }
-                      >
-                        <i
-                          className="ri-arrow-right-s-line"
-                          style={{ padding: "0px" }}
-                        ></i>
-                      </button>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+
+                  <div className="col-sm-6" style={{ textAlign: "right" }}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={() => handleBackPagination()}
+                      disabled={parseInt(router.query.page_substansi) === 1}
+                    >
+                      <i
+                        className="ri-arrow-left-s-line"
+                        style={{ padding: "0px" }}
+                      ></i>
+                    </button>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={() => handleNextPagination()}
+                      disabled={
+                        Math.ceil(
+                          parseInt(
+                            dashboard_subvit && dashboard_subvit.substansi.total
+                          ) / 5
+                        ) !== 0
+                          ? parseInt(router.query.page_substansi) ===
+                            Math.ceil(
+                              parseInt(
+                                dashboard_subvit &&
+                                  dashboard_subvit.substansi.total
+                              ) / 5
+                            )
+                          : true
+                      }
+                    >
+                      <i
+                        className="ri-arrow-right-s-line"
+                        style={{ padding: "0px" }}
+                      ></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -777,49 +768,43 @@ const DashbardSubvit = ({ token }) => {
                       dashboard_subvit.trivia.total_participant}{" "}
                     Peserta
                   </div>
-                  {dataPermission &&
-                  dataPermission.roles.includes("Super Admin") &&
-                  dataPermission &&
-                  dataPermission.permissions.includes(
-                    "subvit.manage" && "subvit.dashboard.manage"
-                  ) ? (
-                    <div className="col-sm-6" style={{ textAlign: "right" }}>
-                      <button
-                        className={`${styles.btnNext} btn btn-primary`}
-                        onClick={handleBackPaginationTrivia}
-                        disabled={parseInt(router.query.page_trivia) === 1}
-                      >
-                        <i
-                          className="ri-arrow-left-s-line"
-                          style={{ padding: "0px" }}
-                        ></i>
-                      </button>
-                      <button
-                        className={`${styles.btnNext} btn btn-primary`}
-                        onClick={handleNextPaginationTrivia}
-                        disabled={
-                          Math.ceil(
-                            parseInt(
-                              dashboard_subvit && dashboard_subvit.trivia.total
-                            ) / 5
-                          ) !== 0
-                            ? parseInt(router.query.page_trivia) ===
-                              Math.ceil(
-                                parseInt(
-                                  dashboard_subvit &&
-                                    dashboard_subvit.trivia.total
-                                ) / 5
-                              )
-                            : true
-                        }
-                      >
-                        <i
-                          className="ri-arrow-right-s-line"
-                          style={{ padding: "0px" }}
-                        ></i>
-                      </button>
-                    </div>
-                  ) : null}
+
+                  <div className="col-sm-6" style={{ textAlign: "right" }}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleBackPaginationTrivia}
+                      disabled={parseInt(router.query.page_trivia) === 1}
+                    >
+                      <i
+                        className="ri-arrow-left-s-line"
+                        style={{ padding: "0px" }}
+                      ></i>
+                    </button>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleNextPaginationTrivia}
+                      disabled={
+                        Math.ceil(
+                          parseInt(
+                            dashboard_subvit && dashboard_subvit.trivia.total
+                          ) / 5
+                        ) !== 0
+                          ? parseInt(router.query.page_trivia) ===
+                            Math.ceil(
+                              parseInt(
+                                dashboard_subvit &&
+                                  dashboard_subvit.trivia.total
+                              ) / 5
+                            )
+                          : true
+                      }
+                    >
+                      <i
+                        className="ri-arrow-right-s-line"
+                        style={{ padding: "0px" }}
+                      ></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -890,51 +875,43 @@ const DashbardSubvit = ({ token }) => {
                       dashboard_subvit.survey.total_participant}{" "}
                     Peserta
                   </div>
-                  {dataPermission &&
-                  dataPermission.roles.includes("Super Admin") &&
-                  dataPermission &&
-                  dataPermission.permissions.includes(
-                    "subvit.manage" && "subvit.dashboard.manage"
-                  ) ? (
-                    <div className="col-sm-6" style={{ textAlign: "right" }}>
-                      <button
-                        className={`${styles.btnNext} btn btn-primary`}
-                        onClick={handleBackPaginationSurvey}
-                        disabled={parseInt(router.query.page_survey) === 1}
-                      >
-                        <i
-                          className="ri-arrow-left-s-line"
-                          style={{ padding: "0px" }}
-                        ></i>
-                      </button>
-                      <button
-                        className={`${styles.btnNext} btn btn-primary`}
-                        onClick={handleNextPaginationSurvey}
-                        disabled={
-                          Math.ceil(
-                            parseInt(
-                              dashboard_subvit && dashboard_subvit.survey.total
-                            ) / 5
-                          ) !== 0
-                            ? parseInt(router.query.page_survey) ===
-                              Math.ceil(
-                                parseInt(
-                                  dashboard_subvit &&
-                                    dashboard_subvit.survey.total
-                                ) / 5
-                              )
-                            : true
-                        }
-                      >
-                        <i
-                          className="ri-arrow-right-s-line"
-                          style={{ padding: "0px" }}
-                        ></i>
-                      </button>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+
+                  <div className="col-sm-6" style={{ textAlign: "right" }}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleBackPaginationSurvey}
+                      disabled={parseInt(router.query.page_survey) === 1}
+                    >
+                      <i
+                        className="ri-arrow-left-s-line"
+                        style={{ padding: "0px" }}
+                      ></i>
+                    </button>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleNextPaginationSurvey}
+                      disabled={
+                        Math.ceil(
+                          parseInt(
+                            dashboard_subvit && dashboard_subvit.survey.total
+                          ) / 5
+                        ) !== 0
+                          ? parseInt(router.query.page_survey) ===
+                            Math.ceil(
+                              parseInt(
+                                dashboard_subvit &&
+                                  dashboard_subvit.survey.total
+                              ) / 5
+                            )
+                          : true
+                      }
+                    >
+                      <i
+                        className="ri-arrow-right-s-line"
+                        style={{ padding: "0px" }}
+                      ></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
