@@ -604,9 +604,10 @@ export const exportFileCSV = token => {
           },
         }
       );
-      var url =
+      let url =
         urlExport.config.url +
         `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`;
+      // window.location.href = url
 
       fetch(url, {
         paramssz,

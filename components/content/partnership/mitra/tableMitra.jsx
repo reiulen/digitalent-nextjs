@@ -35,6 +35,7 @@ const Table = ({ token }) => {
   const { success, update } = router.query;
 
   const allMitra = useSelector((state) => state.allMitra);
+  const { permission } = useSelector ((state) => state.partnershipPermissions)
 
   const [keyWord, setKeyWord] = useState("");
 
@@ -155,21 +156,30 @@ const Table = ({ token }) => {
               Master Mitra
             </h1>
             
-            <div className="col-12 col-md-5 col-xl-3 ml-md-n6 ml-n10 mt-sm-0 mt-n5">
-              <Link href="/partnership/mitra/tambah">
-                <a className="btn btn-rounded-full bg-blue-primary text-white mt-4 d-flex justify-content-center">
-                  <IconAdd
-                    className="mr-3"
-                    width="16"
-                    height="16"
-                    fill="rgba(255,255,255,1)"
-                  />
-                  <div className="text-truncate">
-                    Tambah Mitra Baru 
+            {
+              permission ?
+                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                  <div className="col-12 col-md-5 col-xl-3 ml-md-n6 ml-n10 mt-sm-0 mt-n5">
+                    <Link href="/partnership/mitra/tambah">
+                      <a className="btn btn-rounded-full bg-blue-primary text-white mt-4 d-flex justify-content-center">
+                        <IconAdd
+                          className="mr-3"
+                          width="16"
+                          height="16"
+                          fill="rgba(255,255,255,1)"
+                        />
+                        <div className="text-truncate">
+                          Tambah Mitra Baru 
+                        </div>
+                      </a>
+                    </Link>
                   </div>
-                </a>
-              </Link>
-            </div>
+                :
+                  null
+              :
+                null
+            }
+            
            
           </div>
 
@@ -228,7 +238,16 @@ const Table = ({ token }) => {
                     <th className="text-left align-middle">Status</th>
                     <th className="text-left align-middle">Website</th>
                     <th className="text-left align-middle">Kerjasama</th>
-                    <th className="text-left align-middle">Aksi</th>
+
+                    {
+                      permission ? 
+                        permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                          <th className="text-left align-middle">Aksi</th>
+                        :
+                          null
+                      :
+                        null
+                    }
                   </tr>
                 }
                 tableBody={
@@ -331,58 +350,67 @@ const Table = ({ token }) => {
                           <td className="align-middle text-left text-overflow-ens">
                             {item.cooperations_count} Kerjasama
                           </td>
-                          <td className="align-middle text-left">
-                            <div className="d-flex align-items-center">
-                              <Link
-                                href={{
-                                  pathname:
-                                    "/partnership/mitra/detail-data-kerjasama-mitra",
-                                  query: { id: item.id },
-                                }}
-                              >
-                                <a
-                                  className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                >
-                                  <IconEye
-                                    width="14"
-                                    height="12"
-                                    fill="rgba(255,255,255,1)"
-                                  />
-                                  <div className="text-hover-show-hapus">
-                                    Detail
+                          {
+                            permission ? 
+                              permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                <td className="align-middle text-left">
+                                  <div className="d-flex align-items-center">
+                                    <Link
+                                      href={{
+                                        pathname:
+                                          "/partnership/mitra/detail-data-kerjasama-mitra",
+                                        query: { id: item.id },
+                                      }}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                      >
+                                        <IconEye
+                                          width="14"
+                                          height="12"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </a>
+                                    </Link>
+      
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                      onClick={() =>
+                                        router.push(
+                                          {
+                                            pathname: `/partnership/mitra/edit/${item.id}`,
+                                          },
+                                          undefined,
+                                          { shallow: true }
+                                        )
+                                      }
+                                    >
+                                      <IconPencil />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </button>
+      
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                      onClick={() => handleDelete(item.id)}
+                                    >
+                                      <IconDelete />
+                                      <div className="text-hover-show-hapus">
+                                        Hapus
+                                      </div>
+                                    </button>
                                   </div>
-                                </a>
-                              </Link>
-
-                              <button
-                                className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                onClick={() =>
-                                  router.push(
-                                    {
-                                      pathname: `/partnership/mitra/edit/${item.id}`,
-                                    },
-                                    undefined,
-                                    { shallow: true }
-                                  )
-                                }
-                              >
-                                <IconPencil />
-                                <div className="text-hover-show-hapus">
-                                  Ubah
-                                </div>
-                              </button>
-
-                              <button
-                                className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                onClick={() => handleDelete(item.id)}
-                              >
-                                <IconDelete />
-                                <div className="text-hover-show-hapus">
-                                  Hapus
-                                </div>
-                              </button>
-                            </div>
-                          </td>
+                                </td>
+                              :
+                                null
+                            :
+                              null
+                          }
+                          
                         </tr>
                       );
                     })

@@ -5,6 +5,7 @@ import { wrapper } from "../../../redux/store";
 import { fetchAllMKCooporation } from "../../../redux/actions/partnership/mk_cooporation.actions";
 
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getPartnershipPermissions } from "../../../redux/actions/partnership/partnership_permission.actions"
 const MasterKategoriKerjasama = dynamic(
   () =>
     import(
@@ -47,6 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // }
 
       await store.dispatch(fetchAllMKCooporation(session.user.user.data.token));
+      await store.dispatch(getPartnershipPermissions(session.user.user.data.token))
 
       return {
         props: { session, title: "Master Kategori Kerjasama - Partnership" },
