@@ -31,6 +31,12 @@ const DashbardSubvit = ({ token }) => {
     (state) => state.dashboardSubvit
   );
 
+  const { data: dataPermission } = useSelector(
+    (state) => state.permissionsSubvit
+  );
+
+  console.log(dataPermission);
+
   const data = [];
   dashboard_subvit &&
     dashboard_subvit.chart &&
@@ -173,24 +179,33 @@ const DashbardSubvit = ({ token }) => {
                       <div
                         className={`${styles.colCard} col-md-12 col-xl-7 col-sm-12 mt-25 `}
                       >
-                        <center>
-                          <Dropdown>
-                            <Dropdown.Toggle className={styles.btnDropdown}>
-                              Buat Soal
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu style={{ width: "195px" }}>
-                              <Dropdown.Item href="subvit/substansi/tambah-step-1">
-                                Tambah Test Substansi
-                              </Dropdown.Item>
-                              <Dropdown.Item href="subvit/survey/tambah">
-                                Tambah Survey
-                              </Dropdown.Item>
-                              <Dropdown.Item href="subvit/trivia/tambah">
-                                Tambah TRIVIA
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </center>
+                        {dataPermission &&
+                        dataPermission.roles.includes("Super Admin") &&
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.dashboard.manage"
+                        ) ? (
+                          <center>
+                            <Dropdown>
+                              <Dropdown.Toggle className={styles.btnDropdown}>
+                                Buat Soal
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu style={{ width: "195px" }}>
+                                <Dropdown.Item href="subvit/substansi/tambah-step-1">
+                                  Tambah Test Substansi
+                                </Dropdown.Item>
+                                <Dropdown.Item href="subvit/survey/tambah">
+                                  Tambah Survey
+                                </Dropdown.Item>
+                                <Dropdown.Item href="subvit/trivia/tambah">
+                                  Tambah TRIVIA
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </center>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     </div>
                   </div>
@@ -199,38 +214,78 @@ const DashbardSubvit = ({ token }) => {
             </div>
           </div>
           <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
-            <div className="row">
-              <div
-                className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4  col-xxl-4 order-1 order-xxl-2`}
-              >
-                <CardDashboardMini
-                  link="/subvit/substansi"
-                  background="bg-white"
-                  icon="book-white.svg"
-                  title="Test Substansi"
-                />
+            {dataPermission &&
+            dataPermission.roles.includes("Super Admin") &&
+            dataPermission &&
+            dataPermission.permissions.includes(
+              "subvit.manage" && "subvit.dashboard.manage"
+            ) ? (
+              <div className="row">
+                <div
+                  className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4  col-xxl-4 order-1 order-xxl-2`}
+                >
+                  <CardDashboardMini
+                    link="/subvit/substansi"
+                    background="bg-white"
+                    icon="book-white.svg"
+                    title="Test Substansi"
+                  />
+                </div>
+                <div
+                  className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
+                >
+                  <CardDashboardMini
+                    link="/subvit/survey"
+                    background="bg-white"
+                    icon="blok4-secondary.svg"
+                    title="Survey"
+                  />
+                </div>
+                <div
+                  className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
+                >
+                  <CardDashboardMini
+                    link="/subvit/trivia"
+                    background="bg-white"
+                    icon="movie-secondary.svg"
+                    title="Trivia"
+                  />
+                </div>
               </div>
-              <div
-                className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
-              >
-                <CardDashboardMini
-                  link="/subvit/survey"
-                  background="bg-white"
-                  icon="blok4-secondary.svg"
-                  title="Survey"
-                />
+            ) : (
+              <div className="row">
+                <div
+                  className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4  col-xxl-4 order-1 order-xxl-2`}
+                >
+                  <CardDashboardMini
+                    link="#"
+                    background="bg-white"
+                    icon="book-white.svg"
+                    title="Test Substansi"
+                  />
+                </div>
+                <div
+                  className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
+                >
+                  <CardDashboardMini
+                    link="#"
+                    background="bg-white"
+                    icon="blok4-secondary.svg"
+                    title="Survey"
+                  />
+                </div>
+                <div
+                  className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
+                >
+                  <CardDashboardMini
+                    link="#"
+                    background="bg-white"
+                    icon="movie-secondary.svg"
+                    title="Trivia"
+                  />
+                </div>
               </div>
-              <div
-                className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
-              >
-                <CardDashboardMini
-                  link="/subvit/trivia"
-                  background="bg-white"
-                  icon="movie-secondary.svg"
-                  title="Trivia"
-                />
-              </div>
-            </div>
+            )}
           </div>
         </div>
         <div className="row">
@@ -643,42 +698,52 @@ const DashbardSubvit = ({ token }) => {
                       dashboard_subvit.substansi.total_participant}{" "}
                     Peserta
                   </div>
-                  <div className="col-sm-6" style={{ textAlign: "right" }}>
-                    <button
-                      className={`${styles.btnNext} btn btn-primary`}
-                      onClick={() => handleBackPagination()}
-                      disabled={parseInt(router.query.page_substansi) === 1}
-                    >
-                      <i
-                        className="ri-arrow-left-s-line"
-                        style={{ padding: "0px" }}
-                      ></i>
-                    </button>
-                    <button
-                      className={`${styles.btnNext} btn btn-primary`}
-                      onClick={() => handleNextPagination()}
-                      disabled={
-                        Math.ceil(
-                          parseInt(
-                            dashboard_subvit && dashboard_subvit.substansi.total
-                          ) / 5
-                        ) !== 0
-                          ? parseInt(router.query.page_substansi) ===
-                            Math.ceil(
-                              parseInt(
-                                dashboard_subvit &&
-                                  dashboard_subvit.substansi.total
-                              ) / 5
-                            )
-                          : true
-                      }
-                    >
-                      <i
-                        className="ri-arrow-right-s-line"
-                        style={{ padding: "0px" }}
-                      ></i>
-                    </button>
-                  </div>
+                  {dataPermission &&
+                  dataPermission.roles.includes("Super Admin") &&
+                  dataPermission &&
+                  dataPermission.permissions.includes(
+                    "subvit.manage" && "subvit.dashboard.manage"
+                  ) ? (
+                    <div className="col-sm-6" style={{ textAlign: "right" }}>
+                      <button
+                        className={`${styles.btnNext} btn btn-primary`}
+                        onClick={() => handleBackPagination()}
+                        disabled={parseInt(router.query.page_substansi) === 1}
+                      >
+                        <i
+                          className="ri-arrow-left-s-line"
+                          style={{ padding: "0px" }}
+                        ></i>
+                      </button>
+                      <button
+                        className={`${styles.btnNext} btn btn-primary`}
+                        onClick={() => handleNextPagination()}
+                        disabled={
+                          Math.ceil(
+                            parseInt(
+                              dashboard_subvit &&
+                                dashboard_subvit.substansi.total
+                            ) / 5
+                          ) !== 0
+                            ? parseInt(router.query.page_substansi) ===
+                              Math.ceil(
+                                parseInt(
+                                  dashboard_subvit &&
+                                    dashboard_subvit.substansi.total
+                                ) / 5
+                              )
+                            : true
+                        }
+                      >
+                        <i
+                          className="ri-arrow-right-s-line"
+                          style={{ padding: "0px" }}
+                        ></i>
+                      </button>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
@@ -751,42 +816,49 @@ const DashbardSubvit = ({ token }) => {
                       dashboard_subvit.trivia.total_participant}{" "}
                     Peserta
                   </div>
-                  <div className="col-sm-6" style={{ textAlign: "right" }}>
-                    <button
-                      className={`${styles.btnNext} btn btn-primary`}
-                      onClick={handleBackPaginationTrivia}
-                      disabled={parseInt(router.query.page_trivia) === 1}
-                    >
-                      <i
-                        className="ri-arrow-left-s-line"
-                        style={{ padding: "0px" }}
-                      ></i>
-                    </button>
-                    <button
-                      className={`${styles.btnNext} btn btn-primary`}
-                      onClick={handleNextPaginationTrivia}
-                      disabled={
-                        Math.ceil(
-                          parseInt(
-                            dashboard_subvit && dashboard_subvit.trivia.total
-                          ) / 5
-                        ) !== 0
-                          ? parseInt(router.query.page_trivia) ===
-                            Math.ceil(
-                              parseInt(
-                                dashboard_subvit &&
-                                  dashboard_subvit.trivia.total
-                              ) / 5
-                            )
-                          : true
-                      }
-                    >
-                      <i
-                        className="ri-arrow-right-s-line"
-                        style={{ padding: "0px" }}
-                      ></i>
-                    </button>
-                  </div>
+                  {dataPermission &&
+                  dataPermission.roles.includes("Super Admin") &&
+                  dataPermission &&
+                  dataPermission.permissions.includes(
+                    "subvit.manage" && "subvit.dashboard.manage"
+                  ) ? (
+                    <div className="col-sm-6" style={{ textAlign: "right" }}>
+                      <button
+                        className={`${styles.btnNext} btn btn-primary`}
+                        onClick={handleBackPaginationTrivia}
+                        disabled={parseInt(router.query.page_trivia) === 1}
+                      >
+                        <i
+                          className="ri-arrow-left-s-line"
+                          style={{ padding: "0px" }}
+                        ></i>
+                      </button>
+                      <button
+                        className={`${styles.btnNext} btn btn-primary`}
+                        onClick={handleNextPaginationTrivia}
+                        disabled={
+                          Math.ceil(
+                            parseInt(
+                              dashboard_subvit && dashboard_subvit.trivia.total
+                            ) / 5
+                          ) !== 0
+                            ? parseInt(router.query.page_trivia) ===
+                              Math.ceil(
+                                parseInt(
+                                  dashboard_subvit &&
+                                    dashboard_subvit.trivia.total
+                                ) / 5
+                              )
+                            : true
+                        }
+                      >
+                        <i
+                          className="ri-arrow-right-s-line"
+                          style={{ padding: "0px" }}
+                        ></i>
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -857,42 +929,51 @@ const DashbardSubvit = ({ token }) => {
                       dashboard_subvit.survey.total_participant}{" "}
                     Peserta
                   </div>
-                  <div className="col-sm-6" style={{ textAlign: "right" }}>
-                    <button
-                      className={`${styles.btnNext} btn btn-primary`}
-                      onClick={handleBackPaginationSurvey}
-                      disabled={parseInt(router.query.page_survey) === 1}
-                    >
-                      <i
-                        className="ri-arrow-left-s-line"
-                        style={{ padding: "0px" }}
-                      ></i>
-                    </button>
-                    <button
-                      className={`${styles.btnNext} btn btn-primary`}
-                      onClick={handleNextPaginationSurvey}
-                      disabled={
-                        Math.ceil(
-                          parseInt(
-                            dashboard_subvit && dashboard_subvit.survey.total
-                          ) / 5
-                        ) !== 0
-                          ? parseInt(router.query.page_survey) ===
-                            Math.ceil(
-                              parseInt(
-                                dashboard_subvit &&
-                                  dashboard_subvit.survey.total
-                              ) / 5
-                            )
-                          : true
-                      }
-                    >
-                      <i
-                        className="ri-arrow-right-s-line"
-                        style={{ padding: "0px" }}
-                      ></i>
-                    </button>
-                  </div>
+                  {dataPermission &&
+                  dataPermission.roles.includes("Super Admin") &&
+                  dataPermission &&
+                  dataPermission.permissions.includes(
+                    "subvit.manage" && "subvit.dashboard.manage"
+                  ) ? (
+                    <div className="col-sm-6" style={{ textAlign: "right" }}>
+                      <button
+                        className={`${styles.btnNext} btn btn-primary`}
+                        onClick={handleBackPaginationSurvey}
+                        disabled={parseInt(router.query.page_survey) === 1}
+                      >
+                        <i
+                          className="ri-arrow-left-s-line"
+                          style={{ padding: "0px" }}
+                        ></i>
+                      </button>
+                      <button
+                        className={`${styles.btnNext} btn btn-primary`}
+                        onClick={handleNextPaginationSurvey}
+                        disabled={
+                          Math.ceil(
+                            parseInt(
+                              dashboard_subvit && dashboard_subvit.survey.total
+                            ) / 5
+                          ) !== 0
+                            ? parseInt(router.query.page_survey) ===
+                              Math.ceil(
+                                parseInt(
+                                  dashboard_subvit &&
+                                    dashboard_subvit.survey.total
+                                ) / 5
+                              )
+                            : true
+                        }
+                      >
+                        <i
+                          className="ri-arrow-right-s-line"
+                          style={{ padding: "0px" }}
+                        ></i>
+                      </button>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>

@@ -93,13 +93,14 @@ import {
 
 import {
   allDashboardPublikasiReducer,
-  allRoleAdminPublikasiReducer
+  allRoleAdminPublikasiReducer,
 } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
 // ============== substansi ===============
 import {
   allSubtanceQuestionBanksReducer,
+  permissionsSubvitReducer,
   newSubtanceQuestionBanksReducer,
   detailSubtanceQuestionBanksReducer,
   updateSubtanceQuestionReducer,
@@ -611,6 +612,7 @@ const reducer = combineReducers({
   // Subvit
   // =============== substansi ==================
   allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
+  permissionsSubvit: permissionsSubvitReducer,
   newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
   deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
   detailSubtanceQuestionBanks: detailSubtanceQuestionBanksReducer,
