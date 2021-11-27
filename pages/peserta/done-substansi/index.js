@@ -12,12 +12,15 @@ import { getPelatihan } from "../../../redux/actions/pelatihan/register-training
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
-const Done = dynamic(() => import("../../../user-component/content/done"), {
-  loading: function loadingNow() {
-    return <LoadingSkeleton />;
-  },
-  ssr: false,
-});
+const Done = dynamic(
+  () => import("../../../user-component-new/content/peserta/done"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")

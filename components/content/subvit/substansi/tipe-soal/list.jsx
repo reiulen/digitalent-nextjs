@@ -32,6 +32,10 @@ const ListTipeSoal = ({ token }) => {
     isDeleted,
   } = useSelector((state) => state.deleteSubtanceQuestionType);
 
+  const { data: dataPermission } = useSelector(
+    (state) => state.permissionsSubvit
+  );
+
   let { page = 1, success, successUpdate } = router.query;
   page = Number(page);
   let loading = false;
@@ -207,14 +211,23 @@ const ListTipeSoal = ({ token }) => {
             >
               Tipe Soal Test Substansi
             </h1>
-            <div className="card-toolbar">
-              <Link href="/subvit/substansi/tipe-soal/tambah">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block px-0">
-                  <i className="ri-add-fill"></i>
-                  Tambah Tipe Soal
-                </a>
-              </Link>
-            </div>
+            {dataPermission &&
+            dataPermission.roles.includes("Super Admin") &&
+            dataPermission &&
+            dataPermission.permissions.includes(
+              "subvit.manage" && "subvit.substansi.manage"
+            ) ? (
+              <div className="card-toolbar">
+                <Link href="/subvit/substansi/tipe-soal/tambah">
+                  <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block px-0">
+                    <i className="ri-add-fill"></i>
+                    Tambah Tipe Soal
+                  </a>
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -284,7 +297,16 @@ const ListTipeSoal = ({ token }) => {
                         <th>Tipe Soal</th>
                         <th>Bobot Nilai</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        {dataPermission &&
+                        dataPermission.roles.includes("Super Admin") &&
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.substansi.manage"
+                        ) ? (
+                          <th>Aksi</th>
+                        ) : (
+                          ""
+                        )}
                       </tr>
                     </thead>
                     <tbody>
@@ -319,29 +341,38 @@ const ListTipeSoal = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                <div className="d-flex">
-                                  <Link
-                                    href={`/subvit/substansi/tipe-soal/${row.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                {dataPermission &&
+                                dataPermission.roles.includes("Super Admin") &&
+                                dataPermission &&
+                                dataPermission.permissions.includes(
+                                  "subvit.manage" && "subvit.substansi.manage"
+                                ) ? (
+                                  <div className="d-flex">
+                                    <Link
+                                      href={`/subvit/substansi/tipe-soal/${row.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Ubah"
+                                      >
+                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      onClick={() => handleDelete(row.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
-                                      title="Ubah"
+                                      title="Hapus"
                                     >
-                                      <i className="ri-pencil-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary text-white"
-                                    onClick={() => handleDelete(row.id)}
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Hapus"
-                                  >
-                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                  </button>
-                                </div>
+                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                    </button>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </td>
                             </tr>
                           );

@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
+import {getDetailPesertaManage} from '../../../../../redux/actions/site-management/user/peserta-dts'
 
 const ListUser = dynamic(
   () =>
@@ -43,12 +44,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       // await store.dispatch(
       //   getAllRoles(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     session.user.user.data.token
+      //     session.user.user.data.token,
+      //     query.id
       //   )
       // );
+
+      await store.dispatch(
+        getDetailPesertaManage(
+          session.user.user.data.token,
+          query.id
+        )
+      );
 
       return {
         props: {

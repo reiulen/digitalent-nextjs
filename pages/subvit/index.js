@@ -6,6 +6,7 @@ import { getSession } from "next-auth/client";
 import { getDashboardSubvit } from "../../redux/actions/subvit/subtance-question-detail.action";
 import { wrapper } from "../../redux/store";
 import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
+import { getPermissionSubvit } from "../../redux/actions/subvit/subtance.actions";
 
 const DashboardSubvit = dynamic(
   () => import("../../components/content/subvit/dashboard/dashboard-subvit"),
@@ -59,6 +60,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
 
       return {
         props: { session, title: "Dashboard - Subvit" },

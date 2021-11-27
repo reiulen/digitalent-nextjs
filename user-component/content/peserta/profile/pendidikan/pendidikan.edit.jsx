@@ -213,6 +213,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         };
       }
       dispatch(updateProfilePendidikan(data, token));
+      window.scrollTo(0, 0);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -383,6 +384,68 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </Form.Group>
             </Row>
           )}
+          {jengjangPendidikan.label === "D4" && (
+            <Row>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAdress1"
+              >
+                <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+                <div className="position-relative" style={{ zIndex: "4" }}>
+                  <input
+                    list="data"
+                    type="text"
+                    className="form-control"
+                    value={asalSekolah}
+                    onChange={(e) => {
+                      setAsalSekolah(e.target.value);
+                    }}
+                  />
+                  <datalist id="data">
+                    {dataAsalSekolah === undefined
+                      ? "kosong"
+                      : dataAsalSekolah.map((item, index) => {
+                          return <option value={item.label} key={index} />;
+                        })}
+                  </datalist>
+                </div>
+                {simpleValidator.current.message(
+                  "asal sekolah",
+                  asalSekolah,
+                  asalSekolah === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAddress1"
+              >
+                <Form.Label>Program Studi</Form.Label>
+                <Form.Control
+                  placeholder="Silahkan Masukan Program Studi"
+                  value={programStudi}
+                  onChange={(e) => setProgramStudi(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("program studi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "program studi",
+                  programStudi,
+                  programStudi === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Row>
+          )}
           {jengjangPendidikan.label === "S1" && (
             <Row>
               <Form.Group
@@ -659,6 +722,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
                 />
+                <span className="text-muted">
+                  Minimal 4 Angka ,Contoh : 2020
+                </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
@@ -691,6 +757,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
                 />
+                <span className="text-muted">
+                  Minimal 4 Angka ,Contoh : 2020
+                </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
@@ -723,6 +792,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
                 />
+                <span className="text-muted">
+                  Minimal 4 Angka ,Contoh : 2020
+                </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
@@ -755,6 +827,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
                 />
+                <span className="text-muted">
+                  Minimal 4 Angka ,Contoh : 2020
+                </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
@@ -871,7 +946,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </small>
             </div>
           )}
-          )} */}
+
           {jengjangPendidikan.label === "D3" && (
             <Row className="mb-3">
               <Form.Group as={Col} md={6} controlId="formGridIpk">
@@ -885,6 +960,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
+                <span className="text-muted">Contoh : 3,05</span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -913,6 +989,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
                 />
+                <span className="text-muted">
+                  Minimal 4 Angka ,Contoh : 2020
+                </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
@@ -938,6 +1017,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
+                <span className="text-muted">Contoh : 3,05</span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -966,6 +1046,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
                 />
+                <span className="text-muted">
+                  Minimal 4 Angka ,Contoh : 2020
+                </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
@@ -991,6 +1074,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
+                <span className="text-muted">Contoh : 3,05</span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -1019,6 +1103,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
                 />
+                <span className="text-muted">
+                  Minimal 4 Angka ,Contoh : 2020
+                </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
@@ -1044,6 +1131,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
+                <span className="text-muted">Contoh : 3,05</span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -1072,6 +1160,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
                 />
+                <span className="text-muted">
+                  Minimal 4 Angka ,Contoh : 2020
+                </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,

@@ -124,6 +124,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
         funcViewEdit(false);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorUpdateData, success, dispatch, funcViewEdit]);
 
   const onChangeKtp = (e) => {
@@ -155,34 +156,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     }
   };
 
-  // const onChangeCV = (e) => {
-  //   const type = ["application/pdf"];
-  //   if (e.target.files[0]) {
-  //     if (type.includes(e.target.files[0].type)) {
-  //       if (e.target.files[0].size > 2000000) {
-  //         e.target.value = null;
-  //         Swal.fire("Oops !", "Gambar maksimal 2 MB.", "error");
-  //       } else {
-  //         const reader = new FileReader();
-  //         reader.onload = () => {
-  //           if (reader.readyState === 2) {
-  //             setCv(reader.result);
-  //           }
-  //         };
-  //         reader.readAsDataURL(e.target.files[0]);
-  //         setCvPreview(e.target.files[0]);
-  //         setCvName(e.target.files[0].name);
-  //       }
-  //     } else {
-  //       e.target.value = null;
-  //       Swal.fire(
-  //         "Oops !",
-  //         "Data yang bisa dimasukkan hanya berupa data PDF.",
-  //         "error"
-  //       );
-  //     }
-  //   }
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
@@ -202,6 +175,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
       };
 
       dispatch(updateProfileDataPribadi(data, token));
+      window.scrollTo(0, 0);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -578,7 +552,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
           <Row className="mb-3">
             <Form.Group as={Col} md={6}>
               <Form.Label className={style.label}>Tempat Lahir</Form.Label>
-
+              {/* 
               <Select
                 placeholder={
                   (dataPribadi && dataPribadi.tempat_lahir) === ""
@@ -590,6 +564,17 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 onChange={(e) => {
                   setTempatLahir({ label: e?.label, value: e?.value });
                 }}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("tempat lahir")
+                }
+              /> */}
+
+              <Form.Control
+                className={style.formControl}
+                type="text"
+                placeholder="Masukan Tempat Lahir"
+                value={tempatLahir}
+                onChange={(e) => setTempatLahir(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("tempat lahir")
                 }

@@ -3,9 +3,9 @@ import { Row, Col } from "react-bootstrap";
 
 export default function ComeJoin() {
   return (
-    <div className="py-20 come-join">
+    <div className="py-lg-20 come-join">
       <Row>
-        <Col md={4} className="p-0">
+        <Col md={12} lg={4}>
           <div>
             <h1 className="fw-600" style={{ color: "#6C6C6C" }}>
               Ayo Bergabung, Jadi Jagoan Digital!
@@ -20,7 +20,7 @@ export default function ComeJoin() {
             </Link>
           </div>
         </Col>
-        <Col md={8}>
+        <Col md={12} lg={8}>
           <Row>
             <Col lg={3} md={6}>
               <div

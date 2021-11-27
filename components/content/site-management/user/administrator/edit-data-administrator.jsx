@@ -45,9 +45,7 @@ const TambahApi = ({ token }) => {
       return items.id;
     })
   );
-  const [unitWork, setUnitWork] = useState(
-    JSON.parse(detailAdminSite.adminSite.data.unit_work_ids)
-  );
+  const [unitWork, setUnitWork] = useState(null)
   const [unitWorkOption, setUnitWorkOption] = useState([]);
   const [statusAcademy, setStatusAcademy] = useState([]);
   const [typeAccess, setTypeAccess] = useState("akademi");

@@ -12,10 +12,13 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
 import Image from "next/image";
+import ListPeserta from "./list-peserta-pelatihan";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+
+  const allDetailPeserta = useSelector((state) => state.allDetailPeserta);
 
   const onNewReset = () => {
     router.replace("/site-management/role", undefined, {
@@ -39,7 +42,7 @@ const Table = ({ token }) => {
       <div className="row">
         <div className="col-12 col-xl-3 order-1">
           <div className="card card-custom card-stretch gutter-b px-10 py-12">
-            <div className="form-group" style={{maxWidth:"19rem"}}>
+            <div className="form-group" style={{ maxWidth: "19rem" }}>
               <div>
                 <div
                   className="image-input image-input-outline w-100"
@@ -48,37 +51,22 @@ const Table = ({ token }) => {
                   <div
                     className="image-input-wrapper w-100"
                     style={{ height: "19rem" }}
-                  ></div>
-
-                  <label
-                    className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                    data-action="change"
-                    data-toggle="tooltip"
-                    title=""
-                    data-original-title="Change avatar"
                   >
-                    <i className="fa fa-pen icon-sm text-muted"></i>
-                    <input
-                      type="file"
-                      name="profile_avatar"
-                      accept=".png, .jpg, .jpeg"
-                    />
-                    <input type="hidden" name="profile_avatar_remove" />
-                  </label>
+                    <Image
+                          src={allDetailPeserta.data.data.file_path +
+                            "/site-management/images/" +
+                            allDetailPeserta.data.data.foto}
+                          width="1000"
+                          height="1000"
+                          alt="user2"
+                        />
+                  </div>
 
                   <span
                     className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                     data-action="cancel"
                     data-toggle="tooltip"
                     title="Cancel avatar"
-                  >
-                    <i className="ki ki-bold-close icon-xs text-muted"></i>
-                  </span>
-
-                  <span
-                    className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                    data-action="remove"
-                    data-toggle="tooltip"
                   >
                     <i className="ki ki-bold-close icon-xs text-muted"></i>
                   </span>
@@ -91,7 +79,9 @@ const Table = ({ token }) => {
                     Ubah Data
                   </button>
                   <ul style={listUl}>
-                    <li style={listLi} className="p-4 listDTS">
+                    <li style={listLi} className="p-4 listDTS" onClick={() => {
+                      router.push("/site-management/user/peserta-dts/detail-peserta-dts/"+ allDetailPeserta.data.data.id)
+                    }}>
                       <div className="d-flex align-items-center">
                         <Image
                           src="/assets/icon/user2.svg"
@@ -102,7 +92,9 @@ const Table = ({ token }) => {
                         <p className="m-0 ml-4">Informasi Data Pribadi</p>
                       </div>
                     </li>
-                    <li style={listLi} className="p-4 listDTS">
+                    <li style={listLi} className="p-4 listDTS" onClick={() => {
+                      router.push("/site-management/user/peserta-dts/list-peserta-perlatihan/"+ allDetailPeserta.data.data.id)
+                    }}>
                       <div className="d-flex align-items-center">
                         <Image
                           src="/assets/icon/Briefcase.svg"
@@ -132,23 +124,29 @@ const Table = ({ token }) => {
                     <p className="mb-2" style={colorText}>
                       Nama Lengkap
                     </p>
-                    <p className="fz-16">Lala Racing</p>
+                    <p className="fz-16">{allDetailPeserta.data.data.name}</p>
                     <p className="mb-2 mt-4" style={colorText}>
                       Nomer Identitas (KTP)
                     </p>
-                    <p className="fz-16">123412312412312434312</p>
+                    <p className="fz-16">{allDetailPeserta.data.data.nik}</p>
                     <p className="mb-2 mt-4" style={colorText}>
                       No Handphone
                     </p>
-                    <p className="fz-16">082129320223</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.nomor_handphone}
+                    </p>
                     <p className="mb-2 mt-4" style={colorText}>
                       Nama Kontak Darurat
                     </p>
-                    <p className="fz-16">Rany Febrianty</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.Nama_kontak_darurat}
+                    </p>
                     <p className="mb-2 mt-4" style={colorText}>
                       Tempat Lahir
                     </p>
-                    <p className="fz-16">Depok</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.tempat_lahir}
+                    </p>
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -156,23 +154,31 @@ const Table = ({ token }) => {
                     <p className="mb-2" style={colorText}>
                       Email
                     </p>
-                    <p className="fz-16">Lalaracing@gmail.com</p>
+                    <p className="fz-16">{allDetailPeserta.data.data.email}</p>
                     <p className="mb-2 mt-4" style={colorText}>
                       Jenis Kelamin
                     </p>
-                    <p className="fz-16">Perempuan</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.jenis_kelamin}
+                    </p>
                     <p className="mb-2 mt-4" style={colorText}>
                       Pendidikan
                     </p>
-                    <p className="fz-16">S1</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.jenjang}
+                    </p>
                     <p className="mb-2 mt-4" style={colorText}>
                       Nomor Kontak Darurat
                     </p>
-                    <p className="fz-16">08172615241542</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.nomor_handphone_darurat}
+                    </p>
                     <p className="mb-2 mt-4" style={colorText}>
                       Tanggal Lahir
                     </p>
-                    <p className="fz-16">1 Januari 2000</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.tanggal_lahir}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -186,66 +192,62 @@ const Table = ({ token }) => {
               <p className="mb-2" style={colorText}>
                 Alamat (Sesuai KTP)
               </p>
-              <p className="fz-16">
-                Jl. Almuwahiddin Kp. Kaum Kidul Desa Karang Tengah No. 1 Depok
-                Jawabarat
-              </p>
+              <p className="fz-16">{allDetailPeserta.data.data.address_ktp}</p>
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div>
                     <p className="mb-2" style={colorText}>
                       Provinsi
                     </p>
-                    <p className="fz-16">Jawa Barat</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.provinsi_ktp}
+                    </p>
                     <p className="mb-2 mt-4" style={colorText}>
                       Kode Pos
                     </p>
-                    <p className="fz-16">12423</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.kode_pos_ktp}
+                    </p>
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
                   <div>
                     <p className="mb-2" style={colorText}>
-                      Provinsi
+                      Kota
                     </p>
-                    <p className="fz-16">Jawa Barat</p>
-                    <p className="mb-2 mt-4" style={colorText}>
-                      Kode Pos
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.kota_ktp}
                     </p>
-                    <p className="fz-16">12423</p>
                   </div>
                 </div>
               </div>
               <p className="mb-2 mt-6" style={colorText}>
-                Alamat (Sesuai KTP)
+                Alamat Domisili
               </p>
-              <p className="fz-16">
-                Jl. Almuwahiddin Kp. Kaum Kidul Desa Karang Tengah No. 1 Depok
-                Jawabarat
-              </p>
+              <p className="fz-16">{allDetailPeserta.data.data.address}</p>
               <div className="row">
                 <div className="col-6">
                   <div>
                     <p className="mb-2" style={colorText}>
                       Provinsi
                     </p>
-                    <p className="fz-16">Jawa Barat</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.provinsi}
+                    </p>
                     <p className="mb-2 mt-4" style={colorText}>
                       Kode Pos
                     </p>
-                    <p className="fz-16">12423</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.kode_pos}
+                    </p>
                   </div>
                 </div>
                 <div className="col-6">
                   <div>
                     <p className="mb-2" style={colorText}>
-                      Provinsi
+                      Kota
                     </p>
-                    <p className="fz-16">Jawa Barat</p>
-                    <p className="mb-2 mt-4" style={colorText}>
-                      Kode Pos
-                    </p>
-                    <p className="fz-16">12423</p>
+                    <p className="fz-16">{allDetailPeserta.data.data.kota}</p>
                   </div>
                 </div>
               </div>
@@ -261,15 +263,17 @@ const Table = ({ token }) => {
                     <p className="mb-2" style={colorText}>
                       KTP
                     </p>
-                    <p className="fz-16">Scan Ktp.pdf</p>
+                    <p className="fz-16">
+                      {allDetailPeserta.data.data.File_ktp}
+                    </p>
                   </div>
                 </div>
                 <div className="col-6">
                   <div>
                     <p className="mb-2" style={colorText}>
-                      Email
+                      Ijazah
                     </p>
-                    <p className="fz-16">Scan Ijazah.jpg</p>
+                    <p className="fz-16">{allDetailPeserta.data.data.ijazah}</p>
                   </div>
                 </div>
               </div>
