@@ -38,6 +38,7 @@ const TambahBerita = ({ token, id }) => {
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
     const { akademi } = useSelector(state => state.allAkademi);
+    const { role_permission } = useSelector((state) => state.allRolePermission);
 
     const { quill, quillRef } = useQuill();
     const limit = 12000
@@ -450,32 +451,36 @@ const TambahBerita = ({ token, id }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
-                                <label
-                                    htmlFor="staticEmail"
-                                    className="ml-5 pl-4 font-weight-bolder"
-                                >
-                                    Publish
-                                </label>
-                                <div className="col-sm-1 ml-4">
-                                    <div className="">
-                                        <label className="switches">
-                                            <input
-                                                // required
-                                                className="checkbox"
-                                                checked={publish}
-                                                type="checkbox"
-                                                onChange={(e) => handleChangePublish(e)}
-                                            />
-                                            <span
-                                                className={`sliders round ${publish ? "text-white" : "pl-2"
-                                                    }`}
-                                            >
-                                            </span>
+                            {
+                                role_permission.roles.includes("Super Admin") ?
+                                    <div className="form-group row">
+                                        <label
+                                            htmlFor="staticEmail"
+                                            className="ml-5 pl-4 font-weight-bolder"
+                                        >
+                                            Publish
                                         </label>
+                                        <div className="col-sm-1 ml-4">
+                                            <div className="">
+                                                <label className="switches">
+                                                    <input
+                                                        // required
+                                                        className="checkbox"
+                                                        checked={publish}
+                                                        type="checkbox"
+                                                        onChange={(e) => handleChangePublish(e)}
+                                                    />
+                                                    <span
+                                                        className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                            }`}
+                                                    >
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                    : null
+                            }
 
                             {
                                 disablePublishDate === false ?

@@ -35,6 +35,8 @@ const ArtikelPeserta = ({ token }) => {
         isDeleted,
     } = useSelector((state) => state.deleteArtikelPeserta);
 
+    const { role_permission } = useSelector((state) => state.allRolePermission);
+
     const [search, setSearch] = useState("");
     const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
@@ -85,7 +87,8 @@ const ArtikelPeserta = ({ token }) => {
         });
     };
 
-    const getWindowDimensions = () => {        const { innerWidth: width, innerHeight: height } = window;
+    const getWindowDimensions = () => {
+        const { innerWidth: width, innerHeight: height } = window;
         return {
             width,
             height,
@@ -563,7 +566,11 @@ const ArtikelPeserta = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '9.5vw' }}>Aksi</th>
+                                                {
+                                                    role_permission.permissions.includes("publikasi.artikel_peserta.manage") || role_permission.roles.includes("Super Admin") ?
+                                                        <th style={{ width: '9.5vw' }}>Aksi</th>
+                                                        : null
+                                                }
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -638,40 +645,44 @@ const ArtikelPeserta = ({ token }) => {
                                                                 <td className="align-middle">
                                                                     {artikel_peserta.role}
                                                                 </td>
-                                                                <td className="align-middle d-flex">
+                                                                {
+                                                                    role_permission.permissions.includes("publikasi.artikel_peserta.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                        <td className="align-middle d-flex">
 
-                                                                    <Link
-                                                                        href={`/publikasi/artikel-peserta/preview/${artikel_peserta.id}`}
-                                                                    >
-                                                                        <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
-                                                                            <i className="ri-todo-fill p-0 text-white"></i>
-                                                                            <div className="text-hover-show-hapus">
-                                                                                Pratinjau
-                                                                            </div>
-                                                                        </a>
-                                                                    </Link>
+                                                                            <Link
+                                                                                href={`/publikasi/artikel-peserta/preview/${artikel_peserta.id}`}
+                                                                            >
+                                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
+                                                                                    <i className="ri-todo-fill p-0 text-white"></i>
+                                                                                    <div className="text-hover-show-hapus">
+                                                                                        Pratinjau
+                                                                                    </div>
+                                                                                </a>
+                                                                            </Link>
 
-                                                                    <Link
-                                                                        href={`/publikasi/artikel-peserta/ubah-artikel-peserta?id=${artikel_peserta.id}`}
-                                                                    >
-                                                                        <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                            <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                            <div className="text-hover-show-hapus">
-                                                                                Ubah
-                                                                            </div>
-                                                                        </a>
-                                                                    </Link>
+                                                                            <Link
+                                                                                href={`/publikasi/artikel-peserta/ubah-artikel-peserta?id=${artikel_peserta.id}`}
+                                                                            >
+                                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                                    <div className="text-hover-show-hapus">
+                                                                                        Ubah
+                                                                                    </div>
+                                                                                </a>
+                                                                            </Link>
 
-                                                                    <button
-                                                                        className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
-                                                                        onClick={() => handleDelete(artikel_peserta.id)}
-                                                                    >
-                                                                        <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                                                        <div className="text-hover-show-hapus">
-                                                                            Hapus
-                                                                        </div>
-                                                                    </button>
-                                                                </td>
+                                                                            <button
+                                                                                className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                                onClick={() => handleDelete(artikel_peserta.id)}
+                                                                            >
+                                                                                <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                                                                <div className="text-hover-show-hapus">
+                                                                                    Hapus
+                                                                                </div>
+                                                                            </button>
+                                                                        </td>
+                                                                        : null
+                                                                }
                                                             </tr>
                                                         );
                                                     })

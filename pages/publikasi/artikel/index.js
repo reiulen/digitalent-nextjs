@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
+import { getAllRolePermission } from "../../../redux/actions/publikasi/role-permissions.action"
 import { wrapper } from "../../../redux/store";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
@@ -31,7 +32,6 @@ export default function ArtikelPage(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
-      // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session)
       if (!middleware.status) {
@@ -54,6 +54,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      
       return {
         props: { session, title: "Artikel - Publikasi" },
       };

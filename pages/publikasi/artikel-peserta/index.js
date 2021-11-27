@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
+import { getAllRolePermission } from "../../../redux/actions/publikasi/role-permissions.action";
 import { getAllArtikelPeserta } from "../../../redux/actions/publikasi/artikel-peserta.actions";
 import { wrapper } from "../../../redux/store";
 
@@ -59,6 +60,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+
       return {
         props: { session, title: "Artikel Peserta - Publikasi" },
       };
