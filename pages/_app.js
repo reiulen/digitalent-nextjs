@@ -31,6 +31,8 @@ import { getSidebar } from "../redux/actions/site-management/role.actions";
 import Layout from "../components/templates/layout.component";
 
 function MyApp({ Component, pageProps }) {
+  const allSidebar = useSelector((state) => state.allSidebar);
+
   SimpleReactValidator.addLocale("id", {
     accepted: ":attribute harus diterima.",
     after: ":attribute harus lebih dari :date.",
@@ -73,8 +75,8 @@ function MyApp({ Component, pageProps }) {
   });
 
   const dispatch = useDispatch();
-  dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token))
   useEffect(() => {
+    dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token))
   }, [dispatch, pageProps?.session?.user?.user?.data?.token])
   moment.locale("id");
   

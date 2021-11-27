@@ -10,12 +10,62 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
-import AlertBar from '../../../partnership/components/BarAlert'
+import AlertBar from "../../../partnership/components/BarAlert";
+import { getAllListsPeserta } from "../../../../../redux/actions/site-management/user/peserta-dts";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  const allListPeserta = useSelector((state) => state.allListPeserta);
+
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [search, setSearch] = useState(null);
+
+  console.log(allListPeserta);
+
+  const listPeserta =
+    allListPeserta.loading === false ? (
+      allListPeserta?.data?.data?.list?.map((item, index) => {
+        return (
+          <tr key={index}>
+            <td className="align-middle text-left">
+              {index + limit * (page - 1) + 1}
+            </td>
+            <td className="align-middle text-left">{item.name}</td>
+            <td className="align-middle text-left">{item.email}</td>
+            <td className="align-middle text-left">{item.nomor_handphone}</td>
+            <td className="align-middle text-left">
+              <div className="d-flex align-items-center">
+                <Link
+                  href={`/site-management/user/peserta-dts/ubah-peserta-dts/${item.id}`}
+                >
+                  <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                    <IconPencil width="16" height="16" />
+                    <div className="text-hover-show-hapus">Ubah</div>
+                  </a>
+                </Link>
+                <Link
+                  href={`/site-management/user/peserta-dts/detail-peserta-dts/${item.id}`}
+                >
+                  <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
+                    <IconEye width="16" height="16" />
+                    <div className="text-hover-show-hapus">Detail</div>
+                  </a>
+                </Link>
+              </div>
+            </td>
+          </tr>
+        );
+      })
+    ) : (
+      <tr>
+        <td colSpan="8">
+          <LoadingTable />
+        </td>
+      </tr>
+    );
 
   const onNewReset = () => {
     router.replace("/site-management/role", undefined, {
@@ -27,9 +77,7 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               List User Peserta DTS
             </h3>
           </div>
@@ -53,12 +101,17 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={() => {
+                              setPage(1);
+                              dispatch(
+                                getAllListsPeserta(token, limit, 1, search)
+                              );
+                            }}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -86,61 +139,31 @@ const Table = ({ token }) => {
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">name</td>
-                      <td className="align-middle text-left">email</td>
-                      <td className="align-middle text-left">08973383733</td>
-                      <td className="align-middle text-left">
-                        <div className="d-flex align-items-center">
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/user/peserta-dts/ubah-peserta-dts/1`)
-                            }
-                          >
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/user/peserta-dts/detail-peserta-dts/1`)
-                            }
-                          >
-                            <IconEye width="16" height="16" />
-                            <div className="text-hover-show-hapus">Detail</div>
-                          </button>
-
-                          
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody>{listPeserta}</tbody>
                 </table>
               </div>
 
               <div className="row px-4">
-                <div className="table-pagination">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
+                <div
+                  className="table-pagination table-pagination pagination-custom col-12 col-md-6"
+                  style={{ width: "max-content" }}
+                >
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={allListPeserta?.data?.data?.perPage}
+                    totalItemsCount={allListPeserta?.data?.data?.total}
+                    pageRangeDisplayed={2}
+                    onChange={(e) => {
+                      setPage(e);
+                      dispatch(getAllListsPeserta(token, limit, e, search));
+                    }}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
                     lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                 </div>
 
                 <div className="table-total ml-auto mr-4">
@@ -149,7 +172,18 @@ const Table = ({ token }) => {
                       <select
                         className="form-control pr-2 cursor-pointer"
                         id="exampleFormControlSelect2"
-                        defaultValue=""
+                        value={limit}
+                        onChange={(e) => {
+                          setLimit(e.target.value);
+                          dispatch(
+                            getAllListsPeserta(
+                              token,
+                              e.target.value,
+                              page,
+                              search
+                            )
+                          );
+                        }}
                         style={{
                           width: "63px",
                           background: "#F3F6F9",
@@ -169,7 +203,7 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {allListPeserta?.data?.data?.totalFiltered}
                       </p>
                     </div>
                   </div>

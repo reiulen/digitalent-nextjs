@@ -527,6 +527,7 @@ import {
 } from "./pelatihan/admin/master-pendaftaran.reducer";
 
 import { getAllBookmarkPesertaReducer } from "../reducers/pelatihan/peserta/bookmark.reducer";
+import { allListPesertaReducer } from "./site-management/user/peserta-dts.reducers";
 
 const reducer = combineReducers({
   // DASHBOARD KABADAN
@@ -791,6 +792,7 @@ const reducer = combineReducers({
   detailExportData: detailExportDataReducer,
   updateExportData: updateExportDataReducer,
   deleteExportData: deleteExportDataReducer,
+  allListPeserta: allListPesertaReducer,
 
   // END SITE MANAGEMENT
 

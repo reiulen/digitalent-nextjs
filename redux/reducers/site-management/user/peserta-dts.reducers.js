@@ -33,19 +33,17 @@ const initialState = {
   listPelatihanByPeserta: [],
 };
 
-export const allListPesertaReducer = (state = initialState, action) => {
+export const allListPesertaReducer = (state = {}, action) => {
   switch (action.type) {
     case LIST_PESERTA_REQUEST:
       return {
-        ...state,
-        status: statuslist.process,
+        loading: true
       };
 
     case LIST_PESERTA_SUCCESS:
       return {
-        ...state,
-        status: statuslist.success,
-        listPeserta: action.payload,
+        loading: false,
+        data: action.payload,
       };
 
     case LIST_PESERTA_FAIL:
@@ -55,30 +53,11 @@ export const allListPesertaReducer = (state = initialState, action) => {
         error: null,
       };
 
-    case SEARCH_COORPORATION:
-      return {
-        ...state,
-        keyword: action.text,
-        page: 1,
-      };
-
-    case SET_PAGE:
-      return {
-        ...state,
-        page: action.page,
-      };
-
-    case LIMIT_CONFIGURATION:
-      return {
-        ...state,
-        limit: action.limitValue,
-        page: 1,
-      };
-
     default:
       return state;
   }
 };
+
 export const allDetailPesertaReducer = (state = initialState, action) => {
   switch (action.type) {
     case DETAIL_PESERTA_REQUEST:
@@ -95,35 +74,6 @@ export const allDetailPesertaReducer = (state = initialState, action) => {
       };
 
     case DETAIL_PESERTA_FAIL:
-      return {
-        ...state,
-        status: statuslist.error,
-        error: null,
-      };
-
-    default:
-      return state;
-  }
-};
-export const allListPelatihanByPesertaReducer = (
-  state = initialState,
-  action
-) => {
-  switch (action.type) {
-    case LIST_PELATIHAN_BY_PESERTA_REQUEST:
-      return {
-        ...state,
-        status: statuslist.process,
-      };
-
-    case LIST_PELATIHAN_BY_PESERTA_SUCCESS:
-      return {
-        ...state,
-        status: statuslist.success,
-        listPelatihanByPeserta: action.payload,
-      };
-
-    case LIST_PELATIHAN_BY_PESERTA_FAIL:
       return {
         ...state,
         status: statuslist.error,

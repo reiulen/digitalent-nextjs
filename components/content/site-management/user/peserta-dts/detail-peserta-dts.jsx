@@ -12,6 +12,7 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
 import Image from "next/image";
+import ListPeserta from './list-peserta-pelatihan'
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();

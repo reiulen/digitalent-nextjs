@@ -203,7 +203,7 @@ export const getSidebar = (token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + "/api/user/permissions",
+      "http://192.168.11.58:8000" + "/api/user/permissions",
       config
     );
     dispatch({

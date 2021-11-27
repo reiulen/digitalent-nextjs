@@ -7,7 +7,7 @@ import { getSession } from "next-auth/client";
 const ListUser = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/user/peserta-dts/detail-list-peserta-pelatihan"
+      "../../../../../components/content/site-management/user/peserta-dts/list-peserta-pelatihan"
     ),
   {
     loading: function loadingNow() {
@@ -53,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       return {
         props: {
           session,
-          title: "Detail Peserta Pelatihan DTS - Site Management",
+          title: "List Peserta Pelatihan DTS - Site Management",
         },
       };
     }
