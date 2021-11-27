@@ -596,7 +596,7 @@ useEffect(()=> {
 
             {/* PAGINATION */}
             <div className="d-flex justify-content-center">
-              {video && video.total !== 0 && video.total >= 0 ? (
+              {video && video.total !== 0 && video.total >= 6 ? (
                 <div 
                   className={
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?

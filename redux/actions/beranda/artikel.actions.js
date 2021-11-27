@@ -22,13 +22,12 @@ import {
 import axios from "axios";
 
 // Get all data
-
 export const getAllBerandaArtikel = 
 (
     page = 1,
     keyword = "",
-    limit="",
-    filterPublish="",
+    limit=5,
+    filterPublish="desc",
     sort="",
     category_id="",
     category_name="",
