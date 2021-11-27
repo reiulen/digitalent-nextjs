@@ -4,9 +4,9 @@ import { Row, Col } from "react-bootstrap";
 
 export default function InfoVideo({ video }) {
   return (
-    <div className="py-20 info-video">
+    <div className="py-lg-20 info-video">
       <Row>
-        <Col md={6}>
+        <Col md={12} lg={6}>
           <div className="player-wrapper mb-5">
             <ReactPlayer
               url={
@@ -20,8 +20,8 @@ export default function InfoVideo({ video }) {
             />
           </div>
         </Col>
-        <Col md={6} className="my-auto">
-          <div className="pl-md-20">
+        <Col md={12} lg={6} className="my-lg-auto mt-md-5">
+          <div className="pl-lg-20">
             <h1 className="fw-600" style={{ color: "#1F1F1F" }}>
               Informasi Dalam Video Terkini
             </h1>
@@ -31,7 +31,7 @@ export default function InfoVideo({ video }) {
             </p>
             <Link href="/video">
               <a>
-                <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12 mt-20">
+                <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12 mt-lg-20 mt-md-10">
                   Lihat Selengkapnya >
                 </button>
               </a>

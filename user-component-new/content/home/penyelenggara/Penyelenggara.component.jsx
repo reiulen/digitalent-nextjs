@@ -53,7 +53,7 @@ const Penyelenggara = () => {
         />
 
         <section className="penyelenggara-title-filter">
-          <h1 className="mb-4">Penyelenggara Pelatihan</h1>
+          <h1 className="mb-4 fz-40">Penyelenggara Pelatihan</h1>
           <p className="mr-6 fz-18 text-muted fw-400">
             Memiliki Lembaga Pelatihan dan ingin menjadi bagian dari Program
             Digitalent? tanya saja{" "}
@@ -124,8 +124,8 @@ const Penyelenggara = () => {
                     variant="transparent"
                     className={
                       order === "desc"
-                        ? `bg-penyelenggara-primary btn-penyelenggara-rounded btn-block`
-                        : `bg-penyelenggara-light btn-penyelenggara-rounded btn-block`
+                        ? `bg-penyelenggara-primary btn-penyelenggara-rounded btn-block mt-0`
+                        : `bg-penyelenggara-light btn-penyelenggara-rounded btn-block mt-0`
                     }
                     onClick={() => handleOrder("desc")}
                   >

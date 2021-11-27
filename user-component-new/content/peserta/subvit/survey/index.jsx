@@ -14,15 +14,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/dist/client/image";
-import Dot from "../../../../public/assets/media/logos/dot.png";
+import Dot from "../../../../../public/assets/media/logos/dot.png";
 import { useSelector } from "react-redux";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import {
   getRandomSubtanceQuestionDetail,
   postResult,
-} from "../../../../redux/actions/subvit/subtance-question-detail.action";
+} from "../../../../../redux/actions/subvit/subtance-question-detail.action";
 
-import defaultImage from "../../../../public/assets/media/logos/Gambar.png";
+import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 

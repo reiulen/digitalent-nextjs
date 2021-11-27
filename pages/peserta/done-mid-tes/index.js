@@ -13,7 +13,8 @@ import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMidd
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const DoneMid = dynamic(
-  () => import("../../../user-component/content/done-mid-test/index"),
+  () =>
+    import("../../../user-component-new/content/peserta/done-mid-test/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

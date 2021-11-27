@@ -32,7 +32,7 @@
   font-size: 20px;
   line-height: 120%;
   color: #6c6c6c;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 /* END GLOBAL */
 
