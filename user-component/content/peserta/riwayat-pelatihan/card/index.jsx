@@ -18,7 +18,6 @@ export default function CardTemplateOriginal({ data, session }) {
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [label, setLabel] = useState();
 
-  console.log(data.status);
   useEffect(() => {
     if (data.status.includes("tidak")) return setLabel("danger");
     if (data.status.includes("menunggu") || data.status.includes("seleksi"))

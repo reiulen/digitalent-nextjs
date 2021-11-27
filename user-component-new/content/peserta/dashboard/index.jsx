@@ -79,7 +79,6 @@ const Dashboard = ({ session, success }) => {
         "http://api-dts-dev.majapahit.id/simonas/api/job",
         config
       );
-      console.log(data);
       if (data) {
         return setSimonasData(data.data);
       } else {
