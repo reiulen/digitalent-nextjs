@@ -98,7 +98,7 @@ const Table = ({ token }) => {
                     <li style={listLi} className="p-4 listDTS">
                       <div className="d-flex align-items-center">
                         <Image
-                          src="/assets/icon/user2.svg"
+                          src="/assets/icon/useract.svg"
                           width="20"
                           height="20"
                           alt="user2"
@@ -109,7 +109,7 @@ const Table = ({ token }) => {
                     <li style={listLi} className="p-4 listDTS">
                       <div className="d-flex align-items-center">
                         <Image
-                          src="/assets/icon/Briefcase.svg"
+                          src="/assets/icon/BriefcaseAct.svg"
                           width="20"
                           height="20"
                           alt="user2"
