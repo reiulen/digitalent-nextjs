@@ -31,6 +31,10 @@ const DashbardSubvit = ({ token }) => {
     (state) => state.dashboardSubvit
   );
 
+  const { data: dataPermission } = useSelector(
+    (state) => state.permissionsSubvit
+  );
+
   const data = [];
   dashboard_subvit &&
     dashboard_subvit.chart &&
@@ -111,7 +115,7 @@ const DashbardSubvit = ({ token }) => {
                       <div className="col-md-6">
                         <div className="col-md-12 mt-5">
                           <h4 className="font-weight-bolder text-primary">
-                            Halo Admin A
+                            Halo {dataPermission.user.name || "Admin "}
                           </h4>
                         </div>
                         <div className="col-md-12">
@@ -146,93 +150,105 @@ const DashbardSubvit = ({ token }) => {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
-            <div className="card card-custom  gutter-b ">
-              <div
-                className={`${styles.cardTwo} card-body pt-2`}
-                style={{
-                  backgroundPosition: "right bottom",
-                  backgroundImage: "url('/assets/media/jukut.svg')",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <div className="d-flex align-items-center mb-10">
-                  <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                    <div className="row">
-                      <div className="col-md-12 col-xl-5 col-sm-12">
-                        <div className="col-md-10 mt-16">
-                          <h4
-                            className={`${styles.textCardTwo} font-weight-bolder text-primary`}
-                          >
-                            Buat Soal Test Substansi, Survey dan TRIVIA
-                          </h4>
+        {dataPermission &&
+        dataPermission.roles.includes("Super Admin") &&
+        dataPermission &&
+        dataPermission.permissions.includes(
+          "subvit.manage" && "subvit.dashboard.manage"
+        ) ? (
+          <div className="row">
+            <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
+              <div className="card card-custom  gutter-b ">
+                <div
+                  className={`${styles.cardTwo} card-body pt-2`}
+                  style={{
+                    backgroundPosition: "right bottom",
+                    backgroundImage: "url('/assets/media/jukut.svg')",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                >
+                  <div className="d-flex align-items-center mb-10">
+                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
+                      <div className="row">
+                        <div className="col-md-12 col-xl-5 col-sm-12">
+                          <div className="col-md-10 mt-16">
+                            <h4
+                              className={`${styles.textCardTwo} font-weight-bolder text-primary`}
+                            >
+                              Buat Soal Test Substansi, Survey dan TRIVIA
+                            </h4>
+                          </div>
                         </div>
-                      </div>
 
-                      <div
-                        className={`${styles.colCard} col-md-12 col-xl-7 col-sm-12 mt-25 `}
-                      >
-                        <center>
-                          <Dropdown>
-                            <Dropdown.Toggle className={styles.btnDropdown}>
-                              Buat Soal
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu style={{ width: "195px" }}>
-                              <Dropdown.Item href="subvit/substansi/tambah-step-1">
-                                Tambah Test Substansi
-                              </Dropdown.Item>
-                              <Dropdown.Item href="subvit/survey/tambah">
-                                Tambah Survey
-                              </Dropdown.Item>
-                              <Dropdown.Item href="subvit/trivia/tambah">
-                                Tambah TRIVIA
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </center>
+                        <div
+                          className={`${styles.colCard} col-md-12 col-xl-7 col-sm-12 mt-25 `}
+                        >
+                          <center>
+                            <Dropdown>
+                              <Dropdown.Toggle className={styles.btnDropdown}>
+                                Buat Soal
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu style={{ width: "195px" }}>
+                                <Dropdown.Item href="subvit/substansi/tambah-step-1">
+                                  Tambah Test Substansi
+                                </Dropdown.Item>
+                                <Dropdown.Item href="subvit/survey/tambah">
+                                  Tambah Survey
+                                </Dropdown.Item>
+                                <Dropdown.Item href="subvit/trivia/tambah">
+                                  Tambah TRIVIA
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </center>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
-            <div className="row">
-              <div
-                className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4  col-xxl-4 order-1 order-xxl-2`}
-              >
-                <CardDashboardMini
-                  link="/subvit/substansi"
-                  background="bg-white"
-                  icon="book-white.svg"
-                  title="Test Substansi"
-                />
-              </div>
-              <div
-                className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
-              >
-                <CardDashboardMini
-                  link="/subvit/survey"
-                  background="bg-white"
-                  icon="blok4-secondary.svg"
-                  title="Survey"
-                />
-              </div>
-              <div
-                className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
-              >
-                <CardDashboardMini
-                  link="/subvit/trivia"
-                  background="bg-white"
-                  icon="movie-secondary.svg"
-                  title="Trivia"
-                />
-              </div>
+            <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
+              {
+                <div className="row">
+                  <div
+                    className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4  col-xxl-4 order-1 order-xxl-2`}
+                  >
+                    <CardDashboardMini
+                      link="/subvit/substansi"
+                      background="bg-white"
+                      icon="book-white.svg"
+                      title="Test Substansi"
+                    />
+                  </div>
+                  <div
+                    className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
+                  >
+                    <CardDashboardMini
+                      link="/subvit/survey"
+                      background="bg-white"
+                      icon="blok4-secondary.svg"
+                      title="Survey"
+                    />
+                  </div>
+                  <div
+                    className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
+                  >
+                    <CardDashboardMini
+                      link="/subvit/trivia"
+                      background="bg-white"
+                      icon="movie-secondary.svg"
+                      title="Trivia"
+                    />
+                  </div>
+                </div>
+              }
             </div>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
+
         <div className="row">
           <div className={`${styles.displayMedium} col-12`}>
             <div className={`${styles.cardPeserta} card`}>
@@ -643,6 +659,7 @@ const DashbardSubvit = ({ token }) => {
                       dashboard_subvit.substansi.total_participant}{" "}
                     Peserta
                   </div>
+
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
                     <button
                       className={`${styles.btnNext} btn btn-primary`}
@@ -744,13 +761,14 @@ const DashbardSubvit = ({ token }) => {
                   })
                 )}
                 <div className={`${styles.rowBottom} row`}>
-                  <div className={`${styles.total} col-sm-6 mt-5`}>
+                  <div className={`${styles.total} col-sm-6 mt-5 `}>
                     Total:{" "}
                     {dashboard_subvit &&
                       dashboard_subvit.trivia &&
                       dashboard_subvit.trivia.total_participant}{" "}
                     Peserta
                   </div>
+
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
                     <button
                       className={`${styles.btnNext} btn btn-primary`}
@@ -857,6 +875,7 @@ const DashbardSubvit = ({ token }) => {
                       dashboard_subvit.survey.total_participant}{" "}
                     Peserta
                   </div>
+
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
                     <button
                       className={`${styles.btnNext} btn btn-primary`}

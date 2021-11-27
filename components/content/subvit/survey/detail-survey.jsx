@@ -31,6 +31,10 @@ const DetailSurvey = ({ token }) => {
   );
   const { survey } = useSelector((state) => state.detailSurveyQuestionBanks);
 
+  const { data: dataPermission } = useSelector(
+    (state) => state.permissionsSubvit
+  );
+
   let { page = 1, id } = router.query;
   page = Number(page);
 
@@ -156,14 +160,23 @@ const DetailSurvey = ({ token }) => {
               Survey {survey.academy ? survey.academy.name : ""} -{" "}
               {survey.theme ? survey.theme.name : ""}
             </h2>
-            <div className="card-toolbar">
-              <Link href={`/subvit/survey/edit?id=${id}`}>
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                  <i className="ri-pencil-fill"></i>
-                  Edit
-                </a>
-              </Link>
-            </div>
+            {dataPermission &&
+            dataPermission.roles.includes("Super Admin") &&
+            dataPermission &&
+            dataPermission.permissions.includes(
+              "subvit.manage" && "subvit.survey.manage"
+            ) ? (
+              <div className="card-toolbar">
+                <Link href={`/subvit/survey/edit?id=${id}`}>
+                  <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                    <i className="ri-pencil-fill"></i>
+                    Edit
+                  </a>
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="card-body">
@@ -223,15 +236,24 @@ const DetailSurvey = ({ token }) => {
               <h2 className="card-title h2 text-dark">Bank Soal</h2>
               {/* <span>200 Bank Soal | 150 Ingatan | 50 Analitik</span> */}
             </div>
-            <div className="card-toolbar">
-              <a
-                className="btn btn-primary-rounded-full px-y font-weight-bold btn-block "
-                onClick={handleModal}
-              >
-                <i className="ri-add-fill"></i>
-                Tambah Soal
-              </a>
-            </div>
+            {dataPermission &&
+            dataPermission.roles.includes("Super Admin") &&
+            dataPermission &&
+            dataPermission.permissions.includes(
+              "subvit.manage" && "subvit.survey.manage"
+            ) ? (
+              <div className="card-toolbar">
+                <a
+                  className="btn btn-primary-rounded-full px-y font-weight-bold btn-block "
+                  onClick={handleModal}
+                >
+                  <i className="ri-add-fill"></i>
+                  Tambah Soal
+                </a>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -273,7 +295,16 @@ const DetailSurvey = ({ token }) => {
                       <th>ID Soal</th>
                       <th>Soal</th>
                       <th>Status</th>
-                      <th>Aksi</th>
+                      {dataPermission &&
+                      dataPermission.roles.includes("Super Admin") &&
+                      dataPermission &&
+                      dataPermission.permissions.includes(
+                        "subvit.manage" && "subvit.survey.manage"
+                      ) ? (
+                        <th>Aksi</th>
+                      ) : (
+                        ""
+                      )}
                     </tr>
                   </thead>
                   <tbody>
@@ -317,30 +348,40 @@ const DetailSurvey = ({ token }) => {
                                   </span>
                                 )}
                               </td>
+                              {}
                               <td className="align-middle">
-                                <div className="d-flex">
-                                  <Link
-                                    href={`edit-soal-survey?id=${question.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                {dataPermission &&
+                                dataPermission.roles.includes("Super Admin") &&
+                                dataPermission &&
+                                dataPermission.permissions.includes(
+                                  "subvit.manage" && "subvit.survey.manage"
+                                ) ? (
+                                  <div className="d-flex">
+                                    <Link
+                                      href={`edit-soal-survey?id=${question.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Edit"
+                                      >
+                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      onClick={() => handleDelete(question.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
-                                      title="Edit"
+                                      title="Hapus"
                                     >
-                                      <i className="ri-pencil-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary text-white"
-                                    onClick={() => handleDelete(question.id)}
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Hapus"
-                                  >
-                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                  </button>
-                                </div>
+                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                    </button>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </td>
                             </tr>
                           );

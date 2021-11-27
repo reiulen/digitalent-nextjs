@@ -12,7 +12,7 @@ import {
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
 const SurveyPage = dynamic(
-  () => import("../../../user-component/content/peserta/survey"),
+  () => import("../../../user-component-new/content/peserta/survey"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -76,7 +76,7 @@ export default function TestSubstansiPage(props) {
 // );
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);
@@ -98,7 +98,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         if (!data) {
           return (success = false);
         } else {
-          const survey = data.list.filter(item => item.status === "survey");
+          const survey = data.list.filter((item) => item.status === "survey");
           if (survey.length > 0) {
             await store.dispatch(
               getDetailRiwayatPelatihan(

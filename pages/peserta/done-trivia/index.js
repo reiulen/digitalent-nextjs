@@ -12,7 +12,7 @@ import { getPelatihan } from "../../../redux/actions/pelatihan/register-training
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 
 const DoneSurvey = dynamic(
-  () => import("../../../user-component/content/done-trivia/index"),
+  () => import("../../../user-component-new/content/peserta/done-trivia/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

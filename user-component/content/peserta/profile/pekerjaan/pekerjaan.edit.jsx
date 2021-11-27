@@ -23,17 +23,19 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
 
   const { error: errorPekerjaan, pekerjaan } = useSelector(
-    state => state.dataPekerjaan
+    (state) => state.dataPekerjaan
   );
-  const { data: dataAsalSekolah } = useSelector(state => state.getAsalSekolah);
+  const { data: dataAsalSekolah } = useSelector(
+    (state) => state.getAsalSekolah
+  );
 
   const { error: errorStatusPekerjaan, data: dataStatusPekerjaan } =
-    useSelector(state => state.drowpdownStatusPekerjaan);
+    useSelector((state) => state.drowpdownStatusPekerjaan);
   const {
     error: errorUpdateData,
     loading,
     success,
-  } = useSelector(state => state.updatePekerjaan);
+  } = useSelector((state) => state.updatePekerjaan);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -95,7 +97,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       let data = {};
@@ -136,7 +138,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
           tahun_masuk: parseInt(tahunMasuk),
         };
       }
-
+      window.scrollTo(0, 0);
       dispatch(updateProfilePekerjaan(data, token));
 
       // check deploy today
@@ -194,7 +196,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                 "Silahkan Pilih Status Pekerjaan"
               }
               options={optionsStatusPekerjaan}
-              onChange={e =>
+              onChange={(e) =>
                 setStatusPekerjaan({ label: e.label, value: e.value })
               }
               onBlur={() =>
@@ -228,7 +230,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Form.Control
                     placeholder="Silahkan Masukan Pekerjaan"
                     value={pekerjaanNama}
-                    onChange={e => setPekerjaan(e.target.value)}
+                    onChange={(e) => setPekerjaan(e.target.value)}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("pekerjaan")
                     }
@@ -252,7 +254,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Form.Control
                     placeholder="Silahkan Masukan Perusahaan"
                     value={perusahaan}
-                    onChange={e => setPerusahaan(e.target.value)}
+                    onChange={(e) => setPerusahaan(e.target.value)}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("perusahaan")
                     }
@@ -277,7 +279,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Control
                 placeholder="Silahkan Masukan Penghasilan"
                 value={formatRupiah(penghasilan)}
-                onChange={e => {
+                onChange={(e) => {
                   setPenghasilan(formatRupiah(e.target.value));
                 }}
                 onBlur={() =>
@@ -311,7 +313,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                       type="text" /*  */
                       className="form-control"
                       value={sekolah}
-                      onChange={e => {
+                      onChange={(e) => {
                         setSekolah(e.target.value);
                       }}
                     />
@@ -341,7 +343,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                     <Form.Control
                       placeholder="Silahkan Masukan Tahun Masuk"
                       value={tahunMasuk}
-                      onChange={e => {
+                      onChange={(e) => {
                         if (
                           e.target.value === "" ||
                           helperRegexNumber.test(e.target.value)

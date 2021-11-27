@@ -6,6 +6,7 @@ import { getDetailSurveyQuestionBanks } from "../../../redux/actions/subvit/surv
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.actions";
 
 export default function DetailSurveyPage(props) {
   const session = props.session.user.user.data;
@@ -53,6 +54,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDetailSurveyQuestionBanks(params.id, session.user.user.data.token)
       );
+
+      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
+
       return {
         props: { session, title: "Detail Survey - Subvit" },
       };

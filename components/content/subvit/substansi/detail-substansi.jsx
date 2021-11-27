@@ -21,6 +21,11 @@ const DetailSubstansi = ({ token }) => {
   const { subtance_question_detail } = useSelector(
     (state) => state.allSubtanceQuestionDetail
   );
+
+  const { data: dataPermission } = useSelector(
+    (state) => state.permissionsSubvit
+  );
+
   const { error, isDeleted } = useSelector(
     (state) => state.deleteSubtanceQuestionDetail
   );
@@ -275,14 +280,23 @@ const DetailSubstansi = ({ token }) => {
               {subtance && subtance.academy ? subtance.academy.name : ""} -{" "}
               {subtance && subtance.theme ? subtance.theme.name : ""}
             </h2>
-            <div className="card-toolbar">
-              <Link href={`/subvit/substansi/edit?id=${id}`}>
-                <a className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block">
-                  <i className="ri-pencil-fill"></i>
-                  Edit
-                </a>
-              </Link>
-            </div>
+            {dataPermission &&
+            dataPermission.roles.includes("Super Admin") &&
+            dataPermission &&
+            dataPermission.permissions.includes(
+              "subvit.manage" && "subvit.substansi.manage"
+            ) ? (
+              <div className="card-toolbar">
+                <Link href={`/subvit/substansi/edit?id=${id}`}>
+                  <a className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block">
+                    <i className="ri-pencil-fill"></i>
+                    Edit
+                  </a>
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="card-body">
@@ -468,15 +482,24 @@ const DetailSubstansi = ({ token }) => {
               <h2 className="card-title h2 text-dark">Bank Soal</h2>
               {/* <label htmlFor=""></label> */}
             </div>
-            <div className="card-toolbar">
-              <a
-                className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block"
-                onClick={handleModal}
-              >
-                <i className="ri-add-fill"></i>
-                Tambah Soal
-              </a>
-            </div>
+            {dataPermission &&
+            dataPermission.roles.includes("Super Admin") &&
+            dataPermission &&
+            dataPermission.permissions.includes(
+              "subvit.manage" && "subvit.substansi.manage"
+            ) ? (
+              <div className="card-toolbar">
+                <a
+                  className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block"
+                  onClick={handleModal}
+                >
+                  <i className="ri-add-fill"></i>
+                  Tambah Soal
+                </a>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -538,7 +561,16 @@ const DetailSubstansi = ({ token }) => {
                       <th>Kategori</th>
                       <th>Bobot</th>
                       <th>Status</th>
-                      <th>Aksi</th>
+                      {dataPermission &&
+                      dataPermission.roles.includes("Super Admin") &&
+                      dataPermission &&
+                      dataPermission.permissions.includes(
+                        "subvit.manage" && "subvit.substansi.manage"
+                      ) ? (
+                        <th>Aksi</th>
+                      ) : (
+                        ""
+                      )}
                     </tr>
                   </thead>
                   <tbody>
@@ -576,29 +608,38 @@ const DetailSubstansi = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                <div className="d-flex">
-                                  <Link
-                                    href={`edit-soal-substansi?id=${question.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                {dataPermission &&
+                                dataPermission.roles.includes("Super Admin") &&
+                                dataPermission &&
+                                dataPermission.permissions.includes(
+                                  "subvit.manage" && "subvit.substansi.manage"
+                                ) ? (
+                                  <div className="d-flex">
+                                    <Link
+                                      href={`edit-soal-substansi?id=${question.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Edit"
+                                      >
+                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      onClick={() => handleDelete(question.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
-                                      title="Edit"
+                                      title="Hapus"
                                     >
-                                      <i className="ri-pencil-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary text-white"
-                                    onClick={() => handleDelete(question.id)}
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Hapus"
-                                  >
-                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                  </button>
-                                </div>
+                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                    </button>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </td>
                             </tr>
                           );

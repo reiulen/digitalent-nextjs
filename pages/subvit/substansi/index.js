@@ -6,7 +6,10 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 // import ListSubstansi from "../../../components/content/subvit/substansi/list-substansi";
 
-import { getAllSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";
+import {
+  getAllSubtanceQuestionBanks,
+  getPermissionSubvit,
+} from "../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
@@ -63,6 +66,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
 
       return {
         props: { session, title: "List Test Substansi - Subvit" },

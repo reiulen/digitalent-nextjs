@@ -8,7 +8,8 @@ import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.act
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 
 const SubtansiUser = dynamic(
-  () => import("../../../../user-component/content/subvit/mid-test"),
+  () =>
+    import("../../../../user-component-new/content/peserta/subvit/mid-test"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
