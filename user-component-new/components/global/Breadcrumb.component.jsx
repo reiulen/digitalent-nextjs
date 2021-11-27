@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const BreadcrumbComponent = ({ data = [] }) => {
   return (
-    <div className="rounded-pill d-flex align-items-center border px-4 py-2 my-md-7 mb-10 mb-md-13">
+    <div className="rounded-pill d-flex align-items-center border px-4 py-2 mb-10">
       <span className="text-primary">
         <Link href="/">Beranda</Link>
       </span>
@@ -17,16 +17,22 @@ const BreadcrumbComponent = ({ data = [] }) => {
             <Link href={row.link} passHref>
               {i === data.length - 1 ? (
                 row.name.length > 25 ? (
-                  <span>{row.name.substring(0, 25) + " ..."}</span>
+                  <span className="trim-text-mobile">{row.name}</span>
                 ) : (
-                  <span>{row.name}</span>
+                  <span className="trim-text-mobile">{row.name}</span>
                 )
               ) : row.name.length > 25 ? (
-                <span className="text-primary" style={{ cursor: "pointer" }}>
-                  {row.name.substring(0, 25) + " ..."}
+                <span
+                  className="text-primary trim-text-mobile"
+                  style={{ cursor: "pointer" }}
+                >
+                  {row.name}
                 </span>
               ) : (
-                <span className="text-primary" style={{ cursor: "pointer" }}>
+                <span
+                  className="text-primary trim-text-mobile"
+                  style={{ cursor: "pointer" }}
+                >
                   {row.name}
                 </span>
               )}

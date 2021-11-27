@@ -8,6 +8,15 @@
 }
 
 /* HOME PAGE */
+
+.padding-content-home {
+  padding: 40px 56px;
+}
+
+.padding-content-footer {
+  padding: 40px 56px;
+}
+
 .pelatihan-new {
   background-image: url("/assets/media/section/section-pelatihan-1.png");
   background-repeat: no-repeat;
@@ -230,6 +239,7 @@
   background: #ffffff;
   border: 1px solid #d7e1ea;
   box-sizing: border-box;
+  color: #adb5bd;
 }
 
 .bg-penyelenggara-light:hover {
@@ -361,5 +371,29 @@
 @media (max-width: 350px) {
   .badge-card-pelatihan-new {
     font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .padding-content-home {
+    padding: 40px 32px;
+  }
+  .padding-content-footer {
+    padding: 40px 32px;
+  }
+}
+
+@media (max-width: 500px) {
+  .padding-content-home {
+    padding: 32px 30px;
+  }
+  .padding-content-footer {
+    padding: 20px 30px;
+  }
+  .trim-text-mobile {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 11rem !important;
   }
 }
