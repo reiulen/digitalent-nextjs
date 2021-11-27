@@ -17,7 +17,7 @@ const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
-    (state) => state.dashboardPeserta
+    state => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
   // useEffect(() => {
@@ -66,12 +66,19 @@ const Dashboard = ({ session, success }) => {
   }, [errorDashboard, totalSubvit]);
 
   const [simonasData, setSimonasData] = useState([]);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${session.token}`,
+    },
+  };
 
   useEffect(() => {
     const getSimonasData = async () => {
       try {
         const data = axios.get(
-          "https://beasiswa-dev.majapahit.id/api/get-scholarship-data"
+          // "https://beasiswa-dev.majapahit.id/api/get-scholarship-data"
+          "http://api-dts-dev.majapahit.id/beasiswa/api/get-scholarship-data",
+          config
         );
         // const data = axios.get("http://simonas-dev.majapahit.id/api/job", {
         //   headers: {
@@ -79,6 +86,7 @@ const Dashboard = ({ session, success }) => {
         //   },
         // });
         if (data) {
+          console.log(data, "in idata");
           return setSimonasData(data);
         } else {
           return;
@@ -281,10 +289,10 @@ const Dashboard = ({ session, success }) => {
                     <Image
                       className={`${style.image_dashboard}`}
                       src={
+                        `/assets/media/default-card.png` ||
                         (pelatihan.pelatihan_berjalan.gambar &&
                           process.env.END_POINT_API_IMAGE_BEASISWA +
-                            pelatihan.pelatihan_berjalan.gambar) ||
-                        `/assets/media/default-card.png`
+                            pelatihan.pelatihan_berjalan.gambar)
                       }
                       width={400}
                       height={180}

@@ -6,6 +6,7 @@ import { getAllPenyeleggaraPeserta } from "../../redux/actions/beranda/beranda.a
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 
 import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
+import { getPencarian } from "../../redux/actions/pelatihan/pencarian.action";
 
 const Pencarian = dynamic(
   () =>
@@ -51,7 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllPenyeleggaraPeserta());
 
       await store.dispatch(getDataPribadi(sessionToken));
-
+      await store.dispatch(getPencarian(sessionToken));
       return {
         props: {
           title: "Penyelenggara",

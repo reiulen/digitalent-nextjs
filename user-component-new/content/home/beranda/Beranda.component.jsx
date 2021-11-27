@@ -699,9 +699,6 @@ const Beranda = ({ session }) => {
                                                 <Button
                                                   variant="light"
                                                   className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
-                                                  onClick={() => {
-                                                    console.log(cardBookmark);
-                                                  }}
                                                 >
                                                   <i
                                                     className={
