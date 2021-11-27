@@ -45,17 +45,9 @@ export const getAllListsPeserta =
   (token, id) =>
   async (dispatch) => {
     try {
-
-      const params = {
-        page: page,
-        limit: limit,
-        cari: search,
-      };
-
       const { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/participant/detail/${id}`,
         {
-          params,
           headers: {
             authorization: `Bearer ${token}`,
           },

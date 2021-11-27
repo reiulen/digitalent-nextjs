@@ -29,6 +29,7 @@ import App from "next/app";
 import { getSidebar } from "../redux/actions/site-management/role.actions";
 
 import Layout from "../components/templates/layout.component";
+import { allSidebarReducer } from "../redux/reducers/site-management/role.reducers";
 
 function MyApp({ Component, pageProps }) {
   const allSidebar = useSelector((state) => state.allSidebar);
@@ -76,11 +77,12 @@ function MyApp({ Component, pageProps }) {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token))
-  }, [dispatch, pageProps?.session?.user?.user?.data?.token])
+    if (allSidebar.loading) {
+      dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
+    }
+  }, [dispatch, pageProps?.session?.user?.user?.data?.token, allSidebar.loading]);
   moment.locale("id");
-  
- 
+
   return (
     <>
       {pageProps.data !== "auth" ? (

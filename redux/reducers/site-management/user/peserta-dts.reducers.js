@@ -58,25 +58,18 @@ export const allListPesertaReducer = (state = {}, action) => {
   }
 };
 
-export const allDetailPesertaReducer = (state = initialState, action) => {
+export const allDetailPesertaReducer = (state = {}, action) => {
   switch (action.type) {
-    case DETAIL_PESERTA_REQUEST:
-      return {
-        ...state,
-        status: statuslist.process,
-      };
 
     case DETAIL_PESERTA_SUCCESS:
       return {
         ...state,
-        status: statuslist.success,
-        detailPeserta: action.payload,
+        data: action.payload,
       };
 
     case DETAIL_PESERTA_FAIL:
       return {
         ...state,
-        status: statuslist.error,
         error: null,
       };
 

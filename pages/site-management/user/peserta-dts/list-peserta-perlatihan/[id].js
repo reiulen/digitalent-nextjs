@@ -3,11 +3,12 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
+import {getDetailPesertaManage} from '../../../../../redux/actions/site-management/user/peserta-dts'
 
 const ListUser = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/user/peserta-dts/list-peserta-pelatihan"
+      "../../../../../components/content/site-management/user/peserta-dts/detail-list-peserta-pelatihan"
     ),
   {
     loading: function loadingNow() {
@@ -43,17 +44,22 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       // await store.dispatch(
       //   getAllRoles(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     session.user.user.data.token
+      //     session.user.user.data.token,
+      //     query.id
       //   )
       // );
+
+      await store.dispatch(
+        getDetailPesertaManage(
+          session.user.user.data.token,
+          query.id
+        )
+      );
 
       return {
         props: {
           session,
-          title: "List Peserta Pelatihan DTS - Site Management",
+          title: "Detail Peserta Pelatihan DTS - Site Management",
         },
       };
     }

@@ -18,6 +18,10 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  const allDetailPeserta = useSelector(state => state.allDetailPeserta)
+
+  console.log(allDetailPeserta)
+
   const onNewReset = () => {
     router.replace("/site-management/role", undefined, {
       shallow: true,
