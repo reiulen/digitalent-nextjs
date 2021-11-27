@@ -4,6 +4,7 @@ import { getAllTriviaQuestionBanks } from "../../../redux/actions/subvit/trivia-
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.actions";
 
 const ListTrivia = dynamic(
   () => import("../../../components/content/subvit/trivia/list-trivia"),
@@ -58,6 +59,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
 
       return {
         props: { session, title: "Trivia - Subvit" },
