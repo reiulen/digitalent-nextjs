@@ -10,7 +10,7 @@ import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwa
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const MidTest = dynamic(
-  () => import("../../../user-component/content/peserta/mid-test"),
+  () => import("../../../user-component-new/content/peserta/mid-test"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
