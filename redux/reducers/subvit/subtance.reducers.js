@@ -1,322 +1,365 @@
 import {
-    SUBTANCE_QUESTION_BANKS_REQUEST,
-    SUBTANCE_QUESTION_BANKS_SUCCESS,
-    SUBTANCE_QUESTION_BANKS_FAIL,
+  SUBTANCE_QUESTION_BANKS_REQUEST,
+  SUBTANCE_QUESTION_BANKS_SUCCESS,
+  SUBTANCE_QUESTION_BANKS_FAIL,
+  GET_PERMISSIONS_SUBVIT_REQUEST,
+  GET_PERMISSIONS_SUBVIT_SUCCESS,
+  GET_PERMISSIONS_SUBVIT_FAIL,
+  NEW_SUBTANCE_QUESTION_BANKS_REQUEST,
+  NEW_SUBTANCE_QUESTION_BANKS_SUCCESS,
+  NEW_SUBTANCE_QUESTION_BANKS_RESET,
+  NEW_SUBTANCE_QUESTION_BANKS_FAIL,
+  UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST,
+  UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+  UPDATE_SUBTANCE_QUESTION_BANKS_RESET,
+  UPDATE_SUBTANCE_QUESTION_BANKS_FAIL,
+  DELETE_SUBTANCE_QUESTION_BANKS_REQUEST,
+  DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+  DELETE_SUBTANCE_QUESTION_BANKS_RESET,
+  DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
+  DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST,
+  DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
+  DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
+  DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+  DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+  DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
+  UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
+  UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS,
+  UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET,
+  UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_FAIL,
+  REPORT_SUBTANCE_QUESTION_BANKS_REQUEST,
+  REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS,
+  REPORT_SUBTANCE_QUESTION_BANKS_FAIL,
+  NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+  NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+  NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+  NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+  DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+  DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+  DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+  DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+  CLEAR_ERRORS,
+} from "../../types/subvit/subtance.type";
 
-    NEW_SUBTANCE_QUESTION_BANKS_REQUEST,
-    NEW_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    NEW_SUBTANCE_QUESTION_BANKS_RESET,
-    NEW_SUBTANCE_QUESTION_BANKS_FAIL,
+export const permissionsSubvitReducer = (
+  state = { permissions: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_PERMISSIONS_SUBVIT_REQUEST:
+      return {
+        loading: true,
+      };
 
-    UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST,
-    UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    UPDATE_SUBTANCE_QUESTION_BANKS_RESET,
-    UPDATE_SUBTANCE_QUESTION_BANKS_FAIL,
+    case GET_PERMISSIONS_SUBVIT_SUCCESS:
+      return {
+        loading: false,
+        data: action.payload.data,
+      };
 
-    DELETE_SUBTANCE_QUESTION_BANKS_REQUEST,
-    DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    DELETE_SUBTANCE_QUESTION_BANKS_RESET,
-    DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
+    case GET_PERMISSIONS_SUBVIT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-    DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST,
-    DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST,
-    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
+    default:
+      return state;
+  }
+};
 
-    UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
-    UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS,
-    UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET,
-    UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_FAIL,
+export const allSubtanceQuestionBanksReducer = (
+  state = { subtance: [] },
+  action
+) => {
+  switch (action.type) {
+    case SUBTANCE_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-    REPORT_SUBTANCE_QUESTION_BANKS_REQUEST,
-    REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    REPORT_SUBTANCE_QUESTION_BANKS_FAIL,
+    case SUBTANCE_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        subtance: action.payload.data,
+      };
 
-    NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
-    NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
-    NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+    case SUBTANCE_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
-    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
-    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-    CLEAR_ERRORS,
-} from '../../types/subvit/subtance.type'
+    default:
+      return state;
+  }
+};
 
-export const allSubtanceQuestionBanksReducer = (state = { subtance: [] }, action) => {
-    switch (action.type) {
-        case SUBTANCE_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+export const newSubtanceQuestionBanksReducer = (
+  state = { subtance: {} },
+  action
+) => {
+  switch (action.type) {
+    case NEW_SUBTANCE_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case SUBTANCE_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                subtance: action.payload.data
-            }
+    case NEW_SUBTANCE_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        subtance: action.payload.data,
+      };
 
-        case SUBTANCE_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case NEW_SUBTANCE_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
+    case NEW_SUBTANCE_QUESTION_BANKS_RESET:
+      return {
+        success: false,
+      };
 
-        default:
-            return state
-    }
-}
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-export const newSubtanceQuestionBanksReducer = (state = { subtance: {} }, action) => {
-    switch (action.type) {
-        case NEW_SUBTANCE_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+    default:
+      return state;
+  }
+};
 
-        case NEW_SUBTANCE_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                success: action.payload.message,
-                subtance: action.payload.data
-            }
+export const detailSubtanceQuestionBanksReducer = (
+  state = { subtance: {} },
+  action
+) => {
+  switch (action.type) {
+    case DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST:
+    case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case NEW_SUBTANCE_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS:
+    case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        subtance: action.payload,
+      };
 
-        case NEW_SUBTANCE_QUESTION_BANKS_RESET:
-            return {
-                success: false
-            }
+    case DETAIL_SUBTANCE_QUESTION_BANKS_FAIL:
+    case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
-
-export const detailSubtanceQuestionBanksReducer = (state = { subtance: {} }, action) => {
-    switch (action.type) {
-        case DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST:
-        case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
-
-        case DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS:
-        case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                subtance: action.payload
-            }
-
-        case DETAIL_SUBTANCE_QUESTION_BANKS_FAIL:
-        case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
-
-        case CLEAR_ERRORS:
-            return {
-                ...state,
-                error: null
-            }
-
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
 
 export const updateSubtanceQuestionReducer = (state = {}, action) => {
-    switch (action.type) {
-        case UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+  switch (action.type) {
+    case UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                isUpdated: action.payload
-            }
+    case UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        isUpdated: action.payload,
+      };
 
-        case UPDATE_SUBTANCE_QUESTION_BANKS_RESET:
-            return {
-                loading: false,
-                isUpdated: false
-            }
+    case UPDATE_SUBTANCE_QUESTION_BANKS_RESET:
+      return {
+        loading: false,
+        isUpdated: false,
+      };
 
-        case UPDATE_SUBTANCE_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case UPDATE_SUBTANCE_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                ...state,
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
 
 export const deleteSubtanceQuestionBanksReducer = (state = {}, action) => {
-    switch (action.type) {
-        case DELETE_SUBTANCE_QUESTION_BANKS_REQUEST:
-        case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+  switch (action.type) {
+    case DELETE_SUBTANCE_QUESTION_BANKS_REQUEST:
+    case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS:
-        case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                isDeleted: action.payload
-            }
+    case DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS:
+    case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        isDeleted: action.payload,
+      };
 
-        case DELETE_SUBTANCE_QUESTION_BANKS_RESET:
-        case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET:
-            return {
-                loading: false,
-                isDeleted: false
-            }
+    case DELETE_SUBTANCE_QUESTION_BANKS_RESET:
+    case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET:
+      return {
+        loading: false,
+        isDeleted: false,
+      };
 
-        case DELETE_SUBTANCE_QUESTION_BANKS_FAIL:
-        case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case DELETE_SUBTANCE_QUESTION_BANKS_FAIL:
+    case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                ...state,
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
 
 // ======================================================================================================================
-export const updateSubtanceQuestionBanksPublishReducer = (state = { subtance: {} }, action) => {
-    switch (action.type) {
-        case UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST:
-            return {
-                loading: true
-            }
+export const updateSubtanceQuestionBanksPublishReducer = (
+  state = { subtance: {} },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS:
-            return {
-                loading: false,
-                success: action.payload.message,
-                subtance: action.payload.data
-            }
+    case UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        subtance: action.payload.data,
+      };
 
-        case UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET:
-            return {
-                success: false
-            }
+    case UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET:
+      return {
+        success: false,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
 
-export const allReportSubtanceQuestionBanksReducer = (state = { subtance: [] }, action) => {
-    switch (action.type) {
-        case REPORT_SUBTANCE_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+export const allReportSubtanceQuestionBanksReducer = (
+  state = { subtance: [] },
+  action
+) => {
+  switch (action.type) {
+    case REPORT_SUBTANCE_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                subtance: action.payload.data
-            }
+    case REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        subtance: action.payload.data,
+      };
 
-        case REPORT_SUBTANCE_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case REPORT_SUBTANCE_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
 
-export const newCloneSubtanceQuestionBanksReducer = (state = { subtance: {} }, action) => {
-    switch (action.type) {
-        case NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+export const newCloneSubtanceQuestionBanksReducer = (
+  state = { subtance: {} },
+  action
+) => {
+  switch (action.type) {
+    case NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                success: action.payload.message,
-                subtance: action.payload.data
-            }
+    case NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        subtance: action.payload.data,
+      };
 
-        case NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET:
-            return {
-                success: false
-            }
+    case NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET:
+      return {
+        success: false,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};

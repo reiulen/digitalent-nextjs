@@ -100,6 +100,7 @@ import {
 // ============== substansi ===============
 import {
   allSubtanceQuestionBanksReducer,
+  permissionsSubvitReducer,
   newSubtanceQuestionBanksReducer,
   detailSubtanceQuestionBanksReducer,
   updateSubtanceQuestionReducer,
@@ -620,6 +621,7 @@ const reducer = combineReducers({
   // Subvit
   // =============== substansi ==================
   allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
+  permissionsSubvit: permissionsSubvitReducer,
   newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
   deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
   detailSubtanceQuestionBanks: detailSubtanceQuestionBanksReducer,
