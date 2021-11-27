@@ -24,6 +24,14 @@ export default function CardTemplateOriginal({ data, session }) {
     if (data.status.includes("menunggu") || data.status.includes("seleksi"))
       return setLabel("warning");
     if (
+      data.status.includes("seleksi administrasi") ||
+      data.status.includes("menunggu") ||
+      data.status.includes("belum tersedia")
+    )
+      return setLabel("warning");
+    if (data.status.includes("lulus") || data.status.includes("Lulus"))
+      return setLabel("success");
+    if (
       data.status == "survey belum tersedia" ||
       data.status == "LPJ belum tersedia" ||
       data.status.includes("tes substansi") ||
@@ -32,17 +40,9 @@ export default function CardTemplateOriginal({ data, session }) {
       data.status.includes("survey")
     )
       return setLabel("primary");
-    if (
-      data.status.includes("seleksi administrasi") ||
-      data.status.includes("menunggu") ||
-      data.status.includes("belum tersedia")
-    )
-      return setLabel("warning");
-    if (data.status.includes("lulus") || data.status.includes("Lulus"))
-      return setLabel("success");
-    else return setLabel("success");
+    else return setLabel("primary");
   }, []);
-
+  console.log(data.status);
   const [imageSertifikasi, setImageSertifikasi] = useState();
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
   const config = {
