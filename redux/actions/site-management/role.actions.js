@@ -206,6 +206,8 @@ export const getSidebar = (token) => async (dispatch) => {
       process.env.END_POINT_API_SITE_MANAGEMENT + "/api/user/permissions",
       config
     );
+
+    localStorage.setItem("sidebar", data)
     dispatch({
       type: GET_SIDEBAR,
       payload: data,

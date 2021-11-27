@@ -531,6 +531,10 @@ import {
 
 import { getAllBookmarkPesertaReducer } from "../reducers/pelatihan/peserta/bookmark.reducer";
 import { allPencarianReducer } from "./pelatihan/peserta/pencarian.reducer";
+import {
+  allDetailPesertaReducer,
+  allListPesertaReducer,
+} from "./site-management/user/peserta-dts.reducers";
 
 const reducer = combineReducers({
   // DASHBOARD KABADAN
@@ -798,6 +802,8 @@ const reducer = combineReducers({
   detailExportData: detailExportDataReducer,
   updateExportData: updateExportDataReducer,
   deleteExportData: deleteExportDataReducer,
+  allListPeserta: allListPesertaReducer,
+  allDetailPeserta: allDetailPesertaReducer,
 
   // END SITE MANAGEMENT
 

@@ -13,7 +13,7 @@ const PusatInformasi = () => {
       />
       <div>
         {/* content */}
-        <h1 className="fw-700 fz-36">Pusat Informasi</h1>
+        <h1 className="fw-700 fz-40">Pusat Informasi</h1>
         <p className="mr-6 fz-18 text-muted fw-400">
           Pusat Informasi untuk Panduan Test Substansi dan Hak & Kewajiban
         </p>
@@ -25,7 +25,7 @@ const PusatInformasi = () => {
           >
             <li className="nav-item" role="presentation">
               <a
-                className="nav-link active fw-600 title-2"
+                className="nav-link active fw-600 title-2 fz-20"
                 id="home-tab"
                 data-toggle="tab"
                 href="#home"
@@ -38,7 +38,7 @@ const PusatInformasi = () => {
             </li>
             <li className="nav-item" role="presentation">
               <a
-                className="nav-link fw-600 title-2"
+                className="nav-link fw-600 title-2 fz-20"
                 id="profile-tab"
                 data-toggle="tab"
                 href="#profile"

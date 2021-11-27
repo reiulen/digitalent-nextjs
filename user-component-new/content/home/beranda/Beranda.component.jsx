@@ -58,51 +58,51 @@ const Beranda = ({ session }) => {
     gap: "1rem",
     drag: "free",
     perPage: 4,
-    height: "150px",
+    height: "80px",
     type: "loop",
     breakpoints: {
       1262: {
-        height: "150px",
+        height: "80px",
       },
       1062: {
-        height: "150px",
+        height: "80px",
         perPage: 3,
       },
       833: {
-        height: "150px",
+        height: "80px",
         perPage: 2,
       },
       726: {
-        height: "150px",
+        height: "80px",
         perPage: 2,
       },
       629: {
-        height: "160px",
+        height: "80px",
         perPage: 1,
       },
       590: {
         width: "100",
-        height: "120",
+        height: "80px",
         perPage: 1,
       },
       514: {
         width: "100",
-        height: "160px",
+        height: "80px",
         perPage: 1,
       },
       450: {
         width: "100",
-        height: "150px",
+        height: "80px",
         perPage: 1,
       },
       425: {
         width: "100",
-        height: "150px",
+        height: "80px",
         perPage: 1,
       },
       320: {
         width: "100",
-        height: "100px",
+        height: "80px",
         perPage: 1,
       },
     },
@@ -336,7 +336,7 @@ const Beranda = ({ session }) => {
         <Carousel data={publikasi} />
       </section>
 
-      <Container fluid className="px-xl-13 px-lg-10 px-0 py-md-10 pt-3">
+      <Container fluid className="padding-content-home mt-md-10 mt-5">
         <section className="tema-carousel-new carousel-secondarys">
           {akademi && (
             <Splide options={optionsSplide} hasSliderWrapper>
@@ -362,8 +362,8 @@ const Beranda = ({ session }) => {
                         </h1>
                         <div>
                           <p
-                            className={`mb-0 ${
-                              activeTab === i && "text-white"
+                            className={`mb-0 fw-600 fz-12 text-center ${
+                              activeTab === i && "text-white "
                             }`}
                           >
                             {row.name.split(" ").splice(0, 3).join(" ")}
@@ -379,7 +379,7 @@ const Beranda = ({ session }) => {
       </Container>
 
       <section className="pelatihan-new">
-        <Container fluid className="px-xl-21 px-lg-10 px-10 mt-5">
+        <Container fluid className="padding-content-home">
           {loadingTema ? (
             <>
               <div className="container-fluid">
@@ -396,7 +396,7 @@ const Beranda = ({ session }) => {
                     {row.pelatihan !== null && (
                       <div className="mb-25">
                         <div
-                          className="d-flex justify-content-between header-pelatihan-new mb-10"
+                          className="d-flex justify-content-between header-pelatihan-new mb-10 flex-wrap"
                           key={i}
                         >
                           <div className="title-pelatihan">
@@ -418,7 +418,7 @@ const Beranda = ({ session }) => {
                               pelatihan[i].showDetail !== true ? (
                                 pelatihan[i].pelatihan.length > 0 &&
                                 pelatihan[i].pelatihan.map((row, j) => (
-                                  <Col md={4} className="mb-5" key={j}>
+                                  <Col md={6} lg={4} className="mb-5" key={j}>
                                     <Card
                                       className="h-100 shadow-sm border-0"
                                       onMouseEnter={() =>
@@ -870,8 +870,8 @@ const Beranda = ({ session }) => {
         </Container>
       </section>
 
-      <section className="step-register-new my-20 ">
-        <Container fluid className="px-xl-35 px-lg-10 px-10 mt-5">
+      <section className="step-register-new my-lg-20 ">
+        <Container fluid className="padding-content-home">
           <div className="title-step-register text-center">
             <h1>
               Tahapan Pendaftaran <br /> Digital Talent Scholarship
@@ -889,7 +889,7 @@ const Beranda = ({ session }) => {
       </section>
 
       <section className="rilis-media-new">
-        <Container fluid className="px-xl-21 px-lg-10 px-10 mt-5">
+        <Container fluid className="padding-content-home">
           <RilisMedia
             berita={
               publikasi && publikasi.berita && publikasi.berita.length !== 0
@@ -901,7 +901,7 @@ const Beranda = ({ session }) => {
       </section>
 
       <section className="galeri-update-new">
-        <Container fluid className="px-xl-21 px-lg-10 px-10 mt-5">
+        <Container fluid className="padding-content-home">
           <GaleriUpdate
             gambar={
               publikasi && publikasi.gallery && publikasi.gallery.length !== 0
@@ -913,7 +913,7 @@ const Beranda = ({ session }) => {
       </section>
 
       <section className="info-vidio-new">
-        <Container fluid className="px-xl-21 px-lg-10 px-10 mt-5">
+        <Container fluid className="padding-content-home">
           <InfoVideo
             video={publikasi && publikasi.video ? publikasi.video : null}
           />
@@ -921,7 +921,7 @@ const Beranda = ({ session }) => {
       </section>
 
       <section className="come-join-new">
-        <Container fluid className="px-xl-21 px-lg-10 px-10 mt-5">
+        <Container fluid className="padding-content-home">
           <ComeJoin />
         </Container>
       </section>

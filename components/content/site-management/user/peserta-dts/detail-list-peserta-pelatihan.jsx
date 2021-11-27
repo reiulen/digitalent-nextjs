@@ -14,7 +14,7 @@ import AlertBar from "../../../partnership/components/BarAlert";
 import Image from "next/image";
 import IconArrow from "../../../../assets/icon/Arrow";
 
-const Table = ({ token }) => {
+const Tables = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 

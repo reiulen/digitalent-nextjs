@@ -159,7 +159,7 @@ const DashboardDigitalent = () => {
       </section>
 
       <section className="total-pengguna mt-10">
-        <h2 className="title-section-dashboard">total pengguna</h2>
+        <h2 className="title-section-dashboard">total peserta</h2>
         <div className="row mt-5">
           <div className="col-md-6 mb-5">
             <CardTotal
@@ -187,7 +187,7 @@ const DashboardDigitalent = () => {
             <div className="card card-custom bg-white">
               <div className="card-body py-4">
                 <StatistikWrapper
-                  title={"Pesebaran Pendaftar Akademi"}
+                  title={"Pesebaran Pendaftaran Akademi"}
                   funcFilterYear={(value) => {}}
                 />
 
@@ -293,7 +293,7 @@ const DashboardDigitalent = () => {
             <div className="card card-custom bg-white">
               <div className="card-body">
                 <p className="text-dashboard-gray fz-16 fw-500">
-                  Pendaftaran Dibuka
+                  Pendaftaran pelatihan yang dibuka
                 </p>
 
                 <div className="table-content table-responsive">
@@ -422,10 +422,10 @@ const DashboardDigitalent = () => {
             </div>
             <div className="row mt-5">
               <div className="col-md-6 mb-5">
-                <CardInfo title={"Komposisi Umur Pendaftar"} data={dataUmur} />
+                <CardInfo title={"Komposisi Usia Pendaftar"} data={dataUmur} />
               </div>
               <div className="col-md-6 mb-5">
-                <CardInfo title={"Komposisi Umur Peserta"} data={dataUmur} />
+                <CardInfo title={"Komposisi Usia Peserta"} data={dataUmur} />
               </div>
             </div>
             <div className="row mt-5">
