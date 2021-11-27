@@ -56,7 +56,7 @@ export default function NamaPelatihan({ token }) {
   };
 
   useEffect(() => {
-    // console.log(themeOptions, "ini theme options");
+    // UNFINISH!
     // di tema nya di kasih academy id
     // biar gw kalo nge filter itu berdasarkan academy id yang ada di options tema nya
     const filteredTheme = themeOptions.filter(
@@ -102,14 +102,6 @@ export default function NamaPelatihan({ token }) {
       dispatch(clearErrors);
     }
   };
-
-  useEffect(() => {
-    console.log("certificate", certificate);
-  }, [certificate]);
-
-  useEffect(() => {
-    console.log(allCertificates);
-  }, [allCertificates]);
 
   useEffect(() => {
     dispatch(getAllSertifikat(token));

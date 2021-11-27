@@ -30,6 +30,7 @@ const Table = ({ token }) => {
   const { success, update } = router.query;
 
   const allTandaTangan = useSelector((state) => state.allTandaTangan);
+  const { permission } = useSelector ((state) => state.partnershipPermissions)
 
   const [successDelete, setSuccessDelete] = useState(false);
   const [keyWord, setKeyWord] = useState("");
@@ -134,21 +135,29 @@ const Table = ({ token }) => {
                 Tanda Tangan Digital
               </h3>
             </div>
-            
-            <div className="col-12 col-xl-6 d-flex justify-content-xl-end mt-xl-n10">
-              <div className="card-toolbar">
-                <Link href="/partnership/tanda-tangan/tambah">
-                  <a className="btn btn-rounded-full bg-blue-primary text-white w-75 w-md-100">
-                    <IconAdd className="mr-3" width="14" height="14" />
-                    <div 
-                      className="text-truncate d-block"
-                    >
-                      Tambah Tanda Tangan
+
+            {
+              permission ? 
+                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                  <div className="col-12 col-xl-6 d-flex justify-content-xl-end mt-xl-n10">
+                    <div className="card-toolbar">
+                      <Link href="/partnership/tanda-tangan/tambah">
+                        <a className="btn btn-rounded-full bg-blue-primary text-white w-75 w-md-100">
+                          <IconAdd className="mr-3" width="14" height="14" />
+                          <div 
+                            className="text-truncate d-block"
+                          >
+                            Tambah Tanda Tangan
+                          </div>
+                        </a>
+                      </Link>
                     </div>
-                  </a>
-                </Link>
-              </div>
-            </div>
+                  </div>
+                :
+                  null
+              :
+                null
+            }
           </div>
 
           <div className="card-body pt-0">
@@ -201,7 +210,15 @@ const Table = ({ token }) => {
                         <th className="text-left align-middle">Nama</th>
                         <th className="text-left align-middle">Jabatan</th>
                         <th className="text-left align-middle">Status</th>
-                        <th className="text-left align-middle">Aksi</th>
+                        {
+                          permission ? 
+                            permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                              <th className="text-left align-middle">Aksi</th>
+                            :
+                              null
+                          :
+                            null
+                        }
                       </tr>
                     </thead>
                     <tbody>
@@ -234,86 +251,107 @@ const Table = ({ token }) => {
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.status == "1" ? 
-                                  <div className="position-relative w-max-content">
-                                      <select
-                                        name=""
-                                        id=""
-                                        className="form-control remove-icon-default dropdown-arrows-green"
-                                        key={index}
-                                        onChange={(e) =>
-                                          changeListStatus(
-                                            token,
-                                            e,
-                                            items.id,
-                                          )
-                                        }
-                                      >
-                                        <option value="1">
-                                          Aktif
-                                        </option>
-                                        <option value="0">Tidak Aktif</option>
-                                      </select>
-                                      <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        width="7"
-                                        height="7"
-                                      />
-                                    </div>
-                                    : <div className="position-relative w-max-content">
-                                      <select
-                                        name=""
-                                        id=""
-                                        className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
-                                        key={index}
-                                        onChange={(e) =>
-                                          changeListStatus(
-                                            token,
-                                            e,
-                                            items.id,
-                                          )
-                                        }
-                                      >
-                                        <option value="0">
-                                          Tidak Aktif
-                                        </option>
-                                        <option value="1">Aktif</option>
-                                      </select>
-                                      <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        fill="#F65464"
-                                        width="7"
-                                        height="7"
-                                      />
-                                    </div>}
-                                </td>
-                                <td className="align-middle text-left">
-                                  <div className="d-flex align-items-center">
-                                    <BtnIcon
-                                      className="bg-blue-secondary mr-3"
-                                      onClick={() =>
-                                        router.push(
-                                          `/partnership/tanda-tangan/${items.id}`
-                                        )
-                                      }
-                                    >
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
+                                    <div className="position-relative w-max-content">
+                                        <select
+                                          name=""
+                                          id=""
+                                          className="form-control remove-icon-default dropdown-arrows-green"
+                                          key={index}
+                                          onChange={(e) =>
+                                            changeListStatus(
+                                              token,
+                                              e,
+                                              items.id,
+                                            )
+                                          }
+                                          disabled={
+                                            permission ? 
+                                              permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                                false
+                                              :
+                                                true
+                                            :
+                                              true
+                                          }
+                                        >
+                                          <option value="1">
+                                            Aktif
+                                          </option>
+                                          <option value="0">Tidak Aktif</option>
+                                        </select>
+                                        <IconArrow
+                                          className="right-center-absolute"
+                                          style={{ right: "10px" }}
+                                          width="7"
+                                          height="7"
+                                        />
                                       </div>
-                                    </BtnIcon>
-                                    <BtnIcon
-                                      className="bg-blue-secondary"
-                                      onClick={() => handleDelete(items.id,token)}
-                                    >
-                                      <IconDelete width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Hapus
-                                      </div>
-                                    </BtnIcon>
-                                  </div>
+                                    : 
+                                      <div className="position-relative w-max-content">
+                                        <select
+                                          name=""
+                                          id=""
+                                          className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
+                                          key={index}
+                                          onChange={(e) =>
+                                            changeListStatus(
+                                              token,
+                                              e,
+                                              items.id,
+                                            )
+                                          }
+                                        >
+                                          <option value="0">
+                                            Tidak Aktif
+                                          </option>
+                                          <option value="1">Aktif</option>
+                                        </select>
+                                        <IconArrow
+                                          className="right-center-absolute"
+                                          style={{ right: "10px" }}
+                                          fill="#F65464"
+                                          width="7"
+                                          height="7"
+                                        />
+                                      </div>}
                                 </td>
+                                
+
+                                {
+                                  permission ? 
+                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                      <td className="align-middle text-left">
+                                        <div className="d-flex align-items-center">
+                                          <BtnIcon
+                                            className="bg-blue-secondary mr-3"
+                                            onClick={() =>
+                                              router.push(
+                                                `/partnership/tanda-tangan/${items.id}`
+                                              )
+                                            }
+                                          >
+                                            <IconPencil width="16" height="16" />
+                                            <div className="text-hover-show-hapus">
+                                              Ubah
+                                            </div>
+                                          </BtnIcon>
+                                          <BtnIcon
+                                            className="bg-blue-secondary"
+                                            onClick={() => handleDelete(items.id,token)}
+                                          >
+                                            <IconDelete width="16" height="16" />
+                                            <div className="text-hover-show-hapus">
+                                              Hapus
+                                            </div>
+                                          </BtnIcon>
+                                        </div>
+                                      </td>
+                                    :
+                                      null
+                                  :
+                                    null
+                                }
+                                
                               </tr>
                             );
                           }

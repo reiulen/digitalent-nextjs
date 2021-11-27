@@ -83,7 +83,12 @@ export default function Footer() {
                   footer.social_media &&
                   footer.social_media.length !== 0 &&
                   footer.social_media.map((row, i) => (
-                    <a href={row.link_social_media} target="_blank" key={i}>
+                    <a
+                      href={row.link_social_media}
+                      target="_blank"
+                      key={i}
+                      rel="noreferrer"
+                    >
                       <div className="cursor-pointer mx-md-0 px-2">
                         <Image
                           key={i}
@@ -125,8 +130,9 @@ export default function Footer() {
               className={
                 footer &&
                 footer.external_link &&
-                footer.external_link.length > 5 &&
-                `row ml-0`
+                footer.external_link.length > 5
+                  ? `row ml-0`
+                  : undefined
               }
             >
               {footer &&

@@ -5,6 +5,8 @@ import { wrapper } from "../../../redux/store";
 import { fetchSignature } from "../../../redux/actions/partnership/tandaTangan.actions";
 
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getPartnershipPermissions } from "../../../redux/actions/partnership/partnership_permission.actions"
+
 const TandaTangan = dynamic(
   () =>
     import(
@@ -47,6 +49,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // }
 
       await store.dispatch(fetchSignature(session.user.user.data.token));
+      await store.dispatch(getPartnershipPermissions(session.user.user.data.token))
 
       return {
         props: { session, title: "Tanda Tangan Digital - Partnership" },
