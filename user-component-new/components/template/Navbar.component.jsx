@@ -43,7 +43,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
@@ -169,15 +169,18 @@ const Navigationbar = ({ session }) => {
                     onClick={() => setShowSearch(!showSearch)}
                   ></i>
                 </a>
-                <a href="#" className="col-3 col-xl-4 text-center">
-                  <i className="ri-customer-service-2-line ri-2x mx-3 text-gray"></i>
-                </a>
-                <a
+                <Link href="/helpdesk/live-chat" passHref>
+                  <a className="col-3 col-xl-4 text-center">
+                    <i className="ri-customer-service-2-line ri-2x mx-3 text-gray"></i>
+                  </a>
+                </Link>
+                <Link
                   href="/peserta/bookmark"
                   className="col-3 col-xl-4 text-center"
+                  passHref
                 >
                   <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
-                </a>
+                </Link>
                 <a href="#" className="col-3 col-xl-4 text-center">
                   <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
                 </a>
@@ -185,7 +188,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={(e) => {
+              onClick={e => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -210,7 +213,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onChange={(e) => {}}
+                onChange={e => {}}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -339,7 +342,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onChange={(e) => {}}
+                onChange={e => {}}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -351,18 +354,16 @@ const Navigationbar = ({ session }) => {
           {/* Icon */}
           {session && session.roles[0] === "user" && (
             <div className="row mr-3 d-lg-block d-none">
-              <a
-                href="/helpdesk/live-chat"
-                className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
-              >
-                <i className="ri-customer-service-2-line ri-2x  text-gray"></i>
-              </a>
-              <a
-                href="#"
-                className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
-              >
-                <i className="ri-heart-line ri-2x  text-gray"></i>
-              </a>
+              <Link href="/helpdesk/live-chat" passHref>
+                <a className="col-4 col-sm-4 col-md-4 col-xl-4 text-center">
+                  <i className="ri-customer-service-2-line ri-2x  text-gray"></i>
+                </a>
+              </Link>
+              <Link href="/peserta/bookmark" passHref>
+                <a className="col-4 col-sm-4 col-md-4 col-xl-4 text-center">
+                  <i className="ri-heart-line ri-2x  text-gray"></i>
+                </a>
+              </Link>
               <a
                 href="#"
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
@@ -375,6 +376,7 @@ const Navigationbar = ({ session }) => {
           <Nav>
             {session && session.roles[0] === "user" ? (
               <div>
+                {/* on media queries */}
                 <div className="d-lg-none d-block">
                   <div
                     className={`wrap-accouts ${style.wrapAccounts} `}
@@ -405,6 +407,7 @@ const Navigationbar = ({ session }) => {
                     />
                   </div>
                 </div>
+                {/* normal */}
                 <div className="position-relative d-none d-lg-block">
                   <div
                     className={`wrap-accouts ${style.wrapAccounts} d-flex justify-content-between`}

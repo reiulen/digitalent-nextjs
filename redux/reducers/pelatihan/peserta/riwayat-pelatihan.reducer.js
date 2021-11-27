@@ -57,18 +57,9 @@ export const getAllRiwayatPelatihanPesertaReducer = (
     case SET_PAGE_VALUE: {
       return {
         ...state,
-        keyword: action.text,
-        page: 1,
+        page: action.text,
       };
     }
-    case SET_LIMIT_VALUE: {
-      return {
-        ...state,
-        limit: action.text,
-        page: 1,
-      };
-    }
-
     default:
       return state;
   }

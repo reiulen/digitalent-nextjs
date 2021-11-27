@@ -8,13 +8,16 @@ import Select from "react-select";
 import CardPeserta from "./card";
 import Administrasi from "./administrasi";
 import style from "./style.module.css";
+import Pagination from "react-js-pagination";
 
 import { useSelector } from "react-redux";
 
 import {
   getAllRiwayatPelatihanPeserta,
   setValuePeserta,
+  setValuePage,
 } from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+
 import { useDispatch } from "react-redux";
 
 export default function RiwayatPelatihan({ session }) {
@@ -22,7 +25,7 @@ export default function RiwayatPelatihan({ session }) {
   let refSelect = null;
   const [showModal, setShowModal] = useState(false);
   const dataRiwayatPelatihan = useSelector(
-    (state) => state.getAllRiwayatPelatihanPeserta
+    state => state.getAllRiwayatPelatihanPeserta
   );
 
   const handleClose = () => setShowModal(false);
@@ -113,7 +116,7 @@ export default function RiwayatPelatihan({ session }) {
                           variant={
                             selected == i ? "primary" : "outline-primary"
                           }
-                          onClick={(e) => {
+                          onClick={e => {
                             setSelected(i);
                             dispatch(setValuePeserta(filter[i].value));
                           }}
@@ -130,13 +133,32 @@ export default function RiwayatPelatihan({ session }) {
           </Card>
         </Col>
         {/* <Administrasi /> */}
-        {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
+        {dataRiwayatPelatihan.listPelatihan.list.map((el, i) => {
           return (
-            <Fragment>
+            <Fragment key={i}>
               <CardPeserta status={"test"} data={el} session={session} />
             </Fragment>
           );
         })}
+        <div className="d-flex justify-content-center mt-8 mb-40">
+          {dataRiwayatPelatihan?.listPelatihan?.total >= 5 && (
+            <div className="table-pagination my-auto">
+              <Pagination
+                activePage={dataRiwayatPelatihan?.page}
+                itemsCountPerPage={dataRiwayatPelatihan?.listPelatihan?.perPage}
+                totalItemsCount={dataRiwayatPelatihan?.listPelatihan?.total}
+                pageRangeDisplayed={3}
+                onChange={page => dispatch(setValuePage(page))}
+                nextPageText={">"}
+                prevPageText={"<"}
+                firstPageText={"<<"}
+                lastPageText={">>"}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
+          )}
+        </div>
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header>
@@ -144,7 +166,7 @@ export default function RiwayatPelatihan({ session }) {
         </Modal.Header>
         <Modal.Body>
           <Select
-            ref={(ref) => (refSelect = ref)}
+            ref={ref => (refSelect = ref)}
             className="basic-single"
             classNamePrefix="select"
             placeholder="Semua"
@@ -155,7 +177,7 @@ export default function RiwayatPelatihan({ session }) {
             isRtl={false}
             isSearchable={true}
             name="color"
-            onChange={(e) => {
+            onChange={e => {
               setStatus(e?.value);
             }}
             options={options}
