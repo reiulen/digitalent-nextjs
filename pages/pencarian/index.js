@@ -19,6 +19,7 @@ const Pencarian = dynamic(
     ssr: false,
   }
 );
+
 const Layout = dynamic(
   () => import("../../user-component-new/components/template/Layout.component"),
   { ssr: false }
@@ -41,7 +42,7 @@ export default function PencarianPelatihan(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ params, query, req }) => {
       const session = await getSession({ req });
 
