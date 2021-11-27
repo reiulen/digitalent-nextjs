@@ -200,6 +200,8 @@ import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
 // management kerjasama
 import { allMCooporationReducerMK } from "./partnership/managementCooporation.reducer";
 import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
+// permission
+import { partnershipPermissionsReducer } from "./partnership/partnership_permission.reducer"
 // ================== user
 import { authenticationReducer } from "./partnership/user/authentication.reducer";
 import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
@@ -705,6 +707,8 @@ const reducer = combineReducers({
   allTandaTangan: allTandaTanganReducer,
   // dashboard
   allDashboard: dashboardReducer,
+  // permission
+  partnershipPermissions: partnershipPermissionsReducer,
 
   // ================================= => user
   allCooperationUser: cooperationUserReducer,

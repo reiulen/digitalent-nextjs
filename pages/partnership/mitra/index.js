@@ -4,6 +4,7 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import { fetchMitra } from "../../../redux/actions/partnership/mitra.actions";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getPartnershipPermissions } from "../../../redux/actions/partnership/partnership_permission.actions"
 const Table = dynamic(
   () => import("../../../components/content/partnership/mitra/tableMitra"),
   { loading: () => <LoadingSkeleton />, ssr: false }
@@ -42,6 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // }
 
       await store.dispatch(fetchMitra(session.user.user.data.token));
+      await store.dispatch(getPartnershipPermissions(session.user.user.data.token))
 
       return {
         props: { session, title: "Master Mitra - Partnership" },
