@@ -8,7 +8,8 @@ import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.act
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 
 const SubtansiUser = dynamic(
-  () => import("../../../../user-component/content/subvit/substansi"),
+  () =>
+    import("../../../../user-component-new/content/peserta/subvit/substansi"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -46,8 +47,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
-
-      
 
       await store.dispatch(
         getRandomSubtanceQuestionDetail(
