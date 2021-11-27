@@ -42,7 +42,6 @@ export default function CardTemplateOriginal({ data, session }) {
       return setLabel("primary");
     else return setLabel("primary");
   }, []);
-  console.log(data.status);
   const [imageSertifikasi, setImageSertifikasi] = useState();
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
   const config = {
