@@ -8,6 +8,7 @@ import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import { SweatAlert } from "../../../../utils/middleware/helper";
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
 
@@ -68,7 +69,7 @@ const RegisterUser = () => {
         }
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        SweatAlert("Gagal", err.response.data.message, "error");
       });
   };
 
