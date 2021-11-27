@@ -366,6 +366,9 @@
   .filter-action p {
     font-size: 15px;
   }
+  .padding-content-akademi-slider {
+    padding: 40px 56px;
+  }
 }
 
 @media (max-width: 350px) {

@@ -76,32 +76,32 @@ const Beranda = ({ session }) => {
         perPage: 2,
       },
       629: {
-        height: "160px",
+        height: "80px",
         perPage: 1,
       },
       590: {
         width: "100",
-        height: "120",
+        height: "80px",
         perPage: 1,
       },
       514: {
         width: "100",
-        height: "160px",
+        height: "80px",
         perPage: 1,
       },
       450: {
         width: "100",
-        height: "150px",
+        height: "80px",
         perPage: 1,
       },
       425: {
         width: "100",
-        height: "150px",
+        height: "80px",
         perPage: 1,
       },
       320: {
         width: "100",
-        height: "100px",
+        height: "80px",
         perPage: 1,
       },
     },
@@ -335,7 +335,7 @@ const Beranda = ({ session }) => {
         <Carousel data={publikasi} />
       </section>
 
-      <Container fluid className="padding-content-home mt-10">
+      <Container fluid className="padding-content-home mt-md-10 mt-5">
         <section className="tema-carousel-new carousel-secondarys">
           {akademi && (
             <Splide options={optionsSplide} hasSliderWrapper>
@@ -395,7 +395,7 @@ const Beranda = ({ session }) => {
                     {row.pelatihan !== null && (
                       <div className="mb-25">
                         <div
-                          className="d-flex justify-content-between header-pelatihan-new mb-10"
+                          className="d-flex justify-content-between header-pelatihan-new mb-10 flex-wrap"
                           key={i}
                         >
                           <div className="title-pelatihan">
