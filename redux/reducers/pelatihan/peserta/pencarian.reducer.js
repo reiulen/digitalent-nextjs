@@ -49,6 +49,7 @@ export const allPencarianReducer = (state = initialStates, action) => {
         page: 1,
       };
     }
+
     case SET_PAGE_VALUE: {
       return {
         ...state,

@@ -18,6 +18,7 @@ export default function CardTemplateOriginal({ data, session }) {
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [label, setLabel] = useState();
 
+  console.log(data.status);
   useEffect(() => {
     if (data.status.includes("tidak")) return setLabel("danger");
     if (data.status.includes("menunggu") || data.status.includes("seleksi"))
@@ -27,7 +28,8 @@ export default function CardTemplateOriginal({ data, session }) {
     if (data.status.includes("tes substansi")) return setLabel("primary");
     if (data.status.includes("seleksi administrasi"))
       return setLabel("warning");
-    if (data.status.includes("lulus")) return setLabel("success");
+    if (data.status.includes("lulus") || data.status.includes("Lulus"))
+      return setLabel("success");
     if (data.status.includes("menunggu") || data.status.includes("seleksi"))
       return setLabel("warning");
     if (data.status.includes("tes substansi")) return setLabel("primary");
@@ -110,7 +112,7 @@ export default function CardTemplateOriginal({ data, session }) {
   };
 
   const [fileName, setFileName] = useState();
-  const onChangeFile = (e) => {
+  const onChangeFile = e => {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
@@ -441,7 +443,8 @@ export default function CardTemplateOriginal({ data, session }) {
                 Bukti Pendaftaran
               </CustomButton>
             </Fragment>
-          ) : data.status == "lulus pelatihan" ? (
+          ) : data.status == "lulus pelatihan" ||
+            data.status == "Lulus Pelatihan" ? (
             <Fragment>
               {data.sertifikasi == "1" && (
                 <CustomButton
@@ -603,7 +606,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   type="file"
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
-                  onChange={(e) => {
+                  onChange={e => {
                     onChangeFile(e);
                   }}
                 />

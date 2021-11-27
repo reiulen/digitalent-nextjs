@@ -23,7 +23,7 @@ export const getPencarian = token => async (dispatch, getState) => {
 
     let keywordState = getState().allPencarian.keyword || "";
     let pageState = getState().allPencarian.page || 1;
-    let limitState = getState().allPencarian.limit || 5;
+    let limitState = getState().allPencarian.limit || 6;
     let penyelenggaraState = getState().allPencarian.penyelenggara || "";
     let kategoriPesertaState = getState().allPencarian.kategori_peserta || "";
     let pelatihanMulaiState = getState().allPencarian.pelatihan_mulai || "";
@@ -105,5 +105,11 @@ export const setValuePelatihanAkhir = text => {
   return {
     type: SET_PELATIHAN_AKHIR_VALUE,
     text,
+  };
+};
+
+export const resetFilter = () => {
+  return {
+    type: RESET_STATUS_FILTER,
   };
 };

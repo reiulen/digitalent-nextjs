@@ -53,7 +53,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(getDataPribadi(sessionToken));
       const data = await store.dispatch(getPencarian(sessionToken));
-      console.log(data.data.list);
       return {
         props: {
           title: "Penyelenggara",

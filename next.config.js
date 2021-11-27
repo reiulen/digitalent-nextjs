@@ -10,6 +10,7 @@ module.exports = {
       "dts-sertifikat-dev.s3.ap-southeast-1.amazonaws.com",
       "dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com", //sementara
       "dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
+      "simonas-dev.majapahit.id",
     ],
   },
   env: {

@@ -530,8 +530,11 @@ const Dashboard = ({ session, success }) => {
                   >
                     <div className="d-flex flex-row">
                       <Image
-                        src="/assets/media/mitra-icon/telkom-1.svg"
-                        // src={row.logo}
+                        src={
+                          !row?.logo
+                            ? "/assets/media/mitra-icon/telkom-1.svg"
+                            : row?.logo
+                        }
                         objectFit="contain"
                         width={55}
                         height={52}
@@ -612,7 +615,11 @@ const Dashboard = ({ session, success }) => {
                     <div className="d-flex flex-row align-items-center">
                       <Image
                         // src="/assets/media/mitra-icon/logo-itb-1.svg"
-                        src={`${process.env.END_POINT_API_IMAGE_BEASISWA}/${row.logo}`}
+                        src={
+                          !row.logo
+                            ? "/assets/media/mitra-icon/logo-itb-1.svg"
+                            : `${process.env.END_POINT_API_IMAGE_BEASISWA}/${row.logo}`
+                        }
                         width={55}
                         height={52}
                         objectFit="contain"

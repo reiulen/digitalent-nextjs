@@ -1,29 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Row, Col, Form, Card, Badge, Button } from "react-bootstrap";
 import Select from "react-select";
 import Image from "next/image";
-
 import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 import { SweatAlert } from "../../../../utils/middleware/helper/index";
-import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import HomeWrapper from "../../../components/wrapper/Home.wrapper";
-import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
-import CardPelatihanOpen from "../../../components/global/CardPelatihanOpen.component";
-import CardPelatihanQuickView from "../../../components/global/CardPelatihanQuickView.component";
+import moment from "moment";
+import {
+  getPencarian,
+  setValuePage,
+  searchKeyword,
+  setValueKategoriPeserta,
+  setValueLimit,
+  setValuePelatihanAkhir,
+  setValuePelatihanMulai,
+  setValuePenyelenggara,
+  resetFilter,
+} from "../../../../redux/actions/pelatihan/pencarian.action";
 
-const Pencarian = () => {
+const Pencarian = ({ session }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const allPencarian = useSelector(state => state.allPencarian);
-  console.log(allPencarian, "ini all pencarian");
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
     useSelector(state => state.allPenyelenggaraPeserta);
 
-  const [filterPenyelenggara, setFilterPenyelenggara] = useState(null);
-  const [filterKategori, setFilterKategori] = useState(null);
+  const [filterPenyelenggara, setFilterPenyelenggara] = useState("");
+  const [filterKategori, setFilterKategori] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -35,6 +42,7 @@ const Pencarian = () => {
 
   let selectRefPenyelenggara = null;
   const optionsPenyelenggara = [];
+
   if (allPenyelenggara && allPenyelenggara.data) {
     for (let index = 0; index < allPenyelenggara.data.length; index++) {
       let val = {
@@ -61,6 +69,18 @@ const Pencarian = () => {
       tanggal_mulai: startDate,
       tanggal_akhir: endDate,
     };
+    if (data.penyelenggara) {
+      dispatch(setValuePenyelenggara(data.penyelenggara));
+    }
+    if (data.kategori_peserta) {
+      dispatch(setValueKategoriPeserta(data.kategori_peserta));
+    }
+    if (data.tanggal_mulai) {
+      dispatch(setValuePelatihanMulai(data.tanggal_mulai));
+    }
+    if (data.tanggal_akhir) {
+      dispatch(setValuePelatihanAkhir(data.tanggal_akhir));
+    }
   };
 
   const handleReset = () => {
@@ -70,7 +90,25 @@ const Pencarian = () => {
     selectRefKategoriPeserta.select.clearValue();
     setStartDate("");
     setEndDate("");
+    dispatch(resetFilter());
   };
+
+  const handlePagination = page => {
+    dispatch(setValuePage(page));
+  };
+
+  useEffect(() => {
+    dispatch(getPencarian(session.token));
+  }, [
+    dispatch,
+    session.token,
+    allPencarian.page,
+    allPencarian.limit,
+    allPencarian.kategori_peserta,
+    allPencarian.pelatihan_akhir,
+    allPencarian.pelatihan_mulai,
+    allPencarian.penyelenggara,
+  ]);
 
   return (
     <>
@@ -102,6 +140,7 @@ const Pencarian = () => {
                       src={`/assets/media/logo-filter.svg`}
                       width={32}
                       height={32}
+                      alt="filter"
                     />
                   </div>
 
@@ -183,7 +222,12 @@ const Pencarian = () => {
                         <div className={`parent-image-pelatihan-new`}>
                           <Image
                             className={`image-list-pelatihan-new`}
-                            src={"/assets/media/default-card.png"}
+                            // src={"/assets/media/default-card.png"}
+                            src={
+                              !row.gambar
+                                ? "/assets/media/default-card.png"
+                                : `${process.env.END_POINT_API_IMAGE_PARTNERSHIP}${row?.gambar}`
+                            }
                             layout="fill"
                             objectFit="cover"
                             alt="Image Thumbnail"
@@ -229,7 +273,8 @@ const Pencarian = () => {
                         <Card.Body className="position-relative">
                           <div className="mitra-pelatihan-new">
                             <Image
-                              src={"/assets/media/mitra-default.png"}
+                              // src={"/assets/media/mitra-default.png"}
+                              src={`${process.env.END_POINT_API_IMAGE_PARTNERSHIP}${row?.gambar_mitra}`}
                               width={60}
                               height={60}
                               objectFit="cover"
@@ -244,39 +289,44 @@ const Pencarian = () => {
                             style={{ top: "-15px" }}
                           >
                             <p className={`pl-18 my-0 text-mitra-new`}>
-                              Warung
+                              {row?.mitra}
                             </p>
                             <div className="status align-self-center">
                               <p
                                 className={`${"status-mitra-open-new"} text-uppercase my-0`}
                               >
-                                Open
+                                {row?.status}
                               </p>
                             </div>
                           </div>
-                          <p className={`my-0 title-card-new`}>
-                            Pelatihan Mahir
-                          </p>
+                          <p className={`my-0 title-card-new`}>{row?.name}</p>
                           <p
                             style={{
                               fontSize: "14px",
                               color: "#6C6C6C",
                             }}
                           >
-                            Akademi Militer
+                            {row?.akademi}
                           </p>
                           <hr />
                           <div className="d-flex flex-column">
                             <div className="date d-flex align-items-center align-middle">
                               <i className="ri-time-line"></i>
                               <span className={`text-date-register-new pl-2`}>
-                                Registrasi: 12-10-2021 - 12-10-2021
+                                Registrasi:{" "}
+                                {moment(row?.pendaftaran_mulai).format(
+                                  "DD MMMM YYYY"
+                                )}{" "}
+                                -{" "}
+                                {moment(row?.pendaftaran_selesai).format(
+                                  "DD MMMM YYYY"
+                                )}
                               </span>
                             </div>
                             <div className="date d-flex align-items-center align-middle">
                               <i className="ri-group-line"></i>
                               <span className={`text-date-register-new pl-2`}>
-                                Kuota: 100 Peserta
+                                Kuota: {row?.kuota_peserta} Peserta
                               </span>
                             </div>
                           </div>
@@ -289,11 +339,11 @@ const Pencarian = () => {
               <Row className="my-5 d-flex justify-content-center">
                 <div className="table-pagination">
                   <Pagination
-                    activePage={1}
-                    itemsCountPerPage={3}
-                    totalItemsCount={5}
+                    activePage={allPencarian?.page}
+                    itemsCountPerPage={allPencarian?.pelatihan?.perPage}
+                    totalItemsCount={allPencarian?.pelatihan?.total}
                     pageRangeDisplayed={3}
-                    //   onChange={handlePagination}
+                    onChange={page => handlePagination(page)}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}

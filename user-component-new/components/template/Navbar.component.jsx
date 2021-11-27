@@ -99,20 +99,6 @@ const Navigationbar = ({ session }) => {
     getAkademi();
   }, []);
 
-  const getSimonas = async () => {
-    const link = "http://simonas-dev.majapahit.id/api/job";
-    try {
-      const data = await axios.get("http://simonas-dev.majapahit.id/api/job");
-      if (data) {
-        setSimonas(data);
-      }
-    } catch (error) {
-      notify(error);
-    }
-  };
-  const [beasiswa, setBeasiswa] = useState([]);
-  const [simonas, setSimonas] = useState([]);
-
   const handlerLogout = () => {
     Cookies.remove("id_tema");
     Cookies.remove("id_pelatihan");
@@ -213,7 +199,9 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onChange={e => {}}
+                onChange={e => {
+                  console.log(e.target.value);
+                }}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -342,7 +330,9 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onChange={e => {}}
+                onChange={e => {
+                  console.log(e.target.value);
+                }}
               />
               <IconSearch
                 className="left-center-absolute"
