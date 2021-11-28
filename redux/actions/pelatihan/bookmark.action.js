@@ -38,3 +38,10 @@ export const getAllBookmark = (token) => async (dispatch, getState) => {
     });
   }
 };
+
+export const setValuePage = (text) => {
+  return {
+    type: SET_PAGE_VALUE,
+    text,
+  };
+};

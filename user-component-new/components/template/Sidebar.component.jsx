@@ -261,7 +261,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                 ></div>
               </div>
               <div className="p-2">
-                <div>Bookmark</div>
+                <div>Favorit</div>
               </div>
             </div>
           </Link>

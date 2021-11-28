@@ -270,7 +270,7 @@ const Header = () => {
                         )}
                       </div>
                     </div>
-                    <div className="d-flex">
+                    <div className="d-md-flex d-none">
                       <div className="p-1">
                         <i
                           className={`${styles.icon} ri-time-fill`}
@@ -514,6 +514,15 @@ const Header = () => {
                           marginRight: "15px",
                         }}
                       ></i>
+                    ) : router.pathname.includes("bookmark") ? (
+                      <i
+                        className="ri-heart-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
                     ) : (
                       <i
                         className="ri-article-line"
@@ -558,6 +567,8 @@ const Header = () => {
                       ? "Riwayat Pelatihan"
                       : router.pathname.includes("pengaturan")
                       ? "Pengaturan"
+                      : router.pathname.includes("bookmark")
+                      ? "Favorit"
                       : "Dashboard"}
                   </div>
                 </div>
