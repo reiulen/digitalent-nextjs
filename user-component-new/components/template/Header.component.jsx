@@ -496,6 +496,24 @@ const Header = () => {
                           marginRight: "15px",
                         }}
                       ></i>
+                    ) : router.pathname.includes("riwayat-pelatihan") ? (
+                      <i
+                        className="ri-history-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) : router.pathname.includes("pengaturan") ? (
+                      <i
+                        className="ri-settings-4-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
                     ) : (
                       <i
                         className="ri-article-line"
@@ -536,6 +554,10 @@ const Header = () => {
                       ? "Pekerjaan"
                       : router.pathname.includes("form-lpj")
                       ? "Form LPJ"
+                      : router.pathname.includes("riwayat-pelatihan")
+                      ? "Riwayat Pelatihan"
+                      : router.pathname.includes("pengaturan")
+                      ? "Pengaturan"
                       : "Dashboard"}
                   </div>
                 </div>
