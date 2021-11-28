@@ -3,11 +3,8 @@ import { Card, Button, Col, Row, Modal } from "react-bootstrap";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import IconFilter from "../../../../components/assets/icon/Filter";
 import IconArrow from "../../../../components/assets/icon/Arrow";
-import IconClose from "../../../../components/assets/icon/Close";
 import Select from "react-select";
 import CardPeserta from "./card";
-import Administrasi from "./administrasi";
-import style from "./style.module.css";
 import Pagination from "react-js-pagination";
 
 import { useSelector } from "react-redux";
@@ -16,6 +13,10 @@ import {
   getAllRiwayatPelatihanPeserta,
   setValuePeserta,
   setValuePage,
+  searchKeyword,
+  setPelatihanBerjalanValue,
+  setPelatihanSelesaiValue,
+  resetFilter,
 } from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
 import { useDispatch } from "react-redux";
@@ -28,20 +29,28 @@ export default function RiwayatPelatihan({ session }) {
     state => state.getAllRiwayatPelatihanPeserta
   );
 
+  const [status, setStatus] = useState({ value: "0", label: "Semua" });
+  const [selected, setSelected] = useState(0);
+
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
   const handleFilter = () => {
+    if (status.value == "0") {
+      dispatch(resetFilter());
+    } else if (status.value == "1") {
+      dispatch(setPelatihanBerjalanValue("1"));
+    } else {
+      dispatch(setPelatihanSelesaiValue("1"));
+    }
     setShowModal(false);
   };
 
   const options = [
-    { value: "draft", label: "Draft" },
-    { value: "not-yet-available", label: "Belum Tersedia" },
-    { value: "publish", label: "Publish" },
+    { value: "0", label: "Semua" },
+    { value: "1", label: "Pelatihan Sedang Berjalan" },
+    { value: "2", label: "Pelatihan Selesai" },
   ];
-
-  const [selected, setSelected] = useState(0);
 
   const [filter, setFilter] = useState([
     { name: "semua", value: "all" },
@@ -59,7 +68,17 @@ export default function RiwayatPelatihan({ session }) {
     dataRiwayatPelatihan.page,
     dataRiwayatPelatihan.peserta,
     dataRiwayatPelatihan.limit,
+    dataRiwayatPelatihan.selesai,
+    dataRiwayatPelatihan.sedang_berjalan,
   ]);
+
+  const handleSearchEnter = e => {
+    if (e.code == "Enter") {
+      dispatch(searchKeyword(search));
+    }
+  };
+
+  const [search, setSearch] = useState("");
 
   return (
     <>
@@ -69,31 +88,22 @@ export default function RiwayatPelatihan({ session }) {
             <Card.Body>
               <Row>
                 <Col lg={8}>
-                  <div className="position-relative overflow-hidden">
+                  <div className="position-relative overflow-hidden ">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      type="text"
-                      className="form-control pl-10"
+                      type="search"
+                      className="form-control pl-10 bg-neutral rounded-full"
                       placeholder="Cari..."
-                      //   onChange={e => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
+                      onChange={e => setSearch(e.target.value)}
+                      onKeyDown={e => {
+                        handleSearchEnter(e);
                       }}
-                      //   onClick={e => {
-                      //     handleSearch(e);
-                      //   }}
-                    >
-                      Cari
-                    </button>
+                    />
                   </div>
                 </Col>
                 <Col lg={4} className="w-100">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between border-2 border-primary w-100 mt-5 mt-lg-0"
+                    className="btn border d-flex align-items-center justify-content-between w-100 mt-5 mt-lg-0 rounded-full"
                     data-toggle="modal"
                     style={{
                       color: "#464646",
@@ -102,7 +112,7 @@ export default function RiwayatPelatihan({ session }) {
                   >
                     <div className="d-flex align-items-center">
                       <IconFilter className="mr-3" />
-                      Pilih Filter
+                      {status.label}
                     </div>
                     <IconArrow fill="#ADB5BD" width="10" height="6" />
                   </button>
@@ -167,28 +177,30 @@ export default function RiwayatPelatihan({ session }) {
         <Modal.Body>
           <Select
             ref={ref => (refSelect = ref)}
-            className="basic-single"
-            classNamePrefix="select"
-            placeholder="Semua"
+            placeholder={status?.label || "Semua"}
             // defaultValue={options[0].value}
-            isDisabled={false}
-            isLoading={false}
-            isClearable={false}
-            isRtl={false}
-            isSearchable={true}
             name="color"
             onChange={e => {
-              setStatus(e?.value);
+              setStatus(e);
             }}
+            value={status}
             options={options}
-          />{" "}
+          />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
+          <Button
+            variant="secondary"
+            className="rounded-full"
+            onClick={handleClose}
+          >
+            Tutup
           </Button>
-          <Button variant="primary" onClick={handleFilter}>
-            Save Changes
+          <Button
+            variant="primary"
+            className="rounded-full"
+            onClick={handleFilter}
+          >
+            Terapkan
           </Button>
         </Modal.Footer>
       </Modal>
