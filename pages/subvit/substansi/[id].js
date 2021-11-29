@@ -2,7 +2,10 @@ import DetailSubstansi from "../../../components/content/subvit/substansi/detail
 // import Layout from "../../../components/templates/layout.component";
 
 import { getAllSubtanceQuestionDetail } from "../../../redux/actions/subvit/subtance-question-detail.action";
-import { getDetailSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";
+import {
+  getDetailSubtanceQuestionBanks,
+  getPermissionSubvit,
+} from "../../../redux/actions/subvit/subtance.actions";
 import { getAllSubtanceQuestionBanksType } from "../../../redux/actions/subvit/subtance-question-type.actions";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
@@ -60,6 +63,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getAllSubtanceQuestionBanksType(session.user.user.data.token)
       );
+
+      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
 
       return {
         props: { session, title: "Detail Substansi - Subvit" },

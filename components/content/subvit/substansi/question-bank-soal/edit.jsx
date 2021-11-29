@@ -40,6 +40,10 @@ const EditSoalSubstansi = ({ token }) => {
   );
   let { id } = router.query;
 
+  const { data: dataPermission } = useSelector(
+    (state) => state.permissionsSubvit
+  );
+
   const [question, setQuestion] = useState(
     subtance_question_detail.question || ""
   );

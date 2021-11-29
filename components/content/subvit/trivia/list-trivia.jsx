@@ -23,6 +23,11 @@ const ListTrivia = ({ token }) => {
   const { loading, error, trivia } = useSelector(
     (state) => state.allTriviaQuestionBanks
   );
+
+  const { data: dataPermission } = useSelector(
+    (state) => state.permissionsSubvit
+  );
+
   const {
     loading: loadingDelete,
     error: errorDelete,
@@ -223,17 +228,26 @@ const ListTrivia = ({ token }) => {
             >
               List TRIVIA
             </h1>
-            <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
-              <Link href="/subvit/trivia/tambah">
-                {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
-                <a
-                  className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
-                >
-                  <i className="ri-add-fill"></i>
-                  Tambah TRIVIA
-                </a>
-              </Link>
-            </div>
+            {dataPermission &&
+            dataPermission.roles.includes("Super Admin") &&
+            dataPermission &&
+            dataPermission.permissions.includes(
+              "subvit.manage" && "subvit.trivia.manage"
+            ) ? (
+              <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
+                <Link href="/subvit/trivia/tambah">
+                  {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
+                  <a
+                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
+                  >
+                    <i className="ri-add-fill"></i>
+                    Tambah TRIVIA
+                  </a>
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -282,7 +296,21 @@ const ListTrivia = ({ token }) => {
                         <th>Pelaksanaan</th>
                         <th>Bank Soal</th>
                         <th>Status</th>
-                        <th style={{ width: "10px" }}>Aksi</th>
+                        {dataPermission &&
+                        dataPermission.roles.includes("Super Admin") &&
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.trivia.manage"
+                        ) ? (
+                          <th style={{ width: "10px" }}>Aksi</th>
+                        ) : dataPermission &&
+                          dataPermission.permissions.includes(
+                            "subvit.view" && "subvit.trivia.view"
+                          ) ? (
+                          <th style={{ width: "10px" }}>Aksi</th>
+                        ) : (
+                          ""
+                        )}
                       </tr>
                     </thead>
                     <tbody>
@@ -337,19 +365,61 @@ const ListTrivia = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                <div className="d-flex">
-                                  <Link
-                                    href={`/subvit/trivia/edit?id=${row.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                {dataPermission &&
+                                dataPermission.roles.includes("Super Admin") &&
+                                dataPermission &&
+                                dataPermission.permissions.includes(
+                                  "subvit.manage" && "subvit.trivia.manage"
+                                ) ? (
+                                  <div className="d-flex">
+                                    <Link
+                                      href={`/subvit/trivia/edit?id=${row.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Edit"
+                                      >
+                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <Link href={`/subvit/trivia/${row.id}`}>
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Detail"
+                                      >
+                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <Link
+                                      href={`/subvit/trivia/report?id=${row.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Report"
+                                      >
+                                        <i className="ri-todo-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      onClick={() => handleDelete(row.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
-                                      title="Edit"
+                                      title="Hapus"
                                     >
-                                      <i className="ri-pencil-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
+                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                    </button>
+                                  </div>
+                                ) : dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.view" && "subvit.trivia.view"
+                                  ) ? (
                                   <Link href={`/subvit/trivia/${row.id}`}>
                                     <a
                                       className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -360,28 +430,9 @@ const ListTrivia = ({ token }) => {
                                       <i className="ri-eye-fill p-0 text-white"></i>
                                     </a>
                                   </Link>
-                                  <Link
-                                    href={`/subvit/trivia/report?id=${row.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="Report"
-                                    >
-                                      <i className="ri-todo-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary text-white"
-                                    onClick={() => handleDelete(row.id)}
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Hapus"
-                                  >
-                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                  </button>
-                                </div>
+                                ) : (
+                                  ""
+                                )}
                               </td>
                             </tr>
                           );

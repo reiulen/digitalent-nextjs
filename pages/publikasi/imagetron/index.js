@@ -8,7 +8,7 @@ import Layout from "../../../components/templates/layout.component";
 import { getAllImagetron } from "../../../redux/actions/publikasi/imagetron.actions";
 import { wrapper } from "../../../redux/store";
 
-import LoadingPage from "../../../components/LoadingPage";
+import { getAllRolePermission } from "../../../redux/actions/publikasi/role-permissions.action"
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const Imagetron = dynamic(
@@ -61,6 +61,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+
       return {
         props: { session, title: "Imagetron - Publikasi" },
       };

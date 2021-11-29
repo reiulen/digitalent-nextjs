@@ -48,6 +48,8 @@ const Imagetron = ({ token }) => {
         isDeleted,
     } = useSelector((state) => state.deleteImagetron);
 
+    const { role_permission } = useSelector((state) => state.allRolePermission);
+
     const [search, setSearch] = useState("");
     const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
@@ -438,14 +440,18 @@ const Imagetron = ({ token }) => {
                         <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>
                             Imagetron
                         </h3>
-                        <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                            <Link href="/publikasi/imagetron/tambah-imagetron">
-                                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                                    <i className="ri-add-fill pb-1 text-white mr-2 "></i>
-                                    Tambah Imagetron
-                                </a>
-                            </Link>
-                        </div>
+                        {
+                            role_permission.permissions.includes("publikasi.imagetron.manage") || role_permission.roles.includes("Super Admin") ?
+                                <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                                    <Link href="/publikasi/imagetron/tambah-imagetron">
+                                        <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
+                                            <i className="ri-add-fill pb-1 text-white mr-2 "></i>
+                                            Tambah Imagetron
+                                        </a>
+                                    </Link>
+                                </div>
+                                : null
+                        }
                     </div>
 
                     <div className="card-body pt-0">
@@ -638,7 +644,11 @@ const Imagetron = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '9vw', textAlign: 'center' }}>Aksi</th>
+                                                {
+                                                    role_permission.permissions.includes("publikasi.imagetron.manage") || role_permission.roles.includes("Super Admin") ?
+                                                        <th style={{ width: '9vw', textAlign: 'center' }}>Aksi</th>
+                                                        : null
+                                                }
                                             </tr>
                                         </thead>
 
@@ -704,30 +714,34 @@ const Imagetron = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             <td className='align-middle'>{row.role[0].name}</td>
-                                                            <td className="align-middle d-flex justify-content-center">
+                                                            {
+                                                                role_permission.permissions.includes("publikasi.imagetron.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                    <td className="align-middle d-flex justify-content-center">
 
-                                                                <Link
-                                                                    href={`/publikasi/imagetron/ubah-imagetron?id=${row.id}`}
-                                                                >
-                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                        <div className="text-hover-show-hapus">
-                                                                            Ubah
-                                                                        </div>
-                                                                    </a>
-                                                                </Link>
+                                                                        <Link
+                                                                            href={`/publikasi/imagetron/ubah-imagetron?id=${row.id}`}
+                                                                        >
+                                                                            <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                                <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                                <div className="text-hover-show-hapus">
+                                                                                    Ubah
+                                                                                </div>
+                                                                            </a>
+                                                                        </Link>
 
-                                                                <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
-                                                                    onClick={() => handleDelete(row.id)}
-                                                                >
-                                                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Hapus
-                                                                    </div>
-                                                                </button>
+                                                                        <button
+                                                                            className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                            onClick={() => handleDelete(row.id)}
+                                                                        >
+                                                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                                                            <div className="text-hover-show-hapus">
+                                                                                Hapus
+                                                                            </div>
+                                                                        </button>
 
-                                                            </td>
+                                                                    </td>
+                                                                    : null
+                                                            }
                                                         </tr>
 
                                                     })

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function GaleriUpdate({ gambar }) {
   return (
-    <div className="galery-update pt-20 pb-10">
+    <div className="galery-update pt-lg-20 pb-lg-10">
       <Row className="my-auto">
         <Col xl={4} md={12} className="mb-10 mb-0">
           <h1 className="fw-600" style={{ color: "#1F1F1F" }}>
@@ -16,7 +16,7 @@ export default function GaleriUpdate({ gambar }) {
           </p>
           <Link href="/galeri">
             <a>
-              <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-20">
+              <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-lg-20 mt-md-10">
                 Lihat Selengkapnya >
               </button>
             </a>
@@ -27,10 +27,11 @@ export default function GaleriUpdate({ gambar }) {
             {gambar &&
               gambar.map((row, i) => (
                 <Col
-                  md={4}
+                  md={6}
+                  lg={4}
                   className="text-xl-right text-md-left text-left mb-md-0 mb-10"
                 >
-                  <Image
+                  <img
                     src={
                       (row.gambar &&
                         process.env.END_POINT_API_IMAGE_PUBLIKASI +
@@ -38,10 +39,11 @@ export default function GaleriUpdate({ gambar }) {
                           row.gambar) ||
                       "/assets/media/image-20.png"
                     }
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
                     alt="Picture of the author"
-                    objectFit="cover"
-                    width={330}
-                    height={330}
                     className="rounded-xl float-right"
                   />
                 </Col>

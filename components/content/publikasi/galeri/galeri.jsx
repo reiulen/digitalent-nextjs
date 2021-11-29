@@ -18,7 +18,6 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
-// import ButtonNewTab from "../../../ButtonNewTab";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
@@ -36,7 +35,6 @@ const Galeri = ({ token }) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    // const { loading, error, galeri } = useSelector(state => state.allGaleri)
     const {
         loading: allLoading,
         error,
@@ -52,6 +50,7 @@ const Galeri = ({ token }) => {
         error: viewError,
         isViewed,
     } = useSelector(state => state.viewedGaleri);
+    const { role_permission } = useSelector((state) => state.allRolePermission);
 
     const [search, setSearch] = useState("");
     const [limit, setLimit] = useState(null);
@@ -450,13 +449,6 @@ const Galeri = ({ token }) => {
             ) {
                 router.push(`${router.pathname}?publish=${val}`)
                 setSearch("")
-                // router.push(
-                //     `${router.pathname}?publish=${val}&startdate=${moment(
-                //         startDate
-                //     ).format("YYYY-MM-DD")}&enddate=${moment(endDate).format(
-                //         "YYYY-MM-DD"
-                //     )}&keyword=${search}`
-                // );
             } else if (
                 startDate === null &&
                 endDate === null &&
@@ -703,14 +695,18 @@ const Galeri = ({ token }) => {
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header row border-0">
                         <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Galeri</h3>
-                        <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                            <Link href="/publikasi/galeri/tambah-galeri">
-                                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                                    <i className="ri-add-fill pb-1 text-white mr-2 "></i>
-                                    Tambah Galeri
-                                </a>
-                            </Link>
-                        </div>
+                        {
+                            role_permission.permissions.includes("publikasi.gallery.manage") || role_permission.roles.includes("Super Admin") ?
+                                <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                                    <Link href="/publikasi/galeri/tambah-galeri">
+                                        <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
+                                            <i className="ri-add-fill pb-1 text-white mr-2 "></i>
+                                            Tambah Galeri
+                                        </a>
+                                    </Link>
+                                </div>
+                                : null
+                        }
                     </div>
 
                     <div className="card-body pt-0">
@@ -892,7 +888,11 @@ const Galeri = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '9.7vw' }}>Aksi</th>
+                                                {
+                                                    role_permission.permissions.includes("publikasi.gallery.manage") || role_permission.roles.includes("Super Admin") ?
+                                                        <th style={{ width: '9.7vw' }}>Aksi</th>
+                                                        : null
+                                                }
                                             </tr>
                                         </thead>
 
@@ -965,42 +965,46 @@ const Galeri = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">{row.role[0].name}</td>
-                                                            <td className="align-middle d-flex">
-                                                                <button
-                                                                    onClick={() =>
-                                                                        handlePreview(i, row.id_gallery)
-                                                                    }
-                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
-                                                                    data-target="#galleryModalPreview"
-                                                                    data-toggle="modal"
-                                                                >
-                                                                    <i className="ri-todo-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Pratinjau
-                                                                    </div>
-                                                                </button>
+                                                            {
+                                                                role_permission.permissions.includes("publikasi.gallery.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                    <td className="align-middle d-flex">
+                                                                        <button
+                                                                            onClick={() =>
+                                                                                handlePreview(i, row.id_gallery)
+                                                                            }
+                                                                            className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
+                                                                            data-target="#galleryModalPreview"
+                                                                            data-toggle="modal"
+                                                                        >
+                                                                            <i className="ri-todo-fill p-0 text-white"></i>
+                                                                            <div className="text-hover-show-hapus">
+                                                                                Pratinjau
+                                                                            </div>
+                                                                        </button>
 
-                                                                <Link
-                                                                    href={`/publikasi/galeri/ubah-galeri?id=${row.id_gallery}`}
-                                                                >
-                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                        <div className="text-hover-show-hapus">
-                                                                            Ubah
-                                                                        </div>
-                                                                    </a>
-                                                                </Link>
+                                                                        <Link
+                                                                            href={`/publikasi/galeri/ubah-galeri?id=${row.id_gallery}`}
+                                                                        >
+                                                                            <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                                <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                                <div className="text-hover-show-hapus">
+                                                                                    Ubah
+                                                                                </div>
+                                                                            </a>
+                                                                        </Link>
 
-                                                                <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
-                                                                    onClick={() => handleDelete(row.id_gallery)}
-                                                                >
-                                                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Hapus
-                                                                    </div>
-                                                                </button>
-                                                            </td>
+                                                                        <button
+                                                                            className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                            onClick={() => handleDelete(row.id_gallery)}
+                                                                        >
+                                                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                                                            <div className="text-hover-show-hapus">
+                                                                                Hapus
+                                                                            </div>
+                                                                        </button>
+                                                                    </td>
+                                                                    : null
+                                                            }
                                                         </tr>
                                                     );
                                                 })
@@ -1150,7 +1154,7 @@ const Galeri = ({ token }) => {
                                                 <div className="row mb-4 p-1">
                                                     <div className={styles["subMenuPreview"]}>
                                                         {
-                                                            galeri.gallery[index_galleri].publish === 0 ? 
+                                                            galeri.gallery[index_galleri].publish === 0 ?
                                                                 <div className="mb-1 p-0 d-flex align-items-center">
                                                                     <div className={styles["iconPreview"]}>
                                                                         <i className="flaticon2-calendar-4"></i>

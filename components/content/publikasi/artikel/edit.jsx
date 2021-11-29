@@ -50,6 +50,8 @@ const EditArtikel = ({ token, idUser }) => {
   } = useSelector(state => state.allKategori);
   const { setting } = useSelector(state => state.allSettingPublikasi)
   const { akademi } = useSelector(state => state.allAkademi);
+  const { role_permission } = useSelector((state) => state.allRolePermission);
+
   const limit = 12000
 
   useEffect(() => {
@@ -623,57 +625,65 @@ const EditArtikel = ({ token, idUser }) => {
                   </div>
                 </div>
 
-                <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="ml-5 pl-4 font-weight-bolder"
-                  >
-                    Publish
-                  </label>
-                  <div className="col-sm-1 ml-4">
-                    <div className="">
-                      <label className="switches">
-                        <input
-                          // required
-                          className="checkbox"
-                          checked={publish}
-                          type="checkbox"
-                          onChange={e => handleChangePublish(e)}
-                        />
-                        <span
-                          className={`sliders round ${publish ? "text-white" : "pl-2"
-                            }`}
-                        ></span>
+                {
+                  role_permission.roles.includes("Super Admin") ?
+                    <div className="form-group row">
+                      <label
+                        htmlFor="staticEmail"
+                        className="ml-5 pl-4 font-weight-bolder"
+                      >
+                        Publish
                       </label>
-                    </div>
-                  </div>
-                </div>
-
-                {disablePublishDate === false ? (
-                  <div className="form-group">
-                    <label className="col-sm-5 col-form-label font-weight-bolder">
-                      Set Tanggal Publish
-                    </label>
-                    <div className="col-sm-12">
-                      <div className="input-group">
-                        <DatePicker
-                          className={`${styles.setPublish} form-search-date form-control-sm form-control`}
-                          selected={publishDate}
-                          onChange={date => handlePublishDate(date)}
-                          selectsStart
-                          startDate={publishDate}
-                          dateFormat="dd/MM/yyyy"
-                          placeholderText="Silahkan Isi Tanggal Publish"
-                          wrapperClassName="col-12 col-lg-12 col-xl-12"
-                          disabled={
-                            disablePublishDate === true ||
-                            disablePublishDate === null
-                          }
-                        />
+                      <div className="col-sm-1 ml-4">
+                        <div className="">
+                          <label className="switches">
+                            <input
+                              // required
+                              className="checkbox"
+                              checked={publish}
+                              type="checkbox"
+                              onChange={e => handleChangePublish(e)}
+                            />
+                            <span
+                              className={`sliders round ${publish ? "text-white" : "pl-2"
+                                }`}
+                            ></span>
+                          </label>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ) : null}
+                    : null
+                }
+
+                {
+                  role_permission.roles.includes("Super Admin") ?
+                    disablePublishDate === false ? (
+                      <div className="form-group">
+                        <label className="col-sm-5 col-form-label font-weight-bolder">
+                          Set Tanggal Publish
+                        </label>
+                        <div className="col-sm-12">
+                          <div className="input-group">
+                            <DatePicker
+                              className={`${styles.setPublish} form-search-date form-control-sm form-control`}
+                              selected={publishDate}
+                              onChange={date => handlePublishDate(date)}
+                              selectsStart
+                              startDate={publishDate}
+                              dateFormat="dd/MM/yyyy"
+                              placeholderText="Silahkan Isi Tanggal Publish"
+                              wrapperClassName="col-12 col-lg-12 col-xl-12"
+                              disabled={
+                                disablePublishDate === true ||
+                                disablePublishDate === null
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : null
+                    : null
+                }
 
                 <div className="form-group row mr-0">
                   <div className="col-sm-2"></div>

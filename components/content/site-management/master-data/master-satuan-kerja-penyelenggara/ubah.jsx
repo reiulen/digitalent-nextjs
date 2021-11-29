@@ -23,12 +23,6 @@ const TambahApi = ({ token }) => {
   let optionTempProv = sortirOptionTempProv.map((items) => {
     return { ...items, label: items.provinsi, region: items.provinsi }
   })
-
-
-
-
-
-
   const allProvincesSite = useSelector((state) => state.
     allProvincesSite);
   let sortirOptionTempProvList = allProvincesSite?.data

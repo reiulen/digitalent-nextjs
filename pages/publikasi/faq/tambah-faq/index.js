@@ -9,6 +9,7 @@ import { getAllKategoriInput } from "../../../../redux/actions/publikasi/kategor
 import { wrapper } from "../../../../redux/store";
 
 import LoadingPage from "../../../../components/LoadingPage";
+import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action"
 
 const Tambah = dynamic(
   () => import("../../../../components/content/publikasi/faq/tambah"),
@@ -48,6 +49,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getAllKategoriInput("Faq", session.user.user.data.token)
       );
+      
+      await store.dispatch(getAllRolePermission(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Faq - Publikasi" },

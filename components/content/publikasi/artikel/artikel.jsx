@@ -39,11 +39,13 @@ const Artikel = ({ token }) => {
     error,
     artikel,
   } = useSelector((state) => state.allArtikel);
+
   const {
     loading: deleteLoading,
     error: deleteError,
     isDeleted,
   } = useSelector((state) => state.deleteArtikel);
+  const { role_permission } = useSelector((state) => state.allRolePermission);
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -426,14 +428,18 @@ const Artikel = ({ token }) => {
             <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>
               Artikel
             </h3>
-            <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-              <Link href="/publikasi/artikel/tambah-artikel">
-                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                  <i className="ri-add-line pb-1 text-white mr-2 "></i>
-                  Tambah Artikel
-                </a>
-              </Link>
-            </div>
+            {
+              role_permission.permissions.includes("publikasi.artikel.manage") || role_permission.roles.includes("Super Admin") ?
+                <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                  <Link href="/publikasi/artikel/tambah-artikel">
+                    <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
+                      <i className="ri-add-line pb-1 text-white mr-2 "></i>
+                      Tambah Artikel
+                    </a>
+                  </Link>
+                </div>
+                : null
+            }
           </div>
 
           <div className="card-body pt-0">
@@ -615,7 +621,11 @@ const Artikel = ({ token }) => {
                         <th>Dibuat</th>
                         <th>Status</th>
                         <th>Role</th>
-                        <th style={{ width: '9.5vw' }}>Aksi</th>
+                        {
+                          role_permission.permissions.includes("publikasi.artikel.manage") || role_permission.roles.includes("Super Admin") ?
+                            <th style={{ width: '9.5vw' }}>Aksi</th>
+                            : null
+                        }
                       </tr>
                     </thead>
                     <tbody>
@@ -689,40 +699,44 @@ const Artikel = ({ token }) => {
                               <td className="align-middle">
                                 {artikel.role[0].name}
                               </td>
-                              <td className="align-middle d-flex">
+                              {
+                                role_permission.permissions.includes("publikasi.artikel.manage") || role_permission.roles.includes("Super Admin") ?
+                                  <td className="align-middle d-flex">
 
-                                <Link
-                                  href={`/publikasi/artikel/preview/${artikel.id}`}
-                                >
-                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
-                                    <i className="ri-todo-fill p-0 text-white"></i>
-                                    <div className="text-hover-show-hapus">
-                                      Pratinjau
-                                    </div>
-                                  </a>
-                                </Link>
+                                    <Link
+                                      href={`/publikasi/artikel/preview/${artikel.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
+                                        <i className="ri-todo-fill p-0 text-white"></i>
+                                        <div className="text-hover-show-hapus">
+                                          Pratinjau
+                                        </div>
+                                      </a>
+                                    </Link>
 
-                                <Link
-                                  href={`/publikasi/artikel/ubah-artikel?id=${artikel.id}`}
-                                >
-                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </a>
-                                </Link>
+                                    <Link
+                                      href={`/publikasi/artikel/ubah-artikel?id=${artikel.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </a>
+                                    </Link>
 
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
-                                  onClick={() => handleDelete(artikel.id)}
-                                >
-                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                  <div className="text-hover-show-hapus">
-                                    Hapus
-                                  </div>
-                                </button>
-                              </td>
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                      onClick={() => handleDelete(artikel.id)}
+                                    >
+                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                      <div className="text-hover-show-hapus">
+                                        Hapus
+                                      </div>
+                                    </button>
+                                  </td>
+                                  : null
+                              }
                             </tr>
                           );
                         })

@@ -207,7 +207,7 @@ const Sidebar = ({ session }) => {
           {
             id: 1,
             name: "Dashboard",
-            href: "/publikasi/dashboard-publikasi",
+            href: "/publikasi/dashboard",
             selected: false,
             child: [],
           },
@@ -747,14 +747,14 @@ const Sidebar = ({ session }) => {
                       }}
                     >
                       <a className="menu-link menu-toggle">
-                        {/* <span className="svg-icon menu-icon d-flex align-items-center">
+                        <span className="svg-icon menu-icon d-flex align-items-center">
                         <Image
                           alt="icon-sidebar-logo"
                           src={`/${items.icon}`}
                           width={24}
                           height={24}
                         />
-                      </span> */}
+                      </span>
                         <span className="menu-text ml-4">{items.name}</span>
 
                         <i className="menu-arrow"></i>

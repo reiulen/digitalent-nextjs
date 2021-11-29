@@ -162,7 +162,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           <Link href="/peserta/survey" passHref>
             <div
               className={`${
-                router.pathname === "/peserta/survey"
+                router.pathname === "/peserta/survey" ||
+                router.pathname === "/peserta/done-survey"
                   ? styles.activeMenuItem
                   : styles.menuItem
               } d-flex flex-row`}
@@ -186,7 +187,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           <Link href="/peserta/trivia" passHref>
             <div
               className={`${
-                router.pathname === "/peserta/trivia"
+                router.pathname === "/peserta/trivia" ||
+                router.pathname === "/peserta/done-trivia"
                   ? styles.activeMenuItem
                   : styles.menuItem
               } d-flex flex-row`}

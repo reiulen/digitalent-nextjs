@@ -2,13 +2,10 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-// import Layout from "../../../components/templates/layout.component";
-// import Galeri from "../../../components/content/publikasi/galeri/galeri";
-
 import { getAllGaleri, getDetailGaleri } from "../../../redux/actions/publikasi/galeri.actions";
 import { wrapper } from "../../../redux/store";
 
-// import LoadingPage from "../../../components/LoadingPage";
+import { getAllRolePermission } from "../../../redux/actions/publikasi/role-permissions.action"
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const Galeri = dynamic(
@@ -57,10 +54,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
-      // await store.dispatch(
-      //   getDetailGaleri(session.user.user.data.token)
-      // );
-      // await store.dispatch(getAllKategori(session.user.user.data.token))
+      
+      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      
       return {
         props: { session, title: "Galeri - Publikasi" },
       };

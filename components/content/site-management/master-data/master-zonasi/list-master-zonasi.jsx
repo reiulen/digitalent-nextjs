@@ -240,7 +240,7 @@ const Table = ({ token }) => {
                 {allZonasi ?
                   <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
-                      <div className="col-4 mr-0 mt-3">
+                      <div className="col-4 mr-0">
                         <select
                           className="form-control cursor-pointer pr-2"
                           id="exampleFormControlSelect2"

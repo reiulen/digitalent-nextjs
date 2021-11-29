@@ -36,6 +36,8 @@ const Kategori = ({ token }) => {
   const { error: deleteError, isDeleted } = useSelector(
     state => state.deleteKategori
   );
+  const { role_permission } = useSelector((state) => state.allRolePermission);
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   let { page = 1, success } = router.query;
@@ -247,14 +249,18 @@ const Kategori = ({ token }) => {
             <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>
               Kategori
             </h3>
-            <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-              <Link href="/publikasi/kategori/tambah-kategori">
-                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                  <i className="ri-add-fill pb-1 text-white mr-2 "></i>
-                  Tambah Kategori
-                </a>
-              </Link>
-            </div>
+            {
+              role_permission.permissions.includes("publikasi.kategori.manage") || role_permission.roles.includes("Super Admin") ?
+                <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                  <Link href="/publikasi/kategori/tambah-kategori">
+                    <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
+                      <i className="ri-add-fill pb-1 text-white mr-2 "></i>
+                      Tambah Kategori
+                    </a>
+                  </Link>
+                </div>
+                : null
+            }
           </div>
 
           <div className="card-body pt-0">
@@ -406,7 +412,11 @@ const Kategori = ({ token }) => {
                         <th className="text-center">No</th>
                         <th>Nama</th>
                         <th>Jenis Kategori</th>
-                        <th className="text-center">Aksi</th>
+                        {
+                          role_permission.permissions.includes("publikasi.kategori.manage") || role_permission.roles.includes("Super Admin") ?
+                            <th className="text-center">Aksi</th>
+                            : null
+                        }
                       </tr>
                     </thead>
 
@@ -439,26 +449,30 @@ const Kategori = ({ token }) => {
                               <td className="align-middle">
                                 {row.jenis_kategori}
                               </td>
-                              <td className="align-middle d-flex justify-content-center">
-                                <Link href={`/publikasi/kategori/ubah-kategori?id=${row.id}`}>
-                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2 position-relative btn-delete">
-                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </a>
-                                </Link>
+                              {
+                                role_permission.permissions.includes("publikasi.kategori.manage") || role_permission.roles.includes("Super Admin") ?
+                                  <td className="align-middle d-flex justify-content-center">
+                                    <Link href={`/publikasi/kategori/ubah-kategori?id=${row.id}`}>
+                                      <a className="btn btn-link-action bg-blue-secondary text-white mr-2 position-relative btn-delete">
+                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </a>
+                                    </Link>
 
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white position-relative btn-delete"
-                                  onClick={() => handleDelete(row.id)}
-                                >
-                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                  <div className="text-hover-show-hapus">
-                                    Hapus
-                                  </div>
-                                </button>
-                              </td>
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary text-white position-relative btn-delete"
+                                      onClick={() => handleDelete(row.id)}
+                                    >
+                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                      <div className="text-hover-show-hapus">
+                                        Hapus
+                                      </div>
+                                    </button>
+                                  </td>
+                                  : null
+                              }
                             </tr>
                           );
                         })

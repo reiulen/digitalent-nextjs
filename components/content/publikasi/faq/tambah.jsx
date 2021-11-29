@@ -24,6 +24,8 @@ const TambahFaq = ({ token, id }) => {
     const dispatch = useDispatch()
     const router = useRouter()
 
+    const { role_permission } = useSelector((state) => state.allRolePermission);
+
     const importSwitch = () => import('bootstrap-switch-button-react')
 
     const [editorLoaded, setEditorLoaded] = useState(false);
@@ -260,22 +262,10 @@ const TambahFaq = ({ token, id }) => {
                                         {simpleValidator.current.message(
                                             "jawaban",
                                             jawaban,
-                                            "required",
-                                            // "required|min:100|max:12000",
+                                            "required|min:100|max:7000",
                                             { className: "text-danger" }
                                         )}
                                     </div>
-
-                                    {/* <textarea
-                                        className={`${styles.deskripsiTambah} form-control`}
-                                        placeholder='Tulis disini'
-                                        name="jawaban"
-                                        rows="10"
-                                        onChange={e => setJawaban(e.target.value)}
-                                        value={jawaban}
-                                        onBlur={() => simpleValidator.current.showMessageFor("jawaban")}
-                                    />
-                                    {simpleValidator.current.message("jawaban", jawaban, "required|max:7000", { className: "text-danger" })} */}
                                 </div>
                             </div>
 
@@ -310,32 +300,36 @@ const TambahFaq = ({ token, id }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group row font-weight-bolder font-weight-bolder">
-                                <label
-                                    htmlFor="staticEmail"
-                                    className="ml-5 pl-4 font-weight-bolder"
-                                >
-                                    Publish
-                                </label>
-                                <div className="col-sm-1 ml-4">
-                                    <div className="">
-                                        <label className="switches">
-                                            <input
-                                                // required
-                                                className="checkbox"
-                                                checked={publish}
-                                                type="checkbox"
-                                                onChange={(e) => handleChangePublish(e)}
-                                            />
-                                            <span
-                                                className={`sliders round ${publish ? "text-white" : "pl-2"
-                                                    }`}
-                                            >
-                                            </span>
+                            {
+                                role_permission.roles.includes("Super Admin") ?
+                                    <div className="form-group row font-weight-bolder font-weight-bolder">
+                                        <label
+                                            htmlFor="staticEmail"
+                                            className="ml-5 pl-4 font-weight-bolder"
+                                        >
+                                            Publish
                                         </label>
+                                        <div className="col-sm-1 ml-4">
+                                            <div className="">
+                                                <label className="switches">
+                                                    <input
+                                                        // required
+                                                        className="checkbox"
+                                                        checked={publish}
+                                                        type="checkbox"
+                                                        onChange={(e) => handleChangePublish(e)}
+                                                    />
+                                                    <span
+                                                        className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                            }`}
+                                                    >
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                    : null
+                            }
 
                             {
                                 disablePublishDate === false ?

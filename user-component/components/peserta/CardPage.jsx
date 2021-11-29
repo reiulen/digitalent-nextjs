@@ -21,7 +21,6 @@ const CardPage = ({
     newDate.setHours(newDate.getHours() + hours);
     return newDate;
   }
-  console.log(isSubvit, "ini is subvit");
   return (
     <>
       <Col md={col} className="mb-4 px-2">
