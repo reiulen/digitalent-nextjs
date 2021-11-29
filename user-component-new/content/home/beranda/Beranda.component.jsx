@@ -27,11 +27,11 @@ const Beranda = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { publikasi } = useSelector((state) => state.allPublikasiBeranda);
+  const { publikasi } = useSelector(state => state.allPublikasiBeranda);
   const { tema, loading: loadingTema } = useSelector(
-    (state) => state.temaByAkademi
+    state => state.temaByAkademi
   );
-  const { akademi } = useSelector((state) => state.allAkademi);
+  const { akademi } = useSelector(state => state.allAkademi);
   const [activeTab, setActiveTab] = useState(0);
   const [akademiId, setAkademiId] = useState(null);
 
@@ -51,6 +51,7 @@ const Beranda = ({ session }) => {
   const [cardPendaftaranSelesai, setCardPendaftaranSelesai] = useState(null);
   const [cardMetode, setCardMetode] = useState(null);
   const [cardBookmark, setCardBookmark] = useState(null);
+
   const textToTrim = 325;
 
   const optionsSplide = {
@@ -244,7 +245,7 @@ const Beranda = ({ session }) => {
     setCardBookmark(bookmark);
   };
 
-  const handleCloseQuickView = (indexTema) => {
+  const handleCloseQuickView = indexTema => {
     let obj = [...pelatihan];
 
     for (let i = 0; i < obj.length; i++) {
@@ -270,7 +271,7 @@ const Beranda = ({ session }) => {
     }
   };
 
-  const PrintTextTrim = (word) => {
+  const PrintTextTrim = word => {
     let str = null;
     if (word.length > textToTrim) {
       str = word.slice(0, textToTrim) + "...";
@@ -281,7 +282,7 @@ const Beranda = ({ session }) => {
     return str;
   };
 
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -391,7 +392,7 @@ const Beranda = ({ session }) => {
             <div className="pb-10">
               {tema ? (
                 tema.map((row, i) => (
-                  <div>
+                  <div key={i}>
                     {row.pelatihan !== null && (
                       <div className="mb-25">
                         <div
@@ -404,6 +405,7 @@ const Beranda = ({ session }) => {
                           <div className="link-pelatihan-new">
                             <Link
                               href={`/detail/akademi/${akademiId}?tema_id=${row.id}`}
+                              passHref
                             >
                               <span>Lihat Semua {">"}</span>
                             </Link>
@@ -601,7 +603,7 @@ const Beranda = ({ session }) => {
                                               >
                                                 <Button
                                                   className={`btn-block rounded-xl my-auto btn-quick-view-new`}
-                                                  onClick={() =>
+                                                  onClick={() => {
                                                     handleQuickView(
                                                       i,
                                                       row.gambar,
@@ -616,9 +618,10 @@ const Beranda = ({ session }) => {
                                                       row.pendaftaran_mulai,
                                                       row.pendaftaran_selesai,
                                                       row.id,
-                                                      row.metode_pelatihan
-                                                    )
-                                                  }
+                                                      row.metode_pelatihan,
+                                                      row.bookmark
+                                                    );
+                                                  }}
                                                 >
                                                   LIHAT
                                                 </Button>
@@ -699,13 +702,19 @@ const Beranda = ({ session }) => {
                                                 >
                                                   <i
                                                     className={
-                                                      pelatihan[i].pelatihan[j]
-                                                        .bookmark
+                                                      cardBookmark
                                                         ? "ri-heart-fill p-0 text-danger"
                                                         : "ri-heart-line p-0"
                                                     }
                                                     style={{
                                                       color: "#6C6C6C",
+                                                    }}
+                                                    onClick={() => {
+                                                      const pelatihan = {
+                                                        id: cardId,
+                                                        bookmark: cardBookmark,
+                                                      };
+                                                      handleBookmark(pelatihan);
                                                     }}
                                                   ></i>
                                                 </Button>

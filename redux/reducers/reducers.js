@@ -202,7 +202,7 @@ import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
 import { allMCooporationReducerMK } from "./partnership/managementCooporation.reducer";
 import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
 // permission
-import { partnershipPermissionsReducer } from "./partnership/partnership_permission.reducer"
+import { partnershipPermissionsReducer } from "./partnership/partnership_permission.reducer";
 // ================== user
 import { authenticationReducer } from "./partnership/user/authentication.reducer";
 import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
@@ -530,7 +530,11 @@ import {
 } from "./pelatihan/admin/master-pendaftaran.reducer";
 
 import { getAllBookmarkPesertaReducer } from "../reducers/pelatihan/peserta/bookmark.reducer";
-import { allDetailPesertaReducer, allListPesertaReducer } from "./site-management/user/peserta-dts.reducers";
+import { allPencarianReducer } from "./pelatihan/peserta/pencarian.reducer";
+import {
+  allDetailPesertaReducer,
+  allListPesertaReducer,
+} from "./site-management/user/peserta-dts.reducers";
 
 const reducer = combineReducers({
   // DASHBOARD KABADAN
@@ -559,7 +563,7 @@ const reducer = combineReducers({
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
   updatedArtikel: updateArtikelReducer,
-  cekLulusPelatihan:cekLulusPelatihanReducer,
+  cekLulusPelatihan: cekLulusPelatihanReducer,
 
   allArtikelPeserta: allArtikelPesertaReducer,
   newArtikelPeserta: newArtikelPesertaReducer,
@@ -975,6 +979,7 @@ const reducer = combineReducers({
   allBookmark: getAllBookmarkPesertaReducer,
 
   adminPermission: adminPermissionReducer,
+  allPencarian: allPencarianReducer,
 });
 
 export default reducer;

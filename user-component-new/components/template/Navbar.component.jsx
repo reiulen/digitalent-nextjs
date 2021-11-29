@@ -99,20 +99,6 @@ const Navigationbar = ({ session }) => {
     getAkademi();
   }, []);
 
-  const getSimonas = async () => {
-    const link = "http://simonas-dev.majapahit.id/api/job";
-    try {
-      const data = await axios.get("http://simonas-dev.majapahit.id/api/job");
-      if (data) {
-        setSimonas(data);
-      }
-    } catch (error) {
-      notify(error);
-    }
-  };
-  const [beasiswa, setBeasiswa] = useState([]);
-  const [simonas, setSimonas] = useState([]);
-
   const handlerLogout = () => {
     Cookies.remove("id_tema");
     Cookies.remove("id_pelatihan");
@@ -169,15 +155,18 @@ const Navigationbar = ({ session }) => {
                     onClick={() => setShowSearch(!showSearch)}
                   ></i>
                 </a>
-                <a href="#" className="col-3 col-xl-4 text-center">
-                  <i className="ri-customer-service-2-line ri-2x mx-3 text-gray"></i>
-                </a>
-                <a
+                <Link href="/helpdesk/live-chat" passHref>
+                  <a className="col-3 col-xl-4 text-center">
+                    <i className="ri-customer-service-2-line ri-2x mx-3 text-gray"></i>
+                  </a>
+                </Link>
+                <Link
                   href="/peserta/bookmark"
                   className="col-3 col-xl-4 text-center"
+                  passHref
                 >
                   <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
-                </a>
+                </Link>
                 <a href="#" className="col-3 col-xl-4 text-center">
                   <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
                 </a>
@@ -351,18 +340,16 @@ const Navigationbar = ({ session }) => {
           {/* Icon */}
           {session && session.roles[0] === "user" && (
             <div className="row mr-3 d-lg-block d-none">
-              <a
-                href="/helpdesk/live-chat"
-                className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
-              >
-                <i className="ri-customer-service-2-line ri-2x  text-gray"></i>
-              </a>
-              <a
-                href="#"
-                className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
-              >
-                <i className="ri-heart-line ri-2x  text-gray"></i>
-              </a>
+              <Link href="/helpdesk/live-chat" passHref>
+                <a className="col-4 col-sm-4 col-md-4 col-xl-4 text-center">
+                  <i className="ri-customer-service-2-line ri-2x  text-gray"></i>
+                </a>
+              </Link>
+              <Link href="/peserta/bookmark" passHref>
+                <a className="col-4 col-sm-4 col-md-4 col-xl-4 text-center">
+                  <i className="ri-heart-line ri-2x  text-gray"></i>
+                </a>
+              </Link>
               <a
                 href="#"
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
@@ -375,6 +362,7 @@ const Navigationbar = ({ session }) => {
           <Nav>
             {session && session.roles[0] === "user" ? (
               <div>
+                {/* on media queries */}
                 <div className="d-lg-none d-block">
                   <div
                     className={`wrap-accouts ${style.wrapAccounts} `}
@@ -405,6 +393,7 @@ const Navigationbar = ({ session }) => {
                     />
                   </div>
                 </div>
+                {/* normal */}
                 <div className="position-relative d-none d-lg-block">
                   <div
                     className={`wrap-accouts ${style.wrapAccounts} d-flex justify-content-between`}
