@@ -6,7 +6,7 @@ import moment from "moment";
 
 export default function RilisMedia({ berita }) {
   return (
-    <div className="rillirs-media py-20">
+    <div className="rillirs-media py-lg-20">
       <h1 className="fw-600 text-center" style={{ color: "#1F1F1F" }}>
         Rilis Media & Informasi Terbaru
       </h1>
@@ -14,7 +14,7 @@ export default function RilisMedia({ berita }) {
       <div className="row mt-20">
         {berita &&
           berita.map((row, i) => (
-            <div className="col-sm-12 col-md-4 mb-5">
+            <div className="col-sm-12 col-lg-4 col-md-6 mb-5">
               <Card className="h-100 shadow rounded-xl">
                 <Image
                   src={

@@ -65,7 +65,7 @@ const Profile = ({ session }) => {
       case 1:
         return (
           <InformasiEdit
-            funcViewEdit={val => setViewProfile(val)}
+            funcViewEdit={(val) => setViewProfile(val)}
             token={session.token}
             wizzard={true}
           />
@@ -73,7 +73,7 @@ const Profile = ({ session }) => {
       case 2:
         return (
           <AlamatEdit
-            funcViewEdit={val => setViewProfile(val)}
+            funcViewEdit={(val) => setViewProfile(val)}
             token={session.token}
             wizzard={true}
           />
@@ -81,7 +81,7 @@ const Profile = ({ session }) => {
       case 3:
         return (
           <PendidikanEdit
-            funcViewEdit={val => setViewProfile(val)}
+            funcViewEdit={(val) => setViewProfile(val)}
             token={session.token}
             wizzard={true}
           />
@@ -90,7 +90,7 @@ const Profile = ({ session }) => {
       case 4:
         return (
           <PekerjaanEdit
-            funcViewEdit={val => setViewProfile(val)}
+            funcViewEdit={(val) => setViewProfile(val)}
             wizzard={true}
             token={session.token}
           />

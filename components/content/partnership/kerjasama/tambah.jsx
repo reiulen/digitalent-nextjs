@@ -144,6 +144,12 @@ const Tambah = ({ token }) => {
         period: "Lama Periode tidak boleh kosong atau angka nol",
       });
       setPeriod("");
+    } else if (e.target.value.toString().length > 5) {
+      setError({
+        ...error,
+        period: "Lama Periode maksimum 5 karakter.",
+      });
+      setPeriod("");
     } else {
       setPeriod(e.target.value);
     }

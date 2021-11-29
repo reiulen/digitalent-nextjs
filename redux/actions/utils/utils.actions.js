@@ -16,7 +16,7 @@ import {
 
 import axios from "axios";
 
-export const getAllProvinsi = () => async (dispatch) => {
+export const getAllProvinsi = () => async dispatch => {
   try {
     dispatch({ type: PROVINSI_REQUEST });
 
@@ -47,7 +47,7 @@ export const getAllProvinsi = () => async (dispatch) => {
   }
 };
 
-export const getAllKota = (id) => async (dispatch) => {
+export const getAllKota = id => async dispatch => {
   try {
     dispatch({ type: KOTA_REQUEST });
 
@@ -79,12 +79,12 @@ export const getAllKota = (id) => async (dispatch) => {
   }
 };
 
-export const getAllPermission = (token) => async (dispatch) => {
+export const getAllPermission = token => async dispatch => {
   try {
     dispatch({ type: GET_SUPERADMIN_PERMISSION_REQUEST });
 
     let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/user/permissions`;
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/permissions`;
 
     const config = {
       headers: {

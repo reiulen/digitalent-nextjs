@@ -25,6 +25,10 @@ const ListSubstansi = ({ token }) => {
     (state) => state.allSubtanceQuestionBanks
   );
 
+  const { data: dataPermission } = useSelector(
+    (state) => state.permissionsSubvit
+  );
+
   const {
     loading: loadingDelete,
     error: errorDelete,
@@ -230,26 +234,45 @@ const ListSubstansi = ({ token }) => {
               List Test Substansi
             </h1>
 
-            <div className={`${styles.cardToolbar} card-toolbar`}>
+            {dataPermission &&
+            dataPermission.roles.includes("Super Admin") &&
+            dataPermission &&
+            dataPermission.permissions.includes(
+              "subvit.manage" && "subvit.substansi.manage"
+            ) ? (
+              <div className={`${styles.cardToolbar} card-toolbar`}>
+                <Link href="/subvit/substansi/tipe-soal">
+                  <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                    <i className="ri-book-read-fill"></i>
+                    Tipe Soal
+                  </a>
+                </Link>
+                <Link href="/subvit/substansi/clone">
+                  <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                    <i className="ri-mastercard-fill"></i>
+                    Clone Test
+                  </a>
+                </Link>
+                <Link href="/subvit/substansi/tambah-step-1">
+                  <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
+                    <i className="ri-add-fill"></i>
+                    Tambah Test Subtansi
+                  </a>
+                </Link>
+              </div>
+            ) : dataPermission &&
+              dataPermission.permissions.includes(
+                "subvit.view" && "subvit.substansi.view"
+              ) ? (
               <Link href="/subvit/substansi/tipe-soal">
-                <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                <a className="text-white btn btn-primary-rounded-full  font-weight-bolder px-5 py-6 mt-2 mr-1">
                   <i className="ri-book-read-fill"></i>
                   Tipe Soal
                 </a>
               </Link>
-              <Link href="/subvit/substansi/clone">
-                <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                  <i className="ri-mastercard-fill"></i>
-                  Clone Test
-                </a>
-              </Link>
-              <Link href="/subvit/substansi/tambah-step-1">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-add-fill"></i>
-                  Tambah Test Subtansi
-                </a>
-              </Link>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -299,7 +322,22 @@ const ListSubstansi = ({ token }) => {
                         <th>Bank Soal</th>
                         <th>Kategori</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+
+                        {dataPermission &&
+                        dataPermission.roles.includes("Super Admin") &&
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.substansi.manage"
+                        ) ? (
+                          <th>Aksi</th>
+                        ) : dataPermission &&
+                          dataPermission.permissions.includes(
+                            "subvit.view" && "subvit.substansi.view"
+                          ) ? (
+                          <th>Aksi</th>
+                        ) : (
+                          ""
+                        )}
                       </tr>
                     </thead>
                     <tbody>
@@ -366,19 +404,63 @@ const ListSubstansi = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                <div className="d-flex">
-                                  <Link
-                                    href={`/subvit/substansi/edit?id=${subtance.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                {dataPermission &&
+                                dataPermission.roles.includes("Super Admin") &&
+                                dataPermission &&
+                                dataPermission.permissions.includes(
+                                  "subvit.manage" && "subvit.substansi.manage"
+                                ) ? (
+                                  <div className="d-flex">
+                                    <Link
+                                      href={`/subvit/substansi/edit?id=${subtance.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Ubah"
+                                      >
+                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <Link
+                                      href={`/subvit/substansi/${subtance.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Detail"
+                                      >
+                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <Link
+                                      href={`/subvit/substansi/report?id=${subtance.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Report"
+                                      >
+                                        <i className="ri-todo-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      onClick={() => handleDelete(subtance.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
-                                      title="Ubah"
+                                      title="Hapus"
                                     >
-                                      <i className="ri-pencil-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
+                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                    </button>
+                                  </div>
+                                ) : dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.view" && "subvit.substansi.view"
+                                  ) ? (
                                   <Link
                                     href={`/subvit/substansi/${subtance.id}`}
                                   >
@@ -391,28 +473,9 @@ const ListSubstansi = ({ token }) => {
                                       <i className="ri-eye-fill p-0 text-white"></i>
                                     </a>
                                   </Link>
-                                  <Link
-                                    href={`/subvit/substansi/report?id=${subtance.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="Report"
-                                    >
-                                      <i className="ri-todo-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary text-white"
-                                    onClick={() => handleDelete(subtance.id)}
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Hapus"
-                                  >
-                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                  </button>
-                                </div>
+                                ) : (
+                                  ""
+                                )}
                               </td>
                             </tr>
                           );

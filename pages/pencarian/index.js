@@ -6,6 +6,7 @@ import { getAllPenyeleggaraPeserta } from "../../redux/actions/beranda/beranda.a
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 
 import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
+import { getPencarian } from "../../redux/actions/pelatihan/pencarian.action";
 
 const Pencarian = dynamic(
   () =>
@@ -19,6 +20,7 @@ const Pencarian = dynamic(
     ssr: false,
   }
 );
+
 const Layout = dynamic(
   () => import("../../user-component-new/components/template/Layout.component"),
   { ssr: false }
@@ -41,7 +43,7 @@ export default function PencarianPelatihan(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ params, query, req }) => {
       const session = await getSession({ req });
 
@@ -50,7 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllPenyeleggaraPeserta());
 
       await store.dispatch(getDataPribadi(sessionToken));
-
+      const data = await store.dispatch(getPencarian(sessionToken));
       return {
         props: {
           title: "Penyelenggara",

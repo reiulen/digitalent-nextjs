@@ -1,15 +1,14 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import Header from "../subvit/header/index";
+
 import styles from "./done.module.css";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 
-import doneImage from "../../../public/assets/media/logos/triviadone.png";
-import trainingImage from "../../../public/assets/media/logos/gojek.png";
-import Image from "next/dist/client/image";
-import PesertaWrapper from "../../components/wrapper/Peserta.wrapper";
+import doneImage from "../../../../public/assets/media/logos/triviadone.png";
 
-import moment from "moment";
+import Image from "next/dist/client/image";
+import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+
 import "moment/locale/id";
 
 const Done = () => {
