@@ -10,11 +10,14 @@ import {
   RIWAYAT_PELATIHAN_DETAIL_FAIL,
   RIWAYAT_PELATIHAN_DETAIL_REQUEST,
   RIWAYAT_PELATIHAN_DETAIL_SUCCESS,
+  SET_PELATIHAN_BERJALAN_VALUE,
+  SET_PELATIHAN_SELESAI_VALUE,
+  RESET_FILTER,
 } from "../../types/pelatihan/riwayat-pelatihan.type";
 import axios from "axios";
 
 export const getAllRiwayatPelatihanPeserta =
-  (token) => async (dispatch, getState) => {
+  token => async (dispatch, getState) => {
     try {
       dispatch({ type: RIWAYAT_PELATIHAN_REQUEST });
       let link =
@@ -25,12 +28,17 @@ export const getAllRiwayatPelatihanPeserta =
       let keywordState = getState().getAllRiwayatPelatihanPeserta.keyword || "";
       let pageState = getState().getAllRiwayatPelatihanPeserta.page || 1;
       let limitState = getState().getAllRiwayatPelatihanPeserta.limit || 5;
+      let sedang_berjalan =
+        getState().getAllRiwayatPelatihanPeserta.sedang_berjalan || "0";
+      let selesai = getState().getAllRiwayatPelatihanPeserta.selesai || "0";
 
       const params = {
         peserta: pesertaState,
-        keyword: keywordState,
+        cari: keywordState,
         page: pageState,
         limit: limitState,
+        selesai,
+        sedang_berjalan,
       };
 
       const config = {
@@ -39,6 +47,7 @@ export const getAllRiwayatPelatihanPeserta =
           Authorization: `Bearer ${token}`,
         },
       };
+
       const { data } = await axios.get(link, config);
       if (data) {
         dispatch({ type: RIWAYAT_PELATIHAN_SUCCESS, payload: data });
@@ -52,31 +61,51 @@ export const getAllRiwayatPelatihanPeserta =
     }
   };
 
-export const setValuePeserta = (text) => {
+export const setValuePeserta = text => {
   return {
     type: SET_PESERTA_VALUE,
     text,
   };
 };
 
-export const searchKeyword = (text) => {
+export const searchKeyword = text => {
   return {
     type: SET_KEYWORD_VALUE,
     text,
   };
 };
 
-export const setValuePage = (text) => {
+export const setValuePage = text => {
   return {
     type: SET_PAGE_VALUE,
     text,
   };
 };
 
-export const setValueLimit = (text) => {
+export const setValueLimit = text => {
   return {
     type: SET_LIMIT_VALUE,
     text,
+  };
+};
+
+export const setPelatihanBerjalanValue = text => {
+  return {
+    type: SET_PELATIHAN_BERJALAN_VALUE,
+    text,
+  };
+};
+
+export const setPelatihanSelesaiValue = text => {
+  return {
+    type: SET_PELATIHAN_SELESAI_VALUE,
+    text,
+  };
+};
+
+export const resetFilter = () => {
+  return {
+    type: RESET_FILTER,
   };
 };
 

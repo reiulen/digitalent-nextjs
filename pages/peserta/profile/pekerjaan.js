@@ -19,7 +19,9 @@ const Pekerjaan = dynamic(
 );
 
 const Layout = dynamic(() =>
-  import("../../../user-component/components/template/Layout.component")
+  import(
+    "../../../user-component-new/components/template/Layout-peserta.component"
+  )
 );
 
 export default function PekerjaanPage(props) {
@@ -34,7 +36,7 @@ export default function PekerjaanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {

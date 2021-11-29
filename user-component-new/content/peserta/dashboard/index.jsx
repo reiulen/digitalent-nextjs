@@ -17,7 +17,7 @@ const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
-    (state) => state.dashboardPeserta
+    state => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
   // useEffect(() => {
@@ -66,43 +66,52 @@ const Dashboard = ({ session, success }) => {
   }, [errorDashboard, totalSubvit]);
 
   const [simonasData, setSimonasData] = useState([]);
+  const [beasiswa, setBeasiswa] = useState([]);
 
-  useEffect(() => {
-    const getSimonasData = async () => {
-      try {
-        const data = axios.get(
-          "https://beasiswa-dev.majapahit.id/api/get-scholarship-data"
-        );
-        // const data = axios.get("http://simonas-dev.majapahit.id/api/job", {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // });
-        if (data) {
-          return setSimonasData(data);
-        } else {
-          return;
-        }
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
-      }
-    };
-    getSimonasData();
-  }, []);
-
-  const getBeasiswa = async () => {
-    const link = "https://beasiswa-dev.majapahit.id/api/get-scholarship-data";
+  const getSimonasData = async () => {
     try {
-      const data = await axios.get(
-        "https://beasiswa-dev.majapahit.id/api/get-scholarship-data"
+      const config = {
+        headers: {
+          Authorization: `Bearer ${session.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        "http://api-dts-dev.majapahit.id/simonas/api/job",
+        config
       );
       if (data) {
-        setBeasiswa(data);
+        return setSimonasData(data.data);
+      } else {
+        return;
       }
     } catch (error) {
-      notify(error);
+      throw error;
     }
   };
+
+  const getBeasiswa = async () => {
+    // const link = "https://beasiswa-dev.majapahit.id/api/get-scholarship-data";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+      },
+    };
+    const link =
+      "http://api-dts-dev.majapahit.id/beasiswa/api/get-scholarship-data";
+    try {
+      const { data } = await axios.get(link, config);
+      if (data) {
+        setBeasiswa(data.data);
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    getSimonasData();
+    getBeasiswa();
+  }, []);
 
   const handleHoverCard = (index, status) => {
     let list = [...cardPelatihan];
@@ -281,10 +290,10 @@ const Dashboard = ({ session, success }) => {
                     <Image
                       className={`${style.image_dashboard}`}
                       src={
+                        `/assets/media/default-card.png` ||
                         (pelatihan.pelatihan_berjalan.gambar &&
                           process.env.END_POINT_API_IMAGE_BEASISWA +
-                            pelatihan.pelatihan_berjalan.gambar) ||
-                        `/assets/media/default-card.png`
+                            pelatihan.pelatihan_berjalan.gambar)
                       }
                       width={400}
                       height={180}
@@ -507,33 +516,46 @@ const Dashboard = ({ session, success }) => {
                     </Link>
                   </div>
                 </Card.Title>
-                {[1, 2, 3, 4].map((row, i, arr) => (
+                {simonasData?.map((row, i, arr) => (
                   <div
                     key={i}
                     className={`pekerjaan ${
                       arr.length - 1 !== i ? "mb-8" : ""
                     } `}
+                    onClick={() => {
+                      router.push(row?.url);
+                    }}
+                    style={{ cursor: "pointer" }}
                   >
                     <div className="d-flex flex-row">
                       <Image
-                        src="/assets/media/mitra-icon/telkom-1.svg"
-                        objectFit="cover"
+                        src={
+                          !row?.logo
+                            ? "/assets/media/mitra-icon/telkom-1.svg"
+                            : row?.logo
+                        }
+                        objectFit="contain"
                         width={55}
                         height={52}
+                        alt={row?.logo}
                       />
                       <div className="pekerjaan-pt ml-7">
                         <p
-                          className={`my-0`}
+                          className={`my-0 text-truncate ${style.dashboar_nameBox}`}
                           style={{
                             fontWeight: "600",
                             fontSize: "16px",
                             color: "#6C6C6C",
                           }}
                         >
-                          Data Sciense
+                          {/* Data Sciense */}
+                          {row?.name}
                         </p>
-                        <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                          PT. Telkom Indonesia (Persero) Tbk
+                        <p
+                          style={{ fontSize: "14px", color: "#6C6C6C" }}
+                          className={`${style.dashboar_nameBox}`}
+                        >
+                          {row.corporate_name}
                         </p>
                       </div>
 
@@ -557,11 +579,11 @@ const Dashboard = ({ session, success }) => {
                 <Card.Title className="d-flex">
                   <p className={style.card_title}>Beasiswa Kominfo</p>
                   <div className="ml-auto">
-                    <Link href="/peserta" passHref>
+                    <Link href="https://beasiswa-dev.majapahit.id/" passHref>
                       <p
                         className={`d-flex align-items-center ${style.kunjungi_link}`}
                       >
-                        Kunjungi{" "}
+                        Kunjungi
                         <i
                           className="ri-arrow-right-s-line ml-1"
                           style={{ fontSize: "20px", color: "#203E80" }}
@@ -570,32 +592,51 @@ const Dashboard = ({ session, success }) => {
                     </Link>
                   </div>
                 </Card.Title>
-                {[1, 2, 3, 4].map((row, i, arr) => (
+                {beasiswa?.map((row, i, arr) => (
                   <div
                     key={i}
                     className={`pekerjaan ${
                       arr.length - 1 !== i ? "mb-8" : ""
                     } `}
+                    onClick={() => {
+                      if (row.type == "luar-negeri") {
+                        router.push(
+                          "https://beasiswa-dev.majapahit.id/beasiswa/luar-negeri"
+                        );
+                      } else {
+                        router.push(
+                          "https://beasiswa-dev.majapahit.id/beasiswa/dalam-negeri"
+                        );
+                      }
+                    }}
+                    style={{ cursor: "pointer" }}
                   >
-                    <div className="d-flex flex-row">
+                    <div className="d-flex flex-row align-items-center">
                       <Image
-                        src="/assets/media/mitra-icon/logo-itb-1.svg"
+                        // src="/assets/media/mitra-icon/logo-itb-1.svg"
+                        src={
+                          !row.logo
+                            ? "/assets/media/mitra-icon/logo-itb-1.svg"
+                            : `${process.env.END_POINT_API_IMAGE_BEASISWA}/${row.logo}`
+                        }
                         width={55}
                         height={52}
+                        objectFit="contain"
+                        alt={row?.name}
                       />
                       <div className="pekerjaan-pt ml-7">
                         <p
-                          className={`my-0`}
+                          className={`my-0 text-truncate ${style.dashboar_nameBox}`}
                           style={{
                             fontWeight: "600",
                             fontSize: "16px",
                             color: "#6C6C6C",
                           }}
                         >
-                          Institut Teknologi Bandung
+                          {row.name}
                         </p>
                         <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                          S1 Psikologi
+                          S1 psikologi
                         </p>
                       </div>
 

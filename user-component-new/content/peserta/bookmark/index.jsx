@@ -5,10 +5,13 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import style from "../../../../styles/peserta/dashboard.module.css";
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
-import { getAllBookmark } from "../../../../redux/actions/pelatihan/bookmark.action";
+import {
+  getAllBookmark,
+  setValuePage,
+} from "../../../../redux/actions/pelatihan/bookmark.action";
 import axios from "axios";
 import { SweatAlert } from "../../../../utils/middleware/helper/index";
-
+import Pagination from "react-js-pagination";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
@@ -43,7 +46,6 @@ export default function Bookmark({ session }) {
       SweatAlert("Gagal", e.message, "error");
     }
   };
-
   return (
     <PesertaWrapper>
       <Row className="my-n10 my-md-0">
@@ -51,7 +53,7 @@ export default function Bookmark({ session }) {
           return (
             <Col
               md={6}
-              className={`col-sm-12 col-md-4 mb-5 order-${i + 1}`}
+              className={`col-12 col-md-4 mb-5 order-${i + 1}`}
               key={i}
             >
               <Card className="h-100 shadow-sm">
@@ -71,7 +73,7 @@ export default function Bookmark({ session }) {
                     ></i>
                   </Button>
                   <ShareOverlay
-                    url={`http://dts-dev.majapahit.id/detail/pelatihan/id`}
+                    url={`http://dts-dev.majapahit.id/detail/pelatihan/${el.id}`}
                     quote={el.name}
                   >
                     <Button
@@ -89,7 +91,7 @@ export default function Bookmark({ session }) {
                 </div>
                 <Button
                   variant="transparent"
-                  disabled={!el.status == "Dibuka" ? false : true}
+                  disabled={el.status == "Dibuka" ? false : true}
                   className={
                     el.status == "Dibuka"
                       ? "p-0 mb-0"
@@ -237,6 +239,25 @@ export default function Bookmark({ session }) {
           );
         })}
       </Row>
+      <div className=" d-flex justify-content-center my-18 align-align-items-center">
+        {allBookmark && allBookmark?.bookmark?.total >= 5 && (
+          <div className="table-pagination my-auto">
+            <Pagination
+              activePage={allBookmark?.page}
+              itemsCountPerPage={allBookmark?.bookmark?.perPage}
+              totalItemsCount={allBookmark?.bookmark?.total}
+              pageRangeDisplayed={3}
+              onChange={(page) => dispatch(setValuePage(page))}
+              nextPageText={">"}
+              prevPageText={"<"}
+              firstPageText={"<<"}
+              lastPageText={">>"}
+              itemClass="page-item"
+              linkClass="page-link"
+            />
+          </div>
+        )}
+      </div>
     </PesertaWrapper>
   );
 }
