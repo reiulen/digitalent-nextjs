@@ -1,5 +1,5 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import Header from "../../../../user-component/content/subvit/header/index";
+
 import styles from "./done.module.css";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
