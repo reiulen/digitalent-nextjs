@@ -13,6 +13,7 @@ import LoadingPage from "../../../../components/LoadingPage";
 import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 // import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
+import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action"
 
 const EditArtikel = dynamic(
   () => import("../../../../components/content/publikasi/artikel-peserta/edit"),
@@ -57,6 +58,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllKategori(session.user.user.data.token));
       await store.dispatch(getSettingPublikasi(session.user.user.data.token));
       await store.dispatch(getAllAkademi(session.user.user.data.token));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token));
 
       return {
         props: { session, title: "Ubah Artikel Peserta - Publikasi" },

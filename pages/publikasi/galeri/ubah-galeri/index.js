@@ -11,6 +11,7 @@ import { wrapper } from "../../../../redux/store";
 
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
+import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action";
 
 const EditGaleri = dynamic(
   () => import("../../../../components/content/publikasi/galeri/edit"),
@@ -51,7 +52,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
       await store.dispatch(getAllKategori(session.user.user.data.token));
       await store.dispatch(getSettingPublikasi(session.user.user.data.token));
-
+      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      
       return {
         props: { session, title: "Ubah Galeri" },
       };

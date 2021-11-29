@@ -36,6 +36,7 @@ const Vidio = ({ token }) => {
     const { loading: allLoading, error, video } = useSelector(state => state.allVideo)
     const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteVideo);
     const { loading: playLoading, error: playError, isPlayed } = useSelector((state) => state.playedVideo);
+    const { role_permission } = useSelector((state) => state.allRolePermission);
 
     const [search, setSearch] = useState('')
     const [limit, setLimit] = useState(null)
@@ -52,6 +53,8 @@ const Vidio = ({ token }) => {
     const [isiVideo, setIsiVideo] = useState(null)
     const [tag, setTag] = useState([])
     const [show, setShow] = useState(false)
+    const [showDesc, setShowDesc] = useState(false)
+    const descToTrim = 100;
 
     let loading = false
     let { page = 1, keyword, success } = router.query
@@ -84,11 +87,19 @@ const Vidio = ({ token }) => {
         router.replace('/publikasi/video', undefined, { shallow: true })
     }
 
-    const getWindowDimensions = () => {
-        // if (typeof window === 'undefined') {
-        //     global.window = {}
-        // }
+    const handleDescToTrim = (str) => {
+        let result = null;
 
+        if (str.length > descToTrim) {
+            result = str.slice(0, descToTrim) + "...";
+        } else {
+            result = str;
+        }
+
+        return result;
+    };
+
+    const getWindowDimensions = () => {
         const { innerWidth: width, innerHeight: height } = window;
         return {
             width,
@@ -440,14 +451,18 @@ const Vidio = ({ token }) => {
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header row border-0">
                         <h3 className={`${styles2.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Video</h3>
-                        <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                            <Link href='/publikasi/video/tambah-video'>
-                                <a className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                                    <i className="ri-add-fill pb-1 text-white mr-2 "></i>
-                                    Tambah Video
-                                </a>
-                            </Link>
-                        </div>
+                        {
+                            role_permission.permissions === "publikasi.video.view" && role_permission.roles !== "Super Admin" ? null
+                                :
+                                <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                                    <Link href='/publikasi/video/tambah-video'>
+                                        <a className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
+                                            <i className="ri-add-fill pb-1 text-white mr-2 "></i>
+                                            Tambah Video
+                                        </a>
+                                    </Link>
+                                </div>
+                        }
                     </div>
 
                     <div className="card-body pt-0">
@@ -640,7 +655,11 @@ const Vidio = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '9.7vw' }}>Aksi</th>
+                                                {
+                                                    role_permission.permissions === "publikasi.video.view" && role_permission.roles !== "Super Admin" ? null
+                                                        :
+                                                        <th style={{ width: '9.7vw' }}>Aksi</th>
+                                                }
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -699,42 +718,46 @@ const Vidio = ({ token }) => {
 
                                                             </td>
                                                             <td className='align-middle'>{row.role[0].name}</td>
-                                                            <td className="align-middle d-flex">
+                                                            {
+                                                                role_permission.permissions === "publikasi.video.view" && role_permission.roles !== "Super Admin" ? null
+                                                                    :
+                                                                    <td className="align-middle d-flex">
 
-                                                                <button
-                                                                    onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori, row.isi_video, row.tag)}
-                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
-                                                                    data-target="#videoPlayerModal"
-                                                                    data-toggle="modal"
-                                                                >
-                                                                    <i className="ri-todo-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Pratinjau
-                                                                    </div>
-                                                                </button>
+                                                                        <button
+                                                                            onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori, row.isi_video, row.tag)}
+                                                                            className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
+                                                                            data-target="#videoPlayerModal"
+                                                                            data-toggle="modal"
+                                                                        >
+                                                                            <i className="ri-todo-fill p-0 text-white"></i>
+                                                                            <div className="text-hover-show-hapus">
+                                                                                Pratinjau
+                                                                            </div>
+                                                                        </button>
 
-                                                                <Link
-                                                                    href={`/publikasi/video/ubah-video?id=${row.id}`}
-                                                                >
-                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                        <div className="text-hover-show-hapus">
-                                                                            Ubah
-                                                                        </div>
-                                                                    </a>
-                                                                </Link>
+                                                                        <Link
+                                                                            href={`/publikasi/video/ubah-video?id=${row.id}`}
+                                                                        >
+                                                                            <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                                <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                                <div className="text-hover-show-hapus">
+                                                                                    Ubah
+                                                                                </div>
+                                                                            </a>
+                                                                        </Link>
 
-                                                                <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 btn-delete"
-                                                                    onClick={() => handleDelete(row.id)}
-                                                                >
-                                                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Hapus
-                                                                    </div>
-                                                                </button>
+                                                                        <button
+                                                                            className="btn btn-link-action bg-blue-secondary text-white my-5 btn-delete"
+                                                                            onClick={() => handleDelete(row.id)}
+                                                                        >
+                                                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                                                            <div className="text-hover-show-hapus">
+                                                                                Hapus
+                                                                            </div>
+                                                                        </button>
 
-                                                            </td>
+                                                                    </td>
+                                                            }
                                                         </tr>
                                                     })
                                             }
@@ -827,6 +850,39 @@ const Vidio = ({ token }) => {
                             {judul_video}
                         </h2>
 
+                        <div className={`${styles.descriptionVideo} text-break text-justify`}>
+                            <span>
+                                {/* {isiVideo} */}
+                                {
+                                    showDesc === false && isiVideo ?
+                                        <div className="mx-0 px-0">
+                                            {handleDescToTrim(isiVideo)}
+
+                                            <div
+                                                className="mt-1 mb-3 text-primary"
+                                                style={{ cursor: "pointer" }}
+                                                onClick={() => setShowDesc(true)}
+                                            >
+                                                Lihat Selengkapnya...
+                                            </div>
+                                        </div>
+                                        :
+                                        <div className="overflow-auto">
+                                            {isiVideo}
+
+                                            <div
+                                                className="mt-1 mb-3 text-primary"
+                                                style={{ cursor: "pointer" }}
+                                                onClick={() => setShowDesc(false)}
+                                            >
+                                                Lihat Lebih Sedikit...
+                                            </div>
+                                        </div>
+
+                                }
+                            </span>
+                        </div>
+
                         <div className="mt-10 mb-5 row justify-content-between">
                             <div className="col-12 col-md-4 col-lg-4">
                                 {
@@ -871,11 +927,6 @@ const Vidio = ({ token }) => {
                                 )}
                             </div>
 
-                            <div className={`${styles.descriptionVideo} text-break text-justify m-4`}>
-                                <span>
-                                    {isiVideo}
-                                </span>
-                            </div>
                         </div>
                     </div>
                 </Modal.Footer>

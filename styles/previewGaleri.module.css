@@ -146,6 +146,10 @@
   .cari{
     font-size: 9px;
   }
+  .optionsSelect{
+    font-size: 7px;
+    max-width: max-content;
+  }
   .fontCari{
     font-size: 9px;
   }

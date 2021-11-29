@@ -96,6 +96,10 @@ import {
   allRoleAdminPublikasiReducer,
 } from "./publikasi/dashboard-publikasi.reducers";
 
+import {
+  allRolePermissionReducer
+} from "./publikasi/role-permissions.reducers"
+
 // Subvit
 // ============== substansi ===============
 import {
@@ -617,6 +621,8 @@ const reducer = combineReducers({
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
   allRoleAdminPublikasi: allRoleAdminPublikasiReducer,
+
+  allRolePermission: allRolePermissionReducer,
 
   // allKategoriContent: kategoriVideoContentReducer,
   // allTagContent: allTagReducer,

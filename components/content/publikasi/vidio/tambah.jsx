@@ -41,6 +41,7 @@ const TambahVidio = ({ token, id }) => {
         kategori,
     } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
+    const { role_permission } = useSelector((state) => state.allRolePermission);
 
     useEffect(() => {
         if (success) {
@@ -416,40 +417,45 @@ const TambahVidio = ({ token, id }) => {
                                     />
                                     {
                                         (disableTag === true) ?
-                                        <p className="text-danger">
-                                            Tag tidak boleh sama
-                                        </p>
-                                        :
-                                        null
+                                            <p className="text-danger">
+                                                Tag tidak boleh sama
+                                            </p>
+                                            :
+                                            null
                                     }
                                 </div>
                             </div>
-                            <div className="form-group row">
-                                <label
-                                    htmlFor="staticEmail"
-                                    className="ml-5 pl-4 font-weight-bolder"
-                                >
-                                    Publish
-                                </label>
-                                <div className="col-sm-1 ml-4">
-                                    <div className="">
-                                        <label className="switches">
-                                            <input
-                                                // required
-                                                className="checkbox"
-                                                checked={publish}
-                                                type="checkbox"
-                                                onChange={(e) => handleChangePublish(e)}
-                                            />
-                                            <span
-                                                className={`sliders round ${publish ? "text-white" : "pl-2"
-                                                    }`}
-                                            >
-                                            </span>
+
+                            {
+                                role_permission.roles[0] !== "Super Admin" ? null
+                                    :
+                                    <div className="form-group row">
+                                        <label
+                                            htmlFor="staticEmail"
+                                            className="ml-5 pl-4 font-weight-bolder"
+                                        >
+                                            Publish
                                         </label>
+                                        <div className="col-sm-1 ml-4">
+                                            <div className="">
+                                                <label className="switches">
+                                                    <input
+                                                        // required
+                                                        className="checkbox"
+                                                        checked={publish}
+                                                        type="checkbox"
+                                                        onChange={(e) => handleChangePublish(e)}
+                                                    />
+                                                    <span
+                                                        className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                            }`}
+                                                    >
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                            }
 
                             {
                                 disablePublishDate === false ?

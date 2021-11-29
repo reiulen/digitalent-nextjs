@@ -207,7 +207,7 @@ const Sidebar = ({ session }) => {
           {
             id: 1,
             name: "Dashboard",
-            href: "/publikasi/dashboard-publikasi",
+            href: "/publikasi/dashboard",
             selected: false,
             child: [],
           },

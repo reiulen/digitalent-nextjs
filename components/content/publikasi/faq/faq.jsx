@@ -36,6 +36,7 @@ const Faq = ({ token }) => {
     const { paginateFaq } = useSelector(state => state.paginationFaq)
     const { error: deleteError, isDeleted } = useSelector(state => state.deleteFaq)
     const { error: updateError, isUpdated } = useSelector(state => state.updatePinFaq)
+    const { role_permission } = useSelector((state) => state.allRolePermission);
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -417,14 +418,18 @@ const Faq = ({ token }) => {
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header row border-0">
                         <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>FAQ</h3>
-                        <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                            <Link href='/publikasi/faq/tambah-faq'>
-                                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                                    <i className="ri-add-line pb-1 text-white mr-2 "></i>
-                                    Tambah FAQ
-                                </a>
-                            </Link>
-                        </div>
+                        {
+                            role_permission.permissions.includes("publikasi.faq.manage") || role_permission.roles.includes("Super Admin") ?
+                                <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                                    <Link href='/publikasi/faq/tambah-faq'>
+                                        <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
+                                            <i className="ri-add-line pb-1 text-white mr-2 "></i>
+                                            Tambah FAQ
+                                        </a>
+                                    </Link>
+                                </div>
+                                : null
+                        }
                     </div>
 
                     <div className="card-body pt-0">
@@ -608,7 +613,11 @@ const Faq = ({ token }) => {
                                                 <th>Pin FAQ</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '8vw' }}>Aksi</th>
+                                                {
+                                                    role_permission.permissions.includes("publikasi.faq.manage") || role_permission.roles.includes("Super Admin") ?
+                                                        <th style={{ width: '8vw' }}>Aksi</th>
+                                                        : null
+                                                }
                                             </tr>
                                         </thead>
 
@@ -682,30 +691,34 @@ const Faq = ({ token }) => {
                                                             <td className='align-middle'>
                                                                 {row.role[0].name}
                                                             </td>
-                                                            <td className="align-middle d-flex justify-content-center">
+                                                            {
+                                                                role_permission.permissions.includes("publikasi.faq.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                    <td className="align-middle d-flex justify-content-center">
 
-                                                                <Link
-                                                                    href={`/publikasi/faq/ubah-faq?id=${row.id}`}
-                                                                >
-                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                        <div className="text-hover-show-hapus">
-                                                                            Ubah
-                                                                        </div>
-                                                                    </a>
-                                                                </Link>
+                                                                        <Link
+                                                                            href={`/publikasi/faq/ubah-faq?id=${row.id}`}
+                                                                        >
+                                                                            <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                                <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                                <div className="text-hover-show-hapus">
+                                                                                    Ubah
+                                                                                </div>
+                                                                            </a>
+                                                                        </Link>
 
-                                                                <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
-                                                                    onClick={() => handleDelete(row.id)}
-                                                                >
-                                                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Hapus
-                                                                    </div>
-                                                                </button>
+                                                                        <button
+                                                                            className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                            onClick={() => handleDelete(row.id)}
+                                                                        >
+                                                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                                                            <div className="text-hover-show-hapus">
+                                                                                Hapus
+                                                                            </div>
+                                                                        </button>
 
-                                                            </td>
+                                                                    </td>
+                                                                    : null
+                                                            }
                                                         </tr>
                                                     })
                                             }

@@ -67,6 +67,7 @@ const TambahGaleri = ({ token, id }) => {
     const { loading, error, success } = useSelector(state => state.newGaleri)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
+    const { role_permission } = useSelector((state) => state.allRolePermission);
 
     const [files, setFiles] = useState([]);
     const { getRootProps, getInputProps } = useDropzone({
@@ -623,33 +624,37 @@ const TambahGaleri = ({ token, id }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
-                                <label
-                                    htmlFor="staticEmail"
-                                    className="ml-5 pl-4 font-weight-bolder"
-                                >
-                                    Publish
-                                </label>
-                                <div className="col-sm-1 ml-4">
-                                    <div className="">
-                                        <label className="switches">
-                                            <input
-                                                // required
-                                                className="checkbox"
-                                                checked={publish}
-                                                type="checkbox"
-                                                // onChange={(checked) => setPublish(checked)}
-                                                onChange={(e) => handleChangePublish(e)}
-                                            />
-                                            <span
-                                                className={`sliders round ${publish ? "text-white" : "pl-2"
-                                                    }`}
-                                            >
-                                            </span>
+                            {
+                                role_permission.roles.includes("Super Admin") ?
+                                    <div className="form-group row">
+                                        <label
+                                            htmlFor="staticEmail"
+                                            className="ml-5 pl-4 font-weight-bolder"
+                                        >
+                                            Publish
                                         </label>
+                                        <div className="col-sm-1 ml-4">
+                                            <div className="">
+                                                <label className="switches">
+                                                    <input
+                                                        // required
+                                                        className="checkbox"
+                                                        checked={publish}
+                                                        type="checkbox"
+                                                        // onChange={(checked) => setPublish(checked)}
+                                                        onChange={(e) => handleChangePublish(e)}
+                                                    />
+                                                    <span
+                                                        className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                            }`}
+                                                    >
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                    : null
+                            }
 
                             {
                                 disablePublishDate === false ?

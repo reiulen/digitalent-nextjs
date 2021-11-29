@@ -39,6 +39,8 @@ const TambahImagetron = ({ token, id }) => {
     kategori,
   } = useSelector((state) => state.allKategori);
   const { setting } = useSelector(state => state.allSettingPublikasi)
+  const { role_permission } = useSelector((state) => state.allRolePermission);
+
   const [, forceUpdate] = useState();
 
   useEffect(() => {
@@ -85,11 +87,6 @@ const TambahImagetron = ({ token, id }) => {
       }
     }
     else {
-      // setGambar("")
-      // setGambarPreview("/assets/media/default.jpg")
-      // setGambarName(null)
-      // simpleValidator.current.showMessages();
-      // forceUpdate(1);
       e.target.value = null
       Swal.fire(
         'Oops !',
@@ -381,50 +378,37 @@ const TambahImagetron = ({ token, id }) => {
 
               </div>
 
-              {/* <div className="form-group">
-                    <label className='col-sm-2 col-form-label font-weight-bolder'>URL Link</label>
-                    <div className="col-sm-12">
-                        <div className="input-group">
-                            <div className="input-group-prepend">
-                                <div className="input-group-text">https://</div>
-                            </div>
-                            <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="Isi Link Disini" onBlur={() => simpleValidator.current.showMessageFor("url_link")}/>
-                            {simpleValidator.current.message(
-                                "url_link",
-                                url_link,
-                                "required",
-                                { className: "text-danger" }
-                            )}
-                        </div>
-                    </div>
-                </div> */}
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="ml-5 pl-4 font-weight-bolder"
-                >
-                  Publish
-                </label>
-                <div className="col-sm-1 ml-4">
-                  <div className="">
-                    <label className="switches">
-                      <input
-                        // required
-                        className="checkbox"
-                        checked={publish}
-                        type="checkbox"
-                        onChange={(e) => handleChangePublish(e)}
-                      />
-                      <span
-                        className={`sliders round ${publish ? "text-white" : "pl-2"
-                          }`}
-                      >
-                      </span>
+              {
+                role_permission.roles.includes("Super Admin") ?
+                  <div className="form-group row">
+                    <label
+                      htmlFor="staticEmail"
+                      className="ml-5 pl-4 font-weight-bolder"
+                    >
+                      Publish
                     </label>
+                    <div className="col-sm-1 ml-4">
+                      <div className="">
+                        <label className="switches">
+                          <input
+                            // required
+                            className="checkbox"
+                            checked={publish}
+                            type="checkbox"
+                            onChange={(e) => handleChangePublish(e)}
+                          />
+                          <span
+                            className={`sliders round ${publish ? "text-white" : "pl-2"
+                              }`}
+                          >
+                          </span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                  : null
+              }
+
               {
                 disablePublishDate === false ?
                   <div className="form-group">

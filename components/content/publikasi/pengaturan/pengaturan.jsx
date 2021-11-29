@@ -19,6 +19,7 @@ const Pengaturan = ({ token }) => {
     const [, forceUpdate] = useState();
     const { loading: allLoading, error: allError, success: allSuccess, setting } = useSelector(state => state.allSettingPublikasi)
     const { loading: updateLoading, error: updateError, success: updateSuccess, isUpdated } = useSelector(state => state.updateSettingPublikasi)
+    const { role_permission } = useSelector((state) => state.allRolePermission);
 
     let loading = false
     let error = null
@@ -51,18 +52,6 @@ const Pengaturan = ({ token }) => {
             dispatch(clearErrors())
         }
 
-        // if (success) {
-        //     router.push({
-        //         pathname: `/publikasi/pengaturan`,
-        //     });
-        // }
-
-        // if (success) {
-        //     dispatch({
-        //         type: UPDATE_SETTING_RESET
-        //     })
-        // }
-
     }, [dispatch, error, success]);
 
 
@@ -87,10 +76,6 @@ const Pengaturan = ({ token }) => {
             } else {
                 dispatch(updateSettingImagePublikasi(upload_image, token))
             }
-            // if (error) {
-            //     dispatch(clearErrors())
-            // }
-            // dispatch(updateSettingImagePublikasi(upload_image))
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
@@ -118,11 +103,6 @@ const Pengaturan = ({ token }) => {
             } else {
                 dispatch(updateSettingImagetronPublikasi(upload_imagetron, token))
             }
-            // if (error) {
-            //     dispatch(clearErrors())
-            // }
-            // dispatch(updateSettingImagetronPublikasi(upload_imagetron))
-
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
@@ -150,10 +130,6 @@ const Pengaturan = ({ token }) => {
             } else {
                 dispatch(updateSettingSliderPublikasi(batas_slider, token))
             }
-            // if (error) {
-            //     dispatch(clearErrors())
-            // }
-            // dispatch(updateSettingSliderPublikasi(batas_slider))
 
         } else {
             simpleValidator.current.showMessages();
@@ -182,10 +158,6 @@ const Pengaturan = ({ token }) => {
             } else {
                 dispatch(updateSettingFaqPublikasi(maxfaq, token))
             }
-            // if (error) {
-            //     dispatch(clearErrors())
-            // }
-            // dispatch(updateSettingFaqPublikasi(maxfaq))
 
         } else {
             simpleValidator.current.showMessages();
@@ -197,30 +169,6 @@ const Pengaturan = ({ token }) => {
             });
         }
     }
-
-    // const onSubmit = (e) => {
-    //     e.preventDefault()
-    //     if ((simpleValidator.current.allValid())) {
-    //         if (error) {
-    //             dispatch(clearErrors())
-    //         }
-
-    //         dispatch(updateSettingImagePublikasi(upload_image))
-    //         dispatch(updateSettingImagetronPublikasi(upload_imagetron))
-    //         dispatch(updateSettingSliderPublikasi(batas_slider))
-    //         dispatch(updateSettingFaqPublikasi(maxfaq))
-
-    //     } else {
-    //         simpleValidator.current.showMessages();
-    //         forceUpdate(1);
-    //         Swal.fire({
-    //           icon: "error",
-    //           title: "Oops...",
-    //           text: "Isi data dengan benar !",
-    //         });
-    //       }
-
-    // }
 
     const onNewReset = () => {
         dispatch({ type: UPDATE_SETTING_RESET })
@@ -296,18 +244,23 @@ const Pengaturan = ({ token }) => {
                                                 )}
                                             </div>
                                         </div>
-                                        <button
-                                            className={`${styles.btnSave} col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white`}
-                                            onClick={(e) => submitImagePublikasi(e)}
-                                            style={{ marginLeft: '-30px' }}
-                                        >
-                                            <Image
-                                                src={`/assets/icon/save.svg`}
-                                                width={40}
-                                                height={40}
-                                                alt="IconSave"
-                                            />
-                                        </button>
+
+                                        {
+                                            role_permission.permissions.includes("publikasi.pengaturan.manage") || role_permission.roles.includes("Super Admin") ?
+                                                <button
+                                                    className={`${styles.btnSave} col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white`}
+                                                    onClick={(e) => submitImagePublikasi(e)}
+                                                    style={{ marginLeft: '-30px' }}
+                                                >
+                                                    <Image
+                                                        src={`/assets/icon/save.svg`}
+                                                        width={40}
+                                                        height={40}
+                                                        alt="IconSave"
+                                                    />
+                                                </button>
+                                                : null
+                                        }
 
                                     </div>
                                     <div className="form-group row form-inline">
@@ -326,18 +279,22 @@ const Pengaturan = ({ token }) => {
                                                 )}
                                             </div>
                                         </div>
-                                        <button
-                                            className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
-                                            onClick={(e) => submitImagetron(e)}
-                                            style={{ marginLeft: '-30px' }}
-                                        >
-                                            <Image
-                                                src={`/assets/icon/save.svg`}
-                                                width={40}
-                                                height={40}
-                                                alt="IconSave"
-                                            />
-                                        </button>
+                                        {
+                                            role_permission.permissions.includes("publikasi.pengaturan.manage") || role_permission.roles.includes("Super Admin") ?
+                                                <button
+                                                    className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
+                                                    onClick={(e) => submitImagetron(e)}
+                                                    style={{ marginLeft: '-30px' }}
+                                                >
+                                                    <Image
+                                                        src={`/assets/icon/save.svg`}
+                                                        width={40}
+                                                        height={40}
+                                                        alt="IconSave"
+                                                    />
+                                                </button>
+                                                : null
+                                        }
                                     </div>
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-12 col-md-2 col-lg-3 col-xl-2 col-form-label">Batas Slider</label>
@@ -355,18 +312,22 @@ const Pengaturan = ({ token }) => {
                                                 )}
                                             </div>
                                         </div>
-                                        <button
-                                            className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
-                                            onClick={(e) => submitSlider(e)}
-                                            style={{ marginLeft: '-30px' }}
-                                        >
-                                            <Image
-                                                src={`/assets/icon/save.svg`}
-                                                width={40}
-                                                height={40}
-                                                alt="IconSave"
-                                            />
-                                        </button>
+                                        {
+                                            role_permission.permissions.includes("publikasi.pengaturan.manage") || role_permission.roles.includes("Super Admin") ?
+                                                <button
+                                                    className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
+                                                    onClick={(e) => submitSlider(e)}
+                                                    style={{ marginLeft: '-30px' }}
+                                                >
+                                                    <Image
+                                                        src={`/assets/icon/save.svg`}
+                                                        width={40}
+                                                        height={40}
+                                                        alt="IconSave"
+                                                    />
+                                                </button>
+                                                : null
+                                        }
                                     </div>
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-12 col-md-2 col-lg-3 col-xl-2 col-form-label">Maksimal FAQ</label>
@@ -384,18 +345,22 @@ const Pengaturan = ({ token }) => {
                                                 )}
                                             </div>
                                         </div>
-                                        <button
-                                            className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
-                                            onClick={(e) => submitFaq(e)}
-                                            style={{ marginLeft: '-30px' }}
-                                        >
-                                            <Image
-                                                src={`/assets/icon/save.svg`}
-                                                width={40}
-                                                height={40}
-                                                alt="IconSave"
-                                            />
-                                        </button>
+                                        {
+                                            role_permission.permissions.includes("publikasi.pengaturan.manage") || role_permission.roles.includes("Super Admin") ?
+                                                <button
+                                                    className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
+                                                    onClick={(e) => submitFaq(e)}
+                                                    style={{ marginLeft: '-30px' }}
+                                                >
+                                                    <Image
+                                                        src={`/assets/icon/save.svg`}
+                                                        width={40}
+                                                        height={40}
+                                                        alt="IconSave"
+                                                    />
+                                                </button>
+                                                : null
+                                        }
                                     </div>
 
                                     <div className="form-group row">
