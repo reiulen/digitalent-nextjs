@@ -775,6 +775,9 @@ const handleToggleModal = () => {
 
             {/* PAGINATION */}
             <div className="d-flex justify-content-center">
+              {
+                console.log (video)
+              }
               {video && video.total !== 0 && video.total >= 6 ? (
                 <div 
                   className={

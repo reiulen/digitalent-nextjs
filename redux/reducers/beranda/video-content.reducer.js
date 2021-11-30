@@ -39,7 +39,7 @@ export const allVideoContentReducer = (state = { video: [] }, action) => {
             let arr = action.payload.data.video
             let result = {
                 video : [],
-                total: action.payload.data.total,
+                total: 0,
                 perPage: action.payload.data.perPage,
                 totalFiltered: action.payload.data.totalFiltered
             }
@@ -47,15 +47,16 @@ export const allVideoContentReducer = (state = { video: [] }, action) => {
             if (action.payload.data.video){
                 for (let i = 0; i < arr.length; i++){
                     if (arr[i].tanggal_publish <= momentToday){
-                        result.push (arr[i])
+                        result.video.push (arr[i])
+                        result.total ++
                     }
                 }
             }
 
             return {
                 loading: false,
-                video: action.payload.data
-                // video: result
+                // video: action.payload.data
+                video: result
             }
 
         case BERANDA_VIDEO_FAIL:
