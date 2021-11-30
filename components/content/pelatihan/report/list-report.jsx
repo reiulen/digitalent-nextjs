@@ -142,22 +142,21 @@ const ListReport = ({ token }) => {
             <td>
               <div className="d-flex">
                 {listPermission.includes("pelatihan.report_pelatihan.view") && (
-                  <Link
-                    href={`/pelatihan/report-pelatihan/detail-report-pelatihan/${item.id}`}
+                  <a
+                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Detail"
+                    onClick={() => {
+                      localStorage.setItem("slug", item.slug);
+                      localStorage.setItem("judul", item.name);
+                      router.push(
+                        `/pelatihan/report-pelatihan/detail-report-pelatihan/${item.id}`
+                      );
+                    }}
                   >
-                    <a
-                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                      data-toggle="tooltip"
-                      data-placement="bottom"
-                      title="Detail"
-                      onClick={() => {
-                        localStorage.setItem("slug", item.slug);
-                        localStorage.setItem("slug", item.slug);
-                      }}
-                    >
-                      <i className="ri-eye-fill text-white p-0"></i>
-                    </a>
-                  </Link>
+                    <i className="ri-eye-fill text-white p-0"></i>
+                  </a>
                 )}
                 {listPermission.includes(
                   "pelatihan.report_pelatihan.manage"
