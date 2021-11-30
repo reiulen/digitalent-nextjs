@@ -117,10 +117,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
               >
                 <Image
                   src={
-                    user && user.mitra_profile?
-                      process.env.END_POINT_API_IMAGE_PARTNERSHIP + user.mitra_profile.agency_logo
-                    :
-                      "/assets/media/default.jpg"
+                    "/assets/logo/mainlogo.png"
                   }
                   width={70}
                   height={70}

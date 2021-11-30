@@ -193,7 +193,7 @@ const Table = ({ token }) => {
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
                                   <Link
-                                    href={`/site-management/setting/ubah-page/${items.id}`}
+                                    href={`/site-management/setting/ubah-page/${items.url}`}
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                       <IconPencil width="16" height="16" />
