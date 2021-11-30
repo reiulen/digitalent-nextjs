@@ -96,7 +96,7 @@ export const postRoles = (sendData, token) => {
         type: POST_ROLES_REQUEST,
       });
       const { data } = await axios.post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/store`,
+        `${"http://192.168.11.167:8000/"}api/role/store`,
         sendData,
         {
           headers: {
