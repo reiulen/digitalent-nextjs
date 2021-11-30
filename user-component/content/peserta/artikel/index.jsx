@@ -269,7 +269,7 @@ const Dashboard = ({ session, success }) => {
             <Col md={12} className="mb-4 px-10">
               <div className="mt-10 d-flex">
                 <h3>Artikel Saya</h3>
-                <Link href="/peserta/artikel/tambah/" passHref>
+                <Link href="/peserta/artikel/tambah-artikel/" passHref>
                   <button className="btn btn-primary ml-auto rounded-full px-10 py-3 text-center font-weight-bolder">
                     <i className="ri-pencil-fill mr-2"></i>Buat Artikel
                   </button>
