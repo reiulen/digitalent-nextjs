@@ -334,81 +334,83 @@ const ListReport = ({ token }) => {
                   <tbody>{listReportTraining}</tbody>
                 </table>
               </div>
-              <div className="row">
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={page}
-                    itemsCountPerPage={getDataReportTraining.perPage}
-                    totalItemsCount={getDataReportTraining.total}
-                    pageRangeDisplayed={2}
-                    onChange={(e) => {
-                      setPage(e);
-                      dispatch(
-                        listsReportTraining(
-                          token,
-                          e,
-                          limit,
-                          search,
-                          penyelenggara.label,
-                          academy.label,
-                          theme.label
-                        )
-                      );
-                    }}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0 mt-3">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        value={limit}
-                        onChange={(e) => {
-                          setLimit(e.target.value);
-                          dispatch(
-                            listsReportTraining(
-                              token,
-                              page,
-                              e.target.value,
-                              search,
-                              penyelenggara.label,
-                              academy.label,
-                              theme.label
-                            )
-                          );
-                        }}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto pt-3">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data {getDataReportTraining.total}
-                      </p>
+              {getDataReportTraining.total > 5 && (
+                <div className="row">
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={getDataReportTraining.perPage}
+                      totalItemsCount={getDataReportTraining.total}
+                      pageRangeDisplayed={2}
+                      onChange={(e) => {
+                        setPage(e);
+                        dispatch(
+                          listsReportTraining(
+                            token,
+                            e,
+                            limit,
+                            search,
+                            penyelenggara.label,
+                            academy.label,
+                            theme.label
+                          )
+                        );
+                      }}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                  <div className="table-total ml-auto">
+                    <div className="row">
+                      <div className="col-4 mr-0 p-0 mt-3">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          value={limit}
+                          onChange={(e) => {
+                            setLimit(e.target.value);
+                            dispatch(
+                              listsReportTraining(
+                                token,
+                                page,
+                                e.target.value,
+                                search,
+                                penyelenggara.label,
+                                academy.label,
+                                theme.label
+                              )
+                            );
+                          }}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto pt-3">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {getDataReportTraining.total}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
