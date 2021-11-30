@@ -18,14 +18,14 @@ const SubHeaderComponent = ({ data = [] }) => {
               {
                 i === (data.length - 1) ?
                   
-                  row.name.length > 25 ?
-                    <span>{row.name.substring(0, 25) + " ..."}</span>
+                  row.name.length > 30 ?
+                    <span>{row.name.substring(0, 30) + " ..."}</span>
                   :
                   <span>{row.name}</span>
                 :
     
-                  row.name.length > 25 ?
-                    <span className="text-primary">{row.name.substring(0, 25) + " ..."}</span>
+                  row.name.length > 30 ?
+                    <span className="text-primary">{row.name.substring(0, 30) + " ..."}</span>
                   :
                     <span className="text-primary">{row.name}</span>
                 
