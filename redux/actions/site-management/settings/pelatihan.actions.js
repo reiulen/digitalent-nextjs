@@ -23,7 +23,8 @@ export const loadDataPrompt = (token) => {
         payload: data,
       });
     } catch (error) {
-      notify(error.response.data.message);
+      // notify(error.response.data.message);
+      Swal.fire("Oops...", "Isi data dengan benar !", "error");
     }
   };
 };
@@ -49,7 +50,7 @@ export const postTemplate = (token, subject, body, status) => {
         });
       })
       .catch((error) => {
-        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+        Swal.fire("Oops...", "Isi data dengan benar !", "error");
       });
   };
 };
@@ -82,7 +83,7 @@ export const putDataPrompt = (token, notification, email) => {
         router.push("/partnership/user/auth/login");
       });
     } catch (error) {
-      Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+      Swal.fire("Oops...", "Isi data dengan benar !", "error");
     }
   };
 };
@@ -118,7 +119,7 @@ export const postKetentuan = (
         });
       })
       .catch((error) => {
-        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+        Swal.fire("Oops...", "Isi data dengan benar !", "error");
       });
   };
 };
@@ -177,7 +178,7 @@ export const postViaFilter = (
         });
       })
       .catch((error) => {
-        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan, mohon isi data yang lengkap", "error");
+        Swal.fire("Oops...", "Isi data dengan benar !", "error");
 
       });
   };
@@ -229,7 +230,7 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
         });
       })
       .catch((error) => {
-        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan, mohon isi data dengan lengkap", "error");
+        Swal.fire("Oops...", "Isi data dengan benar !", "error");
       });
   };
 };
@@ -266,7 +267,7 @@ export const postFileSize = (
         });
       })
       .catch((error) => {
-        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+        Swal.fire("Oops...", "Isi data dengan benar !", "error");
       });
   };
 };

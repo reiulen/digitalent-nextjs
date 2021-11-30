@@ -142,22 +142,21 @@ const ListReport = ({ token }) => {
             <td>
               <div className="d-flex">
                 {listPermission.includes("pelatihan.report_pelatihan.view") && (
-                  <Link
-                    href={`/pelatihan/report-pelatihan/detail-report-pelatihan/${item.id}`}
+                  <a
+                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Detail"
+                    onClick={() => {
+                      localStorage.setItem("slug", item.slug);
+                      localStorage.setItem("judul", item.name);
+                      router.push(
+                        `/pelatihan/report-pelatihan/detail-report-pelatihan/${item.id}`
+                      );
+                    }}
                   >
-                    <a
-                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                      data-toggle="tooltip"
-                      data-placement="bottom"
-                      title="Detail"
-                      onClick={() => {
-                        localStorage.setItem("slug", item.slug);
-                        localStorage.setItem("slug", item.slug);
-                      }}
-                    >
-                      <i className="ri-eye-fill text-white p-0"></i>
-                    </a>
-                  </Link>
+                    <i className="ri-eye-fill text-white p-0"></i>
+                  </a>
                 )}
                 {listPermission.includes(
                   "pelatihan.report_pelatihan.manage"
@@ -335,81 +334,83 @@ const ListReport = ({ token }) => {
                   <tbody>{listReportTraining}</tbody>
                 </table>
               </div>
-              <div className="row">
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={page}
-                    itemsCountPerPage={getDataReportTraining.perPage}
-                    totalItemsCount={getDataReportTraining.total}
-                    pageRangeDisplayed={2}
-                    onChange={(e) => {
-                      setPage(e);
-                      dispatch(
-                        listsReportTraining(
-                          token,
-                          e,
-                          limit,
-                          search,
-                          penyelenggara.label,
-                          academy.label,
-                          theme.label
-                        )
-                      );
-                    }}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0 mt-3">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        value={limit}
-                        onChange={(e) => {
-                          setLimit(e.target.value);
-                          dispatch(
-                            listsReportTraining(
-                              token,
-                              page,
-                              e.target.value,
-                              search,
-                              penyelenggara.label,
-                              academy.label,
-                              theme.label
-                            )
-                          );
-                        }}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto pt-3">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data {getDataReportTraining.total}
-                      </p>
+              {getDataReportTraining.total > 5 && (
+                <div className="row">
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={getDataReportTraining.perPage}
+                      totalItemsCount={getDataReportTraining.total}
+                      pageRangeDisplayed={2}
+                      onChange={(e) => {
+                        setPage(e);
+                        dispatch(
+                          listsReportTraining(
+                            token,
+                            e,
+                            limit,
+                            search,
+                            penyelenggara.label,
+                            academy.label,
+                            theme.label
+                          )
+                        );
+                      }}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                  <div className="table-total ml-auto">
+                    <div className="row">
+                      <div className="col-4 mr-0 p-0 mt-3">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          value={limit}
+                          onChange={(e) => {
+                            setLimit(e.target.value);
+                            dispatch(
+                              listsReportTraining(
+                                token,
+                                page,
+                                e.target.value,
+                                search,
+                                penyelenggara.label,
+                                academy.label,
+                                theme.label
+                              )
+                            );
+                          }}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto pt-3">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {getDataReportTraining.total}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
