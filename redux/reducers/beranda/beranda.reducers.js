@@ -31,8 +31,43 @@ import {
   BERANDA_FOOTER_REQUEST,
   BERANDA_FOOTER_SUCCESS,
   BERANDA_FOOTER_FAIL,
+  BERANDA_FOOTER_PESERTA_REQUEST,
+  BERANDA_FOOTER_PESERTA_SUCCESS,
+  BERANDA_FOOTER_PESERTA_FAIL,
   CLEAR_ERRORS,
 } from "../../types/beranda/beranda.type";
+
+export const berandaFooterPesertaReducer = (
+  state = { peserta: [] },
+  action
+) => {
+  switch (action.type) {
+    case BERANDA_FOOTER_PESERTA_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case BERANDA_FOOTER_PESERTA_SUCCESS:
+      return {
+        loading: false,
+        peserta: action.payload.data,
+      };
+
+    case BERANDA_FOOTER_PESERTA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
 
 export const berandaFooterReducer = (state = { footer: [] }, action) => {
   switch (action.type) {
