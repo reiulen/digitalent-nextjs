@@ -130,7 +130,7 @@ const Navigationbar = ({ session }) => {
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard d-flex pr-0 px-md-25 "
+        className="shadow header-dashboard padding-content-home d-flex pr-0 px-md-22 px-0"
         sticky="top"
       >
         <Col
@@ -238,7 +238,7 @@ const Navigationbar = ({ session }) => {
                     {akademi.map((item, i) => {
                       return (
                         <Link key={item.id} href={`/detail/akademi/${item.id}`}>
-                          <a className="dropdown-item navdropdown-child">
+                          <a className="dropdown-item navdropdown-child ">
                             {item.slug}
                           </a>
                         </Link>
