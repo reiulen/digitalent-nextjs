@@ -4,7 +4,7 @@ import Link from "next/link";
 const BreadcrumbComponent = ({ data = [] }) => {
   return (
     <div className="rounded-pill d-flex align-items-center border px-4 py-2 mb-10">
-      <span className="text-primary">
+      <span className="text-primary trim-text-mobile">
         <Link href="/">Beranda</Link>
       </span>
       {data &&
@@ -16,25 +16,16 @@ const BreadcrumbComponent = ({ data = [] }) => {
             </span>
             <Link href={row.link} passHref>
               {i === data.length - 1 ? (
-                row.name.length > 25 ? (
-                  <span className="trim-text-mobile">{row.name}</span>
-                ) : (
-                  <span className="trim-text-mobile">{row.name}</span>
-                )
-              ) : row.name.length > 25 ? (
-                <span
-                  className="text-primary trim-text-mobile"
-                  style={{ cursor: "pointer" }}
-                >
-                  {row.name}
-                </span>
+                <span className="trim-text-mobile">{row.name}</span>
               ) : (
-                <span
-                  className="text-primary trim-text-mobile"
-                  style={{ cursor: "pointer" }}
-                >
-                  {row.name}
-                </span>
+                row.name.length > 25 && (
+                  <span
+                    className="text-primary trim-text-mobile"
+                    style={{ cursor: "pointer" }}
+                  >
+                    {row.name}
+                  </span>
+                )
               )}
             </Link>
           </div>

@@ -132,6 +132,10 @@
   font-size: 18px;
   color: #1f1f1f;
   text-align: start;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  max-width: 40rem !important;
 }
 
 .text-date-register-new {
@@ -390,6 +394,12 @@
   .padding-content-home {
     padding: 32px 30px;
   }
+  .title-card-new {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 11rem !important;
+  }
   .padding-content-footer {
     padding: 20px 30px;
   }
@@ -398,5 +408,23 @@
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
     max-width: 11rem !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .trim-text-mobile {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 6rem !important;
+  }
+}
+
+@media (max-width: 300px) {
+  .trim-text-mobile {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 1rem !important;
   }
 }

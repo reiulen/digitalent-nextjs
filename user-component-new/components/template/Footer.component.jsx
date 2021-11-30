@@ -159,9 +159,11 @@ export default function Footer() {
         </Row>
       </Container>
       <hr style={{ backgroundColor: "white" }} />
-      <p className="text-white fw-500 text-center py-9 mb-0">
-        Copyright © 2021 | Kementerian Komunikasi dan Informatika
-      </p>
+      <div className="px-10">
+        <p className="text-white fw-500 text-center py-9 mb-0">
+          Copyright © 2021 | Kementerian Komunikasi dan Informatika
+        </p>
+      </div>
     </div>
   );
 }
