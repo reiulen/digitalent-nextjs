@@ -7,7 +7,10 @@ import { useRouter } from "next/router";
 
 import { getAllPelatihanByAkademi } from "../../../../../redux/actions/beranda/detail-akademi.actions";
 import { getDetailAkademi } from "../../../../../redux/actions/beranda/detail-akademi.actions";
-import { getAllKotaPeserta } from "../../../../../redux/actions/beranda/beranda.actions";
+import {
+  getAllKotaPeserta,
+  getAllTemaOriginal,
+} from "../../../../../redux/actions/beranda/beranda.actions";
 
 const FilterBar = () => {
   const dispatch = useDispatch();
@@ -64,12 +67,13 @@ const FilterBar = () => {
   }
 
   useEffect(() => {
+    dispatch(getAllTemaOriginal(id));
     allAkademi.filter(
       (val) =>
         val.id === parseInt(id) &&
         setActiveAcademy({ value: val.id, label: val.slug })
     );
-  }, []);
+  }, [dispatch]);
 
   const optionsTipePelatihan = [
     { value: "online", label: "Online" },
@@ -187,7 +191,10 @@ const FilterBar = () => {
             activeAcademy ? `${activeAcademy.label}` : `Pilih Akademi`
           }
           isClearable
-          onChange={(e) => setAkademiId(e)}
+          onChange={(e) => {
+            setAkademiId(e);
+            dispatch(getAllTemaOriginal(e.value));
+          }}
         />
       </div>
 
