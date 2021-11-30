@@ -369,7 +369,7 @@ const Table = ({ token }) => {
                     <div className="row mt-4">
                       <div className="col-4 mr-0 mt-3">
                         <select
-                          className="form-control cursor-pointer pr-2"
+                          className="form-control cursor-pointer pr-2 "
                           id="exampleFormControlSelect2"
                           defaultValue=""
                           style={{
@@ -389,7 +389,7 @@ const Table = ({ token }) => {
                           <option value="50">50</option>
                         </select>
                       </div>
-                      <div className="col-8 my-auto">
+                      <div className="col-8 my-auto pt-3">
                         <p
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}

@@ -22,6 +22,9 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const [dataPendaftaran, setDataPendaftaran] = useState(
     dataForm?.form_pendaftaran
   );
+  const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
+    (state) => state.getPelatihan
+  );
 
   const readerElementHandler = (row, i) => {
     switch (row.type) {
@@ -308,7 +311,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (dataForm?.komitmen) {
+    if (dataTraining?.komitmen == "1") {
       if (simpleValidator.current.allValid()) {
         const data = {
           komitmen: dataForm.komitmen,
@@ -359,7 +362,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
             >
-              {dataForm?.komitmen ? "Lanjut" : "Daftar"}
+              {dataTraining?.komitmen == "1" ? "Lanjut" : "Daftar"}
             </Button>
           </div>
         </form>

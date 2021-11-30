@@ -29,6 +29,9 @@ import {
   BERANDA_FOOTER_REQUEST,
   BERANDA_FOOTER_SUCCESS,
   BERANDA_FOOTER_FAIL,
+  BERANDA_FOOTER_PESERTA_REQUEST,
+  BERANDA_FOOTER_PESERTA_SUCCESS,
+  BERANDA_FOOTER_PESERTA_FAIL,
   CLEAR_ERRORS,
 } from "../../types/beranda/beranda.type";
 
@@ -51,6 +54,26 @@ export const getBerandaFooter = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: BERANDA_FOOTER_FAIL,
+      payload: error.message,
+    });
+  }
+};
+export const getBerandaFooterPeserta = () => async (dispatch) => {
+  try {
+    dispatch({ type: BERANDA_FOOTER_PESERTA_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/auth/count-data-peserta`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: BERANDA_FOOTER_PESERTA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BERANDA_FOOTER_PESERTA_FAIL,
       payload: error.message,
     });
   }
@@ -109,32 +132,38 @@ export const getAllAkademi = () => async (dispatch) => {
 };
 
 // GET TEMA ORIGINAL
-export const getAllTemaOriginal = () => async (dispatch) => {
-  try {
-    dispatch({ type: BERANDA_TEMA_ORIGINAL_REQUEST });
+export const getAllTemaOriginal =
+  (id = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: BERANDA_TEMA_ORIGINAL_REQUEST });
 
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/tema/list-tema`;
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/tema/list-tema-akademi`;
+      if (id) link = link.concat(`?akademi_id=${id}`);
 
-    const { data } = await axios.get(link);
+      const { data } = await axios.get(link);
 
-    dispatch({
-      type: BERANDA_TEMA_ORIGINAL_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: BERANDA_TEMA_ORIGINAL_FAIL,
-      payload: error.message,
-    });
-  }
-};
+      dispatch({
+        type: BERANDA_TEMA_ORIGINAL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: BERANDA_TEMA_ORIGINAL_FAIL,
+        payload: error.message,
+      });
+    }
+  };
 
 // GET KOTA
 export const getAllKotaPeserta = () => async (dispatch) => {
   try {
     dispatch({ type: BERANDA_KOTA_REQUEST });
 
-    let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/city`;
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+      `api/option/reference-choose-name/Kabupaten?paginate=false&limit=5&page`;
 
     const { data } = await axios.get(link);
 

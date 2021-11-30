@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Select from "react-select";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import {
   addNotifTema,
   clearErrors,
 } from "../../../redux/actions/beranda/beranda.actions";
-import { CLEAR_ERRORS_NOTIF } from "../../../redux/types/beranda/beranda.type";
+import {
+  CLEAR_ERRORS_NOTIF,
+  BERANDA_NOTIF_TEMA_RESET,
+} from "../../../redux/types/beranda/beranda.type";
+import { SweatAlert } from "../../../utils/middleware/helper";
 
 const TrainingReminder = ({ session }) => {
   const dispatch = useDispatch();
@@ -37,10 +40,14 @@ const TrainingReminder = ({ session }) => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
+      SweatAlert("Gagal", error, "error");
       dispatch({ type: CLEAR_ERRORS_NOTIF });
     }
-  }, [error, dispatch]);
+    if (success) {
+      SweatAlert("Berhasil", "Berhasil membuat pengingat pelatihan", "success");
+      dispatch({ type: BERANDA_NOTIF_TEMA_RESET });
+    }
+  }, [error, success, dispatch]);
 
   const customStyles = {
     control: (styles) => ({
@@ -61,9 +68,8 @@ const TrainingReminder = ({ session }) => {
 
   const handleTemaNotif = () => {
     const data = {
-      tema_id: (temaId && temaId.value) || null,
+      tema_id: (temaId && temaId.value + "") || null,
     };
-
     if (session) {
       dispatch(addNotifTema(data, session.token));
     } else {
@@ -72,7 +78,10 @@ const TrainingReminder = ({ session }) => {
   };
 
   return (
-    <div className="p-10 rounded mb-10" style={{ backgroundColor: "#E6F2FF" }}>
+    <div
+      className="p-10 rounded-xl mb-10"
+      style={{ backgroundColor: "#E6F2FF" }}
+    >
       <div className="d-flex align-items-center mb-3">
         <div>
           <Image src={`/assets/media/logo-bell.svg`} width={32} height={32} />
@@ -97,7 +106,7 @@ const TrainingReminder = ({ session }) => {
           />
         </div>
         <button
-          className="btn btn-primary rounded-pill text-white fw-600 px-5 ml-4"
+          className="btn btn-beranda-primary rounded-pill text-white fw-600 px-5 ml-4"
           onClick={() => handleTemaNotif()}
         >
           Buat

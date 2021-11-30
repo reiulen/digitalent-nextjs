@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { signOut } from "next-auth/client";
@@ -22,11 +22,13 @@ import {
   Button,
 } from "react-bootstrap";
 import IconSearch from "../../../components/assets/icon/Search";
-import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
-import IconRegister from "../../../components/assets/icon-dashboard-peserta/Register";
 import Cookies from "js-cookie";
 
 import axios from "axios";
+import {
+  getPencarian,
+  searchKeyword,
+} from "../../../redux/actions/pelatihan/pencarian.action";
 
 const Sidebar = dynamic(
   () => import("../../../user-component/components/template/Sidebar.component"),
@@ -125,12 +127,22 @@ const Navigationbar = ({ session }) => {
   if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
   if (router.pathname == "/") routerPath = "/";
 
+  const [search, setSearch] = useState("");
+
+  const handleEnter = (e) => {
+    e.preventDefault();
+    if (e.code == "Enter") {
+      dispatch(searchKeyword(search));
+      router.push(`/pencarian?cari=${search}`);
+    }
+  };
+
   return (
     <>
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard d-flex pr-0 px-md-25 px-10"
+        className="shadow header-dashboard d-flex pr-0 px-md-6 px-0"
         sticky="top"
       >
         <Col
@@ -149,26 +161,24 @@ const Navigationbar = ({ session }) => {
           <div className="d-flex d-lg-none justify-content-end align-items-center">
             {!isNavOpen && session && session.roles[0] === "user" && (
               <div className="row m-3">
-                <a className="col-3 col-xl-4 text-center">
+                <a className="col-3 p-md-0 col-xl-4 text-center">
                   <i
-                    className="ri-search-2-line ri-2x mx-3 text-gray"
+                    className="ri-search-2-line ri-2x mx-0 mx-md-3 text-gray"
                     onClick={() => setShowSearch(!showSearch)}
                   ></i>
                 </a>
                 <Link href="/helpdesk/live-chat" passHref>
-                  <a className="col-3 col-xl-4 text-center">
-                    <i className="ri-customer-service-2-line ri-2x mx-3 text-gray"></i>
+                  <a className="col-3 p-md-0 col-xl-4 text-center">
+                    <i className="ri-customer-service-2-line ri-2x mx-0 mx-md-3 text-gray"></i>
                   </a>
                 </Link>
-                <Link
-                  href="/peserta/bookmark"
-                  className="col-3 col-xl-4 text-center"
-                  passHref
-                >
-                  <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
+                <Link href="/peserta/bookmark" passHref>
+                  <a className="col-3 p-md-0 col-xl-4 text-center">
+                    <i className="ri-heart-line ri-2x mx-0 mx-md-3 text-gray"></i>
+                  </a>
                 </Link>
-                <a href="#" className="col-3 col-xl-4 text-center">
-                  <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
+                <a href="#" className="col-3 p-md-0 col-xl-4 text-center">
+                  <i className="ri-notification-4-line ri-2x mx-0 mx-md-3 text-gray"></i>
                 </a>
               </div>
             )}
@@ -199,7 +209,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onChange={(e) => {}}
+                onKeyDown={(e) => {
+                  setSearch(e.target.value);
+                  if (e.code == "Enter") {
+                    handleEnter(e);
+                  }
+                }}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -236,7 +251,7 @@ const Navigationbar = ({ session }) => {
                     {akademi.map((item, i) => {
                       return (
                         <Link key={item.id} href={`/detail/akademi/${item.id}`}>
-                          <a className="dropdown-item navdropdown-child">
+                          <a className="dropdown-item navdropdown-child ">
                             {item.slug}
                           </a>
                         </Link>
@@ -328,7 +343,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onChange={(e) => {}}
+                onKeyDown={(e) => {
+                  setSearch(e.target.value);
+                  if (e.code == "Enter") {
+                    handleEnter(e);
+                  }
+                }}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -366,7 +386,7 @@ const Navigationbar = ({ session }) => {
                 <div className="d-lg-none d-block">
                   <div
                     className={`wrap-accouts ${style.wrapAccounts} `}
-                    style={{ borderRadius: "20px" }}
+                    style={{ borderRadius: "44px" }}
                     onClick={() => router.push("/peserta/profile")}
                   >
                     {/* <div className="dot-accouts"></div> */}
@@ -399,7 +419,7 @@ const Navigationbar = ({ session }) => {
                     className={`wrap-accouts ${style.wrapAccounts} d-flex justify-content-between`}
                     style={
                       !isShowDropdown
-                        ? { borderRadius: "20px", maxWidth: "max-content" }
+                        ? { borderRadius: "44px", maxWidth: "max-content" }
                         : {}
                     }
                     onClick={() =>
@@ -549,7 +569,7 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {/* gw nge map disini */}
+                    {/* gw map disini */}
                     {akademi &&
                       akademi.map((item, i) => {
                         return (

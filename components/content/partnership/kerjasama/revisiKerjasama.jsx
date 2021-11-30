@@ -180,7 +180,7 @@ const RevisiKerjasama = ({ token }) => {
           <div className="card-body pt-0">
             <form>
               <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
+                <label htmlFor="staticEmail" className="col-form-label" style={{color:'#6c6c6c'}}>
                   Periode Kerjasama
                 </label>
                 <div className="row">
@@ -227,7 +227,7 @@ const RevisiKerjasama = ({ token }) => {
               </div>
 
               <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">
+                <label className="required fw-bold fs-6 mb-2" style={{color:'#6c6c6c'}}>
                   Nomor Perjanjian Lembaga
                 </label>
                 <input
@@ -240,7 +240,7 @@ const RevisiKerjasama = ({ token }) => {
                 />
               </div>
               <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">
+                <label className="required fw-bold fs-6 mb-2" style={{color:'#6c6c6c'}}>
                   Nomor Perjanjian Kemkominfo
                 </label>
                 <input
@@ -255,7 +255,7 @@ const RevisiKerjasama = ({ token }) => {
 
               <div className="row">
                 <div className="col-12 col-xl-6">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label htmlFor="staticEmail" className="col-form-label" style={{color:'#6c6c6c'}}>
                     Tanggal Penandatanganan
                   </label>
                   <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
@@ -277,7 +277,7 @@ const RevisiKerjasama = ({ token }) => {
                 </div>
                 <div className="col-12 col-xl-6">
                   <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
+                    <label htmlFor="staticEmail" className="col-form-label" style={{color:'#6c6c6c'}}>
                       Dokumen Kerjasama
                     </label>
                     <div className="position-relative overflow-hidden w-100 ">
@@ -310,7 +310,7 @@ const RevisiKerjasama = ({ token }) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
+                <label htmlFor="staticEmail" className="col-form-label" style={{color:'#6c6c6c'}}>
                   Catatan Revisi
                 </label>
                 <div>
@@ -323,7 +323,7 @@ const RevisiKerjasama = ({ token }) => {
                     rows="5"
                     value={catatanREvisi}
                     className="form-control"
-                    placeholder="Masukan Catatan Revisi"
+                    placeholder="Masukkan Catatan Revisi"
                   ></textarea>
                   {error.catatanREvisi ? (
                     <p className="error-text">{error.catatanREvisi}</p>

@@ -303,12 +303,12 @@ const Tambah = ({ token }) => {
                           options={optionFromReference}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(
-                              "nameListFromReference"
+                              "List"
                             )
                           }
                         />
                         {simpleValidator.current.message(
-                          "nameListFromReference",
+                          "List",
                           itemsRef.values,
                           "required",
                           { className: "text-danger" }

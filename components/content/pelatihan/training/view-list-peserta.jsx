@@ -372,7 +372,6 @@ const DetailSummary = ({ token }) => {
                         <th>Berkas</th>
                         <th>Status Peserta</th>
                         <th>Updated</th>
-                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -443,7 +442,7 @@ const DetailSummary = ({ token }) => {
                                   }`}
                                 >
                                   <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                    className="btn btn-link-action bg-blue-secondary text-white mr-2 d-none"
                                     data-toggle="tooltip"
                                     data-placement="bottom"
                                     title="Detail"

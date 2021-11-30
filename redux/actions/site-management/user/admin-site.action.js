@@ -25,6 +25,10 @@ import {
   DELETE_ADMIN_SITE_FAIL,
   DELETE_ADMIN_SITE_RESET,
   DELETE_ADMIN_SITE_REQUEST,
+  UPDATE_STATUS_ADMIN_SITE_SUCCESS,
+  UPDATE_STATUS_ADMIN_SITE_FAIL,
+  UPDATE_STATUS_ADMIN_SITE_RESET,
+  UPDATE_STATUS_ADMIN_SITE_REQUEST,
   POST_ADMIN_SITE_REQUEST,
   POST_ADMIN_SITE_SUCCESS,
   POST_ADMIN_SITE_FAIL,
@@ -107,30 +111,32 @@ export const getAllListPelatihan = (token) => async (dispatch, getState) => {
   }
 };
 
-export const getListRoles = (token, search = "") => async (dispatch) => {
-  try {
-    dispatch({ type: ROLES_LIST_REQUEST });
+export const getListRoles =
+  (token, search = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ROLES_LIST_REQUEST });
 
-    const { data } = await axios.get(
-      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
-      {
-        params: {cari: search, limit: 100},
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
+      const { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
+        {
+          params: { cari: search, limit: 10000 },
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    dispatch({
-      type: ROLES_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ROLES_LIST_FAIL,
-    });
-  }
-};
+      dispatch({
+        type: ROLES_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ROLES_LIST_FAIL,
+      });
+    }
+  };
 export const getListUnitWorks = (token) => async (dispatch) => {
   try {
     dispatch({ type: UNIT_WORK_LIST_REQUEST });
@@ -138,10 +144,10 @@ export const getListUnitWorks = (token) => async (dispatch) => {
     const { data } = await axios.get(
       `${process.env.END_POINT_API_SITE_MANAGEMENT}api/satuan/all`,
       {
+        params: {
+          limit: 10000,
+        },
         headers: {
-          params: {
-            limit: 100
-          },
           authorization: `Bearer ${token}`,
         },
       }
@@ -205,6 +211,35 @@ export const deleteAdminSite = (id, token) => async (dispatch) => {
     });
   }
 };
+
+export const updateStatusAdminSite =
+  (id, token, status) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_STATUS_ADMIN_SITE_REQUEST });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.put(
+        process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/status/${id}`,
+        {
+          status: status,
+        },
+        config
+      );
+
+      dispatch({
+        type: UPDATE_STATUS_ADMIN_SITE_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_STATUS_ADMIN_SITE_FAIL,
+      });
+    }
+  };
 
 export const postAdminSite = (sendData, token) => {
   return async (dispatch) => {

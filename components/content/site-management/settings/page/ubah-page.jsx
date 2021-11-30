@@ -1,45 +1,54 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
+import LoadingTable from "../../../../LoadingTable";
+import IconEye from "../../../../assets/icon/Eye";
+import IconPencil from "../../../../assets/icon/Pencil";
+import IconDelete from "../../../../assets/icon/Delete";
+import IconAdd from "../../../../assets/icon/Add";
+import IconSearch from "../../../../assets/icon/Search";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Swal from "sweetalert2";
+import styles from "../../../../../styles/previewGaleri.module.css";
+import SimpleReactValidator from "simple-react-validator";
 
-import {
-  updatePage
-} from "../../../../../redux/actions/site-management/settings/page.actions";
+import Swal from "sweetalert2";
+import Image from "next/image";
+import { postPage, updatePage } from "../../../../../redux/actions/site-management/settings/page.actions";
 
 const UbahPage = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
-
   const editorRef = useRef();
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
-
   const {
     loading: allLoading,
     error,
     pages,
   } = useSelector((state) => state.detailPage);
 
+  const { isUpdateSuccess, errorUpdate } = useSelector((state) => state.updatePage);
 
-  const {
-    isUpdateSuccess,
-  } = useSelector((state) => state.updatePage);
-
-  const [isi_artikel, setIsiArtikel] = useState(pages.content);
+  const [isi_artikel, setIsiArtikel] = useState(pages.property_template.content);
   const [pageName, setPageName] = useState(pages.name);
-  const [pageUrl, setPageUrl] = useState(pages.url);
   const [pageStatus, setPageStatus] = useState(pages.status);
-  const [errorr, setError] = useState({
-    isi_artikel: "",
-    pageName: "",
-    pageStatus: "",
-  });
+  const [titlePage, setTitlePage] = useState(pages.property_template.title);
+  const [template, setTemplate] = useState(pages.template_type.toString());
+  const [gambar, setGambar] = useState(""
+  );
+  const [gambarPreview, setGambarPreview] = useState(
+    process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
+      "site-management/images/" +
+      pages.property_template.image
+  );
+  const [gambarName, setGambarName] = useState(null);
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
 
   const notify = (value) =>
     toast.info(`${value}`, {
@@ -52,21 +61,33 @@ const UbahPage = ({ token }) => {
       progress: undefined,
     });
 
+  const onChangeGambar = (e) => {
+    const type = ["image/jpg", "image/png", "image/jpeg"];
+
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > "5000000") {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setGambarName(e.target.files[0].name);
+      }
+    } else {
+      e.target.value = null;
+      Swal.fire("Oops !", "Thumbnail harus berupa data gambar.", "error");
+    }
+  };
+
   const submit = (e) => {
     e.preventDefault();
-    if (isi_artikel === "") {
-      setError({
-        ...errorr,
-        isi_artikel: "Konten tidak boleh kosong",
-      });
-      notify("Konten tidak boleh kosong");
-    } else if (pageName === "") {
-      setError({ ...errorr, pageName: "page name tidak boleh kosong" });
-      notify("page name tidak boleh kosong");
-    } else if (pageStatus === "") {
-      setError({ ...errorr, pageStatus: "page status tidak boleh kosong" });
-      notify("page status tidak boleh kosong");
-    } else {
+    if (simpleValidator.current.allValid()) {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -79,15 +100,41 @@ const UbahPage = ({ token }) => {
         dismissOnDestroy: false,
       }).then((result) => {
         if (result.value) {
-          const sendData = {
-            name: pageName,
-            content: isi_artikel,
-            status: pageStatus,
-            _method:"PUT"
-          };
-          
-          dispatch(updatePage(sendData,router.query.id, token));
+          let sendData = {};
+          if (template === "1") {
+            sendData = {
+              name: pageName,
+              template_type: template,
+              status: pageStatus,
+              "_method": "PUT",
+              property_template: {
+                title: titlePage,
+                content: isi_artikel,
+              },
+            };
+          } else {
+            sendData = {
+              name: pageName,
+              template_type: template,
+              "_method": "PUT",
+              status: pageStatus,
+              property_template: {
+                title: titlePage,
+                content: isi_artikel,
+                image: gambar,
+              },
+            };
+          }
+          dispatch(updatePage(sendData, pages.id, token ));
         }
+      });
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
       });
     }
   };
@@ -99,17 +146,19 @@ const UbahPage = ({ token }) => {
     };
 
     if (isUpdateSuccess) {
-      Swal.fire("Berhasil Mengupdate data", "", "success").then(() => {
+      Swal.fire("Berhasil Update data", "", "success").then(() => {
         router.push({
           pathname: `/site-management/setting/page`,
-          query: { successUpdate: true },
+          query: { success: true },
         });
       });
     }
+    if (errorUpdate) {
+      Swal.fire(errorUpdate, "", "error").then(() => {});
+    }
 
     setEditorLoaded(true);
-  }, [dispatch, error, isUpdateSuccess, router]);
-
+  }, [errorUpdate, isUpdateSuccess, router]);
   return (
     <PageWrapper>
       <ToastContainer
@@ -124,280 +173,527 @@ const UbahPage = ({ token }) => {
         pauseOnHover
       />
       <form onSubmit={submit}>
-      <div className="row">
-        <div className="col-12 col-xl-8 order-1">
-          <div className="card card-custom card-stretch gutter-b">
-            <div className="card-header border-0">
-              <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
-              >
-                Ubah Page
-              </h3>
-            </div>
-            <div className="card-body pt-0">
-              <div>
-                <h3
-                  className="card-title font-weight-bolder text-dark border-0 w-100 pb-5  my-0 my-sm-5"
-                  style={{ fontSize: "16px" }}
-                >
-                  Konten Page
+        <div className="row">
+          <div
+            className="col-12 col-xl-4 order-1"
+            style={{
+              height: "max-content",
+            }}
+          >
+            <div className="card card-custom card-stretch gutter-b">
+              <div className="card-header border-0">
+                <h3 className="card-title font-weight-bolder text-dark border-0 w-100 pb-5 my-0 pt-5 my-sm-5 titles-1">
+                  Page Attributes
                 </h3>
-                <div
-                  className="my-10"
-                  style={{
-                    width: "100%",
-                  }}
-                >
-                    <div className="ckeditor">
-                      {editorLoaded ? (
-                        <CKEditor
-                          editor={ClassicEditor}
-                          data={isi_artikel}
-                          onChange={(event, editor) => {
-                            const data = editor.getData();
-                            setIsiArtikel(data);
-                          }}
-                          // onBlur={() =>
-                          //   simpleValidator.current.showMessageFor(
-                          //     "isi_artikel"
-                          //   )
-                          // }
-                          config={{
-                            placeholder: "Tulis Deskripsi",
-                            // plugins: [
-                            //   Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage
-                            // ],
-                            // image: {
-                            //   toolbar: [
-                            //     'imageStyle:block',
-                            //     'imageStyle:side',
-                            //     '|',
-                            //     'toggleImageCaption',
-                            //     'imageTextAlternative',
-                            //   ]
-                            // }
-                          }}
-                          // config={{
-                          //   plugins: [
-                          //     Essentials,
-                          //     Paragraph,
-                          //     Bold,
-                          //     Italic,
-                          //     Heading,
-                          //     Indent,
-                          //     IndentBlock,
-                          //     Underline,
-                          //     Strikethrough,
-                          //     BlockQuote,
-                          //     Font,
-                          //     Alignment,
-                          //     List,
-                          //     Link,
-                          //     MediaEmbed,
-                          //     PasteFromOffice,
-                          //     Image,
-                          //     ImageStyle,
-                          //     ImageToolbar,
-                          //     ImageUpload,
-                          //     ImageResize,
-                          //     Base64UploadAdapter,
-                          //     Table,
-                          //     TableToolbar,
-                          //     TextTransformation,
-                          //   ],
-                          //   toolbar: [
-                          //     'heading',
-                          //     '|',
-                          //     'bold',
-                          //     'italic',
-                          //     'underline',
-                          //     'strikethrough',
-                          //     '|',
-                          //     'fontSize',
-                          //     'fontColor',
-                          //     'fontBackgroundColor',
-                          //     '|',
-                          //     'alignment',
-                          //     'outdent',
-                          //     'indent',
-                          //     'bulletedList',
-                          //     'numberedList',
-                          //     'blockQuote',
-                          //     '|',
-                          //     'link',
-                          //     'insertTable',
-                          //     'imageUpload',
-                          //     'mediaEmbed',
-                          //     '|',
-                          //     'undo',
-                          //     'redo',
-                          //   ],
-                          //   heading: {
-                          //     options: [
-                          //       {
-                          //         model: 'paragraph',
-                          //         view: 'p',
-                          //         title: 'Paragraph',
-                          //         class: 'ck-heading_paragraph'
-                          //       },
-                          //       {
-                          //         model: 'heading1',
-                          //         view: 'h1',
-                          //         title: 'Heading 1',
-                          //         class: 'ck-heading_heading1'
-                          //       },
-                          //       {
-                          //         model: 'heading2',
-                          //         view: 'h2',
-                          //         title: 'Heading 2',
-                          //         class: 'ck-heading_heading2'
-                          //       },
-                          //       {
-                          //         model: 'heading3',
-                          //         view: 'h3',
-                          //         title: 'Heading 3',
-                          //         class: 'ck-heading_heading3'
-                          //       }
-                          //     ]
-                          //   },
-                          //   fontSize: {
-                          //     options: [
-                          //       9,
-                          //       10,
-                          //       11,
-                          //       12,
-                          //       13,
-                          //       14,
-                          //       15,
-                          //       16,
-                          //       17,
-                          //       18,
-                          //       19,
-                          //       20,
-                          //       21,
-                          //       23,
-                          //       25,
-                          //       27,
-                          //       29,
-                          //       31,
-                          //       33,
-                          //       35
-                          //     ]
-                          //   },
-                          //   alignment: {
-                          //     options: ['justify', 'left', 'center', 'right']
-                          //   },
-                          //   table: {
-                          //     contentToolbar: [
-                          //       'tableColumn',
-                          //       'tableRow',
-                          //       'mergeTableCells'
-                          //     ]
-                          //   },
-                          //   image: {
-                          //     resizeUnit: 'px',
-                          //     toolbar: [
-                          //       'imageStyle:alignLeft',
-                          //       'imageStyle:full',
-                          //       'imageStyle:alignRight',
-                          //       '|',
-                          //       'imageTextAlternative'
-                          //     ],
-                          //     styles: ['full', 'alignLeft', 'alignRight']
-                          //   },
-                          //   typing: {
-                          //     transformations: {
-                          //       remove: [
-                          //         'enDash',
-                          //         'emDash',
-                          //         'oneHalf',
-                          //         'oneThird',
-                          //         'twoThirds',
-                          //         'oneForth',
-                          //         'threeQuarters'
-                          //       ]
-                          //     }
-                          //   },
-                          //   placeholder: 'Tulis Deskripsi'
-                          // }}
-                        />
-                      ) : (
-                        <p>Tunggu Sebentar</p>
-                      )}
-                    </div>
-                    
-                </div>
-                <div className="form-group row">
-                  <div className="col-sm-12 d-flex justify-content-end">
-                    <Link href="/site-management/setting/page">
-                      <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                        Kembali
-                      </a>
-                    </Link>
-                    <button
-                      type="submit"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                <div className="w-100">
+                  <div className="form-group">
+                    <label style={{ fontSize: "16px" }}>Page Name</label>
+                    <input
+                      value={pageName}
+                      onChange={(e) => setPageName(e.target.value)}
+                      type="text"
+                      className="form-control"
+                      placeholder="Masukkan Page Name"
+                      onBlur={(e) => {
+                        simpleValidator.current.showMessageFor("pageName");
+                      }}
+                    />
+                    {simpleValidator.current.message(
+                      "pageName",
+                      pageName,
+                      "required",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
+                    {/* <span className="form-text text-muted">
+                      Please enter your full name
+                    </span> */}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="exampleSelect1">Page Status</label>
+                    <select
+                      className="form-control"
+                      id="exampleSelect1"
+                      onChange={(e) => setPageStatus(e.target.value)}
+                      value={pageStatus}
+                      onBlur={(e) => {
+                        simpleValidator.current.showMessageFor("pageStatus");
+                      }}
                     >
-                      Simpan
-                    </button>
+                      <option value="" disabled selected>
+                        Pilih Status
+                      </option>
+                      <option value="1">Listed</option>
+                      <option value="0">Unlisted</option>
+                    </select>
+                    {simpleValidator.current.message(
+                      "pageStatus",
+                      pageStatus,
+                      "required",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
+                    {/* <span className="form-text text-muted">
+                      Please enter your full name
+                    </span> */}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-12 col-xl-4 order-1">
-          <div className="card card-custom card-stretch gutter-b">
-            <div className="card-header border-0">
-              <h3
-                className="card-title font-weight-bolder text-dark border-0 w-100 pt-5 pb-5 my-0 my-sm-5 titles-1"
-              >
-                Page Attributes
-              </h3>
-              <form className="w-100">
-                <div className="form-group">
-                  <label style={{ fontSize: "16px" }}>Page name</label>
-                  <input
-                  onChange={(e)=>setPageName(e.target.value)}
-                    value={pageName}
-                    type="text"
-                    className="form-control"
-                    placeholder="Placeholder"
-                  />
+
+          {template === "0" && (
+            <div className="col-12 col-xl-8 order-1">
+              <div className="card card-custom card-stretch gutter-b">
+                <div className="card-header border-0 mt-6">
+                  <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1">
+                    Page Content
+                  </h3>
                 </div>
-                <div className="form-group">
-                  <label style={{ fontSize: "16px" }}>Page url</label>
-                  <input
-                  disabled
-                  onChange={(e)=>setPageUrl(e.target.value)}
-                    value={pageUrl}
-                    type="text"
-                    className="form-control"
-                    placeholder="Placeholder"
-                  />
-                  {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
+                <div className="card-body pt-0">
+                  <div>
+                    <h3
+                      className="font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Title Page
+                    </h3>
+                    <div
+                      className="mb-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Tulis judul halaman"
+                        value={titlePage}
+                        onChange={(e) => {
+                          setTitlePage(
+                            e.target.value.replace(/[^a-zA-Z0-9 ]/g, "")
+                          );
+                        }}
+                        onBlur={(e) => {
+                          simpleValidator.current.showMessageFor("titlePage");
+                        }}
+                      />
+                      {simpleValidator.current.message(
+                        "titlePage",
+                        titlePage,
+                        template === "0" ? "required" : "",
+                        {
+                          className: "text-danger",
+                        }
+                      )}
+                    </div>
+                  </div>
+                  <div className={`${styles.selectKategori} form-group`}>
+                    <label
+                      htmlFor="staticEmail"
+                      className="col-sm-4 col-form-label font-weight-bolder"
+                    >
+                      Image
+                    </label>
+                    <div className="row ml-4">
+                      <figure
+                        className="avatar item-rtl position-relative"
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter"
+                      >
+                        <Image
+                          src={gambarPreview}
+                          alt="image"
+                          width={160}
+                          height={160}
+                          objectFit="fill"
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("gambarPreview");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "gambarPreview",
+                          gambarPreview,
+                          template === "0" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </figure>
+                      <div className="position-relative">
+                        <label
+                          className="circle-top"
+                          htmlFor="inputGroupFile04"
+                        >
+                          <i className="ri-add-line text-dark"></i>
+                        </label>
+                        <input
+                          type="file"
+                          name="gambar"
+                          className="custom-file-input"
+                          id="inputGroupFile04"
+                          onChange={onChangeGambar}
+                          accept="image/*"
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor("gambar")
+                          }
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="ml-4"></div>
+                  </div>
+                  <div>
+                    <h3
+                      className="font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Content Page
+                    </h3>
+                    <div
+                      className="mb-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <div className="ckeditor">
+                        {editorLoaded ? (
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={isi_artikel}
+                            onReady={(editor) => {
+                              // You can store the "editor" and use when it is needed.
+                            }}
+                            onChange={(event, editor) => {
+                              const data = editor.getData();
+                              setIsiArtikel(data);
+                            }}
+                            config={{
+                              placeholder: "Tulis Deskripsi",
+                            }}
+                            onBlur={(e) => {
+                              simpleValidator.current.showMessageFor(
+                                "isi_artikel"
+                              );
+                            }}
+                          />
+                        ) : (
+                          <p>Tunggu Sebentar</p>
+                        )}
+                        {simpleValidator.current.message(
+                          "isi_artikel",
+                          isi_artikel,
+                          template === "0" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-sm-12 d-flex justify-content-end">
+                        <Link href="/site-management/setting/page" passHref>
+                          <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                            Kembali
+                          </a>
+                        </Link>
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                        >
+                          Simpan
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="exampleSelect1">Page Status</label>
-                  {pages.status === "Listed" ? (
-                    <select className="form-control" onChange={(e)=>setPageStatus(e.target.value)} id="exampleSelect1">
-                      <option value="Listed">Listed</option>
-                      <option value="Unlisted">Unlisted</option>
-                    </select>
-                  ) : (
-                    <select className="form-control" onChange={(e)=>setPageStatus(e.target.value)} id="exampleSelect1">
-                      <option value="Unlisted">Unlisted</option>
-                      <option value="Listed">Listed</option>
-                    </select>
-                  )}
-                </div>
-              </form>
+              </div>
             </div>
-          </div>
+          )}
+          {template === "1" && (
+            <div className="col-12 col-xl-8 order-1">
+              <div className="card card-custom card-stretch gutter-b">
+                <div className="card-header border-0 mt-6">
+                  <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1">
+                    Page Content
+                  </h3>
+                </div>
+                <div className="card-body pt-0">
+                  <div>
+                    <h3
+                      className="font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Title Page
+                    </h3>
+                    <div
+                      className="mb-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Tulis judul halaman"
+                        value={titlePage}
+                        onChange={(e) => {
+                          setTitlePage(
+                            e.target.value.replace(/[^a-zA-Z0-9 ]/g, "")
+                          );
+                        }}
+                        onBlur={(e) => {
+                          simpleValidator.current.showMessageFor("titlePage");
+                        }}
+                      />
+                      {simpleValidator.current.message(
+                        "titlePage",
+                        titlePage,
+                        template === "1" ? "required" : "",
+                        {
+                          className: "text-danger",
+                        }
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <h3
+                      className="font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Content Page
+                    </h3>
+                    <div
+                      className="mb-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <div className="ckeditor">
+                        {editorLoaded ? (
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={isi_artikel}
+                            onReady={(editor) => {}}
+                            onChange={(event, editor) => {
+                              const data = editor.getData();
+                              setIsiArtikel(data);
+                            }}
+                            config={{
+                              placeholder: "Tulis Deskripsi",
+                            }}
+                            onBlur={(e) => {
+                              simpleValidator.current.showMessageFor(
+                                "isi_artikel"
+                              );
+                            }}
+                          />
+                        ) : (
+                          <p>Tunggu Sebentar</p>
+                        )}
+                        {simpleValidator.current.message(
+                          "isi_artikel",
+                          isi_artikel,
+                          template === "1" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-sm-12 d-flex justify-content-end">
+                        <Link href="/site-management/setting/page" passHref>
+                          <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                            Kembali
+                          </a>
+                        </Link>
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                        >
+                          Simpan
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {template === "2" && (
+            <div className="col-12 col-xl-8 order-1">
+              <div className="card card-custom card-stretch gutter-b">
+                <div className="card-header border-0 mt-6">
+                  <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1">
+                    Page Content
+                  </h3>
+                </div>
+                <div className="card-body pt-0">
+                  <div>
+                    <h3
+                      className="font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Title Page
+                    </h3>
+                    <div
+                      className="mb-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Tulis judul halaman"
+                        value={titlePage}
+                        onChange={(e) => {
+                          setTitlePage(
+                            e.target.value.replace(/[^a-zA-Z0-9 ]/g, "")
+                          );
+                        }}
+                        onBlur={(e) => {
+                          simpleValidator.current.showMessageFor("titlePage");
+                        }}
+                      />
+                      {simpleValidator.current.message(
+                        "titlePage",
+                        titlePage,
+                        template === "2" ? "required" : "",
+                        {
+                          className: "text-danger",
+                        }
+                      )}
+                    </div>
+                  </div>
+                  <div className={`${styles.selectKategori} form-group`}>
+                    <label
+                      htmlFor="staticEmail"
+                      className="col-sm-4 col-form-label font-weight-bolder"
+                    >
+                      Image
+                    </label>
+                    <div className="row ml-4">
+                      <figure
+                        className="avatar item-rtl position-relative"
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter"
+                      >
+                        <Image
+                          src={gambarPreview}
+                          alt="image"
+                          width={160}
+                          height={160}
+                          objectFit="fill"
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("gambar");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "gambar",
+                          gambar,
+                          template === "2" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </figure>
+                      <div className="position-relative">
+                        <label
+                          className="circle-top"
+                          htmlFor="inputGroupFile04"
+                        >
+                          <i className="ri-add-line text-dark"></i>
+                        </label>
+                        <input
+                          type="file"
+                          name="gambar"
+                          className="custom-file-input"
+                          id="inputGroupFile04"
+                          onChange={onChangeGambar}
+                          accept="image/*"
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor("gambar")
+                          }
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="ml-4"></div>
+                  </div>
+                  <div>
+                    <h3
+                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Content Page
+                    </h3>
+                    <div
+                      className="my-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <div className="ckeditor">
+                        {editorLoaded ? (
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={isi_artikel}
+                            onReady={(editor) => {
+                              // You can store the "editor" and use when it is needed.
+                            }}
+                            onChange={(event, editor) => {
+                              const data = editor.getData();
+                              setIsiArtikel(data);
+                            }}
+                            config={{
+                              placeholder: "Tulis Deskripsi",
+                            }}
+                            onBlur={(e) => {
+                              simpleValidator.current.showMessageFor(
+                                "isi_artikel"
+                              );
+                            }}
+                          />
+                        ) : (
+                          <p>Tunggu Sebentar</p>
+                        )}
+                        {simpleValidator.current.message(
+                          "isi_artikel",
+                          isi_artikel,
+                          template === "2" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-sm-12 d-flex justify-content-end">
+                        <Link href="/site-management/setting/page" passHref>
+                          <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                            Kembali
+                          </a>
+                        </Link>
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                        >
+                          Simpan
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
       </form>
     </PageWrapper>
   );
