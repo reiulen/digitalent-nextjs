@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { signOut } from "next-auth/client";
@@ -22,11 +22,13 @@ import {
   Button,
 } from "react-bootstrap";
 import IconSearch from "../../../components/assets/icon/Search";
-import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
-import IconRegister from "../../../components/assets/icon-dashboard-peserta/Register";
 import Cookies from "js-cookie";
 
 import axios from "axios";
+import {
+  getPencarian,
+  searchKeyword,
+} from "../../../redux/actions/pelatihan/pencarian.action";
 
 const Sidebar = dynamic(
   () => import("../../../user-component/components/template/Sidebar.component"),
@@ -125,12 +127,22 @@ const Navigationbar = ({ session }) => {
   if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
   if (router.pathname == "/") routerPath = "/";
 
+  const [search, setSearch] = useState("");
+
+  const handleEnter = (e) => {
+    e.preventDefault();
+    if (e.code == "Enter") {
+      dispatch(searchKeyword(search));
+      router.push(`/pencarian?cari=${search}`);
+    }
+  };
+
   return (
     <>
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard padding-content-home d-flex pr-0 px-md-22 px-0"
+        className="shadow header-dashboard d-flex pr-0 px-md-22 px-0"
         sticky="top"
       >
         <Col
@@ -160,13 +172,9 @@ const Navigationbar = ({ session }) => {
                     <i className="ri-customer-service-2-line ri-2x mx-0 mx-md-3 text-gray"></i>
                   </a>
                 </Link>
-                <Link
-                  href="/peserta/bookmark"
-
-                  passHref
-                >
-                  <a className='col-3 p-md-0 col-xl-4 text-center'>
-                  <i className="ri-heart-line ri-2x mx-0 mx-md-3 text-gray"></i>
+                <Link href="/peserta/bookmark" passHref>
+                  <a className="col-3 p-md-0 col-xl-4 text-center">
+                    <i className="ri-heart-line ri-2x mx-0 mx-md-3 text-gray"></i>
                   </a>
                 </Link>
                 <a href="#" className="col-3 p-md-0 col-xl-4 text-center">
@@ -201,7 +209,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onChange={(e) => {}}
+                onKeyDown={(e) => {
+                  setSearch(e.target.value);
+                  if (e.code == "Enter") {
+                    handleEnter(e);
+                  }
+                }}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -330,7 +343,13 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onChange={(e) => {}}
+                onKeyDown={(e) => {
+                  if (e.code == "Enter") {
+                    handleEnter(e);
+                  } else {
+                    setSearch(e.target.value);
+                  }
+                }}
               />
               <IconSearch
                 className="left-center-absolute"

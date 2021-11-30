@@ -43,16 +43,17 @@ export default function PencarianPelatihan(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ params, query, req }) => {
       const session = await getSession({ req });
 
       let sessionToken = session?.user.user.data.user.token;
 
       await store.dispatch(getAllPenyeleggaraPeserta());
-
       await store.dispatch(getDataPribadi(sessionToken));
-      const data = await store.dispatch(getPencarian(sessionToken));
+
+      const data = await store.dispatch(getPencarian(sessionToken, query.cari));
+
       return {
         props: {
           title: "Penyelenggara",
