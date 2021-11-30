@@ -350,7 +350,7 @@ export default function DashboardPage({ token }) {
 
                 <div className="text-center">
                   <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
-                    Pengajuan Berakhir
+                    Pengajuan Akan Berakhir
                   </p>
                 </div>
               </div>
