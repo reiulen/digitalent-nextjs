@@ -4,7 +4,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import IconSearch from "../../../../assets/icon/Search";
 
-const DetailRole = ({ token }) => {
+const DetailAdmin = ({ token }) => {
 
   const detailAdminSite = useSelector((state) => state.detailAdminSite);
 
@@ -27,7 +27,7 @@ const DetailRole = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {detailAdminSite.adminSite.data.name}
+                {detailAdminSite.adminSite?.data.name}
               </p>
             </div>
             <div className="form-group d-flex flex-column mt-4">
@@ -39,7 +39,7 @@ const DetailRole = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {detailAdminSite.adminSite.data.email}
+                {detailAdminSite.adminSite?.data.email}
               </p>
             </div>
             <div className="form-group d-flex flex-column mt-4">
@@ -51,7 +51,7 @@ const DetailRole = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {detailAdminSite.adminSite.data.status == 1
+                {detailAdminSite.adminSite?.data.status == 1
                   ? "Aktif"
                   : "Tidak Aktif"}
               </p>
@@ -59,7 +59,7 @@ const DetailRole = ({ token }) => {
             <div className="form-group d-flex flex-column mt-4">
               <p style={{ color: "#6C6C6C" }}>Status</p>
               <div className="d-flex ailgn-items-center">
-                {detailAdminSite.adminSite.data.roles.map((items, index) => {
+                {detailAdminSite.adminSite?.data.roles.map((items, index) => {
                   return (
                     <span
                       className="label label-lg label-inline"
@@ -104,7 +104,7 @@ const DetailRole = ({ token }) => {
               </div>
             </div>
 
-            {detailAdminSite.adminSite.data.type_access === "akademi" ? (
+            {detailAdminSite.adminSite?.data.type_access === "akademi" ? (
               <div className="border-top pt-6">
                 <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1">
                   Hak Akses Pelatihan
@@ -176,9 +176,9 @@ const DetailRole = ({ token }) => {
                       </thead>
 
                       <tbody>
-                        {JSON.parse(
-                          detailAdminSite.adminSite.data.training_access
-                        ).map((items, index) => {
+                        {
+                          detailAdminSite.adminSite?.data.training_access
+                        .map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="py-8 border-bottom">
@@ -254,4 +254,4 @@ const DetailRole = ({ token }) => {
   );
 };
 
-export default DetailRole;
+export default DetailAdmin;

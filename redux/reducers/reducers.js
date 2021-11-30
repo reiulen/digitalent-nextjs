@@ -263,6 +263,7 @@ import {
   allRolesListReducer,
   allAcademyListReducer,
   allListPelatihanReducer,
+  updateStatusAdminReducer,
 } from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
@@ -798,6 +799,7 @@ const reducer = combineReducers({
   deleteRoles: deleteRolesReducer,
   allPermission: allPermissionReducer,
   allSidebar: allSidebarReducer,
+  updateStatusAdmin: updateStatusAdminReducer,
   // ============ PELATIHAN =======
   allPrompt: allPromptReducer,
   // ============ Dashboatd =======
