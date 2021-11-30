@@ -143,7 +143,8 @@ const TambahRole = ({ token }) => {
                     <p className="mb-0">{sub.name}</p>
                   </div>
                 </td>
-                {sub.name === "Artikel" && (
+
+                {sub.name === "Artikel" ? (
                   <td
                     className="text-right child-permission align-middle"
                     style={{ width: "10rem" }}
@@ -166,8 +167,122 @@ const TambahRole = ({ token }) => {
                       <span></span>
                     </label>
                   </td>
-                )}
-                {sub.name !== "Artikel" && (
+                ) : sub.name === "Berita" ? (
+                  <td
+                    className="text-right child-permission align-middle"
+                    style={{ width: "10rem" }}
+                  >
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="Checkboxes1"
+                        onClick={() => {
+                          permission.filter((filter) => {
+                            if (sub.id === filter.id) {
+                              filter.publish = !(
+                                filter.publish === true || filter.publish === 1
+                              );
+                            }
+                            return filter;
+                          });
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </td>
+                ) : sub.name === "Video" ? (
+                  <td
+                    className="text-right child-permission align-middle"
+                    style={{ width: "10rem" }}
+                  >
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="Checkboxes1"
+                        onClick={() => {
+                          permission.filter((filter) => {
+                            if (sub.id === filter.id) {
+                              filter.publish = !(
+                                filter.publish === true || filter.publish === 1
+                              );
+                            }
+                            return filter;
+                          });
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </td>
+                ) : sub.name === "FAQ" ? (
+                  <td
+                    className="text-right child-permission align-middle"
+                    style={{ width: "10rem" }}
+                  >
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="Checkboxes1"
+                        onClick={() => {
+                          permission.filter((filter) => {
+                            if (sub.id === filter.id) {
+                              filter.publish = !(
+                                filter.publish === true || filter.publish === 1
+                              );
+                            }
+                            return filter;
+                          });
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </td>
+                ) : sub.name === "Imagetron" ? (
+                  <td
+                    className="text-right child-permission align-middle"
+                    style={{ width: "10rem" }}
+                  >
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="Checkboxes1"
+                        onClick={() => {
+                          permission.filter((filter) => {
+                            if (sub.id === filter.id) {
+                              filter.publish = !(
+                                filter.publish === true || filter.publish === 1
+                              );
+                            }
+                            return filter;
+                          });
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </td>
+                ) : sub.name === "Galeri" ? (
+                  <td
+                    className="text-right child-permission align-middle"
+                    style={{ width: "10rem" }}
+                  >
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="Checkboxes1"
+                        onClick={() => {
+                          permission.filter((filter) => {
+                            if (sub.id === filter.id) {
+                              filter.publish = !(
+                                filter.publish === true || filter.publish === 1
+                              );
+                            }
+                            return filter;
+                          });
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </td>
+                ) :(
                   <td
                     className="text-right child-permission align-middle"
                     style={{ width: "10rem" }}
@@ -324,9 +439,9 @@ const TambahRole = ({ token }) => {
               <div className="form-group">
                 <label>Nama Role</label>
                 <input
-                  onChange={(e) => setNameRole(e.target.value)}
                   type="text"
                   className="form-control"
+                  onChange={(e) => setNameRole(e.target.value)}
                   value={nameRole}
                   placeholder="Masukkan nama role"
                   onBlur={() =>
@@ -343,10 +458,9 @@ const TambahRole = ({ token }) => {
               <div className="form-group">
                 <label>Status</label>
                 <select
+                  className="form-control"
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="form-control"
-                  required
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("status")
                   }
@@ -364,8 +478,8 @@ const TambahRole = ({ token }) => {
               <div className="form-group">
                 <label>Editable</label>
                 <select
-                  onChange={(e) => setEditTable(e.target.value)}
                   className="form-control"
+                  onChange={(e) => setEditTable(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("editable")
                   }
