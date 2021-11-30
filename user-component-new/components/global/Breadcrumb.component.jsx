@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import Link from "next/link";
 
 const BreadcrumbComponent = ({ data = [] }) => {
@@ -15,18 +15,20 @@ const BreadcrumbComponent = ({ data = [] }) => {
               <i className="ri-arrow-right-s-line"></i>
             </span>
             <Link href={row.link} passHref>
-              {i === data.length - 1 ? (
-                <span className="trim-text-mobile">{row.name}</span>
-              ) : (
-                row.name.length > 25 && (
-                  <span
-                    className="text-primary trim-text-mobile"
-                    style={{ cursor: "pointer" }}
-                  >
-                    {row.name}
-                  </span>
-                )
-              )}
+              <Fragment>
+                {i === data.length - 1 ? (
+                  <span className="trim-text-mobile">{row.name}</span>
+                ) : (
+                  row.name.length > 25 && (
+                    <span
+                      className="text-primary trim-text-mobile"
+                      style={{ cursor: "pointer" }}
+                    >
+                      {row.name}
+                    </span>
+                  )
+                )}
+              </Fragment>
             </Link>
           </div>
         ))}

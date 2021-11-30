@@ -126,7 +126,7 @@ const RegisterMitra = () => {
           style={{ background: "#1A4367" }}
         >
           <div className="container scroll-form-login">
-            <div className="title-login text-center mt-6">
+            <div className="title-login text-center mt-40">
               <Image
                 src="/assets/logo/logo-6.svg"
                 width={246}

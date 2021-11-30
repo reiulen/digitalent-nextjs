@@ -14,27 +14,21 @@ import {
   SET_PENYELENGGARA_VALUE,
 } from "../../types/pelatihan/pencarian.type";
 
-export const getPencarian = token => async (dispatch, getState) => {
+export const getPencarian = (token, cari) => async (dispatch, getState) => {
   try {
     dispatch({ type: LIST_TRAINING_REQUEST });
     let link =
       process.env.END_POINT_API_PELATIHAN +
       `api/v1/pelatihan/dasboard-filter-pelatihan`;
 
-    let keywordState = getState().allPencarian.keyword || "";
+    let keywordState = cari || "";
     let pageState = getState().allPencarian.page || 1;
-    let limitState = getState().allPencarian.limit || 6;
+    let limitState = getState().allPencarian.limit || 5;
     let penyelenggaraState = getState().allPencarian.penyelenggara || "";
     let kategoriPesertaState = getState().allPencarian.kategori_peserta || "";
     let pelatihanMulaiState = getState().allPencarian.pelatihan_mulai || "";
     let pelatihanAkhirState = getState().allPencarian.pelatihan_akhir || "";
-    // keyword: "",
-    // page: 1,
-    // limit: 5,
-    // penyelenggara: "",
-    // kategori_peserta: "",
-    // pelatihan_mulai: "",
-    // pelatihan_akhir: "",
+
     const params = {
       page: pageState,
       limit: limitState,
@@ -52,7 +46,6 @@ export const getPencarian = token => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(link, config);
-
     if (data) {
       dispatch({ type: LIST_TRAINING_SUCCESS, payload: data });
     }
@@ -65,43 +58,43 @@ export const getPencarian = token => async (dispatch, getState) => {
   }
 };
 
-export const searchKeyword = text => {
+export const searchKeyword = (text) => {
   return {
     type: SET_KEYWORD_VALUE,
     text,
   };
 };
-export const setValuePage = text => {
+export const setValuePage = (text) => {
   return {
     type: SET_PAGE_VALUE,
     text,
   };
 };
-export const setValueLimit = text => {
+export const setValueLimit = (text) => {
   return {
     type: SET_LIMIT_VALUE,
     text,
   };
 };
-export const setValuePenyelenggara = text => {
+export const setValuePenyelenggara = (text) => {
   return {
     type: SET_PENYELENGGARA_VALUE,
     text,
   };
 };
-export const setValueKategoriPeserta = text => {
+export const setValueKategoriPeserta = (text) => {
   return {
     type: SET_KATEGORI_PESERTA_VALUE,
     text,
   };
 };
-export const setValuePelatihanMulai = text => {
+export const setValuePelatihanMulai = (text) => {
   return {
     type: SET_PELATIHAN_MULAI_VALUE,
     text,
   };
 };
-export const setValuePelatihanAkhir = text => {
+export const setValuePelatihanAkhir = (text) => {
   return {
     type: SET_PELATIHAN_AKHIR_VALUE,
     text,
