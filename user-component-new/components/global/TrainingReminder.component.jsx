@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Select from "react-select";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import {
   addNotifTema,
   clearErrors,
 } from "../../../redux/actions/beranda/beranda.actions";
-import { CLEAR_ERRORS_NOTIF } from "../../../redux/types/beranda/beranda.type";
+import {
+  CLEAR_ERRORS_NOTIF,
+  BERANDA_NOTIF_TEMA_RESET,
+} from "../../../redux/types/beranda/beranda.type";
+import { SweatAlert } from "../../../utils/middleware/helper";
 
 const TrainingReminder = ({ session }) => {
   const dispatch = useDispatch();
@@ -37,10 +40,14 @@ const TrainingReminder = ({ session }) => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
+      SweatAlert("Gagal", error, "error");
       dispatch({ type: CLEAR_ERRORS_NOTIF });
     }
-  }, [error, dispatch]);
+    if (success) {
+      SweatAlert("Berhasil", "Berhasil membuat pengingat pelatihan", "success");
+      dispatch({ type: BERANDA_NOTIF_TEMA_RESET });
+    }
+  }, [error, success, dispatch]);
 
   const customStyles = {
     control: (styles) => ({
@@ -61,9 +68,8 @@ const TrainingReminder = ({ session }) => {
 
   const handleTemaNotif = () => {
     const data = {
-      tema_id: (temaId && temaId.value) || null,
+      tema_id: (temaId && temaId.value + "") || null,
     };
-
     if (session) {
       dispatch(addNotifTema(data, session.token));
     } else {
