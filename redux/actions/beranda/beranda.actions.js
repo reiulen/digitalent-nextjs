@@ -157,7 +157,9 @@ export const getAllKotaPeserta = () => async (dispatch) => {
   try {
     dispatch({ type: BERANDA_KOTA_REQUEST });
 
-    let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/city`;
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+      `api/option/reference-choose-name/Kabupaten?paginate=false&limit=5&page`;
 
     const { data } = await axios.get(link);
 
