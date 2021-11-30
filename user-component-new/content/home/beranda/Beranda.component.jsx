@@ -21,6 +21,9 @@ import ComeJoin from "./section/ComeJoin.component";
 import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
 
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
+
+import { checkRegisterPelatihan } from "../../../../redux/actions/beranda/detail-pelatihan.actions";
+
 import axios from "axios";
 
 const Beranda = ({ session }) => {
@@ -257,9 +260,9 @@ const Beranda = ({ session }) => {
   };
 
   const handleCheckPelatihanReg = async (id, session) => {
-    if (session && session.token) {
+    if (session) {
       const data = await dispatch(checkRegisterPelatihan(id, session.token));
-
+      console.log(data);
       if (data.status === true) {
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
