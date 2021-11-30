@@ -676,7 +676,7 @@ const handleToggleModal = () => {
                             className="font-weight-bolder mt-15 text-center fw-600" 
                             style={{fontFamily:"Poppins", fontSize:"24px"}}
                           >
-                            Tidak ada video terkait [video]
+                            Tidak ada video terkait "{keyword}"
                           </h1>
                 
                         </div>

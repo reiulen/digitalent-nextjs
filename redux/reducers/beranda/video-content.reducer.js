@@ -23,6 +23,8 @@ import {
     CLEAR_ERRORS
 } from "../../types/beranda/video-content.type"
 
+import moment from "moment";
+
 export const allVideoContentReducer = (state = { video: [] }, action) => {
     switch (action.type) {
         case BERANDA_VIDEO_REQUEST:
@@ -31,9 +33,29 @@ export const allVideoContentReducer = (state = { video: [] }, action) => {
             }
 
         case BERANDA_VIDEO_SUCCESS:
+            let today = new Date
+            let momentToday = moment(today).format ("YYYY-MM-DD")
+
+            let arr = action.payload.data.video
+            let result = {
+                video : [],
+                total: action.payload.data.total,
+                perPage: action.payload.data.perPage,
+                totalFiltered: action.payload.data.totalFiltered
+            }
+
+            if (action.payload.data.video){
+                for (let i = 0; i < arr.length; i++){
+                    if (arr[i].tanggal_publish <= momentToday){
+                        result.push (arr[i])
+                    }
+                }
+            }
+
             return {
                 loading: false,
                 video: action.payload.data
+                // video: result
             }
 
         case BERANDA_VIDEO_FAIL:

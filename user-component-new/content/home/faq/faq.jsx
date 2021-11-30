@@ -6,7 +6,6 @@ import Image from "next/image";
 import { getAllFaq } from "../../../../redux/actions/beranda/faq-content.actions";
 import PulseLoaderRender from "../../../../user-component-new/components/loader/PulseLoader";
 import SubHeaderComponent from "../../../../user-component/components/template/Subheader.component";
-// import styles from "../../../../user-component/components/template/Sidebar.module.css";
 import styles from "../faq/faq.module.css"
 
 const FaqPage = () => {
@@ -62,12 +61,12 @@ const FaqPage = () => {
             />
             <div className="row">
                 <div className="col-12 col-md-4">
-                    <h1 style={{ fontWeight: "800" }}>
-                        Tanya Jawab
+                    <h1 style={{ fontWeight: "700" , fontFamily:"Poppins", fontSize:"40px"}}>
+                        Frequently Asked Questions
                     </h1>
                     <p
                         className="my-5"
-                        style={{ color: "#6C6C6C" }}
+                        style={{ color: "#6C6C6C" , fontFamily:"Poppins", fontSize:"18px"}}
                     >
                         Ada yang bisa Kami Bantu ?
                     </p>
@@ -86,7 +85,7 @@ const FaqPage = () => {
 
             <div className="row">
                 <div className="col-md-4">
-                    <div className="position-relative overflow-hidden my-5">
+                    <form className="position-relative overflow-hidden my-5" onSubmit={() => handleFilterKeyword()}>
                         <i className="ri-search-line left-center-absolute ml-3"></i>
                         <input
                             type="text"
@@ -108,9 +107,9 @@ const FaqPage = () => {
                         >
                             Cari
                         </button>
-                    </div>
+                    </form>
                     <div className="mb-5 d-none d-md-block">
-                        <h4 style={{ fontWeight: "600", marginTop: "50px" }}>
+                        <h4 style={{ fontWeight: "600", marginTop: "50px", fontFamily:"Poppins", fontSize:"16px" }}>
                             Kategori Pertanyaan
                         </h4>
                         <div>
@@ -298,8 +297,8 @@ const FaqPage = () => {
                     <div className="ml-3">
                         <h2
                             style={{
-                                fontWeight: "800",
-                                marginTop: "20px",
+                                fontWeight: "700",
+                                marginTop: "10px",
                                 color: "#203e80",
                             }}
                         >
@@ -362,7 +361,7 @@ const FaqPage = () => {
                                                         }
                                                         style={{ marginLeft: "30px" }}
                                                     >
-                                                        <h6 style={{ fontWeight: "700" }}>{row.judul}</h6>
+                                                        <h4 style={{ fontWeight: "600", fontSize:'20px' }}>{row.judul}</h4>
                                                         <button
                                                             className="accordion-button btn"
                                                             type="button"
@@ -386,7 +385,11 @@ const FaqPage = () => {
                                                         }
                                                         key={i}
                                                     >
-                                                        <div className="accordion-body mx-9 border-0 mb-5 text-justify" dangerouslySetInnerHTML={{ __html: row.jawaban }}>
+                                                        <div 
+                                                            className={`accordion-body mx-9 border-0 mb-5 mt-3 text-justify ${styles.detailFaq}`}
+                                                            style={{fontFamily: "Poppins", fontSize:"16px", color: "#464E5F"}}
+                                                            dangerouslySetInnerHTML={{ __html: row.jawaban }}
+                                                        >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -394,10 +397,29 @@ const FaqPage = () => {
                                         )
                                     })
                                 ) : (
-                                    <div className="text-center">
-                                        <h2 className="font-weight-bolder">
-                                            Pertanyaan FAQ Tidak Tersedia
-                                        </h2>
+                                    <div className="row mx-auto">
+                                        <div className="col col-12 d-flex flex-column justify-content-center">
+                                            <Image
+                                                src={`/assets/media/gambar-belum-tersedia-page.svg`}
+                                                width={525}
+                                                height={350}
+                                                alt="Tidak Tersedia"
+                                            />
+                                            <h1 
+                                                className="font-weight-bolder mt-15 text-center fw-600" 
+                                                style={{fontFamily:"Poppins", fontSize:"24px"}}
+                                            >
+                                                Tidak ada tanya jawab terkait "{keyword}"
+                                            </h1>
+
+                                            <div 
+                                                className="mt-5 text-center"
+                                                style={{fontFamily:"Poppins", fontSize:"16px"}}
+                                            >
+                                                Silahkan hubungi pusat bantuan kami jika anda membutuhkan bantuan 
+                                            </div>
+                                
+                                        </div>
                                     </div>
                                 )}
                             </div>
