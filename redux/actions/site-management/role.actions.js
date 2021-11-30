@@ -96,7 +96,7 @@ export const postRoles = (sendData, token) => {
         type: POST_ROLES_REQUEST,
       });
       const { data } = await axios.post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/store`,
+        `${"http://192.168.11.167:8000/"}api/role/store`,
         sendData,
         {
           headers: {
@@ -131,7 +131,7 @@ export const getDetailRoles = (id, token) => async (dispatch) => {
     };
 
     let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/role/detail/${id}`;
+    process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/detail/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -178,10 +178,13 @@ export const updateRoles = (sendData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/satuan/update`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/update`,
       sendData,
       config
     );
+    Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+      window.location = "/site-management/role";
+    });
 
     dispatch({
       type: UPDATE_ROLES_SUCCESS,
@@ -206,8 +209,6 @@ export const getSidebar = (token) => async (dispatch) => {
       process.env.END_POINT_API_SITE_MANAGEMENT + "/api/user/permissions",
       config
     );
-
-    localStorage.setItem("sidebar", data)
     dispatch({
       type: GET_SIDEBAR,
       payload: data,

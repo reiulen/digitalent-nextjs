@@ -57,7 +57,7 @@ export const kategoriBerandaFaqReducer = (state = {kategori: [] }, action) => {
 
             return {
                 loading: false,
-                kategori: result
+                kategori: result.sort()
             }
 
         case KATEGORI_BERANDA_FAQ_FAIL:

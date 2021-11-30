@@ -8,23 +8,26 @@ import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
-import { postLpj } from '../../../../redux/actions/pelatihan/training.actions'
+import { postLpj } from "../../../../redux/actions/pelatihan/training.actions";
 
-const AddFormLpj = ({token}) => {
+const AddFormLpj = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
-  const { data: getFormLPJ } = useSelector(
-    (state) => state.getFormLPJ
-  );
+  const { data: getFormLPJ } = useSelector((state) => state.getFormLPJ);
 
-  const [formLpj, setFormLpj] = useState(getFormLPJ.data.length > 0 ? getFormLPJ.data.map((item, index) => {
-    return {
-       key: index + 1, name: item.name 
-    }
-  }) : [{ key: 1, name: "" }]);
+  const [formLpj, setFormLpj] = useState(
+    getFormLPJ.data.length > 0
+      ? getFormLPJ.data.map((item, index) => {
+          return {
+            key: index + 1,
+            name: item.name,
+          };
+        })
+      : [{ key: 1, name: "" }]
+  );
 
   const handleResetError = () => {
     if (error) {
@@ -55,18 +58,18 @@ const AddFormLpj = ({token}) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    let form = formLpj.map(item => {
+    let form = formLpj.map((item) => {
       return {
-        name: item.name
-      }
-    })
+        name: item.name,
+      };
+    });
     const data = {
       pelatian_id: parseInt(router.query.id),
-      data: form
-    }
+      data: form,
+    };
 
     if (simpleValidator.current.allValid()) {
-      dispatch(postLpj(token, data))
+      dispatch(postLpj(token, data));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -93,33 +96,26 @@ const AddFormLpj = ({token}) => {
 
           <div className="card-body py-4">
             <form onSubmit={submitHandler}>
+              <div className="d-flex justify-content-start align-items-center mb-5">
+                <label className="col-form-label font-weight-bold">No</label>
+                <label className="col-form-label font-weight-bold mx-md-10 mx-5">
+                  Nama Field
+                </label>
+              </div>
               {formLpj.map((row, i) => (
-                <div className="row" key={i}>
-                  <div className="form-group col-md-1 col-sm-1">
-                    <label className="col-form-label font-weight-bold">
-                      No
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control-plaintext disabled readonly"
-                      value={row.key}
-                    />
-                  </div>
-                  <div className="form-group col-md-10 col-sm-10 mb-0 pb-0">
-                    <label className="col-form-label font-weight-bold">
-                      Nama Field
-                    </label>
+                <div
+                  className="d-flex justify-content-between align-items-center mb-5"
+                  key={i}
+                >
+                  <div style={{ width: "20px" }}>{row.key}</div>
+                  <div className="w-100 mx-md-10 mx-5">
                     <input
                       type="text"
                       placeholder="Masukan Nama Field"
-                      className="form-control mb-0"
+                      className="form-control w-100"
                       value={row.name}
                       onChange={(e) => handleInputForm(e.target.value, i)}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor(
-                          `nama field ${i + 1}`
-                        )
-                      }
+                      maxLength={100}
                     />
                     {simpleValidator.current.message(
                       `nama field ${i + 1}`,
@@ -128,7 +124,7 @@ const AddFormLpj = ({token}) => {
                       { className: "text-danger" }
                     )}
                   </div>
-                  <div className="form-group col-md-1 col-sm-1 d-flex align-items-end">
+                  <div className="">
                     <button
                       className="btn btn-link-action bg-danger text-white"
                       type="button"

@@ -222,7 +222,7 @@ const EditMitra = ({ token }) => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}api/partners/${router.query.id}`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/partners/${router.query.name}`,
               formData,
               {
                 headers: {
@@ -230,6 +230,7 @@ const EditMitra = ({ token }) => {
                 },
               }
             );
+
             router.push(
               {
                 pathname: "/partnership/mitra",
@@ -238,6 +239,7 @@ const EditMitra = ({ token }) => {
               undefined,
               { shallow: true }
             );
+            
           } catch (error) {
             Swal.fire("Gagal", `${error.response.data.message}`, "error")
           }

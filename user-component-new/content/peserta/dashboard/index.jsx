@@ -17,7 +17,7 @@ const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
-    state => state.dashboardPeserta
+    (state) => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
   // useEffect(() => {
@@ -286,7 +286,14 @@ const Dashboard = ({ session, success }) => {
                     <p className={style.card_title}>Pelatihan Terkini</p>
                   </Card.Title>
 
-                  <Card className="shadow rounded-md mt-20">
+                  <Card
+                    className="shadow rounded-md mt-20"
+                    onClick={() => {
+                      router.push(
+                        `/detail/pelatihan/${dataDashboard.pelatihan.pelatihan_berjalan.id}?akademiId=${dataDashboard.pelatihan.pelatihan_berjalan.akademi_id}`
+                      );
+                    }}
+                  >
                     <Image
                       className={`${style.image_dashboard}`}
                       src={
@@ -372,7 +379,14 @@ const Dashboard = ({ session, success }) => {
 
           {dataDashboard.pelatihan.pelatihan_selesi.length === 0 && (
             <Col md={6} className="mb-4 px-2">
-              <Card className="rounded-xl h-100">
+              <Card
+                className="rounded-xl h-100"
+                onClick={() => {
+                  router.push(
+                    `/detail/pelatihan/${dataDashboard.pelatihan.pelatihan_selesi.id}?akademiId=${dataDashboard.pelatihan.pelatihan_selesi.akademi_id}`
+                  );
+                }}
+              >
                 <Card.Body>
                   <Card.Title>
                     <p className={style.card_title}>Pelatihan Sebelumnya</p>

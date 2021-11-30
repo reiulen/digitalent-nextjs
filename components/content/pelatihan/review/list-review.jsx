@@ -14,6 +14,7 @@ import {
   getAllListReview,
   clearErrors,
 } from "../../../../redux/actions/pelatihan/review.actions";
+import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -31,13 +32,6 @@ const ListReview = ({ token }) => {
   const { permission } = useSelector((state) => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
 
-  useEffect(() => {
-    const filterPermission = permission?.permissions?.filter((item) =>
-      item.includes("pelatihan")
-    );
-    setListPermission(filterPermission);
-  }, []);
-
   const { loading, error, review } = useSelector(
     (state) => state.allListReview
   );
@@ -47,9 +41,13 @@ const ListReview = ({ token }) => {
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
-  const { error: dropdownErrorTema, data: dataTema } = useSelector(
-    (state) => state.drowpdownTema
+  // const { error: dropdownErrorTema, data: dataTema } = useSelector(
+  //   (state) => state.drowpdownTema
+  // );
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
   );
+
   const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
     useSelector((state) => state.drowpdownPenyelenggara);
 
@@ -70,8 +68,20 @@ const ListReview = ({ token }) => {
   const [showModal, setShowModal] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
 
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
   const optionsAkademi = dataAkademi.data;
-  const optionsTema = dataTema.data;
+  // const optionsTema = dataTema.data;
   const optionsPenyelenggara = [];
   if (dataPenyelenggara) {
     for (let index = 0; index < dataPenyelenggara.data.length; index++) {
@@ -99,6 +109,21 @@ const ListReview = ({ token }) => {
     { value: "disetujui", label: "Disetujui" },
     { value: "ditolak", label: "Ditolak" },
   ];
+
+  useEffect(() => {
+    dispatch(dropdownTemabyAkademi(academy?.value, token));
+    const filterPermission = permission?.permissions?.filter((item) =>
+      item.includes("pelatihan")
+    );
+    setListPermission(filterPermission);
+
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [academy?.value]);
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
@@ -141,11 +166,11 @@ const ListReview = ({ token }) => {
         limit,
         register[0] === "Invalid date" ? "" : register.join(","),
         pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
-        statusSubstansi != null ? statusSubstansi.value : null,
-        statusPelatihan != null ? statusPelatihan.value : null,
-        penyelenggara != null ? penyelenggara.value : null,
-        academy,
-        theme,
+        statusSubstansi != null ? statusSubstansi.label : null,
+        statusPelatihan != null ? statusPelatihan.label : null,
+        penyelenggara != null ? penyelenggara.label : null,
+        academy !== null ? academy.label : null,
+        theme !== null ? theme.label : null,
         token
       )
     );
@@ -157,8 +182,8 @@ const ListReview = ({ token }) => {
     setTheme(null);
     setStatusSubstansi(null);
     setStatusPelatihan(null);
-    setDateRegister(null);
-    setDateStart(null);
+    setDateRegister([null, null]);
+    setDatePelaksanaan([null, null]);
     setShowModal(false);
     setPage(1);
     dispatch(
@@ -561,7 +586,7 @@ const ListReview = ({ token }) => {
                       activePage={page}
                       itemsCountPerPage={review.perPage}
                       totalItemsCount={review.total}
-                      pageRangeDisplayed={3}
+                      pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
                       onChange={handlePagination}
                       nextPageText={">"}
                       prevPageText={"<"}
@@ -645,13 +670,16 @@ const ListReview = ({ token }) => {
             <Select
               options={optionsAkademi}
               defaultValue={academy}
-              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+              onChange={(e) => {
+                setAcademy({ value: e.value, label: e.label });
+                setTheme(null);
+              }}
             />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              options={optionsTema}
+              options={drowpdownTemabyAkademi.data.data}
               defaultValue={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />

@@ -50,6 +50,10 @@ const VideoPage = () => {
   const [ show, setShow ] = useState (false)
   const [ showFilter, setShowFilter ] = useState(false)
   const [ showDesc, setShowDesc ] = useState(false)
+  const [ tagVideo, setTagVideo ] = useState([])
+  const [ kategoriToShow, setKategoriToShow ] = useState ([])
+  const [ showArrow, setShowArrow ] = useState(null)
+  const [ videoContent, setVideoContent ] = useState([])
 
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
@@ -76,135 +80,211 @@ useEffect(()=> {
 
 },[windowDimensions])
 
-  const handlePagination = (pageNumber) => {
-    setActivePage(pageNumber);
-    dispatch(
-      getAllVideoContent(
-        pageNumber,
-        keyword,
-        limit,
-        filterPublish,
-        sort,
-        category_id,
-        kategoriVideo,
-        tag
-      )
-    );
-  };
+useEffect(() => {
+  handleEmptyTag()
+  handleKategoriToShow()
+}, [])
 
-  const handleDescToTrim = (str) => {
-    let result = null;
+// Handle Empty Tag
+const handleEmptyTag = () => {
+  if (video){
+    let arr = video?.video
+    let temps = []
+    let result = []
+    for (let i = 0; i < arr.length; i++){
+        for (let j = 0; j < arr[i].tag.length; j++){
+            if (
+                arr[i].tag[j].length !== 0 && 
+                arr[i].tag[j] !== null &&
+                arr[i].tag[j] !== undefined && 
+                arr[i].tag[j] !== " " &&
+                arr[i].tag[j] !== ""
+                )
 
-    if (str.length > descToTrim) {
-      result = str.slice(0, descToTrim) + "...";
-    } else {
-      result = str;
+            {
+                temps.push (arr[i].tag[j])
+            }
+        }
     }
+    
+    for (let k = 0; k < temps.length; k++){
+      if (k === 0){
+        result.push(temps[k])
 
-    return result;
-  };
-
-  const handleFilterTag = (str) => {
-    if (str === ""){
-      setActiveTitle("Video Terupdate dan Terkini")
+      } else {
+        if (result.includes (temps[k]) === false){
+          result.push(temps[k])
+        }
+      }
     }
-    setActiveTitle(`#${str.toUpperCase()}`)
-
-    dispatch(
-      getAllVideoContent(
-        activePage,
-        keyword,
-        limit,
-        filterPublish,
-        sort,
-        category_id,
-        kategoriVideo,
-        str
-      )
-    );
-  };
-
-  const submitFilter = () => {
-    dispatch(
-      getAllVideoContent(
-        activePage,
-        keyword,
-        limit,
-        filterPublish,
-        sort,
-        category_id,
-        kategoriVideo,
-        tag
-      )
-    );
-  };
-
-  const handleFilterKeyword = (e) => {
-    e.preventDefault();
-    dispatch(
-      getAllVideoContent(
-        activePage,
-        keyword,
-        limit,
-        filterPublish,
-        sort,
-        category_id,
-        kategoriVideo,
-        tag
-      )
-    );
-  };
-
-  const handleFilterPublish = (publish) => {
-    setFilterPublish(publish);
-    setSort("")
-  };
-
-  const handleSort = (sort) => {
-    setSort(sort);
-    setFilterPublish("")
-  };
-
-  const handleFilterKategori = (str) => {
-    setKategoriVideo(str);
-
-    dispatch(
-      getAllVideoContent(
-        activePage,
-        keyword,
-        limit,
-        filterPublish,
-        sort,
-        category_id,
-        str,
-        tag
-      )
-    );
-  };
-
-  const handlePreview = (
-    id,
-  ) => {
-    setVideoPlaying(true);
-    setShow (true)
-    dispatch(getDetailBerandaVideo(id))
-    handleIsPlayed(id)
-  };
-
-  const handleIsPlayed = (id_video) => {
-    const data = {
-      id: id_video,
-      _method: "PUT",
-      isplay: "1",
-    };
-    dispatch(playVideoContent(data));
-  };
-
-  const handleToggleModal = () => {
-    setShow(false)
-    setVideoPlaying(false)
-    setShowDesc(false)
+    setTagVideo (result)
   }
+  
+}
+
+// Handle Empty Kategori not show
+const handleKategoriToShow = () => {
+    if (video){
+      let obj = video?.video
+      let arr = []
+      let result = []
+
+      for (let i = 0; i < obj.length; i++){
+          arr.push (obj[i].nama_kategori)
+      }
+
+      for (let j = 0; j < arr.length; j++){
+        if (j === 0){
+          result.push (arr[j])
+
+        } else {
+          if (result.includes (arr[j]) === false){
+            result.push (arr[j])
+          }
+        }
+  
+      }
+      setKategoriToShow(result)
+
+      if (result.length > 3) {
+        setShowArrow (true)
+
+      } else {
+        setShowArrow (false)
+      }
+    }
+    
+}
+
+const handlePagination = (pageNumber) => {
+  setActivePage(pageNumber);
+  dispatch(
+    getAllVideoContent(
+      pageNumber,
+      keyword,
+      limit,
+      filterPublish,
+      sort,
+      category_id,
+      kategoriVideo,
+      tag
+    )
+  );
+};
+
+const handleDescToTrim = (str) => {
+  let result = null;
+
+  if (str.length > descToTrim) {
+    result = str.slice(0, descToTrim) + "...";
+  } else {
+    result = str;
+  }
+
+  return result;
+};
+
+const handleFilterTag = (str) => {
+  if (str === ""){
+    setActiveTitle("Video Terupdate dan Terkini")
+  }
+  setActiveTitle(`#${str.toUpperCase()}`)
+
+  dispatch(
+    getAllVideoContent(
+      activePage,
+      keyword,
+      limit,
+      filterPublish,
+      sort,
+      category_id,
+      kategoriVideo,
+      str
+    )
+  );
+};
+
+const submitFilter = () => {
+  dispatch(
+    getAllVideoContent(
+      activePage,
+      keyword,
+      limit,
+      filterPublish,
+      sort,
+      category_id,
+      kategoriVideo,
+      tag
+    )
+  );
+};
+
+const handleFilterKeyword = (e) => {
+  e.preventDefault();
+  dispatch(
+    getAllVideoContent(
+      activePage,
+      keyword,
+      limit,
+      filterPublish,
+      sort,
+      category_id,
+      kategoriVideo,
+      tag
+    )
+  );
+};
+
+const handleFilterPublish = (publish) => {
+  setFilterPublish(publish);
+  setSort("")
+};
+
+const handleSort = (sort) => {
+  setSort(sort);
+  setFilterPublish("")
+};
+
+const handleFilterKategori = (str) => {
+  setKategoriVideo(str);
+  setActiveTitle("Video Terupdate dan Terkini")
+  dispatch(
+    getAllVideoContent(
+      activePage,
+      keyword,
+      limit,
+      filterPublish,
+      sort,
+      category_id,
+      str,
+      tag
+    )
+  );
+};
+
+const handlePreview = (
+  id,
+) => {
+  setVideoPlaying(true);
+  setShow (true)
+  dispatch(getDetailBerandaVideo(id))
+  handleIsPlayed(id)
+};
+
+const handleIsPlayed = (id_video) => {
+  const data = {
+    id: id_video,
+    _method: "PUT",
+    isplay: "1",
+  };
+  dispatch(playVideoContent(data));
+};
+
+const handleToggleModal = () => {
+  setShow(false)
+  setVideoPlaying(false)
+  setShowDesc(false)
+}
 
   return (
     <>
@@ -217,7 +297,12 @@ useEffect(()=> {
 
         {/* Header */}
         <div className="col-12">
-          <h1 className="fw-700">{activeTitle}</h1>
+          <h1 
+            className="fw-700" 
+            style={{fontSize: "40px", fontFamily: "Poppins"}}
+          >
+            {activeTitle}
+          </h1>
           <span>
             Temukan konten terupdate dan terkini mengenai Digital Talent
             Scholarship
@@ -229,83 +314,169 @@ useEffect(()=> {
         <div 
           className= "col-xl-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-0 pr-xxl-11"
         >
-          <Splide
-            options={{
-              arrows: true,
-              pagination: false,
-              gap: "1rem",
-              drag: "free",
-              perPage: 4,
-              breakpoints:{
-                  830: {
-                      perPage: 2,
-                    },
-                  450: {
-                    perPage: 1,
-                  },
-              }
-            }}
-            className="px-20"
-          >
-           
-              {kategoriVideo === "" ? (
-                <SplideSlide>
-                  <div
-                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
-                    style={{ cursor: "pointer", height:"40px"}}
-                    onClick={() => handleFilterKategori("")}
-                  >
-                    <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
-                  </div>
-                </SplideSlide>
-                
-              ) : (
-                <SplideSlide>
-                  <div
-                    className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                    style={{ cursor: "pointer", height:"40px"}}
-                    onClick={() => handleFilterKategori("")}
-                  >
-                    <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
-                  </div>
-                </SplideSlide>
-              )}
-
-            {kategori && kategori.length === 0
-            ? null
-            : kategori.map((row, i) => {
-                return kategoriVideo === row.nama_kategori ? (
-                  <SplideSlide>
-                    <div
-                      className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
-                      style={{ cursor: "pointer", height:"40px"}}
-                      onClick={() => handleFilterKategori(row.nama_kategori)}
-                      key={i}
-                    >
-                      <div className="my-1 mx-auto py-1 px-auto text-white text-center text-truncate">
-                        {row.nama_kategori.toString().toUpperCase()}
+          {
+            showArrow === true ?
+              <Splide
+                options={{
+                  arrows: true,
+                  pagination: true,
+                  gap: "1rem",
+                  drag: "free",
+                  perPage: 4,
+                  breakpoints:{
+                      830: {
+                          perPage: 2,
+                        },
+                      450: {
+                        perPage: 1,
+                      },
+                  }
+                }}
+                className="px-20 "
+              >
+              
+                  {kategoriVideo === "" ? (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
+                        style={{ cursor: "pointer", height:"40px", minWidth: "150px"}}
+                        onClick={() => handleFilterKategori("")}
+                      >
+                        <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
                       </div>
-                    </div>
-                  </SplideSlide>
-                  
-                ) : (
-                  <SplideSlide>
-                    <div
-                      className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                      style={{ cursor: "pointer", height:"40px"}}
-                      onClick={() => handleFilterKategori(row.nama_kategori)}
-                      key={i}
-                    >
-                      <div className="my-1 mx-auto py-1 px-auto text-muted text-center text-truncate">
-                        {row.nama_kategori.toString().toUpperCase()}
+                    </SplideSlide>
+                    
+                  ) : (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                        style={{ cursor: "pointer", height:"40px", minWidth: "150px"}}
+                        onClick={() => handleFilterKategori("")}
+                      >
+                        <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
                       </div>
-                    </div>
-                  </SplideSlide>
-                  
-                );
-              })}
+                    </SplideSlide>
+                  )}
 
-          </Splide>
+                {
+                  kategoriToShow ?
+                      kategoriToShow.map ((row, i) => {
+                        return kategoriVideo === row ? (
+                          <SplideSlide>
+                            <div
+                              className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
+                              style={{ cursor: "pointer", height:"40px", minWidth:"150px"}}
+                              onClick={() => handleFilterKategori(row)}
+                              key={i}
+                            >
+                              <div className="my-1 mx-auto py-1 px-auto text-white text-center">
+                                {row.toString().toUpperCase()}
+                              </div>
+                            </div>
+                          </SplideSlide>
+                          
+                        ) : (
+                          <SplideSlide>
+                            <div
+                              className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                              style={{ cursor: "pointer", height:"40px", minWidth:"150px"}}
+                              onClick={() => handleFilterKategori(row)}
+                              key={i}
+                            >
+                              <div className="my-1 mx-auto py-1 px-auto text-muted text-center">
+                                {row.toString().toUpperCase()}
+                              </div>
+                            </div>
+                          </SplideSlide>
+                        );
+                      })
+                    :
+                      null
+                }
+
+              </Splide>
+            :
+              <Splide
+                options={{
+                  arrows: false,
+                  pagination: false,
+                  gap: "1rem",
+                  drag: "free",
+                  perPage: 4,
+                  breakpoints:{
+                      830: {
+                          perPage: 2,
+                        },
+                      450: {
+                        perPage: 1,
+                      },
+                  }
+                }}
+                className="ml-2"
+              >
+              
+                  {kategoriVideo === "" ? (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
+                        style={{ cursor: "pointer", height:"40px", minWidth: "150px"}}
+                        onClick={() => handleFilterKategori("")}
+                      >
+                        <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
+                      </div>
+                    </SplideSlide>
+                    
+                  ) : (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                        style={{ cursor: "pointer", height:"40px", minWidth: "150px"}}
+                        onClick={() => handleFilterKategori("")}
+                      >
+                        <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
+                      </div>
+                    </SplideSlide>
+                  )}
+
+                {
+                  kategoriToShow ?
+                      kategoriToShow.map ((row, i) => {
+                        return kategoriVideo === row ? (
+                          <SplideSlide>
+                            <div
+                              className="d-flex w-100 align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
+                              style={{ cursor: "pointer", height:"40px", minWidth: "150px"}}
+                              onClick={() => handleFilterKategori(row)}
+                              key={i}
+                            >
+                              <div className="my-1 mx-auto py-1 px-auto text-white text-center">
+                                {row.toString().toUpperCase()}
+                              </div>
+                            </div>
+                          </SplideSlide>
+                          
+                        ) : (
+                          <SplideSlide>
+                            <div
+                              className="d-flex w-100 align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                              style={{ cursor: "pointer", height:"40px", minWidth: "150px"}}
+                              onClick={() => handleFilterKategori(row)}
+                              key={i}
+                            >
+                              <div className="my-1 mx-auto py-1 px-auto text-muted text-center">
+                                {row.toString().toUpperCase()}
+                              </div>
+                            </div>
+                          </SplideSlide>
+                        );
+                      })
+                    :
+                      null
+                }
+
+              </Splide>
+          }
+          
         </div>
         
         {/* End of Filter Button */}
@@ -365,6 +536,7 @@ useEffect(()=> {
                                   <button
                                     className="btn btn-primary rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("")}
+                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
                                   >
                                     Terbaru
                                   </button>
@@ -372,6 +544,7 @@ useEffect(()=> {
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("desc")}
+                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
                                   >
                                     Terbaru
                                   </button>
@@ -383,6 +556,7 @@ useEffect(()=> {
                                   <button
                                     className="btn btn-primary rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("")}
+                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
                                   >
                                     Terlama
                                   </button>
@@ -390,6 +564,7 @@ useEffect(()=> {
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("asc")}
+                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
                                   >
                                     Terlama
                                   </button>
@@ -402,6 +577,7 @@ useEffect(()=> {
                                   <button
                                     className="btn btn-primary rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("")}
+                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
                                   >
                                     A-Z
                                   </button>
@@ -409,6 +585,7 @@ useEffect(()=> {
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("asc")}
+                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
                                   >
                                     A-Z
                                   </button>
@@ -420,6 +597,7 @@ useEffect(()=> {
                                   <button
                                     className="btn btn-primary rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("")}
+                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
                                   >
                                     Z-A
                                   </button>
@@ -427,6 +605,7 @@ useEffect(()=> {
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("desc")}
+                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
                                   >
                                     Z-A
                                   </button>
@@ -493,17 +672,27 @@ useEffect(()=> {
                   </div>
                 </div>
               :
-                <div className="mt-5 ml-4">
+                <div className="mt-5 ml-4 mb-20">
                   <div
                     className="row d-flex justify-content-between flex-wrap"
                   >
                     {!video || (video && video.video.length === 0) ? (
 
                       <div className="row mx-auto">
-                        <div className="col col-12 d-flex justify-content-center">
-                            <h1 className="font-weight-bolder">
-                              Video Tidak Tersedia
-                            </h1>
+                        <div className="col col-12 d-flex flex-column justify-content-center">
+                          <Image
+                            src={`/assets/media/gambar-belum-tersedia-page.svg`}
+                            width={525}
+                            height={350}
+                            alt="Tidak Tersedia"
+                          />
+                          <h1 
+                            className="font-weight-bolder mt-15 text-center fw-600" 
+                            style={{fontFamily:"Poppins", fontSize:"24px"}}
+                          >
+                            Tidak ada video terkait "{keyword}"
+                          </h1>
+                
                         </div>
                       </div>
 
@@ -516,7 +705,8 @@ useEffect(()=> {
                             key={i}
                           >
                             <div 
-                              className="card mb-4 border-0" 
+                              className="card mb-4 border-0 position-relative" 
+                              style={{cursor: "pointer"}}
                             >
                               <Image
                                 alt={row.judul}
@@ -531,9 +721,9 @@ useEffect(()=> {
                                   "publikasi/images/" +
                                   row.gambar
                                 }
-                                width={180}
+                                width={394}
                                 height={260}
-                                objectFit="cover"
+                                objectFit="fit"
                                 className="rounded"
                                 data-target="#videoPlayerModal"
                                 data-toggle="modal"
@@ -545,18 +735,21 @@ useEffect(()=> {
                               />
                               <div className="card-body px-0">
                                 <div>
-                                  <h5 className="card-title" 
+                                  <h4 className="card-title" 
                                   style=
                                     {{
                                       display:"-webkit-box", 
                                       overflow: 'hidden', 
                                       textOverflow: 'ellipsis', 
                                       WebkitLineClamp: "2",
-                                      WebkitBoxOrient:"vertical"
+                                      WebkitBoxOrient:"vertical",
+                                      fontSize:"20px",
+                                      fontFamily:"Poppins",
+                                      color:"#1B283F",
                                     }}
                                   >
                                     {row.judul}
-                                  </h5>
+                                  </h4>
                                   <div className="d-flex justify-content-between align-items-center">
                                     <div className="d-flex flex-row align-items-center">
                                       <div className="border rounded-circle py-1 px-2">
@@ -569,15 +762,15 @@ useEffect(()=> {
                                         />
                                       </div>
                                       <span 
-                                        className="ml-2 d-inline-block text-truncate" 
-                                        style={{ maxWidth: "120px" }} 
+                                        className="ml-2 d-inline-block text-truncate FW-600" 
+                                        style={{ maxWidth: "120px", color: "#6C6C6C", fontFamily: "Poppins", fontSize:"16px" }} 
                                       >
                                         {row.dibuat}
                                       </span>
                                     </div>
                                     <span
                                       className="label label-inline label-light-primary font-weight-bold d-inline-block text-truncate"
-                                      style={{ maxWidth: "120px" }} 
+                                      style={{ maxWidth: "120px", color: "#0063CC", fontSize:"12px", fontFamily: "Poppins" }} 
                                     >
                                       {row.nama_kategori.toUpperCase()}
                                     </span>
@@ -653,6 +846,7 @@ useEffect(()=> {
                           <button
                             className="btn btn-primary rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("")}
+                            style={{fontSize:"14px", fontFamily:"Poppins"}}
                           >
                             Terbaru
                           </button>
@@ -660,6 +854,7 @@ useEffect(()=> {
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("desc")}
+                            style={{fontSize:"14px", fontFamily:"Poppins"}}
                           >
                             Terbaru
                           </button>
@@ -671,6 +866,7 @@ useEffect(()=> {
                           <button
                             className="btn btn-primary rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("")}
+                            style={{fontSize:"14px", fontFamily:"Poppins"}}
                           >
                             Terlama
                           </button>
@@ -678,6 +874,7 @@ useEffect(()=> {
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("asc")}
+                            style={{fontSize:"14px", fontFamily:"Poppins"}}
                           >
                             Terlama
                           </button>
@@ -690,6 +887,7 @@ useEffect(()=> {
                           <button
                             className="btn btn-primary rounded-pill btn-block text-truncate"
                             onClick={() => handleSort("")}
+                            style={{fontSize:"14px", fontFamily:"Poppins"}}
                           >
                             A-Z
                           </button>
@@ -697,6 +895,7 @@ useEffect(()=> {
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
                             onClick={() => handleSort("asc")}
+                            style={{fontSize:"14px", fontFamily:"Poppins"}}
                           >
                             A-Z
                           </button>
@@ -708,6 +907,7 @@ useEffect(()=> {
                           <button
                             className="btn btn-primary rounded-pill btn-block"
                             onClick={() => handleSort("")}
+                            style={{fontSize:"14px", fontFamily:"Poppins"}}
                           >
                             Z-A
                           </button>
@@ -715,6 +915,7 @@ useEffect(()=> {
                           <button
                             className="btn btn-outline-light rounded-pill btn-block"
                             onClick={() => handleSort("desc")}
+                            style={{fontSize:"14px", fontFamily:"Poppins"}}
                           >
                             Z-A
                           </button>
@@ -749,8 +950,8 @@ useEffect(()=> {
               </h3>
               <div className=" d-flex flex-wrap flex-row">
                 <div className="row ml-0">
-                  {dataTag && dataTag.tag && dataTag.tag.length !== 0 ? (
-                    dataTag.tag.map((row, i) => {
+                  {tagVideo && tagVideo.length !== 0 ? (
+                    tagVideo.map((row, i) => {
                       return (
                         <div
                           className="border px-2 py-1 rounded my-3 mr-3"
@@ -824,7 +1025,7 @@ useEffect(()=> {
 
                   {
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 770 && detail.nama_kategori ?
-                        <div className="p-2 badge badge-pill badge-light font-weight-bold text-primary mb-3">
+                        <div className="p-2 badge badge-pill badge-light font-weight-bold text-primary mb-3" style={{color:"#0063CC"}}>
                           {detail.nama_kategori}
                         </div>
                       :
@@ -838,7 +1039,7 @@ useEffect(()=> {
                   
                   {
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 450 ? 
-                      <div className="mr-3">
+                      <div className="mr-3" style={{color:"#ADB5BD", fontSize:"14px"}}>
                         {
                           detail.tanggal_publish !== null && playLoading === false ? 
                             `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton} Ditonton`
@@ -891,7 +1092,7 @@ useEffect(()=> {
                       {/* Insert Date Here */}
                       {
                         windowDimensions && windowDimensions.width && windowDimensions.width >= 450 ? 
-                          <div className="mr-3">
+                          <div className="mr-3" style={{color:"#ADB5BD", fontSize:"14px"}}>
                             {
                               detail.tanggal_publish !== null && playLoading === false ? 
                                 `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton} Ditonton`
@@ -923,7 +1124,7 @@ useEffect(()=> {
                                   >
                                     <div
                                       className="text-center text-truncate"
-                                      style={{ fontSize: "10px" }}
+                                      style={{ fontSize: "14px", color: "#6C6C6C" }}
                                     >
                                       #{el.toUpperCase()}
                                     </div>
@@ -939,7 +1140,7 @@ useEffect(()=> {
                       windowDimensions && windowDimensions.width && windowDimensions.width >= 770 ?
                         <div>
                           {detail.nama_kategori === null ? null : (
-                              <span className="p-2 badge  badge-light font-weight-bold text-primary">
+                              <span className="p-2 badge badge-light font-weight-bold" style={{color:"#0063CC", fontSize: "12px"}}>
                                 {detail.nama_kategori}
                               </span>
                             )}

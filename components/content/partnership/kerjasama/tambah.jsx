@@ -4,6 +4,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+
 import {
   setNameLembaga,
   fetchDataEmail,
@@ -214,29 +215,17 @@ const Tambah = ({ token }) => {
                       <label className="required fw-bold fs-6 mb-2">
                         Lembaga
                       </label>
-                      <select
-                        style={{ zIndex: "999" }}
-                        onFocus={() =>
-                          setError({ ...error, institution_name: "" })
-                        }
-                        className="basic-single form-control"
-                        classNamePrefix="select"
-                        placeholder="Pilih Lembaga"
-                        defaultValue={allMK?.stateListMitra[0]}
-                        isDisabled={false}
-                        isLoading={false}
-                        isClearable={false}
-                        isRtl={false}
-                        isSearchable={true}
-                        name="color"
-                        onChange={(e) => changeInstitusi(e.label)}
-                        options={allMK?.stateListMitra}
-                      >
-                        {allMK?.stateListMitra.map((item, index) => {
-                          return <option value={item.label} key={index}>{item.label}</option>
+                      <Select
+                      placeholder="Silahkan Pilih Lembaga"
+                        options={allMK?.stateListMitra.map((item, index) => {
+                          return (
+                            {
+                              label: item.label, value:item.label
+                            }
+                          );
                         })}
-                        
-                      </select>
+                        onChange={(e) => changeInstitusi(e.label)}
+                      />
                       {error.institution_name ? (
                         <p className="error-text">{error.institution_name}</p>
                       ) : (

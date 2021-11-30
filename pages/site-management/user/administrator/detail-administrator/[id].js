@@ -5,7 +5,7 @@ import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailAdminSite } from "../../../../../redux/actions/site-management/user/admin-site.action";
 
-const DetailUser = dynamic(
+const DetailAdmin = dynamic(
   () =>
     import(
       "../../../../../components/content/site-management/user/administrator/detail-administrator"
@@ -23,7 +23,7 @@ export default function UserList(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DetailUser token={session.token} />
+        <DetailAdmin token={session.token} />
       </div>
     </>
   );

@@ -86,10 +86,10 @@
 }
 
 .responsive-margin-without-background {
-  top: 38px;
+  margin-top: 17%;
 }
 .responsive-margin-peserta-1 {
-  top: 35px !important;
+  margin-top: 17% !important;
 }
 
 @media (min-width: 768px) {
@@ -137,10 +137,10 @@
   }
 
   .responsive-margin-without-background {
-    top: 120px;
+    margin-top: 19%;
   }
   .responsive-margin-peserta-1 {
-    top: 115px !important;
+    margin-top: 19% !important;
   }
   .responsive-normal-font-size {
     font-size: 10px;
@@ -216,10 +216,10 @@
   }
 
   .responsive-margin-without-background {
-    top: 110px;
+    margin-top: 18% !important;
   }
   .responsive-margin-peserta-1 {
-    top: 105px !important;
+    margin-top: 18% !important;
   }
   .responsive-normal-font-size {
     font-size: 10px;
@@ -232,7 +232,7 @@
   }
 
   .responsive-margin-peserta-1 {
-    top: 130px !important;
+    margin-top: 19% !important;
   }
 
   .responsive-font-size-peserta {
@@ -279,6 +279,6 @@
   }
 
   .responsive-margin-without-background {
-    top: 135px;
+    margin-top: 18% !important;
   }
 }
