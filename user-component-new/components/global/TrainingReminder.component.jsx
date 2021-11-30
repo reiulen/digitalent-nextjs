@@ -78,7 +78,10 @@ const TrainingReminder = ({ session }) => {
   };
 
   return (
-    <div className="p-10 rounded mb-10" style={{ backgroundColor: "#E6F2FF" }}>
+    <div
+      className="p-10 rounded-xl mb-10"
+      style={{ backgroundColor: "#E6F2FF" }}
+    >
       <div className="d-flex align-items-center mb-3">
         <div>
           <Image src={`/assets/media/logo-bell.svg`} width={32} height={32} />
@@ -103,7 +106,7 @@ const TrainingReminder = ({ session }) => {
           />
         </div>
         <button
-          className="btn btn-primary rounded-pill text-white fw-600 px-5 ml-4"
+          className="btn btn-beranda-primary rounded-pill text-white fw-600 px-5 ml-4"
           onClick={() => handleTemaNotif()}
         >
           Buat

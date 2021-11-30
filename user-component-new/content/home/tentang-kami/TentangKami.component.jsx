@@ -14,7 +14,7 @@ const TentangKami = () => {
         />
         <Row>
           <Col md={12}>
-            <div className="ml-2 mb-3 title-pelatihan">
+            <div className="mb-3 title-pelatihan">
               <h1 className="fw-700 fz-40">Tentang Kami</h1>
 
               <div className="mt-5 mt-md-1">
