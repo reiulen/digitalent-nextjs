@@ -130,7 +130,7 @@ const Navigationbar = ({ session }) => {
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard d-flex pr-0 px-md-25 px-10"
+        className="shadow header-dashboard d-flex pr-0 px-md-25 "
         sticky="top"
       >
         <Col
@@ -149,26 +149,28 @@ const Navigationbar = ({ session }) => {
           <div className="d-flex d-lg-none justify-content-end align-items-center">
             {!isNavOpen && session && session.roles[0] === "user" && (
               <div className="row m-3">
-                <a className="col-3 col-xl-4 text-center">
+                <a className="col-3 p-md-0 col-xl-4 text-center">
                   <i
-                    className="ri-search-2-line ri-2x mx-3 text-gray"
+                    className="ri-search-2-line ri-2x mx-0 mx-md-3 text-gray"
                     onClick={() => setShowSearch(!showSearch)}
                   ></i>
                 </a>
                 <Link href="/helpdesk/live-chat" passHref>
-                  <a className="col-3 col-xl-4 text-center">
-                    <i className="ri-customer-service-2-line ri-2x mx-3 text-gray"></i>
+                  <a className="col-3 p-md-0 col-xl-4 text-center">
+                    <i className="ri-customer-service-2-line ri-2x mx-0 mx-md-3 text-gray"></i>
                   </a>
                 </Link>
                 <Link
                   href="/peserta/bookmark"
-                  className="col-3 col-xl-4 text-center"
+
                   passHref
                 >
-                  <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
+                  <a className='col-3 p-md-0 col-xl-4 text-center'>
+                  <i className="ri-heart-line ri-2x mx-0 mx-md-3 text-gray"></i>
+                  </a>
                 </Link>
-                <a href="#" className="col-3 col-xl-4 text-center">
-                  <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
+                <a href="#" className="col-3 p-md-0 col-xl-4 text-center">
+                  <i className="ri-notification-4-line ri-2x mx-0 mx-md-3 text-gray"></i>
                 </a>
               </div>
             )}
@@ -244,7 +246,7 @@ const Navigationbar = ({ session }) => {
                     })}
                   </div>
                 </div>
-                <div className="btn-group dropright w-100">
+                <div className="btn-group droptop w-100">
                   <a
                     type="button"
                     className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
