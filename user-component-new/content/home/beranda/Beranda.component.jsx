@@ -821,7 +821,7 @@ const Beranda = ({ session }) => {
                                           <div className="row pt-6">
                                             <div className="col-6">
                                               <Link
-                                                href={`/detail/pelatihan/${cardId}`}
+                                                href={`/detail/pelatihan/${cardId}?akademiId=${akademiId}`}
                                                 passHref
                                               >
                                                 <a>

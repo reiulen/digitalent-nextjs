@@ -400,3 +400,21 @@
     max-width: 11rem !important;
   }
 }
+
+@media (max-width: 450px) {
+  .trim-text-mobile {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 6rem !important;
+  }
+}
+
+@media (max-width: 300px) {
+  .trim-text-mobile {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 1rem !important;
+  }
+}

@@ -23,6 +23,8 @@ import axios from "axios";
 
 const DetailPelatihan = ({ session }) => {
   const router = useRouter();
+  const { akademiId } = router.query;
+
   const dispatch = useDispatch();
   const { pelatihan } = useSelector((state) => state.detailPelatihan);
 
@@ -56,10 +58,13 @@ const DetailPelatihan = ({ session }) => {
     <>
       <HomeWrapper>
         <BreadcrumbComponent
-          data={[{ link: router.asPath, name: pelatihan.name }]}
+          data={[
+            { link: `/detail/akademi/${akademiId}`, name: pelatihan.akademi },
+            { link: router.asPath, name: pelatihan.name },
+          ]}
         />
         <Row>
-          <Col md={8}>
+          <Col md={12} lg={8}>
             <div className="rounded my-5">
               <div className="ml-2 mb-3 title-pelatihan">
                 <h1 className="fw-700 fz-40">{pelatihan.name}</h1>
@@ -70,12 +75,12 @@ const DetailPelatihan = ({ session }) => {
                 </div>
 
                 <Row className="mt-8">
-                  <Col md={4} sm={6}>
+                  <div className="col-6 col-sm-6 col-md-3">
                     <div>
-                      <p className="mb-1 fz-16" style={{ color: "#6C6C6C" }}>
+                      <p className="mb-1 fz-14" style={{ color: "#6C6C6C" }}>
                         Registrasi
                       </p>
-                      <p className="fz-18 fw-400">
+                      <p className="fz-16 fw-400">
                         {moment(pelatihan.pendaftaran_mulai).format(
                           "DD MMM YYYY"
                         )}{" "}
@@ -85,31 +90,31 @@ const DetailPelatihan = ({ session }) => {
                         )}
                       </p>
                     </div>
-                  </Col>
+                  </div>
 
-                  <Col md={3} sm={6}>
-                    <div>
-                      <p className="mb-1 fz-16" style={{ color: "#6C6C6C" }}>
+                  <div className="col-6 col-sm-6 col-md-3">
+                    <div className="">
+                      <p className="mb-1 fz-14" style={{ color: "#6C6C6C" }}>
                         Pelaksanaan
                       </p>
-                      <p className="fz-18 fw-400">
+                      <p className="fz-16 fw-400">
                         {pelatihan.metode_pelatihan}
                       </p>
                     </div>
-                  </Col>
+                  </div>
 
-                  <Col md={3} sm={6}>
+                  <div className="col-6 col-sm-6 col-md-3">
                     <div>
-                      <p className="mb-1 fz-16" style={{ color: "#6C6C6C" }}>
+                      <p className="mb-1 fz-14" style={{ color: "#6C6C6C" }}>
                         Pendaftar
                       </p>
-                      <p className="fz-18 fw-400">
+                      <p className="fz-16 fw-400">
                         {pelatihan.kuota_peserta} Peserta
                       </p>
                     </div>
-                  </Col>
+                  </div>
 
-                  <Col md={2} sm={6}>
+                  <div className="col-6 col-sm-6 col-md-3">
                     <div className="d-flex align-items-center justify-content-md-end">
                       <ShareOverlay
                         url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan.id}`}
@@ -123,7 +128,7 @@ const DetailPelatihan = ({ session }) => {
                         <IconLove />
                       </button>
                     </div>
-                  </Col>
+                  </div>
                 </Row>
               </div>
               <div
@@ -148,7 +153,7 @@ const DetailPelatihan = ({ session }) => {
               </div>
             </div>
           </Col>
-          <Col md={4}>
+          <Col md={12} lg={4}>
             <div className="border rounded p-6 mb-5 ikuti-pelatihan">
               <h4 className="fz-20 fw-600">Ikuti Pelatihan</h4>
               <span className="fz-16">
@@ -167,10 +172,10 @@ const DetailPelatihan = ({ session }) => {
                   </button>
                 )}
                 <button
-                  className="btn btn-outline-primary-new rounded-pill btn-block fw-500"
+                  className="btn btn-outline-primary-new rounded-pill btn-block fw-500 d-flex justify-content-center align-items-center p-1"
                   onClick={() => handleDownloadSilabus()}
                 >
-                  <i className="ri-download-cloud-fill"></i>
+                  <div className="ri-download-cloud-fill mr-2 fz-16"></div>
                   <span>Unduh Silabus</span>
                 </button>
               </div>
