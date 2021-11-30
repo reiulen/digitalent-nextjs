@@ -18,17 +18,21 @@ import {
   setPage,
   searchCooporation,
   limitCooporation,
+  updateStatusAdminSite,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
+import {} from "../../../../../redux/actions/site-management/role.actions";
 
-import { DETAIL_ADMIN_SITE_RESET } from "../../../../../redux/types/site-management/user/admin-site.type";
+import { DETAIL_ADMIN_SITE_RESET, RESET_UPDATE_STATUS_REDUCER } from "../../../../../redux/types/site-management/user/admin-site.type";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
   const allAdminSite = useSelector((state) => state.allAdminSite);
-  const { isDeleted,error: deleteError, } = useSelector((state) => state.deleteAdminSite);
-
+  const { isDeleted, error: deleteError } = useSelector(
+    (state) => state.deleteAdminSite
+  );
+  const updateStatusAdmin = useSelector((state) => state.updateStatusAdmin);
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -63,6 +67,19 @@ const Table = ({ token }) => {
         (result) => {
           if (result.isConfirmed) {
             dispatch(getAllAdminSite(token));
+            
+          }
+        }
+      );
+    }
+    if (updateStatusAdmin.isUpdated) {
+      Swal.fire("Berhasil ", "Status berhasil di update.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(getAllAdminSite(token));
+            dispatch({
+              type: RESET_UPDATE_STATUS_REDUCER,
+            });
           }
         }
       );
@@ -81,6 +98,7 @@ const Table = ({ token }) => {
     token,
     isDeleted,
     deleteError,
+    updateStatusAdmin.isUpdated,
   ]);
 
   useEffect(() => {
@@ -193,27 +211,47 @@ const Table = ({ token }) => {
                               <td className="align-middle text-left">
                                 {items.email ? items.email : "-"}
                               </td>
-                              <td className="align-middle text-left">role</td>
+                              <td className="align-middle text-left">
+                                {items.roles?.length > 1
+                                  ? `${items.roles[0]?.name}, ${
+                                      items?.roles?.length - 1
+                                    } More Role`
+                                  : `${items.roles[0]?.name}`}
+                              </td>
                               <td className="align-middle text-left">
                                 <div className="position-relative w-max-content">
                                   <select
                                     name=""
                                     id=""
-                                    className="form-control remove-icon-default dropdown-arrows-green"
-                                    // key={index}
-                                    // onChange={(e) =>
-                                    //   changeListStatus(
-                                    //     e,
-                                    //     items.id,
-                                    //     items.status.name
-                                    //   )
-                                    // }
+                                    className={`form-control remove-icon-default dropdown-arrows-${
+                                      items.status === 1
+                                        ? "green"
+                                        : "red-primary"
+                                    }`}
+                                    key={index}
+                                    onChange={(e) => {
+                                      dispatch(
+                                        updateStatusAdminSite(
+                                          items.id,
+                                          token,
+                                          e.target.value
+                                        )
+                                      );
+                                    }}
                                   >
-                                    <option value="1">
+                                    <option
+                                      value="1"
+                                      selected={items.status === 1}
+                                    >
                                       {/* {items.status.name} */}
                                       Aktif
                                     </option>
-                                    <option value="2">Tidak Aktif</option>
+                                    <option
+                                      value="0"
+                                      selected={items.status === 0}
+                                    >
+                                      Tidak Aktif
+                                    </option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
@@ -241,12 +279,7 @@ const Table = ({ token }) => {
                                     </a>
                                   </Link>
                                   <Link
-                                    href={{
-                                      pathname:
-                                        "/site-management/user/administrator/detail-administrator",
-                                      query: { id: items.id },
-                                    }}
-                                    passHref
+                                    href={`/site-management/user/administrator/detail-administrator/${items.id}`}
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
                                       <IconEye width="16" height="16" />

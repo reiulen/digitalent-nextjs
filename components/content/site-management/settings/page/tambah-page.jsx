@@ -13,6 +13,7 @@ import IconSearch from "../../../../assets/icon/Search";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "../../../../../styles/previewGaleri.module.css";
+import SimpleReactValidator from "simple-react-validator";
 
 import Swal from "sweetalert2";
 import Image from "next/image";
@@ -42,6 +43,8 @@ const TambahPage = ({ token }) => {
     "/assets/media/default.jpg"
   );
   const [gambarName, setGambarName] = useState(null);
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
 
   const { loading, error, success } = useSelector((state) => state.newPage);
 
@@ -82,22 +85,7 @@ const TambahPage = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    if (isi_artikel === "") {
-      setError({
-        ...errorr,
-        isi_artikel: "Konten tidak boleh kosong",
-      });
-      notify("Konten tidak boleh kosong");
-    } else if (pageName === "") {
-      setError({ ...errorr, pageName: "page name tidak boleh kosong" });
-      notify("page name tidak boleh kosong");
-    } else if (titlePage === "") {
-      setError({ ...errorr, pageName: "title page tidak boleh kosong" });
-      notify("title page tidak boleh kosong");
-    } else if (pageStatus === "") {
-      setError({ ...errorr, pageStatus: "page status tidak boleh kosong" });
-      notify("page status tidak boleh kosong");
-    } else {
+    if (simpleValidator.current.allValid()) {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -135,6 +123,14 @@ const TambahPage = ({ token }) => {
           }
           dispatch(postPage(sendData, token));
         }
+      });
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
       });
     }
   };
@@ -194,7 +190,18 @@ const TambahPage = ({ token }) => {
                       type="text"
                       className="form-control"
                       placeholder="Masukkan Page Name"
+                      onBlur={(e) => {
+                        simpleValidator.current.showMessageFor("pageName");
+                      }}
                     />
+                    {simpleValidator.current.message(
+                      "pageName",
+                      pageName,
+                      "required",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
                     {/* <span className="form-text text-muted">
                       Please enter your full name
                     </span> */}
@@ -205,7 +212,10 @@ const TambahPage = ({ token }) => {
                       className="form-control"
                       id="exampleSelect1"
                       onChange={(e) => setPageStatus(e.target.value)}
-                      defaultValue={pageStatus}
+                      value={pageStatus}
+                      onBlur={(e) => {
+                        simpleValidator.current.showMessageFor("pageStatus");
+                      }}
                     >
                       <option value="" disabled selected>
                         Pilih Status
@@ -213,6 +223,14 @@ const TambahPage = ({ token }) => {
                       <option value="1">Listed</option>
                       <option value="0">Unlisted</option>
                     </select>
+                    {simpleValidator.current.message(
+                      "pageStatus",
+                      pageStatus,
+                      "required",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
                     {/* <span className="form-text text-muted">
                       Please enter your full name
                     </span> */}
@@ -233,13 +251,13 @@ const TambahPage = ({ token }) => {
                 <div className="card-body pt-0">
                   <div>
                     <h3
-                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      className="font-weight-bolder text-dark border-0 w-100"
                       style={{ fontSize: "16px" }}
                     >
                       Title Page
                     </h3>
                     <div
-                      className="my-10"
+                      className="mb-10"
                       style={{
                         width: "100%",
                       }}
@@ -254,7 +272,18 @@ const TambahPage = ({ token }) => {
                             e.target.value.replace(/[^a-zA-Z0-9 ]/g, "")
                           );
                         }}
+                        onBlur={(e) => {
+                          simpleValidator.current.showMessageFor("titlePage");
+                        }}
                       />
+                      {simpleValidator.current.message(
+                        "titlePage",
+                        titlePage,
+                        template === "0" ? "required" : "",
+                        {
+                          className: "text-danger",
+                        }
+                      )}
                     </div>
                   </div>
                   <div className={`${styles.selectKategori} form-group`}>
@@ -276,7 +305,18 @@ const TambahPage = ({ token }) => {
                           width={160}
                           height={160}
                           objectFit="fill"
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("gambar");
+                          }}
                         />
+                        {simpleValidator.current.message(
+                          "gambar",
+                          gambar,
+                          template === "0" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
                       </figure>
                       <div className="position-relative">
                         <label
@@ -304,13 +344,13 @@ const TambahPage = ({ token }) => {
                   </div>
                   <div>
                     <h3
-                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      className="font-weight-bolder text-dark border-0 w-100"
                       style={{ fontSize: "16px" }}
                     >
                       Content Page
                     </h3>
                     <div
-                      className="my-10"
+                      className="mb-10"
                       style={{
                         width: "100%",
                       }}
@@ -330,9 +370,20 @@ const TambahPage = ({ token }) => {
                             config={{
                               placeholder: "Tulis Deskripsi",
                             }}
+                            onBlur={(e) => {
+                              simpleValidator.current.showMessageFor("isi_artikel");
+                            }}
                           />
                         ) : (
                           <p>Tunggu Sebentar</p>
+                        )}
+                        {simpleValidator.current.message(
+                          "isi_artikel",
+                          isi_artikel,
+                          template === "0" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
                         )}
                       </div>
                     </div>
@@ -367,13 +418,13 @@ const TambahPage = ({ token }) => {
                 <div className="card-body pt-0">
                   <div>
                     <h3
-                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      className="font-weight-bolder text-dark border-0 w-100"
                       style={{ fontSize: "16px" }}
                     >
                       Title Page
                     </h3>
                     <div
-                      className="my-10"
+                      className="mb-10"
                       style={{
                         width: "100%",
                       }}
@@ -388,18 +439,29 @@ const TambahPage = ({ token }) => {
                             e.target.value.replace(/[^a-zA-Z0-9 ]/g, "")
                           );
                         }}
+                        onBlur={(e) => {
+                          simpleValidator.current.showMessageFor("titlePage");
+                        }}
                       />
+                      {simpleValidator.current.message(
+                        "titlePage",
+                        titlePage,
+                        template === "1" ? "required" : "",
+                        {
+                          className: "text-danger",
+                        }
+                      )}
                     </div>
                   </div>
                   <div>
                     <h3
-                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      className="font-weight-bolder text-dark border-0 w-100"
                       style={{ fontSize: "16px" }}
                     >
                       Content Page
                     </h3>
                     <div
-                      className="my-10"
+                      className="mb-10"
                       style={{
                         width: "100%",
                       }}
@@ -417,9 +479,20 @@ const TambahPage = ({ token }) => {
                             config={{
                               placeholder: "Tulis Deskripsi",
                             }}
+                            onBlur={(e) => {
+                              simpleValidator.current.showMessageFor("isi_artikel");
+                            }}
                           />
                         ) : (
                           <p>Tunggu Sebentar</p>
+                        )}
+                         {simpleValidator.current.message(
+                          "isi_artikel",
+                          isi_artikel,
+                          template === "1" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
                         )}
                       </div>
                     </div>
@@ -454,13 +527,13 @@ const TambahPage = ({ token }) => {
                 <div className="card-body pt-0">
                   <div>
                     <h3
-                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      className="font-weight-bolder text-dark border-0 w-100"
                       style={{ fontSize: "16px" }}
                     >
                       Title Page
                     </h3>
                     <div
-                      className="my-10"
+                      className="mb-10"
                       style={{
                         width: "100%",
                       }}
@@ -475,7 +548,18 @@ const TambahPage = ({ token }) => {
                             e.target.value.replace(/[^a-zA-Z0-9 ]/g, "")
                           );
                         }}
+                        onBlur={(e) => {
+                          simpleValidator.current.showMessageFor("titlePage");
+                        }}
                       />
+                      {simpleValidator.current.message(
+                        "titlePage",
+                        titlePage,
+                        template === "2" ? "required" : "",
+                        {
+                          className: "text-danger",
+                        }
+                      )}
                     </div>
                   </div>
                   <div className={`${styles.selectKategori} form-group`}>
@@ -497,7 +581,18 @@ const TambahPage = ({ token }) => {
                           width={160}
                           height={160}
                           objectFit="fill"
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("gambar");
+                          }}
                         />
+                         {simpleValidator.current.message(
+                          "gambar",
+                          gambar,
+                          template === "2" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
                       </figure>
                       <div className="position-relative">
                         <label
@@ -525,13 +620,13 @@ const TambahPage = ({ token }) => {
                   </div>
                   <div>
                     <h3
-                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      className="font-weight-bolder text-dark border-0 w-100"
                       style={{ fontSize: "16px" }}
                     >
                       Content Page
                     </h3>
                     <div
-                      className="my-10"
+                      className="mb-10"
                       style={{
                         width: "100%",
                       }}
@@ -551,9 +646,20 @@ const TambahPage = ({ token }) => {
                             config={{
                               placeholder: "Tulis Deskripsi",
                             }}
+                            onBlur={(e) => {
+                              simpleValidator.current.showMessageFor("isi_artikel");
+                            }}
                           />
                         ) : (
                           <p>Tunggu Sebentar</p>
+                        )}
+                         {simpleValidator.current.message(
+                          "isi_artikel",
+                          isi_artikel,
+                          template === "2" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
                         )}
                       </div>
                     </div>

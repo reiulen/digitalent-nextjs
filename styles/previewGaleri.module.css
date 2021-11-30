@@ -97,6 +97,20 @@
   margin-bottom: 70px;
 }
 
+.btnKembali{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 27px;
+  padding-right: 27px;
+}
+
+.btnSimpan{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 @media only screen and (max-width: 1024px) {
   .modal-body {
     height: 400px;
@@ -238,9 +252,17 @@
   }
   .btnKembali{
     font-size: 8.5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 17px;
+    padding-right: 17px;
   }
   .btnSimpan{
     font-size: 8.5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 13px;
+    padding-right: 13px;
   }
 }
 
@@ -257,5 +279,17 @@
   .deskripsiTambah{
     font-size: 6.7px;
     margin-bottom: 210px;
+  }
+  .btnKembali{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+  .btnSimpan{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 13px;
+    padding-right: 13px;
   }
 }

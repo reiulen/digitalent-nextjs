@@ -114,7 +114,12 @@ const Table = ({ token }) => {
             },
           }
         );
-        setArray(data.data);
+        
+        setArray(data.data.map((row, i) => {
+          return {
+            ...row, id: row.page_id
+          }
+        }));
         sessionStorage.setItem("array2", JSON.stringify(data.data));
         localStorage.setItem("array2", data.data);
       } catch (error) {
@@ -178,6 +183,7 @@ const Table = ({ token }) => {
                               id=""
                               className="form-control"
                               defaultValue={parrent.page_id}
+                              // value={parrent.page_id}
                               onChange={(e) => handleChangeInput(e, i)}
                               onBlur={(e) => {
                                 simpleValidator.current.showMessageFor("halaman");
@@ -192,8 +198,8 @@ const Table = ({ token }) => {
                                 allPage &&
                                 allPage.data.setting_page.map((row) => {
                                   return (
-                                    <option key={row.id} value={row.id}>
-                                      {row.id}
+                                    <option key={row.id} value={row.id} >
+                                      {row.name}
                                     </option>
                                   );
                                 })
@@ -202,7 +208,7 @@ const Table = ({ token }) => {
 
                             {simpleValidator.current.message(
                               "halaman",
-                              parrent.id,
+                              parrent.page_id || parrent.id,
                               "required",
                               { className: "text-danger" }
                             )}
