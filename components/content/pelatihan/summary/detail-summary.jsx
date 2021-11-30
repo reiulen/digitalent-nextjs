@@ -362,7 +362,7 @@ const DetailSummary = ({ token }) => {
                     }}
                   >
                     <a
-                      className="btn w-100 btn-rounded-full bg-success text-white mt-2"
+                      className="btn w-100 btn-rounded-full bg-success text-white mt-2 d-flex justify-content-center flex-wrap"
                       style={{ width: "max-content" }}
                     >
                       <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
@@ -371,13 +371,19 @@ const DetailSummary = ({ token }) => {
                   </Link>
                 </div>
                 <div className="col-md-2 mt-3">
-                  <select className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2">
-                    <option value="" disabled selected>
-                      Export
-                    </option>
-                    <option value="LMS">LMS</option>
-                    <option value="CSV">CSV</option>
-                  </select>
+                  <div className="position-relative ml-2 d-flex flex-wrap">
+                    <i className="ri-arrow-down-s-line right-center-absolute mr-md-13 mr-20 text-white mt-1"></i>
+                    <select
+                      className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
+                      style={{ appearance: "none" }}
+                    >
+                      <option value="" disabled selected>
+                        Export
+                      </option>
+                      <option value="LMS">LMS</option>
+                      <option value="CSV">CSV</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
