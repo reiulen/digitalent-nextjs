@@ -15,7 +15,7 @@ import {
 
 const initialStates = {
   pelatihan: [],
-  keyword: "",
+  cari: "",
   page: 1,
   limit: 5,
   penyelenggara: "",
@@ -37,16 +37,17 @@ export const allPencarianReducer = (state = initialStates, action) => {
         pelatihan: action.payload.data,
         loading: false,
       };
+
     case LIST_TRAINING_FAIL:
       return {
         ...state,
         error: action.payload,
       };
+
     case SET_KEYWORD_VALUE: {
       return {
         ...state,
-        keyword: action.text,
-        page: 1,
+        cari: action.text,
       };
     }
 

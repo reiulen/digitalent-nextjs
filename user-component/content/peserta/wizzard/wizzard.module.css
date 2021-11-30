@@ -62,3 +62,97 @@
   background-color: #007cff !important;
   color: white !important;
 }
+
+.circle {
+  background-color: #0063cc;
+  width: 40px;
+  height: 40px;
+  line-height: 24px;
+  border-radius: 50%;
+  border: 2px solid #0063cc;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  color: white;
+  font-size: 20px;
+}
+
+.stepWrapper {
+  display: flex;
+  max-width: 100%;
+}
+
+.stepBlock .circleWrapper {
+  padding: 0px 10px;
+}
+
+.selected {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  line-height: 24px;
+  border-radius: 50%;
+  border: 2px solid #0063cc;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  color: #0063cc;
+  font-size: 20px;
+}
+
+.stepBlock:not(:last-child) .circleWrapper::after {
+  width: 100%;
+  content: "";
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  background-color: #0063cc;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  z-index: -1;
+}
+
+.stepBlock {
+  z-index: 1;
+}
+
+.stepBlock:not(:last-child) > .circleWrapper::after {
+  height: 3px;
+  background-color: #0063cc;
+}
+
+.finish:not(:last-child) > .circleWrapper::after {
+  height: 2px;
+  background-color: grey;
+}
+
+.stepBlock:not(:last-child) > .circleWrapperSelected::after {
+  height: 2px;
+  background-color: grey;
+}
+
+.finish > .circleWrapper > .circle {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  line-height: 24px;
+  border-radius: 50%;
+  border: 2px solid grey;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  color: grey;
+  font-size: 20px;
+}
+
+.finish .circle {
+  background-color: white;
+  border: 2px solid #0063cc;
+  z-index: 1;
+  color: #0063cc;
+  font-size: 20px;
+}

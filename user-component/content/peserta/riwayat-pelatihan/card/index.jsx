@@ -17,7 +17,6 @@ export default function CardTemplateOriginal({ data, session }) {
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [label, setLabel] = useState();
-
   useEffect(() => {
     if (data.status.includes("tidak") || data.status.includes("ditolak"))
       return setLabel("danger");
@@ -97,7 +96,7 @@ export default function CardTemplateOriginal({ data, session }) {
   };
 
   const [fileName, setFileName] = useState();
-  const onChangeFile = e => {
+  const onChangeFile = (e) => {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
@@ -138,19 +137,29 @@ export default function CardTemplateOriginal({ data, session }) {
         >
           <Card.Body
             onClick={() => {
-              if (data.status.includes("menunggu jadwal tes substansi"))
+              if (data.status.includes("menunggu jadwal tes substansi")) {
+                Cookies.set("id_pelatihan", data.id);
+                Cookies.set("id_tema", data.tema_id);
                 return router.push(`/peserta/test-substansi`);
+              }
 
-              if (data.status.includes("seleksi akhir"))
+              if (data.status.includes("seleksi akhir")) {
+                Cookies.set("id_pelatihan", data.id);
+                Cookies.set("id_tema", data.tema_id);
                 return router.push(
                   `/peserta/riwayat-pelatihan/${data.name
                     .split(" ")
                     .join("-")
                     .toLowerCase()}`
                 );
-              if (data.status.includes("tes substansi"))
+              }
+              if (data.status.includes("tes substansi")) {
+                Cookies.set("id_pelatihan", data.id);
+                Cookies.set("id_tema", data.tema_id);
                 return router.push("/peserta/test-substansi");
-              else {
+              } else {
+                Cookies.set("id_pelatihan", data.id);
+                Cookies.set("id_tema", data.tema_id);
                 return router.push(
                   `/peserta/riwayat-pelatihan/${data.name
                     .split(" ")
@@ -332,7 +341,13 @@ export default function CardTemplateOriginal({ data, session }) {
           <Col lg={3} />
           {data.lpj ? (
             <Fragment>
-              <CustomButton click={() => router.push(`/peserta/form-lpj`)}>
+              <CustomButton
+                click={() => {
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  router.push(`/peserta/form-lpj`);
+                }}
+              >
                 <i className="ri-file-text-line mr-2"></i>
                 Isi Laporan Pertangungjawaban
               </CustomButton>
@@ -458,6 +473,8 @@ export default function CardTemplateOriginal({ data, session }) {
               </CustomButton>
               <CustomButton
                 click={() => {
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
                   router.push(`/peserta/test-substansi/panduan-substansi`);
                 }}
                 disabled={!data.tes_subtansi}
@@ -591,7 +608,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   type="file"
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
-                  onChange={e => {
+                  onChange={(e) => {
                     onChangeFile(e);
                   }}
                 />

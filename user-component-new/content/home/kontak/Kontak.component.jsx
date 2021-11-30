@@ -23,7 +23,7 @@ export default function Kontak() {
             <Row>
               <Col
                 lg={6}
-                className="d-flex align-items-center px-20 py-lg-0 py-md-20 py-10"
+                className="d-flex align-items-center px-15 px-md-20 py-lg-0 py-md-20 py-10"
               >
                 <div className="max-w-180px max-w-sm-100 pr-10 pr-md-0">
                   <p className="fw-600 fz-20">Alamat</p>

@@ -19,6 +19,8 @@ const Header = () => {
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
     routerPath = "form-pendaftaran";
+    if (router.pathname.includes("administrasi"))
+    routerPath = "Administrasi";
   if (router.pathname === "/peserta/subvit/substansi/[id]")
     routerPath = "/peserta/subvit/substansi/[id]";
   if (router.pathname === "/peserta/subvit/survey/[id]")
@@ -523,7 +525,16 @@ const Header = () => {
                           marginRight: "15px",
                         }}
                       ></i>
-                    ) : (
+                    ) : router.pathname.includes("administrasi") ? (
+                      <i
+                        className="ri-todo-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) :(
                       <i
                         className="ri-article-line"
                         style={{
@@ -568,7 +579,8 @@ const Header = () => {
                       : router.pathname.includes("pengaturan")
                       ? "Pengaturan"
                       : router.pathname.includes("bookmark")
-                      ? "Favorit"
+                      ? "Favorit": router.pathname.includes("administrasi")
+                      ? "Administrasi"
                       : "Dashboard"}
                   </div>
                 </div>

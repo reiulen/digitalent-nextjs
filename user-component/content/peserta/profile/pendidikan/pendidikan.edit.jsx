@@ -254,6 +254,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         if (e.code == "Equal") {
           return false;
         }
+        if (e.code == "Comma") {
+          return false;
+        }
       };
     }
   }, [ipk]);
@@ -723,7 +726,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka ,Contoh : 2020
+                  Minimal 4 Angka Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -758,7 +761,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka ,Contoh : 2020
+                  Minimal 4 Angka Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -793,7 +796,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka ,Contoh : 2020
+                  Minimal 4 Angka Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -828,7 +831,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka ,Contoh : 2020
+                  Minimal 4 Angka Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -960,7 +963,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
-                <span className="text-muted">Contoh : 3,05</span>
+                <span className="text-muted">Contoh : IPK 3.05</span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -990,7 +993,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka ,Contoh : 2020
+                  Minimal 4 Angka Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1017,7 +1020,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
-                <span className="text-muted">Contoh : 3,05</span>
+                <span className="text-muted">
+                  Gunakan titik "." - Contoh : 3.75
+                </span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -1047,7 +1052,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka ,Contoh : 2020
+                  Minimal 4 Angka Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1074,7 +1079,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
-                <span className="text-muted">Contoh : 3,05</span>
+                <span className="text-muted">
+                  Gunakan titik "." - Contoh : 3.75
+                </span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -1104,7 +1111,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka ,Contoh : 2020
+                  Minimal 4 Angka Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1131,7 +1138,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
-                <span className="text-muted">Contoh : 3,05</span>
+                <span className="text-muted">
+                  Gunakan titik "." - Contoh : 3.75
+                </span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -1161,7 +1170,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka ,Contoh : 2020
+                  Minimal 4 Angka Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
