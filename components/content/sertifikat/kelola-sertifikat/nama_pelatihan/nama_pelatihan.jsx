@@ -105,7 +105,6 @@ export default function NamaPelatihanID({ token }) {
       { shallow: true }
     );
   };
-
   return (
     <PageWrapper>
       {/* error START */}
@@ -381,7 +380,7 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.academy}
                                 </td>
                                 <td className="align-middle">
-                                  {certificate.theme}
+                                  {certificate.training}
                                 </td>
                                 <td className="align-middle">
                                   {certificate.name || "-"}
