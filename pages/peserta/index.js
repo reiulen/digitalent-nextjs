@@ -64,6 +64,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           success = true;
         }
       }
+
       const data = await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
