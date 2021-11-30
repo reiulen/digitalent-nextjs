@@ -114,8 +114,8 @@ const Profile = ({ session }) => {
       <Col md={12} style={{ marginTop: "-2%" }}>
         <Row>
           <Col md={12}>
-            <Card>
-              <div className="d-flex justify-content-center align-items-center d-md-none ">
+            <Card className="mb-8 mt-n12 mt-md-n8">
+              <div className=" d-flex justify-content-center align-items-center d-md-none ">
                 {step.map((el, i) => {
                   return (
                     <Steppers
