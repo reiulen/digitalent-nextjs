@@ -87,25 +87,40 @@ useEffect(() => {
 
 // Handle Empty Tag
 const handleEmptyTag = () => {
-  let arr = dataTag.tag
-  let result = []
+  if (video){
+    let arr = video?.video
+    let temps = []
+    let result = []
+    console.log (arr)
+    for (let i = 0; i < arr.length; i++){
+        for (let j = 0; j < arr[i].tag.length; j++){
+            if (
+                arr[i].tag[j].length !== 0 && 
+                arr[i].tag[j] !== null &&
+                arr[i].tag[j] !== undefined && 
+                arr[i].tag[j] !== " " &&
+                arr[i].tag[j] !== ""
+                )
 
-  for (let i = 0; i < arr.length; i++){
-      for (let j = 0; j < arr[i].length; j++){
-          if (
-              arr[i][j].length !== 0 && 
-              arr[i][j] !== null &&
-              arr[i][j] !== undefined && 
-              arr[i][j] !== " " &&
-              arr[i][j] !== ""
-              )
+            {
+                temps.push (arr[i].tag[j])
+            }
+        }
+    }
+    
+    for (let k = 0; k < temps.length; k++){
+      if (k === 0){
+        result.push(temps[k])
 
-          {
-              result.push (arr[i][j])
-          }
+      } else {
+        if (result.includes (temps[k]) === false){
+          result.push(temps[k])
+        }
       }
+    }
+    setTagVideo (result)
   }
-  setTagVideo (result)
+  
 }
 
 // Handle Empty Kategori not show
@@ -775,9 +790,6 @@ const handleToggleModal = () => {
 
             {/* PAGINATION */}
             <div className="d-flex justify-content-center">
-              {
-                console.log (video)
-              }
               {video && video.total !== 0 && video.total >= 6 ? (
                 <div 
                   className={
@@ -939,8 +951,8 @@ const handleToggleModal = () => {
               </h3>
               <div className=" d-flex flex-wrap flex-row">
                 <div className="row ml-0">
-                  {dataTag && dataTag.tag && dataTag.tag.length !== 0 ? (
-                    dataTag.tag.map((row, i) => {
+                  {tagVideo && tagVideo.length !== 0 ? (
+                    tagVideo.map((row, i) => {
                       return (
                         <div
                           className="border px-2 py-1 rounded my-3 mr-3"
