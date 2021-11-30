@@ -154,7 +154,7 @@ const Artikel = () => {
         
     }
 
-    // Handle Emty Kategori not show
+    // Handle Empty Kategori not show
     const handleKategoriToShow = () => {
         if (artikel){
             let obj = artikel?.artikel
@@ -167,8 +167,13 @@ const Artikel = () => {
 
             for (let j = 0; j < arr.length; j++){
 
-                if (arr[j] !== arr[j+1]){
+                if (j === 0){
                     result.push (arr[j])
+          
+                } else {
+                    if (result.includes (arr[j]) === false){
+                        result.push (arr[j])
+                    }
                 }
             }
             setKategoriToShow(result)

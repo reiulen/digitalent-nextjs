@@ -1,4 +1,4 @@
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
@@ -6,10 +6,11 @@ import { useSelector } from "react-redux";
 import IconSearch from "../../../../assets/icon/Search";
 import Select from "react-select";
 import axios from "axios";
+import SimpleReactValidator from "simple-react-validator";
 
 const TambahApi = ({ token }) => {
   const router = useRouter();
-  const [name, setName] = useState("");
+  const [name, setName] = useState(null);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +26,7 @@ const TambahApi = ({ token }) => {
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
   const allRolesList = useSelector((state) => state.allRolesList);
   const allAcademyList = useSelector((state) => state.allAcademyList);
+  const [, forceUpdate] = useState();
 
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
   const [sortListPelatihan, setSortListPelatihan] = useState(
@@ -40,6 +42,7 @@ const TambahApi = ({ token }) => {
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const handlerShowPassword = (value) => {
     setHidePassword(value);
@@ -104,128 +107,121 @@ const TambahApi = ({ token }) => {
       return { ...items, training_id: items.value };
     });
 
-    if (name === "") {
-      Swal.fire("Gagal simpan", "Nama lengkap tidak boleh kosong", "error");
-    } else if (email === "") {
-      Swal.fire("Gagal simpan", "Email tidak boleh kosong", "error");
-    } else if (!email.includes("@")) {
-      Swal.fire("Gagal simpan", "Format email tidak valid", "error");
-    } else if (status === "") {
-      Swal.fire("Gagal simpan", "Status tidak boleh kosong", "error");
-    } else if (password === "") {
-      Swal.fire("Gagal simpan", "Password tidak boleh kosong", "error");
-    } else if (confirmPassword === "") {
-      Swal.fire(
-        "Gagal simpan",
-        "Konfirmasi password tidak boleh kosong",
-        "error"
-      );
-    } else if (password !== confirmPassword) {
-      Swal.fire(
-        "Gagal simpan",
-        "Password dan konfirmasi password harus sama",
-        "error"
-      );
-    } else if (!role.length) {
-      Swal.fire("Gagal simpan", "Role  tidak boleh kosong", "error");
-    } else if (!unitWork.length) {
-      Swal.fire("Gagal simpan", "Satuan kerja tidak boleh kosong", "error");
-    } else if (typeAccess === "akademi" && statusAcademy.length === 0) {
-      Swal.fire("Gagal simpan", "Status akademy tidak boleh kosong", "error");
-    }
-    // else if (typeAccess === "pelatihan" && pelatihan.length === 0) {
-    //   Swal.fire("Gagal simpan", "Data pelatihan tidak boleh kosong", "error");
-    // }
-    else {
+    if(password !== confirmPassword){
       Swal.fire({
-        title: "Apakah anda yakin simpan ?",
-        // text: "Data ini tidak bisa dikembalikan !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Batal",
-        confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
-      }).then(async (result) => {
-        if (result.value) {
-          if (typeAccess === "akademi") {
-            const sendData = {
-              name: name,
-              email: email,
-              password: password,
-              password_confirmation: confirmPassword,
-              role: role,
-              unit_work_ids: unitWork,
-              type_access: typeAccess,
-
-              academy_ids: statusAcademy.map((items) => {
-                return items.value;
-              }),
-              status: status,
-            };
-            try {
-              let { data } = await axios.post(
-                `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/store`,
-                sendData,
-                {
-                  headers: {
-                    authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-
-              Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
-                () => {
-                  router.push(`/site-management/user/administrator`);
-                }
-              );
-            } catch (error) {
-              Swal.fire(
-                "Gagal simpan",
-                `${error.response.data.message}`,
-                "error"
-              );
-            }
-          } else {
-            const sendData = {
-              name: name,
-              email: email,
-              password: password,
-              password_confirmation: confirmPassword,
-              role: role,
-              unit_work_id: unitWork,
-              type_access: typeAccess,
-              training_access: newData,
-              status: 1,
-            };
-            try {
-              let { data } = await axios.post(
-                `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/store`,
-                sendData,
-                {
-                  headers: {
-                    authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-
-              Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
-                () => {
-                  router.push(`/site-management/user/administrator`);
-                }
-              );
-            } catch (error) {
-              Swal.fire(
-                "Gagal simpan",
-                `${error.response.data.message}`,
-                "error"
-              );
+        icon: "error",
+        title: "Oops...",
+        text: "Password harus sama dengan Confirmation Password !",
+      });
+    }else{
+      if (simpleValidator.current.allValid()) {
+        Swal.fire({
+          title: "Apakah anda yakin simpan ?",
+          // text: "Data ini tidak bisa dikembalikan !",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Batal",
+          confirmButtonText: "Ya !",
+          dismissOnDestroy: false,
+        }).then(async (result) => {
+          if (result.value) {
+            if (typeAccess === "akademi") {
+              const sendData = {
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: confirmPassword,
+                role: role,
+                unit_work_ids: unitWork,
+                type_access: typeAccess,
+  
+                academy_ids: statusAcademy.map((items) => {
+                  return items.value;
+                }),
+                status: status,
+              };
+              try {
+                let { data } = await axios.post(
+                  `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/store`,
+                  sendData,
+                  {
+                    headers: {
+                      authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+  
+                Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+                  () => {
+                    router.push(`/site-management/user/administrator`);
+                  }
+                );
+              } catch (error) {
+                Swal.fire(
+                  "Gagal simpan",
+                  `${error.response.data.message}`,
+                  "error"
+                );
+              }
+            } else {
+              const trainings = newData.map((item) => {
+                return {
+                  id: item.value,
+                  view: item.view === true ? 1 : 0,
+                  manage: item.manage === true ? 1 : 0,
+                };
+              });
+              const sendData = {
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: confirmPassword,
+                role: role,
+                unit_work_ids: unitWork,
+                type_access: typeAccess,
+                training_access: trainings,
+                status: 1,
+              };
+              try {
+                let { data } = await axios.post(
+                  `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/store`,
+                  sendData,
+                  {
+                    headers: {
+                      authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+  
+                Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+                  () => {
+                    router.push(`/site-management/user/administrator`);
+                  }
+                );
+              } catch (error) {
+                Swal.fire(
+                  "Gagal simpan",
+                  `${error.response.data.message}`,
+                  "error"
+                );
+              }
             }
           }
-        }
-      });
+        });
+      } else {
+        simpleValidator.current.showMessages();
+        forceUpdate(1);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data dengan benar !",
+        });
+      }
     }
+
+    
   };
 
   const handleChangeRole = (e) => {
@@ -262,17 +258,31 @@ const TambahApi = ({ token }) => {
                   onChange={(e) => setName(e.target.value)}
                   className="form-control"
                   placeholder="Masukkan nama lengkap"
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("name");
+                  }}
                 />
+                {simpleValidator.current.message("name", name, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group">
                 <label>Email</label>
                 <input
                   value={email}
-                  onChange={(e) => setEmail(e.target.value.replace(/[^A-Za-z0-9@._ ]/g, ""))}
+                  onChange={(e) =>
+                    setEmail(e.target.value.replace(/[^A-Za-z0-9@._ ]/g, ""))
+                  }
                   type="email"
                   className="form-control"
                   placeholder="Masukkan email"
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("email");
+                  }}
                 />
+                 {simpleValidator.current.message("email", email, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group">
                 <label>Status</label>
@@ -280,11 +290,19 @@ const TambahApi = ({ token }) => {
                   value={status}
                   className="form-control"
                   onChange={(e) => setStatus(e.target.value)}
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("status");
+                  }}
                 >
-                  <option value="" selected disabled hidden>Pilih status</option>
+                  <option value="" selected disabled hidden>
+                    Pilih status
+                  </option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
                 </select>
+                {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group">
                 <label>Password</label>
@@ -296,6 +314,9 @@ const TambahApi = ({ token }) => {
                     id="input-password"
                     className="form-control"
                     placeholder="Masukkan password"
+                    onBlur={(e) => {
+                      simpleValidator.current.showMessageFor("password");
+                    }}
                   />
                   {hidePassword === true ? (
                     <i
@@ -311,6 +332,9 @@ const TambahApi = ({ token }) => {
                     />
                   )}
                 </div>
+                {simpleValidator.current.message("password", password, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group mb-2">
                 <label>Konfirmasi Password</label>
@@ -322,6 +346,9 @@ const TambahApi = ({ token }) => {
                     type="password"
                     className="form-control"
                     placeholder="Masukkan konfirmasi password"
+                    onBlur={(e) => {
+                      simpleValidator.current.showMessageFor("confirmPassword");
+                    }}
                   />
                   {hidePasswordConfirm === true ? (
                     <i
@@ -337,6 +364,9 @@ const TambahApi = ({ token }) => {
                     />
                   )}
                 </div>
+                {simpleValidator.current.message("confirmPassword", confirmPassword, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <p style={{ color: "#b7b5cf" }}>
                 Min 8 Karakter,
@@ -363,7 +393,13 @@ const TambahApi = ({ token }) => {
                   options={allRolesList?.data?.list_role?.map((items) => {
                     return { ...items, label: items.name, value: items.name };
                   })}
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("roleOption");
+                  }}
                 />
+                {simpleValidator.current.message("roleOption", roleOption, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group">
                 <label>Satuan Kerja</label>
@@ -383,7 +419,13 @@ const TambahApi = ({ token }) => {
                   options={allUnitWorkList?.data?.unit_work?.map((items) => {
                     return { ...items, label: items.name, value: items.name };
                   })}
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("unitWorkOption");
+                  }}
                 />
+                {simpleValidator.current.message("unitWorkOption", unitWorkOption, "required", {
+                  className: "text-danger",
+                })}
               </div>{" "}
               {/* hak akses disini */}
               <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
@@ -517,47 +559,57 @@ const TambahApi = ({ token }) => {
 
                       <table className="table table-separate table-head-custom table-checkable mt-5">
                         <thead style={{ backgroundColor: "#F2F7FC" }}>
-                        <tr>
-                          <th rowSpan="2" className="align-middle fz-16 fw-600">
-                            No
-                          </th>
-                          <th rowSpan="2" className="align-middle fz-16 fw-600">
-                            ID Pelatihan
-                          </th>
-                          <th rowSpan="2" className="align-middle fz-16 fw-600">
-                            Nama Pelatihan
-                          </th>
-                          <th
-                            rowSpan="2"
-                            className="align-middle text-center fz-16 fw-600"
-                          >
-                            Access
-                          </th>
-                          <th
-                            colSpan="2"
-                            className="text-center border-0 fz-16 fw-600"
-                          >
-                            Permission
-                          </th>
-                        </tr>
-                        <tr>
-                          <th className="text-center fz-16 fw-600">Manage</th>
-                          <th className="text-center fz-16 fw-600">View</th>
-                        </tr>
-                      </thead>
+                          <tr>
+                            <th
+                              rowSpan="2"
+                              className="align-middle fz-16 fw-600"
+                            >
+                              No
+                            </th>
+                            <th
+                              rowSpan="2"
+                              className="align-middle fz-16 fw-600"
+                            >
+                              ID Pelatihan
+                            </th>
+                            <th
+                              rowSpan="2"
+                              className="align-middle fz-16 fw-600"
+                            >
+                              Nama Pelatihan
+                            </th>
+                            <th
+                              rowSpan="2"
+                              className="align-middle text-center fz-16 fw-600"
+                            >
+                              Access
+                            </th>
+                            <th
+                              colSpan="2"
+                              className="text-center border-0 fz-16 fw-600"
+                            >
+                              Permission
+                            </th>
+                          </tr>
+                          <tr>
+                            <th className="text-center fz-16 fw-600">Manage</th>
+                            <th className="text-center fz-16 fw-600">View</th>
+                          </tr>
+                        </thead>
                         <tbody>
                           {sortListPelatihan.map((items, index) => {
                             return (
                               <tr key={index}>
                                 <td className="py-8 border-bottom">
-                                  {index + 1}</td>
+                                  {index + 1}
+                                </td>
 
                                 <td className="py-8 border-bottom">
                                   {items.value}
-                                  </td>
+                                </td>
                                 <td className="py-8 border-bottom">
                                   {items.label}
-                                  </td>
+                                </td>
                                 <td className="text-center py-8 border-bottom">
                                   <label className="checkbox d-flex justify-content-center">
                                     <input
@@ -572,7 +624,7 @@ const TambahApi = ({ token }) => {
                                   </label>
                                 </td>
                                 <td className="text-center py-8 border-bottom">
-                                <label className="checkbox d-flex justify-content-center">
+                                  <label className="checkbox d-flex justify-content-center">
                                     <input
                                       type="checkbox"
                                       checked={items.manage}
@@ -585,7 +637,7 @@ const TambahApi = ({ token }) => {
                                   </label>
                                 </td>
                                 <td className="text-center py-8 border-bottom">
-                                <label className="checkbox d-flex justify-content-center">
+                                  <label className="checkbox d-flex justify-content-center">
                                     <input
                                       type="checkbox"
                                       checked={items.view}
