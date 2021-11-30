@@ -31,7 +31,7 @@ const DetailAkademi = ({ session }) => {
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
     useSelector((state) => state.allPenyelenggaraPeserta);
 
-  const textToTrim = 200;
+  const textToTrim = 450;
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -335,7 +335,7 @@ const DetailAkademi = ({ session }) => {
           <Row>
             <Col md={4} className="mb-5">
               <TrainingReminder session={session} />
-              <div className="filter-content border p-10">
+              <div className="filter-content border rounded-xl p-10">
                 <div className="d-flex align-items-center mb-3 filter-title">
                   <div>
                     <Image
@@ -398,14 +398,14 @@ const DetailAkademi = ({ session }) => {
                 <div className="mt-7">
                   <div className="row d-flex justify-content-around">
                     <button
-                      className="btn btn-white-ghost-rounded-full text-primary"
+                      className="btn btn-white-ghost-rounded-full text-beranda-primary"
                       onClick={() => handleReset()}
                     >
                       Reset
                     </button>
 
                     <button
-                      className="btn btn-primary rounded-pill px-5 fw-600"
+                      className="btn btn-beranda-primary rounded-pill px-5 fw-600"
                       onClick={() => handleFilter()}
                     >
                       Tampilkan

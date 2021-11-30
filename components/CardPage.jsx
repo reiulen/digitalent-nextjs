@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import styles from "../styles/previewGaleri.module.css"
+import styles from "../styles/previewGaleri.module.css";
 
 const CardPage = ({
   background,
@@ -12,46 +12,42 @@ const CardPage = ({
   publishedVal = "",
   routePublish,
   search,
-  backgroundCard
+  backgroundCard,
 }) => {
   return (
     <div
-      className={`col ${background} px-6 py-8 rounded-xl mr-3 mb-7 ml-3`}
+      className={`col-12 ${background} px-6 py-8 rounded-xl mb-7 ml-md-3 col-md`}
       onClick={(publishedVal) => {
-        if(search){
-        search()
-        }else{
-
-          routePublish(publishedVal)
+        if (search) {
+          search();
+        } else {
+          routePublish(publishedVal);
         }
       }}
       style={
-        publishedVal !== "" ? 
-          
-          backgroundCard ?
-            {
-              cursor: "pointer",
-              backgroundImage: `url(${backgroundCard})`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "right top",
-              backgroundSize: "100px",
-            }
-          :
-            {
-              cursor: "pointer",
+        publishedVal !== ""
+          ? backgroundCard
+            ? {
+                cursor: "pointer",
+                backgroundImage: `url(${backgroundCard})`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "right top",
+                backgroundSize: "100px",
+              }
+            : {
+                cursor: "pointer",
+                backgroundImage: "url('/assets/media/card-img.svg')",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "right top",
+                backgroundSize: "100px",
+              }
+          : {
+              cursor: "default",
               backgroundImage: "url('/assets/media/card-img.svg')",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "right top",
               backgroundSize: "100px",
             }
-        : 
-          {
-            cursor: "default",
-            backgroundImage: "url('/assets/media/card-img.svg')",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "right top",
-            backgroundSize: "100px",
-          }
       }
     >
       <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">

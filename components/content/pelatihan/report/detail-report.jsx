@@ -12,7 +12,10 @@ import Select from "react-select";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
-import { getDetailReportTraining, uploadSertifikat } from "../../../../redux/actions/pelatihan/report-training.actions";
+import {
+  getDetailReportTraining,
+  uploadSertifikat,
+} from "../../../../redux/actions/pelatihan/report-training.actions";
 
 const DetailReport = ({ token }) => {
   const dispatch = useDispatch();
@@ -171,91 +174,96 @@ const DetailReport = ({ token }) => {
     return hours + ":" + minutes + ":" + seconds;
   };
 
-  const listPeserta = detailReportTraining.list.length > 0 ? detailReportTraining.list.map((item, index) => {
-    return (
-      <tr key={index}>
-        <td className="text-center">{index + 1}</td>
-        <td className="align-middle">
-          <p className="font-weight-bolder my-0">{item.name}</p>
-          <p className="my-0">{item.nomor_registrasi}</p>
-          <p className="my-0">{item.nik}</p>
-        </td>
-        <td
-          className="align-middle"
-          style={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            maxWidth: "4rem",
-          }}
-        >
-          {item.alamat}
-        </td>
-        <td className="align-middle">
-          <p
-            className={`my-0 text-${
-              item.subtansi_status.toLowerCase() !== "lulus tes"
-                ? "danger"
-                : "success"
-            }`}
-          >
-            {item.subtansi_status}
-          </p>
-          <p className="my-0">{Math.round(item.nilai)}</p>
-          <p className="my-0">{handleSecondsToTime(item.waktu)}</p>
-        </td>
-        <td className="align-middle">
-          <span
-            className={`label label-inline label-light-${
-              item.administrasi.toLowerCase() !== "verified"
-                ? "danger"
-                : "success"
-            } font-weight-bold`}
-          >
-            {item.administrasi}
-          </span>
-        </td>
-        <td className="align-middle">
-          <span
-            className={`label label-inline label-light-${
-              item.status.toLowerCase() === "lulus tes substansi" ||
-              item.status.toLowerCase() === "diterima" ||
-              item.status.toLowerCase() === "pelatihan" ||
-              item.status.toLowerCase() === "lulus pelatihan"
-                ? "success"
-                : "danger"
-            } font-weight-bold`}
-          >
-            {item.status}
-          </span>
-        </td>
-        <td className="align-middle">
-          <div className="d-flex align-items-center">
-            {item.sertifikat === "" ? "Tidak Ada" : "Ada"}
-          </div>
-        </td>
-        {item.sertifikat === "" && (
-          <td className="align-middle">
-            <button
-              className="btn btn-link-action bg-blue-primary text-white"
-              data-toggle="tooltip"
-              data-placement="bottom"
-              title="Tambah Sertifikasi"
-              onClick={() => {
-                setShowModalSertifikasi(true);
-                setId(item.id);
+  const listPeserta =
+    detailReportTraining.list.length > 0 ? (
+      detailReportTraining.list.map((item, index) => {
+        return (
+          <tr key={index}>
+            <td className="text-center">{index + 1}</td>
+            <td className="align-middle">
+              <p className="font-weight-bolder my-0">{item.name}</p>
+              <p className="my-0">{item.nomor_registrasi}</p>
+              <p className="my-0">{item.nik}</p>
+            </td>
+            <td
+              className="align-middle"
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                maxWidth: "4rem",
               }}
-              type="button"
             >
-              <i className="ri-add-fill text-white p-0"></i>
-            </button>
-          </td>
-        )}
-      </tr>
+              {item.alamat}
+            </td>
+            <td className="align-middle">
+              <p
+                className={`my-0 text-${
+                  item.subtansi_status.toLowerCase() !== "lulus tes"
+                    ? "danger"
+                    : "success"
+                }`}
+              >
+                {item.subtansi_status}
+              </p>
+              <p className="my-0">{Math.round(item.nilai)}</p>
+              <p className="my-0">{handleSecondsToTime(item.waktu)}</p>
+            </td>
+            <td className="align-middle">
+              <span
+                className={`label label-inline label-light-${
+                  item.administrasi.toLowerCase() !== "verified"
+                    ? "danger"
+                    : "success"
+                } font-weight-bold`}
+              >
+                {item.administrasi}
+              </span>
+            </td>
+            <td className="align-middle">
+              <span
+                className={`label label-inline label-light-${
+                  item.status.toLowerCase() === "lulus tes substansi" ||
+                  item.status.toLowerCase() === "diterima" ||
+                  item.status.toLowerCase() === "pelatihan" ||
+                  item.status.toLowerCase() === "lulus pelatihan"
+                    ? "success"
+                    : "danger"
+                } font-weight-bold`}
+              >
+                {item.status}
+              </span>
+            </td>
+            <td className="align-middle">
+              <div className="d-flex align-items-center">
+                {item.sertifikat === "" ? "Tidak Ada" : "Ada"}
+              </div>
+            </td>
+            {item.sertifikat === "" && (
+              <td className="align-middle">
+                <button
+                  className="btn btn-link-action bg-blue-primary text-white"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Tambah Sertifikasi"
+                  onClick={() => {
+                    setShowModalSertifikasi(true);
+                    setId(item.id);
+                  }}
+                  type="button"
+                >
+                  <i className="ri-add-fill text-white p-0"></i>
+                </button>
+              </td>
+            )}
+          </tr>
+        );
+      })
+    ) : (
+      <td className="align-middle text-center" colSpan={8}>
+        Data Kosong
+      </td>
     );
-  }): <td className="align-middle text-center" colSpan={8}>
-  Data Kosong
-</td>;
 
   return (
     <PageWrapper>
@@ -266,7 +274,8 @@ const DetailReport = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              Detail Report Pelatihan - {localStorage.getItem("slug")} - {localStorage.getItem("judul")}
+              Detail Report Pelatihan - {localStorage.getItem("slug")} -{" "}
+              {localStorage.getItem("judul")}
             </h1>
           </div>
 
@@ -302,7 +311,7 @@ const DetailReport = ({ token }) => {
                             statusAdmin?.label,
                             statusSubstansi?.label,
                             sertifikasi?.value,
-                            statusPeserta?.label,
+                            statusPeserta?.label
                           )
                         );
                       }}
@@ -368,58 +377,22 @@ const DetailReport = ({ token }) => {
                 </table>
               </div>
               <div className="row">
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={page}
-                    itemsCountPerPage={detailReportTraining.perPage}
-                    totalItemsCount={detailReportTraining.total}
-                    pageRangeDisplayed={2}
-                    onChange={(e) => {
-                      setPage(e);
-                      dispatch(
-                        getDetailReportTraining(
-                          token,
-                          pelatian_id,
-                          e,
-                          limit,
-                          search,
-                          statusAdmin.label,
-                          statusSubstansi.label,
-                          sertifikasi.value,
-                          statusPeserta.label,
-                          
-                        )
-                      );
-                    }}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0 mt-3">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        value={limit}
+                {detailReportTraining.total > 5 && (
+                  <>
+                    <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={detailReportTraining.perPage}
+                        totalItemsCount={detailReportTraining.total}
+                        pageRangeDisplayed={3}
                         onChange={(e) => {
-                          setLimit(e.target.value);
+                          setPage(e);
                           dispatch(
                             getDetailReportTraining(
                               token,
                               pelatian_id,
-                              page,
-                              e.target.value,
+                              e,
+                              limit,
                               search,
                               statusAdmin.label,
                               statusSubstansi.label,
@@ -428,24 +401,63 @@ const DetailReport = ({ token }) => {
                             )
                           );
                         }}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
                     </div>
-                    <div className="col-8 my-auto pt-3">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data {detailReportTraining.total}
-                      </p>
+                    <div className="table-total ml-auto">
+                      <div className="row">
+                        <div className="col-4 mr-0 p-0 mt-3">
+                          <select
+                            className="form-control"
+                            id="exampleFormControlSelect2"
+                            style={{
+                              width: "65px",
+                              background: "#F3F6F9",
+                              borderColor: "#F3F6F9",
+                              color: "#9E9E9E",
+                            }}
+                            value={limit}
+                            onChange={(e) => {
+                              setLimit(e.target.value);
+                              dispatch(
+                                getDetailReportTraining(
+                                  token,
+                                  pelatian_id,
+                                  page,
+                                  e.target.value,
+                                  search,
+                                  statusAdmin.label,
+                                  statusSubstansi.label,
+                                  sertifikasi.value,
+                                  statusPeserta.label
+                                )
+                              );
+                            }}
+                          >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                          </select>
+                        </div>
+                        <div className="col-8 my-auto pt-3">
+                          <p
+                            className="align-middle mt-3"
+                            style={{ color: "#B5B5C3" }}
+                          >
+                            Total Data {detailReportTraining.total}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -514,12 +526,11 @@ const DetailReport = ({ token }) => {
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
             type="button"
-  
             onClick={() => {
-              setStatusAdmin(null)
-              setStatusSubstansi(null)
-              setSertifikasi(null)
-              setStatusPeserta(null)
+              setStatusAdmin(null);
+              setStatusSubstansi(null);
+              setSertifikasi(null);
+              setStatusPeserta(null);
             }}
           >
             Reset
@@ -634,11 +645,11 @@ const DetailReport = ({ token }) => {
             onClick={(e) => {
               e.preventDefault();
               const data = {
-                "id": id,
-                "Sertifikasi": isLulus,
-                "file_sertifikat": sertifkatBase,
+                id: id,
+                Sertifikasi: isLulus,
+                file_sertifikat: sertifkatBase,
               };
-              dispatch(uploadSertifikat(token, data, router.query.id))
+              dispatch(uploadSertifikat(token, data, router.query.id));
               setShowModalSertifikasi(false);
             }}
           >

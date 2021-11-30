@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, Col, Form, InputGroup, FormControl } from "react-bootstrap";
 
-import Select from "react-select";
+import Select, { components } from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 import { getAllPelatihanByAkademi } from "../../../../../redux/actions/beranda/detail-akademi.actions";
 import { getDetailAkademi } from "../../../../../redux/actions/beranda/detail-akademi.actions";
+import {
+  getAllKotaPeserta,
+  getAllTemaOriginal,
+} from "../../../../../redux/actions/beranda/beranda.actions";
 
 const FilterBar = () => {
   const dispatch = useDispatch();
@@ -63,12 +67,13 @@ const FilterBar = () => {
   }
 
   useEffect(() => {
+    dispatch(getAllTemaOriginal(id));
     allAkademi.filter(
       (val) =>
         val.id === parseInt(id) &&
         setActiveAcademy({ value: val.id, label: val.slug })
     );
-  }, []);
+  }, [dispatch]);
 
   const optionsTipePelatihan = [
     { value: "online", label: "Online" },
@@ -97,7 +102,6 @@ const FilterBar = () => {
       ...styles,
       borderRadius: "30px",
       paddingLeft: "25px",
-      overflowY: "overlay",
     }),
     multiValue: (styles) => ({
       ...styles,
@@ -107,15 +111,14 @@ const FilterBar = () => {
     multiValueLabel: (styles) => ({
       ...styles,
       color: "#0063CC",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      maxWidth: "12rem",
     }),
     valueContainer: (styles) => ({
       ...styles,
-      position: temaId && temaId.length > 1 ? "absolute" : "relative",
-      width: "auto",
-    }),
-    indicatorsContainer: (styles) => ({
-      ...styles,
-      display: temaId && temaId.length > 1 ? "none" : "",
+      position: "static",
     }),
   };
 
@@ -153,6 +156,31 @@ const FilterBar = () => {
     );
   };
 
+  const ValueContainer = ({ children, getValue, ...props }) => {
+    let maxToShow = 1;
+    var length = getValue().length;
+    let displayChips = React.Children.toArray(children).slice(0, maxToShow);
+    let shouldBadgeShow = length > maxToShow;
+    let displayLength = length - maxToShow;
+
+    return (
+      <components.ValueContainer {...props}>
+        {!props.selectProps.inputValue && displayChips}
+        <div
+          style={{
+            color: "#0063CC",
+            backgroundColor: "#E6F2FF",
+            padding: "1px 10px",
+            borderRadius: "30px",
+          }}
+        >
+          {shouldBadgeShow &&
+            `+ ${displayLength} ${length != 1 ? "" : ""} lainya`}
+        </div>
+      </components.ValueContainer>
+    );
+  };
+
   return (
     <div className="d-flex align-content-stretch align-items-center flex-lg-nowrap flex-wrap mt-13">
       <div className="mb-5 w-100 rounded-xl mr-md-4 mr-0">
@@ -163,19 +191,23 @@ const FilterBar = () => {
             activeAcademy ? `${activeAcademy.label}` : `Pilih Akademi`
           }
           isClearable
-          onChange={(e) => setAkademiId(e)}
+          onChange={(e) => {
+            setAkademiId(e);
+            dispatch(getAllTemaOriginal(e.value));
+          }}
         />
       </div>
 
       <div className="mb-5 w-100 mr-md-4 mr-0 position-relative">
         <Select
+          closeMenuOnSelect={false}
           options={optionsTheme}
           styles={customStylesTheme}
           placeholder="Pilih Tema"
           isMulti
           onChange={(e) => setTemaId(e)}
           defaultValue={[optionsTheme[activeTheme]]}
-          isClearable={false}
+          components={{ ValueContainer }}
         />
         <i
           className="ri-search-line left-center-absolute"
@@ -213,7 +245,7 @@ const FilterBar = () => {
 
       <div className="mb-5 w-md-50 w-100">
         <button
-          className="btn btn-primary rounded-pill btn-block fw-500"
+          className="btn btn-beranda-primary rounded-pill btn-block fw-500"
           onClick={() => handleSearch()}
         >
           Search
