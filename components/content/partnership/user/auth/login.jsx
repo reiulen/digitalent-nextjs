@@ -61,7 +61,7 @@ const LoginAdmin = () => {
   return (
     <>
       <AuthWrapper image="multiethnic-businesswoman.svg" title="Login">
-        <div className="col-lg-7 d-flex flex-wrap align-content-center" style={{ background: "#0063CC" }}>
+        <div className="col-lg-7 d-flex flex-wrap align-content-center " style={{ background: "#1A4367" }} >
           <div className="container px-0 px-sm-4 scroll-form-login">
             <div className="title-login text-center mt-6">
               <Image src="/assets/logo/logo-6.svg" width={246} height={96} alt="Logo-5" />

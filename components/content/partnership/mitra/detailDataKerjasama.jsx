@@ -936,31 +936,22 @@ const DetailDataKerjasama = ({ token }) => {
                                   <Link
                                     href={{
                                       pathname:
-                                        "/partnership/mitra/detail-data-kerjasama-mitra/sub-detail",
-                                      query: { id: items.id, idDetail: getId },
+                                        // "/partnership/mitra/detail-data-kerjasama-mitra/sub-detail",
+                                        "/partnership/kerjasama/submit-dokumen-kerjasama-revisi",
+                                      query: { id: items.id},
                                     }}
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
-                                      <IconEye
+                                      <IconReview
                                         width="16"
                                         height="16"
                                         fill="rgba(255,255,255,1)"
                                       />
                                       <div className="text-hover-show-hapus">
-                                        Detail
+                                        Review
                                       </div>
                                     </a>
                                   </Link>
-
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() => cooperationDelete(items.id)}
-                                  >
-                                    <IconDelete width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Hapus
-                                    </div>
-                                  </button>
                                 </div>
                               )}
                             </td>

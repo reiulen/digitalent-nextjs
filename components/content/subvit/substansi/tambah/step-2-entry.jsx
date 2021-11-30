@@ -91,7 +91,7 @@ const StepTwo = ({ token }) => {
         if (router.query.metode) {
           router.push({
             pathname: `/subvit/substansi/tambah-step-2-${metode}`,
-            query: { metode },
+            query: { metode, id },
           });
         } else {
           router.push({
