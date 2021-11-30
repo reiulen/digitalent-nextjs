@@ -15,7 +15,7 @@ module.exports = {
   },
   env: {
     NEXTAUTH_URL: "http://dts-dev.majapahit.id",
-
+    LOGO_DTS: "http://api-dts-dev.majapahit.id/pelatihan/storage/images/logo-dts.png",
     // PATH_URL: "http://dts-dev.majapahit.id",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
