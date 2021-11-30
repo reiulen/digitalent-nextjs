@@ -254,9 +254,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         if (e.code == "Equal") {
           return false;
         }
-        if (e.code == "Equal") {
-          return false;
-        }
         if (e.code == "Comma") {
           return false;
         }
