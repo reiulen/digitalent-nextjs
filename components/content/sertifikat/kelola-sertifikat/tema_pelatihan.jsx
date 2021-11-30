@@ -56,14 +56,12 @@ export default function NamaPelatihan({ token }) {
   };
 
   useEffect(() => {
-    // UNFINISH!
-    // di tema nya di kasih academy id
-    // biar gw kalo nge filter itu berdasarkan academy id yang ada di options tema nya
     const filteredTheme = themeOptions.filter(
-      (items) => items.id == academy?.value
+      (items) => items.akademi_id == academy?.value
     );
+
     const data = filteredTheme.map((el) => {
-      return { ...el, value: el.name, label: el.name };
+      return { ...el, value: el.label, label: el.label };
     });
     setDataTemaPelatihan(data);
   }, [academy, themeOptions]);
@@ -104,6 +102,7 @@ export default function NamaPelatihan({ token }) {
   };
 
   useEffect(() => {
+    console.log(allCertificates);
     dispatch(getAllSertifikat(token));
   }, [
     dispatch,
@@ -189,7 +188,7 @@ export default function NamaPelatihan({ token }) {
                       className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
-                      style={{ color: "#464646", minWidth: "230px" }}
+                      style={{ color: "#464646", maxWidth: "230px" }}
                     >
                       <div className="d-flex align-items-center">
                         <IconFilter className="mr-3" />
@@ -272,7 +271,7 @@ export default function NamaPelatihan({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   onChange={(e) => setTemaPelatihan(e)}
-                                  options={themeOptions}
+                                  options={dataTemaPelatihan}
                                 />
                               </div>
                             </div>
