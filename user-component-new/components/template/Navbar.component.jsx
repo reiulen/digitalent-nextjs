@@ -142,7 +142,7 @@ const Navigationbar = ({ session }) => {
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard d-flex pr-0 px-md-22 px-0"
+        className="shadow header-dashboard d-flex pr-0 px-md-6 px-0"
         sticky="top"
       >
         <Col
@@ -344,10 +344,9 @@ const Navigationbar = ({ session }) => {
                   border: "0px !important",
                 }}
                 onKeyDown={(e) => {
+                  setSearch(e.target.value);
                   if (e.code == "Enter") {
                     handleEnter(e);
-                  } else {
-                    setSearch(e.target.value);
                   }
                 }}
               />
@@ -387,7 +386,7 @@ const Navigationbar = ({ session }) => {
                 <div className="d-lg-none d-block">
                   <div
                     className={`wrap-accouts ${style.wrapAccounts} `}
-                    style={{ borderRadius: "20px" }}
+                    style={{ borderRadius: "44px" }}
                     onClick={() => router.push("/peserta/profile")}
                   >
                     {/* <div className="dot-accouts"></div> */}
@@ -420,7 +419,7 @@ const Navigationbar = ({ session }) => {
                     className={`wrap-accouts ${style.wrapAccounts} d-flex justify-content-between`}
                     style={
                       !isShowDropdown
-                        ? { borderRadius: "20px", maxWidth: "max-content" }
+                        ? { borderRadius: "44px", maxWidth: "max-content" }
                         : {}
                     }
                     onClick={() =>
@@ -570,7 +569,7 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {/* gw nge map disini */}
+                    {/* gw map disini */}
                     {akademi &&
                       akademi.map((item, i) => {
                         return (
