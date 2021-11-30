@@ -102,7 +102,6 @@ export default function NamaPelatihan({ token }) {
   };
 
   useEffect(() => {
-    console.log(allCertificates);
     dispatch(getAllSertifikat(token));
   }, [
     dispatch,
