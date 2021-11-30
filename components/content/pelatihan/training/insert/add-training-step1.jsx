@@ -485,6 +485,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <div className="col-sm-10 my-auto">
               <div className="form-check form-check-inline">
                 <input
+                  id="programYa"
                   type="radio"
                   name="program"
                   className="form-check-input"
@@ -495,10 +496,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("program dts")
                   }
                 />
-                <label className="form-check-label">Ya</label>
+                <label className="form-check-label" htmlFor="programYa">
+                  Ya
+                </label>
               </div>
               <div className="form-check form-check-inline">
                 <input
+                  id="programTidak"
                   type="radio"
                   name="program"
                   value="0"
@@ -509,7 +513,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("program dts")
                   }
                 />
-                <label className="form-check-label">Tidak</label>
+                <label className="form-check-label" htmlFor="programTidak">
+                  Tidak
+                </label>
               </div>
               {simpleValidator.current.message(
                 "program dts",
