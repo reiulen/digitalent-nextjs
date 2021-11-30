@@ -259,7 +259,7 @@ const Navigationbar = ({ session }) => {
                     })}
                   </div>
                 </div>
-                <div className="btn-group droptop w-100">
+                <div className="btn-group dropright w-100">
                   <a
                     type="button"
                     className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"

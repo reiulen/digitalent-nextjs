@@ -1023,7 +1023,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
-                <span className="text-muted">Gunakan titik  "." - Contoh : 3.75</span>
+                <span className="text-muted">
+                  Gunakan titik "." - Contoh : 3.75
+                </span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -1080,7 +1082,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
-                <span className="text-muted">Gunakan titik  "." - Contoh : 3.75</span>
+                <span className="text-muted">
+                  Gunakan titik "." - Contoh : 3.75
+                </span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -1137,7 +1141,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
-                <span className="text-muted">Gunakan titik  "." - Contoh : 3.75</span>
+                <span className="text-muted">
+                  Gunakan titik "." - Contoh : 3.75
+                </span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
