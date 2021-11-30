@@ -29,6 +29,9 @@ import {
   BERANDA_FOOTER_REQUEST,
   BERANDA_FOOTER_SUCCESS,
   BERANDA_FOOTER_FAIL,
+  BERANDA_FOOTER_PESERTA_REQUEST,
+  BERANDA_FOOTER_PESERTA_SUCCESS,
+  BERANDA_FOOTER_PESERTA_FAIL,
   CLEAR_ERRORS,
 } from "../../types/beranda/beranda.type";
 
@@ -51,6 +54,26 @@ export const getBerandaFooter = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: BERANDA_FOOTER_FAIL,
+      payload: error.message,
+    });
+  }
+};
+export const getBerandaFooterPeserta = () => async (dispatch) => {
+  try {
+    dispatch({ type: BERANDA_FOOTER_PESERTA_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/auth/count-data-peserta`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: BERANDA_FOOTER_PESERTA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BERANDA_FOOTER_PESERTA_FAIL,
       payload: error.message,
     });
   }

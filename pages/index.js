@@ -2,7 +2,10 @@ import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 
 import { wrapper } from "../redux/store";
-import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
+import {
+  getAllAkademi,
+  getBerandaFooterPeserta,
+} from "../redux/actions/beranda/beranda.actions";
 import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getAllPublikasi } from "../redux/actions/beranda/beranda.actions";
 import { getDataPribadi } from "../redux/actions/pelatihan/function.actions";
@@ -60,6 +63,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllAkademi());
 
       await store.dispatch(getAllPublikasi());
+
+      await store.dispatch(getBerandaFooterPeserta());
 
       return {
         props: {

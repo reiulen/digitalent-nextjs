@@ -96,9 +96,7 @@ import {
   allRoleAdminPublikasiReducer,
 } from "./publikasi/dashboard-publikasi.reducers";
 
-import {
-  allRolePermissionReducer
-} from "./publikasi/role-permissions.reducers"
+import { allRolePermissionReducer } from "./publikasi/role-permissions.reducers";
 
 // Subvit
 // ============== substansi ===============
@@ -459,6 +457,7 @@ import {
   addNotifTemaReducer,
   berandaFooterReducer,
   allTemaOriginalReducer,
+  berandaFooterPesertaReducer,
 } from "../reducers/beranda/beranda.reducers";
 
 // ========== detail akademi ========
@@ -931,6 +930,7 @@ const reducer = combineReducers({
   allPublikasiBeranda: allPublikasiBerandaReducer,
   berandaFooter: berandaFooterReducer,
   allTemaOriginal: allTemaOriginalReducer,
+  berandaFooterPeserta: berandaFooterPesertaReducer,
 
   // ========== detail akademi ========
   detailAkademi: detailAkademiReducer,

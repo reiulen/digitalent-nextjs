@@ -138,7 +138,10 @@ const CardPelatihanQuickView = ({
 
                 <div className="row pt-6">
                   <div className="col-6">
-                    <Link href={`/detail/pelatihan/${row.id}`} passHref>
+                    <Link
+                      href={`/detail/pelatihan/${row.id}?akademiId=${akademi.id}`}
+                      passHref
+                    >
                       <a>
                         <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100">
                           Lihat Selengkapnya

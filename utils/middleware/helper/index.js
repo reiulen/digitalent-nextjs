@@ -59,3 +59,13 @@ export const helperRemoveZeroFromIndex0 = (value, setValue) => {
     setValue(value);
   }
 };
+
+export const helperDigitsCount = (n) => {
+  var count = 0;
+  if (n >= 1) ++count;
+  while (n / 10 >= 1) {
+    n /= 10;
+    ++count;
+  }
+  return count;
+};
