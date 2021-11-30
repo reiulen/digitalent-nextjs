@@ -132,6 +132,10 @@
   font-size: 18px;
   color: #1f1f1f;
   text-align: start;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  max-width: 40rem !important;
 }
 
 .text-date-register-new {
@@ -389,6 +393,12 @@
 @media (max-width: 500px) {
   .padding-content-home {
     padding: 32px 30px;
+  }
+  .title-card-new {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 11rem !important;
   }
   .padding-content-footer {
     padding: 20px 30px;
