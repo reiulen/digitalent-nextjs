@@ -381,6 +381,7 @@ const AddMasterPelatihan = ({ token }) => {
                     simpleValidator.current.showMessageFor("judul form")
                   }
                   autoComplete="off"
+                  maxLength={100}
                 />
                 {simpleValidator.current.message(
                   "judul form",
