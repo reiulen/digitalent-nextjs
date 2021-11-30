@@ -131,9 +131,9 @@ const DetailPelatihan = ({ session }) => {
               >
                 <Image
                   src={
-                    (pelatihan.logo &&
+                    (pelatihan.thumbnail &&
                       process.env.END_POINT_API_IMAGE_BEASISWA +
-                        pelatihan.logo) ||
+                        pelatihan.thumbnail) ||
                     "/assets/media/default-card.png"
                   }
                   objectFit="cover"
@@ -225,6 +225,9 @@ const DetailPelatihan = ({ session }) => {
                   <div className="dot-bullet-detail">
                     <Image
                       src={
+                        (pelatihan.logo &&
+                          process.env.END_POINT_API_IMAGE_BEASISWA +
+                            pelatihan.logo) ||
                         (pelatihan.gambar_mitra &&
                           process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                             pelatihan.gambar_mitra) ||

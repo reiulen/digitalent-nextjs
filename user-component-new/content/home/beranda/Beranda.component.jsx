@@ -27,11 +27,11 @@ const Beranda = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { publikasi } = useSelector(state => state.allPublikasiBeranda);
+  const { publikasi } = useSelector((state) => state.allPublikasiBeranda);
   const { tema, loading: loadingTema } = useSelector(
-    state => state.temaByAkademi
+    (state) => state.temaByAkademi
   );
-  const { akademi } = useSelector(state => state.allAkademi);
+  const { akademi } = useSelector((state) => state.allAkademi);
   const [activeTab, setActiveTab] = useState(0);
   const [akademiId, setAkademiId] = useState(null);
 
@@ -245,7 +245,7 @@ const Beranda = ({ session }) => {
     setCardBookmark(bookmark);
   };
 
-  const handleCloseQuickView = indexTema => {
+  const handleCloseQuickView = (indexTema) => {
     let obj = [...pelatihan];
 
     for (let i = 0; i < obj.length; i++) {
@@ -271,10 +271,10 @@ const Beranda = ({ session }) => {
     }
   };
 
-  const PrintTextTrim = word => {
+  const PrintTextTrim = (word) => {
     let str = null;
-    if (word.length > textToTrim) {
-      str = word.slice(0, textToTrim) + "...";
+    if (word.length > 200) {
+      str = word.slice(0, 200) + "...";
     } else {
       str = word;
     }
@@ -282,7 +282,7 @@ const Beranda = ({ session }) => {
     return str;
   };
 
-  const handleBookmark = async pelatihan => {
+  const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -680,15 +680,23 @@ const Beranda = ({ session }) => {
                                               </div>
                                               <div className="ml-6">
                                                 <p
-                                                  className="fz-14"
-                                                  style={{ color: "#6C6C6C" }}
+                                                  style={{
+                                                    color: "#6C6C6C",
+                                                    fontSize: "14px",
+                                                  }}
                                                 >
                                                   {cardAkademi}
                                                 </p>
-                                                <p className="fz-30 fw-600">
+                                                <p
+                                                  className="fw-600"
+                                                  style={{ fontSize: "20px" }}
+                                                >
                                                   {cardName}
                                                 </p>
-                                                <p className="fw-600 fz-14">
+                                                <p
+                                                  className="fw-600"
+                                                  style={{ fontSize: "14px" }}
+                                                >
                                                   {cardMitra}
                                                 </p>
                                               </div>
@@ -749,6 +757,7 @@ const Beranda = ({ session }) => {
 
                                           <p className="fz-16 fw-400 my-6">
                                             <div
+                                              style={{ maxWidth: "500px" }}
                                               dangerouslySetInnerHTML={{
                                                 __html:
                                                   PrintTextTrim(cardDeskripsi),
@@ -760,7 +769,7 @@ const Beranda = ({ session }) => {
                                             <div className="date d-flex align-items-center align-middle mr-5">
                                               <i className="ri-time-line"></i>
                                               <span
-                                                className="ml-6"
+                                                className="ml-3"
                                                 style={{ color: "#6C6C6C" }}
                                               >
                                                 Registrasi:{" "}
@@ -776,6 +785,7 @@ const Beranda = ({ session }) => {
                                             <div className="date d-flex align-items-center align-middle mr-5">
                                               <i className="ri-group-line"></i>
                                               <span
+                                                className="ml-3"
                                                 style={{ color: "#6C6C6C" }}
                                               >
                                                 Kuota: {cardKuota}
@@ -788,9 +798,20 @@ const Beranda = ({ session }) => {
                                               ></i>
                                               <span
                                                 style={{ color: "#6C6C6C" }}
-                                                className="d-flex align-items-center"
+                                                className="d-flex align-items-center ml-3"
                                               >
-                                                Lokasi: {cardAlamat}
+                                                Lokasi:{" "}
+                                                <span
+                                                  style={{
+                                                    overflow: "hidden",
+                                                    textOverflow: "ellipsis",
+                                                    whiteSpace: "nowrap",
+                                                    maxWidth: "20rem",
+                                                  }}
+                                                >
+                                                  {" "}
+                                                  {cardAlamat}
+                                                </span>
                                               </span>
                                             </div>
                                           </div>
