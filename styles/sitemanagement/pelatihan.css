@@ -50,7 +50,7 @@
 }
 
 .styling-content-pelatihan {
-  margin-left: 32px;
+  margin-left: 34px;
   margin-top: 32px;
 }
 
@@ -305,11 +305,19 @@
   margin-right: 30px;
 }
 
+.styling-unduh > div {
+  margin: 8px 0;
+}
+
+.styling-upload > div {
+  margin: 5px 0;
+}
+
 .styling-unduh span{
   font-family: Poppins;
   font-style: normal;
   font-weight: 600;
-  padding: 12px 32px 12px 56px;
+  padding: 13px 32px 13px 56px;
   font-size: 14px;
   background-color: #4299E1  ;
   border-radius: 30px;
@@ -319,15 +327,64 @@
   white-space: nowrap;
 }
 
-@media only screen and (max-width: 1222px) {
- .border-resnponsive{
-  border-top: solid 1px #D7E1EA;
-  padding-top: 40px;
- }
-}
-
 @media only screen and (min-width: 1222px) {
   .responsive-side-bar{
     border-right: solid 1px #D7E1EA;
   } 
+}
+
+@media only screen and (max-width: 1024px) {
+  .styling-content-pelatihan {
+    margin-left: 12px;
+  }
+  .styling-upload > div {
+    margin: 21px 0 0 0;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .border-resnponsive{
+   border-top: solid 1px #D7E1EA;
+   padding-top: 40px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .styling-content-pelatihan {
+    margin-left: 14px;
+  }
+  .styling-unduh > div {
+    margin: 9px 0 0 0;
+  }
+  .styling-upload > div {
+    margin: 5px 0;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .styling-content-pelatihan {
+    margin-left: 14px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .notification-title h1 {
+    font-size: 18px;
+  }
+  .notification h5 {
+    font-size: 14px;
+  }
+  .email h3 {
+    font-size: 14px;
+  }
+  .isAktif {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  .styling-content-pelatihan {
+    margin-left: 14px;
+    width: 94%;
+  }
 }
