@@ -7,7 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { signIn } from "next-auth/client";
 import SimpleReactValidator from "simple-react-validator";
 import { SweatAlert } from "../../../../utils/middleware/helper";
-
+import { getSession } from "next-auth/client";
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
 
@@ -54,8 +54,13 @@ const LoginUser = () => {
         if (data.role === "admin") {
         } else if (data.role === "mitra") {
           router.push("/partnership/user/kerjasama");
-        } else {
-          router.push("/peserta");
+        } else {  
+          const session = await getSession()
+          if(!session.user.user.data.user.status){
+            router.push('/peserta/wizzard')
+          }else{
+            router.push('/peserta')
+          }
         }
       }
     } else {

@@ -353,7 +353,11 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           <div className={styles.akunMenu}>
             <div className="d-flex flex-row">
               <div className="p-2">
-                <div className="ri-settings-4-line"></div>
+                <div className={`${
+                      router.pathname === "/peserta/pengaturan"
+                        ? styles.activeIconMenu
+                        : styles.iconMenu
+                    }  ri-settings-4-line`}></div>
               </div>
               <div className="p-2">
                 <div>Pengaturan</div>
@@ -370,7 +374,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
         >
           <div className="d-flex flex-row">
             <div className="p-2">
-              <div className="ri-logout-circle-line"></div>
+              <div className={` ${styles.iconMenu} ri-logout-circle-line`}></div>
             </div>
             <div className="p-2">
               <div>Logout</div>
