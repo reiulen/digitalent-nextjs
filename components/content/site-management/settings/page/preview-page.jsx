@@ -58,7 +58,7 @@ const TentangKami = ({ token }) => {
             >
               {pages.name}
             </h3>
-            <div className="">
+            <div className="" style={{marginBottom: "48px"}}>
               <Image
                 src={
                   process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
@@ -66,7 +66,7 @@ const TentangKami = ({ token }) => {
                   pages.property_template.image
                 }
                 width="1500vw"
-                height="1000vh"
+                height="413"
                 objectFit="fill"
                 alt="Detail Image"
                 className="rounded-lg"
@@ -123,7 +123,7 @@ const TentangKami = ({ token }) => {
               {pages.name}
             </h3>
             <div className="row">
-              <div className="col-md-3 mt-3">
+              <div className="col-md-4 mt-3">
                 <Image
                   src={
                     process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
