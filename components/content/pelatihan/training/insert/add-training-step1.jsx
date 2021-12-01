@@ -365,7 +365,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         sertifikasi: sertification,
         lpj_peserta: lpjUser,
         zonasi_id: zonasi,
-        batch: batch.label,
+        batch: batch,
         metode_pelatihan: metodeTraining,
         alamat: address,
         provinsi: province,

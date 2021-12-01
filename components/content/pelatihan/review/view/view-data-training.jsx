@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Modal } from "react-bootstrap";
@@ -114,11 +114,12 @@ const ViewReviewTraining = ({ token }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    revisi &&
-      revisi.length !== 0 &&
-      revisi.map((row, i) => {
-        setNote(row.revisi);
-      });
+    // revisi &&
+    //   revisi.length !== 0 &&
+    //   revisi.map((row, i) => {
+    //     setNote(row.revisi);
+    //   });
+    setRevision();
 
     if (successRevisi) {
       dispatch({ type: REVISI_REVIEW_RESET });
@@ -135,7 +136,18 @@ const ViewReviewTraining = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [successRevisi, successTolak, dispatch, revisi, router]);
+  }, [successRevisi, successTolak, dispatch, revisi, router, setRevision]);
+
+  const setRevision = useCallback(() => {
+    let notes = [];
+    revisi &&
+      revisi.length !== 0 &&
+      revisi.map((row, i) => {
+        notes.push(row.revisi);
+      });
+
+    setNote(notes.join("\n"));
+  }, [revisi]);
 
   const handleRevisi = () => {
     setShowModal(false);
@@ -248,47 +260,44 @@ const ViewReviewTraining = ({ token }) => {
               <div className="col-md-6">
                 <p className="text-neutral-body">Logo Reference</p>
                 <div className="">
-                {dataPelatihan.logoReference.split("/").length === 3 && (
+                  {dataPelatihan.logoReference.split("/").length === 3 && (
                     <p>-</p>
                   )}
-                   {dataPelatihan.logoReference.split("/").length > 3 && (
-                  <figure
-                    className="avatar item-rtl"
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                  >
-                    <Image
-                      src={dataPelatihan.logoReference}
-                      alt="image"
-                      width={160}
-                      height={160}
-                      objectFit="cover"
-                    />
-                  </figure>
-                
+                  {dataPelatihan.logoReference.split("/").length > 3 && (
+                    <figure
+                      className="avatar item-rtl"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src={dataPelatihan.logoReference}
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="cover"
+                      />
+                    </figure>
                   )}
                 </div>
               </div>
               <div className="col-md-6">
                 <p className="text-neutral-body">Thumbnail</p>
                 <div className="">
-                {dataPelatihan.thumbnail.includes("default") && (
-                    <p>-</p>
-                  )}
-                   {dataPelatihan.thumbnail.includes("https") && (
-                  <figure
-                    className="avatar item-rtl"
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                  >
-                    <Image
-                      src={dataPelatihan.thumbnail}
-                      alt="image"
-                      width={160}
-                      height={160}
-                      objectFit="cover"
-                    />
-                  </figure>
+                  {dataPelatihan.thumbnail.includes("default") && <p>-</p>}
+                  {dataPelatihan.thumbnail.includes("https") && (
+                    <figure
+                      className="avatar item-rtl"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src={dataPelatihan.thumbnail}
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="cover"
+                      />
+                    </figure>
                   )}
                 </div>
               </div>
@@ -477,6 +486,12 @@ const ViewReviewTraining = ({ token }) => {
               value={note}
               onChange={(e) => setNote(e.target.value)}
             ></textarea>
+            {revisi.length > 1 && (
+              <p className="text-danger fz-12">
+                *Sebagai history, tambahkan catatan revisi <br /> dibawah
+                catatan sebelumnya.
+              </p>
+            )}
           </div>
         </Modal.Body>
         <Modal.Footer>

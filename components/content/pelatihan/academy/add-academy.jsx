@@ -114,7 +114,7 @@ const AddAcademy = ({ token }) => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 10000000) {
+        if (e.target.files[0].size > 5000000) {
           e.target.value = null;
           SweatAlert("Oops !", "Gambar maksimal 5 MB", "error");
         } else {
@@ -132,7 +132,7 @@ const AddAcademy = ({ token }) => {
         e.target.value = null;
         SweatAlert(
           "Oops !",
-          "Data yang bisa dimasukkan hanya berupa data gambar",
+          "Gambar yang bisa dimasukkan hanya berupa PNG",
           "error"
         );
       }
@@ -370,7 +370,7 @@ const AddAcademy = ({ token }) => {
                   </button>
                 </div>
                 <small className="text-muted">
-                  Format File (.png/.jpg/.pdf) & Max 10 mb
+                  Format File (.png/.jpg/.pdf) & Max 5 mb
                 </small>
               </div>
 
