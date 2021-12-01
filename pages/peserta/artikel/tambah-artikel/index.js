@@ -25,7 +25,6 @@ const TambahArtikelPeserta = dynamic(
 
 const Layout = dynamic(() =>
 import("../../../../user-component/components/template/Layout.component")
-// import("../../../../user-component-new/components/template/Layout.component")
 );
 
 export default function TambahArtikel(props) {

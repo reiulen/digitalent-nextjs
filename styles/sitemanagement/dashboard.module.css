@@ -1,0 +1,29 @@
+.imageAdmin{
+    position: absolute;
+    top: 3px;
+    left: 195px;
+    z-index: 1;
+}
+.cardName{
+    height: 197px;
+    /* z-index: 2; */
+}
+.nameUser{
+
+}
+.namaAdmin{
+    
+}
+
+@media only screen and (max-width: 1024px) {
+    .imageAdmin{
+        /* top: 20px; */
+        left: 30px;
+        width: 300px;
+    }
+    .nameUser{
+        height: 170px;
+        z-index: 2;
+        position: relative;
+    }
+}

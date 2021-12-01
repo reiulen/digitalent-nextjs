@@ -13,6 +13,8 @@ import CardDashboardSM from "../../../CardDashboardSM";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardDashboardSiteManagement from "../../../CardDashboardSiteManagement";
 
+import styles from "../../../../styles/sitemanagement/dashboard.module.css";
+
 import {
   loadDataPeserta,
   loadDataZonasi,
@@ -138,26 +140,20 @@ const DashboardSiteManagement = ({ token, user }) => {
           </div>
         </div>
         <div className="container">
-          <div className="row mx-0">
-            <div className="col-lg-6 mt-2">
-              <div
-                className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
-                style={{ height: "197px", maxHeight: "197px" }}
-              >
-                <div className="right-center-absolute">
-                  <Image src={ImageHero} alt="imagehero" />
-                </div>
-
-                <div className="left-bottom-absolute">
-                  <Image src={ImagePlants} alt="imagehero" />
-                </div>
-
+          <div className="row ml-2 mr-1">
+            <div className={`${styles.cardName} col-lg-6 mt-2 bg-white br-12 py-10 px-6 position-relative`}>
+              <div className={`${styles.nameUser}`}>
+                {/* <div className={`${styles.namaAdmin}`}> */}
                 <h5 className="text-blue-primary fw-600 fz-24">
                   Hallo {user.name} !
                 </h5>
-                <p className="text-muted fw-600 fz-16">
+                <p className="fw-600 fz-16">
                   Selamat Datang di Dashboard <br /> Site Management
                 </p>
+                {/* </div> */}
+              </div>
+              <div className={`${styles.imageAdmin}`}>
+                <Image src={ImageHero} alt="imagehero" width={300} height={200} />
               </div>
             </div>
             <div className="col-lg-3 mt-2 hover-subm">
@@ -269,11 +265,11 @@ const DashboardSiteManagement = ({ token, user }) => {
                       type="button"
                       className={
                         pagePeserta >=
-                        Math.ceil(
-                          allDataPeserta &&
+                          Math.ceil(
+                            allDataPeserta &&
                             allDataPeserta.length > 0 &&
                             allDataPeserta[0].totalPage / 5
-                        )
+                          )
                           ? "btn btn-primary disabled"
                           : "btn btn-primary"
                       }
@@ -283,8 +279,8 @@ const DashboardSiteManagement = ({ token, user }) => {
                           pagePeserta >=
                           Math.ceil(
                             allDataPeserta &&
-                              allDataPeserta.length > 0 &&
-                              allDataPeserta[0].totalPage / 5
+                            allDataPeserta.length > 0 &&
+                            allDataPeserta[0].totalPage / 5
                           )
                         ) {
                           setPagePeserta(pagePeserta);
