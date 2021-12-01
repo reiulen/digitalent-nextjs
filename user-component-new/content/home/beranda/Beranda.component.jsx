@@ -447,6 +447,8 @@ const Beranda = ({ session }) => {
                                               className={`image-list-pelatihan-new`}
                                               src={
                                                 (row.gambar &&
+                                                  row.gambar !==
+                                                    "Belum ada file" &&
                                                   process.env
                                                     .END_POINT_API_IMAGE_BEASISWA +
                                                     row.gambar) ||
@@ -521,6 +523,8 @@ const Beranda = ({ session }) => {
                                               <Image
                                                 src={
                                                   (row.gambar_mitra &&
+                                                    row.gambar_mitra !==
+                                                      "Belum ada file" &&
                                                     process.env
                                                       .END_POINT_API_IMAGE_PARTNERSHIP +
                                                       row.gambar_mitra) ||
@@ -653,6 +657,8 @@ const Beranda = ({ session }) => {
                                           <Image
                                             src={
                                               (cardImage &&
+                                                cardImage !==
+                                                  "Belum ada file" &&
                                                 process.env
                                                   .END_POINT_API_IMAGE_BEASISWA +
                                                   cardImage) ||
