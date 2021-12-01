@@ -726,7 +726,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka Contoh : 2020
+                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -761,7 +761,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka Contoh : 2020
+                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -796,7 +796,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka Contoh : 2020
+                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -831,7 +831,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka Contoh : 2020
+                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -955,6 +955,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
+                  min={0}
                   type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
@@ -963,7 +964,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
-                <span className="text-muted">Contoh : IPK 3.05</span>
+                <span className="text-muted">
+                  Gunakan titik "." - Contoh : 3.75
+                </span>
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
@@ -993,7 +996,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka Contoh : 2020
+                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1012,6 +1015,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
                   type="number"
+                  min={0}
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   onChange={(e) => {
@@ -1052,7 +1056,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka Contoh : 2020
+                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1071,6 +1075,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
                   type="number"
+                  min={0}
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   onChange={(e) => {
@@ -1111,7 +1116,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka Contoh : 2020
+                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1129,6 +1134,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
+                  min={0}
                   type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
@@ -1170,7 +1176,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Minimal 4 Angka Contoh : 2020
+                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
