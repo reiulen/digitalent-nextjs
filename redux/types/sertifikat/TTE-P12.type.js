@@ -1,0 +1,11 @@
+export const TTE_P12_REQUEST = "TTE_P12_REQUEST";
+export const TTE_P12_SUCCESS = "TTE_P12_SUCCESS";
+export const TTE_P12_FAIL = "TTE_P12_FAIL";
+
+export const NEW_TTE_P12_REQUEST = "NEW_TTE_P12_REQUEST";
+export const NEW_TTE_P12_SUCCESS = "NEW_TTE_P12_SUCCESS";
+export const NEW_TTE_P12_FAIL = "NEW_TTE_P12_FAIL";
+
+export const SIGN_PDF_REQUEST = "SIGN_PDF_REQUEST";
+export const SIGN_PDF_SUCCESS = "SIGN_PDF_SUCCESS";
+export const SIGN_PDF_FAIL = "SIGN_PDF_FAIL";
