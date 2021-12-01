@@ -405,6 +405,10 @@ import {
   updateKeterampilanReducer,
   updatePekerjaanReducer,
   getAsalSekolahReducer,
+  getDataAlamatWizzardReducer,
+  getDataInformasiWizzardReducer,
+  getDataPekerjaanWizzardReducer,
+  getDataPendidikanWizzardReducer,
 } from "./pelatihan/peserta/profile.reducers";
 
 import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
@@ -992,6 +996,12 @@ const reducer = combineReducers({
 
   // TTE P12
   TTEP12Data: TTEP12DataReducer,
+
+  //wizzard
+  dataPekerjaanWizzard: getDataPekerjaanWizzardReducer,
+  dataPendidikanWizzard: getDataPendidikanWizzardReducer,
+  dataAlamatWizzard: getDataAlamatWizzardReducer,
+  dataInformasiWizzard: getDataInformasiWizzardReducer,
 });
 
 export default reducer;

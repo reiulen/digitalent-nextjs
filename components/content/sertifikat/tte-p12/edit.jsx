@@ -78,7 +78,7 @@ export default function EditTTEP12({ setUbah, data, token }) {
       </Card.Title>
       <hr className="p-0 m-0" />
       <Card.Body>
-        <Row className=" fz-16">
+        <Row className="fz-16">
           <Col>
             <Form>
               <Form.Group className="mb-8 text-capitalize">
@@ -120,7 +120,7 @@ export default function EditTTEP12({ setUbah, data, token }) {
           <Col>
             <Form>
               <Form.Group className="mb-8 text-capitalize">
-                <Form.Label>Unggah File</Form.Label>
+                <Form.Label className="fz-16">Unggah File</Form.Label>
                 <div className="d-flex">
                   <div className="custom-file">
                     <input
@@ -156,7 +156,7 @@ export default function EditTTEP12({ setUbah, data, token }) {
           <Col>
             <Form>
               <Form.Group className="mb-8 text-capitalize">
-                <Form.Label>Password</Form.Label>
+                <Form.Label className="fz-16">Password</Form.Label>
                 <Form.Control
                   type={!hidePassword ? "text" : "password"}
                   placeholder="Password"

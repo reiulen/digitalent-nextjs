@@ -60,24 +60,28 @@ const Navigationbar = ({ session }) => {
         router.push("/peserta/wizzard");
       }
     }
-    async function getDataGeneral(token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
+  }, []);
 
-        if (data) {
-          setSecondary(data.data.color[0].color);
+  async function getDataGeneral(token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        Swal.fire("Oops !", `${error.response.data.message}`, "error");
+      );
+
+      if (data) {
+        setSecondary(data.data.color[0].color);
       }
+    } catch (error) {
+      Swal.fire("Oops !", `${error.response.data.message}`, "error");
     }
+  }
+
+  useEffect(() => {
     getDataGeneral();
     if (secondary === "1") {
       setWarna("primary");
@@ -86,9 +90,10 @@ const Navigationbar = ({ session }) => {
     } else if (secondary === "3") {
       setWarna("extras");
     }
-  }, [secondary, dataPribadi, router, session]);
+  }, [secondary]);
 
   const [akademi, setAkademi] = useState([]);
+
   const getAkademi = async () => {
     let link =
       process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/dasboard-akademi`;

@@ -48,7 +48,7 @@ import {
   GET_DROPDOWN_FORM_BUILDER,
   ERROR_DROPDOWN_FORM_BUILDER,
   GET_DROPDOWN_YEAR,
-  ERROR_DROPDOWN_YEAR
+  ERROR_DROPDOWN_YEAR,
 } from "../../types/pelatihan/function.type";
 
 import axios from "axios";
