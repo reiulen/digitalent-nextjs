@@ -48,7 +48,7 @@ function Pembahasan({ token }) {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
@@ -56,7 +56,7 @@ function Pembahasan({ token }) {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
@@ -64,7 +64,7 @@ function Pembahasan({ token }) {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
@@ -79,7 +79,7 @@ function Pembahasan({ token }) {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
@@ -94,7 +94,7 @@ function Pembahasan({ token }) {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
@@ -104,7 +104,7 @@ function Pembahasan({ token }) {
               </div>
             </div>
 
-            <div className={`row my-10 ${Style.clearRow}`}>
+            <div className={`row mt-10 mb-20 ${Style.clearRow}`}>
               <div className="col-12 col-sm-6">
                 <Image
                   src="/assets/media/hubungi-kami-1.svg"
@@ -127,14 +127,14 @@ function Pembahasan({ token }) {
                   </p>
                 </div>
 
-                <div className="form-group col-12 col-xl-6 flex-row">
-                  <div className="d-flex flex-wrap justify-content-between">
+                <div className="form-group mb-10">
+                  <div className="d-flex flex-column flex-md-row justify-content-end">
                     <Link
                       href="/partnership/user/tanda-tangan-digital"
                       passHref
                     >
                       <a
-                        className="btn bg-blue-secondary btn-rounded-full text-white mr-5 mt-3"
+                        className="btn bg-blue-secondary btn-rounded-full text-white mr-sm-5 mr-0 mt-3"
                         style={{ whiteSpace: "nowrap" }}
                       >
                         Tanda Tangan Digital
@@ -153,8 +153,7 @@ function Pembahasan({ token }) {
                         passHref
                       >
                         <a
-                          className="btn btn-rounded-full bg-blue-primary text-white mt-3"
-                          style={{ whiteSpace: "nowrap" }}
+                          className="btn btn-rounded-full bg-blue-primary text-white mt-3 "
                         >
                           Submit Dokumen Kerjasama
                         </a>
@@ -162,6 +161,7 @@ function Pembahasan({ token }) {
                     ) : (
                       ""
                     )}
+
                   </div>
                 </div>
               </div>
