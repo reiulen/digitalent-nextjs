@@ -42,10 +42,15 @@ const ViewTrainingStep3 = () => {
                 <p className="text-neutral-body">Komitmen Peserta</p>
                 <p className="text-dark">{komitmenPeserta}</p>
               </div>
-              <div className="col-md-12 mt-4">
-                <p className="font-weight-400">Form Komitmen</p>
-               <div className="border px-4 py-4 rounded text-gray" dangerouslySetInnerHTML={{__html: formKomitmen}} />
-              </div>
+              {review.komitmen === "1" && (
+                <div className="col-md-12 mt-4">
+                  <p className="font-weight-400">Form Komitmen</p>
+                  <div
+                    className="border px-4 py-4 rounded text-gray"
+                    dangerouslySetInnerHTML={{ __html: formKomitmen }}
+                  />
+                </div>
+              )}
             </div>
 
             <div className="button my-5">
@@ -53,7 +58,11 @@ const ViewTrainingStep3 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() => router.push(`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`)}
+                  onClick={() =>
+                    router.push(
+                      `/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`
+                    )
+                  }
                 >
                   Kembali
                 </button>
