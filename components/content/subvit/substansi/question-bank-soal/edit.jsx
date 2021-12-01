@@ -165,9 +165,9 @@ const EditSoalSubstansi = ({ token }) => {
     }
     const list = [...answer];
     list.forEach((row, j) => {
-      list[j]["is_right"] = false;
+      list[j]["is_checked"] = false;
     });
-    list[i]["is_right"] = value;
+    list[i]["is_checked"] = value;
   };
 
   const handleSubmit = (e) => {
@@ -361,6 +361,7 @@ const EditSoalSubstansi = ({ token }) => {
                             <div className="col-md-2 p-0 pl-3 text-center">
                               <Image
                                 src={
+                                  row.image_preview &&
                                   row.image_preview.includes("blob")
                                     ? row.image_preview
                                     : process.env.END_POINT_API_IMAGE_SUBVIT +
@@ -399,7 +400,8 @@ const EditSoalSubstansi = ({ token }) => {
                                 htmlFor="customFile"
                               >
                                 {row.image_name ||
-                                  row.image_preview.substr(16) ||
+                                  (row.image_preview &&
+                                    row.image_preview.substr(16)) ||
                                   "Pilih Gambar"}
                               </label>
                             </div>
@@ -414,7 +416,7 @@ const EditSoalSubstansi = ({ token }) => {
                             </button>
                             <div className="ml-3">
                               <SwitchButton
-                                checked={row.is_right}
+                                checked={row.is_checked}
                                 onlabel=" "
                                 onstyle="primary"
                                 offlabel=" "
