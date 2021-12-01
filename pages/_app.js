@@ -79,14 +79,13 @@ function MyApp({ Component, pageProps }) {
   
   useEffect(() => {
     if (pageProps?.session?.user?.user?.data?.token) {
-      if (allSidebar.loading) {
+      if (!localStorage.getItem("sidebar")) {
         dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
       }
     }
   }, [
     dispatch,
     pageProps?.session?.user?.user?.data?.token,
-    allSidebar.loading,
   ]);
   moment.locale("id");
 

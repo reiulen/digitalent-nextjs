@@ -537,6 +537,7 @@ import { getAllBookmarkPesertaReducer } from "../reducers/pelatihan/peserta/book
 import { allPencarianReducer } from "./pelatihan/peserta/pencarian.reducer";
 import {
   allDetailPesertaReducer,
+  allListPelatihanByPesertaReducer,
   allListPesertaReducer,
 } from "./site-management/user/peserta-dts.reducers";
 
@@ -765,6 +766,7 @@ const reducer = combineReducers({
   allRolesList: allRolesListReducer,
   allAcademyList: allAcademyListReducer,
   allListPelatihan: allListPelatihanReducer,
+  allListPelatihanByPeserta: allListPelatihanByPesertaReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
