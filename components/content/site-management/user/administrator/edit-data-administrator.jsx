@@ -13,6 +13,7 @@ import {
   getListAcademy,
   getAllListPelatihan,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
+import SimpleReactValidator from "simple-react-validator";
 
 const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
@@ -27,6 +28,8 @@ const TambahApi = ({ token }) => {
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
 
   const detailAdminSite = useSelector((state) => state.detailAdminSite);
+
+  console.log(detailAdminSite?.adminSite?.data);
 
   const [name, setName] = useState(detailAdminSite?.adminSite?.data?.name);
   const [email, setEmail] = useState(detailAdminSite?.adminSite?.data?.email);
@@ -45,10 +48,20 @@ const TambahApi = ({ token }) => {
       return items.id;
     })
   );
-  const [unitWork, setUnitWork] = useState(null)
-  const [unitWorkOption, setUnitWorkOption] = useState([]);
+  const [unitWork, setUnitWork] = useState(
+    detailAdminSite?.adminSite?.data?.unit_works?.map((items) => {
+      return items.id;
+    })
+  );
+  const [unitWorkOption, setUnitWorkOption] = useState(
+    detailAdminSite?.adminSite?.data?.unit_works?.map((items) => {
+      return { value: items.id, label: items.name, id: items.id };
+    })
+  );
   const [statusAcademy, setStatusAcademy] = useState([]);
-  const [typeAccess, setTypeAccess] = useState("akademi");
+  const [typeAccess, setTypeAccess] = useState(
+    detailAdminSite?.adminSite?.data?.type_access
+  );
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
 
@@ -82,6 +95,8 @@ const TambahApi = ({ token }) => {
       };
     })
   );
+  const [, forceUpdate] = useState();
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const handleChangeRole = (e) => {
     let data = e.map((items) => {
@@ -169,129 +184,113 @@ const TambahApi = ({ token }) => {
       return { ...items, training_id: items.value };
     });
 
-    if (name === "") {
-      Swal.fire("Gagal simpan", "Nama lengkap tidak boleh kosong", "error");
-    } else if (email === "") {
-      Swal.fire("Gagal simpan", "Email tidak boleh kosong", "error");
-    } else if (!email.includes("@")) {
-      Swal.fire("Gagal simpan", "Format email tidak valid", "error");
-    } else if (status === "") {
-      Swal.fire("Gagal simpan", "Status tidak boleh kosong", "error");
-    } else if (password === "") {
-      Swal.fire("Gagal simpan", "Password tidak boleh kosong", "error");
-    } else if (confirmPassword === "") {
-      Swal.fire(
-        "Gagal simpan",
-        "Konfirmasi password tidak boleh kosong",
-        "error"
-      );
-    } else if (password !== confirmPassword) {
-      Swal.fire(
-        "Gagal simpan",
-        "Password dan konfirmasi password harus sama",
-        "error"
-      );
-    } else if (!role.length) {
-      Swal.fire("Gagal simpan", "Role  tidak boleh kosong", "error");
-    } else if (!unitWork.length) {
-      Swal.fire("Gagal simpan", "Satuan kerja tidak boleh kosong", "error");
-    } else if (typeAccess === "akademi" && statusAcademy.length === 0) {
-      Swal.fire("Gagal simpan", "Status akademy tidak boleh kosong", "error");
-    }
-    // else if (typeAccess === "pelatihan" && pelatihan.length === 0) {
-    //   Swal.fire("Gagal simpan", "Data pelatihan tidak boleh kosong", "error");
-    // }
-    else {
+    if (password !== confirmPassword) {
       Swal.fire({
-        title: "Apakah anda yakin simpan ?",
-        // text: "Data ini tidak bisa dikembalikan !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Batal",
-        confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
-      }).then(async (result) => {
-        if (result.value) {
-          if (typeAccess === "akademi") {
-            const sendData = {
-              id: router.query.id,
-              name: name,
-              email: email,
-              password: password,
-              password_confirmation: confirmPassword,
-              role: role,
-              unit_work_ids: unitWork,
-              type_access: typeAccess,
+        icon: "error",
+        title: "Oops...",
+        text: "Password harus sama dengan Confirmation Password !",
+      });
+    } else {
+      if (simpleValidator.current.allValid()) {
+        Swal.fire({
+          title: "Apakah anda yakin simpan ?",
+          // text: "Data ini tidak bisa dikembalikan !",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Batal",
+          confirmButtonText: "Ya !",
+          dismissOnDestroy: false,
+        }).then(async (result) => {
+          if (result.value) {
+            if (typeAccess === "akademi") {
+              const sendData = {
+                id: router.query.id,
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: confirmPassword,
+                role: role,
+                unit_work_ids: unitWork,
+                type_access: typeAccess,
 
-              academy_ids: statusAcademy.map((items) => {
-                return items.value;
-              }),
-              status: status,
-            };
-            try {
-              let { data } = await axios.post(
-                `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/update`,
-                sendData,
-                {
-                  headers: {
-                    authorization: `Bearer ${token}`,
-                  },
-                }
-              );
+                academy_ids: statusAcademy.map((items) => {
+                  return items.value;
+                }),
+                status: status,
+              };
+              try {
+                let { data } = await axios.post(
+                  `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/update`,
+                  sendData,
+                  {
+                    headers: {
+                      authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
 
-              Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
-                () => {
-                  router.push(`/site-management/user/administrator`);
-                }
-              );
-            } catch (error) {
-              Swal.fire(
-                "Gagal simpan",
-                `${error.response.data.message}`,
-                "error"
-              );
-            }
-          } else {
-            const sendData = {
-              id: router.query.id,
-              name: name,
-              email: email,
-              password: password,
-              password_confirmation: confirmPassword,
-              role: role,
-              unit_work_id: unitWork,
-              type_access: typeAccess,
-              training_access: newData,
-              status: 1,
-            };
-            try {
-              let { data } = await axios.post(
-                `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/update`,
-                sendData,
-                {
-                  headers: {
-                    authorization: `Bearer ${token}`,
-                  },
-                }
-              );
+                Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+                  () => {
+                    router.push(`/site-management/user/administrator`);
+                  }
+                );
+              } catch (error) {
+                Swal.fire(
+                  "Gagal simpan",
+                  `${error.response.data.message}`,
+                  "error"
+                );
+              }
+            } else {
+              const sendData = {
+                id: router.query.id,
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: confirmPassword,
+                role: role,
+                unit_work_id: unitWork,
+                type_access: typeAccess,
+                training_access: newData,
+                status: 1,
+              };
+              try {
+                let { data } = await axios.post(
+                  `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/update`,
+                  sendData,
+                  {
+                    headers: {
+                      authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
 
-              Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
-                () => {
-                  router.push(`/site-management/user/administrator`);
-                }
-              );
-            } catch (error) {
-              Swal.fire(
-                "Gagal simpan",
-                `${error.response.data.message}`,
-                "error"
-              );
+                Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+                  () => {
+                    router.push(`/site-management/user/administrator`);
+                  }
+                );
+              } catch (error) {
+                Swal.fire(
+                  "Gagal simpan",
+                  `${error.response.data.message}`,
+                  "error"
+                );
+              }
             }
           }
-        }
-      });
+        });
+      } else {
+        simpleValidator.current.showMessages();
+        forceUpdate(1);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data dengan benar !",
+        });
+      }
     }
   };
 
@@ -316,7 +315,13 @@ const TambahApi = ({ token }) => {
                   }}
                   className="form-control"
                   placeholder="Masukkan nama lengkap"
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("name");
+                  }}
                 />
+                {simpleValidator.current.message("name", name, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group">
                 <label>Email</label>
@@ -328,17 +333,32 @@ const TambahApi = ({ token }) => {
                   }}
                   className="form-control"
                   placeholder="Masukkan email"
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("email");
+                  }}
                 />
+                {simpleValidator.current.message("email", email, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group">
                 <label>Status</label>
-                <select className="form-control" value={status}>
+                <select
+                  className="form-control"
+                  value={status}
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("status");
+                  }}
+                >
                   <option value="" selected disabled hidden>
                     Pilih status
                   </option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
                 </select>
+                {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group">
                 <label>Password</label>
@@ -418,7 +438,18 @@ const TambahApi = ({ token }) => {
                   options={allRolesList?.data?.list_role?.map((items) => {
                     return { ...items, label: items.name, value: items.name };
                   })}
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("roleOption");
+                  }}
                 />
+                {simpleValidator.current.message(
+                  "roleOption",
+                  roleOption,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Satuan Kerja</label>
@@ -439,7 +470,18 @@ const TambahApi = ({ token }) => {
                   options={allUnitWorkList?.data?.unit_work?.map((items) => {
                     return { ...items, label: items.name, value: items.name };
                   })}
+                  onBlur={(e) => {
+                    simpleValidator.current.showMessageFor("unitWorkOption");
+                  }}
                 />
+                {simpleValidator.current.message(
+                  "unitWorkOption",
+                  unitWorkOption,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </div>{" "}
               {/* hak akses disini */}
               <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
@@ -452,7 +494,12 @@ const TambahApi = ({ token }) => {
                   onClick={() => setTypeAccess("akademi")}
                 >
                   <a
-                    className="nav-link active"
+                    className={`nav-link ${
+                      detailAdminSite?.adminSite?.data?.type_access ===
+                      "akademi"
+                        ? "active"
+                        : ""
+                    }`}
                     id="home-tab"
                     data-toggle="tab"
                     href="#home"
@@ -469,7 +516,12 @@ const TambahApi = ({ token }) => {
                   onClick={() => setTypeAccess("pelatihan")}
                 >
                   <a
-                    className="nav-link"
+                    className={`nav-link ${
+                      detailAdminSite?.adminSite?.data?.type_access ===
+                      "pelatihan"
+                        ? "active"
+                        : ""
+                    }`}
                     id="profile-tab"
                     data-toggle="tab"
                     href="#profile"
@@ -481,9 +533,14 @@ const TambahApi = ({ token }) => {
                   </a>
                 </li>
               </ul>
+              {}
               <div className="tab-content" id="myTabContent">
                 <div
-                  className="tab-pane fade show active"
+                 className={
+                  detailAdminSite?.adminSite?.data?.type_access === "akademi"
+                    ? "tab-pane fade show active"
+                    : "tab-pane fade"
+                }
                   id="home"
                   role="tabpanel"
                   aria-labelledby="home-tab"
@@ -508,7 +565,11 @@ const TambahApi = ({ token }) => {
                   </div>
                 </div>
                 <div
-                  className="tab-pane fade"
+                  className={
+                    detailAdminSite?.adminSite?.data?.type_access === "pelatihan"
+                      ? "tab-pane fade show active"
+                      : "tab-pane fade"
+                  }
                   id="profile"
                   role="tabpanel"
                   aria-labelledby="profile-tab"
