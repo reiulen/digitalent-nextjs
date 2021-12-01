@@ -35,6 +35,40 @@ const SubHeader = () => {
   const days = new Date().toLocaleTimeString("in-ID", { weekday: "long" });
   const [breadcrumbs, setBreadcrumbs] = useState(null);
 
+  var date = new Date();
+
+  var myDays = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+
+  var thisDay = date.getDay(),
+    thisDay = myDays[thisDay];
+
+  useEffect(() => {
+    time();
+  });
+  const [jam, setJam] = useState();
+  const time = () => {
+    var e = document.getElementById("jam"),
+      d = new Date(),
+      h,
+      m,
+      s;
+    h = d.getHours();
+    m = set(d.getMinutes());
+    s = set(d.getSeconds());
+    setJam(`${h}:${m}:${s}`);
+    if (e) {
+      e.innerHTML = h + ":" + m + ":" + s;
+    }
+    setTimeout(() => {
+      time();
+    }, 1000);
+  };
+
+  const set = (e) => {
+    e = e < 10 ? "0" + e : e;
+    return e;
+  };
+
   useEffect(() => {
     if (router) {
       const linkPath = router.asPath.split("/");
@@ -115,7 +149,9 @@ const SubHeader = () => {
               className="text-muted font-size-base font-weight-bold mr-2"
               id="kt_dashboard_daterangepicker_title"
             >
-              {days}
+              <div className="p-1">
+                {thisDay} , <span id="jam">{jam}</span>
+              </div>
             </span>
           </div>
         </div>
