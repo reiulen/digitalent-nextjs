@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Card, Form, Col, Row, Button } from "react-bootstrap";
 import SimpleReactValidator from "simple-react-validator";
 import { SweatAlert } from "../../../../utils/middleware/helper/index";
@@ -16,7 +16,6 @@ export default function EditTTEP12({ setUbah, data, token }) {
   const [hidePassword, setHidePassword] = useState(true);
 
   const [fileName, setFileName] = useState("");
-  const [filePreview, setFilePreview] = useState("");
 
   const onChangeFile = (e) => {
     const type = ["application/x-pkcs12"];
@@ -53,7 +52,6 @@ export default function EditTTEP12({ setUbah, data, token }) {
 
     try {
       const data = await axios.post(link, formData);
-      // console.log(test, "ini test");
       if (data.status == 200) {
         SweatAlert("Berhasil", "Anda berhasil mengunggah file p12", "success");
         const success = await dispatch(getTTEP12(token));
