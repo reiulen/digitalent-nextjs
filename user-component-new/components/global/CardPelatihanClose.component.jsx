@@ -16,6 +16,7 @@ const CardPelatihanClose = ({ row }) => {
             className={`image-list-pelatihan-new`}
             src={
               (row.gambar &&
+                row.gambar !== "Belum ada file" &&
                 process.env.END_POINT_API_IMAGE_BEASISWA + row.gambar) ||
               "/assets/media/default-card.png"
             }
@@ -41,6 +42,7 @@ const CardPelatihanClose = ({ row }) => {
             <Image
               src={
                 (row.gambar_mitra &&
+                  row.gambar_mitra !== "Belum ada file" &&
                   process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                     row.gambar_mitra) ||
                 "/assets/media/mitra-default.png"
