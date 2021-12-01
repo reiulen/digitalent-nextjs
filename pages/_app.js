@@ -76,11 +76,18 @@ function MyApp({ Component, pageProps }) {
   });
 
   const dispatch = useDispatch();
+  
   useEffect(() => {
-    if (allSidebar.loading) {
-      dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
+    if (pageProps?.session?.user?.user?.data?.token) {
+      if (allSidebar.loading) {
+        dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
+      }
     }
-  }, [dispatch, pageProps?.session?.user?.user?.data?.token, allSidebar.loading]);
+  }, [
+    dispatch,
+    pageProps?.session?.user?.user?.data?.token,
+    allSidebar.loading,
+  ]);
   moment.locale("id");
 
   return (

@@ -196,19 +196,16 @@ const Table = ({ token }) => {
                                       </div>
                                     </a>
                                   </Link>
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/role/detail-role`
-                                      )
-                                    }
+                                  <Link
+                                    href={`/site-management/role/detail-role/${items.id}`}
                                   >
-                                    <IconEye width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Detail
-                                    </div>
-                                  </button>
+                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                      <IconEye width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Detail
+                                      </div>
+                                    </a>
+                                  </Link>
 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"

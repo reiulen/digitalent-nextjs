@@ -232,10 +232,10 @@ export default function MasterPelatihan({ token }) {
                   <div className="d-flex flex-wrap align-items-center justify-content-end mt-2 responsive-columns">
                     {/* sortir by modal */}
                     <button
-                      className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                      className="btn border d-flex align-items-center justify-content-between mt-2 w-100"
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
-                      style={{ color: "#464646", minWidth: "230px" }}
+                      style={{ color: "#464646", maxWidth: "280px" }}
                     >
                       <div className="d-flex align-items-center">
                         <IconFilter className="mr-3" />
