@@ -29,8 +29,6 @@ const TambahApi = ({ token }) => {
 
   const detailAdminSite = useSelector((state) => state.detailAdminSite);
 
-  console.log(detailAdminSite?.adminSite?.data);
-
   const [name, setName] = useState(detailAdminSite?.adminSite?.data?.name);
   const [email, setEmail] = useState(detailAdminSite?.adminSite?.data?.email);
   const [status, setStatus] = useState(
