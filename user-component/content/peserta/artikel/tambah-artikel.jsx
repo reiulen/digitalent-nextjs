@@ -9,15 +9,15 @@ import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
-import { newArtikelPeserta } from '../../../../redux/actions/publikasi/artikel.actions'
+import { newArtikelPeserta } from "../../../../redux/actions/publikasi/artikel.actions";
 
-import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../../user-component-new/components/wrapper/Peserta.wrapper";
 import { Container } from "react-bootstrap";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 import gambarImage from "../../../../public/assets/media/default.jpg";
 
-const TambahArtikelPeserta = ({session}) => {
+const TambahArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -102,9 +102,9 @@ const TambahArtikelPeserta = ({session}) => {
       gambar: gambar,
       kategori_akademi: akademi,
       kategori_id: kategori,
-      tag: tag
-    }
-    dispatch(newArtikelPeserta(data, session.token))
+      tag: tag,
+    };
+    dispatch(newArtikelPeserta(data, session.token));
   };
 
   useEffect(() => {
@@ -191,8 +191,17 @@ const TambahArtikelPeserta = ({session}) => {
                       onChange={(e) => {
                         setJudul(e.target.value);
                       }}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("judul")
+                      }
                       required
                     />
+                    {simpleValidator.current.message(
+                      "judul",
+                      judul,
+                      "required|max:200",
+                      { className: "text-danger" }
+                    )}
                   </div>
                 </div>
 
@@ -207,7 +216,6 @@ const TambahArtikelPeserta = ({session}) => {
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <CKEditor
-                      
                           editor={ClassicEditor}
                           config={{
                             placeholder: "Tulis Deskripsi",
@@ -307,9 +315,8 @@ const TambahArtikelPeserta = ({session}) => {
                         handleTag(data);
                       }}
                       name="fruits"
-                      placeHolder="Isi Tag disini"
+                      placeHolder="Isi Tag disini dan Enter"
                       seprators={["Enter", "Tab", "Space"]}
-                      
                     />
                     {checkTag && (
                       <span className="text-danger">Tag tidak boleh sama</span>
