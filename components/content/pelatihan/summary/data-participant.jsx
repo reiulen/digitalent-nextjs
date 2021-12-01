@@ -391,10 +391,7 @@ const DataParticipant = ({ token }) => {
                     </label>
                     <Select
                       options={optionsPeserta}
-                      placeholder={
-                        capitalize(peserta.list[0].status)
-                         || "-"
-                      }
+                      placeholder={capitalize(peserta.list[0].status) || "-"}
                       onChange={(e) =>
                         setStatusPeserta({ label: e.label, value: e.value })
                       }
@@ -418,8 +415,7 @@ const DataParticipant = ({ token }) => {
                     <Select
                       options={optionsAdministrasi}
                       placeholder={
-                        capitalize(peserta.list[0].administrasi)
-                        || "-"
+                        capitalize(peserta.list[0].administrasi) || "-"
                       }
                       onChange={(e) =>
                         setStatusAdministrasi({
@@ -432,7 +428,9 @@ const DataParticipant = ({ token }) => {
                           peserta.list[0].status === "tes substansi" ||
                           peserta.list[0].status ===
                             "tidak lulus tes substansi" ||
-                          peserta.list[0].status === "seleksi akhir"
+                          peserta.list[0].status === "seleksi akhir" ||
+                          peserta.list[0].status === "diterima" ||
+                          peserta.list[0].status === "ditolak"
                         )
                           ? false
                           : true
@@ -445,9 +443,7 @@ const DataParticipant = ({ token }) => {
                     </label>
                     <Select
                       options={optionsPeserta}
-                      placeholder={
-                        capitalize(peserta.list[0].status)|| "-"
-                      }
+                      placeholder={capitalize(peserta.list[0].status) || "-"}
                       onChange={(e) =>
                         setStatusPeserta({ label: e.label, value: e.value })
                       }
@@ -491,9 +487,7 @@ const DataParticipant = ({ token }) => {
                     </label>
                     <Select
                       options={optionsPeserta}
-                      placeholder={
-                        capitalize(peserta.list[0].status) || "-"
-                      }
+                      placeholder={capitalize(peserta.list[0].status) || "-"}
                       onChange={(e) =>
                         setStatusPeserta({ label: e.label, value: e.value })
                       }

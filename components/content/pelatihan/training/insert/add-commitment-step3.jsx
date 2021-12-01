@@ -92,7 +92,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.kabupaten = data.kabupaten.label && data.kabupaten.label;
       data.level_pelatihan =
         data.level_pelatihan.label && data.level_pelatihan.label;
-      data.mitra = data.mitra.value && data.mitra.value + "";
+      data.mitra = data.mitra.value ? data.mitra.value + "" : "";
       data.penyelenggara = data.penyelenggara.label && data.penyelenggara.label;
       data.provinsi = data.provinsi.label && data.provinsi.label;
       data.zonasi_id = data.zonasi_id.label && data.zonasi_id.label;
@@ -107,7 +107,9 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.pendaftaran_selesai = moment(data.pendaftaran_selesai).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      data.pelatihan_mulai = moment(data.pelatihan_mulai).format("YYYY-MM-DD HH:mm:ss");
+      data.pelatihan_mulai = moment(data.pelatihan_mulai).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
       data.pelatihan_selesai = moment(data.pelatihan_selesai).format(
         "YYYY-MM-DD HH:mm:ss"
       );
