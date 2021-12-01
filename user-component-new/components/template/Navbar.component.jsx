@@ -546,7 +546,7 @@ const Navigationbar = ({ session }) => {
           <hr />
 
           <Nav style={{ fontSize: "14px", color: "#6C6C6C" }}>
-            <Row className="d-lg-none">
+            <Row className="d-lg-none px-6">
               <Col sm={12} className="font-weight-bold mb-8">
                 Menu
               </Col>
@@ -571,17 +571,22 @@ const Navigationbar = ({ session }) => {
                       <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
                     </div>
                   </Dropdown.Toggle>
-                  <Dropdown.Menu>
+                  <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
                     {/* gw map disini */}
                     {akademi &&
                       akademi.map((item, i) => {
                         return (
-                          <Dropdown.Item
-                            href={`/detail/akademi/${item.id}`}
-                            key={item.id}
-                          >
-                            {item.slug}
-                          </Dropdown.Item>
+                          <Fragment key={item.id}>
+                            <div
+                              className="p-4 fz-12"
+                              href={`/detail/akademi/${item.id}`}
+                            >
+                              {item.slug}
+                            </div>
+                            {i !== akademi.length - 1 && (
+                              <hr className="w-100 p-0 m-0" />
+                            )}
+                          </Fragment>
                         );
                       })}
                   </Dropdown.Menu>
@@ -604,13 +609,14 @@ const Navigationbar = ({ session }) => {
                       <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
                     </div>
                   </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">
+                  <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
+                    <div className="p-4 fz-12" href="#/action-1">
                       Panduan Test Substansi
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
+                    </div>
+                    <hr className="w-100 p-0 m-0" />
+                    <div className="p-4 fz-12" href="#/action-2">
                       Hak dan Kewajiban
-                    </Dropdown.Item>
+                    </div>
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
@@ -637,11 +643,25 @@ const Navigationbar = ({ session }) => {
                       <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
                     </div>
                   </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="/berita">Berita</Dropdown.Item>
-                    <Dropdown.Item href="/artikel">Artikel</Dropdown.Item>
-                    <Dropdown.Item href="/galeri">Galeri</Dropdown.Item>
-                    <Dropdown.Item href="/video">Video</Dropdown.Item>
+                  <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
+                    <div className="p-4 fz-12" href="/berita">
+                      Berita
+                    </div>
+                    <hr className="w-100 p-0 m-0" />
+
+                    <div className="p-4 fz-12" href="/artikel">
+                      Artikel
+                    </div>
+                    <hr className="w-100 p-0 m-0" />
+
+                    <div className="p-4 fz-12" href="/galeri">
+                      Galeri
+                    </div>
+                    <hr className="w-100 p-0 m-0" />
+
+                    <div className="p-4 fz-12" href="/video">
+                      Video
+                    </div>
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>

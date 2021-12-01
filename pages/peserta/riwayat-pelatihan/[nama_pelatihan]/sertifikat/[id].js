@@ -10,10 +10,10 @@ import { getDetailRiwayatPelatihan } from "../../../../../redux/actions/pelatiha
 import { getAllAkademi } from "../../../../../redux/actions/beranda/beranda.actions";
 import { getDashboardPeserta } from "../../../../../redux/actions/pelatihan/dashboard-peserta.actions";
 
-const RiwayatPelatihanDetail = dynamic(
+const SertifikatPeserta = dynamic(
   () =>
     import(
-      "../../../../../user-component/content/peserta/riwayat-pelatihan/[id]/lulus-pelatihan"
+      "../../../../../user-component-new/content/peserta/sertifikat-peserta/sertifikat-peserta"
     ),
   {
     loading: function loadingNow() {
@@ -26,7 +26,7 @@ const RiwayatPelatihanDetail = dynamic(
 const BelumTersedia = dynamic(
   () =>
     import(
-      "../../../../../user-component/content/peserta/riwayat-pelatihan/[id]/belum-tersedia"
+      "../../../../../user-component-new/content/peserta/sertifikat-peserta/Belum-tersedia"
     ),
   {
     loading: function loadingNow() {
@@ -48,8 +48,8 @@ export default function RiwayatPelatihanPage(props) {
   return (
     <>
       <Layout title="Administrasi" session={session}>
-        {props.success ? (
-          <RiwayatPelatihanDetail session={session} />
+        {!props.success ? (
+          <SertifikatPeserta session={session} />
         ) : (
           <BelumTersedia />
         )}
