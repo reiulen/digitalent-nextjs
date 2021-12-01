@@ -339,7 +339,7 @@ const Beranda = ({ session }) => {
         <Carousel data={publikasi} />
       </section>
 
-      <Container fluid className="padding-content-home mt-md-10 mt-5">
+      <Container fluid className="padding-content-tema mt-md-10 mt-5">
         <section className="tema-carousel-new carousel-secondarys">
           {akademi && (
             <Splide options={optionsSplide} hasSliderWrapper>
@@ -900,7 +900,7 @@ const Beranda = ({ session }) => {
             <h1>
               Tahapan Pendaftaran <br /> Digital Talent Scholarship
             </h1>
-            <Col md={12}>
+            <Col md={12} className="p-0">
               <div className="mt-md-20 mt-10 ">
                 <img
                   src="/assets/media/image-step-register.png"
@@ -946,7 +946,7 @@ const Beranda = ({ session }) => {
 
       <section className="come-join-new">
         <Container fluid className="padding-content-home">
-          <ComeJoin />
+          <ComeJoin session={session} />
         </Container>
       </section>
     </>
