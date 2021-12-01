@@ -30,15 +30,12 @@ import {
   searchKeyword,
 } from "../../../redux/actions/pelatihan/pencarian.action";
 
-const Sidebar = dynamic(
-  () => import("../../../user-component/components/template/Sidebar.component"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSidebar />;
-    },
-    ssr: false,
-  }
-);
+const Sidebar = dynamic(() => import("./Sidebar.component"), {
+  loading: function loadingNow() {
+    return <LoadingSidebar />;
+  },
+  ssr: false,
+});
 
 const Navigationbar = ({ session }) => {
   const dispatch = useDispatch();
