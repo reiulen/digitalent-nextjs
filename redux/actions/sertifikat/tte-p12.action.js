@@ -24,13 +24,13 @@ export const getTTEP12 = (token) => async (dispatch, getState) => {
 
     const { data } = await axios.get(link, config);
     if (data) {
-      dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
+      dispatch({ type: TTE_P12_SUCCESS, payload: data });
     }
 
     return data;
   } catch (error) {
     dispatch({
-      type: SERTIFIKAT_FAIL,
+      type: TTE_P12_FAIL,
       payload: error?.response?.data?.message || error.message,
     });
   }

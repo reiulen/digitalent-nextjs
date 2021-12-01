@@ -5,6 +5,7 @@ import { getSession } from "next-auth/client";
 import Pagination from "react-js-pagination";
 
 import { wrapper } from "../../redux/store";
+import { getTTEP12 } from "../../redux/actions/sertifikat/tte-p12.action";
 
 const TTEP12 = dynamic(
   () => import("../../components/content/sertifikat/tte-p12/index"),
@@ -29,7 +30,7 @@ export default function KelokaSertifikatPage(props) {
 
 // Function GETSERVERSIDE PROPS
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -40,6 +41,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const data = await store.dispatch(
+        getTTEP12(session.user.user.data.token)
+      );
 
       return {
         props: { session, title: "List Akademi - Sertifikat" },
