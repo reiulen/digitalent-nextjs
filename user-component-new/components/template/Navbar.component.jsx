@@ -604,20 +604,12 @@ const Navigationbar = ({ session }) => {
                     }}
                     className="p-0"
                   >
-                    <div className="d-flex align-items-center justify-content-between p-0 m-0">
-                      Pusat Informasi
-                      <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
-                    </div>
+                    <Link href="/pusat-informasi">
+                      <div className="d-flex align-items-center justify-content-between p-0 m-0">
+                        Pusat Informasi
+                      </div>
+                    </Link>
                   </Dropdown.Toggle>
-                  <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
-                    <div className="p-4 fz-12" href="#/action-1">
-                      Panduan Test Substansi
-                    </div>
-                    <hr className="w-100 p-0 m-0" />
-                    <div className="p-4 fz-12" href="#/action-2">
-                      Hak dan Kewajiban
-                    </div>
-                  </Dropdown.Menu>
                 </Dropdown>
               </Col>
               <Col className="mb-8" sm={12}>
