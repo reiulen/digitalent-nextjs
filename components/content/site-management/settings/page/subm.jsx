@@ -664,7 +664,7 @@ export default function SUBM(props) {
               onClick={(e) => handleSubmit(e)}
               className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
             >
-              Simpan
+              Kirim
             </button>
           </div>
         </form>

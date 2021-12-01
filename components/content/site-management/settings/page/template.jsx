@@ -164,7 +164,7 @@ export default function Template(props) {
               type="submit"
               className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
             >
-              Simpan
+              Kirim
             </button>
           </div>
         </form>

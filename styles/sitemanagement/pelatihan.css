@@ -330,6 +330,11 @@
   white-space: nowrap;
 }
 
+.cardDataPeserta{
+  margin: 0 2px 0 10px;
+  width: 97%;
+}
+
 @media only screen and (min-width: 1222px) {
   .responsive-side-bar{
     border-right: solid 1px #D7E1EA;
@@ -357,6 +362,17 @@
   .responsive-side-bar{
     border-right: solid 1px #D7E1EA;
   } 
+
+  /* DASHBOARD SITE MANAGEMENT */
+  
+  .cardDataPeserta{
+    /* margin: 0 2px 0 10px; */
+    width: 77%;
+  }
+  .data-daerah {
+    font-size: 14px;
+  }
+
 }
 
 @media only screen and (max-width: 991px) {
