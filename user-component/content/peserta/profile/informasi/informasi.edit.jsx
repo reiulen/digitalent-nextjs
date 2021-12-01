@@ -410,7 +410,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-                {!dataPribadi.foto &&
+                {!dataPribadi?.foto &&
                   simpleValidator.current.message("foto", upImg, "required", {
                     className: "text-danger",
                   })}

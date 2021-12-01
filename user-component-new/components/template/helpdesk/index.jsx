@@ -9,9 +9,9 @@ export default function Index({ children }) {
     router.asPath.includes("formulir-pengaduan")
   );
 
-  const sidebar = ["live-chat", "formulir-pengaduan", "hubungi-kami"];
+  const sidebar = ["live-chat", "formulir-pengaduan"];
   const [index, setIndex] = useState(null);
-  const icon = ["question-answer-fill", "file-text-line", "phone-line"];
+  const icon = ["question-answer-fill", "file-text-line"];
   useEffect(() => {
     const arr = router.asPath.split("/");
     const current = arr[arr.length - 1];
@@ -29,7 +29,6 @@ export default function Index({ children }) {
           {sidebar &&
             sidebar.map((el, i) => (
               <a
-                href={el.includes("hubungi-kami") && "tel:0213452841"}
                 onClick={() =>
                   !el.includes("hubungi-kami") &&
                   router.push(`/helpdesk/${sidebar[i]}`)
