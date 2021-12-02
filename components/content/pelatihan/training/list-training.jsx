@@ -141,10 +141,12 @@ const ListTraining = ({ token }) => {
   const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
   const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
 
+  const [dateDisabled, setDateDisabled] = useState(true);
+
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
 
-  const optionsAkademi = dataAkademi.data || [];
+  const optionsAkademi = dataAkademi ? dataAkademi.data : [];
   const optionsTema = dataTema.data || [];
   const optionsPenyelenggara = [];
   if (dataPenyelenggara) {
@@ -318,6 +320,7 @@ const ListTraining = ({ token }) => {
 
   const handleFilter = () => {
     setShowModal(false);
+    setDateDisabled(true);
     let register = dateRegister.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
@@ -344,6 +347,7 @@ const ListTraining = ({ token }) => {
   };
 
   const handleReset = () => {
+    setDateDisabled(true);
     setPenyelenggara(null);
     setAcademy(null);
     setTheme(null);
@@ -1256,7 +1260,10 @@ const ListTraining = ({ token }) => {
                 className="form-control"
                 name="start_date"
                 selectsRange={true}
-                onChange={(date) => setDateRegister(date)}
+                onChange={(date) => {
+                  setDateRegister(date);
+                  setDateDisabled(false);
+                }}
                 startDate={dateRegisterStart}
                 endDate={dateRegisterEnd}
                 dateFormat="dd/MM/yyyy"
@@ -1272,10 +1279,12 @@ const ListTraining = ({ token }) => {
                 name="start_date"
                 selectsRange={true}
                 onChange={(date) => setDatePelaksanaan(date)}
+                minDate={dateRegisterEnd || dateRegisterStart}
                 startDate={datePelaksanaanStart}
                 endDate={datePelaksanaanEnd}
                 dateFormat="dd/MM/yyyy"
                 autoComplete="off"
+                disabled={dateDisabled}
               />
             </div>
           </div>
@@ -1327,7 +1336,7 @@ const ListTraining = ({ token }) => {
         </Modal.Body>
         <Modal.Footer>
           <button
-            className={`${styles} btn btn-rounded-full`}
+            className={` btn btn-rounded-full`}
             type="button"
             onClick={() => setShowModalRevisi(false)}
           >

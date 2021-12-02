@@ -22,6 +22,7 @@ const ViewFormCommitment = ({ token }) => {
   const dispatch = useDispatch();
 
   const [note, setNote] = useState("");
+  const [noteSend, setNoteSend] = useState("");
 
   const { id } = router.query;
   const { error: errorRevisi, revisi } = useSelector(
@@ -91,7 +92,7 @@ const ViewFormCommitment = ({ token }) => {
     setShowModal(false);
     const data = {
       pelatian_id: parseInt(id),
-      revisi: note,
+      revisi: noteSend,
     };
     dispatch(revisiReviewPelatihan(data, token));
   };
@@ -138,14 +139,14 @@ const ViewFormCommitment = ({ token }) => {
 
             <div className="row">
               <div className="col-md-12">
-                <p className="text-neutral-body">Komitmen Peserta</p>
+                <p className="text-neutral-body mb-2 fz-14">Komitmen Peserta</p>
                 <p className="text-dark">
                   {komitmenPeserta === "1" ? "Ya" : "Tidak"}
                 </p>
               </div>
               {komitmenPeserta === "1" && (
                 <div className="col-md-12">
-                  <p className="text-neutral-body">Form Komitmen</p>
+                  <p className="text-neutral-body mb-2 fz-14">Form Komitmen</p>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: formKomitmen,
@@ -212,9 +213,17 @@ const ViewFormCommitment = ({ token }) => {
             <textarea
               rows="5"
               className="form-control"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
+              value={noteSend}
+              placeholder={note}
+              onChange={(e) => setNoteSend(e.target.value)}
+              maxLength={200}
             ></textarea>
+            {revisi.length > 0 && (
+              <p className="text-danger fz-12">
+                *Sebagai history, tambahkan catatan revisi <br /> dibawah
+                catatan sebelumnya.
+              </p>
+            )}
           </div>
         </Modal.Body>
         <Modal.Footer>

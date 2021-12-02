@@ -58,6 +58,9 @@ const ListReport = ({ token }) => {
 
   const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
   const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
+
+  const [dateDisabled, setDateDisabled] = useState(true);
+
   const [penyelenggara, setPenyelenggara] = useState({ label: "", value: "" });
   const [academy, setAcademy] = useState({ label: "", value: "" });
   const [theme, setTheme] = useState({ label: "", value: "" });
@@ -480,6 +483,7 @@ const ListReport = ({ token }) => {
                 name="start_date"
                 selectsRange={true}
                 onChange={(date) => {
+                  setDateDisabled(false);
                   setDateRegister(date);
                 }}
                 startDate={dateRegisterStart}
@@ -500,6 +504,8 @@ const ListReport = ({ token }) => {
                 endDate={datePelaksanaanEnd}
                 dateFormat="dd/MM/yyyy"
                 autoComplete="off"
+                minDate={dateRegisterEnd || dateRegisterStart}
+                disabled={dateDisabled}
               />
             </div>
           </div>
@@ -509,6 +515,8 @@ const ListReport = ({ token }) => {
             className="btn btn-light-ghost-rounded-full mr-2"
             type="button"
             onClick={() => {
+              setShowModal(false);
+              setDateDisabled(true);
               setPenyelenggara({ label: "", value: "" });
               setAcademy({ label: "", value: "" });
               setTheme({ label: "", value: "" });
@@ -523,6 +531,7 @@ const ListReport = ({ token }) => {
             type="button"
             onClick={() => {
               setShowModal(false);
+              setDateDisabled(true);
               let register = dateRegister.map((item) => {
                 return moment(item).format("YYYY/MM/DD");
               });

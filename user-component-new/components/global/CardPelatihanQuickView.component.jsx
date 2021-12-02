@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import Image from "next/image";
 import Link from "next/link";
+import moment from "moment";
 
 import style from "../../../styles/peserta/dashboard.module.css";
 
@@ -112,10 +113,13 @@ const CardPelatihanQuickView = ({
                     <span style={{ color: "#6C6C6C" }}>
                       <IconTime className="mr-2" />
                       Registrasi:{" "}
-                      {moment(row.pendaftaran_mulai).format(
-                        "DD MMMM YYYY"
-                      )} -{" "}
-                      {moment(row.pendaftaran_selesai).format("DD MMMM YYYY")}
+                      {moment(row.pendaftaran_mulai)
+                        .utc()
+                        .format("DD MMM YYYY")}{" "}
+                      -{" "}
+                      {moment(row.pendaftaran_selesai)
+                        .utc()
+                        .format("DD MMM YYYY")}
                     </span>
                     <span className="mx-6" style={{ color: "#6C6C6C" }}>
                       <IconPeserta className="mr-2" />
@@ -143,7 +147,7 @@ const CardPelatihanQuickView = ({
                       passHref
                     >
                       <a>
-                        <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100">
+                        <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100 fw-600">
                           Lihat Selengkapnya
                         </button>
                       </a>

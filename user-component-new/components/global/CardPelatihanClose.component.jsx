@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Badge } from "react-bootstrap";
-import style from "../../../styles/peserta/dashboard.module.css";
 import Image from "next/image";
+import moment from "moment";
 
 const CardPelatihanClose = ({ row }) => {
   return (
@@ -90,8 +90,8 @@ const CardPelatihanClose = ({ row }) => {
               <i className="ri-time-line"></i>
               <span className={`text-date-register-new pl-2`}>
                 Registrasi:{" "}
-                {moment(row.pendaftaran_mulai).format("DD MMMM YYYY")} -{" "}
-                {moment(row.pendaftaran_selesai).format("DD MMMM YYYY")}
+                {moment(row.pendaftaran_mulai).format("DD MMM YYYY")} -{" "}
+                {moment(row.pendaftaran_selesai).format("DD MMM YYYY")}
               </span>
             </div>
             <div className="date d-flex align-items-center align-middle">

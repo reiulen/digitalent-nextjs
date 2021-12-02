@@ -50,7 +50,7 @@ const FormCopy = ({
         <label className="col-form-label font-weight-bold">Judul Form</label>
         <Select
           options={optionsForm}
-          value={{value: title, label: title}}
+          value={{ value: title, label: title }}
           onChange={(e) => {
             funcTitle(e.label);
             dispatch(getDetailMasterPelatihan(e.value, token));
