@@ -25,6 +25,7 @@ export const loadDataZonasi = (token, type, page) => {
           params,
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -57,6 +58,8 @@ export const loadDataPeserta = (token, type, page) => {
           params,
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
+
           },
         }
       );
@@ -94,6 +97,7 @@ export const loadDataZonasiNext = (token, type, page) => {
           params,
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
           },
         }
       );

@@ -3,13 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-// import Highlighter from "react-highlight-words";
+import styles from "../detail-berita/detail-berita.module.css";
 import { useRouter } from "next/router";
 import {
     Container,
     Modal
   } from "react-bootstrap";
-import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
+import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 
 const DetailBerita = () => {
     const dispatch = useDispatch();
@@ -19,14 +19,11 @@ const DetailBerita = () => {
     const { tags } = useSelector((state) => state.allTagBerandaBerita)
 
     const [ keyword, setKeyword ] = useState (null)
-    const [ searchWords, setSearchWords ] = useState (null)
     const [ resultText, setResultText ] = useState(null)
+    const [ detailContent, setDetailContent ] = useState("")
+    const [ tagBerita, setTagBerita ] = useState([])
 
     const getWindowDimensions = () => {
-        // if (typeof window === 'undefined') {
-        //     global.window = {}
-        // }
-
         const { innerWidth: width, innerHeight: height } = window;
         return {
             width,
@@ -35,7 +32,6 @@ const DetailBerita = () => {
     };
 
     const [windowDimensions, setWindowDimensions] = useState(
-        // getWindowDimensions()
         {}
     );
 
@@ -52,6 +48,70 @@ const DetailBerita = () => {
 
     },[windowDimensions])
 
+    useEffect(() => {
+        handleLinkContent()
+    }, [detail])
+
+    useEffect(() => {
+        handleEmptyTag()
+    },[])
+
+
+    const handleLinkContent = () => {
+        if (detail){
+            let text = detail.isi_berita 
+            let result = ""
+
+            if (text.includes ("<a")){
+                result = text.replace("<a", `<a target="_blank"`)
+            }
+
+            setDetailContent(result)
+        }
+    }
+
+    // Handle Empty Tag
+    const handleEmptyTag = () => {
+        if (tags){
+            let arr = tags?.tag
+            let temps = []
+            let result = []
+
+            for (let i = 0; i < arr.length; i++){
+                if (
+                    arr[i].length !== 0 && 
+                    arr[i] !== null &&
+                    arr[i] !== undefined && 
+                    arr[i] !== " " &&
+                    arr[i] !== ""
+                    )
+
+                {
+                    temps.push (arr[i].toUpperCase())
+                }
+            }
+
+            for (let k = 0; k < temps.length; k++){
+                if (k === 0){
+                    result.push(temps[k].toUpperCase())
+
+                } else {
+                    if (result.includes (temps[k].toUpperCase()) === false){
+                    result.push(temps[k].toUpperCase())
+                    }
+                }
+            }
+
+            if (result.length <= 8){
+                setTagBerita (result)
+
+            } else {
+                let tagResult = result.slice(0, 8)
+                setTagBerita (tagResult)
+            }
+        }
+    }
+
     const handleFilterTag = (str) => {
         router.push (`/berita?tag=${str}`)
     }
@@ -62,8 +122,6 @@ const DetailBerita = () => {
         let result = ""
         let splitWords = keyword.split (" ")
         let splitText = text.split(" ")
-        // let splitWords = keyword
-        // setSearchWords(splitWords)
 
         for (let i = 0; i < splitWords.length; i++){
             for (let j = 0; j < splitText.length; j++){
@@ -71,7 +129,7 @@ const DetailBerita = () => {
                     result += `<mark>`+splitText[j]+`</mark>`+" "
 
                 } else {
-                    result += `<span>`+splitText[j]+`</span>`+" "
+                    result += " "+splitText[j]+" "
                 }
             }
         }
@@ -80,10 +138,13 @@ const DetailBerita = () => {
     }
     
     return (
-        <Container fluid className="px-md-30 px-10 py-10 bg-white">
+        <Container fluid className="px-3 pl-sm-15 pr-sm-10 py-10 bg-white">
             {/* BreadCrumb */}
-            <SubHeaderComponent 
-                data={[{ link: "/berita", name: "Berita" }, { link: router.asPath, name: "Detail Berita" }]}
+            <BreadcrumbComponent 
+                data={[
+                    { link: "/berita", name: "Berita" }, 
+                    { link: router.asPath, name: "Detail Berita" }
+                ]}
             />
 
             {/* Header */}
@@ -191,12 +252,24 @@ const DetailBerita = () => {
 
                             {/* Berita */}
                             <div className="border rounded-lg mb-5 mt-15">
-                                <div className="row my-5 mx-5 text-justify" style={{width: '95%',wordBreak:'break-word'}}>
+                                <div 
+                                    className="row my-5 mx-5 text-justify " 
+                                    style={{width: '95%',wordBreak:'break-word'}}
+                                >
                                     {
-                                        resultText ?
-                                            <div dangerouslySetInnerHTML={{__html: resultText}}></div>
+                                        detailContent ?
+                                            resultText ?
+                                                <div 
+                                                    dangerouslySetInnerHTML={{__html: resultText}}
+                                                    className={ `${styles.detailBerita}`}
+                                                />
+                                            :
+                                                <div 
+                                                    dangerouslySetInnerHTML={{__html: detailContent}}
+                                                    className={ `${styles.detailBerita}`}
+                                                />
                                         :
-                                            <div dangerouslySetInnerHTML={{__html: detail.isi_berita}}/>
+                                            null
                                     }
                                 </div>
 
@@ -222,12 +295,6 @@ const DetailBerita = () => {
                                                 <i className="ri-share-line px-0 py-1"></i>
                                             </button>
                                         </div>
-                                        
-                                        {/* <div className="mr-3">
-                                            <button className="btn btn-sm btn-outline-light rounded-circle">
-                                                <i className="ri-heart-line px-0 py-1"></i>
-                                            </button>
-                                        </div> */}
                                         
                                     </div>
                                 </div>
@@ -276,16 +343,22 @@ const DetailBerita = () => {
                                                     placeholder="Cari Berita"
                                                     onChange={(e) => setKeyword(e.target.value)}
                                                 />
-                                
-                                                <div>
-                                                    <button 
-                                                        className="btn btn-primary-dashboard" 
-                                                        // onClick={(e) => handleHighlightWords(e, detail.isi_berita)}
-                                                        style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
-                                                    >
-                                                        Cari
-                                                    </button>
-                                                </div>
+
+                                                {
+                                                    detailContent ?
+                                                        <div>
+                                                            <button 
+                                                                className="btn btn-primary-dashboard" 
+                                                                onClick={(e) => handleHighlightWords(e, detailContent)}
+                                                                style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
+                                                            >
+                                                                Cari
+                                                            </button>
+                                                        </div>
+                                                    :
+                                                        null
+                                                }
+                                                
                                             </div>
                                         </form>
 
@@ -298,8 +371,8 @@ const DetailBerita = () => {
                                         </h3>
                                         <div className=" d-flex flex-wrap flex-row">
                                             {
-                                                tags && tags.tag && tags.tag.length !== 0 ?
-                                                    tags.tag.map ((el, i) => {
+                                                tagBerita && tagBerita.length !== 0 ?
+                                                    tagBerita.map ((el, i) => {
                                                         return (
                                                             <div 
                                                             className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 
