@@ -13,7 +13,7 @@ import { getDashboardPeserta } from "../../../../redux/actions/pelatihan/dashboa
 const RiwayatPelatihanDetail = dynamic(
   () =>
     import(
-      "../../../../user-component/content/peserta/riwayat-pelatihan/[id]/lulus-pelatihan"
+      "../../../../user-component-new/content/peserta/riwayat-pelatihan/[id]/lulus-pelatihan"
     ),
   {
     loading: function loadingNow() {
@@ -26,7 +26,7 @@ const RiwayatPelatihanDetail = dynamic(
 const BelumTersedia = dynamic(
   () =>
     import(
-      "../../../../user-component/content/peserta/riwayat-pelatihan/[id]/belum-tersedia"
+      "../../../../user-component-new/content/peserta/riwayat-pelatihan/[id]/belum-tersedia"
     ),
   {
     loading: function loadingNow() {
@@ -59,7 +59,7 @@ export default function RiwayatPelatihanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 
