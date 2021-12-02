@@ -303,7 +303,6 @@ const EditArtikelPeserta = ({ session }) => {
                         <div
                           ref={quillRef}
                           onBlur={() =>
-                            ref={quillRef},
                             simpleValidator.current.showMessageFor("deskripsi")
                           }
                         />
