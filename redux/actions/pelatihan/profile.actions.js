@@ -327,19 +327,19 @@ export const clearErrors = () => async (dispatch) => {
   });
 };
 
-export const getDataInformasiWizzard = () => async (dispatch, getState) => {
-  dispatch({
-    type: GET_DATA_PRIBADI_WIZZARD,
-    payload: data,
-  });
-};
+// export const getDataInformasiWizzard = () => async (dispatch, getState) => {
+//   dispatch({
+//     type: GET_DATA_PRIBADI_WIZZARD,
+//     payload: data,
+//   });
+// };
 
-export const updateDataWizzard =
-  (dataPribadi, params) => async (dispatch, getState) => {
-    const current = getState().getDataPribadiWizzard;
+// export const updateDataWizzard =
+//   (dataPribadi, params) => async (dispatch, getState) => {
+//     const current = getState().getDataPribadiWizzard;
 
-    dispatch({
-      type: STORE_ALL_DATA_PRIBADI,
-      payload: data,
-    });
-  };
+//     dispatch({
+//       type: STORE_ALL_DATA_PRIBADI,
+//       payload: data,
+//     });
+//   };
