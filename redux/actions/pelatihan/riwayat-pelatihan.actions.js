@@ -123,6 +123,7 @@ export const getDetailRiwayatPelatihan =
         },
       };
       const { data } = await axios.get(link, config);
+
       if (data) {
         dispatch({ type: RIWAYAT_PELATIHAN_DETAIL_SUCCESS, payload: data });
       }

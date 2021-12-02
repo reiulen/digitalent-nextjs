@@ -213,7 +213,7 @@ const DetailDataKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark titles-1">
-              Kerjasama &nbsp;
+              Kerjasama &nbsp; 
               {mitraDetailAll?.mitraDetailAll?.data?.title}
             </h3>
           </div>
@@ -250,7 +250,7 @@ const DetailDataKerjasama = ({ token }) => {
                 <div className="d-flex flex-wrap align-items-center justify-content-xl-end justify-content-start mt-2">
                   {/* disini sortir modal */}
                   <button
-                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2 col-12 col-md-9 col-xl-3 mr-sm-6 mt-5"
+                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2 col-12 col-md-9 col-xl-6 mr-sm-6 mt-2"
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
                     style={{ color: "#464646"}}
@@ -373,7 +373,7 @@ const DetailDataKerjasama = ({ token }) => {
                   <button
                     type="button"
                     onClick={() => dispatch(exportFileCSVDetail(token, getId))}
-                    className="btn btn-rounded-full bg-blue-secondary text-white ml-sm-11  ml-md-6 mt-5"
+                    className="btn btn-rounded-full bg-blue-secondary text-white ml-sm-11  ml-md-6 mt-2"
                     style={{ width: "max-content" }}
                   >
                     Export .xlsx
