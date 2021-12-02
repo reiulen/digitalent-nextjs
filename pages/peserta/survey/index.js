@@ -10,6 +10,7 @@ import {
   getAllRiwayatPelatihanPeserta,
   getDetailRiwayatPelatihan,
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
 
 const SurveyPage = dynamic(
   () => import("../../../user-component-new/content/peserta/survey"),
@@ -51,32 +52,6 @@ export default function TestSubstansiPage(props) {
   );
 }
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) =>
-//     async ({ query, req }) => {
-//       const session = await getSession({ req });
-//       const middleware = middlewareAuthPesertaSession(session);
-
-//       if (!middleware.status) {
-//         return {
-//           redirect: {
-//             destination: middleware.redirect,
-//             permanent: false,
-//           },
-//         };
-//       }
-//       if (session) {
-//         await store.dispatch(
-//           getDataPribadi(session?.user.user.data.user.token)
-//         );
-//       }
-
-//       return {
-//         props: { data: "auth", session, title: "Dashboard - Peserta" },
-//       };
-//     }
-// );
-
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
@@ -92,38 +67,26 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       let success = false;
-      if (!req.cookies.id_pelatihan) {
-        const { data } = await store.dispatch(
-          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-          );
-        if (!data) {
-          return success = false;
-        } else {
-          const survey = data.list.filter((item) => item.status === "survey");
-          if (survey.length > 0) {
-            await store.dispatch(
-              getDetailRiwayatPelatihan(
-                survey[0].id,
-                session.user.user.data.user.token
-              )
-            );
-            success = true;
-          } else {
-            success = false;
-          }
-        }
-      } else {
-        console.log(req.cookies.id_pelatihan)
+
+      const { data } = await store.dispatch(
+        getDashboardPeserta(session?.user.user.data.user.token)
+      );
+
+      const status = data.pelatihan.pelatihan_berjalan.status || "";
+
+      if (!status || status == "") {
+        success = false;
+      } else if (status.includes("administrasi akhir")) {
         await store.dispatch(
           getDetailRiwayatPelatihan(
-            req.cookies.id_pelatihan,
+            data.pelatihan.pelatihan_berjalan.id,
             session.user.user.data.user.token
           )
         );
         success = true;
+      } else {
+        success = false;
       }
-
-      console.log(success)
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
