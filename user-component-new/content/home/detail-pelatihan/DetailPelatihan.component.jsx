@@ -18,7 +18,10 @@ import IconShare from "../../../../components/assets/icon/Share";
 
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
 
-import { checkRegisterPelatihan } from "../../../../redux/actions/beranda/detail-pelatihan.actions";
+import {
+  checkRegisterPelatihan,
+  getDetailPelatihan,
+} from "../../../../redux/actions/beranda/detail-pelatihan.actions";
 import axios from "axios";
 
 const DetailPelatihan = ({ session }) => {
@@ -27,7 +30,7 @@ const DetailPelatihan = ({ session }) => {
 
   const dispatch = useDispatch();
   const { pelatihan } = useSelector((state) => state.detailPelatihan);
-
+  console.log(pelatihan, "ini pelatihan");
   useEffect(() => {
     if (pelatihan.Status === "Close") {
       router.back();
@@ -54,24 +57,76 @@ const DetailPelatihan = ({ session }) => {
     window.location.href = silabus;
   };
 
+  //disini kurang
+  const handleBookmark = async (id) => {
+    const link = process.env.END_POINT_API_PELATIHAN;
+    const config = {
+      headers: {
+        Authorization: "Bearer " + session?.token,
+      },
+    };
+
+    const body = {
+      pelatihan_id: pelatihan.id,
+    };
+
+    if (!pelatihan.bookmark) {
+      try {
+        const data = await axios.post(
+          `${link}api/v1/bookmart-peserta/create`,
+          body,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "success"
+          );
+          dispatch(getDetailPelatihan(router.query.id, session?.token));
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    } else {
+      try {
+        const data = await axios.delete(
+          `${link}api/v1/bookmart-peserta/delete?pelatihan_id=${pelatihan.id}`,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menghapus pelatihan dari bookmark",
+            "success"
+          );
+
+          dispatch(getDetailPelatihan(router.query.id, session?.token));
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    }
+  };
+
   return (
     <>
       <HomeWrapper>
         <BreadcrumbComponent
           data={[
-            { link: `/detail/akademi/${akademiId}`, name: pelatihan.akademi },
-            { link: router.asPath, name: pelatihan.name },
+            { link: `/detail/akademi/${akademiId}`, name: pelatihan?.akademi },
+            { link: router.asPath, name: pelatihan?.name },
           ]}
         />
         <Row>
           <Col md={12} lg={8}>
             <div className="rounded my-5">
               <div className="ml-2 mb-3 title-pelatihan">
-                <h1 className="fw-700 fz-40">{pelatihan.name}</h1>
+                <h1 className="fw-700 fz-40">{pelatihan?.name}</h1>
 
                 <div className="d-flex align-items-center mt-5 mt-md-1">
-                  <p className="mr-6 fz-18 fw-500">{pelatihan.akademi}</p>
-                  <p className="badgess-green">{pelatihan.Status}</p>
+                  <p className="mr-6 fz-18 fw-500">{pelatihan?.akademi}</p>
+                  <p className="badgess-green">{pelatihan?.Status}</p>
                 </div>
 
                 <Row className="mt-8">
@@ -124,7 +179,16 @@ const DetailPelatihan = ({ session }) => {
                           <IconShare />
                         </button>
                       </ShareOverlay>
-                      <button className="btn btn-white roundedss-border">
+                      <button
+                        className="btn btn-white roundedss-border"
+                        onClick={() => {
+                          if (!session) {
+                            router.push("/login");
+                          } else {
+                            handleBookmark(pelatihan);
+                          }
+                        }}
+                      >
                         <IconLove />
                       </button>
                     </div>

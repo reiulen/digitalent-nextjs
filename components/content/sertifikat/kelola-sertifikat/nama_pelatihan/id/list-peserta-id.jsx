@@ -52,6 +52,7 @@ export default function ListPesertaID({ token }) {
   const handleDownload = async () => {
     const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${certificate?.data?.certificate?.training_id}`;
     const check = await axios.get(linkChecker);
+    console.log(check, "iini check");
     // check udh pernah di sign apa belum?
     if (!check.data.status) {
       const data = await convertDivToPng(divReference.current);

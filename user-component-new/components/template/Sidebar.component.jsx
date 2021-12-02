@@ -350,7 +350,13 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
         </div>
 
         <Link href="/peserta/pengaturan" passHref>
-          <div className={styles.akunMenu}>
+          <div
+            className={
+              router.pathname === "/peserta/pengaturan"
+                ? styles.akunMenuActive
+                : styles.akunMenu
+            }
+          >
             <div className="d-flex flex-row">
               <div className="p-2">
                 <div

@@ -28,6 +28,7 @@ const DetailAkademi = ({ session }) => {
   const { pelatihan, loading: loadingPelatihan } = useSelector(
     (state) => state.allPelatihan
   );
+
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
     useSelector((state) => state.allPenyelenggaraPeserta);
 
@@ -468,6 +469,7 @@ const DetailAkademi = ({ session }) => {
                                     funcQuickView={(index) =>
                                       handleQuickView(index)
                                     }
+                                    session={session}
                                     show={show}
                                     row={el}
                                     i={i}

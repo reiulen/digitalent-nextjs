@@ -64,11 +64,12 @@ export const getAllPelatihanByAkademi =
       if (page) link = link.concat(`&page=${page}`);
 
       const { data } = await axios.get(link);
-
       dispatch({
         type: PELATIHAN_AKADEMI_SUCCESS,
         payload: data.data,
       });
+
+      return data;
     } catch (error) {
       dispatch({
         type: PELATIHAN_AKADEMI_FAIL,
