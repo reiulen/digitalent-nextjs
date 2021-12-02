@@ -21,7 +21,7 @@ const SubHeaderComponent = ({ data = [] }) => {
                   row.name.length > 30 ?
                     <span>{row.name.substring(0, 30) + " ..."}</span>
                   :
-                  <span>{row.name}</span>
+                    <span>{row.name}</span>
                 :
     
                   row.name.length > 30 ?
