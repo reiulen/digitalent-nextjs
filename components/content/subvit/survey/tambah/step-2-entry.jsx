@@ -243,6 +243,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
           dispatch(newSurveyQuestionDetail(data, token));
+          handleResetForm();
         }
       default:
         break;
