@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Card, Button, Modal, ModalBody } from "react-bootstrap";
@@ -11,7 +12,9 @@ const TestSubstansi = () => {
   const pelatihanId = Cookies.get("id_pelatihan");
 
   const handlePage = () => {
-    router.push(`/peserta/subvit/survey/1?theme_id=73&training_id=204`);
+    router.push(
+      `/peserta/subvit/survey/1?theme_id=${temaId}&training_id=${pelatihanId}`
+    );
   };
 
   const [show, setShow] = useState(false);

@@ -73,9 +73,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const status = data.pelatihan.pelatihan_berjalan.status || "";
       if (!status || status == "") {
         success = false;
-      } else if (
-        status.includes("trivia" || "belum tersedia" || "belum mengerjakan")
-      ) {
+      } else if (status.includes("pelatihan")) {
         await store.dispatch(
           getDetailRiwayatPelatihan(
             data.pelatihan.pelatihan_berjalan.id,

@@ -73,11 +73,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       const status = data.pelatihan.pelatihan_berjalan.status || "";
+      console.log(status);
       if (!status || status == "") {
         success = false;
-      } else if (
-        status.includes("survei" || "belum tersedia" || "belum mengerjakan")
-      ) {
+      } else if (status.includes("administrasi akhir")) {
         await store.dispatch(
           getDetailRiwayatPelatihan(
             data.pelatihan.pelatihan_berjalan.id,
