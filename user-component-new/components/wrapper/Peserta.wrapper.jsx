@@ -1,5 +1,6 @@
 import React from "react";
 import { Col } from "react-bootstrap";
+import styles from "./pesertaWrapper.module.css";
 
 const PesertaWrapper = ({ children, padding }) => {
   return (
@@ -7,8 +8,8 @@ const PesertaWrapper = ({ children, padding }) => {
       <Col
         md={12}
         lg={9}
-        style={{ marginTop: "-5%" }}
-        className={`${padding ? "pt-10 pt-lg-0" : ""}`}
+        // style={{ marginTop: "-5%" }}
+        className={`${styles.responsive} ${padding ? "pt-10 pt-lg-0" : ""}`}
       >
         {children}
       </Col>
