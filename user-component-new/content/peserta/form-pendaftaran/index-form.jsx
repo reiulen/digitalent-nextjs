@@ -9,21 +9,14 @@ import style from "./style.module.css";
 import moment from "moment";
 
 import LoadingPage from "../../../../components/LoadingPage";
+
 import FormPendaftaran from "./form-pendaftaran";
 import FormKomitmen from "./form-komitmen";
 import FormBerhasil from "./form-berhasil";
 
 import { clearErrors } from "../../../../redux/actions/pelatihan/register-training.actions";
-import { PENDAFTARAN_PELATIHAN_RESET } from "../../../../redux/types/pelatihan/register-training.type";
 import Layout from "../../../components/template/form-pendaftaran/LayoutCustom.component";
 import { SweatAlert } from "../../../../utils/middleware/helper";
-// const Layout = dynamic(
-//   () =>
-//     import(
-//       "../../../../user-component/components/template/LayoutCustom.component"
-//     )
-//   // import("../../../user-component/components/template/LayoutCustom.component")
-// );
 
 const IndexForm = ({ token, session }) => {
   const dispatch = useDispatch();
@@ -69,7 +62,6 @@ const IndexForm = ({ token, session }) => {
     if (success) {
       SweatAlert("Berhasil", "Anda berhasil mendaftar pelatihan", "success");
       setView(3);
-      // dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
     }
   }, [error, success]);
 
