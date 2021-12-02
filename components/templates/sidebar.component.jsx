@@ -73,8 +73,6 @@ const Sidebar = ({ session }) => {
     });
   };
 
-  let initializeMenu = null;
-
   const [menu, setMenu] = useState(JSON.parse(localStorage.getItem("sidebar")) ? JSON.parse(localStorage.getItem("sidebar")) : []);
   const pathRoute = router.route;
   const splitRouteToMakingActive = pathRoute.split("/");
@@ -91,7 +89,7 @@ const Sidebar = ({ session }) => {
           ) {
             if (splitRouteToMakingActive[1] !== "dashboard") {
               const idSubmenuActive = localStorage.getItem("submenuActive");
-              // menu[index].child[idSubmenuActive].selected = true;
+              menu[index].child[idSubmenuActive].selected = true;
             }
           }
         }
@@ -108,10 +106,24 @@ const Sidebar = ({ session }) => {
   }, []); 
 
   useEffect(() => {
+    if(!JSON.parse(localStorage.getItem("sidebar")) && session){
+      const config = {
+        headers: {
+          Authorization: "Bearer " + session.user.user.data.token,
+        },
+      };
+  
+      axios.get(
+        process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
+        config
+      ).then(data => {
+        setMenu(data.data.data.menu)
+      })
+    }
     if (!menu) {
       setMenu(JSON.parse(localStorage.getItem("sidebar")));
    }
-  }, []);
+  }, [session]);
  
 
   const handleOpenMenu = (e, i, condition) => {
@@ -130,7 +142,7 @@ const Sidebar = ({ session }) => {
           menu[i].selected = !condition;
           if (menu[i].name.toLowerCase() === splitRouteToMakingActive[1]) {
             const idSubmenuActive = localStorage.getItem("submenuActive");
-            // menu[i].child[idSubmenuActive].selected = true;
+            menu[i].child[idSubmenuActive].selected = true;
           }
         }
       }
@@ -176,6 +188,8 @@ const Sidebar = ({ session }) => {
     setMenu(_temp);
     e.stopPropagation();
   };
+
+  console.log(menu)
 
   const handleActiveSubSubmenu = (e, iMenu, iSubMenu, iSubSubMenu) => {
     let _temp = [...menu];

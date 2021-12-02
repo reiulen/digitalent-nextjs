@@ -182,7 +182,8 @@ export const allSidebarReducer = (state = {loading: true, data: {data: {menu: []
     case GET_SIDEBAR:
       return {
         loading: false,
-        data: action.payload
+        data: action.payload,
+        menu: JSON.parse(localStorage.getItem("sidebar"))
       };
 
     default:
