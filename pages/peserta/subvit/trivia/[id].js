@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 import { getRandomSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
+import { getRandomTriviaQuestionDetail } from "../../../../redux/actions/subvit/trivia-question-detail.action";
 import { wrapper } from "../../../../redux/store";
 import Layout from "../../../../user-component/components/template/Layout.component";
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
@@ -46,10 +47,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getRandomSubtanceQuestionDetail(
+        getRandomTriviaQuestionDetail(
           query.training_id,
           query.theme_id,
-          query.category,
+
           session.user.user.data.token
         )
       );

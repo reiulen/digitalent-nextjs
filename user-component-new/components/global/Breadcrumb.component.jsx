@@ -35,10 +35,10 @@ const BreadcrumbComponent = ({ data = [] }) => {
                     >
                       {row.name}
                     </span>
-                  )
-                )}
-              </Fragment>
-            </Link>
+                  </Link>
+                )
+              )}
+            </Fragment>
           </div>
         ))}
     </div>

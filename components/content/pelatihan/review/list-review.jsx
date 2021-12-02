@@ -65,6 +65,8 @@ const ListReview = ({ token }) => {
   const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
   const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
 
+  const [dateDisabled, setDateDisabled] = useState(true);
+
   const [showModal, setShowModal] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
 
@@ -152,6 +154,7 @@ const ListReview = ({ token }) => {
 
   const handleFilter = () => {
     setShowModal(false);
+    setDateDisabled(true);
     let register = dateRegister.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
@@ -177,6 +180,7 @@ const ListReview = ({ token }) => {
   };
 
   const handleReset = () => {
+    setDateDisabled(true);
     setPenyelenggara(null);
     setAcademy(null);
     setTheme(null);
@@ -714,6 +718,7 @@ const ListReview = ({ token }) => {
                 selectsRange={true}
                 onChange={(date) => {
                   setDateRegister(date);
+                  setDateDisabled(false);
                 }}
                 startDate={dateRegisterStart}
                 endDate={dateRegisterEnd}
@@ -733,6 +738,8 @@ const ListReview = ({ token }) => {
                 endDate={datePelaksanaanEnd}
                 dateFormat="dd/MM/yyyy"
                 autoComplete="off"
+                minDate={dateRegisterEnd || dateRegisterStart}
+                disabled={dateDisabled}
               />
             </div>
           </div>

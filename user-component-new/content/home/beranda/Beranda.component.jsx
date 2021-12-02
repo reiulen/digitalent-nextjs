@@ -185,6 +185,7 @@ const Beranda = ({ session }) => {
               kuota_peserta: tema[i].pelatihan[j].kuota_peserta,
               metode_pelatihan: tema[i].pelatihan[j].metode_pelatihan,
               gambar_mitra: tema[i].pelatihan[j].gambar_mitra,
+              file_path: tema[i].pelatihan[j].file_path,
               mitra: tema[i].pelatihan[j].mitra,
               pendaftaran_mulai: tema[i].pelatihan[j].pendaftaran_mulai,
               pendaftaran_selesai: tema[i].pelatihan[j].pendaftaran_selesai,
@@ -519,14 +520,14 @@ const Beranda = ({ session }) => {
                                             </div>
                                           </Card.ImgOverlay>
                                           <Card.Body className="position-relative">
+                                            {console.log(row)}
                                             <div className="mitra-pelatihan-new">
                                               <Image
                                                 src={
                                                   (row.gambar_mitra &&
                                                     row.gambar_mitra !==
                                                       "Belum ada file" &&
-                                                    process.env
-                                                      .END_POINT_API_IMAGE_PARTNERSHIP +
+                                                    row.file_path +
                                                       row.gambar_mitra) ||
                                                   "/assets/media/mitra-default.png"
                                                 }
@@ -586,12 +587,12 @@ const Beranda = ({ session }) => {
                                                     {moment(
                                                       row.pendaftaran_mulai
                                                     ).format(
-                                                      "DD MMMM YYYY"
+                                                      "DD MMM YYYY"
                                                     )}{" "}
                                                     -{" "}
                                                     {moment(
                                                       row.pendaftaran_selesai
-                                                    ).format("DD MMMM YYYY")}
+                                                    ).format("DD MMM YYYY")}
                                                   </span>
                                                 </div>
                                                 <div className="date d-flex align-items-center align-middle">
@@ -784,11 +785,11 @@ const Beranda = ({ session }) => {
                                                 Registrasi:{" "}
                                                 {moment(
                                                   cardPendaftaranMulai
-                                                ).format("DD MMMM YYYY")}{" "}
+                                                ).format("DD MMM YYYY")}{" "}
                                                 -{" "}
                                                 {moment(
                                                   cardPendaftaranSelesai
-                                                ).format("DD MMMM YYYY")}
+                                                ).format("DD MMM YYYY")}
                                               </span>
                                             </div>
                                             <div className="date d-flex align-items-center align-middle mr-5">
@@ -801,10 +802,7 @@ const Beranda = ({ session }) => {
                                               </span>
                                             </div>
                                             <div className="date d-flex align-items-center align-middle">
-                                              <i
-                                                className="ri-map-pin-line mr-2"
-                                                style={{ color: "#6C6C6C" }}
-                                              ></i>
+                                              <i className="ri-map-pin-line "></i>
                                               <span
                                                 style={{ color: "#6C6C6C" }}
                                                 className="d-flex align-items-center ml-3"
