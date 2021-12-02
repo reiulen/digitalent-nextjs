@@ -29,6 +29,7 @@ const Dashboard = ({ session, success }) => {
 
   const allArtikelsPeserta = useSelector((state) => state.allArtikelsPeserta);
   const deleteArtikel = useSelector((state) => state.deleteArtikel);
+  const cekLulus = useSelector((state) => state.cekLulusPelatihan);
 
   const [listPeserta, setPeserta] = useState(
     allArtikelsPeserta.artikel?.artikel.length > 0 ? (
@@ -73,9 +74,8 @@ const Dashboard = ({ session, success }) => {
             <td className="align-middle">
               {" "}
               <span
-                className={`label label-inline label-light-${
-                  item.publish === 1 ? "success" : "danger"
-                } font-weight-bold`}
+                className={`label label-inline label-light-${item.publish === 1 ? "success" : "danger"
+                  } font-weight-bold`}
               >
                 {item.publish === 1 ? "Publish" : "Unpublish"}
               </span>
@@ -270,9 +270,16 @@ const Dashboard = ({ session, success }) => {
               <div className="mt-10 d-flex">
                 <h3>Artikel Saya</h3>
                 <Link href="/peserta/artikel/tambah-artikel/" passHref>
-                  <button className="btn btn-primary ml-auto rounded-full px-10 py-3 text-center font-weight-bolder">
-                    <i className="ri-pencil-fill mr-2"></i>Buat Artikel
-                  </button>
+                  {
+                    cekLulus.status === false ?
+                      <button disabled className="btn btn-primary ml-auto rounded-full px-10 py-3 text-center font-weight-bolder">
+                        <i className="ri-pencil-fill mr-2"></i>Buat Artikel
+                      </button>
+                      :
+                      <button className="btn btn-primary ml-auto rounded-full px-10 py-3 text-center font-weight-bolder">
+                        <i className="ri-pencil-fill mr-2"></i>Buat Artikel
+                      </button>
+                  }
                 </Link>
               </div>
             </Col>

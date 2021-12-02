@@ -9,7 +9,7 @@ import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-
 import LoadingContent from "../../../user-component/content/peserta/components/loader/LoadingContent";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { useRouter } from "next/router";
-import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import { cekLulus } from "../../../redux/actions/beranda/artikel.actions";
 import { getAllArtikelsPeserta } from '../../../redux/actions/publikasi/artikel.actions'
 
 const Dashboard = dynamic(
@@ -63,12 +63,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           success = true;
         }
       }
-      
+
       await store.dispatch(
         getAllArtikelsPeserta(session?.user.user.data.user.token)
       );
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
+      );
+      await store.dispatch(
+        cekLulus(session?.user.user.data.user.token)
       );
 
       return {

@@ -11,7 +11,6 @@ import ImageWhiteLogo from "../../../components/assets/icon-dashboard-peserta/wh
 export default function Footer() {
   const dispatch = useDispatch();
   const { footer, loading } = useSelector((state) => state.berandaFooter);
-
   const [secondary, setSecondary] = useState("1");
   const [warna, setWarna] = useState("secondary");
 

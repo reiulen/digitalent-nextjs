@@ -144,6 +144,7 @@ import {
 } from "./subvit/survey-question.reducers";
 import {
   allSurveyQuestionDetailReducer,
+  randomSurveyReducer,
   newSurveyQuestionDetailReducer,
   deleteSurveyQuestionDetailReducer,
   detailSurveyQuestionDetailReducer,
@@ -165,6 +166,7 @@ import {
 } from "./subvit/trivia-question.reducers";
 import {
   allTriviaQuestionDetailReducer,
+  randomTriviaReducer,
   newTriviaQuestionDetailReducer,
   deleteTriviaQuestionDetailReducer,
   detailTriviaQuestionDetailReducer,
@@ -651,6 +653,7 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
+
   dashboardSubvit: getDashboardReducer,
   postResultSubvit: postResultReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
@@ -669,7 +672,7 @@ const reducer = combineReducers({
   updateSurveyQuestion: updateSurveyQuestionReducer,
   updateSurveyQuestionBanksPublish: updateSurveyQuestionBanksPublishReducer,
   allReportSurveyQuestionBanks: allReportSurveyQuestionBanksReducer,
-
+  randomSurvey: randomSurveyReducer,
   allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
   newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
   deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
@@ -680,6 +683,7 @@ const reducer = combineReducers({
   // =============== end substansi ==================
 
   // =============== trivia ==================
+  randomTrivia: randomTriviaReducer,
   allTriviaQuestionBanks: allTriviaQuestionBanksReducer,
   newTriviaQuestionBanks: newTriviaQuestionBanksReducer,
   deleteTriviaQuestionBanks: deleteTriviaQuestionBanksReducer,

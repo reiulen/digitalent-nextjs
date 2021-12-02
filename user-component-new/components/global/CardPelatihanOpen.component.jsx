@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import Image from "next/image";
 import ShareOverlay from "../global/ShareOverlay.component";
+import moment from "moment";
 
 const CardPelatihanOpen = ({
   funcMouseEnter,
@@ -83,9 +84,7 @@ const CardPelatihanOpen = ({
           <div className="mitra-pelatihan-new">
             <Image
               src={
-                (row.gambar_mitra &&
-                  process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                    row.gambar_mitra) ||
+                (row.gambar_mitra && row.file_path + row.gambar_mitra) ||
                 "/assets/media/mitra-default.png"
               }
               width={60}
@@ -130,8 +129,8 @@ const CardPelatihanOpen = ({
                 <i className="ri-time-line"></i>
                 <span className={`text-date-register-new pl-2`}>
                   Registrasi:{" "}
-                  {moment(row.pendaftaran_mulai).format("DD MMMM YYYY")} -{" "}
-                  {moment(row.pendaftaran_selesai).format("DD MMMM YYYY")}
+                  {moment(row.pendaftaran_mulai).utc().format("DD MMM YYYY")} -{" "}
+                  {moment(row.pendaftaran_selesai).utc().format("DD MMM YYYY")}
                 </span>
               </div>
               <div className="date d-flex align-items-center align-middle">

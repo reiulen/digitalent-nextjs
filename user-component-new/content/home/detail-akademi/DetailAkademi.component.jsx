@@ -31,7 +31,7 @@ const DetailAkademi = ({ session }) => {
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
     useSelector((state) => state.allPenyelenggaraPeserta);
 
-  const textToTrim = 450;
+  const textToTrim = 550;
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -49,6 +49,8 @@ const DetailAkademi = ({ session }) => {
   const [filterKategori, setFilterKategori] = useState(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  const [disabledDate, setDisabledDate] = useState(true);
 
   let selectRefKategoriPeserta = null;
   const optionsKategoriPeserta = [
@@ -221,6 +223,7 @@ const DetailAkademi = ({ session }) => {
   };
 
   const handleFilter = () => {
+    setDisabledDate(true);
     let data = {
       akademi_id: id,
       tema_id: tema_id || null,
@@ -248,6 +251,7 @@ const DetailAkademi = ({ session }) => {
   };
 
   const handleReset = () => {
+    setDisabledDate(true);
     setFilterPenyelenggara(null);
     selectRefPenyelenggara.select.clearValue();
     setFilterKategori(null);
@@ -293,32 +297,38 @@ const DetailAkademi = ({ session }) => {
                     </h2>
                   </Card.Title>
                   <Card.Text>
-                    {seeMoreStatus === false ? (
-                      <>
-                        <div
-                          dangerouslySetInnerHTML={{ __html: akademiDesc }}
-                        ></div>
-                        <div
-                          className="my-2 text-primary"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleShowMoreText(true)}
-                        >
-                          Lihat Selengkapnya ...
-                        </div>
-                      </>
+                    {akademi.deskripsi.length > textToTrim ? (
+                      seeMoreStatus === false ? (
+                        <>
+                          <div
+                            dangerouslySetInnerHTML={{ __html: akademiDesc }}
+                          ></div>
+                          <div
+                            className="my-2 text-primary"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleShowMoreText(true)}
+                          >
+                            Lihat Selengkapnya ...
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div
+                            dangerouslySetInnerHTML={{ __html: oldAkademiDesc }}
+                          ></div>
+                          <div
+                            className="my-2 text-primary"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleShowMoreText(false)}
+                          >
+                            Lihat Lebih Sedikit
+                          </div>
+                        </>
+                      )
                     ) : (
-                      <>
-                        <div
-                          dangerouslySetInnerHTML={{ __html: oldAkademiDesc }}
-                        ></div>
-                        <div
-                          className="my-2 text-primary"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleShowMoreText(false)}
-                        >
-                          Lihat Lebih Sedikit
-                        </div>
-                      </>
+                      <div
+                        dangerouslySetInnerHTML={{ __html: akademi.deskripsi }}
+                      ></div>
                     )}
                   </Card.Text>
                 </Col>
@@ -379,7 +389,10 @@ const DetailAkademi = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      onChange={(e) => {
+                        setStartDate(e.target.value);
+                        setDisabledDate(false);
+                      }}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -392,6 +405,8 @@ const DetailAkademi = ({ session }) => {
                       type="date"
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
+                      min={startDate}
+                      disabled={disabledDate}
                     />
                   </Form.Group>
                 </div>
@@ -428,7 +443,7 @@ const DetailAkademi = ({ session }) => {
                   <>
                     {pelatihan &&
                     pelatihan.list &&
-                    pelatihan.list !== 0 &&
+                    pelatihan.list.length > 0 &&
                     show.length !== 0 ? (
                       pelatihan.list.map((el, i) => {
                         return showDetail[i] !== true ? (
@@ -477,10 +492,18 @@ const DetailAkademi = ({ session }) => {
                         );
                       })
                     ) : (
-                      <div className="container-fluid">
-                        <div className="d-flex justify-content-center">
-                          <h1>Pelatihan Tidak Tersedia</h1>
-                        </div>
+                      <div className="container-fluid text-center">
+                        <Image
+                          src="/assets/media/empty-akademi-pelatihan.png"
+                          width={525}
+                          height={350}
+                        />
+                        <h1
+                          className="fw-600 fz-24 mt-14"
+                          style={{ color: "#1f1f1f" }}
+                        >
+                          Belum ada pelatihan terkait
+                        </h1>
                       </div>
                     )}
                   </>
