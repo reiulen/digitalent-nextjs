@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
-import { getDetailMasterPelatihan } from "../../../../../../redux/actions/pelatihan/master-pendaftaran.action";
+import { getDetailMasterCopyEditPelatihan } from "../../../../../../redux/actions/pelatihan/master-pendaftaran.action";
 
 const FormCopyEdit = ({
   optionsForm,
@@ -21,14 +21,14 @@ const FormCopyEdit = ({
     loading: loadingFormPendaftaran,
     form: formPendaftaran,
     error: errorForm,
-  } = useSelector((state) => state.getDetailMasterPelatihan);
+  } = useSelector((state) => state.getDetailMasterCopyEditPelatihan);
 
   const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
   useEffect(() => {
-    dispatch(getDetailMasterPelatihan(99999, token));
+    // dispatch(getDetailMasterPelatihan(99999, token));
     if (
       formPendaftaran &&
       Object.keys(formPendaftaran).length !== 0 &&
@@ -230,7 +230,7 @@ const FormCopyEdit = ({
           }
           onChange={(e) => {
             funcTitle(e.label);
-            dispatch(getDetailMasterPelatihan(e.value, token));
+            dispatch(getDetailMasterCopyEditPelatihan(e.value, token));
           }}
         />
 
@@ -254,6 +254,7 @@ const FormCopyEdit = ({
                 placeholder="Field"
                 autoComplete="off"
                 onChange={(e) => inputChangeHandler(e, i)}
+                required
               />
             </div>
           </div>
@@ -267,6 +268,7 @@ const FormCopyEdit = ({
                 name="element"
                 value={row.element}
                 onChange={(e) => inputChangeHandler(e, i)}
+                required
               >
                 <option value="" disabled selected>
                   -- PILIH --

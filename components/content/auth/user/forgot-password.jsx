@@ -97,7 +97,7 @@ const ForgotPassword = () => {
               className="title-form col-lg-6 p-0 mx-auto"
               style={{ marginTop: "30px" }}
             >
-              <form onSubmit={submit}>
+              <form>
                 <div className="form-group mb-2">
                   <label className="form-auth-label">E-mail Pemulihan</label>
                   <div className="position-relative">
@@ -128,8 +128,9 @@ const ForgotPassword = () => {
                 ) : (
                   <>
                     <button
-                      type="submit"
+                      type="button"
                       className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
+                      onClick={submit}
                     >
                       Kirim E-mail
                     </button>
@@ -148,11 +149,9 @@ const ForgotPassword = () => {
                       <p className="text-white text-center">
                         Belum menerima e-mail?
                         <span>
-                          <Link href="/">
-                            <a className="ml-3" style={{ color: "#4CBDE2" }}>
+                            <a onClick={submit} className="ml-3" style={{ color: "#4CBDE2", cursor: "pointer" }}>
                               Kirim Ulang
                             </a>
-                          </Link>
                         </span>
                       </p>
                     </div>

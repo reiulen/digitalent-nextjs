@@ -434,9 +434,7 @@ const TambahArtikelPeserta = ({ session }) => {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div
-                className={`${styles.modalsPrevImage} modal-body text-center`}
-              >
+              <div className={`${styles.modalsPrevImage} modal-body text-center`}>
                 <Image
                   src={gambarPreview}
                   alt="image"
@@ -448,8 +446,7 @@ const TambahArtikelPeserta = ({ session }) => {
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  data-dismiss="modal"
-                >
+                  data-dismiss="modal">
                   Tutup
                 </button>
               </div>

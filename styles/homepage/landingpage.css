@@ -391,7 +391,7 @@
 
 @media (max-width: 768px) {
   .padding-content-home {
-    padding: 40px 32px;
+    padding: 40px 32px !important;
   }
   .padding-content-tema {
     padding: 40px 19px;

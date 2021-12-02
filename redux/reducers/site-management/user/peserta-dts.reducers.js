@@ -37,7 +37,7 @@ export const allListPesertaReducer = (state = {}, action) => {
   switch (action.type) {
     case LIST_PESERTA_REQUEST:
       return {
-        loading: true
+        loading: true,
       };
 
     case LIST_PESERTA_SUCCESS:
@@ -60,7 +60,6 @@ export const allListPesertaReducer = (state = {}, action) => {
 
 export const allDetailPesertaReducer = (state = {}, action) => {
   switch (action.type) {
-
     case DETAIL_PESERTA_SUCCESS:
       return {
         ...state,
@@ -77,28 +76,25 @@ export const allDetailPesertaReducer = (state = {}, action) => {
       return state;
   }
 };
-export const allListPelatihanByPesertaReducer = (
-  state = initialState,
-  action
-) => {
+export const allListPelatihanByPesertaReducer = (state = {}, action) => {
   switch (action.type) {
     case LIST_PELATIHAN_BY_PESERTA_REQUEST:
       return {
         ...state,
-        status: statuslist.process,
+        loading: true,
       };
 
     case LIST_PELATIHAN_BY_PESERTA_SUCCESS:
       return {
         ...state,
-        status: statuslist.success,
-        listPelatihanByPeserta: action.payload,
+        loading: false,
+        data: action.payload,
       };
 
     case LIST_PELATIHAN_BY_PESERTA_FAIL:
       return {
         ...state,
-        status: statuslist.error,
+        loading: false,
         error: null,
       };
 

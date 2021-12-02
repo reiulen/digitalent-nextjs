@@ -46,10 +46,6 @@ export default function ChatBot() {
                     Form Pengaduan
                   </a>
                 </Link>
-                <a className={`rounded-full py-2`} href="tel:0213452841">
-                  <i className="ri-phone-fill text-primary" />
-                  Hubungi Kami
-                </a>
               </div>
             )}
           </div>

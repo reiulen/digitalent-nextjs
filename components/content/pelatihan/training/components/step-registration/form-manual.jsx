@@ -235,6 +235,7 @@ const FormManual = ({
                 placeholder="Field"
                 autoComplete="off"
                 onChange={(e) => inputChangeHandler(e, i)}
+                required
               />
             </div>
           </div>
@@ -248,6 +249,7 @@ const FormManual = ({
                 name="element"
                 value={row.element}
                 onChange={(e) => inputChangeHandler(e, i)}
+                required
               >
                 <option value="" disabled selected>
                   -- PILIH --

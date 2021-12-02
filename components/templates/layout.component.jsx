@@ -47,6 +47,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
   const [sideBar, setSidebar] = useState([])
   const handlerLogout = () => {
     signOut();
+    localStorage.removeItem("sidebar")
     // {
     //   callbackUrl: `${window.location.origin}/login/admin`,
     // } LAGI DEVELOP JANGAN DIHAPUS

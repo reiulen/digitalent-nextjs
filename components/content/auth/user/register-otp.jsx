@@ -23,6 +23,7 @@ const RegisterUser = () => {
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
+  const [sendOtpDisabled, setOtpDisabled] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [, forceUpdate] = useState();
@@ -54,6 +55,7 @@ const RegisterUser = () => {
   };
 
   const handleResend = () => {
+    setOtpDisabled(true);
     const data = {
       email,
       services,
@@ -66,6 +68,7 @@ const RegisterUser = () => {
       .then((res) => {
         if (res.data.status) {
           setCount(60);
+          setOtpDisabled(false);
         }
       })
       .catch((err) => {
@@ -113,7 +116,7 @@ const RegisterUser = () => {
         })
         .catch((err) => {
           setLoading(false);
-          toast.error(err.response.data.message);
+          SweatAlert("Gagal", err.response.data.message, "error");
         });
     } else {
       setLoading(false);
@@ -200,7 +203,7 @@ const RegisterUser = () => {
                   </span>
                 </p>
 
-                {count < 1 && (
+                {count < 0 && sendOtpDisabled === false && (
                   <p
                     style={{ fontSize: "12px", cursor: "pointer" }}
                     className="text-warning"
