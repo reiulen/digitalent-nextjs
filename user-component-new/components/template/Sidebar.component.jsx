@@ -342,7 +342,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                   ></div>
                 </div>
                 <div className="p-2">
-                  <div>Profile</div>
+                  <div>Profil</div>
                 </div>
               </div>
             </div>

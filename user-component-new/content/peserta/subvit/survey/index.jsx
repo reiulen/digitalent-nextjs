@@ -129,7 +129,7 @@ const SubtansiUser = ({ token }) => {
   ];
   let multi = [];
 
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState();
   const [answer, setAnswer] = useState("");
   const [d, setD] = useState("");
 
@@ -236,9 +236,9 @@ const SubtansiUser = ({ token }) => {
     } else {
       localStorage.clear();
       // MASIH DIPAKE UNTUK SETELAH TESTING
-      // router.push(`/peserta/done-mid-tes`);
+      router.push(`/peserta/done-survey`);
     }
-  }, [count, data, error, dispatch]);
+  }, [count, data, error, dispatch, router]);
 
   // MASIH DIPAKE UNTUK SETELAH TESTING
   useEffect(() => {
@@ -247,7 +247,7 @@ const SubtansiUser = ({ token }) => {
     //   .then((res) => setData(res.data.data));
 
     setData(random_survey);
-  }, []);
+  }, [data, random_survey]);
 
   const secondsToTime = (secs) => {
     var hours = Math.floor(secs / (60 * 60));

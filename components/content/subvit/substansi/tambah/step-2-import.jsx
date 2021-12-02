@@ -185,7 +185,7 @@ const StepTwo = ({ token }) => {
 
   const handleImportImage = async () => {
     const data = new FormData();
-    data.append("subtance_question_bank_id", id);
+    // data.append("subtance_question_bank_id", id);
     data.append("image_file", image_file, image_file.name);
 
     dispatch(importImagesSubtanceQuestionDetail(data, token));

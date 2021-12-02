@@ -29,6 +29,10 @@ import {
   IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_RESET,
   IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_FAIL,
   CLEAR_ERRORS,
+  POST_RESULT_TRIVIA_REQUEST,
+  POST_RESULT_TRIVIA_SUCCESS,
+  POST_RESULT_TRIVIA_FAIL,
+  POST_RESULT_TRIVIA_RESET,
 } from "../../types/subvit/trivia-question-detail.type";
 
 export const allTriviaQuestionDetailReducer = (
@@ -81,6 +85,45 @@ export const randomTriviaReducer = (state = { random_trivia: [] }, action) => {
       return {
         loading: false,
         error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const postResultTriviaReducer = (
+  state = { post_result_trivia: {} },
+  action
+) => {
+  switch (action.type) {
+    case POST_RESULT_TRIVIA_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case POST_RESULT_TRIVIA_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        post_result: action.payload.data,
+      };
+
+    case POST_RESULT_TRIVIA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case POST_RESULT_TRIVIA_RESET:
+      return {
+        success: false,
       };
 
     case CLEAR_ERRORS:
