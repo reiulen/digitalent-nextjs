@@ -179,32 +179,27 @@ export const updateProfilePendidikan =
     }
   };
 
-export const getDataAsalSekolah =
-  (token, keyword = "") =>
-  async (dispatch) => {
-    try {
-      let link =
-        process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/option/origin-of-school`;
+export const getDataAsalSekolah = (token) => async (dispatch) => {
+  try {
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+      `api/option/origin-of-school?limit=500`;
 
-      if (keyword === "0" ? "" : keyword)
-        link = link.concat(`&keyword=${keyword}`);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
 
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      };
-
-      const { data } = await axios.get(link, config);
-      dispatch({
-        type: GET_ASAL_SEKOLAH,
-        payload: data.data.list_signatures,
-      });
-    } catch (error) {
-      throw error;
-    }
-  };
+    const { data } = await axios.get(link, config);
+    dispatch({
+      type: GET_ASAL_SEKOLAH,
+      payload: data.data.list_signatures,
+    });
+  } catch (error) {
+    throw error;
+  }
+};
 
 //END PENDIDIKAN
 
