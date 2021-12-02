@@ -35,7 +35,6 @@ export default function Footer() {
           setSecondary(data.data.color[1].color);
         }
       } catch (error) {
-        Swal.fire("Oops !", `${error.response.data.message}`, "error");
       }
     }
     getDataGeneral();

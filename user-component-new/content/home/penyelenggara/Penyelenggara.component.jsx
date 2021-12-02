@@ -138,7 +138,7 @@ const Penyelenggara = () => {
         </section>
 
         <section className="penyelenggara-content">
-          <Row className="d-flex justify-content-between">
+          <Row className="d-flex justify-content-start">
             {loading && <PulseLoaderRender />}
             {!penyelenggara ||
               (penyelenggara && penyelenggara.data.list_mitras.length === 0 ? (
