@@ -27,10 +27,10 @@ const Artikel = () => {
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
     const [ kategoriArtikel, setKategoriArtikel ] = useState ("")
-    const [ keyword, setKeyword ] = useState ("")
+    const [ keyword, setKeyword ] = useState (null)
     const [ activePage, setActivePage ] = useState(1)
-    const [ limit, setLimit ] = useState("")
-    const [ filterPublish, setFilterPublish ] = useState("")
+    const [ limit, setLimit ] = useState(5)
+    const [ filterPublish, setFilterPublish ] = useState("desc")
     const [ sort, setSort ] = useState("")
     const [ category_id, setCategoryId ] = useState("")
     const [ category_academy, setCategoryAcademy ] = useState("")
@@ -40,7 +40,8 @@ const Artikel = () => {
     const [ tagCards, setTagCards ] = useState ([])
     const [ kategoriToShow, setKategoriToShow ] = useState ([])
     const [ showArrow, setShowArrow ] = useState(null)
-
+    const [showDescButton, setShowDescButton ] = useState(false)
+    
     const getWindowDimensions = () => {
         const { innerWidth: width, innerHeight: height } = window;
         return {
@@ -252,14 +253,16 @@ const Artikel = () => {
         return result
     }
 
-    const handleFilterPublish = (publish) => {
+    const handleFilterPublish = (publish, status) => {
         setFilterPublish(publish)
+        setShowDescButton(status)
         setSort("")
     }
 
-    const handleSort = (sort) => {
+    const handleSort = (sort, filter) => {
         setSort(sort)
-        setFilterPublish("")
+        setShowDescButton(false)
+        setFilterPublish(filter)
     }
 
     const handleCategoryAcademy = (slug) => {
@@ -346,7 +349,7 @@ const Artikel = () => {
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
                                 "col-12 pl-0 ml-4 mt-10 mb-5"
                             :
-                                "col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-10"
+                                "col-lg-8 col-12 pl-0 ml-n2 mt-10 mb-5 pr-10"
                         }
                     >
 
@@ -457,7 +460,7 @@ const Artikel = () => {
                                                 },
                                             }
                                         }}
-                                        className= "ml-0 ml-sm-1 mr-n5 mr-sm-n1"
+                                        className= "ml-0 ml-sm-3 mr-n5 mr-sm-n1"
                                     >
                                         {
                                             kategoriArtikel === "" ?
@@ -591,10 +594,10 @@ const Artikel = () => {
                                             <div className="row mx-3 mb-3 d-flex justify-content-between">
                                                 <div className=" col-6">
                                                     {
-                                                        filterPublish === "desc" && sort === "" ?
+                                                        showDescButton === true && sort === "" ?
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
-                                                                onClick={() => handleFilterPublish("")}
+                                                                onClick={() => handleFilterPublish("", false)}
                                                                 style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 Terbaru
@@ -602,7 +605,7 @@ const Artikel = () => {
                                                         :
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
-                                                                onClick={() => handleFilterPublish("desc")}
+                                                                onClick={() => handleFilterPublish("desc", true)}
                                                                 style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 Terbaru
@@ -615,7 +618,7 @@ const Artikel = () => {
                                                         filterPublish === "asc" && sort === "" ?
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
-                                                                onClick={() => handleFilterPublish("")}
+                                                                onClick={() => handleFilterPublish("desc", false)}
                                                                 style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 Terlama
@@ -623,7 +626,7 @@ const Artikel = () => {
                                                         :
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
-                                                                onClick={() => handleFilterPublish("asc")}
+                                                                onClick={() => handleFilterPublish("asc", false)}
                                                                 style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 Terlama
@@ -635,10 +638,10 @@ const Artikel = () => {
                                             <div className="row mx-3 mb-3 d-flex justify-content-between">
                                                 <div className="col-6">
                                                     {
-                                                        sort === "asc" && filterPublish === "" ?
+                                                        sort === "asc" && showDescButton === false ?
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
-                                                                onClick={() => handleSort("")}
+                                                                onClick={() => handleSort("", "desc")}
                                                                 style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 A-Z
@@ -646,7 +649,7 @@ const Artikel = () => {
                                                         :
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
-                                                                onClick={() => handleSort("asc")}
+                                                                onClick={() => handleSort("asc", "")}
                                                                 style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 A-Z
@@ -656,10 +659,10 @@ const Artikel = () => {
 
                                                 <div className="col-6">
                                                     {
-                                                        sort === "desc" && filterPublish === ""  ?
+                                                        sort === "desc" && showDescButton === false  ?
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
-                                                                onClick={() => handleSort("")}
+                                                                onClick={() => handleSort("", "desc")}
                                                                 style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 Z-A
@@ -667,7 +670,7 @@ const Artikel = () => {
                                                         :
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
-                                                                onClick={() => handleSort("desc")}
+                                                                onClick={() => handleSort("desc", "")}
                                                                 style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 Z-A
@@ -1006,10 +1009,10 @@ const Artikel = () => {
                                 <div className="row mx-3 mb-3 d-flex justify-content-between">
                                     <div className="col-md-6 col-12">
                                         {
-                                            filterPublish === "desc" && sort === "" ?
+                                            showDescButton === true && sort === "" ?
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
-                                                    onClick={() => handleFilterPublish("")}
+                                                    onClick={() => handleFilterPublish("", false)}
                                                     style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     Terbaru
@@ -1017,7 +1020,7 @@ const Artikel = () => {
                                             :
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
-                                                    onClick={() => handleFilterPublish("desc")}
+                                                    onClick={() => handleFilterPublish("desc", true)}
                                                     style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     Terbaru
@@ -1030,7 +1033,7 @@ const Artikel = () => {
                                             filterPublish === "asc" && sort === "" ?
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
-                                                    onClick={() => handleFilterPublish("")}
+                                                    onClick={() => handleFilterPublish("desc", false)}
                                                     style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     Terlama
@@ -1038,7 +1041,7 @@ const Artikel = () => {
                                             :
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
-                                                    onClick={() => handleFilterPublish("asc")}
+                                                    onClick={() => handleFilterPublish("asc", false)}
                                                     style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     Terlama
@@ -1050,10 +1053,10 @@ const Artikel = () => {
                                 <div className="row mx-3 mb-3 d-flex justify-content-between">
                                     <div className="col-md-6 col-12">
                                         {
-                                            sort === "asc" && filterPublish === "" ?
+                                            sort === "asc" && showDescButton === false ?
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
-                                                    onClick={() => handleSort("")}
+                                                    onClick={() => handleSort("", "desc")}
                                                     style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     A-Z
@@ -1061,7 +1064,7 @@ const Artikel = () => {
                                             :
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
-                                                    onClick={() => handleSort("asc")}
+                                                    onClick={() => handleSort("asc", "")}
                                                     style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     A-Z
@@ -1071,10 +1074,10 @@ const Artikel = () => {
 
                                     <div className="col-md-6 col-12">
                                         {
-                                            sort === "desc" && filterPublish === "" ?
+                                            sort === "desc" && showDescButton === false ?
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
-                                                    onClick={() => handleSort("")}
+                                                    onClick={() => handleSort("", "desc")}
                                                     style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     Z-A
@@ -1082,7 +1085,7 @@ const Artikel = () => {
                                             :
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
-                                                    onClick={() => handleSort("desc")}
+                                                    onClick={() => handleSort("desc", "")}
                                                     style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     Z-A
