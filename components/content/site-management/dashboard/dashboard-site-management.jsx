@@ -13,6 +13,8 @@ import CardDashboardSM from "../../../CardDashboardSM";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardDashboardSiteManagement from "../../../CardDashboardSiteManagement";
 
+import styles from "../../../../styles/sitemanagement/dashboard.module.css";
+
 import {
   loadDataPeserta,
   loadDataZonasi,
@@ -139,25 +141,19 @@ const DashboardSiteManagement = ({ token, user }) => {
         </div>
         <div className="container">
           <div className="row mx-0">
-            <div className="col-lg-6 mt-2">
-              <div
-                className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
-                style={{ height: "197px", maxHeight: "197px" }}
-              >
-                <div className="right-center-absolute">
-                  <Image src={ImageHero} alt="imagehero" />
+            <div className={`${styles.cardName} col-lg-6 overflow-hidden d-flex justify-content-between position-relative`}>
+              <div className={`${styles.nameUser} bg-white px-2 mt-2 br-12 py-10 px-6 w-100 overflow-hidden`}>
+                <div className={`${styles.textName}`}>
+                  <h5 className="text-blue-primary fw-600 fz-24">
+                    Hallo {user.name} !
+                  </h5>
+                  <p className="fw-600 fz-16">
+                    Selamat Datang di Dashboard <br /> Site Management
+                  </p>
                 </div>
-
-                <div className="left-bottom-absolute">
-                  <Image src={ImagePlants} alt="imagehero" />
-                </div>
-
-                <h5 className="text-blue-primary fw-600 fz-24">
-                  Hallo {user.name} !
-                </h5>
-                <p className="text-muted fw-600 fz-16">
-                  Selamat Datang di Dashboard <br /> Site Management
-                </p>
+              </div>
+              <div className={`${styles.imageAdmin} d-flex mr-auto`}>
+                <Image src={ImageHero} alt="imagehero" />
               </div>
             </div>
             <div className="col-lg-3 mt-2 hover-subm">
@@ -186,7 +182,7 @@ const DashboardSiteManagement = ({ token, user }) => {
           <div className="row mx-0">
             <div className="col-lg-6 mt-2">
               <div className="content-data bg-white">
-                <table className="table table-borderless rounded mx-4">
+                <table className={`cardDataPeserta table table-borderless rounded`}>
                   <tr>
                     <th>
                       <div className="data-peserta">Data Peserta</div>
@@ -269,11 +265,11 @@ const DashboardSiteManagement = ({ token, user }) => {
                       type="button"
                       className={
                         pagePeserta >=
-                        Math.ceil(
-                          allDataPeserta &&
+                          Math.ceil(
+                            allDataPeserta &&
                             allDataPeserta.length > 0 &&
                             allDataPeserta[0].totalPage / 5
-                        )
+                          )
                           ? "btn btn-primary disabled"
                           : "btn btn-primary"
                       }
@@ -283,8 +279,8 @@ const DashboardSiteManagement = ({ token, user }) => {
                           pagePeserta >=
                           Math.ceil(
                             allDataPeserta &&
-                              allDataPeserta.length > 0 &&
-                              allDataPeserta[0].totalPage / 5
+                            allDataPeserta.length > 0 &&
+                            allDataPeserta[0].totalPage / 5
                           )
                         ) {
                           setPagePeserta(pagePeserta);
@@ -301,7 +297,7 @@ const DashboardSiteManagement = ({ token, user }) => {
             </div>
             <div className="col-lg-6 mt-2">
               <div className="content-data bg-white">
-                <table className="table table-borderless rounded mx-4">
+                <table className="table table-borderless rounded cardDataPeserta">
                   <tr>
                     <th>
                       <div className="data-peserta">Data Zonasi</div>
@@ -351,7 +347,13 @@ const DashboardSiteManagement = ({ token, user }) => {
                     </th>
                   </tr>
 
-                  {tableZonasi.length > 0 ? tableZonasi : emptyData}
+                  {tableZonasi.length > 0 ?
+                    <div className="" style={{border:'1px solid black', width:'280px'}}>
+                      {
+                      tableZonasi
+                      }
+                    </div>
+                    : emptyData}
                 </table>
                 <div className="d-flex mx-6">
                   <p className="pt-6">

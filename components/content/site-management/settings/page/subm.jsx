@@ -344,6 +344,7 @@ export default function SUBM(props) {
                           onChange={(e) => {
                             setFile(e.target.files[0]);
                           }}
+                          style={{ width: '100%' }}
                         />
                       </div>
                     </div>
@@ -550,7 +551,7 @@ export default function SUBM(props) {
           <div className="status-peserta">
             <div className="form-group">
               <h3 className="mb-4 judul">Status</h3>
-              <div className="mr-4" style={{ zIndex: '99', position: 'relative' }}>
+              <div className="mr-4" style={{ zIndex: '2', position: 'relative' }}>
                 <Select
                   placeholder="PILIH PELATIHAN"
                   options={optionsStatus}
@@ -663,7 +664,7 @@ export default function SUBM(props) {
               onClick={(e) => handleSubmit(e)}
               className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
             >
-              Simpan
+              Kirim
             </button>
           </div>
         </form>
