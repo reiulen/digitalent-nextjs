@@ -28,53 +28,51 @@ import axios from "axios";
 
 const SubtansiUser = ({ token }) => {
   const dispatch = useDispatch();
-  const { random_subtance_question_detail } = useSelector(
-    (state) => state.randomSubtanceQuestionDetail
-  );
+  const { random_trivia } = useSelector((state) => state.randomTrivia);
 
   const router = useRouter();
 
-  const initialData = [
-    {
-      id: 3,
-      trivia_question_bank_id: 2,
-      question: "Tivia Polling Transportasi darat",
-      question_image: null,
-      type: "poliing",
-      answer:
-        '[{"key":"A","option":"Kapal","image":null},{"key":"B","option":"Pesawat","image":null},{"key":"C","option":"Mobil","image":null},{"key":"D","option":"Sampan","image":null},{"key":"E","option":"Rakit","image":null}]',
-      participant_answer: "A",
-    },
-    {
-      id: 8,
-      trivia_question_bank_id: 2,
-      question: "Trivia Fill In The Blank Makanan bika ambon berasal dari?",
-      question_image: null,
-      type: "pertanyaan_terbuka",
-      answer: null,
-      participant_answer: "medan",
-    },
-    {
-      id: 4,
-      trivia_question_bank_id: 2,
-      question: "Tivia Polling Makanan bika ambon berasal dari?",
-      question_image: null,
-      type: "poliing",
-      answer:
-        '[{"key":"A","option":"Ambon","image":null},{"key":"B","option":"Maluku","image":null},{"key":"C","option":"Jakarta","image":null},{"key":"D","option":"Medan","image":null}]',
-      participant_answer: "A",
-    },
-    {
-      id: 6,
-      trivia_question_bank_id: 2,
-      question: "Trivia Checkbox Makanan bika ambon berasal dari?",
-      question_image: null,
-      type: "checkbox",
-      answer:
-        '[{"key":"A","option":"Ambon","image":null,"value":3},{"key":"B","option":"Maluku","image":null,"value":3},{"key":"C","option":"Jakarta","image":null,"value":3},{"key":"D","option":"Medan","image":null,"value":1}]',
-      participant_answer: ["A", "B"],
-    },
-  ];
+  // const initialData = [
+  //   {
+  //     id: 3,
+  //     trivia_question_bank_id: 2,
+  //     question: "Tivia Polling Transportasi darat",
+  //     question_image: null,
+  //     type: "poliing",
+  //     answer:
+  //       '[{"key":"A","option":"Kapal","image":null},{"key":"B","option":"Pesawat","image":null},{"key":"C","option":"Mobil","image":null},{"key":"D","option":"Sampan","image":null},{"key":"E","option":"Rakit","image":null}]',
+  //     participant_answer: "A",
+  //   },
+  //   {
+  //     id: 8,
+  //     trivia_question_bank_id: 2,
+  //     question: "Trivia Fill In The Blank Makanan bika ambon berasal dari?",
+  //     question_image: null,
+  //     type: "pertanyaan_terbuka",
+  //     answer: null,
+  //     participant_answer: "medan",
+  //   },
+  //   {
+  //     id: 4,
+  //     trivia_question_bank_id: 2,
+  //     question: "Tivia Polling Makanan bika ambon berasal dari?",
+  //     question_image: null,
+  //     type: "poliing",
+  //     answer:
+  //       '[{"key":"A","option":"Ambon","image":null},{"key":"B","option":"Maluku","image":null},{"key":"C","option":"Jakarta","image":null},{"key":"D","option":"Medan","image":null}]',
+  //     participant_answer: "A",
+  //   },
+  //   {
+  //     id: 6,
+  //     trivia_question_bank_id: 2,
+  //     question: "Trivia Checkbox Makanan bika ambon berasal dari?",
+  //     question_image: null,
+  //     type: "checkbox",
+  //     answer:
+  //       '[{"key":"A","option":"Ambon","image":null,"value":3},{"key":"B","option":"Maluku","image":null,"value":3},{"key":"C","option":"Jakarta","image":null,"value":3},{"key":"D","option":"Medan","image":null,"value":1}]',
+  //     participant_answer: ["A", "B"],
+  //   },
+  // ];
 
   const [data, setData] = useState([]);
   const [answer, setAnswer] = useState("");
@@ -83,7 +81,7 @@ const SubtansiUser = ({ token }) => {
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
-  const [count, setCount] = useState(data.time_left);
+  const [count, setCount] = useState(random_trivia && random_trivia.time_left);
   const [modalDone, setModalDone] = useState(false);
 
   const [hour, setHour] = useState(0);
@@ -114,14 +112,14 @@ const SubtansiUser = ({ token }) => {
   useEffect(() => {
     // MASIH DIPAKE AKAN DIBUKA SETELAH NO BUGS
     // setData(initialData);
-    // setData(random_subtance_question_detail);
+    setData(random_trivia);
 
-    axios
-      .get("https://run.mocky.io/v3/8d2f8ee5-8871-4b37-979a-0a83762c4e4e")
-      .then((res) => {
-        setData(res.data.data);
-      });
-  }, [data, random_subtance_question_detail]);
+    // axios
+    //   .get("https://run.mocky.io/v3/8d2f8ee5-8871-4b37-979a-0a83762c4e4e")
+    //   .then((res) => {
+    //     setData(res.data.data);
+    //   });
+  }, [data, random_trivia]);
 
   const handleModalSoal = () => {
     setModalSoal(true);

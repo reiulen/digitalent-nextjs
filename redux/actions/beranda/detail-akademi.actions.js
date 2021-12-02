@@ -42,7 +42,8 @@ export const getAllPelatihanByAkademi =
     kategori_peserta = null,
     tanggal_mulai = null,
     tanggal_akhir = null,
-    page = null
+    page = null,
+    token = ""
   ) =>
   async (dispatch) => {
     try {
@@ -63,12 +64,19 @@ export const getAllPelatihanByAkademi =
       if (tanggal_akhir) link = link.concat(`&tanggal_akhir=${tanggal_akhir}`);
       if (page) link = link.concat(`&page=${page}`);
 
-      const { data } = await axios.get(link);
+      const config = {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      };
 
+      const { data } = await axios.get(link, config);
       dispatch({
         type: PELATIHAN_AKADEMI_SUCCESS,
         payload: data.data,
       });
+
+      return data;
     } catch (error) {
       dispatch({
         type: PELATIHAN_AKADEMI_FAIL,

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Card, Button, Modal, ModalBody } from "react-bootstrap";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import styles from "./testSubstansi.module.css";
 
 const TestSubstansi = () => {

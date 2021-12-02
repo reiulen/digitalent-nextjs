@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
-import LoadingContent from "../../../user-component/content/peserta/components/loader/LoadingContent";
+import LoadingContent from "../../../user-component-new/components/loader/LoadingContent";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
@@ -34,7 +34,7 @@ export default function ProfilePage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);

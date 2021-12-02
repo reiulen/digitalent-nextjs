@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-import LoadingContent from "../../../user-component/content/peserta/components/loader/LoadingContent";
+import LoadingContent from "../../../user-component-new/components/loader/LoadingContent";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 
 import { getAllBookmark } from "../../../redux/actions/pelatihan/bookmark.action";
