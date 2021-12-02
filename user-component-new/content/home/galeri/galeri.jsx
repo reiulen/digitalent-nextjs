@@ -245,7 +245,7 @@ const Galeri = () => {
                             className="col-12 pl-0 ml-4 mt-10 mb-5"
                         >
                             {
-                                showArrow === null ? <PulseLoaderRender /> :
+                                showArrow === null ? <div className="col-12"><PulseLoaderRender /></div> :
                                     showArrow === true ?
                                         <Splide
                                             options={{
