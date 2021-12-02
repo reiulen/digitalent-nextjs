@@ -75,7 +75,6 @@ const Navigationbar = ({ session }) => {
           setSecondary(data.data.color[0].color);
         }
       } catch (error) {
-        Swal.fire("Oops !", `${error.response.data.message}`, "error");
       }
     }
     getDataGeneral();
