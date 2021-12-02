@@ -50,7 +50,7 @@ export default function ListPesertaID({ token }) {
   };
 
   const handleDownload = async () => {
-    const linkChecker = `http://192.168.11.38:8000/api/tte-p12/sign-pdf/check-pdf/${certificate.data.certificate.training_id}`;
+    const linkChecker = `http://192.168.11.38:8000/api/tte-p12/sign-pdf/check-pdf/${certificate?.data?.certificate?.training_id}`;
     const check = await axios.get(linkChecker);
     // check udh pernah di sign apa belum?
     if (!check.data.status) {
@@ -58,7 +58,7 @@ export default function ListPesertaID({ token }) {
       if (data) {
         const formData = new FormData();
         formData.append("certificate", data);
-        const link = `http://192.168.11.38:8000/api/tte-p12/sign-pdf/${certificate.data.certificate.training_id}`;
+        const link = `http://192.168.11.38:8000/api/tte-p12/sign-pdf/${certificate?.data?.certificate?.training_id}`;
 
         const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
         const a = document.createElement("a");
@@ -69,7 +69,7 @@ export default function ListPesertaID({ token }) {
     } else {
       const a = document.createElement("a");
       a.download = `Sertifikat - p12 ${query.name}.png`;
-      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${certificate.data.certificate.certificate_pdf}`;
+      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${certificate?.data?.certificate?.certificate_pdf}`;
       a.click();
     }
   };
