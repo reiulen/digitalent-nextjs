@@ -125,14 +125,19 @@ const StepTwo = ({ token }) => {
   const handleSoalImage = (e) => {
     setImageSoalName(e.target.files[0].name);
     if (e.target.name === "question_image") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setSoalImage(reader.result);
+      if (e.target.files[0].size > 5000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setSoalImage(reader.result);
+          }
+        };
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
         }
-      };
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
       }
     }
   };

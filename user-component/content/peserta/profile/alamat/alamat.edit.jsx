@@ -717,6 +717,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onChange={(e) => {
                   setKelurahanKtp(null);
                   setKecamatanKtp({ label: e?.label, value: e?.value });
+                  console.log(e);
                   dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
@@ -746,6 +747,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 options={optionsKelurahan}
                 onChange={(e) => {
                   setKelurahanKtp({ label: e?.label, value: e?.value });
+                  console.log(e);
                   dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
