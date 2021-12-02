@@ -134,7 +134,6 @@ const Navigationbar = ({ session }) => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
-      console.log(search, "ini search");
       router.push(`/pencarian?cari=${search}`);
     }
   };

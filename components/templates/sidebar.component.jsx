@@ -73,7 +73,11 @@ const Sidebar = ({ session }) => {
     });
   };
 
-  const [menu, setMenu] = useState(JSON.parse(localStorage.getItem("sidebar")) ? JSON.parse(localStorage.getItem("sidebar")) : []);
+  const [menu, setMenu] = useState(
+    JSON.parse(localStorage.getItem("sidebar"))
+      ? JSON.parse(localStorage.getItem("sidebar"))
+      : []
+  );
   const pathRoute = router.route;
   const splitRouteToMakingActive = pathRoute.split("/");
 
@@ -103,50 +107,45 @@ const Sidebar = ({ session }) => {
         localStorage.removeItem("submenuActive");
       };
     }
-  }, []); 
+  }, []);
 
   useEffect(() => {
-    if(!JSON.parse(localStorage.getItem("sidebar")) && session){
+    if (!JSON.parse(localStorage.getItem("sidebar")) && session) {
       const config = {
         headers: {
           Authorization: "Bearer " + session.user.user.data.token,
         },
       };
-  
-      axios.get(
-        process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
-        config
-      ).then(data => {
-        setMenu(data.data.data.menu)
-      })
+
+      axios
+        .get(
+          process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
+          config
+        )
+        .then((data) => {
+          setMenu(data.data.data.menu);
+        });
     }
 
     if (!menu) {
-      setMenu(
-        JSON.parse(localStorage.getItem("sidebar"))
-      );
+      setMenu(JSON.parse(localStorage.getItem("sidebar")));
     }
-
   }, [session]);
- 
 
   const handleOpenMenu = (e, i, condition) => {
-
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
     if (condition != null) {
-
       if (splitRouteToMakingActive[1]) {
         menu.map((data, index) => {
-          if(index === i){
-            data.selected = !data.selected
-          }else{
+          if (index === i) {
+            data.selected = !data.selected;
+          } else {
             data.selected = false;
           }
         });
       }
-
     }
 
     let _temp = [...menu];
@@ -154,11 +153,6 @@ const Sidebar = ({ session }) => {
   };
 
   const handleOpenMenuSubMenu = (e, iMenu, iSubMenu) => {
-
-    console.log(e);
-    console.log(iMenu);
-    console.log(iSubMenu);
-
     let _temp = [...menu];
     _temp.map((items, index) => {
       if (index === iMenu) {
@@ -175,7 +169,6 @@ const Sidebar = ({ session }) => {
   };
 
   const handleActiveSubmenu = (e, iMenu, iSubMenu) => {
-
     let _temp = [...menu];
     _temp.map((items, index) => {
       if (index === iMenu) {
@@ -191,8 +184,7 @@ const Sidebar = ({ session }) => {
             _temp[iMenu].child[indxx] = { ...itemsp, selected: false };
           }
         });
-      }else{
-
+      } else {
       }
     });
     setMenu(_temp);
