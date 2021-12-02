@@ -115,11 +115,6 @@ const ViewReviewTraining = ({ token }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // revisi &&
-    //   revisi.length !== 0 &&
-    //   revisi.map((row, i) => {
-    //     setNote(row.revisi);
-    //   });
     setRevision();
 
     if (successRevisi) {
@@ -226,42 +221,46 @@ const ViewReviewTraining = ({ token }) => {
             <h3 className="font-weight-bolder pb-5 pt-4">Data Pelatihan</h3>
             <div className="row">
               <div className="col-md-6">
-                <p className="text-neutral-body">Program DTS</p>
-                <p>{dataPelatihan.peserta}</p>
-              </div>
-              <div className="col-md-6">
-                <p className="text-neutral-body">Ketentuan Peserta</p>
-                <p className="font-weight-bold">
-                  {dataPelatihan.ketentuanPeserta}
+                <p className="text-neutral-body mb-2 fz-14">Program DTS</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.peserta}
                 </p>
               </div>
             </div>
 
             <div className="row mt-2">
               <div className="col-md-6">
-                <p className="text-neutral-body">Nama Pelatihan</p>
-                <p className="text-dark">{dataPelatihan.namaPelatihan}</p>
+                <p className="text-neutral-body mb-2 fz-14">Nama Pelatihan</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.namaPelatihan}
+                </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Level Pelatihan</p>
-                <p className="text-dark">{dataPelatihan.levelPelatihan}</p>
-              </div>
-            </div>
-
-            <div className="row mt-2">
-              <div className="col-md-6">
-                <p className="text-neutral-body">Akademi</p>
-                <p className="text-dark">{dataPelatihan.akademi}</p>
-              </div>
-              <div className="col-md-6">
-                <p className="text-neutral-body">Tema</p>
-                <p className="text-dark">{dataPelatihan.tema}</p>
+                <p className="text-neutral-body mb-2 fz-14">Level Pelatihan</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.levelPelatihan}
+                </p>
               </div>
             </div>
 
             <div className="row mt-2">
               <div className="col-md-6">
-                <p className="text-neutral-body">Logo Reference</p>
+                <p className="text-neutral-body mb-2 fz-14">Akademi</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.akademi}
+                </p>
+              </div>
+              <div className="col-md-6">
+                <p className="text-neutral-body mb-2 fz-14">Tema</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.tema}
+                </p>
+              </div>
+            </div>
+
+            <div className="row mt-2">
+              <div className="col-md-6">
+                <p className="text-neutral-body mb-2 fz-14">Logo Reference</p>
                 <div className="">
                   {dataPelatihan.logoReference.split("/").length === 3 && (
                     <p>-</p>
@@ -284,7 +283,7 @@ const ViewReviewTraining = ({ token }) => {
                 </div>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Thumbnail</p>
+                <p className="text-neutral-body mb-2 fz-14">Thumbnail</p>
                 <div className="">
                   {dataPelatihan.thumbnail.includes("default") && <p>-</p>}
                   {dataPelatihan.thumbnail.includes("https") && (
@@ -308,40 +307,56 @@ const ViewReviewTraining = ({ token }) => {
 
             <div className="row mt-2">
               <div className="col-md-6">
-                <p className="text-neutral-body">Silabus</p>
-                <p className="text-dark">{dataPelatihan.silabus}</p>
+                <p className="text-neutral-body mb-2 fz-14">Silabus</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.silabus}
+                </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Metode Pelatihan</p>
-                <p className="text-dark">{dataPelatihan.metodePelatihan}</p>
-              </div>
-            </div>
-
-            <div className="row mt-2">
-              <div className="col-md-6">
-                <p className="text-neutral-body">Penyelenggara</p>
-                <p className="text-dark">{dataPelatihan.penyelenggara}</p>
-              </div>
-              <div className="col-md-6">
-                <p className="text-neutral-body">Mitra</p>
-                <p className="text-dark">{dataPelatihan.mitra}</p>
+                <p className="text-neutral-body mb-2 fz-14">Metode Pelatihan</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.metodePelatihan}
+                </p>
               </div>
             </div>
 
             <div className="row mt-2">
               <div className="col-md-6">
-                <p className="text-neutral-body">Tanggal Pendaftaran</p>
-                <p className="text-dark">{dataPelatihan.tanggalPendaftaran}</p>
+                <p className="text-neutral-body mb-2 fz-14">Penyelenggara</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.penyelenggara}
+                </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Tanggal Pelatihan</p>
-                <p className="text-dark">{dataPelatihan.tanggalPelatihan}</p>
+                <p className="text-neutral-body mb-2 fz-14">Mitra</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.mitra}
+                </p>
+              </div>
+            </div>
+
+            <div className="row mt-2">
+              <div className="col-md-6">
+                <p className="text-neutral-body mb-2 fz-14">
+                  Tanggal Pendaftaran
+                </p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.tanggalPendaftaran}
+                </p>
+              </div>
+              <div className="col-md-6">
+                <p className="text-neutral-body mb-2 fz-14">
+                  Tanggal Pelatihan
+                </p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {dataPelatihan.tanggalPelatihan}
+                </p>
               </div>
             </div>
 
             <div className="row mt-2">
               <div className="col-md-12">
-                <p className="text-neutral-body">Deskripsi</p>
+                <p className="text-neutral-body mb-2 fz-14">Deskripsi</p>
                 <div
                   dangerouslySetInnerHTML={{ __html: dataPelatihan.deskripsi }}
                   style={{ overflowWrap: "break-word" }}
@@ -352,84 +367,137 @@ const ViewReviewTraining = ({ token }) => {
             <h3 className="font-weight-bolder pb-5 pt-4">Kuota Pelatihan</h3>
             <div className="row">
               <div className="col-md-6">
-                <p className="text-neutral-body">Kuota Target Pendaftar</p>
-                <p className="text-dark">
+                <p className="text-neutral-body mb-2 fz-14">
+                  Kuota Target Pendaftar
+                </p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
                   {kuotaPelatihan.kuotaTargetPendaftar}
                 </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Kuota Target Peserta</p>
-                <p className="text-dark">{kuotaPelatihan.kuotaTargetPeserta}</p>
+                <p className="text-neutral-body mb-2 fz-14">
+                  Kuota Target Peserta
+                </p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {kuotaPelatihan.kuotaTargetPeserta}
+                </p>
               </div>
             </div>
 
             <div className="row mt-2">
               <div className="col-md-6">
-                <p className="text-neutral-body">Komitmen Peserta</p>
-                <p className="text-dark">{kuotaPelatihan.komitmenPeserta}</p>
+                <p className="text-neutral-body mb-2 fz-14">Komitmen Peserta</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {kuotaPelatihan.komitmenPeserta}
+                </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">LPJ Peserta</p>
-                <p className="text-dark">{kuotaPelatihan.lpjPeserta}</p>
-              </div>
-            </div>
-
-            <div className="row mt-2">
-              <div className="col-md-6">
-                <p className="text-neutral-body">Info Sertifikasi</p>
-                <p className="text-dark"> {kuotaPelatihan.infoSertifikasi}</p>
-              </div>
-              <div className="col-md-6">
-                <p className="text-neutral-body">Metode Pelatihan</p>
-                <p className="text-dark"> {kuotaPelatihan.metodePelatihan}</p>
+                <p className="text-neutral-body mb-2 fz-14">LPJ Peserta</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {kuotaPelatihan.lpjPeserta}
+                </p>
               </div>
             </div>
 
             <div className="row mt-2">
               <div className="col-md-6">
-                <p className="text-neutral-body">Status Kuota</p>
-                <p className="text-dark"> {kuotaPelatihan.statusKuota}</p>
+                <p className="text-neutral-body mb-2 fz-14">Info Sertifikasi</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {" "}
+                  {kuotaPelatihan.infoSertifikasi}
+                </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Alur Pendaftaran</p>
-                <p className="text-dark"> {kuotaPelatihan.alurPendaftaran}</p>
+                <p className="text-neutral-body mb-2 fz-14">Metode Pelatihan</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {" "}
+                  {kuotaPelatihan.metodePelatihan}
+                </p>
               </div>
             </div>
 
             <div className="row mt-2">
               <div className="col-md-6">
-                <p className="text-neutral-body">Zonasi</p>
-                <p className="text-dark"> {kuotaPelatihan.zonasi}</p>
+                <p className="text-neutral-body mb-2 fz-14">Status Kuota</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {" "}
+                  {kuotaPelatihan.statusKuota}
+                </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Batch</p>
-                <p className="text-dark"> {kuotaPelatihan.batch}</p>
+                <p className="text-neutral-body mb-2 fz-14">Alur Pendaftaran</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {" "}
+                  {kuotaPelatihan.alurPendaftaran}
+                </p>
+              </div>
+            </div>
+
+            <div className="row mt-2">
+              <div className="col-md-6">
+                <p className="text-neutral-body mb-2 fz-14">Zonasi</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {" "}
+                  {kuotaPelatihan.zonasi}
+                </p>
+              </div>
+              <div className="col-md-6">
+                <p className="text-neutral-body mb-2 fz-14">Batch</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {" "}
+                  {kuotaPelatihan.batch}
+                </p>
               </div>
             </div>
 
             <h3 className="font-weight-bolder pb-5 pt-4">Alamat</h3>
             <div className="row">
               <div className="col-md-12">
-                <p className="text-neutral-body">Alamat</p>
-                <p className="text-dark">{alamatPelatihan.alamat}</p>
+                <p className="text-neutral-body mb-2 fz-14">Alamat</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {alamatPelatihan.alamat}
+                </p>
               </div>
             </div>
 
             <div className="row mt-2">
               <div className="col-md-6">
-                <p className="text-neutral-body">Provinsi</p>
-                <p className="text-dark">{alamatPelatihan.provinsi}</p>
+                <p className="text-neutral-body mb-2 fz-14">Provinsi</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {alamatPelatihan.provinsi}
+                </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Kota / Kabupaten</p>
-                <p className="text-dark">{alamatPelatihan.kota}</p>
+                <p className="text-neutral-body mb-2 fz-14">Kota / Kabupaten</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {alamatPelatihan.kota}
+                </p>
               </div>
             </div>
 
             <div className="row mt-2">
               <div className="col-md-12">
-                <p className="text-neutral-body">Disabilitas</p>
-                <p className="text-dark">{alamatPelatihan.disabilitas}</p>
+                <p className="text-neutral-body mb-2 fz-14">Disabilitas</p>
+                {review.umum === "1" && (
+                  <p className="fz-16 mb-1" style={{ color: "#1f1f1f" }}>
+                    Umum
+                  </p>
+                )}
+                {review.tuna_netra === "1" && (
+                  <p className="fz-16 mb-1" style={{ color: "#1f1f1f" }}>
+                    Tuna Netra
+                  </p>
+                )}
+                {review.tuna_rungu === "1" && (
+                  <p className="fz-16 mb-1" style={{ color: "#1f1f1f" }}>
+                    Tuna Rungu
+                  </p>
+                )}
+                {review.tuna_daksa === "1" && (
+                  <p className="fz-16 mb-1" style={{ color: "#1f1f1f" }}>
+                    Tuna Daksa
+                  </p>
+                )}
               </div>
             </div>
 

@@ -316,6 +316,8 @@ export default function MasterPelatihan({ token }) {
                                 <button
                                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
                                   onClick={(e) => handleFilter(e)}
                                 >
                                   Terapkan

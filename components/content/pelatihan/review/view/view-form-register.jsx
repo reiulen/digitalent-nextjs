@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +22,7 @@ const ReviewFormRegister = ({ token }) => {
   const dispatch = useDispatch();
 
   const [note, setNote] = useState("");
+  const [noteSend, setNoteSend] = useState("");
 
   const { id } = router.query;
   const { error: errorRevisi, revisi } = useSelector(
@@ -93,11 +94,7 @@ const ReviewFormRegister = ({ token }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    revisi &&
-      revisi.length !== 0 &&
-      revisi.map((row, i) => {
-        setNote(row.revisi);
-      });
+    setRevision();
 
     if (successRevisi) {
       dispatch({ type: REVISI_REVIEW_RESET });
@@ -114,14 +111,27 @@ const ReviewFormRegister = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [successRevisi, successTolak, dispatch, revisi, router]);
+  }, [successRevisi, successTolak, dispatch, setRevision, router]);
+
+  const setRevision = useCallback(() => {
+    let notes = [];
+    let revisiLength = revisi.length + 1;
+    revisi &&
+      revisi.length !== 0 &&
+      revisi.map((row, i) => {
+        revisiLength--;
+        notes.push(revisiLength + "." + " " + row.revisi);
+      });
+
+    setNote(notes.join("\n \n"));
+  }, [revisi]);
 
   const readerElementHandler = (row, i) => {
     switch (row.element) {
       case "text":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body mb-2 fz-14">
               {row.name}
             </label>
             <input
@@ -136,7 +146,7 @@ const ReviewFormRegister = ({ token }) => {
       case "select":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body mb-2 fz-14">
               {row.name}
             </label>
             <select
@@ -158,7 +168,7 @@ const ReviewFormRegister = ({ token }) => {
       case "checkbox":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body mb-2 fz-14">
               {row.name}
             </label>
             <div className="my-auto">
@@ -183,7 +193,7 @@ const ReviewFormRegister = ({ token }) => {
       case "textarea":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body mb-2 fz-14">
               {row.name}
             </label>
             <textarea
@@ -199,7 +209,7 @@ const ReviewFormRegister = ({ token }) => {
       case "radio":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body mb-2 fz-14">
               {row.name}
             </label>
             <div className="my-auto">
@@ -224,7 +234,7 @@ const ReviewFormRegister = ({ token }) => {
       case "file_image":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body mb-2 fz-14">
               {row.name}
             </label>
             <div className="custom-file">
@@ -244,7 +254,7 @@ const ReviewFormRegister = ({ token }) => {
       case "file_doc":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body mb-2 fz-14">
               {row.name}
             </label>
             <div className="custom-file">
@@ -264,7 +274,7 @@ const ReviewFormRegister = ({ token }) => {
       case "date":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body mb-2 fz-14">
               {row.name}
             </label>
             <input
@@ -285,7 +295,7 @@ const ReviewFormRegister = ({ token }) => {
     setShowModal(false);
     const data = {
       pelatian_id: parseInt(id),
-      revisi: note,
+      revisi: noteSend,
     };
     dispatch(revisiReviewPelatihan(data, token));
   };
@@ -413,9 +423,17 @@ const ReviewFormRegister = ({ token }) => {
             <textarea
               rows="5"
               className="form-control"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
+              value={noteSend}
+              placeholder={note}
+              onChange={(e) => setNoteSend(e.target.value)}
+              maxLength={200}
             ></textarea>
+            {revisi.length > 0 && (
+              <p className="text-danger fz-12">
+                *Sebagai history, tambahkan catatan revisi <br /> dibawah
+                catatan sebelumnya.
+              </p>
+            )}
           </div>
         </Modal.Body>
         <Modal.Footer>
