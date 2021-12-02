@@ -15,8 +15,11 @@ import {
     TAG_BERANDA_ARTIKEL_SUCCESS,
     TAG_BERANDA_ARTIKEL_FAIL,
 
+    CEK_LULUS_PELATIHAN_REQUEST,
+    CEK_LULUS_PELATIHAN,
+    CEK_LULUS_FAIL,
+
     CLEAR_ERRORS,
-    CEK_LULUS_PELATIHAN
 } from "../../types/beranda/artikel.type"
 
 export const allBerandaArtikelReducer = (state = { artikel: [] }, action) => {
@@ -48,7 +51,7 @@ export const allBerandaArtikelReducer = (state = { artikel: [] }, action) => {
     }
 }
 
-export const detailBerandaArtikelReducer = (state = {detail: {} }, action) => {
+export const detailBerandaArtikelReducer = (state = { detail: {} }, action) => {
     switch (action.type) {
         case DETAIL_BERANDA_ARTIKEL_SUCCESS:
             return {
@@ -64,13 +67,13 @@ export const detailBerandaArtikelReducer = (state = {detail: {} }, action) => {
             return {
                 error: null,
             };
-        
+
         default:
             return state;
     }
 }
 
-export const kategoriBerandaArtikelReducer = (state = {kategori: [] }, action) => {
+export const kategoriBerandaArtikelReducer = (state = { kategori: [] }, action) => {
     switch (action.type) {
         case KATEGORI_BERANDA_ARTIKEL_REQUEST:
             return {
@@ -80,9 +83,9 @@ export const kategoriBerandaArtikelReducer = (state = {kategori: [] }, action) =
         case KATEGORI_BERANDA_ARTIKEL_SUCCESS:
             let result = []
 
-            for (let i = 0; i < action.payload.data.kategori.length; i++){
-                if (action.payload.data.kategori[i].jenis_kategori == "Artikel"){
-                    result.push (action.payload.data.kategori[i])
+            for (let i = 0; i < action.payload.data.kategori.length; i++) {
+                if (action.payload.data.kategori[i].jenis_kategori == "Artikel") {
+                    result.push(action.payload.data.kategori[i])
                 }
             }
 
@@ -101,7 +104,7 @@ export const kategoriBerandaArtikelReducer = (state = {kategori: [] }, action) =
             return {
                 error: null,
             };
-        
+
         default:
             return state;
     }
@@ -136,16 +139,32 @@ export const allTagBerandaArtikelReducer = (state = { tags: [] }, action) => {
     }
 }
 
-export const cekLulusPelatihanReducer = (state = {}, action) => {
+export const cekLulusPelatihanReducer = (state = { cekLulus: [] }, action) => {
     switch (action.type) {
+
+        case CEK_LULUS_PELATIHAN_REQUEST:
+            return {
+                loading: true
+            }
 
         case CEK_LULUS_PELATIHAN:
             return {
                 loading: false,
-                tags: action.payload.data
+                cekLulus: action.payload.data,
+                status: true
             }
 
+        case CEK_LULUS_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+                status: false
+            }
 
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
 
         default:
             return state
