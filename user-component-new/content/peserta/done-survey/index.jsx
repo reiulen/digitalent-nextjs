@@ -1,8 +1,8 @@
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 
 import styles from "./done.module.css";
 import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import doneImage from "../../../../public/assets/media/logos/Survei.png";
 

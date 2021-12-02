@@ -134,13 +134,13 @@
   background-color: #fff;
   border-radius: 50%;
   width: 32px;
-  height: 25px;
+  height: 29px;
   justify-content: center;
   visibility: hidden;
 }
 .simbolX{
   position: absolute;
-  top: 2px;
+  top: 4px;
   right: 8px;
 }
 
@@ -160,9 +160,6 @@
   }
   .deskripsiTambah{
     margin-bottom: 90px;
-  }
-  .kategoriModal{
-
   }
 }
 

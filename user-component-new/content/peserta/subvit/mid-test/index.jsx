@@ -41,7 +41,9 @@ const SubtansiUser = ({ token }) => {
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
 
-  const [count, setCount] = useState(data && data.time_left);
+  const [count, setCount] = useState(
+    random_subtance_question_detail && random_subtance_question_detail.time_left
+  );
   const [modalDone, setModalDone] = useState(false);
 
   const [hour, setHour] = useState(0);
@@ -127,7 +129,7 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      router.push(`/peserta/done-mid-tes`);
+      // router.push(`/peserta/done-mid-tes`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);

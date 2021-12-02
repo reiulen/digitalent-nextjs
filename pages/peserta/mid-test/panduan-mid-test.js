@@ -29,7 +29,7 @@ export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Dashboard Peserta - Pelatihan" session={session}>
+      <Layout title="Panduan Mid Test" session={session}>
         <MidTest session={session} />
       </Layout>
     </>
@@ -55,7 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllAkademi());
 
       return {
-        props: { data: "auth", session, title: "Dashboard - Peserta" },
+        props: { data: "auth", session, title: "Panduan Mid Test" },
       };
     }
 );
