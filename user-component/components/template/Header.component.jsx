@@ -86,11 +86,10 @@ const Header = () => {
             <Col sm={3} hidden={router.pathname.includes(routerPath)}>
               <center>
                 <Image
-                  src={`${
-                    dataPribadi && dataPribadi.foto
+                  src={`${dataPribadi && dataPribadi.foto
                       ? dataPribadi.file_path + dataPribadi.foto
                       : "/assets/media/logos/default.png"
-                  }`}
+                    }`}
                   alt=""
                   className={styles.imageProfile}
                   width="120px"
@@ -131,9 +130,11 @@ const Header = () => {
                           "Mid Test"
                         ) : router.pathname.includes("done-mid-tes") ? (
                           "Mid Test"
+                        ) : router.pathname.includes("artikel/tambah-artikel") ? (
+                          "Artikel > Tambah Artikel"
                         ) : router.pathname.includes("artikel") ? (
                           "Artikel"
-                        ): router.pathname.includes("profile") &&
+                        ) : router.pathname.includes("profile") &&
                           localStorage.getItem("btn") === "0" ? (
                           <>
                             <a
@@ -322,8 +323,8 @@ const Header = () => {
                             ) : router.pathname.includes("test-subtansi") ? (
                               "Test Substansi"
                             ) : router.pathname.includes(
-                                "riwayat-pelatihan"
-                              ) ? (
+                              "riwayat-pelatihan"
+                            ) ? (
                               "Riwayat Pelatihan"
                             ) : router.pathname.includes("administrasi") ? (
                               "Administrasi"
@@ -489,15 +490,15 @@ const Header = () => {
                         }}
                       ></i>
                     ) : router.pathname.includes("artikel") ? (
-                    <i
-                      className="ri-bar-chart-horizontal-line"
-                      style={{
-                        color: "#fff",
-                        fontSize: "20px",
-                        marginRight: "15px",
-                      }}
-                    ></i>
-                  ) : router.pathname.includes("profile") &&
+                      <i
+                        className="ri-bar-chart-horizontal-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) : router.pathname.includes("profile") &&
                       localStorage.getItem("btn") === "3" ? (
                       <i
                         className="ri-briefcase-4-line"
@@ -522,34 +523,34 @@ const Header = () => {
                     {router.pathname.includes("substansi")
                       ? "Test Substansi"
                       : router.pathname.includes("survey")
-                      ? "Survey & LPJ"
-                      : router.pathname.includes("trivia")
-                      ? "Trivia"
-                      : router.pathname.includes("test-subtansi")
-                      ? "Test Substansi"
-                      : router.pathname.includes("mid-test")
-                      ? "Mid Test"
-                      : router.pathname.includes("done-mid-tes")
-                      ? "Mid Test"
-                      : router.pathname.includes("form-pendaftaran")
-                      ? "Pendaftaran Pelatihan"
-                      : router.pathname.includes("profile") &&
-                        localStorage.getItem("btn") === "0"
-                      ? "Informasi Pribadi"
-                      : router.pathname.includes("profile") &&
-                        localStorage.getItem("btn") === "1"
-                      ? "Alamat"
-                      : router.pathname.includes("profile") &&
-                        localStorage.getItem("btn") === "2"
-                      ? "Pendidikan"
-                      : router.pathname.includes("profile") &&
-                        localStorage.getItem("btn") === "3"
-                      ? "Pekerjaan"
-                      : router.pathname.includes("form-lpj")
-                      ? "Form LPJ"
-                      : router.pathname.includes("artikel")
-                      ? "Artikel"
-                      : "Dashboard"}
+                        ? "Survey & LPJ"
+                        : router.pathname.includes("trivia")
+                          ? "Trivia"
+                          : router.pathname.includes("test-subtansi")
+                            ? "Test Substansi"
+                            : router.pathname.includes("mid-test")
+                              ? "Mid Test"
+                              : router.pathname.includes("done-mid-tes")
+                                ? "Mid Test"
+                                : router.pathname.includes("form-pendaftaran")
+                                  ? "Pendaftaran Pelatihan"
+                                  : router.pathname.includes("profile") &&
+                                    localStorage.getItem("btn") === "0"
+                                    ? "Informasi Pribadi"
+                                    : router.pathname.includes("profile") &&
+                                      localStorage.getItem("btn") === "1"
+                                      ? "Alamat"
+                                      : router.pathname.includes("profile") &&
+                                        localStorage.getItem("btn") === "2"
+                                        ? "Pendidikan"
+                                        : router.pathname.includes("profile") &&
+                                          localStorage.getItem("btn") === "3"
+                                          ? "Pekerjaan"
+                                          : router.pathname.includes("form-lpj")
+                                            ? "Form LPJ"
+                                            : router.pathname.includes("artikel")
+                                              ? "Artikel"
+                                              : "Dashboard"}
                   </div>
                 </div>
               </p>

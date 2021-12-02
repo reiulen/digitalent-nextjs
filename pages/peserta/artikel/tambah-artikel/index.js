@@ -1,20 +1,20 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
-import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
-import LoadingContent from "../../../user-component/content/peserta/components/loader/LoadingContent";
+import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
+import { getDashboardPeserta } from "../../../../redux/actions/pelatihan/dashboard-peserta.actions";
+import LoadingContent from "../../../../user-component/content/peserta/components/loader/LoadingContent";
 import { useRouter } from "next/router";
-import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
-import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
+import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 
-import { wrapper } from "../../../redux/store";
+import { wrapper } from "../../../../redux/store";
 
 const TambahArtikelPeserta = dynamic(
   () =>
-    import("../../../user-component/content/peserta/artikel/tambah-artikel"),
+    import("../../../../user-component/content/peserta/artikel/tambah-artikel"),
   {
     loading: function loadingNow() {
       return <LoadingContent />;
@@ -24,7 +24,7 @@ const TambahArtikelPeserta = dynamic(
 );
 
 const Layout = dynamic(() =>
-  import("../../../user-component/components/template/Layout.component")
+import("../../../../user-component/components/template/Layout.component")
 );
 
 export default function TambahArtikel(props) {

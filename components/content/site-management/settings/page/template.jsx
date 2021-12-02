@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
+
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
@@ -16,6 +18,9 @@ export default function Template(props) {
   const [status, setStatus] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
+
+  const selectReset = useRef()
+  const router = useRouter();
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -88,7 +93,7 @@ export default function Template(props) {
                 <Select
                   placeholder="Pilih Status"
                   options={optionsStatus}
-                  defaultValue={status}
+                  value={status}
                   onChange={onChangeStatus}
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("status");
@@ -144,18 +149,22 @@ export default function Template(props) {
             </div>
           </div>
           <div className="d-flex justify-content-end mb-5 mr-4">
-            <button type="reset" className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`} onClick={e => {
-              setStatus("")
-              setSubject("")
-              setBody("")
-            }}>
+            <button
+              type="reset"
+              className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+              onClick={(e) => {
+                setStatus("")
+                setSubject("")
+                setBody("")
+              }}
+            >
               Reset
             </button>
             <button
               type="submit"
               className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
             >
-              Simpan
+              Kirim
             </button>
           </div>
         </form>
