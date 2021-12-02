@@ -3,7 +3,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import style from "../style.module.css";
@@ -16,11 +15,10 @@ import {
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 import {
-  helperRegexGPA,
+  helperRegexNumberIpk,
   helperRegexNumber,
   helperRemoveZeroFromIndex0,
   SweatAlert,
-  yyyy,
 } from "../../../../../utils/middleware/helper";
 import moment from "moment";
 
@@ -55,7 +53,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       label: "",
     }
   );
-  // console.log(pendidikan);
+
   const [asalSekolah, setAsalSekolah] = useState(
     (pendidikan && pendidikan.asal_pendidikan) || ""
   );
@@ -73,10 +71,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   );
   const [ijazah, setIjazah] = useState("");
   const [ijazahPreview, setIjazahPreview] = useState("");
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  // const [optionsAsalSekolah, setOptionsAsalSekolah] = useState(
-  //   dataAsalSekolah ? dataAsalSekolah : []
-  // );
 
   const [dataSearch, setDataSearch] = useState([]);
   const optionsJenjangPendidikan = [];
@@ -117,8 +111,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     token,
     asalSekolah,
   ]);
-
-  console.log(dataAsalSekolah);
 
   const optionsAsalSekolah = [];
 
@@ -320,22 +312,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     setAsalSekolah(e.label);
                   }}
                 />
-                {/* <input
-                  list="data"
-                  type="text"
-                  className="form-control"
-                  value={asalSekolah}
-                  onChange={(e) => {
-                    setAsalSekolah(e.target.value);
-                  }}
-                />
-                <datalist id="data">
-                  {dataAsalSekolah === undefined
-                    ? "kosong"
-                    : dataAsalSekolah.map((item, index) => {
-                        return <option value={item.label} key={index} />;
-                      })}
-                </datalist> */}
               </div>
               {simpleValidator.current.message(
                 "asal sekolah",
@@ -357,33 +333,14 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               >
                 <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
                 <div className="position-relative" style={{ zIndex: "4" }}>
-                  {/* <input
-                    list="data"
-                    type="text"
-                    className="form-control"
-                    value={asalSekolah}
-                    onChange={(e) => {
-                      setAsalSekolah(e.target.value);
-                    }}
-                  /> */}
-
                   <Select
-                    // list="data"
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
-                    // className="form-control"
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       setAsalSekolah(e.label);
                     }}
                   />
-                  {/* <datalist id="data">
-                    {dataAsalSekolah === undefined
-                      ? "kosong"
-                      : dataAsalSekolah.map((item, index) => {
-                          return <option value={item.label} key={index} />;
-                        })}
-                  </datalist> */}
                 </div>
                 {simpleValidator.current.message(
                   "asal sekolah",
@@ -432,33 +389,14 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               >
                 <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
                 <div className="position-relative" style={{ zIndex: "4" }}>
-                  {/* <input
-                    list="data"
-                    type="text"
-                    className="form-control"
-                    value={asalSekolah}
-                    onChange={(e) => {
-                      setAsalSekolah(e.target.value);
-                    }}
-                  /> */}
-
                   <Select
-                    // list="data"
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
-                    // className="form-control"
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       setAsalSekolah(e.label);
                     }}
                   />
-                  {/* <datalist id="data">
-                    {dataAsalSekolah === undefined
-                      ? "kosong"
-                      : dataAsalSekolah.map((item, index) => {
-                          return <option value={item.label} key={index} />;
-                        })}
-                  </datalist> */}
                 </div>
                 {simpleValidator.current.message(
                   "asal sekolah",
@@ -508,31 +446,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
                 <div className="position-relative" style={{ zIndex: "4" }}>
                   <Select
-                    // list="data"
                     placeholder="Pilih Sekolah"
                     options={optionsAsalSekolah}
-                    // className="form-control"
                     defaultValue={asalSekolah}
                     onChange={(e) => {
                       setAsalSekolah(e.label);
                     }}
                   />
-                  {/* <input
-                    list="data"
-                    type="text"
-                    className="form-control"
-                    value={asalSekolah}
-                    onChange={(e) => {
-                      setAsalSekolah(e.target.value);
-                    }}
-                  />
-                  <datalist id="data">
-                    {dataAsalSekolah === undefined
-                      ? "kosong"
-                      : dataAsalSekolah.map((item, index) => {
-                          return <option value={item.label} key={index} />;
-                        })}
-                  </datalist> */}
                 </div>
                 {simpleValidator.current.message(
                   "asal sekolah",
@@ -582,7 +502,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
                 <div className="position-relative" style={{ zIndex: "4" }}>
                   <Select
-                    // list="data"
                     placeholder="Pilih Sekolah"
                     options={
                       dataAsalSekolah &&
@@ -590,28 +509,11 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                         return { value: item.id, label: item.label };
                       })
                     }
-                    // className="form-control"
                     defaultValue={asalSekolah}
                     onChange={(e) => {
                       setAsalSekolah(e.label);
                     }}
                   />
-                  {/* <input
-                    list="data"
-                    type="text"
-                    className="form-control"
-                    value={asalSekolah}
-                    onChange={(e) => {
-                      setAsalSekolah(e.target.value);
-                    }}
-                  />
-                  <datalist id="data">
-                    {dataAsalSekolah === undefined
-                      ? "kosong"
-                      : dataAsalSekolah.map((item, index) => {
-                          return <option value={item.label} key={index} />;
-                        })}
-                  </datalist> */}
                 </div>
                 {simpleValidator.current.message(
                   "asal sekolah",
@@ -661,7 +563,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
                 <div className="position-relative" style={{ zIndex: "4" }}>
                   <Select
-                    // list="data"
                     placeholder="Pilih Sekolah"
                     options={
                       dataAsalSekolah &&
@@ -669,28 +570,11 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                         return { value: item.id, label: item.label };
                       })
                     }
-                    // className="form-control"
                     defaultValue={asalSekolah}
                     onChange={(e) => {
                       setAsalSekolah(e.label);
                     }}
                   />
-                  {/* <input
-                    list="data"
-                    type="text"
-                    className="form-control"
-                    value={asalSekolah}
-                    onChange={(e) => {
-                      setAsalSekolah(e.target.value);
-                    }}
-                  />
-                  <datalist id="data">
-                    {dataAsalSekolah === undefined
-                      ? "kosong"
-                      : dataAsalSekolah.map((item, index) => {
-                          return <option value={item.label} key={index} />;
-                        })}
-                  </datalist> */}
                 </div>
                 {simpleValidator.current.message(
                   "asal sekolah",
@@ -1061,7 +945,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   onChange={(e) => {
                     if (
                       e.target.value === "" ||
-                      helperRegexNumber.test(e.target.value)
+                      helperRegexNumberIpk.test(e.target.value)
                     ) {
                       helperRemoveZeroFromIndex0(e.target.value, setIpk);
                     }
@@ -1128,7 +1012,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   onChange={(e) => {
                     if (
                       e.target.value === "" ||
-                      helperRegexNumber.test(e.target.value)
+                      helperRegexNumberIpk.test(e.target.value)
                     ) {
                       helperRemoveZeroFromIndex0(e.target.value, setIpk);
                     }
@@ -1194,7 +1078,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   onChange={(e) => {
                     if (
                       e.target.value === "" ||
-                      helperRegexNumber.test(e.target.value)
+                      helperRegexNumberIpk.test(e.target.value)
                     ) {
                       helperRemoveZeroFromIndex0(e.target.value, setIpk);
                     }
@@ -1260,7 +1144,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   onChange={(e) => {
                     if (
                       e.target.value === "" ||
-                      helperRegexNumber.test(e.target.value)
+                      helperRegexNumberIpk.test(e.target.value)
                     ) {
                       helperRemoveZeroFromIndex0(e.target.value, setIpk);
                     }
@@ -1326,7 +1210,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   onChange={(e) => {
                     if (
                       e.target.value === "" ||
-                      helperRegexNumber.test(e.target.value)
+                      helperRegexNumberIpk.test(e.target.value)
                     ) {
                       helperRemoveZeroFromIndex0(e.target.value, setIpk);
                     }
