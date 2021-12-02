@@ -177,20 +177,17 @@ export const updateProfilePendidikan =
   };
 
 export const getDataAsalSekolah =
-  (token, page, limit, keyword) => async (dispatch) => {
+  (token, keyword = "") =>
+  async (dispatch) => {
     try {
-      const params = {
-        page,
-        limit,
-        keyword,
-      };
-
       let link =
         process.env.END_POINT_API_SITE_MANAGEMENT +
         `api/option/origin-of-school`;
 
+      if (keyword === "0" ? "" : keyword)
+        link = link.concat(`&keyword=${keyword}`);
+
       const config = {
-        params,
         headers: {
           Authorization: "Bearer " + token,
         },
