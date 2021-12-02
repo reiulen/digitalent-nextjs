@@ -519,7 +519,6 @@ const Beranda = ({ session }) => {
                                             </div>
                                           </Card.ImgOverlay>
                                           <Card.Body className="position-relative">
-                                            {console.log(row)}
                                             <div className="mitra-pelatihan-new">
                                               <Image
                                                 src={
@@ -874,10 +873,10 @@ const Beranda = ({ session }) => {
                   </div>
                 ))
               ) : (
-                <div className="mt-20">
+                <div className="mt-10">
                   <div className="row">
                     <h1 className="text-center text-muted col-12 font-weight-bolder">
-                      Tema Pelatihan Belum Tersedia
+                      Tema Belum Tersedia
                     </h1>
                   </div>
                 </div>

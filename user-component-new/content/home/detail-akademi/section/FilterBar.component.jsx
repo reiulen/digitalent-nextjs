@@ -195,7 +195,7 @@ const FilterBar = () => {
           onChange={(e) => {
             selectThemeRef.select.clearValue();
             setAkademiId(e);
-            dispatch(getAllTemaOriginal(e.value));
+            dispatch(getAllTemaOriginal(e ? e.value : null));
           }}
         />
       </div>
