@@ -120,38 +120,45 @@ const Sidebar = ({ session }) => {
         setMenu(data.data.data.menu)
       })
     }
+
     if (!menu) {
-      setMenu(JSON.parse(localStorage.getItem("sidebar")));
-   }
+      setMenu(
+        JSON.parse(localStorage.getItem("sidebar"))
+      );
+    }
+
   }, [session]);
  
 
   const handleOpenMenu = (e, i, condition) => {
+
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
-    
-
     if (condition != null) {
+
       if (splitRouteToMakingActive[1]) {
-        menu[i].selected = !condition;
+        menu.map((data, index) => {
+          if(index === i){
+            data.selected = !data.selected
+          }else{
+            data.selected = false;
+          }
+        });
       }
 
-      if (i) {
-        if (splitRouteToMakingActive[1]) {
-          menu[i].selected = !condition;
-          if (menu[i].name.toLowerCase() === splitRouteToMakingActive[1]) {
-            const idSubmenuActive = localStorage.getItem("submenuActive");
-            menu[i].child[idSubmenuActive].selected = true;
-          }
-        }
-      }
     }
 
     let _temp = [...menu];
     setMenu(_temp);
   };
+
   const handleOpenMenuSubMenu = (e, iMenu, iSubMenu) => {
+
+    console.log(e);
+    console.log(iMenu);
+    console.log(iSubMenu);
+
     let _temp = [...menu];
     _temp.map((items, index) => {
       if (index === iMenu) {
@@ -168,6 +175,7 @@ const Sidebar = ({ session }) => {
   };
 
   const handleActiveSubmenu = (e, iMenu, iSubMenu) => {
+
     let _temp = [...menu];
     _temp.map((items, index) => {
       if (index === iMenu) {
@@ -183,6 +191,8 @@ const Sidebar = ({ session }) => {
             _temp[iMenu].child[indxx] = { ...itemsp, selected: false };
           }
         });
+      }else{
+
       }
     });
     setMenu(_temp);

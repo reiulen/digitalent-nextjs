@@ -30,13 +30,12 @@ const Berita = () => {
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
     const [ kategoriBerita, setKategoriBerita ] = useState ("")
-    const [ keyword, setKeyword ] = useState ("")
+    const [ keyword, setKeyword ] = useState (null)
     const [ activePage, setActivePage ] = useState(1)
-    const [ limit, setLimit ] = useState("")
-    const [ filterPublish, setFilterPublish ] = useState("")
+    const [ limit, setLimit ] = useState(5)
+    const [ filterPublish, setFilterPublish ] = useState("desc")
     const [ sort, setSort ] = useState("")
     const [ category_id, setCategoryId ] = useState("")
-    // const [ category_name, setCategoryName ] = useState("")
     const [ category_academy, setCategoryAcademy ] = useState("")
     const [ tag, setTag ] = useState("")
     const [ showFilter, setShowFilter ] = useState(false)
@@ -44,6 +43,7 @@ const Berita = () => {
     const [ tagCards, setTagCards ] = useState ([])
     const [ kategoriToShow, setKategoriToShow ] = useState ([])
     const [ showArrow, setShowArrow ] = useState(null)
+    const [showDescButton, setShowDescButton ] = useState(false)
 
     const getWindowDimensions = () => {
 
@@ -261,15 +261,18 @@ const Berita = () => {
         return result
     }
 
-    const handleFilterPublish = (publish) => {
+    const handleFilterPublish = (publish, status) => {
         setFilterPublish(publish)
+        setShowDescButton(status)
         setSort("")
     }
 
-    const handleSort = (sort) => {
+    const handleSort = (sort, filter) => {
         setSort(sort)
-        setFilterPublish("")
+        setShowDescButton(false)
+        setFilterPublish(filter)
     }
+
     const handleCategoryAcademy = (slug) => {
         setCategoryAcademy (slug)
     }
@@ -357,180 +360,185 @@ const Berita = () => {
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
                                 "col-12 pl-0 ml-4 mt-10 mb-5"
                             :
-                                "col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-10"
+                                "col-lg-8 col-12 pl-0 ml-n2 mt-10 mb-5 pr-10"
                         }
                     >
                         {
-                            showArrow === true ?
-
-                                <Splide
-                                    options={{
-                                        arrows: true,
-                                        pagination: false,
-                                        gap: "1rem",
-                                        drag: "free",
-                                        perPage: 4,
-                                        breakpoints:{
-                                            830: {
-                                                perPage: 2,
-                                            },
-                                            450: {
-                                                perPage: 1,
-                                                },
-                                        }
-                                    }}
-                                    className="pr-20 mr-n10 mr-sm-0"
-                                >
-                                    {
-                                        kategoriBerita === "" ?
-                                            <SplideSlide>
-                                                <div 
-                                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
-                                                    style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori("")}
-                                                >
-                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                        SEMUA
-                                                    </div>
-                                                </div>
-                                            </SplideSlide>
-                                        :
-                                            <SplideSlide>
-                                                <div 
-                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                    style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori("")}
-                                                >
-                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                        SEMUA
-                                                    </div>
-                                                </div>
-                                            </SplideSlide>
-                                            
-                                    }
-                                    {
-                                        kategoriToShow ?
-                                            kategoriToShow.map((el, i) => {
-                                                return (
-                                                    kategoriBerita == el ?
-                                                        <SplideSlide>
-                                                            <div 
-                                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
-                                                                style={{ cursor: "pointer", height:"40px" }}
-                                                                onClick={() => handleFilterKategori(el)}
-                                                                key={i}
-                                                            >
-                                                                <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                    {el.toString().toUpperCase()}
-                                                                </div>
-                                                            </div>
-                                                        </SplideSlide>
-                                                    :
-                                                        <SplideSlide>
-                                                            <div 
-                                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                                style={{ cursor: "pointer", height:"40px" }}
-                                                                onClick={() => handleFilterKategori(el)}
-                                                                key={i}
-                                                            >
-                                                                <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                    {el.toString().toUpperCase()}
-                                                                </div>
-                                                            </div> 
-                                                        </SplideSlide>
-                                                        
-                                                )
-                                            })
-                                        :
-                                            null
-                                    }
-
-                                </Splide>
+                            showArrow === null ?
+                                <div className="col col-12">
+                                    <PulseLoaderRender />
+                                </div> 
                             :
-                                <Splide
-                                    options={{
-                                        arrows: false,
-                                        pagination: false,
-                                        gap: "1rem",
-                                        drag: "free",
-                                        perPage: 4,
-                                        breakpoints:{
-                                            830: {
-                                                perPage: 2,
-                                            },
-                                            450: {
-                                                perPage: 1,
+                                showArrow === true ?
+                                    <Splide
+                                        options={{
+                                            arrows: true,
+                                            pagination: false,
+                                            gap: "1rem",
+                                            drag: "free",
+                                            perPage: 4,
+                                            breakpoints:{
+                                                830: {
+                                                    perPage: 2,
                                                 },
+                                                450: {
+                                                    perPage: 1,
+                                                    },
+                                            }
+                                        }}
+                                        className="px-20 mr-n5 mr-sm-1"
+                                    >
+                                        {
+                                            kategoriBerita === "" ?
+                                                <SplideSlide>
+                                                    <div 
+                                                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
+                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                        onClick={() => handleFilterKategori("")}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                            SEMUA
+                                                        </div>
+                                                    </div>
+                                                </SplideSlide>
+                                            :
+                                                <SplideSlide>
+                                                    <div 
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                        onClick={() => handleFilterKategori("")}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                            SEMUA
+                                                        </div>
+                                                    </div>
+                                                </SplideSlide>
+                                                
                                         }
-                                    }}
-                                    className="ml-5 mr-n10 mr-sm-0"
-                                >
-                                    {
-                                        kategoriBerita === "" ?
-                                            <SplideSlide>
-                                                <div 
-                                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
-                                                    style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori("")}
-                                                >
-                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                        SEMUA
-                                                    </div>
-                                                </div>
-                                            </SplideSlide>
-                                        :
-                                            <SplideSlide>
-                                                <div 
-                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                    style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori("")}
-                                                >
-                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                        SEMUA
-                                                    </div>
-                                                </div>
-                                            </SplideSlide>
-                                            
-                                    }
-                                    {
-                                        kategoriToShow ?
-                                            kategoriToShow.map((el, i) => {
-                                                return (
-                                                    kategoriBerita == el ?
-                                                        <SplideSlide>
-                                                            <div 
-                                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
-                                                                style={{ cursor: "pointer", height:"40px" }}
-                                                                onClick={() => handleFilterKategori(el)}
-                                                                key={i}
-                                                            >
-                                                                <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                    {el.toString().toUpperCase()}
+                                        {
+                                            kategoriToShow ?
+                                                kategoriToShow.map((el, i) => {
+                                                    return (
+                                                        kategoriBerita == el ?
+                                                            <SplideSlide>
+                                                                <div 
+                                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    key={i}
+                                                                >
+                                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                                        {el.toString().toUpperCase()}
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </SplideSlide>
-                                                    :
-                                                        <SplideSlide>
-                                                            <div 
-                                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                                style={{ cursor: "pointer", height:"40px" }}
-                                                                onClick={() => handleFilterKategori(el)}
-                                                                key={i}
-                                                            >
-                                                                <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                    {el.toString().toUpperCase()}
+                                                            </SplideSlide>
+                                                        :
+                                                            <SplideSlide>
+                                                                <div 
+                                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    key={i}
+                                                                >
+                                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                                        {el.toString().toUpperCase()}
+                                                                    </div>
+                                                                </div> 
+                                                            </SplideSlide>
+                                                            
+                                                    )
+                                                })
+                                            :
+                                                null
+                                        }
+            
+                                    </Splide>
+                                :
+                                    <Splide
+                                        options={{
+                                            arrows: false,
+                                            pagination: false,
+                                            gap: "1rem",
+                                            drag: "free",
+                                            perPage: 4,
+                                            breakpoints:{
+                                                830: {
+                                                    perPage: 2,
+                                                },
+                                                450: {
+                                                    perPage: 1,
+                                                    },
+                                            }
+                                        }}
+                                        className="ml-0 ml-sm-3 mr-n5 mr-sm-n1"
+                                    >
+                                        {
+                                            kategoriBerita === "" ?
+                                                <SplideSlide>
+                                                    <div 
+                                                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
+                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                        onClick={() => handleFilterKategori("")}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                            SEMUA
+                                                        </div>
+                                                    </div>
+                                                </SplideSlide>
+                                            :
+                                                <SplideSlide>
+                                                    <div 
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                        onClick={() => handleFilterKategori("")}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                            SEMUA
+                                                        </div>
+                                                    </div>
+                                                </SplideSlide>
+                                                
+                                        }
+                                        {
+                                            kategoriToShow ?
+                                                kategoriToShow.map((el, i) => {
+                                                    return (
+                                                        kategoriBerita == el ?
+                                                            <SplideSlide>
+                                                                <div 
+                                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    key={i}
+                                                                >
+                                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                                        {el.toString().toUpperCase()}
+                                                                    </div>
                                                                 </div>
-                                                            </div> 
-                                                        </SplideSlide>
-                                                        
-                                                )
-                                            })
-                                        :
-                                            null
-                                    }
-
-                                </Splide>
+                                                            </SplideSlide>
+                                                        :
+                                                            <SplideSlide>
+                                                                <div 
+                                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    key={i}
+                                                                >
+                                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                                        {el.toString().toUpperCase()}
+                                                                    </div>
+                                                                </div> 
+                                                            </SplideSlide>
+                                                            
+                                                    )
+                                                })
+                                            :
+                                                null
+                                        }
+            
+                                    </Splide>
                         }
+                        
                         
                     </div>
                     
@@ -598,10 +606,10 @@ const Berita = () => {
                                             <div className="row mx-3 mb-3 d-flex justify-content-between">
                                                 <div className=" col-6">
                                                     {
-                                                        filterPublish === "desc" && sort === "" ?
+                                                        showDescButton === true && sort === "" ?
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
-                                                                onClick={() => handleFilterPublish("")}
+                                                                onClick={() => handleFilterPublish("", false)}
                                                                 style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 Terbaru
@@ -609,7 +617,7 @@ const Berita = () => {
                                                         :
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
-                                                                onClick={() => handleFilterPublish("desc")}
+                                                                onClick={() => handleFilterPublish("desc", true)}
                                                                 style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 Terbaru
@@ -622,7 +630,7 @@ const Berita = () => {
                                                         filterPublish === "asc"  && sort === "" ?
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
-                                                                onClick={() => handleFilterPublish("")}
+                                                                onClick={() => handleFilterPublish("desc", false)}
                                                                 style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 Terlama
@@ -630,7 +638,7 @@ const Berita = () => {
                                                         :
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
-                                                                onClick={() => handleFilterPublish("asc")}
+                                                                onClick={() => handleFilterPublish("asc", false)}
                                                                 style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 Terlama
@@ -642,10 +650,10 @@ const Berita = () => {
                                             <div className="row mx-3 mb-3 d-flex justify-content-between">
                                                 <div className="col-6">
                                                     {
-                                                        sort === "asc" && filterPublish === ""  ?
+                                                        sort === "asc" && showDescButton === false   ?
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
-                                                                onClick={() => handleSort("")}
+                                                                onClick={() => handleSort("", "desc")}
                                                                 style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 A-Z
@@ -653,7 +661,7 @@ const Berita = () => {
                                                         :
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
-                                                                onClick={() => handleSort("asc")}
+                                                                onClick={() => handleSort("asc", "")}
                                                                 style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 A-Z
@@ -663,10 +671,10 @@ const Berita = () => {
 
                                                 <div className="col-6">
                                                     {
-                                                        sort === "desc" && filterPublish === ""  ?
+                                                        sort === "desc" &&  showDescButton === false   ?
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
-                                                                onClick={() => handleSort("")}
+                                                                onClick={() => handleSort("", "desc")}
                                                                 style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 Z-A
@@ -674,7 +682,7 @@ const Berita = () => {
                                                         :
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
-                                                                onClick={() => handleSort("desc")}
+                                                                onClick={() => handleSort("desc", "")}
                                                                 style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 Z-A
@@ -916,7 +924,7 @@ const Berita = () => {
                                             </div>
 
                                             <div 
-                                                className="col col-5 position-relative " 
+                                                className="col-5 position-relative d-flex align-md-self-center " 
                                                 // style={{objectFit:"contain"}}
                                                 style={{objectFit:"cover"}}
                                             >
@@ -943,11 +951,21 @@ const Berita = () => {
                                 
                             :
                                 <div className="row my-20 ml-5">
-                                    <div className="col col-12 d-flex justify-content-center">
-                                        <h1 className="font-weight-bolder">
-                                           Berita Tidak Tersedia
+                                    <div className="col col-12 d-flex flex-column justify-content-center">
+                                        <Image
+                                            src={`/assets/media/gambar-belum-tersedia-page.svg`}
+                                            width={525}
+                                            height={350}
+                                            alt="Tidak Tersedia"
+                                        />
+                                        <h1 
+                                            className="font-weight-bolder mt-15 text-center fw-600" 
+                                            style={{fontFamily:"Poppins", fontSize:"24px"}}
+                                        >
+                                            Tidak ada berita terkait "{keyword}"
                                         </h1>
-                                    </div>
+                                
+                                        </div>
                                 </div>
                     }
                     {/* End of Card */}
@@ -1013,10 +1031,10 @@ const Berita = () => {
                                 <div className="row mx-3 mb-3 d-flex justify-content-between">
                                     <div className="col-md-6 col-12">
                                         {
-                                            filterPublish === "desc" && sort === "" ?
+                                            showDescButton === true && sort === "" ?
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
-                                                    onClick={() => handleFilterPublish("")}
+                                                    onClick={() => handleFilterPublish("", false)}
                                                     style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     Terbaru
@@ -1024,7 +1042,7 @@ const Berita = () => {
                                             :
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
-                                                    onClick={() => handleFilterPublish("desc")}
+                                                    onClick={() => handleFilterPublish("desc", true)}
                                                     style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     Terbaru
@@ -1037,7 +1055,7 @@ const Berita = () => {
                                             filterPublish === "asc" && sort === "" ?
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
-                                                    onClick={() => handleFilterPublish("")}
+                                                    onClick={() => handleFilterPublish("desc", false)}
                                                     style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     Terlama
@@ -1045,7 +1063,7 @@ const Berita = () => {
                                             :
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
-                                                    onClick={() => handleFilterPublish("asc")}
+                                                    onClick={() => handleFilterPublish("asc", false)}
                                                     style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     Terlama
@@ -1057,10 +1075,10 @@ const Berita = () => {
                                 <div className="row mx-3 mb-3 d-flex justify-content-between">
                                     <div className="col-md-6 col-12">
                                         {
-                                            sort === "asc" && filterPublish === "" ?
+                                            sort === "asc" && showDescButton === false ?
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
-                                                    onClick={() => handleSort("")}
+                                                    onClick={() => handleSort("", "desc")}
                                                     style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     A-Z
@@ -1068,7 +1086,7 @@ const Berita = () => {
                                             :
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
-                                                    onClick={() => handleSort("asc")}
+                                                    onClick={() => handleSort("asc", "")}
                                                     style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     A-Z
@@ -1078,10 +1096,10 @@ const Berita = () => {
 
                                     <div className="col-md-6 col-12">
                                         {
-                                            sort === "desc" && filterPublish === ""  ?
+                                            sort === "desc" && showDescButton === false  ?
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
-                                                    onClick={() => handleSort("")}
+                                                    onClick={() => handleSort("", 'desc')}
                                                     style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     Z-A
@@ -1089,7 +1107,7 @@ const Berita = () => {
                                             :
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
-                                                    onClick={() => handleSort("desc")}
+                                                    onClick={() => handleSort("desc", "")}
                                                     style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     Z-A

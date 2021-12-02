@@ -12,7 +12,9 @@ import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const RiwayatPelatihan = dynamic(
   () =>
-    import("../../../user-component/content/peserta/riwayat-pelatihan/index"),
+    import(
+      "../../../user-component-new/content/peserta/riwayat-pelatihan/index"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

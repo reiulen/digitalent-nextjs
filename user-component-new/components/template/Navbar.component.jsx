@@ -59,7 +59,7 @@ const Navigationbar = ({ session }) => {
     }
   }, []);
 
-   const getDataGeneral = async(token) => {
+  const getDataGeneral = async (token) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
@@ -73,9 +73,8 @@ const Navigationbar = ({ session }) => {
       if (data) {
         localStorage.setItem("navbar", data.data.color[0].color);
       }
-    } catch (error) {
-    }
-  }
+    } catch (error) {}
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("navbar")) {
@@ -463,20 +462,24 @@ const Navigationbar = ({ session }) => {
                           PELATIHAN
                         </li>
                       </Link>{" "}
-                      <li className="items-lists rounded-0">
-                        <div
-                          style={{ fontSize: "16px" }}
-                          className="ri-bar-chart-horizontal-line mr-2"
-                        ></div>
-                        ARTIKEL
-                      </li>{" "}
-                      <li className="items-lists rounded-0">
-                        <div
-                          style={{ fontSize: "16px" }}
-                          className="ri-settings-4-line mr-2"
-                        ></div>
-                        PENGATURAN
-                      </li>
+                      <Link href="/peserta/artikel" passHref>
+                        <li className="items-lists rounded-0">
+                          <div
+                            style={{ fontSize: "16px" }}
+                            className="ri-bar-chart-horizontal-line mr-2"
+                          ></div>
+                          ARTIKEL
+                        </li>
+                      </Link>
+                      <Link href="/peserta/pengaturan" passHref>
+                        <li className="items-lists rounded-0">
+                          <div
+                            style={{ fontSize: "16px" }}
+                            className="ri-settings-4-line mr-2"
+                          ></div>
+                          PENGATURAN
+                        </li>
+                      </Link>
                       <li className={`items-lists p-0 p-3`}>
                         <button
                           className={`btn rounded-full ${style.navbar_btnPrimary} d-flex align-items-center justify-content-center`}
