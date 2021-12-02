@@ -171,7 +171,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           data: "auth",
           session,
           title: "Administrasi Pelatihan - Peserta",
-          success: true,
+          success,
         },
       };
     }
