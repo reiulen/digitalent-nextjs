@@ -17,6 +17,7 @@ const FilterBar = () => {
   const router = useRouter();
 
   const { id, tema_id } = router.query;
+  let selectThemeRef;
 
   const { akademi: allAkademi, loading: loadingAllAkademi } = useSelector(
     (state) => state.allAkademi
@@ -32,7 +33,7 @@ const FilterBar = () => {
   const [temaId, setTemaId] = useState(null); // multiple
   const [kota, setKota] = useState(null);
   const [tipePelatihan, setTipePelatihan] = useState(null);
-  const [activeTheme, setActiveTheme] = useState(null);
+  const [changeTheme, setChangeTheme] = useState(false);
   const [activeAcademy, setActiveAcademy] = useState(null);
 
   const optionsAkademi = [];
@@ -123,6 +124,7 @@ const FilterBar = () => {
   };
 
   const handleSearch = () => {
+    setChangeTheme(true);
     let temaArr = [];
     temaId !== null &&
       temaId.forEach((row, i) => {
@@ -165,7 +167,6 @@ const FilterBar = () => {
 
     return (
       <components.ValueContainer {...props}>
-        {console.log(props)}
         {!props.selectProps.inputValue && displayChips}
         <div
           style={{
@@ -192,6 +193,7 @@ const FilterBar = () => {
           }
           isClearable
           onChange={(e) => {
+            selectThemeRef.select.clearValue();
             setAkademiId(e);
             dispatch(getAllTemaOriginal(e.value));
           }}
@@ -205,7 +207,14 @@ const FilterBar = () => {
           placeholder="Pilih Tema"
           isMulti
           onChange={(e) => setTemaId(e)}
-          defaultValue={[optionsTheme[activeTheme]]}
+          ref={(ref) => {
+            selectThemeRef = ref;
+          }}
+          defaultValue={
+            changeTheme !== true
+              ? optionsTheme.filter((value) => value.value === +tema_id)
+              : null
+          }
           components={{ ValueContainer }}
         />
         <i
@@ -247,7 +256,7 @@ const FilterBar = () => {
           className="btn btn-beranda-primary rounded-pill btn-block fw-500"
           onClick={() => handleSearch()}
         >
-          Search
+          Cari
         </button>
       </div>
     </div>

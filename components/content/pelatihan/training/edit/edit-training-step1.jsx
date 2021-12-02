@@ -454,7 +454,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         silabus: silabusBase,
         metode_pelaksanaan: metodeImplementation,
         penyelenggara: organizer.label,
-        mitra: mitra.value.toString() || mitra.id.toString(),
+        mitra: mitra ? mitra.value.toString() || mitra.id.toString() : "",
         pendaftaran_mulai: moment(startDateRegistration).format(
           "YYYY-MM-DD HH:mm:ss"
         ),
@@ -667,6 +667,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("logo reference")
                     }
+                    id="logoReference"
                   />
                   <label className="custom-file-label" htmlFor="customFile">
                     {logoName.includes("logo")
@@ -709,6 +710,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("thumbnail")
                     }
+                    id="uploadThumbnail"
                   />
                   <label className="custom-file-label" htmlFor="customFile">
                     {thumbnailName.includes("thumbnail")
@@ -751,6 +753,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("upload silabus")
                     }
+                    id="uploadSilabus"
                   />
                   <label className="custom-file-label" htmlFor="customFile">
                     {silabusName.includes("silabus")

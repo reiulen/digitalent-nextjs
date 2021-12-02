@@ -15,53 +15,55 @@ import {
     TAG_BERANDA_ARTIKEL_SUCCESS,
     TAG_BERANDA_ARTIKEL_FAIL,
 
+    CEK_LULUS_PELATIHAN,
+    CEK_LULUS_FAIL,
+
     CLEAR_ERRORS,
-    CEK_LULUS_PELATIHAN
 } from "../../types/beranda/artikel.type"
 
 import axios from "axios";
 
 // Get all data
-export const getAllBerandaArtikel = 
-(
-    page = 1,
-    keyword = "",
-    limit=5,
-    filterPublish="desc",
-    sort="",
-    category_id="",
-    category_name="",
-    category_akademi="",
-    tag="",
-) => 
-    async dispatch => {
-        try {
-            dispatch({ type: BERANDA_ARTIKEL_REQUEST})
+export const getAllBerandaArtikel =
+    (
+        page = 1,
+        keyword = "",
+        limit = 5,
+        filterPublish = "desc",
+        sort = "",
+        category_id = "",
+        category_name = "",
+        category_akademi = "",
+        tag = "",
+    ) =>
+        async dispatch => {
+            try {
+                dispatch({ type: BERANDA_ARTIKEL_REQUEST })
 
-            let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}`
-            if (keyword) link = link.concat(`&keyword=${keyword}`);
-            if (limit) link = link.concat(`&limit=${limit}`);
-            if (filterPublish) link = link.concat(`&filterPublish=${filterPublish}`);
-            if (sort) link = link.concat(`&sort=${sort}`);
-            if (category_id) link = link.concat(`&category_id=${category_id}`);
-            if (category_name) link = link.concat(`&category_name=${category_name}`);
-            if (category_akademi) link = link.concat(`&category_akademi=${category_akademi}`);
-            if (tag) link = link.concat(`&tag=${tag}`);
+                let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}`
+                if (keyword) link = link.concat(`&keyword=${keyword}`);
+                if (limit) link = link.concat(`&limit=${limit}`);
+                if (filterPublish) link = link.concat(`&filterPublish=${filterPublish}`);
+                if (sort) link = link.concat(`&sort=${sort}`);
+                if (category_id) link = link.concat(`&category_id=${category_id}`);
+                if (category_name) link = link.concat(`&category_name=${category_name}`);
+                if (category_akademi) link = link.concat(`&category_akademi=${category_akademi}`);
+                if (tag) link = link.concat(`&tag=${tag}`);
 
-            const { data } = await axios.get(link);
+                const { data } = await axios.get(link);
 
-            dispatch({
-                type: BERANDA_ARTIKEL_SUCCESS,
-                payload: data,
-            })
-            
-        } catch (error) {
-            dispatch({
-                type: BERANDA_ARTIKEL_FAIL,
-                payload: error.response.data.message,
-            });
+                dispatch({
+                    type: BERANDA_ARTIKEL_SUCCESS,
+                    payload: data,
+                })
+
+            } catch (error) {
+                dispatch({
+                    type: BERANDA_ARTIKEL_FAIL,
+                    payload: error.response.data.message,
+                });
+            }
         }
-    }
 
 export const getDetailBerandaArtikel = (id) => async dispatch => {
     try {
@@ -69,37 +71,47 @@ export const getDetailBerandaArtikel = (id) => async dispatch => {
 
         const { data } = await axios.get(link)
 
-        dispatch ({
+        dispatch({
             type: DETAIL_BERANDA_ARTIKEL_SUCCESS,
             payload: data.data
         })
-        
+
     } catch (error) {
-        dispatch ({
+        dispatch({
             type: DETAIL_BERANDA_ARTIKEL_FAIL,
             payload: error.response.data.message
         })
     }
 }
 
-export const cekLulus = (id) => async dispatch => {
+export const cekLulus = (token) => async (dispatch) => {
     try {
-        let link = process.env.END_POINT_API_PELATIHAN + `/api/v1/formPendaftaran/cek-lulus-peserta`
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
 
-        const { data } = await axios.get(link)
+        let link = process.env.END_POINT_API_PELATIHAN + `api/v1/formPendaftaran/cek-lulus-peserta`
 
-        dispatch ({
+        const { data } = await axios.get(link, config)
+
+        dispatch({
             type: CEK_LULUS_PELATIHAN,
             payload: data
         })
         
     } catch (error) {
+        dispatch({
+            type: CEK_LULUS_FAIL,
+            payload: error.response.data.message
+        })
     }
 }
 
 export const getKategoriBerandaArtikel = () => async dispatch => {
     try {
-        dispatch({ type: KATEGORI_BERANDA_ARTIKEL_REQUEST})
+        dispatch({ type: KATEGORI_BERANDA_ARTIKEL_REQUEST })
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
 
@@ -109,7 +121,7 @@ export const getKategoriBerandaArtikel = () => async dispatch => {
             type: KATEGORI_BERANDA_ARTIKEL_SUCCESS,
             payload: data,
         })
-        
+
     } catch (error) {
         dispatch({
             type: KATEGORI_BERANDA_ARTIKEL_FAIL,
@@ -121,7 +133,7 @@ export const getKategoriBerandaArtikel = () => async dispatch => {
 export const getTagBerandaArtikel = () => async dispatch => {
     try {
 
-        dispatch({ type: TAG_BERANDA_ARTIKEL_REQUEST})
+        dispatch({ type: TAG_BERANDA_ARTIKEL_REQUEST })
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel`
 
@@ -131,7 +143,7 @@ export const getTagBerandaArtikel = () => async dispatch => {
             type: TAG_BERANDA_ARTIKEL_SUCCESS,
             payload: data,
         })
-        
+
     } catch (error) {
         dispatch({
             type: TAG_BERANDA_ARTIKEL_FAIL,
@@ -143,6 +155,6 @@ export const getTagBerandaArtikel = () => async dispatch => {
 // Clear Error
 export const clearErrors = () => async dispatch => {
     dispatch({
-      type: CLEAR_ERRORS,
+        type: CLEAR_ERRORS,
     });
 };

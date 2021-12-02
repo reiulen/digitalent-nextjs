@@ -49,6 +49,7 @@ const FormManual = ({
               name="dataOption"
               value={row.dataOption}
               onChange={(e) => inputChangeHandler(e, i)}
+              required
             >
               <option value="" disabled selected>
                 -- PILIH --
@@ -77,6 +78,7 @@ const FormManual = ({
               placeholder="data1;data2"
               autoComplete="off"
               onChange={(e) => inputChangeHandler(e, i)}
+              required
             />
           </div>
         </div>
@@ -100,6 +102,7 @@ const FormManual = ({
                 name="option"
                 value={row.option}
                 onChange={(e) => inputChangeHandler(e, i)}
+                required
               >
                 <option value="" disabled selected>
                   -- PILIH --

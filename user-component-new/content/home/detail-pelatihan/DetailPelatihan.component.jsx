@@ -146,7 +146,7 @@ const DetailPelatihan = ({ session }) => {
                   className="rounded-lg"
                 />
               </div>
-              <div className="p-4 border rounded mt-10">
+              <div className="p-4 border rounded-xl mt-10">
                 <div
                   dangerouslySetInnerHTML={{ __html: pelatihan.deskripsi }}
                 ></div>
@@ -154,7 +154,7 @@ const DetailPelatihan = ({ session }) => {
             </div>
           </Col>
           <Col md={12} lg={4}>
-            <div className="border rounded p-6 mb-5 ikuti-pelatihan">
+            <div className="border rounded-xl p-6 mb-5 ikuti-pelatihan">
               <h4 className="fz-20 fw-600">Ikuti Pelatihan</h4>
               <span className="fz-16">
                 {moment(pelatihan.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
@@ -223,7 +223,7 @@ const DetailPelatihan = ({ session }) => {
               </div>
             </div>
             {/* PEMBATAS */}
-            <div className="bg-white border rounded mb-5 p-6">
+            <div className="bg-white border rounded-xl mb-5 p-6">
               <h4 className="fz-20 fw-600 mb-4">Mitra Pelatihan</h4>
               <Row>
                 <Col md={12} sm={12} xl={2} lg={2}>

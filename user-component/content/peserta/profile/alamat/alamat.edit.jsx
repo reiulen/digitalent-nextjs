@@ -717,6 +717,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onChange={(e) => {
                   setKelurahanKtp(null);
                   setKecamatanKtp({ label: e?.label, value: e?.value });
+                  console.log(e);
                   dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
@@ -746,6 +747,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 options={optionsKelurahan}
                 onChange={(e) => {
                   setKelurahanKtp({ label: e?.label, value: e?.value });
+                  console.log(e);
                   dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
@@ -828,17 +830,6 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
           </div>
         ) : (
           <div className="button-aksi mt-5 float-right">
-            <Button
-              className={`${style.button_profile_batal} rounded-xl mr-2`}
-              type="button"
-              onClick={() => {
-                if (wizzard) {
-                  return funcViewEdit(1);
-                }
-              }}
-            >
-              Kembali
-            </Button>
             <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"

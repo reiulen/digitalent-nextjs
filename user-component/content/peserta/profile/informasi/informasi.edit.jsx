@@ -13,6 +13,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_DATA_PRIBADI_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 import {
+  helperRegexAlphabet,
   helperRegexNumber,
   SweatAlert,
 } from "../../../../../utils/middleware/helper";
@@ -258,12 +259,24 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
       )
       .then((res) => {
         setShowUpdateGambar(false);
-        toast.success("Berhasil Update");
+        SweatAlert("Berhasil", "Berhasil update foto", "success");
         dispatch(getDataPribadi(token));
       })
       .catch((err) => {
         toast.error("gagal");
       });
+  };
+
+  const handleTempatLahir = (e) => {
+    if (e.target.value === "" || helperRegexAlphabet.test(e.target.value)) {
+      setTempatLahir(e.target.value);
+    }
+  };
+
+  const handlehubungan = (e) => {
+    if (e.target.value === "" || helperRegexAlphabet.test(e.target.value)) {
+      setHubunganUrgent(e.target.value);
+    }
   };
 
   return (
@@ -359,7 +372,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                         name="gambar"
                         className="custom-file-input"
                         id="update-foto"
-                        accept="image/*"
+                        accept="image/png, image/gif, image/jpeg , image/jpg"
                         style={{ display: "none" }}
                         onChange={onSelectFile}
                       />
@@ -562,7 +575,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Tempat Lahir"
                 value={tempatLahir}
-                onChange={(e) => setTempatLahir(e.target.value)}
+                onChange={(e) => handleTempatLahir(e)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("tempat lahir")
                 }
@@ -629,6 +642,8 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Form.Label>Nomor Handphone</Form.Label>
               <Form.Control
                 className={style.formControl}
+                min={4}
+                max={14}
                 type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorUrgent}
@@ -664,7 +679,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Hubungan"
                 value={hubunganUrgent}
-                onChange={(e) => setHubunganUrgent(e.target.value)}
+                onChange={(e) => handlehubungan(e)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("hubungan darurat")
                 }

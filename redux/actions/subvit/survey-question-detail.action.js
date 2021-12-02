@@ -2,6 +2,9 @@ import {
   SURVEY_QUESTION_DETAIL_REQUEST,
   SURVEY_QUESTION_DETAIL_SUCCESS,
   SURVEY_QUESTION_DETAIL_FAIL,
+  SURVEY_QUESTION_RANDOM_DETAIL_REQUEST,
+  SURVEY_QUESTION_RANDOM_DETAIL_SUCCESS,
+  SURVEY_QUESTION_RANDOM_DETAIL_FAIL,
   NEW_SURVEY_QUESTION_DETAIL_REQUEST,
   NEW_SURVEY_QUESTION_DETAIL_SUCCESS,
   NEW_SURVEY_QUESTION_DETAIL_FAIL,
@@ -52,6 +55,37 @@ export const getAllSurveyQuestionDetail =
       dispatch({
         type: SURVEY_QUESTION_DETAIL_FAIL,
         payload: error.message,
+      });
+    }
+  };
+
+export const getRandomSurveyQuestionDetail =
+  (training_id = 1, theme_id = 1, token) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: SURVEY_QUESTION_RANDOM_DETAIL_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_SUBVIT +
+        `api/survey-question-bank-details/random?`;
+      if (training_id) link = link.concat(`&training_id=${training_id}`);
+      if (theme_id) link = link.concat(`&theme_id=${theme_id}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: SURVEY_QUESTION_RANDOM_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: SURVEY_QUESTION_RANDOM_DETAIL_FAIL,
+        payload: error.response.data.message,
       });
     }
   };

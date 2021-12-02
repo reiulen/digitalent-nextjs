@@ -177,6 +177,7 @@ const AddRegistrationStep2 = ({ token }) => {
               name="dataOption"
               value={row.dataOption}
               onChange={(e) => inputChangeHandler(e, i)}
+              required
             >
               <option value="" disabled selected>
                 -- PILIH --
@@ -205,6 +206,7 @@ const AddRegistrationStep2 = ({ token }) => {
               placeholder="data1;data2"
               autoComplete="off"
               onChange={(e) => inputChangeHandler(e, i)}
+              required
             />
           </div>
         </div>
@@ -228,6 +230,7 @@ const AddRegistrationStep2 = ({ token }) => {
                 name="option"
                 value={row.option}
                 onChange={(e) => inputChangeHandler(e, i)}
+                required
               >
                 <option value="" disabled selected>
                   -- PILIH --
@@ -373,7 +376,7 @@ const AddRegistrationStep2 = ({ token }) => {
                 {simpleValidator.current.message(
                   "judul form",
                   title,
-                  "required",
+                  "required|max:100",
                   { className: "text-danger" }
                 )}
               </div>
@@ -393,6 +396,7 @@ const AddRegistrationStep2 = ({ token }) => {
                         placeholder="Field"
                         autoComplete="off"
                         onChange={(e) => inputChangeHandler(e, i)}
+                        required
                       />
                     </div>
                   </div>
@@ -406,6 +410,7 @@ const AddRegistrationStep2 = ({ token }) => {
                         name="element"
                         value={row.element}
                         onChange={(e) => inputChangeHandler(e, i)}
+                        required
                       >
                         <option value="" disabled selected>
                           -- PILIH --

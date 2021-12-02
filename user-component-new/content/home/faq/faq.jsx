@@ -42,6 +42,16 @@ const FaqPage = () => {
     }
   };
 
+  const handleLinkContent = (string) => {
+    let text = string;
+    let result = "";
+
+    if (text.includes("<a")) {
+      result = text.replace("<a", `<a target="_blank"`);
+    }
+
+    return result;
+  };
 
   const handlePinnedFaq = () => {
     dispatch(getAllFaq(1, null, null));
@@ -160,10 +170,6 @@ const FaqPage = () => {
 
             {kategori && kategori.length !== 0
               ? kategori.map((el, i) => {
-                  faq.faq.filter((item) => {
-                    if (item.nama_kategori === el.nama_kategori) {
-                    }
-                  });
                   return (
                     <div key={i}>
                       <div className={`d-flex flex-row ${styles.menuItem}`}>
@@ -385,7 +391,9 @@ const FaqPage = () => {
                                 fontSize: "16px",
                                 color: "#464E5F",
                               }}
-                              dangerouslySetInnerHTML={{ __html: row.jawaban }}
+                              dangerouslySetInnerHTML={{
+                                __html: handleLinkContent(row.jawaban),
+                              }}
                             ></div>
                           </div>
                         </div>

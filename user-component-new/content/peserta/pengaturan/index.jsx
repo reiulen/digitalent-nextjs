@@ -457,7 +457,7 @@ export default function Pengaturan({ session }) {
             </div>
             <hr />
             <div className="mt-10">
-              <h1 className="font-weight-bolder">Kontak</h1>
+              <h1 className="font-weight-bolder">Keamanan</h1>
               <br />
               <div
                 className={`d-flex align-item-center ${style.text14}`}
