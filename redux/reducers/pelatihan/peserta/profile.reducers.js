@@ -330,62 +330,62 @@ export const updatePekerjaanReducer = (state = { success: false }, action) => {
   }
 };
 
-export const updateDataWizzardReducer = (state = {}, action) => {
-  switch (action.type) {
-    case STORE_ALL_DATA_PRIBADI:
-      return {
-        ...state,
-        data: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+// export const updateDataWizzardReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case STORE_ALL_DATA_PRIBADI:
+//       return {
+//         ...state,
+//         data: action.payload,
+//       };
+//     default:
+//       return state;
+//   }
+// };
 
-export const updateDataInformasiWizzardReducer = (state = {}, action) => {
-  switch (action.type) {
-    case STORE_ALL_DATA_PRIBADI:
-      return {
-        ...state,
-        data: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+// export const updateDataInformasiWizzardReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case STORE_ALL_DATA_PRIBADI:
+//       return {
+//         ...state,
+//         data: action.payload,
+//       };
+//     default:
+//       return state;
+//   }
+// };
 
-export const updateDataAlamatWizzardReducer = (state = {}, action) => {
-  switch (action.type) {
-    case STORE_ALL_DATA_PRIBADI:
-      return {
-        ...state,
-        data: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+// export const updateDataAlamatWizzardReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case STORE_ALL_DATA_PRIBADI:
+//       return {
+//         ...state,
+//         data: action.payload,
+//       };
+//     default:
+//       return state;
+//   }
+// };
 
-export const updateDataPendidikanWizzardReducer = (state = {}, action) => {
-  switch (action.type) {
-    case STORE_ALL_DATA_PRIBADI:
-      return {
-        ...state,
-        data: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+// export const updateDataPendidikanWizzardReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case STORE_ALL_DATA_PRIBADI:
+//       return {
+//         ...state,
+//         data: action.payload,
+//       };
+//     default:
+//       return state;
+//   }
+// };
 
-export const updateDataPekerjaanWizzardReducer = (state = {}, action) => {
-  switch (action.type) {
-    case STORE_ALL_DATA_PRIBADI:
-      return {
-        ...state,
-        data: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+// export const updateDataPekerjaanWizzardReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case STORE_ALL_DATA_PRIBADI:
+//       return {
+//         ...state,
+//         data: action.payload,
+//       };
+//     default:
+//       return state;
+//   }
+// };
