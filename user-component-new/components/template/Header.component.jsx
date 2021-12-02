@@ -19,8 +19,7 @@ const Header = () => {
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
     routerPath = "form-pendaftaran";
-    if (router.pathname.includes("administrasi"))
-    routerPath = "Administrasi";
+  if (router.pathname.includes("administrasi")) routerPath = "Administrasi";
   if (router.pathname === "/peserta/subvit/substansi/[id]")
     routerPath = "/peserta/subvit/substansi/[id]";
   if (router.pathname === "/peserta/subvit/survey/[id]")
@@ -133,6 +132,8 @@ const Header = () => {
                           "Mid Test"
                         ) : router.pathname.includes("done-mid-tes") ? (
                           "Mid Test"
+                        ) : router.pathname.includes("bookmark") ? (
+                          "Favorit"
                         ) : router.pathname.includes("profile") &&
                           localStorage.getItem("btn") === "0" ? (
                           <>
@@ -140,7 +141,7 @@ const Header = () => {
                               onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
-                              Profile
+                              Profil
                             </a>
 
                             {condition === "true" ? (
@@ -173,7 +174,7 @@ const Header = () => {
                               onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
-                              Profile
+                              Profil
                             </a>
 
                             {condition === "true" ? (
@@ -206,7 +207,7 @@ const Header = () => {
                               onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
-                              Profile
+                              Profil
                             </a>
 
                             {condition === "true" ? (
@@ -239,7 +240,7 @@ const Header = () => {
                               onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
-                              Profile
+                              Profil
                             </a>
 
                             {condition === "true" ? (
@@ -534,7 +535,7 @@ const Header = () => {
                           marginRight: "15px",
                         }}
                       ></i>
-                    ) :(
+                    ) : (
                       <i
                         className="ri-article-line"
                         style={{
@@ -579,7 +580,8 @@ const Header = () => {
                       : router.pathname.includes("pengaturan")
                       ? "Pengaturan"
                       : router.pathname.includes("bookmark")
-                      ? "Favorit": router.pathname.includes("administrasi")
+                      ? "Favorit"
+                      : router.pathname.includes("administrasi")
                       ? "Administrasi"
                       : "Dashboard"}
                   </div>

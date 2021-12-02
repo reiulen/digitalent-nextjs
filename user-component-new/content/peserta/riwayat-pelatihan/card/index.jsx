@@ -26,7 +26,7 @@ export default function CardTemplateOriginal({ data, session }) {
   useEffect(() => {
     if (data.status.includes("tidak") || data.status.includes("ditolak"))
       return setLabel("danger");
-    if (data.status.includes("menunggu") || data.status.includes("seleksi"))
+    if (data.status.includes("menunggu") || data.status.includes("seleksi")) 
       return setLabel("warning");
     if (
       data.status.includes("seleksi administrasi") ||
@@ -143,6 +143,8 @@ export default function CardTemplateOriginal({ data, session }) {
         >
           <Card.Body
             onClick={() => {
+              if(data.status.includes("tidak"))
+              return false
               if (data.status.includes("menunggu jadwal tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
@@ -284,7 +286,7 @@ export default function CardTemplateOriginal({ data, session }) {
                         style={{ borderRadius: "50px" }}
                         className={`label label-inline label-light-${
                           data.midtest ? "primary" : label
-                        } font-weight-bolder p-0 px-4 text-capitalize mr-5`}
+                        } font-weight-bolder p-0 px-4 py-4 text-capitalize mr-5`}
                       >
                         Kerjakan Mid Test
                       </p>
@@ -359,6 +361,13 @@ export default function CardTemplateOriginal({ data, session }) {
           <Col lg={3} />
           {data.lpj ? (
             <Fragment>
+               <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
               <CustomButton
                 click={() => {
                   Cookies.set("id_pelatihan", data.id);
@@ -431,7 +440,22 @@ export default function CardTemplateOriginal({ data, session }) {
                 Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
             </Fragment>
-          ) : data.status == "pelatihan" && data.trivia ? (
+          ) :
+           data.status == "pelatihan" && data.midtest ? (
+            <Fragment>
+              <CustomButton
+                click={() => {
+                  router.push(`/peserta/test-substansi`);
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                }}
+              >
+                Kerjakan Mid Test
+                <i className="ri-arrow-right-s-line mr-2"></i>
+              </CustomButton>
+            </Fragment>
+          ) :
+          data.status == "pelatihan" && data.trivia ? (
             <Fragment>
               <CustomButton
                 click={() => {

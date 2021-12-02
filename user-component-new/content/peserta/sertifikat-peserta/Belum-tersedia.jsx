@@ -38,25 +38,6 @@ export default function SeleksiAdministrasi() {
             {/* silahkan cek berkala. */}
             Sertifikat masih dalam proses pembuatan.
           </p>
-          <div className="d-flex justify-content-center">
-            <Button
-              className="btn-rounded-full font-weight-bold btn-block d-flex justify-content-center mt-5 w-25"
-              style={{
-                height: "40px",
-                fontFamily: "poppins",
-                fontSize: "14px",
-              }}
-              onClick={() => {
-                router.push("/peserta/riwayat-pelatihan");
-              }}
-            >
-              Cek Status
-              <i
-                className="ri-arrow-right-s-line mr-2"
-                style={{ color: "white" }}
-              ></i>
-            </Button>
-          </div>
         </Card>
       </Col>
       {/* <Administrasi /> */}

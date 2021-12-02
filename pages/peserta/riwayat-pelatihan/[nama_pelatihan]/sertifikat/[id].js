@@ -82,7 +82,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         const data = await store.dispatch(
           getSertifikatPeserta(session.user.user.data.user.token, query.id)
         );
-        if (data.data) {
+        if (data?.data) {
           success = true;
         } else {
           success = false;

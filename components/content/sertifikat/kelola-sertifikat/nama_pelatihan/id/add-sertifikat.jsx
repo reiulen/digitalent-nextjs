@@ -405,6 +405,20 @@ export default function TambahMasterSertifikat({ token }) {
     setSyllabus([...syllabus, ""]);
   };
 
+  function acronym(text) {
+    return text.split(" ").reduce(function (accumulator, word) {
+      return accumulator + word.charAt(0);
+    }, "");
+  }
+
+  const [akademi, setAkademi] = useState();
+
+  useEffect(() => {
+    const str = certificate?.data?.tema?.akademi || "- -";
+    const data = acronym(str);
+    setAkademi(data);
+  }, []);
+
   return (
     <PageWrapper>
       {/* error START */}
@@ -526,7 +540,7 @@ export default function TambahMasterSertifikat({ token }) {
                         <span className="w-100">
                           Program{" "}
                           <span className="font-weight-boldest w-100">
-                            {certificate?.data?.pelatihan.list[0]?.academy.name}
+                            {akademi || "-"}
                           </span>{" "}
                           Selama
                         </span>

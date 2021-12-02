@@ -226,7 +226,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Group className="mb-3" controlId="formGridAddress1">
                   <Form.Label>Pekerjaan</Form.Label>
                   <Form.Control
-                    placeholder="Silahkan Masukan Pekerjaan"
+                    placeholder="Silahkan Masukkan Pekerjaan"
                     value={pekerjaanNama}
                     onChange={(e) => setPekerjaan(e.target.value)}
                     onBlur={() =>
@@ -250,7 +250,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Group className="mb-3" controlId="formGridAddress1">
                   <Form.Label>Perusahaan / Institut Tempat Bekerja</Form.Label>
                   <Form.Control
-                    placeholder="Silahkan Masukan Perusahaan"
+                    placeholder="Silahkan Masukkan Perusahaan"
                     value={perusahaan}
                     onChange={(e) => setPerusahaan(e.target.value)}
                     onBlur={() =>
@@ -275,7 +275,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Penghasilan</Form.Label>
               <Form.Control
-                placeholder="Silahkan Masukan Penghasilan"
+                placeholder="Silahkan Masukkan Penghasilan"
                 value={formatRupiah(penghasilan)}
                 onChange={(e) => {
                   setPenghasilan(formatRupiah(e.target.value));
@@ -339,7 +339,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Form.Group className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Tahun Masuk</Form.Label>
                     <Form.Control
-                      placeholder="Silahkan Masukan Tahun Masuk"
+                      placeholder="Silahkan Masukkan Tahun Masuk"
                       value={tahunMasuk}
                       minLength={4}
                       maxLength={4}

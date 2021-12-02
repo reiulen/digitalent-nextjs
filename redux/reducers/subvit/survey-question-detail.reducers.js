@@ -29,6 +29,10 @@ import {
   IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_RESET,
   IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_FAIL,
   CLEAR_ERRORS,
+  POST_RESULT_SURVEY_REQUEST,
+  POST_RESULT_SURVEY_SUCCESS,
+  POST_RESULT_SURVEY_FAIL,
+  POST_RESULT_SURVEY_RESET,
 } from "../../types/subvit/survey-question-detail.type";
 
 export const allSurveyQuestionDetailReducer = (
@@ -79,6 +83,45 @@ export const randomSurveyReducer = (state = { random_survey: [] }, action) => {
       return {
         loading: false,
         error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const postResultSurveyReducer = (
+  state = { post_result_survey: {} },
+  action
+) => {
+  switch (action.type) {
+    case POST_RESULT_SURVEY_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case POST_RESULT_SURVEY_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        post_result: action.payload.data,
+      };
+
+    case POST_RESULT_SURVEY_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case POST_RESULT_SURVEY_RESET:
+      return {
+        success: false,
       };
 
     case CLEAR_ERRORS:

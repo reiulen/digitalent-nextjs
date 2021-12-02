@@ -9,9 +9,43 @@ import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 
 export default function SeleksiAdministrasi() {
-  const { state: data } = useSelector(
-    (state) => state.getDetailRiwayatPelatihanPeserta
-  );
+  // const { state: data } = useSelector(
+  //   (state) => state.getDetailRiwayatPelatihanPeserta
+  // );
+
+  const data = {
+    id: 204,
+    id_pendaftaran: 30344,
+    gambar: "/thumbnail/7cc12d3c-0064-4bb8-8331-0063989d0042-December.png",
+    akademi: "Vocational School Graduate Academy",
+    tema: "Junior Web Developer",
+    tema_id: 69,
+    akademi_id: 55,
+    alamat: "Jatinegara",
+    name: "Junior Laravel Programming",
+    kuota_peserta: 900,
+    silabus: "/silabus/2d5a21ae-5794-4104-a9b3-36b8c2eaddac-December.pdf",
+    metode_pelatihan: "Online dan Offline",
+    gambar_mitra: "",
+    mitra: "",
+    pendaftaran_mulai: "2021-12-02T10:30:00Z",
+    pendaftaran_selesai: "2021-12-02T09:00:00Z",
+    pelatihan_mulai: "",
+    pelatihan_selesai: "",
+    deskripsi:
+      '<p>Pengembangan website akan terasa lebih mudah jika menggunakan tool yang tepat. Contohnya pemilihan <a href="https://www.niagahoster.co.id/blog/framework-php-terbaik/">framework php</a> yang akan digunakan</p><p><a href="https://www.niagahoster.co.id/blog/apa-itu-framework/"><strong>Framework</strong></a> yang baik adalah framework yang sesuai dengan kebutuhan aplikasi web yang akan Anda bangun. Tidak hanya itu, framework juga harus bisa menyederhanakan proses pembuatan dan menghasilkan performa yang aplikasi web yang lebih maksimal.</p><p>Nah! Salah satu framework yang sangat populer saat ini adalah Laravel. Framework ini terkenal kesederhanaannya dan menghasilkan aplikasi web yang powerful.</p><p>Artikel ini akan membahas soal apa itu Laravel, manfaat Laravel, fitur-fitur Laravel, hingga tips Laravel untuk pemula.</p>',
+    sertifikasi: "",
+    lpj_peserta: "",
+    status: "tidak lulus administrasi",
+    tes_subtansi: false,
+    trivia: false,
+    survei: false,
+    lpj: false,
+    midtest: false,
+    file_path: "",
+    level_pelatihan: "",
+  };
+
   const router = useRouter();
   const [description, setDescription] = useState(data?.deskripsi || "-");
   const [finalDescription, setFinalDescription] = useState();
@@ -106,7 +140,7 @@ export default function SeleksiAdministrasi() {
             </Col>
             <Col md={12} className="py-10 ">
               <Row>
-                <Col>
+                {data.status !== "tidak lulus administrasi" &&  <Col>
                   <Button
                     className="btn-rounded-full font-weight-bold btn-block justify-content-center"
                     style={{ height: "40px", fontSize: "14px" }}
@@ -118,7 +152,8 @@ export default function SeleksiAdministrasi() {
                     ></i>
                     Bukti Pendaftaran
                   </Button>
-                </Col>
+                </Col>}
+                
               </Row>
 
               <hr className="my-12" />

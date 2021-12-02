@@ -91,14 +91,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
       let success = false;
       if (!req.cookies.id_pelatihan) {
         const { data } = await store.dispatch(
           getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-        );
+          );
         if (!data) {
-          return (success = false);
+          return success = false;
         } else {
           const survey = data.list.filter((item) => item.status === "survey");
           if (survey.length > 0) {
@@ -114,6 +113,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           }
         }
       } else {
+        console.log(req.cookies.id_pelatihan)
         await store.dispatch(
           getDetailRiwayatPelatihan(
             req.cookies.id_pelatihan,
@@ -122,6 +122,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         );
         success = true;
       }
+
+      console.log(success)
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 

@@ -9,6 +9,7 @@ import {
     Container
   } from "react-bootstrap";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
+import Select from "react-select";
 
 import { getAllBerandaArtikel } from "../../../../redux/actions/beranda/artikel.actions"
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
@@ -41,6 +42,7 @@ const Artikel = () => {
     const [ kategoriToShow, setKategoriToShow ] = useState ([])
     const [ showArrow, setShowArrow ] = useState(null)
     const [showDescButton, setShowDescButton ] = useState(false)
+    const [ optionAkademi, setOptionAkademi] = useState ([])
     
     const getWindowDimensions = () => {
         const { innerWidth: width, innerHeight: height } = window;
@@ -68,6 +70,21 @@ const Artikel = () => {
         handleKategoriToShow()
     }, [])
 
+    useEffect(() => {
+        handleTagEachCard()
+        // handleKategoriToShow()
+    }, [artikel])
+
+    useEffect(() => {
+        if (router.query.tag){
+            handleFilterTag(router.query.tag)
+        }
+    }, [router.query.tag])
+
+    useEffect(() => {
+        setOptionSelect()
+    },[akademi])
+
     // Handle Empty Tag
     const handleEmptyTag = (tags) => {
         let arr = tags
@@ -85,7 +102,7 @@ const Artikel = () => {
                     )
 
                 {
-                    result.push (arr[i][j].toUpperCase())
+                    temps.push (arr[i][j].toUpperCase())
                 }
             }
         }
@@ -157,7 +174,7 @@ const Artikel = () => {
         if (tagCards) {
             let arr = tagCards
             return (
-                arr[index].map ((el, i) => {
+                arr[index]?.map ((el, i) => {
                     return (
                         <div
                             className=" border px-2 py-1 my-1 mr-3"
@@ -209,6 +226,47 @@ const Artikel = () => {
        
     }
 
+    const setOptionSelect = () => {
+        if (akademi){
+            let result = [{value: "", label: "Semua Akademi"}]
+            
+            for (let i = 0; i < akademi.length; i++){
+                let obj = {
+                    value: akademi[i].slug,
+                    label: akademi[i].slug
+                }
+
+                result.push (obj)
+            }
+
+            setOptionAkademi(result)
+        }
+    }
+
+    // Style Select Filter
+    const customStyle = {
+        control: (styles) => ({
+          ...styles,
+          borderRadius: "30px",
+          paddingLeft: "25px",
+          fontFamily:"Poppins",
+          fontSize:"14px"
+        }),
+        multiValue: (styles) => ({
+          ...styles,
+          backgroundColor: "#E6F2FF",
+          borderRadius: "30px",
+          fontFamily:"Poppins",
+          fontSize:"14px"
+        }),
+        multiValueLabel: (styles) => ({
+          ...styles,
+          color:"#ADB5BD",
+          fontFamily:"Poppins",
+          fontSize:"14px"
+        }),
+    };
+
     const handleFilterKategori = (str) => {
         setKategoriArtikel(str)
         setActiveTitle("Ada Apa di Digitalent")
@@ -224,6 +282,8 @@ const Artikel = () => {
             category_academy,
             tag
         ))
+
+        window.scrollTo(0,0)
     }
 
     const handleFilterKeyword = (e) => {
@@ -239,6 +299,8 @@ const Artikel = () => {
             category_academy,
             tag
         ))
+
+        window.scrollTo(0,0)
     }
 
     const handleDescToTrim = (str) => {
@@ -281,6 +343,8 @@ const Artikel = () => {
             category_academy,
             tag
         ))
+
+        window.scrollTo(0,0)
     }
 
     const handleFilterTag = (str) => {
@@ -296,7 +360,8 @@ const Artikel = () => {
             category_academy,
             str
         ))
-
+        
+        window.scrollTo(0,0)
     }
 
     const handlePagination = (pageNumber) => {
@@ -686,23 +751,20 @@ const Artikel = () => {
                                                 </p>
                                             </div>
 
-                                            <div className="row mx-3 mb-7">
+                                            <div className="mx-3 mb-7">
                                                 {
-                                                    akademi && akademi.length !== 0 &&
-                                                        <select 
-                                                            className="form-control rounded-pill"
-                                                            onChange={(e) => handleCategoryAcademy(e.target.value)}
-                                                            style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
-                                                        >
-                                                            <option defaultValue="" style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}} >Semua Akademi</option>
-                                                            {
-                                                                akademi.map ((el, i) => {
-                                                                    return (
-                                                                        <option value={el.slug} key={i} style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}} >{el.slug}</option>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </select>
+                                                    optionAkademi && optionAkademi.length !== 0 ?
+                                                        <Select
+                                                            placeholder="Semua Akademi"
+                                                            options={optionAkademi}
+                                                            onChange={(e) => handleCategoryAcademy(e?.value)}
+                                                            styles={customStyle}
+                                                            components={{
+                                                                IndicatorSeparator: () => null
+                                                              }}
+                                                        />
+                                                    :
+                                                        null
                                                 }
                                                 
                                             </div>

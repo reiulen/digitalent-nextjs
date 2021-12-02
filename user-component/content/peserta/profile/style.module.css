@@ -50,3 +50,12 @@ INFORMASI PRIBADI
   background: #007cff;
   color: #ffffff;
 }
+
+.Select.is-disabled > .Select-control {
+  cursor: not-allowed !important;
+  color: #aaa !important;
+}
+
+.Select-placeholder {
+  color: black !important;
+}
