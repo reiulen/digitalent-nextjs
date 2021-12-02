@@ -75,37 +75,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      // if (req.cookies.id_pelatihan) {
-      //   await store.dispatch(
-      //     getDetailRiwayatPelatihan(
-      //       req.cookies.id_pelatihan,
-      //       session.user.user.data.user.token
-      //     )
-      //   );
-      //   success = true;
-      // } else {
-      //   const { data } = await store.dispatch(
-      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-      //   );
-      //   if (data) {
-      //     const test_substansi = data.list.filter(
-      //       (item) => item.status == "tes substansi"
-      //     );
-      //     if (test_substansi.length > 0) {
-      //       await store.dispatch(
-      //         getDetailRiwayatPelatihan(
-      //           test_substansi[0].id,
-      //           session.user.user.data.user.token
-      //         )
-      //       );
-      //       success = true;
-      //     } else {
-      //       success = false;
-      //     }
-      //   } else {
-      //     success = false;
-      //   }
-      // }
+      if (!query.id) {
+        success = false;
+      } else {
+      }
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 
@@ -128,6 +101,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       } else {
         success = false;
       }
+
+      console.log(session.user.user.data.user.token);
 
       return {
         props: {
