@@ -41,17 +41,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     (state) => state.drowpdownAgama
   );
 
-  const { error: errorTempatLahir, data: dataTempatLahir } = useSelector(
-    (state) => state.drowpdownTempatLahir.data
-  );
-
-  let optionsTempatLahir = [];
-
-  dataTempatLahir &&
-    dataTempatLahir.city.map((item) => {
-      return optionsTempatLahir.push({ label: item.label, value: item.id });
-    });
-
   const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
   const [email, setEmail] = useState((dataPribadi && dataPribadi.email) || "");
   const [kelamin, setKelamin] = useState(
@@ -108,6 +97,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 
   useEffect(() => {
     dispatch(dropdownTempatLahir(token));
+
     if (errorUpdateData) {
       // toast.error(errorUpdateData);
       SweatAlert("Gagal", errorUpdateData, "error");
