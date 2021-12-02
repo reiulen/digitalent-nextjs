@@ -58,7 +58,7 @@ const DetailPelatihan = ({ session }) => {
   };
 
   //disini kurang
-  const handleBookmark = async (id) => {
+  const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -185,11 +185,19 @@ const DetailPelatihan = ({ session }) => {
                           if (!session) {
                             router.push("/login");
                           } else {
-                            handleBookmark(pelatihan);
+                            const pelatihanObj = {
+                              bookmark: pelatihan.bookmart,
+                              id: pelatihan.id,
+                            };
+                            handleBookmark(pelatihanObj);
                           }
                         }}
                       >
-                        <IconLove />
+                        {!pelatihan?.bookmart ? (
+                          <IconLove />
+                        ) : (
+                          <i className="ri-heart-fill text-danger p-0 fz-16" />
+                        )}
                       </button>
                     </div>
                   </div>

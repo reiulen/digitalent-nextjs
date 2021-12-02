@@ -23,7 +23,8 @@ export const getDetailPelatihan =
           Authorization: "Bearer " + token,
         },
       };
-      const { data } = await axios.get(link);
+      const { data } = await axios.get(link, config);
+
       dispatch({
         type: DETAIL_PELATIHAN_SUCCESS,
         payload: data,
