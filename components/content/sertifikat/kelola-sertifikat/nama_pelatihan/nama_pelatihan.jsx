@@ -51,7 +51,7 @@ export default function NamaPelatihanID({ token }) {
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
   };
-
+  console.log(certificates);
   const options = [
     { value: "draft", label: "Draft" },
     { value: "not-yet-available", label: "Belum Tersedia" },
@@ -198,7 +198,7 @@ export default function NamaPelatihanID({ token }) {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              {certificates?.theme}
+              {certificates?.data?.tema?.name}
             </h3>
           </div>
 

@@ -528,6 +528,7 @@ import {
   allMasterPelatihanListReducer,
   deleteMasterPelatihanReducer,
   detailMasterPelatihanReducer,
+  detailMasterCopyEditPelatihanReducer,
   newMasterTrainingReducer,
   updateMasterPelatihanReducer,
   updateStatusMasterReducer,
@@ -540,6 +541,7 @@ import {
   allListPelatihanByPesertaReducer,
   allListPesertaReducer,
 } from "./site-management/user/peserta-dts.reducers";
+import { TTEP12DataReducer } from "./sertifikat/TTE-P12.reducer";
 
 const reducer = combineReducers({
   // DASHBOARD KABADAN
@@ -982,6 +984,7 @@ const reducer = combineReducers({
   getAllMasterPelatihan: allMasterPelatihanListReducer,
   deleteMasterPelatihan: deleteMasterPelatihanReducer,
   getDetailMasterPelatihan: detailMasterPelatihanReducer,
+  getDetailMasterCopyEditPelatihan: detailMasterCopyEditPelatihanReducer,
   newMasterPelatihan: newMasterTrainingReducer,
   updateMasterPelatihan: updateMasterPelatihanReducer,
   updateStatusMaster: updateStatusMasterReducer,
@@ -990,6 +993,9 @@ const reducer = combineReducers({
 
   adminPermission: adminPermissionReducer,
   allPencarian: allPencarianReducer,
+
+  // TTE P12
+  TTEP12Data: TTEP12DataReducer,
 });
 
 export default reducer;

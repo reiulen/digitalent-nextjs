@@ -343,6 +343,8 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                     <Form.Control
                       placeholder="Silahkan Masukan Tahun Masuk"
                       value={tahunMasuk}
+                      minLength={4}
+                      maxLength={4}
                       onChange={(e) => {
                         if (
                           e.target.value === "" ||
