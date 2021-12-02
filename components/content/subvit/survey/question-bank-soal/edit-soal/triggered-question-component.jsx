@@ -470,6 +470,7 @@ const TriggeredQuestionComponent = ({
                                           >
                                             <Image
                                               src={
+                                                rowX.image_preview &&
                                                 rowX.image_preview.includes(
                                                   "blob"
                                                 )

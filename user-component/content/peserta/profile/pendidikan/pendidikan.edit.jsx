@@ -85,7 +85,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   }
 
   useEffect(() => {
-    dispatch(getDataAsalSekolah(token, asalSekolah));
+    dispatch(getDataAsalSekolah(token));
 
     if (errorUpdateData) {
       SweatAlert("Gagal", errorUpdateData, "error");

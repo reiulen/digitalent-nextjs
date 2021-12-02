@@ -288,14 +288,18 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       case "LOGO":
         setLogoFile("");
         setLogoName("Belum ada file");
+        document.getElementById("logoReference").value = null;
         break;
       case "THUMBNAIL":
         setThumbnailFile("");
         setThumbnailName("Belum ada file");
+        document.getElementById("uploadThumbnail").value = null;
+
         break;
       case "SILABUS":
         setSilabusFile("");
         setSilabusName("Belum ada file");
+        document.getElementById("uploadSilabus").value = null;
         break;
       default:
         break;
@@ -628,6 +632,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   accept="image/png, image/jpeg , image/jpg"
                   onChange={onLogoHandler}
                   name="logo-reference"
+                  id="logoReference"
                 />
                 <label className="custom-file-label" htmlFor="customFile">
                   {logoName}
@@ -636,7 +641,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <button
                 className="btn btn-link-action bg-danger text-white ml-3"
                 type="button"
-                onClick={() => onDeleteHandler("LOGO")}
+                onClick={() => {
+                  onDeleteHandler("LOGO");
+                }}
               >
                 <i className="ri-delete-bin-fill p-0 text-white"></i>
               </button>
@@ -657,6 +664,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
                   onChange={onThumbnailHandler}
+                  id="uploadThumbnail"
                 />
                 <label className="custom-file-label" htmlFor="customFile">
                   {thumbnailName}
@@ -689,6 +697,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("upload silabus")
                   }
+                  id="uploadSilabus"
                 />
                 <label className="custom-file-label" htmlFor="customFile">
                   {silabusName}
