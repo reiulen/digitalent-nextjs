@@ -88,7 +88,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.tema_id = data.tema_id.value;
       data.kuota_pendaftar = parseInt(data.kuota_pendaftar);
       data.kuota_peserta = parseInt(data.kuota_peserta);
-      data.batch = data.batch.toString();
+      data.batch = data.batch.label && data.batch.label.toString();
       data.kabupaten = data.kabupaten.label && data.kabupaten.label;
       data.level_pelatihan =
         data.level_pelatihan.label && data.level_pelatihan.label;

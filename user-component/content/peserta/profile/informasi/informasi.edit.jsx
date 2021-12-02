@@ -97,6 +97,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 
   useEffect(() => {
     dispatch(dropdownTempatLahir(token));
+
     if (errorUpdateData) {
       SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());

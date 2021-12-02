@@ -250,9 +250,16 @@ const ListTraining = ({ token }) => {
     }
 
     if (revisi && revisi.length !== 0) {
-      revisi.map((row, i) => {
-        setNote(row.revisi);
-      });
+      let notes = [];
+      let revisiLength = revisi.length + 1;
+      revisi &&
+        revisi.length !== 0 &&
+        revisi.map((row, i) => {
+          revisiLength--;
+          notes.push(revisiLength + "." + " " + row.revisi);
+        });
+
+      setNote(notes.join("\n \n"));
     }
   }, [
     isDeleted,
@@ -780,7 +787,7 @@ const ListTraining = ({ token }) => {
 
                 <div className="col-md-2">
                   <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white"
+                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white d-flex justify-content-center"
                     type="button"
                     onClick={handleExportReport}
                   >
@@ -838,22 +845,22 @@ const ListTraining = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <p className="my-0">
-                                {moment(row.pendaftaran_mulai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pendaftaran_mulai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
-                                {moment(row.pendaftaran_selesai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pendaftaran_selesai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                               <p className="my-0">
-                                {moment(row.pelatihan_mulai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pelatihan_mulai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
-                                {moment(row.pelatihan_selesai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pelatihan_selesai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                             </td>
                             <td className="align-middle">
@@ -969,7 +976,8 @@ const ListTraining = ({ token }) => {
                                   <div className="d-flex flex-row">
                                     {!(
                                       row.status_pelatihan === "pelatihan" ||
-                                      row.status_substansi === "ditolak"
+                                      row.status_substansi === "ditolak" ||
+                                      row.status_pelatihan === "selesai"
                                     ) && (
                                       <Link
                                         href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}
@@ -1319,11 +1327,11 @@ const ListTraining = ({ token }) => {
         </Modal.Body>
         <Modal.Footer>
           <button
-            className="btn btn-primary-rounded-full"
+            className={`${styles} btn btn-rounded-full`}
             type="button"
             onClick={() => setShowModalRevisi(false)}
           >
-            Batal
+            Tutup
           </button>
         </Modal.Footer>
       </Modal>

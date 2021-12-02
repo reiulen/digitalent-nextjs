@@ -225,7 +225,7 @@ const SubmitKerjasama = ({ token }) => {
                         endDate={endDate}
                         dateFormat="YYYY-MM-DD"
                         placeholderText="Mulai Tanggal"
-                        minDate={moment().toDate()}
+                        // minDate={moment().toDate()}
                       />
                       <IconCalender
                         className="right-center-absolute"
@@ -323,7 +323,7 @@ const SubmitKerjasama = ({ token }) => {
                     selectsEnd
                     startDate={startDate}
                     endDate={endDate}
-                    minDate={moment().toDate()}
+                    // minDate={moment().toDate()}
                     maxDate={addDays(startDate, 20)}
                     dateFormat="dd/MM/yyyy"
                     placeholderText="Pilih Tanggal"

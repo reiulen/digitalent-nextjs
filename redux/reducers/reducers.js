@@ -532,6 +532,7 @@ import {
   allMasterPelatihanListReducer,
   deleteMasterPelatihanReducer,
   detailMasterPelatihanReducer,
+  detailMasterCopyEditPelatihanReducer,
   newMasterTrainingReducer,
   updateMasterPelatihanReducer,
   updateStatusMasterReducer,
@@ -541,6 +542,7 @@ import { getAllBookmarkPesertaReducer } from "../reducers/pelatihan/peserta/book
 import { allPencarianReducer } from "./pelatihan/peserta/pencarian.reducer";
 import {
   allDetailPesertaReducer,
+  allListPelatihanByPesertaReducer,
   allListPesertaReducer,
 } from "./site-management/user/peserta-dts.reducers";
 import { TTEP12DataReducer } from "./sertifikat/TTE-P12.reducer";
@@ -770,6 +772,7 @@ const reducer = combineReducers({
   allRolesList: allRolesListReducer,
   allAcademyList: allAcademyListReducer,
   allListPelatihan: allListPelatihanReducer,
+  allListPelatihanByPeserta: allListPelatihanByPesertaReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
@@ -985,6 +988,7 @@ const reducer = combineReducers({
   getAllMasterPelatihan: allMasterPelatihanListReducer,
   deleteMasterPelatihan: deleteMasterPelatihanReducer,
   getDetailMasterPelatihan: detailMasterPelatihanReducer,
+  getDetailMasterCopyEditPelatihan: detailMasterCopyEditPelatihanReducer,
   newMasterPelatihan: newMasterTrainingReducer,
   updateMasterPelatihan: updateMasterPelatihanReducer,
   updateStatusMaster: updateStatusMasterReducer,

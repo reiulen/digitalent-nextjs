@@ -544,7 +544,7 @@ const handleToggleModal = () => {
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("desc")}
-                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
+                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                   >
                                     Terbaru
                                   </button>
@@ -564,7 +564,7 @@ const handleToggleModal = () => {
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("asc")}
-                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
+                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                   >
                                     Terlama
                                   </button>
@@ -585,7 +585,7 @@ const handleToggleModal = () => {
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("asc")}
-                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
+                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                   >
                                     A-Z
                                   </button>
@@ -605,7 +605,7 @@ const handleToggleModal = () => {
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("desc")}
-                                    style={{fontSize:"14px", fontFamily:"Poppins"}}
+                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                   >
                                     Z-A
                                   </button>
@@ -854,7 +854,7 @@ const handleToggleModal = () => {
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("desc")}
-                            style={{fontSize:"14px", fontFamily:"Poppins"}}
+                            style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                           >
                             Terbaru
                           </button>
@@ -874,7 +874,7 @@ const handleToggleModal = () => {
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("asc")}
-                            style={{fontSize:"14px", fontFamily:"Poppins"}}
+                            style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                           >
                             Terlama
                           </button>
@@ -895,7 +895,7 @@ const handleToggleModal = () => {
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
                             onClick={() => handleSort("asc")}
-                            style={{fontSize:"14px", fontFamily:"Poppins"}}
+                            style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                           >
                             A-Z
                           </button>
@@ -915,7 +915,7 @@ const handleToggleModal = () => {
                           <button
                             className="btn btn-outline-light rounded-pill btn-block"
                             onClick={() => handleSort("desc")}
-                            style={{fontSize:"14px", fontFamily:"Poppins"}}
+                            style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                           >
                             Z-A
                           </button>

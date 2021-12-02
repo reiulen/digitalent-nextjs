@@ -119,8 +119,8 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <div className="row">
-                    <div className="col-12 col-md-5 col-lg-5 col-xl-5">
+                  <div className="row d-flex">
+                    <div className="col-12 col-md-5 col-lg-4 col-xl-4">
                       <div className="position-relative overflow-hidden w-100 mt-5">
                         <IconSearch
                           style={{ left: "10" }}
@@ -148,10 +148,10 @@ const Table = ({ token }) => {
                       </div>
                     </div>
 
-                    <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
+                    <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 ml-auto">
                       <div className={`${styles.rightBtnHead} row flex-wrap align-items-center justify-content-end mt-2`}>
                         {/* sorotir by modal check */}
-                        <div className="col-12 col-md-5 col-lg-5 col-xl-5">
+                        <div className="col-12 col-md-5 col-lg-5 col-xl-5 mb-2">
                           <button
                             type="button"
                             className={`${styles.filterBtn} avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2`}

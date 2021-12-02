@@ -14,6 +14,8 @@
   background-color: #ecf5fc;
   color: #1f1f1f;
   font-weight: 600;
+  /* width: 295px; */
+  width: 95%;
 }
 
 .prompt h3 {
@@ -33,6 +35,7 @@
   border-radius: 8px;
   font-size: 16px;
   font-weight: bold;
+  width: 95%;
 }
 
 .isactive a {
@@ -327,6 +330,11 @@
   white-space: nowrap;
 }
 
+.cardDataPeserta{
+  margin: 0 2px 0 10px;
+  width: 97%;
+}
+
 @media only screen and (min-width: 1222px) {
   .responsive-side-bar{
     border-right: solid 1px #D7E1EA;
@@ -340,12 +348,51 @@
   .styling-upload > div {
     margin: 21px 0 0 0;
   }
+  .isactive {
+    padding: 15px;
+    font-size: 16px;
+    width: 197px;
+  }
+  .prompt:hover {
+    background-color: #ecf5fc;
+    color: #1f1f1f;
+    font-weight: 600;
+    width: 197px;
+  }
+  .responsive-side-bar{
+    border-right: solid 1px #D7E1EA;
+  } 
+
+  /* DASHBOARD SITE MANAGEMENT */
+  
+  .cardDataPeserta{
+    /* margin: 0 2px 0 10px; */
+    width: 77%;
+  }
+  .data-daerah {
+    font-size: 14px;
+  }
+
 }
 
 @media only screen and (max-width: 991px) {
   .border-resnponsive{
    border-top: solid 1px #D7E1EA;
    padding-top: 40px;
+  }
+  .responsive-side-bar{
+    border-right: none;
+  } 
+  .isactive {
+    padding: 15px;
+    font-size: 16px;
+    width: 100%;
+  }
+  .prompt:hover {
+    background-color: #ecf5fc;
+    color: #1f1f1f;
+    font-weight: 600;
+    width: 100%;
   }
 }
 

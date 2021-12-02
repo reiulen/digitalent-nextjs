@@ -13,6 +13,9 @@ import {
   DETAIL_MASTER_TRAINING_FAIL,
   DETAIL_MASTER_TRAINING_REQUEST,
   DETAIL_MASTER_TRAINING_SUCCESS,
+  DETAIL_MASTER_TRAINING_COPY_EDIT_FAIL,
+  DETAIL_MASTER_TRAINING_COPY_EDIT_REQUEST,
+  DETAIL_MASTER_TRAINING_COPY_EDIT_SUCCESS,
   UPDATE_MASTER_TRAINING_FAIL,
   UPDATE_MASTER_TRAINING_REQUEST,
   UPDATE_MASTER_TRAINING_RESET,
@@ -159,6 +162,37 @@ export const detailMasterPelatihanReducer = (state = { form: {} }, action) => {
       };
 
     case DETAIL_MASTER_TRAINING_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const detailMasterCopyEditPelatihanReducer = (
+  state = { form: {} },
+  action
+) => {
+  switch (action.type) {
+    case DETAIL_MASTER_TRAINING_COPY_EDIT_REQUEST:
+      return {
+        loading: true,
+      };
+    case DETAIL_MASTER_TRAINING_COPY_EDIT_SUCCESS:
+      return {
+        loading: false,
+        form: action.payload,
+      };
+
+    case DETAIL_MASTER_TRAINING_COPY_EDIT_FAIL:
       return {
         loading: false,
         error: action.payload,

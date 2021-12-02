@@ -183,9 +183,9 @@ const TambahTandaTangan = ({ token }) => {
                   ) : (
                     ""
                   )}
-                  <div className="d-flex flex-wrap align-items-center">
+                  <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-start">
                     <a
-                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5 mt-3"
+                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-0 mr-sm-5 mt-3 text-center"
                       onClick={() => dataTandaTangan()}
                     >
                       Buat Tanda Tangan
@@ -193,7 +193,7 @@ const TambahTandaTangan = ({ token }) => {
                     <button
                       type="button"
                       onClick={clear}
-                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mt-3"
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mt-3 text-truncate text-center"
                     >
                       Buat Ulang Tanda Tangan
                     </button>

@@ -259,29 +259,11 @@ const Navigationbar = ({ session }) => {
                     })}
                   </div>
                 </div>
-                <div className="btn-group dropright w-100">
-                  <a
-                    type="button"
-                    className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                <Link href="/pusat-informasi" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
                     Pusat Informasi
-                  </a>
-                  <div className="dropdown-menu ml-3">
-                    <Link href="/pusat-informasi" passHref>
-                      <a className="dropdown-item navdropdown-child">
-                        Panduan Test Substansi
-                      </a>
-                    </Link>
-                    <Link href="/pusat-informasi" passHref>
-                      <a className="dropdown-item navdropdown-child">
-                        Hak dan Kewajiban
-                      </a>
-                    </Link>
-                  </div>
-                </div>
+                  </NavDropdown.Item>
+                </Link>
                 <Link href="/tentang-kami" passHref>
                   <NavDropdown.Item className="navdropdown-child">
                     Tentang Kami
@@ -589,25 +571,8 @@ const Navigationbar = ({ session }) => {
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
-              <Col sm={12}>
-                <Dropdown color="white">
-                  <Dropdown.Toggle
-                    id="dropdown-basic"
-                    style={{
-                      backgroundColor: "transparent",
-                      border: "transparent",
-                      color: "#6C6C6C",
-                      fontSize: "14px",
-                    }}
-                    className="p-0"
-                  >
-                    <Link href="/pusat-informasi">
-                      <div className="d-flex align-items-center justify-content-between p-0 m-0">
-                        Pusat Informasi
-                      </div>
-                    </Link>
-                  </Dropdown.Toggle>
-                </Dropdown>
+              <Col className="mb-8" sm={12}>
+                <Link href="/pusat-informasi">Pusat Informasi</Link>
               </Col>
               <Col className="mb-8" sm={12}>
                 Tentang Kami

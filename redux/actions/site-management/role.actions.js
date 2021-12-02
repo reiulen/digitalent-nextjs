@@ -213,6 +213,7 @@ export const getSidebar = (token) => async (dispatch) => {
       type: GET_SIDEBAR,
       payload: data,
     });
+    localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
   } catch (error) {}
 };
 
