@@ -422,7 +422,7 @@ export default function CardTemplateOriginal({ data, session }) {
             <Fragment>
               <CustomButton
                 click={() => {
-                  router.push(`/peserta/test-substansi`);
+                  router.push(`/peserta/mid-test/panduan-mid-test`);
                   Cookies.set("id_pelatihan", data.id);
                   Cookies.set("id_tema", data.tema_id);
                 }}
@@ -445,7 +445,7 @@ export default function CardTemplateOriginal({ data, session }) {
             <Fragment>
               <CustomButton
                 click={() => {
-                  router.push(`/peserta/test-substansi`);
+                  router.push(`/peserta/mid-test/panduan-mid-test`);
                   Cookies.set("id_pelatihan", data.id);
                   Cookies.set("id_tema", data.tema_id);
                 }}
