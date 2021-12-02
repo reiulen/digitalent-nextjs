@@ -402,7 +402,7 @@ const EditArtikelPeserta = ({ session }) => {
               <div className="form-group row mr-0">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <Link href="/publikasi/artikel">
+                  <Link href="/peserta/artikel">
                     <a
                       className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}
                     >
