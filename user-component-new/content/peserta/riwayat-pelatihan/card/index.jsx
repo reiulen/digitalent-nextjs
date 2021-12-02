@@ -18,6 +18,8 @@ export default function CardTemplateOriginal({ data, session }) {
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [label, setLabel] = useState();
 
+  console.log(data);
+
   useEffect(() => {
     if (data.status.includes("tidak") || data.status.includes("ditolak"))
       return setLabel("danger");
@@ -374,9 +376,8 @@ export default function CardTemplateOriginal({ data, session }) {
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
-              
+
               <CustomButton
-              
                 disabled={!data.survei}
                 click={() => {
                   router.push("/peserta/survey");
@@ -471,10 +472,12 @@ export default function CardTemplateOriginal({ data, session }) {
                 </CustomButton>
               )}
               <CustomButton
-                click={() => handleClick("download", data.id_pendaftaran)}
+                click={() => {
+                  router.push(`/peserta/riwayat-pelatihan/`);
+                }}
               >
                 <i className="ri-download-2-fill mr-2"></i>
-                Bukti Pendaftaran
+                Lihat Sertifikat
               </CustomButton>
             </Fragment>
           ) : data.status == "tes substansi" ? (
