@@ -359,9 +359,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               >
                 <Form.Label>Program Studi</Form.Label>
                 <Form.Control
-                  placeholder={
-                    programStudi === "0" && "Silahkan Masukan Program Studi"
-                  }
+                  placeholder={"Silahkan Masukkan Program Studi"}
                   value={programStudi === "0" ? "-" : programStudi}
                   onChange={(e) => setProgramStudi(e.target.value)}
                   onBlur={() =>
@@ -415,9 +413,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               >
                 <Form.Label>Program Studi</Form.Label>
                 <Form.Control
-                  placeholder={
-                    programStudi === "0" && "Silahkan Masukan Program Studi"
-                  }
+                  placeholder={"Silahkan Masukkan Program Studi"}
                   value={programStudi === "0" ? "-" : programStudi}
                   onChange={(e) => setProgramStudi(e.target.value)}
                   onBlur={() =>
@@ -446,7 +442,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
                 <div className="position-relative" style={{ zIndex: "4" }}>
                   <Select
-                    placeholder="Pilih Sekolah"
+                    placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
                     defaultValue={asalSekolah}
                     onChange={(e) => {
@@ -471,9 +467,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               >
                 <Form.Label>Program Studi</Form.Label>
                 <Form.Control
-                  placeholder={
-                    programStudi === "0" && "Silahkan Masukan Program Studi"
-                  }
+                  placeholder={"Silahkan Masukkan Program Studi"}
                   value={programStudi === "0" ? "-" : programStudi}
                   onChange={(e) => setProgramStudi(e.target.value)}
                   onBlur={() =>
@@ -502,7 +496,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
                 <div className="position-relative" style={{ zIndex: "4" }}>
                   <Select
-                    placeholder="Pilih Sekolah"
+                    placeholder={asalSekolah || "Pilih Sekolah"}
                     options={
                       dataAsalSekolah &&
                       dataAsalSekolah.map((item, index) => {
@@ -532,9 +526,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               >
                 <Form.Label>Program Studi</Form.Label>
                 <Form.Control
-                  placeholder={
-                    programStudi === "0" && "Silahkan Masukan Program Studi"
-                  }
+                  placeholder={"Silahkan Masukkan Program Studi"}
                   value={programStudi === "0" ? "-" : programStudi}
                   onChange={(e) => setProgramStudi(e.target.value)}
                   onBlur={() =>
@@ -563,7 +555,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
                 <div className="position-relative" style={{ zIndex: "4" }}>
                   <Select
-                    placeholder="Pilih Sekolah"
+                    placeholder={asalSekolah || "Pilih Sekolah"}
                     options={
                       dataAsalSekolah &&
                       dataAsalSekolah.map((item, index) => {
@@ -593,9 +585,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               >
                 <Form.Label>Program Studi</Form.Label>
                 <Form.Control
-                  placeholder={
-                    programStudi === "0" && "Silahkan Masukan Program Studi"
-                  }
+                  placeholder={"Silahkan Masukkan Program Studi"}
                   value={programStudi === "0" ? "-" : programStudi}
                   onChange={(e) => setProgramStudi(e.target.value)}
                   onBlur={() =>
@@ -617,7 +607,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Lainnya ( Sekolah / PT)</Form.Label>
               <Form.Control
-                placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
+                placeholder="Silahkan Masukkan Lainnya ( Sekolah / PT)"
                 value={lainya}
                 onChange={(e) => setLainya(e.target.value)}
                 onBlur={() =>
@@ -640,7 +630,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Lainnya ( Sekolah / PT)</Form.Label>
               <Form.Control
-                placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
+                placeholder="Silahkan Masukkan Lainnya ( Sekolah / PT)"
                 value={lainya}
                 onChange={(e) => setLainya(e.target.value)}
                 onBlur={() =>
@@ -663,7 +653,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Lainnya ( Sekolah / PT)</Form.Label>
               <Form.Control
-                placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
+                placeholder="Silahkan Masukkan Lainnya ( Sekolah / PT)"
                 value={lainya}
                 onChange={(e) => setLainya(e.target.value)}
                 onBlur={() =>
@@ -688,7 +678,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Silahkan Masukan Tahun Masuk"
+                  placeholder="Silahkan Masukkan Tahun Masuk"
                   value={tahunMasuk === 1 ? "-" : tahunMasuk}
                   onChange={(e) => {
                     if (
@@ -705,7 +695,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
+                  Masukkan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -724,7 +714,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Silahkan Masukan Tahun Masuk"
+                  placeholder="Silahkan Masukkan Tahun Masuk"
                   value={tahunMasuk === 1 ? "-" : tahunMasuk}
                   onChange={(e) => {
                     if (
@@ -741,7 +731,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
+                  Masukkan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -760,7 +750,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Silahkan Masukan Tahun Masuk"
+                  placeholder="Silahkan Masukkan Tahun Masuk"
                   value={tahunMasuk === 1 ? "-" : tahunMasuk}
                   onChange={(e) => {
                     if (
@@ -777,7 +767,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
+                  Masukkan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -796,7 +786,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Silahkan Masukan Tahun Masuk"
+                  placeholder="Silahkan Masukkan Tahun Masuk"
                   value={tahunMasuk === 1 ? "-" : tahunMasuk}
                   onChange={(e) => {
                     if (
@@ -813,7 +803,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
+                  Masukkan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -940,7 +930,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   minLength={0}
                   maxLength={4}
                   type="text"
-                  placeholder="Silahkan Masukan IPK"
+                  placeholder="Silahkan Masukkan IPK"
                   value={ipk === "0" ? "-" : ipk}
                   onChange={(e) => {
                     if (
@@ -968,7 +958,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Silahkan Masukan Tahun Masuk"
+                  placeholder="Silahkan Masukkan Tahun Masuk"
                   value={tahunMasuk === 1 ? "-" : tahunMasuk}
                   onChange={(e) => {
                     if (
@@ -985,7 +975,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
+                  Masukkan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1007,7 +997,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   minLength={0}
                   maxLength={4}
                   type="text"
-                  placeholder="Silahkan Masukan IPK"
+                  placeholder="Silahkan Masukkan IPK"
                   value={ipk === "0" ? "-" : ipk}
                   onChange={(e) => {
                     if (
@@ -1035,7 +1025,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Silahkan Masukan Tahun Masuk"
+                  placeholder="Silahkan Masukkan Tahun Masuk"
                   value={tahunMasuk === 1 ? "-" : tahunMasuk}
                   onChange={(e) => {
                     if (
@@ -1052,7 +1042,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
+                  Masukkan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1073,7 +1063,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   minLength={0}
                   maxLength={4}
                   type="text"
-                  placeholder="Silahkan Masukan IPK"
+                  placeholder="Silahkan Masukkan IPK"
                   value={ipk === "0" ? "-" : ipk}
                   onChange={(e) => {
                     if (
@@ -1101,7 +1091,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Silahkan Masukan Tahun Masuk"
+                  placeholder="Silahkan Masukkan Tahun Masuk"
                   value={tahunMasuk === 1 ? "-" : tahunMasuk}
                   onChange={(e) => {
                     if (
@@ -1118,7 +1108,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
+                  Masukkan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1139,7 +1129,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   minLength={0}
                   maxLength={4}
                   type="text"
-                  placeholder="Silahkan Masukan IPK"
+                  placeholder="Silahkan Masukkan IPK"
                   value={ipk === "0" ? "-" : ipk}
                   onChange={(e) => {
                     if (
@@ -1167,7 +1157,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Silahkan Masukan Tahun Masuk"
+                  placeholder="Silahkan Masukkan Tahun Masuk"
                   value={tahunMasuk === 1 ? "-" : tahunMasuk}
                   onChange={(e) => {
                     if (
@@ -1184,7 +1174,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
+                  Masukkan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
@@ -1205,7 +1195,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   minLength={0}
                   maxLength={4}
                   type="text"
-                  placeholder="Silahkan Masukan IPK"
+                  placeholder="Silahkan Masukkan IPK"
                   value={ipk === "0" ? "-" : ipk}
                   onChange={(e) => {
                     if (
@@ -1233,7 +1223,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Silahkan Masukan Tahun Masuk"
+                  placeholder="Silahkan Masukkan Tahun Masuk"
                   value={tahunMasuk === 1 ? "-" : tahunMasuk}
                   onChange={(e) => {
                     if (
@@ -1250,7 +1240,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 />
                 <span className="text-muted">
-                  Masukan Maksimal dan Minimal 4 Angka, Contoh : 2020
+                  Masukkan Maksimal dan Minimal 4 Angka, Contoh : 2020
                 </span>
                 {simpleValidator.current.message(
                   "tahun masuk",
