@@ -331,19 +331,19 @@ const SubtansiUser = ({ token }) => {
     setModalDone(false);
   };
 
-  const handleTest = (e, i, it) => {
-    if (e.target.checked === true) {
-      localStorage.setItem(router.query.id + "/" + i, it.key);
-    } else {
-      localStorage.removeItem(router.query.id + "/" + i);
-    }
+  // const handleTest = (e, i, it) => {
+  //   if (e.target.checked === true) {
+  //     localStorage.setItem(router.query.id + "/" + i, it.key);
+  //   } else {
+  //     localStorage.removeItem(router.query.id + "/" + i);
+  //   }
 
-    let list22 = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      list22.push(localStorage.getItem(key));
-    }
-  };
+  //   let list22 = [];
+  //   for (let i = 0; i < localStorage.length; i++) {
+  //     const key = localStorage.key(i);
+  //     list22.push(localStorage.getItem(key));
+  //   }
+  // };
 
   return (
     <>
@@ -417,6 +417,7 @@ const SubtansiUser = ({ token }) => {
                   </p>
                 </Col>
               </Row>
+              {console.log(data[parseInt(router.query.id) - 1])}
               {data &&
                 data[parseInt(router.query.id) - 1].type ===
                   "triggered_question" && (

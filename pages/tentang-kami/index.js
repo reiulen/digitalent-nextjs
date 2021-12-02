@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 
-import LoadingDetailAkademi from "../../user-component/components/loader/DetailAkademiLoader";
+import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const TentangKami = dynamic(
   () =>

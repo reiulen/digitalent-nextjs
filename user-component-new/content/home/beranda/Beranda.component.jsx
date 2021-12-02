@@ -309,9 +309,11 @@ const Beranda = ({ session }) => {
             "Anda berhasil menambahkan pelatihan ke bookmark",
             "success"
           );
+          handleActive(0, akademi[0].id);
           dispatch(getTemaByAkademi(session?.token, akademi[0].id));
         }
       } catch (e) {
+        handleActive(0, akademi[0].id);
         SweatAlert("Gagal", e.message, "error");
       }
     } else {
@@ -326,9 +328,11 @@ const Beranda = ({ session }) => {
             "Anda berhasil menghapus pelatihan dari bookmark",
             "success"
           );
+          handleActive(0, akademi[0].id);
           dispatch(getTemaByAkademi(session?.token, akademi[0].id));
         }
       } catch (e) {
+        handleActive(0, akademi[0].id);
         SweatAlert("Gagal", e.message, "error");
       }
     }

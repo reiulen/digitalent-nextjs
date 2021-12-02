@@ -393,6 +393,7 @@ const DetailAkademi = ({ session }) => {
                       value={startDate}
                       onChange={(e) => {
                         setStartDate(e.target.value);
+                        setEndDate("");
                         setDisabledDate(false);
                       }}
                     />

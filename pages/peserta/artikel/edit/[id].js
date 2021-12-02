@@ -4,7 +4,7 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 import { getDashboardPeserta } from "../../../../redux/actions/pelatihan/dashboard-peserta.actions";
-import LoadingContent from "../../../../user-component/content/peserta/components/loader/LoadingContent";
+import LoadingContent from "../../../../user-component-new/components/loader/LoadingContent";
 import { useRouter } from "next/router";
 import { wrapper } from "../../../../redux/store";
 import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
@@ -13,7 +13,7 @@ import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authM
 import { getDetailArtikelsPeserta } from "../../../../redux/actions/publikasi/artikel.actions";
 
 const EditArtikelPeserta = dynamic(
-  () => import("../../../../user-component/content/peserta/artikel/edit"),
+  () => import("../../../../user-component-new/content/peserta/artikel/edit"),
   {
     loading: function loadingNow() {
       return <LoadingContent />;
@@ -23,7 +23,9 @@ const EditArtikelPeserta = dynamic(
 );
 
 const Layout = dynamic(() =>
-  import("../../../../user-component/components/template/Layout.component")
+  import(
+    "../../../../user-component-new/components/template/Layout-peserta.component"
+  )
 );
 
 export default function EditArtikel(props) {

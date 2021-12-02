@@ -68,7 +68,7 @@ export default function Footer() {
               />
             </div>
           </Col>
-          <Col md={8} sm={12}>
+          <Col lg={8} md={12} sm={12}>
             <div className="h-100 d-flex align-items-center mt-md-2">
               <p className="fw-500 text-white">
                 {(footer && footer.logo_description) ||
@@ -76,9 +76,9 @@ export default function Footer() {
               </p>
             </div>
           </Col>
-          <Col md={2} sm={12}>
+          <Col lg={2} md={12} sm={12}>
             <div className="h-100 w-100">
-              <div className="pl-xl-20 mt-md-0 mt-8  d-flex border-left-md align-items-md-center justify-content-md-end h-100 w-100">
+              <div className="pl-xl-20 mt-lg-0 mt-8  d-flex border-left-lg align-items-md-center justify-content-lg-end h-100 w-100">
                 {footer &&
                   footer.social_media &&
                   footer.social_media.length !== 0 &&
@@ -90,7 +90,7 @@ export default function Footer() {
                       rel="noreferrer"
                     >
                       <div className="cursor-pointer mx-md-0 px-2">
-                        <Image
+                        <img
                           key={i}
                           src={
                             (footer &&
@@ -102,7 +102,7 @@ export default function Footer() {
                           alt={row.name}
                           width={25}
                           height={25}
-                          objectFit="cover"
+                          // objectFit="cover"
                         />
                       </div>
                     </a>

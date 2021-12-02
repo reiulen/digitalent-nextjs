@@ -110,7 +110,10 @@ export default function Carousel({ data }) {
                 height={windowDimensions.width < 800 ? 500 : 500}
                 objectFit="cover"
                 className="img-carousel"
-                onClick={() => router.push(window.open(row.url_link, "_blank"))}
+                onClick={() => {
+                  row.url_link &&
+                    router.push(window.open(row.url_link, "_blank"));
+                }}
               />
             </div>
           ))}
