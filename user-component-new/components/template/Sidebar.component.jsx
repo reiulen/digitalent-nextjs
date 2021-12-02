@@ -62,7 +62,9 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
   return (
     <Fragment>
       <div className={screenClass}>
-        <div className={styles.titlePlatform}>PLATFORM</div>
+        <div className={styles.titlePlatform + " mx-md-0 mx-6 m-0"}>
+          PLATFORM
+        </div>
         <div
           className={
             drop && !router.pathname.includes("/peserta/profile")
@@ -320,7 +322,9 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
             </div>
           </div>
         </div>
-        <div className={styles.titleAkun}>{titleAkun}</div>
+        <div className={styles.titleAkun + " mx-md-0 mx-6 m-0"}>
+          {titleAkun}
+        </div>
         <div className={accountFalse}>
           <Link href="/peserta/profile" passHref>
             <div
