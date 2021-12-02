@@ -19,7 +19,16 @@ const BreadcrumbComponent = ({ data = [] }) => {
                 {i === data.length - 1 ? (
                   <span className="trim-text-mobile">{row.name}</span>
                 ) : (
-                  row.name.length > 25 && (
+                  row.name.length > 25 ? (
+                    <span
+                      className="text-primary trim-text-mobile"
+                      style={{ cursor: "pointer" }}
+                    >
+                      {row.name}
+                    </span>
+                  )
+                  :
+                  (
                     <span
                       className="text-primary trim-text-mobile"
                       style={{ cursor: "pointer" }}
