@@ -131,7 +131,7 @@ export const getDetailRoles = (id, token) => async (dispatch) => {
     };
 
     let link =
-    process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/detail/${id}`;
+      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/detail/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -214,6 +214,7 @@ export const getSidebar = (token) => async (dispatch) => {
       payload: data,
     });
     localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
+    
   } catch (error) {}
 };
 

@@ -12,45 +12,41 @@ export default function Footer() {
   const dispatch = useDispatch();
   const { footer, loading } = useSelector((state) => state.berandaFooter);
   const [secondary, setSecondary] = useState("1");
-  const [warna, setWarna] = useState("primary");
+  const [warna, setWarna] = useState("secondary");
 
   useEffect(() => {
     dispatch(getBerandaFooter());
   }, [dispatch]);
 
-  useEffect(() => {
-    // async function getDataGeneral(token) {
-    //   try {
-    //     let { data } = await axios.get(
-    //       `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
-    //       {
-    //         headers: {
-    //           authorization: `Bearer ${token}`,
-    //         },
-    //       }
-    //     );
+  const getDataGeneral = async (token) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    //     if (data) {
-    //       setSecondary(data.data.color[1].color);
-    //     }
-    //   } catch (error) {
-    //     Swal.fire("Oops !", `${error.response.data.message}`, "error");
-    //   }
-    // }
-    // getDataGeneral();
-
-    if (footer && footer.length !== 0) {
-      if (footer.color[1].color === "1") {
-        setWarna("primary");
-      } else if (footer.color[1].color === "2") {
-        setWarna("secondary");
-      } else if (footer.color[1].color === "3") {
-        setWarna("extras");
+      if (data) {
+        localStorage.setItem("footer", data.data.color[1].color);
       }
-    } else {
-      setWarna("primary");
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem("footer")) {
+      getDataGeneral();
     }
-  }, [footer]);
+    if (localStorage.getItem("footer") === "1") {
+      setWarna("primary");
+    } else if (localStorage.getItem("footer") === "2") {
+      setWarna("secondary");
+    } else if (localStorage.getItem("footer") === "3") {
+      setWarna("extras");
+    }
+  }, []);
 
   return (
     <div className={`color-secondary-${warna}`}>

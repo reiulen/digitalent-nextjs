@@ -397,9 +397,9 @@ const DetailSummary = ({ token }) => {
                       <option value="CSV">CSV</option>
                     </select>
                   </div> */}
-                  <div class="dropdown">
+                  <div className="dropdown">
                     <button
-                      class="btn w-100 btn-rounded-full bg-blue-secondary text-white dropdown-toggle d-flex justify-content-center"
+                      className="btn w-100 btn-rounded-full bg-blue-secondary text-white dropdown-toggle d-flex justify-content-center"
                       type="button"
                       id="dropdownMenuButton"
                       data-toggle="dropdown"
@@ -409,17 +409,17 @@ const DetailSummary = ({ token }) => {
                       Export
                     </button>
                     <div
-                      class="dropdown-menu"
+                      className="dropdown-menu"
                       aria-labelledby="dropdownMenuButton"
                     >
                       <a
-                        class="dropdown-item"
+                        className="dropdown-item"
                         onClick={() => handleExportReport("xlsx")}
                       >
                         LMS
                       </a>
                       <a
-                        class="dropdown-item"
+                        className="dropdown-item"
                         onClick={() => handleExportReport("csv")}
                       >
                         CSV

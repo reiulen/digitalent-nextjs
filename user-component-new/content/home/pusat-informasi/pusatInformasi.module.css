@@ -1,0 +1,11 @@
+@media (max-width: 280px) {
+  .menuPanduan {
+    font-size: 15px !important;
+    height: 100px;
+  }
+  .menuHak {
+    font-size: 15px !important;
+    height: 100px;
+    padding-bottom: 20px;
+  }
+}

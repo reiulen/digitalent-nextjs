@@ -111,6 +111,39 @@
   padding-right: 20px;
 }
 
+/* HOME PAGE GALERI */
+
+.contentGaleri{
+  margin-left: -4px;
+}
+.isiGaleriHome{
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 260px;
+  font-size: 12px;
+}
+.borderStrip{
+  width: 108%;
+  margin-left: -21px;
+}
+.closeModal{
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  z-index: 1;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 25px;
+  justify-content: center;
+  visibility: hidden;
+}
+.simbolX{
+  position: absolute;
+  top: 2px;
+  right: 8px;
+}
+
 @media only screen and (max-width: 1024px) {
   .modal-body {
     height: 400px;
@@ -127,6 +160,9 @@
   }
   .deskripsiTambah{
     margin-bottom: 90px;
+  }
+  .kategoriModal{
+
   }
 }
 
@@ -153,6 +189,22 @@
   }
   .btnTambah {
     font-size: 12px;
+  }
+
+  /* Modal Galeri HOMEPAGE */
+
+  .imageModalHomePage{
+    margin: 0 10px;
+  }
+  .contentGaleri{
+    margin: 10px 10px;
+  }
+  .isiGaleriHome{
+    margin-left: -10px;
+  }
+  .borderStrip{
+    width: 100%;
+    margin-left: -10px;
   }
 }
 
@@ -211,6 +263,12 @@
   }
   .deskripsiTambah{
     margin-bottom: 140px;
+  }
+
+  /* Home Page Galeri */
+
+  .closeModal{
+    visibility: visible;
   }
 }
 
