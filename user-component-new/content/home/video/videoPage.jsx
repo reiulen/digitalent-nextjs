@@ -368,7 +368,8 @@ const VideoPage = () => {
                             key={i}
                           >
                             <div className="my-1 mx-auto py-1 px-auto text-white text-center">
-                              {row.toString().toUpperCase()}
+                              {/* {row.toString().toUpperCase()} */}
+                              {row.toString()}
                             </div>
                           </div>
                         </SplideSlide>
@@ -382,7 +383,8 @@ const VideoPage = () => {
                             key={i}
                           >
                             <div className="my-1 mx-auto py-1 px-auto text-muted text-center">
-                              {row.toString().toUpperCase()}
+                              {/* {row.toString().toUpperCase()} */}
+                              {row.toString()}
                             </div>
                           </div>
                         </SplideSlide>
@@ -448,7 +450,8 @@ const VideoPage = () => {
                             key={i}
                           >
                             <div className="my-1 mx-auto py-1 px-auto text-white text-center">
-                              {row.toString().toUpperCase()}
+                              {/* {row.toString().toUpperCase()} */}
+                              {row.toString()}
                             </div>
                           </div>
                         </SplideSlide>
@@ -462,7 +465,8 @@ const VideoPage = () => {
                             key={i}
                           >
                             <div className="my-1 mx-auto py-1 px-auto text-muted text-center">
-                              {row.toString().toUpperCase()}
+                              {/* {row.toString().toUpperCase()} */}
+                              {row.toString()}
                             </div>
                           </div>
                         </SplideSlide>
@@ -957,7 +961,8 @@ const VideoPage = () => {
                           style={{ cursor: "pointer" }}
                           key={i}
                         >
-                          #{row.toUpperCase()}
+                          {/* #{row.toUpperCase()} */}
+                          #{row}
                         </div>
                       );
                     })
@@ -1094,7 +1099,8 @@ const VideoPage = () => {
                                         className="text-center text-truncate"
                                         style={{ fontSize: "12px", color: "#6C6C6C" }}
                                       >
-                                        #{el.toUpperCase()}
+                                        {/* #{el.toUpperCase()} */}
+                                        #{el}
                                       </div>
                                     </div>
                                   );
@@ -1137,7 +1143,7 @@ const VideoPage = () => {
                         <div className="mr-3">
                           {detail.nama_kategori === null ? null : (
                             <span className="p-2 badge badge-light font-weight-bold" style={{ color: "#0063CC", fontSize: "12px" }}>
-                              {(detail.nama_kategori).toUpperCase()}
+                              {detail.nama_kategori}
                             </span>
                           )}
                         </div>
