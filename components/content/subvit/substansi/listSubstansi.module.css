@@ -16,6 +16,12 @@
     padding: 0px !important;
   }
 }
+
+@media (max-width: 280px) {
+  .btnAdd {
+    font-size: 11px;
+  }
+}
 .top {
   padding: 15px 30px;
 }
