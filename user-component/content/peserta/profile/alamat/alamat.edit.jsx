@@ -99,28 +99,6 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
     (alamat && alamat.kode_pos) || ""
   );
 
-  const customStyles = {
-    // For the select it self, not the options of the select
-    control: (styles, { isDisabled }) => {
-      return {
-        ...styles,
-        cursor: isDisabled ? "not-allowed" : "default",
-        // This is an example: backgroundColor: isDisabled ? 'rgba(206, 217, 224, 0.5)' : 'white'
-        color: isDisabled ? "#aaa" : "white",
-      };
-    },
-    // For the options
-    option: (styles, { isDisabled }) => {
-      const color = chroma(data.color);
-      return {
-        ...styles,
-        backgroundColor: isDisabled ? "red" : blue,
-        color: "#FFF",
-        cursor: isDisabled ? "not-allowed" : "default",
-      };
-    },
-  };
-
   const optionsProvinsi = [];
   if (dataProvinsi) {
     for (let index = 0; index < dataProvinsi.data.length; index++) {
@@ -242,7 +220,6 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
             <Form.Label>Alamat Lengkap </Form.Label>
             <Form.Control
               disabled={isValid}
-              styles={customStyles}
               placeholder="Silahkan Masukkan Alamat Lengkap"
               value={alamatDomisili}
               onChange={(e) => setAlamatDomisili(e.target.value)}
@@ -717,7 +694,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onChange={(e) => {
                   setKelurahanKtp(null);
                   setKecamatanKtp({ label: e?.label, value: e?.value });
-                  console.log(e);
+
                   dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
@@ -747,8 +724,6 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 options={optionsKelurahan}
                 onChange={(e) => {
                   setKelurahanKtp({ label: e?.label, value: e?.value });
-                  console.log(e);
-                  dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kelurahan ktp")
