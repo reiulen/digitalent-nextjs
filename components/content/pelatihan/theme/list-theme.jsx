@@ -359,7 +359,11 @@ const ListTheme = ({ token }) => {
                               </p>
                               <p>{row.akademi}</p>
                             </td>
-                            <td className="align-middle">{row.name}</td>
+                            <td className="align-middle">
+                              {row.name.length > 30
+                                ? row.name.substring(0, 30) + "..."
+                                : row.name}
+                            </td>
                             <td className="align-middle">
                               {row.peminat} Peminat
                             </td>
