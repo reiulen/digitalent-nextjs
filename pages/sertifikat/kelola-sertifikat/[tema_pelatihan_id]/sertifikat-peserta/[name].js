@@ -45,6 +45,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getPublishedSertifikat(query.id_pelatihan, session.user.user.data.token)
       );
+
       await store.dispatch(
         getDetailParticipant(
           //   query.nama_pelatihan_id,
