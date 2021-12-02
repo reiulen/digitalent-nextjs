@@ -16,6 +16,7 @@ import FormBerhasil from "./form-berhasil";
 import { clearErrors } from "../../../../redux/actions/pelatihan/register-training.actions";
 import { PENDAFTARAN_PELATIHAN_RESET } from "../../../../redux/types/pelatihan/register-training.type";
 import Layout from "../../../components/template/form-pendaftaran/LayoutCustom.component";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 // const Layout = dynamic(
 //   () =>
 //     import(
@@ -65,7 +66,8 @@ const IndexForm = ({ token, session }) => {
       dispatch(clearErrors());
     }
     if (success) {
-      toast.success("Berhasil Mendaftar Pelatihan");
+      console.log(pendaftaran, "ini pendaftaran");
+      SweatAlert("Berhasil", "Anda berhasil mendaftar pelatihan", "success");
       setView(3);
       dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
     }
@@ -193,7 +195,7 @@ const IndexForm = ({ token, session }) => {
       case 3:
         return (
           <Card className="card-custom gutter-b" style={{ marginTop: "-50px" }}>
-            <FormBerhasil />
+            <FormBerhasil token={token} />
           </Card>
         );
         break;

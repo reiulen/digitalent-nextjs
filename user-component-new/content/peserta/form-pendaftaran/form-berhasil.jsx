@@ -10,15 +10,42 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-const FormBerhasil = () => {
+const FormBerhasil = ({ token }) => {
   const router = useRouter();
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
   );
 
+  const { pendaftaran } = useSelector((state) => state.newPendaftaranPelatihan);
+
   const [dataPelatihan] = useState(dataTraining || null);
 
-  const handleDownloadBukti = () => {};
+  const handleDownloadBukti = async () => {
+    try {
+      // console.log(dataTraining);
+      const config = {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/export-pdf?id=${dataTraining.id}`,
+        config
+      );
+      // console.log(pendaftaran);
+      // console.log(data);
+
+      if (data) {
+        const link = document.createElement("a");
+        link.download = `Form Pendaftaran.pdf`;
+        // link.target = "_blank";
+        link.href = data.data;
+        link.click();
+      }
+    } catch (error) {
+      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+    }
+  };
   return (
     <>
       <div className="p-6">
