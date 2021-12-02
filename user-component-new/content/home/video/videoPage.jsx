@@ -91,8 +91,8 @@ const handleEmptyTag = () => {
     let arr = video?.video
     let temps = []
     let result = []
-    for (let i = 0; i < arr.length; i++){
-        for (let j = 0; j < arr[i].tag.length; j++){
+    for (let i = 0; i < arr?.length; i++){
+        for (let j = 0; j < arr[i]?.tag?.length; j++){
             if (
                 arr[i].tag[j].length !== 0 && 
                 arr[i].tag[j] !== null &&

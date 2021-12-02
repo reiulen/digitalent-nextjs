@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-// import Highlighter from "react-highlight-words";
+import styles from "../detail-artikel/detail-artikel.module.css";
 import { useRouter } from "next/router";
 import {
   Container,
-  Modal
 } from "react-bootstrap";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 
@@ -18,15 +16,12 @@ const DetailArtikel = () => {
   const { detail, loading: loadingDetail } = useSelector((state) => state.detailBerandaArtikel);
   const { tags } = useSelector((state) => state.allTagBerandaArtikel);
 
-  const [keyword, setKeyword] = useState(null);
-  const [searchWords, setSearchWords] = useState(null);
+  const [ keyword, setKeyword ] = useState(null);
   const [ resultText, setResultText ] = useState(null)
+  const [ detailContent, setDetailContent ] = useState("")
+  const [ tagArtikel, setTagArtikel ] = useState([])
   
   const getWindowDimensions = () => {
-    // if (typeof window === 'undefined') {
-    //     global.window = {}
-    // }
-
     const { innerWidth: width, innerHeight: height } = window;
     return {
       width,
@@ -35,7 +30,6 @@ const DetailArtikel = () => {
   };
 
   const [windowDimensions, setWindowDimensions] = useState(
-    // getWindowDimensions()
     {}
   );
 
@@ -50,6 +44,72 @@ const DetailArtikel = () => {
 
   useEffect(() => {}, [windowDimensions]);
 
+  useEffect(() => {
+    handleLinkContent()
+  }, [detail])
+
+  useEffect(() => {
+      handleEmptyTag()
+  },[])
+
+  const handleLinkContent = () => {
+    if (detail){
+        let text = detail.isi_artikel 
+
+        let result = ""
+
+        if (text.includes ("<a")){
+            result = text.replace("<a", `<a target="_blank"`)
+        } else {
+          result = text
+        }
+
+        setDetailContent(result)
+    }
+}
+
+// Handle Empty Tag
+const handleEmptyTag = () => {
+  if (tags){
+      let arr = tags?.tag
+      let temps = []
+      let result = []
+
+      for (let i = 0; i < arr?.length; i++){
+          if (
+              arr[i].length !== 0 && 
+              arr[i] !== null &&
+              arr[i] !== undefined && 
+              arr[i] !== " " &&
+              arr[i] !== ""
+              )
+
+          {
+              temps.push (arr[i].toUpperCase())
+          }
+      }
+
+      for (let k = 0; k < temps.length; k++){
+          if (k === 0){
+              result.push(temps[k].toUpperCase())
+
+          } else {
+              if (result.includes (temps[k].toUpperCase()) === false){
+              result.push(temps[k].toUpperCase())
+              }
+          }
+      }
+
+      if (result.length <= 8){
+          setTagArtikel (result)
+
+      } else {
+          let tagResult = result.slice(0, 8)
+          setTagArtikel (tagResult)
+      }
+  }
+}
+
   const handleFilterTag = (str) => {
     router.push(`/artikel?tag=${str}`);
   };
@@ -60,15 +120,13 @@ const DetailArtikel = () => {
     let result = "";
     let splitWords = keyword.split(" ");
     let splitText = text.split(" ");
-    // let splitWords = keyword
-    // setSearchWords(splitWords)
 
     for (let i = 0; i < splitWords.length; i++) {
       for (let j = 0; j < splitText.length; j++) {
         if (splitWords[i].toLowerCase() === splitText[j].toLowerCase()) {
           result += `<mark>` + splitText[j] + `</mark>` + " ";
         } else {
-          result += `<span>` + splitText[j] + `</span>` + " ";
+          result += " " + splitText[j] + " ";
         }
       }
     }
@@ -77,11 +135,14 @@ const DetailArtikel = () => {
   };
 
   return (
-    <Container fluid className="px-md-30 px-10 py-10 bg-white">
+    <Container fluid className="px-3 pl-sm-15 pr-sm-10 py-10 bg-white">
 
       {/* BreadCrumb */}
       <SubHeaderComponent 
-          data={[{ link: "/artikel", name: "Artikel" }, { link: router.asPath, name: "Detail Artikel" }]}
+          data={[
+            { link: "/artikel", name: "Artikel" }, 
+            { link: router.asPath, name: "Detail Artikel" }
+          ]}
       />
 
       {/* Header */}
@@ -113,7 +174,7 @@ const DetailArtikel = () => {
             </span>
           </div>
 
-          <div className="mt-5 d-flex flex-row align-items-center justify-content-between col-11 col-md-12">
+          <div className="mt-5 d-flex flex-row align-items-center justify-content-between col-12 col-md-12">
             <div className="row">
               <div className="">
                 {/* Insert Logo Image Here */}
@@ -180,13 +241,25 @@ const DetailArtikel = () => {
 
             {/* Artikel */}
             <div className="border rounded-lg mb-5 mt-15">
-                <div className="row my-5 mx-5 text-justify">
-                    {
+                <div 
+                  className="row my-5 mx-5 text-justify"
+                  style={{width: '95%',wordBreak:'break-word'}}
+                >
+                  {
+                    detailContent ?
                         resultText ?
-                            <div dangerouslySetInnerHTML={{__html: resultText}}></div>
+                            <div 
+                                dangerouslySetInnerHTML={{__html: resultText}}
+                                className={ `${styles.detailArtikel}`}
+                            />
                         :
-                            <div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>
-                    }
+                            <div 
+                                dangerouslySetInnerHTML={{__html: detailContent}}
+                                className={ `${styles.detailArtikel}`}
+                            />
+                    :
+                        null
+                  }
                 </div>
 
               <div className="row m-3 d-flex justify-content-between pb-5">
@@ -257,21 +330,25 @@ const DetailArtikel = () => {
                       onChange={(e) => setKeyword(e.target.value)}
                     />
 
-                    <div>
-                      <button
-                        className="btn btn-primary-dashboard"
-                        // onClick={(e) =>
-                        //   handleHighlightWords(e, detail.isi_artikel)
-                        // }
-                        style={{
-                          borderTopRightRadius: "150px",
-                          borderBottomRightRadius: "150px",
-                        }}
-                        type="submit"
-                      >
-                        Cari
-                      </button>
-                    </div>
+                    {
+                      detailContent ?
+                        <div>
+                          <button
+                            className="btn btn-primary-dashboard"
+                            onClick={(e) => handleHighlightWords(e, detailContent)}
+                            style={{
+                              borderTopRightRadius: "150px",
+                              borderBottomRightRadius: "150px",
+                            }}
+                            type="submit"
+                          >
+                            Cari
+                          </button>
+                        </div>
+                      :
+                        null
+                    }
+                    
                   </div>
                 </form>
               </div>
@@ -282,8 +359,8 @@ const DetailArtikel = () => {
                   TEMUKAN LEBIH BANYAK APA YANG PENTING BAGI ANDA
                 </h3>
                 <div className=" d-flex flex-wrap flex-row">
-                  {tags && tags.tag && tags.tag.length !== 0 ? (
-                    tags.tag.map((el, i) => {
+                  {tagArtikel && tagArtikel.length !== 0 ? (
+                    tagArtikel.map((el, i) => {
                       return (
                         <div
                           className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center"
@@ -300,7 +377,7 @@ const DetailArtikel = () => {
                       );
                     })
                   ) : (
-                    <div className="row text-center">
+                    <div className="row d-flex justify-content-center  text-center">
                       <h3 className="text-muted">
                         <em>Tag Belum Tersedia</em>
                       </h3>
