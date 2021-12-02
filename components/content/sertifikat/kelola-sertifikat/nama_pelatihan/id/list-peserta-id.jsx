@@ -51,14 +51,16 @@ export default function ListPesertaID({ token }) {
 
   const handleDownload = async () => {
     const data = await convertDivToPng(divReference.current);
+
     if (data) {
-      // const link = document.createElement("a");
-      // link.download = `Sertifikat - ${query.name}.png`;
-      // link.href = data;
-      // link.click();
+      const formData = new FormData();
+      formData.append("certificate", data);
       const link = `http://192.168.11.38:8000/api/tte-p12/sign-pdf/${certificate.data.certificate.training_id}`;
-      const result = await axios.post(link, test);
-      // console.log(result, "ini");
+      const result = await axios.post(link, formData);
+      const a = document.createElement("a");
+      a.download = `Sertifikat - p12 ${query.name}.png`;
+      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
+      a.click();
     }
 
     if (type == "2 lembar") {
