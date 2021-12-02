@@ -14,49 +14,64 @@ import {
   SET_PENYELENGGARA_VALUE,
 } from "../../types/pelatihan/pencarian.type";
 
-export const getPencarian = (token, cari) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: LIST_TRAINING_REQUEST });
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/pelatihan/dasboard-filter-pelatihan`;
+export const getPencarian =
+  (
+    keyword = "",
+    page = 1,
+    limit = 6,
+    penyelenggara = "",
+    pelatihan_mulai = "",
+    pelatihan_akhir = "",
+    kategori_peserta = "",
+    token = ""
+  ) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: LIST_TRAINING_REQUEST });
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/pelatihan/dasboard-filter-pelatihan?`;
 
-    let keywordState = cari || "";
-    let pageState = getState().allPencarian.page || 1;
-    let limitState = getState().allPencarian.limit || 5;
-    let penyelenggaraState = getState().allPencarian.penyelenggara || "";
-    let kategoriPesertaState = getState().allPencarian.kategori_peserta || "";
-    let pelatihanMulaiState = getState().allPencarian.pelatihan_mulai || "";
-    let pelatihanAkhirState = getState().allPencarian.pelatihan_akhir || "";
+      // let keywordState = cari || "";
+      // let pageState = getState().allPencarian.page || 1;
+      // let limitState = getState().allPencarian.limit || 5;
+      // let penyelenggaraState = getState().allPencarian.penyelenggara || "";
+      // let kategoriPesertaState = getState().allPencarian.kategori_peserta || "";
+      // let pelatihanMulaiState = getState().allPencarian.pelatihan_mulai || "";
+      // let pelatihanAkhirState = getState().allPencarian.pelatihan_akhir || "";
+      // let link = process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/find?`;
 
-    const params = {
-      page: pageState,
-      limit: limitState,
-      cari: keywordState,
-      penyelenggara: penyelenggaraState,
-      kategori_peserta: kategoriPesertaState,
-      pelatihan_akhir: pelatihanAkhirState,
-      pelatihan_mulai: pelatihanMulaiState,
-    };
+      if (keyword) link = link.concat(`&cari=${keyword}`);
+      if (page) link = link.concat(`&page=${page}`);
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (penyelenggara) link = link.concat(`&penyelenggara=${penyelenggara}`);
+      if (pelatihan_mulai)
+        link = link.concat(`&pelatihan_mulai=${pelatihan_mulai}`);
+      if (pelatihan_akhir)
+        link = link.concat(`&pelatihan_akhir=${pelatihan_akhir}`);
+      if (kategori_peserta)
+        link = link.concat(`&kategori_peserta=${kategori_peserta}`);
 
-    const config = {
-      params,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const { data } = await axios.get(link, config);
-    if (data) {
-      dispatch({ type: LIST_TRAINING_SUCCESS, payload: data });
+      let config = "";
+      if (token) {
+        config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      }
+      const { data } = await axios.get(link, config);
+      if (data) {
+        dispatch({ type: LIST_TRAINING_SUCCESS, payload: data });
+      }
+      return data;
+    } catch (error) {
+      dispatch({
+        type: LIST_TRAINING_FAIL,
+        payload: error?.response?.data?.message || error.message,
+      });
     }
-    return data;
-  } catch (error) {
-    dispatch({
-      type: LIST_TRAINING_FAIL,
-      payload: error?.response?.data?.message || error.message,
-    });
-  }
-};
+  };
 
 export const searchKeyword = (text) => {
   return {

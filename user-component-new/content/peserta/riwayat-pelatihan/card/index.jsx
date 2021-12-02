@@ -422,7 +422,7 @@ export default function CardTemplateOriginal({ data, session }) {
             <Fragment>
               <CustomButton
                 click={() => {
-                  router.push(`/peserta/test-substansi`);
+                  router.push(`/peserta/mid-test/panduan-mid-test`);
                   Cookies.set("id_pelatihan", data.id);
                   Cookies.set("id_tema", data.tema_id);
                 }}
@@ -440,7 +440,22 @@ export default function CardTemplateOriginal({ data, session }) {
                 Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
             </Fragment>
-          ) : data.status == "pelatihan" && data.trivia ? (
+          ) :
+           data.status == "pelatihan" && data.midtest ? (
+            <Fragment>
+              <CustomButton
+                click={() => {
+                  router.push(`/peserta/mid-test/panduan-mid-test`);
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                }}
+              >
+                Kerjakan Mid Test
+                <i className="ri-arrow-right-s-line mr-2"></i>
+              </CustomButton>
+            </Fragment>
+          ) :
+          data.status == "pelatihan" && data.trivia ? (
             <Fragment>
               <CustomButton
                 click={() => {

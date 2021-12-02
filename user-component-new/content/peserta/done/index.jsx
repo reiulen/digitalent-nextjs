@@ -60,7 +60,7 @@ const Done = () => {
                 {dataTraining ? dataTraining.name : "-"}
                 <br />
                 <span className={styles.trainingTitle}>
-                  {dataTraining ? dataTraining.mitra : "-"}
+                  {dataTraining ? dataTraining.mitra_nama : "-"}
                 </span>
                 <span className={styles.trainingTheme}>
                   {" "}

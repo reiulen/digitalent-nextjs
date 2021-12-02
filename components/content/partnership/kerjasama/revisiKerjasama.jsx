@@ -337,19 +337,19 @@ const RevisiKerjasama = ({ token }) => {
                 <div className="d-flex flex-column flex-md-row  flex-wrap justify-content-start justify-content-sm-end">
                   <button
                     onClick={(e) => rejectDokument(e)}
-                    className="btn btn-sm btn-rounded-full bg-red-primary text-white ml-3 ml-sm-0 mt-2"
+                    className="btn btn-sm btn-rounded-full bg-red-primary text-white ml-3 ml-sm-0 mt-2 d-flex justify-content-center"
                   >
                     Tolak
                   </button>
                   <button
                     onClick={(e) => ajukanRevisiDokumen(e)}
-                    className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-3 mt-2"
+                    className="btn btn-sm btn-rounded-full bg-yellow-primary text-white ml-3 mr-0 mr-sm-3 mt-2 d-flex justify-content-center"
                   >
                     Ajukan Revisi
                   </button>
                   <button
                     onClick={(e) => acceptDokument(e)}
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white ml-3 ml-sm-0 mt-2"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white ml-3 ml-sm-0 mt-2 d-flex justify-content-center"
                   >
                     Terima
                   </button>

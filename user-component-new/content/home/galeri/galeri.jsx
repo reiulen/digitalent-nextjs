@@ -147,11 +147,14 @@ const Galeri = () => {
                 }
             }
             setKategoriToShow(result)
+          
 
-            if (result.length > 5) {
+            if (result.length > 4) {
                 setShowArrow(true)
+               
             } else {
                 setShowArrow(false)
+               
             }
         }
     }
@@ -433,10 +436,10 @@ const Galeri = () => {
                                         </h1>
                                     </div>
                                     :
-                                    galeri.gallery.map((el, i) => {
+                                    galeri?.gallery.map((el, i) => {
                                         return (
                                             <div
-                                                className="col-6 col-md-4 position-relative my-5"
+                                                className="col-12 col-sm-6 col-md-4 position-relative my-5"
                                                 key={i}
                                                 onMouseOver={() => handleMouseEnter(i)}
                                                 onMouseOut={() => handleMouseLeave(i)}
