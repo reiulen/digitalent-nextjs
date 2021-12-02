@@ -38,6 +38,7 @@ const DashboardSiteManagement = ({ token, user }) => {
       .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/card`, {
         headers: {
           authorization: `Bearer ${token}`,
+          permissionToken: localStorage.getItem("token-permission")
         },
       })
       .then((items) => {
