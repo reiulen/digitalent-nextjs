@@ -195,7 +195,7 @@ const SubmitKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
@@ -203,7 +203,7 @@ const SubmitKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
@@ -211,7 +211,7 @@ const SubmitKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
@@ -226,7 +226,7 @@ const SubmitKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
@@ -241,7 +241,7 @@ const SubmitKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
@@ -272,7 +272,7 @@ const SubmitKerjasama = ({ token }) => {
                         endDate={endDate}
                         dateFormat="YYYY-MM-DD"
                         placeholderText="Dari Tanggal"
-                        minDate={moment().toDate()}
+                        // minDate={moment().toDate()}
                       />
                       <IconCalender
                         className="right-center-absolute"
@@ -296,7 +296,7 @@ const SubmitKerjasama = ({ token }) => {
                         value={newDate}
                         startDate={startDate}
                         endDate={endDate}
-                        minDate={moment().toDate()}
+                        // minDate={moment().toDate()}
                         maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
@@ -370,7 +370,7 @@ const SubmitKerjasama = ({ token }) => {
                     selectsEnd
                     startDate={startDate}
                     endDate={endDate}
-                    minDate={moment().toDate()}
+                    // minDate={moment().toDate()}
                     maxDate={addDays(startDate, 20)}
                     dateFormat="dd/MM/yyyy"
                     placeholderText="Sampai Tanggal"

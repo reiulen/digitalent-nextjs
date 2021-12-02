@@ -150,7 +150,8 @@ const Tambah = ({ token }) => {
         ...error,
         period: "Lama Periode maksimum 5 karakter.",
       });
-      setPeriod("");
+      console.log(true)
+      // setPeriod("");
     } else {
       setPeriod(e.target.value);
     }
