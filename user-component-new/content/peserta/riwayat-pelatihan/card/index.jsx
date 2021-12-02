@@ -356,6 +356,13 @@ export default function CardTemplateOriginal({ data, session }) {
           <Col lg={3} />
           {data.lpj ? (
             <Fragment>
+               <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
               <CustomButton
                 click={() => {
                   Cookies.set("id_pelatihan", data.id);

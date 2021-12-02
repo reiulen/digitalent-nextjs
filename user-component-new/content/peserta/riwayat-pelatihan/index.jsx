@@ -29,49 +29,7 @@ export default function RiwayatPelatihan({ session }) {
     (state) => state.getAllRiwayatPelatihanPeserta
   );
 
-  // const dataRiwayatPelatihan = {
-  //   listPelatihan: {
-  //     perPage: 5,
-  //     total: 2,
-  //     totalFiltered: 2,
-  //     list: [
-  //       {
-  //         id: 211,
-  //         id_pendaftaran: 30340,
-  //         gambar:
-  //           "/thumbnail/d81a54b8-e30e-4079-bb3d-300f5b7b6e6b-December.png",
-  //         akademi: "Vocational School Graduate Academy",
-  //         tema: "Junior Network Administrator",
-  //         tema_id: 68,
-  //         akademi_id: 55,
-  //         alamat: "Jalan Industri 3 Nomor 5",
-  //         name: "Junior Network Administrator",
-  //         kuota_peserta: 900,
-  //         silabus: "/silabus/bf6195eb-c66c-4d96-982d-b1b6e3559c11-December.pdf",
-  //         metode_pelatihan: "Online",
-  //         gambar_mitra:
-  //           "/partnership/images/profile-images/fcf56081-a6dc-471d-8184-615c46b8654c.png",
-  //         mitra: "Progate",
-  //         pendaftaran_mulai: "2021-12-02T16:00:00Z",
-  //         pendaftaran_selesai: "2021-12-03T14:30:00Z",
-  //         pelatihan_mulai: "2021-12-04T14:30:00Z",
-  //         pelatihan_selesai: "2021-12-05T15:00:00Z",
-  //         deskripsi:
-  //           "<p>Junior Network Administrator merupakan salah satu skema pelatihan dalam Pelatihan Intensif dan Sertifikasi (Daring) yang berbasis Standar Kompetensi Kerja Nasional Indonesia (SKKNI) dengan skema Network Administrator. Peserta pelatihan Junior Network Administrator akan mampu mengkonfigurasi perangkat jaringan dan mengelola jaringan komputer sesuai kebutuhan dunia kerja. Di akhir pelatihan peserta akan mengikuti uji kompetensi dan sertifikasi Junior Network Administrator, bagi yang dinyatakan kompeten akan mendapatkan Sertifikat Kompetensi Junior Network Administrator dari BNSP.</p><p>Pelatihan akan dilaksanakan secara daring (online) kurang lebih 6 (enam) minggu dengan pengantar live session dalam Bahasa Indonesia.</p><p>Peserta akan mendapatkan fasilitas secara gratis, diantaranya:</p><p>1. Materi pelatihan</p><p>2. Penggantian pulsa/biaya komunikasi</p><p>3. Sertifikat Keikutsertaan (Completion) dari Kementerian Kominfo bagi peserta yang menyelesaikan pelatihan hingga akhir</p><p>4. Kesempatan untuk mengikuti Uji Kompetensi (Sertifikasi) bagi peserta yang menyelesaikan pelatihan hingga akhir dan Sertifikat Kompetensi bagi yang dinyatakan Kompeten</p><p>5. Kesempatan untuk mengikuti program pasca pelatihan (pelatihan pengembangan soft skills)</p>",
-  //         sertifikasi: "1",
-  //         lpj_peserta: "1",
-  //         status: "menunggu pengumuman",
-  //         tes_subtansi: true,
-  //         trivia: false,
-  //         survei: false,
-  //         lpj: false,
-  //         midtest: false,
-  //         file_path: "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com",
-  //         level_pelatihan: "",
-  //       }
-  //     ],
-  //   },
-  // };
+
 
   const [status, setStatus] = useState({ value: "0", label: "Semua" });
   const [selected, setSelected] = useState(0);
