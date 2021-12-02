@@ -136,13 +136,13 @@ const RevisiSubmit = ({token}) => {
             <div className="row mt-8 mb-10 relative-progress">
               <div className="col-2 p-0">
                 <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
+                  <div className="line-progress"></div>
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
@@ -150,7 +150,7 @@ const RevisiSubmit = ({token}) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
@@ -158,7 +158,7 @@ const RevisiSubmit = ({token}) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
@@ -168,7 +168,7 @@ const RevisiSubmit = ({token}) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
@@ -178,7 +178,7 @@ const RevisiSubmit = ({token}) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">

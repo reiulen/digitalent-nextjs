@@ -235,7 +235,7 @@ const Table = ({ token }) => {
       )}
 
       <div>
-        <div className="row ml-n7 pr-3">
+        <div className="row ml-sm-n7 pr-0 pr-sm-3">
           {/* card Kerjasama Aktif */}
           <div className="col-12 col-md-6 col-lg-6 col-xl-4">
             <CardPage

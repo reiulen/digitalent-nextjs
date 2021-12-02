@@ -286,13 +286,14 @@ const EditDokumentKerjasama = ({ token }) => {
     setError({ ...error, period: "" });
     const regex = new RegExp(/[^0-9]/, "g");
     const val = e.target.value;
+    
     if (val.match(regex)) {
       setError({ ...error, period: "Masukkan angka" });
       setPeriod("");
     }else if(e.target.value.toString().charAt(0) === "0"){
       setError({ ...error, period: "Lama Periode tidak boleh kosong atau angka nol" });
       setPeriod("");
-    }else if(e.target.value.length >= 5){
+    }else if(e.target.value.length > 5){
       setError({ ...error, period: "Lama Periode tidak boleh lebih 5 karakter" });
     }
     else {
@@ -424,7 +425,7 @@ const EditDokumentKerjasama = ({ token }) => {
                       required
                       onFocus={() => setError({ ...error, period: "" })}
                       type="text"
-                      maxLength="5"
+                      maxLength="6"
                       className="form-control"
                       onChange={(e) => onChangePeriod(e)}
                       value={period}
@@ -458,7 +459,7 @@ const EditDokumentKerjasama = ({ token }) => {
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         onChange={(date) => onChangePeriodeDateStart(date)}
                         value={periodDateStart}
-                        minDate={moment().toDate()}
+                        // minDate={moment().toDate()}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />

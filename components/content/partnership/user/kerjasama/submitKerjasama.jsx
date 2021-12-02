@@ -161,7 +161,7 @@ const DetailDokumenKerjasama = ({ token }) => {
         ...error,
         period: "Lama Periode maksimum 5 karakter.",
       });
-      setPeriod("");
+      // setPeriod("");
     } else {
       setPeriod(e.target.value);
     }
@@ -190,12 +190,12 @@ const DetailDokumenKerjasama = ({ token }) => {
             <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0 relative-progress">
                 <div className="progress-items">
-                  <div className="circle-progress active-circle">
+                  <div className="circle-progress active-circle ">
                     <span className="title-progress active">Submit Kerjasama</span>
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
@@ -203,18 +203,18 @@ const DetailDokumenKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="circle-progress ">
                     <span className="title-progress">Pembahasan</span>
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="circle-progress ">
                     <span className="title-progress text-center" style={{ top: "-4rem" }}>
                       Submit Dokumen
                       <br />
@@ -223,10 +223,10 @@ const DetailDokumenKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="circle-progress ">
                     <span className="title-progress text-center" style={{ top: "-4rem" }}>
                       Review Dokumen
                       <br />
@@ -235,10 +235,10 @@ const DetailDokumenKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="circle-progress ">
                     <span className="title-progress">Hasil</span>
                   </div>
                 </div>
