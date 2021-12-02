@@ -107,6 +107,7 @@ export const newPendaftaranPelatihan =
         type: PENDAFTARAN_PELATIHAN_SUCCESS,
         payload: data,
       });
+      return data;
     } catch (error) {
       dispatch({
         type: PENDAFTARAN_PELATIHAN_FAIL,

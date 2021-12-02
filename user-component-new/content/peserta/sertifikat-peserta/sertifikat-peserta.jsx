@@ -1,53 +1,57 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Card, Col, Row, Badge, Button, Modal } from "react-bootstrap";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import style from "./sertifikat.module.css";
 import { useSelector } from "react-redux";
 // import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import axios from "axios";
-import Swal from "sweetalert2";
 import Link from "next/link";
 import Image from "next/image";
+import { toPng } from "html-to-image";
 
 export default function RiwayatPelatihanDetail(props) {
-  const query = {
-    tema: "test",
-    name: "sandikha galih",
+  const {
+    data: { data },
+  } = useSelector((state) => state.sertifikatPeserta);
+
+  const divReference = useRef(null);
+  const divReferenceSyllabus = useRef(null);
+  const [type, setType] = useState(
+    data?.data_sertifikat?.certificate?.certificate_type
+  );
+
+  const convertDivToPng = async (div) => {
+    const data = await toPng(div, {
+      cacheBust: true,
+      canvasWidth: 842,
+      canvasHeight: 595,
+      backgroundColor: "white",
+    });
+    return data;
   };
 
-  const divReference = null;
+  const handleDownload = async () => {
+    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}/api/tte-p12/sign-pdf/check-pdf/${data?.data_sertifikat?.pelatihan?.id}`;
+    const check = await axios.get(linkChecker);
+    // check udh pernah di sign apa belum?
+    if (!check.data.status) {
+      const data = await convertDivToPng(divReference.current);
+      if (data) {
+        const formData = new FormData();
+        formData.append("certificate", data);
+        const link = `${process.env.END_POINT_API_SERTIFIKAT}/api/tte-p12/sign-pdf/${data?.data_sertifikat?.pelatihan?.id}`;
 
-  const participant = {
-    data: {
-      tahun: "2010",
-    },
-  };
-
-  const type = "1 lembar";
-
-  const certificate = {
-    data: {
-      certificate: {
-        id: 1,
-        academy_id: 41,
-        theme_id: 45,
-        training_id: 106,
-        name: "64ew",
-        certificate_type: "1 lembar",
-        number_of_signatures: 1,
-        background: "2b3aa540-b1ab-409b-9ffc-28e5cc87665b.jpeg",
-        certificate_result: "7c5d6507-ec10-43f3-aceb-41e1c6e21027.png",
-        number_of_signature_syllabus: 1,
-        background_syllabus: null,
-        certificate_result_syllabus: null,
-        syllabus: null,
-        status_migrate_id: 1,
-        created_by_id: 12,
-        created_at: "2021-11-26T08:48:29.000000Z",
-        updated_at: "2021-11-27T05:49:47.000000Z",
-        certificate_pdf: "78da402e-3bc6-41cb-8e2d-86bd9c955b87.pdf",
-      },
-    },
+        const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
+        const a = document.createElement("a");
+        a.download = `Sertifikat - p12 ${data?.data_user?.name}.png`;
+        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
+        a.click();
+      }
+    } else {
+      const a = document.createElement("a");
+      a.download = `Sertifikat - p12 ${data?.data_user?.name}.png`;
+      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${data?.data_sertifikat?.certificate?.certificate_pdf}`;
+      a.click();
+    }
   };
 
   return (
@@ -60,14 +64,17 @@ export default function RiwayatPelatihanDetail(props) {
               <div className="text-dark ">Nama Sertifikat :</div>
               <div className="mx-6">
                 <div type="text" className="form-control w-100 h-100">
-                  {certificate?.data?.certificate?.name || "Nama sertifikat"}
+                  {data.data_sertifikat.certificate.name || "-"}
                 </div>
               </div>
             </div>
             <div className="card-toolbar">
               <Link
                 passHref
-                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${query.id}`}
+                href={`/peserta/riwayat-pelatihan/${data?.data_user?.nama_pelatihan
+                  .split(" ")
+                  .join("-")
+                  .toLowerCase()}`}
               >
                 <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3">
                   Kembali
@@ -86,36 +93,39 @@ export default function RiwayatPelatihanDetail(props) {
                 ref={divReference}
               >
                 <div className="position-relative">
-                  <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
-                    {participant?.data?.nomor_registrasi}
+                  <div
+                    className={`position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1`}
+                  >
+                    {data?.data_user?.nomor_registrasi}
                   </div>
                   <div
                     className={`position-absolute ${
-                      certificate?.data?.certificate.background
+                      data?.data_sertifikat?.certificate?.background
                         ? `${style.responsive_date_from}`
-                        : "responsive-date-from-without-background"
+                        : `${style.responsive_date_from_without_background}`
+                    }
                     } font-weight-boldest zindex-1 responsive-date-text`}
                   >
-                    {moment(participant?.data?.pelatihan_mulai).format(
-                      "DD/MM/YY"
-                    )}{" "}
+                    {moment(
+                      data?.data_sertifikat?.pelatihan?.pelatihan_mulai
+                    ).format("DD/MM/YY")}{" "}
                     -{" "}
-                    {moment(participant?.data?.pelatihan_selesai).format(
-                      "DD/MM/YY"
-                    )}
+                    {moment(
+                      data?.data_sertifikat?.pelatihan?.pelatihan_selesai
+                    ).format("DD/MM/YY")}
                   </div>
                   <div
                     className={`position-absolute ${
-                      certificate?.data?.certificate?.background
+                      data?.data_sertifikat?.certificate?.background
                         ? `${style.responsive_year}`
                         : `${style.responsive_year_without_background}`
                     } font-weight-boldest zindex-1 responsive-date-text`}
                   >
-                    {participant?.data?.tahun}
+                    {data?.data_user?.tahun}
                   </div>
                   <div
                     className={`position-absolute w-100 text-center ${
-                      certificate?.data?.certificate?.background
+                      data?.data_sertifikat?.certificate?.background
                         ? `${style.responsive_margin_peserta_1}`
                         : `${style.responsive_margin_without_background}`
                     } zindex-1`}
@@ -123,16 +133,16 @@ export default function RiwayatPelatihanDetail(props) {
                     <span
                       className={`${style.responsive_font_size_peserta} font-weight-bolder`}
                     >
-                      {query.name}
+                      {data?.data_user?.name}
                     </span>
                   </div>
                   <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
-                    alt={`image ${certificate.data.certificate.certificate_result}`}
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${data?.data_sertifikat?.certificate?.certificate_result}`}
+                    alt={`image ${data?.data_sertifikat?.certificate?.certificate_result}`}
                     objectFit="fill"
                     width={842}
                     height={595}
-                    key={certificate?.data?.certificate?.certificate_result}
+                    key={1}
                   />
                 </div>
               </div>
@@ -165,15 +175,12 @@ export default function RiwayatPelatihanDetail(props) {
                   ref={divReferenceSyllabus}
                 >
                   <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate.data.certificate.certificate_result_syllabus}`}
-                    alt={`image ${certificate?.data?.certificate?.certificate_result_syllabus}`}
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${data?.data_sertifikat?.certificate?.certificate_result_syllabus}`}
+                    alt={`image ${data?.data_sertifikat?.certificate?.certificate_result_syllabus}`}
                     width={842}
                     height={595}
                     objectFit="fill"
-                    key={
-                      certificate?.data?.certificate
-                        ?.certificate_result_syllabus
-                    }
+                    key={2}
                     id="image2"
                   />
                 </div>
