@@ -59,7 +59,7 @@ const Navigationbar = ({ session }) => {
     }
   }, []);
 
-   const getDataGeneral = async(token) => {
+  const getDataGeneral = async (token) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
@@ -73,9 +73,8 @@ const Navigationbar = ({ session }) => {
       if (data) {
         localStorage.setItem("navbar", data.data.color[0].color);
       }
-    } catch (error) {
-    }
-  }
+    } catch (error) {}
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("navbar")) {
