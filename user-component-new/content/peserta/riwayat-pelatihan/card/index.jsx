@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 export default function CardTemplateOriginal({ data, session }) {
   const router = useRouter();
@@ -18,7 +19,9 @@ export default function CardTemplateOriginal({ data, session }) {
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [label, setLabel] = useState();
 
-  console.log(data);
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
 
   useEffect(() => {
     if (data.status.includes("tidak") || data.status.includes("ditolak"))
@@ -473,7 +476,12 @@ export default function CardTemplateOriginal({ data, session }) {
               )}
               <CustomButton
                 click={() => {
-                  router.push(`/peserta/riwayat-pelatihan/`);
+                  router.push(
+                    `/peserta/riwayat-pelatihan/${data.name
+                      .split(" ")
+                      .join("-")
+                      .toLowerCase()}/sertifikat/${data.id}`
+                  );
                 }}
               >
                 <i className="ri-download-2-fill mr-2"></i>
