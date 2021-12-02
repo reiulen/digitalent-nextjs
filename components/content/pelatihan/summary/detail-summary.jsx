@@ -42,15 +42,18 @@ const DetailSummary = ({ token }) => {
   const [statusPeserta, setStatusPeserta] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  const [loadingExport, setLoadingExport] = useState(false);
+
   const optionsPeserta = [
-    { value: "menunggu", label: "Menunggu" },
+    { value: "seleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
     { value: "tes substansi", label: "Tes Substansi" },
     { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
-    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "seleksi akhir", label: "Seleksi Akhir" },
     { value: "ditolak", label: "Ditolak" },
     { value: "diterima", label: "Diterima" },
     { value: "pelatihan", label: "Pelatihan" },
+    { value: "administrasi akhir", label: "Administrasi Akhir" },
     { value: "lulus pelatihan", label: "Lulus Pelatihan" },
     { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
@@ -110,9 +113,19 @@ const DetailSummary = ({ token }) => {
   };
 
   const handleExportReport = async (type) => {
+    const data = {
+      cari: search,
+      administrasi: statusBerkas === null ? "" : statusBerkas.value,
+      pelatihan: statusPeserta === null ? "" : statusPeserta.value,
+    };
+    setLoadingExport(true);
     let link =
       process.env.END_POINT_API_PELATIHAN +
       `api/v1/formPendaftaran/list-detail-rekap-pendaftaran-export?pelatian_id=${id}&type=${type}`;
+    if (data.cari) link = link.concat(`&cari=${data.cari}`);
+    if (data.administrasi)
+      link = link.concat(`&administrasi=${data.administrasi}`);
+    if (data.pelatihan) link = link.concat(`&pelatihan=${data.pelatihan}`);
 
     const config = {
       headers: {
@@ -120,8 +133,10 @@ const DetailSummary = ({ token }) => {
       },
     };
 
-    await axios.get(link, config);
-    // window.location.href = link;
+    await axios.get(link, config).then((res) => {
+      setLoadingExport(false);
+      window.location.href = res.data.data;
+    });
   };
 
   const handleSecondsToTime = (secs) => {
@@ -384,48 +399,39 @@ const DetailSummary = ({ token }) => {
                   </Link>
                 </div>
                 <div className="col-md-2 mt-3">
-                  {/* <div className="position-relative ml-2 d-flex flex-wrap">
-                    <i className="ri-arrow-down-s-line right-center-absolute mr-md-13 mr-20 text-white mt-1"></i>
-                    <select
-                      className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
-                      style={{ appearance: "none" }}
-                    >
-                      <option value="" disabled selected>
+                  {loadingExport !== true ? (
+                    <div className="dropdown">
+                      <button
+                        className="btn w-100 btn-rounded-full bg-blue-secondary text-white dropdown-toggle d-flex justify-content-center"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
                         Export
-                      </option>
-                      <option value="LMS">LMS</option>
-                      <option value="CSV">CSV</option>
-                    </select>
-                  </div> */}
-                  <div className="dropdown">
-                    <button
-                      className="btn w-100 btn-rounded-full bg-blue-secondary text-white dropdown-toggle d-flex justify-content-center"
-                      type="button"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Export
-                    </button>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton"
-                    >
-                      <a
-                        className="dropdown-item"
-                        onClick={() => handleExportReport("xlsx")}
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
                       >
-                        LMS
-                      </a>
-                      <a
-                        className="dropdown-item"
-                        onClick={() => handleExportReport("csv")}
-                      >
-                        CSV
-                      </a>
+                        <a
+                          className="dropdown-item"
+                          onClick={() => handleExportReport("xlsx")}
+                        >
+                          LMS
+                        </a>
+                        <a
+                          className="dropdown-item"
+                          onClick={() => handleExportReport("csv")}
+                        >
+                          CSV
+                        </a>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <LoadingTable loading={loadingExport} />
+                  )}
                 </div>
               </div>
             </div>
@@ -501,10 +507,16 @@ const DetailSummary = ({ token }) => {
                                 {row.update_by}
                               </p>
                               <p className="my-0">
-                                {moment(row.update_time).format("DD MMMM YYYY")}
+                                {row.update_time !== null
+                                  ? moment(row.update_time).format(
+                                      "DD MMMM YYYY"
+                                    )
+                                  : "-"}
                               </p>
                               <p className="my-0">
-                                {moment(row.update_time).format("hh:mm:ss")}
+                                {row.update_time !== null
+                                  ? moment(row.update_time).format("hh:mm:ss")
+                                  : "-"}
                               </p>
                             </td>
                             <td>

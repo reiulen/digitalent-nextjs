@@ -53,7 +53,7 @@ export const getAllPelatihanByAkademi =
         `api/v1/akademi/kategori-akademi?akademi_id=${id}`;
 
       if (tema_id) link = link.concat(`&tema_id=${tema_id}`);
-      if (provinsi) link = link.concat(`&provinsi=${provinsi}`);
+      if (provinsi) link = link.concat(`&kabupaten=${provinsi}`);
       if (tipe_pelatihan)
         link = link.concat(`&tipe_pelatihan=${tipe_pelatihan}`);
       if (penyelenggara) link = link.concat(`&penyelenggara=${penyelenggara}`);
