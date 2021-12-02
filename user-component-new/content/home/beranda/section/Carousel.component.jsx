@@ -100,6 +100,7 @@ export default function Carousel({ data }) {
         {data &&
           data.imagetron.map((row, i) => (
             <div style={{ width: 1650 }} key={i}>
+              {/* {console.log(row)} */}
               <Image
                 src={
                   process.env.END_POINT_API_IMAGE_PUBLIKASI +
@@ -110,6 +111,7 @@ export default function Carousel({ data }) {
                 height={windowDimensions.width < 800 ? 500 : 500}
                 objectFit="cover"
                 className="img-carousel"
+                onClick={() => router.push(window.open(row.url_link, "_blank"))}
               />
             </div>
           ))}
