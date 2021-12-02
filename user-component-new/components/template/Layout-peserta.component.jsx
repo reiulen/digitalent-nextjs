@@ -80,7 +80,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
         <Row>
           <Col md={3}>
             {!router.pathname.includes(routerPath) && (
-              <Sidebar screenClass={"d-none d-lg-block"} titleAkun={"AKUN"} />
+              <Sidebar screenClass={"d-none d-lg-block"} titleAkun={"AKUN"} session={session} />
             )}
           </Col>
           {children}

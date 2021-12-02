@@ -9,8 +9,9 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { signOut } from "next-auth/client";
+import axios from "axios";
 
-const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
+const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
   const router = useRouter();
 
   const [drop, setDrop] = useState(true);
@@ -21,6 +22,40 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
 
   const [dropBeasiswa, setDropBeasiswa] = useState(false);
   const [clickBeasiswa, setClickBeasiswa] = useState(1);
+
+  const fetchSimonas = (e) => {
+    e.preventDefault();
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/auth/sso-dashboard?type=simonas`,
+        {
+          headers: {
+            Authorization: `Bearer ${session.token}`,
+          },
+        }
+      )
+      .then((items) => {
+        window.open(items.data.data, "_blank");
+      });
+  };
+
+  const fetchBeasiswa = (e) => {
+    e.preventDefault();
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/auth/sso-dashboard?type=beasiswa`,
+        {
+          headers: {
+            Authorization: `Bearer ${session.token}`,
+          },
+        }
+      )
+      .then((items) => {
+        window.open(items.data.data, "_blank");
+      });
+  };
 
   const handleDown = (e) => {
     if (e.target.innerHTML === "Digital Talent Schoolarship") {
@@ -174,7 +209,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           <Link href="/peserta/survey" passHref>
             <div
               className={`${
-                router.pathname === "/peserta/survey"
+                router.pathname === "/peserta/survey" ||
+                router.pathname === "/peserta/done-survey"
                   ? styles.activeMenuItem
                   : styles.menuItem
               } d-flex flex-row`}
@@ -182,7 +218,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               <div className="p-2">
                 <div
                   className={`${
-                    router.pathname === "/peserta/survey"
+                    router.pathname === "/peserta/survey" ||
+                    router.pathname === "/peserta/done-survey"
                       ? styles.activeIconMenu
                       : styles.iconMenu
                   } ri-chat-smile-line`}
@@ -198,7 +235,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           <Link href="/peserta/trivia" passHref>
             <div
               className={`${
-                router.pathname === "/peserta/trivia"
+                router.pathname === "/peserta/trivia" ||
+                router.pathname === "/peserta/done-trivia"
                   ? styles.activeMenuItem
                   : styles.menuItem
               } d-flex flex-row`}
@@ -206,7 +244,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               <div className="p-2">
                 <div
                   className={`${
-                    router.pathname === "/peserta/trivia"
+                    router.pathname === "/peserta/trivia" ||
+                    router.pathname === "/peserta/done-trivia"
                       ? styles.activeIconMenu
                       : styles.iconMenu
                   } ri-lightbulb-line`}
@@ -298,27 +337,31 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           className={dropSimonas ? styles.active : styles.subMenuTitle}
           onClick={(event) => handleDown(event)}
         >
-          <div className="d-flex flex-row align-items-center">
-            <div className="p-2">
-              <Image src={Simonas} alt="" className={styles.img} />
+          <a target="_blank" onClick={fetchSimonas}>
+            <div className="d-flex flex-row align-items-center">
+              <div className="p-2">
+                <Image src={Simonas} alt="" className={styles.img} />
+              </div>
+              <div className="p-2">
+                <div>SIMONAS</div>
+              </div>
             </div>
-            <div className="p-2">
-              <div>SIMONAS</div>
-            </div>
-          </div>
+          </a>
         </div>
         <div
           className={dropBeasiswa ? styles.active : styles.subMenuTitle}
           onClick={(event) => handleDown(event)}
         >
-          <div className="d-flex flex-row align-items-center">
-            <div className="p-2">
-              <Image src={Beasiswa} alt="" className={styles.img} />
+          <a target="_blank" onClick={fetchBeasiswa}>
+            <div className="d-flex flex-row align-items-center">
+              <div className="p-2">
+                <Image src={Beasiswa} alt="" className={styles.img} />
+              </div>
+              <div className="p-2">
+                <div>Beasiswa</div>
+              </div>
             </div>
-            <div className="p-2">
-              <div>Beasiswa</div>
-            </div>
-          </div>
+          </a>
         </div>
         <div className={styles.titleAkun}>{titleAkun}</div>
         <div className={accountFalse}>
