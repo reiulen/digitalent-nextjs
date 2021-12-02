@@ -8,6 +8,8 @@ import CardPeserta from "./card";
 import Pagination from "react-js-pagination";
 import style from "./style.module.css";
 import { useSelector } from "react-redux";
+import Image from "next/image";
+import LoadingTable from '../../../../components/LoadingTable'
 
 import {
   getAllRiwayatPelatihanPeserta,
@@ -27,12 +29,12 @@ export default function RiwayatPelatihan({ session }) {
   const [showModal, setShowModal] = useState(false);
   const dataRiwayatPelatihan = useSelector(
     (state) => state.getAllRiwayatPelatihanPeserta
-  ); 
+  );
 
-  const [status, setStatus] = useState({ value: "0", label: "Semua" });
+  const [status, setStatus] = useState(null);
   const [selected, setSelected] = useState(0);
 
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {setShowModal(false); setStatus(null)};
   const handleShow = () => setShowModal(true);
 
   const handleFilter = () => {
@@ -110,9 +112,9 @@ export default function RiwayatPelatihan({ session }) {
                     }}
                     onClick={handleShow}
                   >
-                    <div className="d-flex align-items-center">
+                    <div className={`d-flex align-items-center ${status ? "" : "text-muted"}`}>
                       <IconFilter className="mr-3" />
-                      {status.label}
+                      {status ? status?.label : "Pilih Filter"}
                     </div>
                     <IconArrow fill="#ADB5BD" width="10" height="6" />
                   </button>
@@ -147,13 +149,31 @@ export default function RiwayatPelatihan({ session }) {
           </Card>
         </Col>
         {/* <Administrasi /> */}
-        {dataRiwayatPelatihan.listPelatihan.list.map((el, i) => {
+        {dataRiwayatPelatihan.loading && <div className="mb-2"><LoadingTable /></div>}
+        {dataRiwayatPelatihan.listPelatihan.list.length > 0 ? dataRiwayatPelatihan.listPelatihan.list.map((el, i) => {
           return (
             <Fragment key={i}>
               <CardPeserta status={"test"} data={el} session={session} />
             </Fragment>
           );
-        })}
+        }) : (
+          <div className="row mx-auto bg-white rounded">
+            <div className="col col-12 d-flex flex-column justify-content-center">
+              <Image
+                src={`/assets/media/gambar-belum-tersedia-page.svg`}
+                width={525}
+                height={350}
+                alt="Tidak Tersedia"
+              />
+              <h1
+                className="font-weight-bolder mt-15 text-center fw-600 mb-10"
+                style={{ fontFamily: "Poppins", fontSize: "24px" }}
+              >
+                Pencarian tidak ditemukan
+              </h1>
+            </div>
+          </div>
+        )}
         <div className="d-flex justify-content-center mt-8 mb-40">
           {dataRiwayatPelatihan?.listPelatihan?.total >= 5 && (
             <div className="table-pagination my-auto">
@@ -181,7 +201,7 @@ export default function RiwayatPelatihan({ session }) {
         <Modal.Body>
           <Select
             ref={(ref) => (refSelect = ref)}
-            placeholder={status?.label || "Semua"}
+            placeholder={"Pilih Filter...."}
             // defaultValue={options[0].value}
             name="color"
             onChange={(e) => {
