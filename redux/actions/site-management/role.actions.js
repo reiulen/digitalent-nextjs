@@ -206,13 +206,14 @@ export const getSidebar = (token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + "/api/user/permissions",
+      process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
       config
     );
     dispatch({
       type: GET_SIDEBAR,
       payload: data,
     });
+    localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
   } catch (error) {}
 };
 

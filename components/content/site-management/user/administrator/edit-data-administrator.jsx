@@ -84,12 +84,14 @@ const TambahApi = ({ token }) => {
     academyIds: detailAdminSite?.adminSite?.data?.academy_ids,
   });
   const [sortListPelatihan, setSortListPelatihan] = useState(
-    allListPelatihan.data.map((items) => {
+    detailAdminSite?.adminSite?.data.training_access.map((items) => {
       return {
         ...items,
-        manage: false,
-        view: false,
-        allSelect: false,
+        value: items.id,
+        label: items.name,
+        manage: items.manage === 1 ? true : false,
+        view: items.view === 1 ? true : false,
+        allSelect: items.manage === 1 && items.view === 1 ? true: false,
       };
     })
   );
@@ -242,6 +244,14 @@ const TambahApi = ({ token }) => {
                 );
               }
             } else {
+              const trainings = newData.map((item) => {
+                return {
+                  id: item.value,
+                  view: item.view === true ? 1 : 0,
+                  manage: item.manage === true ? 1 : 0,
+                };
+              });
+
               const sendData = {
                 id: router.query.id,
                 name: name,
@@ -251,7 +261,7 @@ const TambahApi = ({ token }) => {
                 role: role,
                 unit_work_id: unitWork,
                 type_access: typeAccess,
-                training_access: newData,
+                training_access: trainings,
                 status: 1,
               };
               try {
