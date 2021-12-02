@@ -126,6 +126,7 @@ const StepTwo = ({ token }) => {
     setImageSoalName(e.target.files[0].name);
     if (e.target.name === "question_image") {
       if (e.target.files[0].size > 5000000) {
+        setImageSoalName("");
         e.target.value = null;
         Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
       } else {
@@ -175,6 +176,7 @@ const StepTwo = ({ token }) => {
   };
 
   const handleResetForm = () => {
+    setImageSoalName("");
     setSoal("");
     setSoalImage("");
     setSoalList([
@@ -251,6 +253,7 @@ const StepTwo = ({ token }) => {
       };
 
       dispatch(newSubtanceQuestionDetail(data, token));
+      handleResetForm();
     }
   };
 
