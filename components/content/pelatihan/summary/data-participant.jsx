@@ -396,7 +396,12 @@ const DataParticipant = ({ token }) => {
                         setStatusPeserta({ label: e.label, value: e.value })
                       }
                       isDisabled={
-                        peserta.list[0].status !== "seleksi akhir"
+                        peserta.list[0].status === "tes substansi" ||
+                        peserta.list[0].status ===
+                          "tidak lulus tes substansi" ||
+                        peserta.list[0].status === "seleksi administrasi" ||
+                        peserta.list[0].status === "tidak lulus administrasi" ||
+                        peserta.list[0].status === "tes substansi"
                           ? true
                           : false
                       }

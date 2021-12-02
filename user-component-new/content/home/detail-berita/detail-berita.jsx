@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +6,6 @@ import styles from "../detail-berita/detail-berita.module.css";
 import { useRouter } from "next/router";
 import {
     Container,
-    Modal
   } from "react-bootstrap";
 import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 
@@ -44,9 +42,7 @@ const DetailBerita = () => {
         return () => window.removeEventListener("resize", handleResize);
     },[detail])
 
-    useEffect(()=> {
-
-    },[windowDimensions])
+    useEffect(()=> {},[windowDimensions])
 
     useEffect(() => {
         handleLinkContent()
@@ -64,6 +60,8 @@ const DetailBerita = () => {
 
             if (text.includes ("<a")){
                 result = text.replace("<a", `<a target="_blank"`)
+            } else {
+                result = text
             }
 
             setDetailContent(result)
@@ -77,7 +75,7 @@ const DetailBerita = () => {
             let temps = []
             let result = []
 
-            for (let i = 0; i < arr.length; i++){
+            for (let i = 0; i < arr?.length; i++){
                 if (
                     arr[i].length !== 0 && 
                     arr[i] !== null &&
@@ -385,7 +383,7 @@ const DetailBerita = () => {
                                                         )
                                                     })
                                                 :
-                                                    <div className="row text-center">
+                                                    <div className="row d-flex justify-content-center text-center">
                                                         <h3 className="text-muted">
                                                             <em>
                                                                 Tag Belum Tersedia
