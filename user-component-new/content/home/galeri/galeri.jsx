@@ -229,7 +229,9 @@ const Galeri = () => {
         {kategori ? (
           <div className="col-12 pl-0 ml-4 mt-10 mb-5">
             {showArrow === null ? (
-              <PulseLoaderRender />
+              <div className="col-12">
+                <PulseLoaderRender />
+              </div>
             ) : showArrow === true ? (
               <Splide
                 options={{
@@ -391,12 +393,12 @@ const Galeri = () => {
       ) : (
         <div className="mt-5">
           <div className="row d-flex justify-content-evenly flex-wrap">
-            {galeri && galeri?.gallery && galeri?.gallery.length === 0 ? (
+            {galeri && galeri.gallery && galeri.gallery.length === 0 ? (
               <div className="col-12 d-flex justify-content-center my-5">
                 <h1 className="font-weight-bolder">Galeri Tidak Tersedia</h1>
               </div>
             ) : (
-              galeri?.gallery.map((el, i) => {
+              galeri.gallery.map((el, i) => {
                 return (
                   <div
                     className="col-6 col-md-4 position-relative my-5"

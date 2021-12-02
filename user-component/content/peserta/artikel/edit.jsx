@@ -37,19 +37,27 @@ const EditArtikelPeserta = ({ session }) => {
 
   const [, forceUpdate] = useState();
 
-  const { CKEditor, ClassicEditor, Base64UploadAdapter } =
-    editorRef.current || {};
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true);
+  const [gambarDB, setGambarDB] = useState(
+    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+    "publikasi/images/" +
+    detailArtikelsPeserta.artikel.data.gambar
+  );
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
     "publikasi/images/" +
     detailArtikelsPeserta.artikel.data.gambar
   );
+  const [gambar, setGambar] = useState(
+    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+    "publikasi/images/" +
+    detailArtikelsPeserta.artikel.data.gambar
+  );
 
-  const [gambar, setGambar] = useState("");
+  // const [gambar, setGambar] = useState("");
   const [gambarName, setGambarName] = useState(null);
   const [judul, setJudul] = useState(
     detailArtikelsPeserta.artikel.data.judul_artikel
@@ -120,16 +128,29 @@ const EditArtikelPeserta = ({ session }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      const data = {
-        isi_artikel: deskripsi,
-        judul_artikel: judul,
-        gambar: gambar,
-        kategori_akademi: akademi,
-        kategori_id: kategori,
-        tag: tag,
-        _method: "put",
-      };
-      dispatch(updateArtikelPeserta(data, session.token, router.query.id));
+      if (gambarDB !== gambar) {
+        const data = {
+          isi_artikel: deskripsi,
+          judul_artikel: judul,
+          gambar: gambar,
+          kategori_akademi: akademi,
+          kategori_id: kategori,
+          tag: tag,
+          _method: "put",
+        };
+        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
+      } else {
+        const data = {
+          isi_artikel: deskripsi,
+          judul_artikel: judul,
+          gambar: "",
+          kategori_akademi: akademi,
+          kategori_id: kategori,
+          tag: tag,
+          _method: "put",
+        };
+        dispatch(updateArtikelPeserta(data, session.token, router.query.id));
+      }
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -193,7 +214,7 @@ const EditArtikelPeserta = ({ session }) => {
                       alt="image12s"
                       width={160}
                       height={160}
-                      objectFit="fill"
+                      objectFit="cover"
                     />
                   </figure>
                   <div className="position-relative">
@@ -281,6 +302,9 @@ const EditArtikelPeserta = ({ session }) => {
                       <div style={{ width: "100%", height: "300px" }}>
                         <div
                           ref={quillRef}
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor("deskripsi")
+                          }
                         />
                       </div>
                     ) : (
