@@ -257,7 +257,15 @@ export default function CardTemplateOriginal({ data, session }) {
                       className="d-flex align-items-center p-0 justify-content-lg-start justify-content-start order-1 order-lg-2 col-12"
                       style={{ color: "#203E80" }}
                     >
-                      <div className="font-weight-bolder text-truncate text-left">
+                      <div
+                        className="font-weight-bolder text-truncate text-left"
+                        style={{
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          maxWidth: "6rem",
+                        }}
+                      >
                         {data.mitra}
                       </div>
                       <div className="text-muted pl-2 justify-content-center text-left text-truncate">
@@ -288,7 +296,9 @@ export default function CardTemplateOriginal({ data, session }) {
                         ? "Kerjakan LPJ"
                         : data.survei
                         ? "Kerjakan Survei"
-                        : data.status == "pelatihan" && data.midtest && !data.trivia
+                        : data.status == "pelatihan" &&
+                          data.midtest &&
+                          !data.trivia
                         ? "Kerjakan Mid Test"
                         : data.status == "pelatihan" && data.trivia
                         ? "kerjakan trivia"
@@ -364,7 +374,9 @@ export default function CardTemplateOriginal({ data, session }) {
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
+              
               <CustomButton
+              
                 disabled={!data.survei}
                 click={() => {
                   router.push("/peserta/survey");
