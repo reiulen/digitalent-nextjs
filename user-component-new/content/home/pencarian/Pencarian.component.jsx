@@ -98,19 +98,6 @@ const Pencarian = ({ session }) => {
     dispatch(setValuePage(page));
   };
 
-  useEffect(() => {
-    dispatch(getPencarian(session.token));
-  }, [
-    dispatch,
-    session.token,
-    allPencarian.page,
-    allPencarian.limit,
-    allPencarian.kategori_peserta,
-    allPencarian.pelatihan_akhir,
-    allPencarian.pelatihan_mulai,
-    allPencarian.penyelenggara,
-  ]);
-
   return (
     <>
       <HomeWrapper>

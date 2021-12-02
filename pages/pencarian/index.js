@@ -52,7 +52,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllPenyeleggaraPeserta());
       await store.dispatch(getDataPribadi(sessionToken));
 
-      const data = await store.dispatch(getPencarian(sessionToken, query.cari));
+      await store.dispatch(
+        getPencarian(
+          query.cari || "",
+          query.page || 1,
+          query.limit || 6,
+          query.penyelenggara || "",
+          query.pelatihan_mulai || "",
+          query.pelatihan_akhir || "",
+          query.kategori_peserta || "",
+          token || ""
+        )
+      );
 
       return {
         props: {
