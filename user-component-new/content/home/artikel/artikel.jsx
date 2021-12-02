@@ -376,7 +376,7 @@ const Artikel = () => {
                                                 },
                                             }
                                         }}
-                                        className="px-20 mr-n5 mr-sm-n1"
+                                        className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
                                     >
                                         {
                                             kategoriArtikel === "" ?
