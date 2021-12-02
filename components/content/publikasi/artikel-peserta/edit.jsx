@@ -65,7 +65,7 @@ const EditArtikel = ({ token }) => {
   const [users_id, setUserId] = useState(artikel_peserta.users_id);
   const [kategori_akademi, setKategoriAkademi] = useState(artikel_peserta.kategori_akademi);
   const [tag, setTag] = useState(artikel_peserta.tag);
-  const [publish, setPublish] = useState(artikel_peserta.publish === 1 ? true : false);
+  const [publish, setPublish] = useState(artikel_peserta.publish);
   const [publishDate, setPublishDate] = useState(artikel_peserta.tanggal_publish ? new Date(artikel_peserta.tanggal_publish) : null);
   const [disablePublishDate, setDisablePublishDate] = useState(artikel_peserta.publish === 0 ? true : false)
   const [_method, setMethod] = useState("put");

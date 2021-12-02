@@ -196,7 +196,7 @@ const Table = ({ token }) => {
         ""
       )}
       <div>
-        <div className="row pl-0 ml-n7 pr-3">
+        <div className="row pl-0 ml-sm-n7 pr-0 pr-sm-3">
           {/* card Kerjasama Aktif */}
           <div className="col-12 col-md-6 col-lg-6 col-xl-4">
             <CardPage
@@ -259,14 +259,18 @@ const Table = ({ token }) => {
                 }}
                 passHref
               >
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
+                <a 
+                  className="btn btn-rounded-full bg-blue-primary text-white text-truncate"
+                >
                   <IconAdd className="mr-3" width="18" height="16" />
                   Tambah kerjasama
                 </a>
               </Link>
             ) : (
               <Link href="/partnership/user/kerjasama/submit-kerjasama" passHref>
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
+                <a 
+                  className="btn btn-rounded-full bg-blue-primary text-white text-truncate"
+                >
                   <IconAdd className="mr-3" width="18" height="16" />
                   Tambah kerjasama
                 </a>
@@ -693,7 +697,7 @@ const Table = ({ token }) => {
                 )}
               </div>
               <div className="row">
-                <div className="table-pagination col-12 col-md-8">
+                <div className="table-pagination col-12 col-md-8 overflow-auto">
                   <Pagination
                     activePage={allCooperationUser.page}
                     itemsCountPerPage={allCooperationUser?.cooperationMitra?.data?.perPage}

@@ -254,7 +254,9 @@ const ListSubstansi = ({ token }) => {
                   </a>
                 </Link>
                 <Link href="/subvit/substansi/tambah-step-1">
-                  <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
+                  <a
+                    className={`${styles.btnAdd} btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2`}
+                  >
                     <i className="ri-add-fill"></i>
                     Tambah Test Subtansi
                   </a>
@@ -491,26 +493,48 @@ const ListSubstansi = ({ token }) => {
               <div className={`${styles.rowPagination} row`}>
                 {subtance && subtance.perPage < subtance.total && (
                   // <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <div
-                    className={`${stylesPag.pagination} table-pagination pagination-custom col-12 col-md-6`}
-                  >
-                    <Pagination
-                      activePage={page}
-                      itemsCountPerPage={subtance.perPage}
-                      totalItemsCount={subtance.total}
-                      pageRangeDisplayed={3}
-                      onChange={handlePagination}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
+                  <>
+                    {/* KONDISI KETIKA FOLD */}
+                    <div
+                      className={`${stylesPag.paginationFold} table-pagination pagination-custom col-12 col-md-6`}
+                    >
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={subtance.perPage}
+                        totalItemsCount={subtance.total}
+                        pageRangeDisplayed={2}
+                        onChange={handlePagination}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
+                    <div
+                      className={`${stylesPag.pagination} table-pagination pagination-custom col-12 col-md-6`}
+                    >
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={subtance.perPage}
+                        totalItemsCount={subtance.total}
+                        pageRangeDisplayed={3}
+                        onChange={handlePagination}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
+                  </>
                 )}
                 {subtance && subtance.total > 5 ? (
-                  <div className={`${stylesPag.rightPag} table-total ml-auto`}>
+                  <div
+                    className={`${stylesPag.rightPag} table-total ml-auto mt-3`}
+                  >
                     <div className="row">
                       <div className="col-4 mr-0">
                         <select
@@ -559,7 +583,7 @@ const ListSubstansi = ({ token }) => {
                       </div>
                       <div className="col-8 my-auto">
                         <p
-                          className="align-middle mt-3"
+                          className={`${stylesPag.textTotal} align-middle mt-3`}
                           style={{ color: "#B5B5C3" }}
                         >
                           Total Data {subtance.total} List Data

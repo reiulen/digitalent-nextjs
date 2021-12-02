@@ -27,11 +27,13 @@ const EditArtikelPeserta = ({ session }) => {
   const allAkademi = useSelector((state) => state.allAkademi);
   const allKategori = useSelector((state) => state.allKategori);
 
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+
   const [, forceUpdate] = useState();
 
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
@@ -206,8 +208,17 @@ const EditArtikelPeserta = ({ session }) => {
                     onChange={(e) => {
                       setJudul(e.target.value);
                     }}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("judul")
+                    }
                     required
                   />
+                  {simpleValidator.current.message(
+                    "judul",
+                    judul,
+                    "required|max:200",
+                    { className: "text-danger" }
+                  )}
                 </div>
               </div>
 
@@ -307,7 +318,7 @@ const EditArtikelPeserta = ({ session }) => {
                 >
                   <TagsInput
                     name="fruits"
-                    placeHolder="Isi Tag disini"
+                    placeHolder="Isi Tag disini dan Enter"
                     seprators={["Enter", "Tab"]}
                     value={tag}
                     onExisting={(data) => {
