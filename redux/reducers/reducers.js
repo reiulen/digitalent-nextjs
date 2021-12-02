@@ -97,7 +97,7 @@ import {
 } from "./publikasi/dashboard-publikasi.reducers";
 
 import { allRolePermissionReducer } from "./publikasi/role-permissions.reducers";
-
+import { sertifikatPesertaReducer } from "./pelatihan/peserta/sertifikat.reducer";
 // Subvit
 // ============== substansi ===============
 import {
@@ -151,6 +151,7 @@ import {
   updateSurveyQuestionDetailReducer,
   importFileSurveyQuestionDetailReducer,
   importImagesSurveyQuestionDetailReducer,
+  postResultSurveyReducer,
 } from "./subvit/survey-question-detail.reducers";
 // ============== survey ===============
 
@@ -173,6 +174,7 @@ import {
   updateTriviaQuestionDetailReducer,
   importFileTriviaQuestionDetailReducer,
   importImagesTriviaQuestionDetailReducer,
+  postResultTriviaReducer,
 } from "./subvit/trivia-question-detail.reducers";
 // ============== trivia ===============
 
@@ -666,6 +668,7 @@ const reducer = combineReducers({
 
   // =============== survey ==================
   allSurveyQuestionBanks: allSurveyQuestionBanksReducer,
+  postResultSurveySubvit: postResultSurveyReducer,
   newSurveyQuestionBanks: newSurveyQuestionBanksReducer,
   deleteSurveyQuestionBanks: deleteSurveyQuestionBanksReducer,
   detailSurveyQuestionBanks: detailSurveyQuestionBanksReducer,
@@ -684,6 +687,7 @@ const reducer = combineReducers({
 
   // =============== trivia ==================
   randomTrivia: randomTriviaReducer,
+  postResultTriviaSubvit: postResultTriviaReducer,
   allTriviaQuestionBanks: allTriviaQuestionBanksReducer,
   newTriviaQuestionBanks: newTriviaQuestionBanksReducer,
   deleteTriviaQuestionBanks: deleteTriviaQuestionBanksReducer,
@@ -1000,6 +1004,7 @@ const reducer = combineReducers({
 
   // TTE P12
   TTEP12Data: TTEP12DataReducer,
+  sertifikatPeserta: sertifikatPesertaReducer,
 });
 
 export default reducer;

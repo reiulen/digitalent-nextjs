@@ -17,7 +17,7 @@ import {
 import axios from "axios";
 
 export const getAllRiwayatPelatihanPeserta =
-  token => async (dispatch, getState) => {
+  (token) => async (dispatch, getState) => {
     try {
       dispatch({ type: RIWAYAT_PELATIHAN_REQUEST });
       let link =
@@ -61,42 +61,42 @@ export const getAllRiwayatPelatihanPeserta =
     }
   };
 
-export const setValuePeserta = text => {
+export const setValuePeserta = (text) => {
   return {
     type: SET_PESERTA_VALUE,
     text,
   };
 };
 
-export const searchKeyword = text => {
+export const searchKeyword = (text) => {
   return {
     type: SET_KEYWORD_VALUE,
     text,
   };
 };
 
-export const setValuePage = text => {
+export const setValuePage = (text) => {
   return {
     type: SET_PAGE_VALUE,
     text,
   };
 };
 
-export const setValueLimit = text => {
+export const setValueLimit = (text) => {
   return {
     type: SET_LIMIT_VALUE,
     text,
   };
 };
 
-export const setPelatihanBerjalanValue = text => {
+export const setPelatihanBerjalanValue = (text) => {
   return {
     type: SET_PELATIHAN_BERJALAN_VALUE,
     text,
   };
 };
 
-export const setPelatihanSelesaiValue = text => {
+export const setPelatihanSelesaiValue = (text) => {
   return {
     type: SET_PELATIHAN_SELESAI_VALUE,
     text,
@@ -126,6 +126,7 @@ export const getDetailRiwayatPelatihan =
       if (data) {
         dispatch({ type: RIWAYAT_PELATIHAN_DETAIL_SUCCESS, payload: data });
       }
+      return data;
     } catch (error) {
       dispatch({
         type: RIWAYAT_PELATIHAN_DETAIL_FAIL,

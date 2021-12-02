@@ -25,6 +25,9 @@ import {
   IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_SUCCESS,
   IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_FAIL,
   CLEAR_ERRORS,
+  POST_RESULT_TRIVIA_REQUEST,
+  POST_RESULT_TRIVIA_SUCCESS,
+  POST_RESULT_TRIVIA_FAIL,
 } from "../../types/subvit/trivia-question-detail.type";
 
 import axios from "axios";
@@ -92,6 +95,36 @@ export const getRandomTriviaQuestionDetail =
       });
     }
   };
+
+export const postResultTrivia = (resultData, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: POST_RESULT_TRIVIA_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_SUBVIT + "api/trivia-question-banks/result",
+      resultData,
+      config
+    );
+
+    dispatch({
+      type: POST_RESULT_TRIVIA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_RESULT_TRIVIA_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const newTriviaQuestionDetail =
   (triviaDetailData, token) => async (dispatch) => {

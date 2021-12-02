@@ -11,11 +11,13 @@ module.exports = {
       "dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com", //sementara
       "dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
       "simonas-dev.majapahit.id",
+      "dts-simonas.s3.ap-southeast-1.amazonaws.com",
     ],
   },
   env: {
     NEXTAUTH_URL: "http://dts-dev.majapahit.id",
-    LOGO_DTS: "http://api-dts-dev.majapahit.id/pelatihan/storage/images/logo-dts.png",
+    LOGO_DTS:
+      "http://api-dts-dev.majapahit.id/pelatihan/storage/images/logo-dts.png",
     // PATH_URL: "http://dts-dev.majapahit.id",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
