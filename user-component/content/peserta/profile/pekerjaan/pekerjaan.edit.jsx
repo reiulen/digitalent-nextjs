@@ -86,13 +86,13 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
 
     if (success) {
-      SweatAlert("Berhasil", "Berhasil Update Data", "success");
-      dispatch({ type: UPDATE_PEKERJAAN_RESET });
       if (wizzard) {
         router.push("/peserta");
       } else {
         funcViewEdit(false);
       }
+      SweatAlert("Berhasil", "Berhasil Update Data", "success");
+      dispatch({ type: UPDATE_PEKERJAAN_RESET });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
@@ -140,8 +140,6 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
       }
       window.scrollTo(0, 0);
       dispatch(updateProfilePekerjaan(data, token));
-
-      // check deploy today
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

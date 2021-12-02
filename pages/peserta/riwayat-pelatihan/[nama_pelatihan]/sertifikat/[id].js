@@ -9,6 +9,7 @@ import { middlewareAuthPesertaSession } from "../../../../../utils/middleware/au
 import { getDetailRiwayatPelatihan } from "../../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 import { getAllAkademi } from "../../../../../redux/actions/beranda/beranda.actions";
 import { getDashboardPeserta } from "../../../../../redux/actions/pelatihan/dashboard-peserta.actions";
+import { getSertifikatPeserta } from "../../../../../redux/actions/pelatihan/sertifikat.action";
 
 const SertifikatPeserta = dynamic(
   () =>
@@ -49,9 +50,9 @@ export default function RiwayatPelatihanPage(props) {
     <>
       <Layout title="Administrasi" session={session}>
         {!props.success ? (
-          <SertifikatPeserta session={session} />
-        ) : (
           <BelumTersedia />
+        ) : (
+          <SertifikatPeserta session={session} />
         )}
       </Layout>
     </>
@@ -75,58 +76,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      // if (req.cookies.id_pelatihan) {
-      //   await store.dispatch(
-      //     getDetailRiwayatPelatihan(
-      //       req.cookies.id_pelatihan,
-      //       session.user.user.data.user.token
-      //     )
-      //   );
-      //   success = true;
-      // } else {
-      //   const { data } = await store.dispatch(
-      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-      //   );
-      //   if (data) {
-      //     const test_substansi = data.list.filter(
-      //       (item) => item.status == "tes substansi"
-      //     );
-      //     if (test_substansi.length > 0) {
-      //       await store.dispatch(
-      //         getDetailRiwayatPelatihan(
-      //           test_substansi[0].id,
-      //           session.user.user.data.user.token
-      //         )
-      //       );
-      //       success = true;
-      //     } else {
-      //       success = false;
-      //     }
-      //   } else {
-      //     success = false;
-      //   }
-      // }
-      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
-      await store.dispatch(getAllAkademi());
-
-      const { data } = await store.dispatch(
-        getDashboardPeserta(session?.user.user.data.user.token)
-      );
-      const status = data.pelatihan.pelatihan_selesi.status || "";
-      if (!status || status == "") {
+      if (!query.id) {
         success = false;
-      } else if (
-        !status.includes("substansi" || "belum tersedia" || "belum mengerjakan")
-      ) {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            data.pelatihan.pelatihan_selesi.id,
-            session.user.user.data.user.token
-          )
-        );
-        success = true;
       } else {
-        success = false;
+        const data = await store.dispatch(
+          getSertifikatPeserta(session.user.user.data.user.token, query.id)
+        );
+        if (data.data) {
+          success = true;
+        } else {
+          success = false;
+        }
       }
 
       return {

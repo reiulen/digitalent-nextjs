@@ -3,15 +3,9 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux';
 import Image from "next/image";
 import moment from "moment";
-import IconFilter from "../../../assets/icon/Filter";
 import imageLogo from "../../../../public/assets/media/logo-default.png"
 
 import { Container } from "react-bootstrap"
-import SubHeaderComponent from "../../../../components/templates/subheader.component"
-
-import PreviewWrapper from "../../../wrapper/preview.wrapper";
-import Backdrop from "../../../../public/assets/media/backdrop.svg";
-import styles from "../../../../styles/preview.module.css";
 
 const Preview = () => {
 

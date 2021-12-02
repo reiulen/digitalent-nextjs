@@ -97,7 +97,7 @@ import {
 } from "./publikasi/dashboard-publikasi.reducers";
 
 import { allRolePermissionReducer } from "./publikasi/role-permissions.reducers";
-
+import { sertifikatPesertaReducer } from "./pelatihan/peserta/sertifikat.reducer";
 // Subvit
 // ============== substansi ===============
 import {
@@ -1004,6 +1004,7 @@ const reducer = combineReducers({
 
   // TTE P12
   TTEP12Data: TTEP12DataReducer,
+  sertifikatPeserta: sertifikatPesertaReducer,
 });
 
 export default reducer;
