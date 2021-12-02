@@ -251,13 +251,15 @@ const ListTraining = ({ token }) => {
 
     if (revisi && revisi.length !== 0) {
       let notes = [];
+      let revisiLength = revisi.length + 1;
       revisi &&
         revisi.length !== 0 &&
         revisi.map((row, i) => {
-          notes.push(row.revisi);
+          revisiLength--;
+          notes.push(revisiLength + "." + " " + row.revisi);
         });
 
-      setNote(notes.join("\n"));
+      setNote(notes.join("\n \n"));
     }
   }, [
     isDeleted,
@@ -974,7 +976,8 @@ const ListTraining = ({ token }) => {
                                   <div className="d-flex flex-row">
                                     {!(
                                       row.status_pelatihan === "pelatihan" ||
-                                      row.status_substansi === "ditolak"
+                                      row.status_substansi === "ditolak" ||
+                                      row.status_pelatihan === "selesai"
                                     ) && (
                                       <Link
                                         href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}

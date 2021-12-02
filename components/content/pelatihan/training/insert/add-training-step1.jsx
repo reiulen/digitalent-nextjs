@@ -627,6 +627,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
                   onChange={onLogoHandler}
+                  name="logo-reference"
                 />
                 <label className="custom-file-label" htmlFor="customFile">
                   {logoName}

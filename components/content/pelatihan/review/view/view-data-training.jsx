@@ -25,6 +25,7 @@ const ViewReviewTraining = ({ token }) => {
   const dispatch = useDispatch();
 
   const [note, setNote] = useState("");
+  const [noteSend, setNoteSend] = useState("");
 
   const { id } = router.query;
   const { error: errorRevisi, revisi } = useSelector(
@@ -140,20 +141,22 @@ const ViewReviewTraining = ({ token }) => {
 
   const setRevision = useCallback(() => {
     let notes = [];
+    let revisiLength = revisi.length + 1;
     revisi &&
       revisi.length !== 0 &&
       revisi.map((row, i) => {
-        notes.push(row.revisi);
+        revisiLength--;
+        notes.push(revisiLength + "." + " " + row.revisi);
       });
 
-    setNote(notes.join("\n"));
+    setNote(notes.join("\n \n"));
   }, [revisi]);
 
   const handleRevisi = () => {
     setShowModal(false);
     const data = {
       pelatian_id: parseInt(id),
-      revisi: note,
+      revisi: noteSend,
     };
     dispatch(revisiReviewPelatihan(data, token));
   };
@@ -483,10 +486,12 @@ const ViewReviewTraining = ({ token }) => {
             <textarea
               rows="5"
               className="form-control"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
+              value={noteSend}
+              placeholder={note}
+              onChange={(e) => setNoteSend(e.target.value)}
+              maxLength={200}
             ></textarea>
-            {revisi.length > 1 && (
+            {revisi.length > 0 && (
               <p className="text-danger fz-12">
                 *Sebagai history, tambahkan catatan revisi <br /> dibawah
                 catatan sebelumnya.
