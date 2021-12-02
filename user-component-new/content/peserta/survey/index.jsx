@@ -7,13 +7,11 @@ import styles from "./survey.module.css";
 
 const TestSubstansi = () => {
   const router = useRouter();
+  const temaId = Cookies.get("id_tema");
+  const pelatihanId = Cookies.get("id_pelatihan");
 
   const handlePage = () => {
-    router.push(
-      `/peserta/subvit/survey/1?theme_id=${
-        router.query.theme_id || 1
-      }&training_id=${router.query.training_id || 1}`
-    );
+    router.push(`/peserta/subvit/survey/1?theme_id=73&training_id=204`);
   };
 
   const [show, setShow] = useState(false);
