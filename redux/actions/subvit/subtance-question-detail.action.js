@@ -342,6 +342,8 @@ export const importImagesSubtanceQuestionDetail =
         config
       );
 
+      // console.log(data);
+
       dispatch({
         type: IMPORT_IMAGES_SUBTANCE_QUESTION_DETAIL_SUCCESS,
         payload: data,
