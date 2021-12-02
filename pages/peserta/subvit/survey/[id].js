@@ -50,7 +50,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getRandomSurveyQuestionDetail(
           query.training_id,
           query.theme_id,
-          query.category,
           session.user.user.data.token
         )
       );

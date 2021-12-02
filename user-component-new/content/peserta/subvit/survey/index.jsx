@@ -141,7 +141,7 @@ const SubtansiUser = ({ token }) => {
   const [multipleAnswer, setMultipleAnswer] = useState(multi);
   const [indexSoal, setIndexSoal] = useState(0);
 
-  const [count, setCount] = useState(data && data.time_left);
+  const [count, setCount] = useState(random_survey && random_survey.time_left);
   const [modalDone, setModalDone] = useState(false);
 
   const [hour, setHour] = useState(0);
