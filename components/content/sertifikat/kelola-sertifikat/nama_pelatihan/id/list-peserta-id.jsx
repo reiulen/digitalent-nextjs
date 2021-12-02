@@ -9,6 +9,7 @@ import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { toPng } from "html-to-image";
 import moment from "moment";
+import axios from "axios";
 // #Icon
 
 export default function ListPesertaID({ token }) {
@@ -51,11 +52,15 @@ export default function ListPesertaID({ token }) {
   const handleDownload = async () => {
     const data = await convertDivToPng(divReference.current);
     if (data) {
-      const link = document.createElement("a");
-      link.download = `Sertifikat - ${query.name}.png`;
-      link.href = data;
-      link.click();
+      // const link = document.createElement("a");
+      // link.download = `Sertifikat - ${query.name}.png`;
+      // link.href = data;
+      // link.click();
+      const link = `http://192.168.11.38:8000/api/tte-p12/sign-pdf/${certificate.data.certificate.training_id}`;
+      const result = await axios.post(link, test);
+      // console.log(result, "ini");
     }
+
     if (type == "2 lembar") {
       const image = document.getElementById("image2").getAttribute("src");
       const link = document.createElement("a");

@@ -48,8 +48,6 @@ export default function EditTTEP12({ setUbah, data, token }) {
     formData.append("position", position);
     formData.append("p12", fileUpload);
 
-    const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/store`;
-
     try {
       const data = await axios.post(link, formData);
       if (data.status == 200) {
@@ -128,6 +126,7 @@ export default function EditTTEP12({ setUbah, data, token }) {
                       className="custom-file-input"
                       name="question_image"
                       onChange={onChangeFile}
+                      accept=".p12"
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("file")
                       }
