@@ -109,7 +109,20 @@ const DetailSummary = ({ token }) => {
     setShowModal(false);
   };
 
-  const handleExportReport = async () => {};
+  const handleExportReport = async (type) => {
+    let link =
+      process.env.END_POINT_API_PELATIHAN +
+      `api/v1/formPendaftaran/list-detail-rekap-pendaftaran-export?pelatian_id=${id}&type=${type}`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios.get(link, config);
+    // window.location.href = link;
+  };
 
   const handleSecondsToTime = (secs) => {
     let hours = Math.floor(secs / (60 * 60));
@@ -362,7 +375,7 @@ const DetailSummary = ({ token }) => {
                     }}
                   >
                     <a
-                      className="btn w-100 btn-rounded-full bg-success text-white mt-2 d-flex justify-content-center flex-wrap"
+                      className="btn w-100 btn-rounded-full bg-success text-white mt-2 d-flex justify-content-center"
                       style={{ width: "max-content" }}
                     >
                       <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
@@ -371,7 +384,7 @@ const DetailSummary = ({ token }) => {
                   </Link>
                 </div>
                 <div className="col-md-2 mt-3">
-                  <div className="position-relative ml-2 d-flex flex-wrap">
+                  {/* <div className="position-relative ml-2 d-flex flex-wrap">
                     <i className="ri-arrow-down-s-line right-center-absolute mr-md-13 mr-20 text-white mt-1"></i>
                     <select
                       className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
@@ -383,6 +396,35 @@ const DetailSummary = ({ token }) => {
                       <option value="LMS">LMS</option>
                       <option value="CSV">CSV</option>
                     </select>
+                  </div> */}
+                  <div class="dropdown">
+                    <button
+                      class="btn w-100 btn-rounded-full bg-blue-secondary text-white dropdown-toggle d-flex justify-content-center"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Export
+                    </button>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <a
+                        class="dropdown-item"
+                        onClick={() => handleExportReport("xlsx")}
+                      >
+                        LMS
+                      </a>
+                      <a
+                        class="dropdown-item"
+                        onClick={() => handleExportReport("csv")}
+                      >
+                        CSV
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

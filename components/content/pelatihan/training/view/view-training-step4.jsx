@@ -82,21 +82,27 @@ const ViewTrainingStep4 = () => {
             <h3 className="font-weight-bolder pb-5 pt-4">Parameter</h3>
             <div className="row">
               <div className="col-md-6">
-                <p className="text-neutral-body">Test Substansi</p>
+                <p className="text-neutral-body mb-2 fz-14">Test Substansi</p>
                 <p
                   className={
-                    substansi.value.includes("Telah") ? "text-success" : ""
+                    substansi.value.includes("Telah")
+                      ? "text-success fz-16"
+                      : "fz-16"
                   }
+                  style={{ color: "#1f1f1f" }}
                 >
                   {substansi.value}
                 </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Tanggal</p>
+                <p className="text-neutral-body mb-2 fz-14">Tanggal</p>
                 <p
                   className={
-                    substansi.value.includes("Telah") ? "text-success" : ""
+                    substansi.value.includes("Telah")
+                      ? "text-success fz-16"
+                      : "fz-16"
                   }
+                  style={{ color: "#1f1f1f" }}
                 >
                   {substansi.date}
                 </p>
@@ -105,21 +111,27 @@ const ViewTrainingStep4 = () => {
 
             <div className="row">
               <div className="col-md-6">
-                <p className="text-neutral-body">Mid Test</p>
+                <p className="text-neutral-body mb-2 fz-14">Mid Test</p>
                 <p
                   className={
-                    midTest.value.includes("Telah") ? "text-success" : ""
+                    midTest.value.includes("Telah")
+                      ? "text-success fz-16"
+                      : "fz-16"
                   }
+                  style={{ color: "#1f1f1f" }}
                 >
                   {midTest.value}
                 </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Tanggal</p>
+                <p className="text-neutral-body mb-2 fz-14">Tanggal</p>
                 <p
                   className={
-                    midTest.value.includes("Telah") ? "text-success" : ""
+                    midTest.value.includes("Telah")
+                      ? "text-success fz-16"
+                      : "fz-16"
                   }
+                  style={{ color: "#1f1f1f" }}
                 >
                   {midTest.date}
                 </p>
@@ -128,21 +140,27 @@ const ViewTrainingStep4 = () => {
 
             <div className="row">
               <div className="col-md-6">
-                <p className="text-neutral-body">Survey</p>
+                <p className="text-neutral-body mb-2 fz-14">Survey</p>
                 <p
                   className={
-                    survey.value.includes("Telah") ? "text-success" : ""
+                    survey.value.includes("Telah")
+                      ? "text-success fz-16"
+                      : "fz-16"
                   }
+                  style={{ color: "#1f1f1f" }}
                 >
                   {survey.value}
                 </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Tanggal</p>
+                <p className="text-neutral-body mb-2 fz-14">Tanggal</p>
                 <p
                   className={
-                    survey.value.includes("Telah") ? "text-success" : ""
+                    survey.value.includes("Telah")
+                      ? "text-success fz-16"
+                      : "fz-16"
                   }
+                  style={{ color: "#1f1f1f" }}
                 >
                   {survey.date}
                 </p>
@@ -151,21 +169,27 @@ const ViewTrainingStep4 = () => {
 
             <div className="row">
               <div className="col-md-6">
-                <p className="text-neutral-body">Sertifikat</p>
+                <p className="text-neutral-body mb-2 fz-14">Sertifikat</p>
                 <p
                   className={
-                    sertifikat.value.includes("Telah") ? "text-success" : ""
+                    sertifikat.value.includes("Telah")
+                      ? "text-success fz-16"
+                      : "fz-16"
                   }
+                  style={{ color: "#1f1f1f" }}
                 >
                   {sertifikat.value}
                 </p>
               </div>
               <div className="col-md-6">
-                <p className="text-neutral-body">Tanggal</p>
+                <p className="text-neutral-body mb-2 fz-14">Tanggal</p>
                 <p
                   className={
-                    sertifikat.value.includes("Telah") ? "text-success" : ""
+                    sertifikat.value.includes("Telah")
+                      ? "text-success fz-16"
+                      : "fz-16"
                   }
+                  style={{ color: "#1f1f1f" }}
                 >
                   {sertifikat.date}
                 </p>

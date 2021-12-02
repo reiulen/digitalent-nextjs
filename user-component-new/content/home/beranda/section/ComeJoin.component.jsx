@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { helperDigitsCount } from "../../../../../utils/middleware/helper";
 
-export default function ComeJoin() {
+export default function ComeJoin({ session }) {
   const { peserta, loading, error } = useSelector(
     (state) => state.berandaFooterPeserta
   );
@@ -31,14 +31,16 @@ export default function ComeJoin() {
             <h1 className="fw-600" style={{ color: "#6C6C6C" }}>
               Ayo Bergabung, Jadi Jagoan Digital!
             </h1>
-            <Link href="/register">
-              <a>
-                <button className="btn btn-beranda-primary mt-5 mb-10 sm-mb-0 fw-500 rounded-pill">
-                  {/* <IconRegister className="mr-2" /> */}
-                  Daftar Sekarang!
-                </button>
-              </a>
-            </Link>
+            {!session && (
+              <Link href="/register">
+                <a>
+                  <button className="btn btn-beranda-primary mt-5 mb-10 sm-mb-0 fw-500 rounded-pill">
+                    {/* <IconRegister className="mr-2" /> */}
+                    Daftar Sekarang!
+                  </button>
+                </a>
+              </Link>
+            )}
           </div>
         </Col>
         <Col md={12} lg={8}>
