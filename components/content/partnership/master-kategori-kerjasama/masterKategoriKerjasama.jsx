@@ -97,8 +97,8 @@ const Table = ({ token }) => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0 mt-10 ml-sm-n5 ml-n5">
-            <div className="col-12 col-xl-6">
+          <div className="card-header border-0 mt-7 ml-sm-n5 ml-n5">
+            <div className="col-12 col-xl-6 mt-2">
               <h3
                 className="card-title font-weight-bolder text-dark titles-1"
               >
@@ -114,9 +114,7 @@ const Table = ({ token }) => {
                       <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
                         <a className="btn btn-rounded-full bg-blue-primary text-white w-75 w-md-100">
                           <IconAdd className="mr-3" width="14" height="14" />
-                          <div 
-                            className="text-truncate d-block"
-                          >
+                          <div className="d-inline-block text-truncate mr-n8 mr-sm-0">
                             Tambah Kategori Kerjasama
                           </div>
                         </a>
