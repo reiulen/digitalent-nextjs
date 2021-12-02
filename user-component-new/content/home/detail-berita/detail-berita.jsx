@@ -120,7 +120,7 @@ const DetailBerita = () => {
                             </span>
                         </div>
 
-                        <div className="mt-5 d-flex flex-row align-items-center justify-content-between col-11 col-md-12">
+                        <div className="mt-5 d-flex flex-row align-items-center justify-content-between col-12 col-md-12">
                             <div className="row">
                                 <div className="">
                                     {/* Insert Logo Image Here */}
@@ -152,7 +152,6 @@ const DetailBerita = () => {
                                         <i className="ri-share-line px-0 py-1"></i>
                                     </button>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -192,7 +191,7 @@ const DetailBerita = () => {
 
                             {/* Berita */}
                             <div className="border rounded-lg mb-5 mt-15">
-                                <div className="row my-5 mx-5 text-justify">
+                                <div className="row my-5 mx-5 text-justify" style={{width: '95%',wordBreak:'break-word'}}>
                                     {
                                         resultText ?
                                             <div dangerouslySetInnerHTML={{__html: resultText}}></div>
@@ -202,7 +201,7 @@ const DetailBerita = () => {
                                 </div>
 
                                 <div className="row m-3 d-flex justify-content-between pb-5">
-                                    <div className="row d-flex justify-content-between ml-1">
+                                    <div className="row d-flex justify-content-evenly ml-1">
                                         {
                                             detail && detail.tag && detail.tag.length !== 0 ?
                                                 detail.tag.map ((el, i) => {
