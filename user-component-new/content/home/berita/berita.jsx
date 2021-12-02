@@ -14,6 +14,7 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { getAllBerandaBerita } from "../../../../redux/actions/beranda/berita.actions"
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
+import { route } from "next/dist/server/router";
 
 const Berita = () => {
     const dispatch = useDispatch();
@@ -71,6 +72,12 @@ const Berita = () => {
         handleTagEachCard()
         handleKategoriToShow()
     }, [])
+
+    useEffect(() => {
+        if (router.query.tag){
+            handleFilterTag(router.query.tag)
+        }
+    }, [router.query.tag])
 
     // Handle Empty Tag
     const handleEmptyTag = (tags) => {
@@ -386,7 +393,7 @@ const Berita = () => {
                                                     },
                                             }
                                         }}
-                                        className="px-20 mr-n5 mr-sm-1"
+                                        className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
                                     >
                                         {
                                             kategoriBerita === "" ?
