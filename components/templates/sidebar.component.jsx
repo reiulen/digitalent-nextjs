@@ -91,7 +91,7 @@ const Sidebar = ({ session }) => {
           ) {
             if (splitRouteToMakingActive[1] !== "dashboard") {
               const idSubmenuActive = localStorage.getItem("submenuActive");
-              // menu[index].child[idSubmenuActive].selected = true;
+              menu[index].child[idSubmenuActive].selected = true;
             }
           }
         }
@@ -130,7 +130,7 @@ const Sidebar = ({ session }) => {
           menu[i].selected = !condition;
           if (menu[i].name.toLowerCase() === splitRouteToMakingActive[1]) {
             const idSubmenuActive = localStorage.getItem("submenuActive");
-            // menu[i].child[idSubmenuActive].selected = true;
+            menu[i].child[idSubmenuActive].selected = true;
           }
         }
       }

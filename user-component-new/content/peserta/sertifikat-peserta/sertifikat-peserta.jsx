@@ -1,100 +1,57 @@
-import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-// #Page, Component & Library
-
-import Image from "next/image";
+import React, { useState, useEffect, Fragment } from "react";
+import { Card, Col, Row, Badge, Button, Modal } from "react-bootstrap";
+import style from "./sertifikat.module.css";
 import { useSelector } from "react-redux";
-import PageWrapper from "../../../../../wrapper/page.wrapper";
-import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { toPng } from "html-to-image";
-import moment from "moment";
-// #Icon
+// import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import axios from "axios";
+import Swal from "sweetalert2";
+import Link from "next/link";
+import Image from "next/image";
 
-export default function ListPesertaID({ token }) {
-  const router = useRouter();
-  const { query } = router;
-
-  const { error, certificate } = useSelector(
-    (state) => state.publishCertificate
-  );
-  const { participant } = useSelector((state) => state.detailParticipant);
-
-  const [type, setType] = useState(
-    certificate?.data?.certificate?.certificate_type
-  );
-  const [currentUser, setCurrentUser] = useState([]);
-
-  useEffect(() => {
-    const data = participant?.data?.list?.filter((el) => el.user == query.name);
-    setCurrentUser(data);
-  }, [participant, query.name]);
-
-  const handleResetError = () => {
-    if (error) {
-      dispatch(clearErrors());
-    }
-  };
-  const divReference = useRef(null);
-  const divReferenceSyllabus = useRef(null);
-
-  const convertDivToPng = async (div) => {
-    const data = await toPng(div, {
-      cacheBust: true,
-      canvasWidth: 842,
-      canvasHeight: 595,
-      backgroundColor: "white",
-    });
-    return data;
+export default function RiwayatPelatihanDetail(props) {
+  const query = {
+    tema: "test",
+    name: "sandikha galih",
   };
 
-  const handleDownload = async () => {
-    const data = await convertDivToPng(divReference.current);
-    if (data) {
-      const link = document.createElement("a");
-      link.download = `Sertifikat - ${query.name}.png`;
-      link.href = data;
-      link.click();
-    }
-    if (type == "2 lembar") {
-      const image = document.getElementById("image2").getAttribute("src");
-      const link = document.createElement("a");
-      link.href = image;
-      link.download = "tes 123";
-      link.click();
-    }
+  const divReference = null;
+
+  const participant = {
+    data: {
+      tahun: "2010",
+    },
+  };
+
+  const type = "1 lembar";
+
+  const certificate = {
+    data: {
+      certificate: {
+        id: 1,
+        academy_id: 41,
+        theme_id: 45,
+        training_id: 106,
+        name: "64ew",
+        certificate_type: "1 lembar",
+        number_of_signatures: 1,
+        background: "2b3aa540-b1ab-409b-9ffc-28e5cc87665b.jpeg",
+        certificate_result: "7c5d6507-ec10-43f3-aceb-41e1c6e21027.png",
+        number_of_signature_syllabus: 1,
+        background_syllabus: null,
+        certificate_result_syllabus: null,
+        syllabus: null,
+        status_migrate_id: 1,
+        created_by_id: 12,
+        created_at: "2021-11-26T08:48:29.000000Z",
+        updated_at: "2021-11-27T05:49:47.000000Z",
+        certificate_pdf: "78da402e-3bc6-41cb-8e2d-86bd9c955b87.pdf",
+      },
+    },
   };
 
   return (
-    <PageWrapper>
-      {/* error START */}
-      {error ? (
-        <div
-          className="alert alert-custom alert-light-danger fade show mb-5"
-          role="alert"
-        >
-          <div className="alert-icon">
-            <i className="flaticon-warning"></i>
-          </div>
-          <div className="alert-text">{error}</div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={handleResetError}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-      {/* error END */}
+    <PesertaWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           {/* START HEADER */}
@@ -135,35 +92,37 @@ export default function ListPesertaID({ token }) {
                   <div
                     className={`position-absolute ${
                       certificate?.data?.certificate.background
-                        ? "responsive-date-from"
+                        ? `${style.responsive_date_from}`
                         : "responsive-date-from-without-background"
                     } font-weight-boldest zindex-1 responsive-date-text`}
                   >
                     {moment(participant?.data?.pelatihan_mulai).format(
-                      "DD MMMM"
+                      "DD/MM/YY"
                     )}{" "}
                     -{" "}
                     {moment(participant?.data?.pelatihan_selesai).format(
-                      "DD MMMM YYYY"
+                      "DD/MM/YY"
                     )}
                   </div>
                   <div
                     className={`position-absolute ${
                       certificate?.data?.certificate?.background
-                        ? "responsive-year"
-                        : "responsive-year-without-background"
+                        ? `${style.responsive_year}`
+                        : `${style.responsive_year_without_background}`
                     } font-weight-boldest zindex-1 responsive-date-text`}
                   >
-                    {participant.data.tahun}
+                    {participant?.data?.tahun}
                   </div>
                   <div
                     className={`position-absolute w-100 text-center ${
                       certificate?.data?.certificate?.background
-                        ? "responsive-margin-peserta-1"
-                        : "responsive-margin-without-background"
+                        ? `${style.responsive_margin_peserta_1}`
+                        : `${style.responsive_margin_without_background}`
                     } zindex-1`}
                   >
-                    <span className="responsive-font-size-peserta font-weight-bolder">
+                    <span
+                      className={`${style.responsive_font_size_peserta} font-weight-bolder`}
+                    >
                       {query.name}
                     </span>
                   </div>
@@ -237,6 +196,6 @@ export default function ListPesertaID({ token }) {
           <div></div>
         )}
       </div>
-    </PageWrapper>
+    </PesertaWrapper>
   );
 }

@@ -13,40 +13,41 @@ export default function Footer() {
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
   const [secondary, setSecondary] = useState("1");
-  const [warna, setWarna] = useState("primary");
+  const [warna, setWarna] = useState("secondary");
 
   useEffect(() => {
     dispatch(getBerandaFooter());
   }, [dispatch]);
 
-  useEffect(() => {
-    async function getDataGeneral(token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (data) {
-          setSecondary(data.data.color[1].color);
+  const getDataGeneral = async (token) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        Swal.fire("Oops !", `${error.response.data.message}`, "error");
+      );
+
+      if (data) {
+        localStorage.setItem("footer", data.data.color[1].color);
       }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem("footer")) {
+      getDataGeneral();
     }
-    getDataGeneral();
-    if (secondary === "1") {
+    if (localStorage.getItem("footer") === "1") {
       setWarna("primary");
-    } else if (secondary === "2") {
+    } else if (localStorage.getItem("footer") === "2") {
       setWarna("secondary");
-    } else if (secondary === "3") {
+    } else if (localStorage.getItem("footer") === "3") {
       setWarna("extras");
     }
-  }, [secondary]);
+  }, []);
 
   return (
     <div className={`color-secondary-${warna}`}>

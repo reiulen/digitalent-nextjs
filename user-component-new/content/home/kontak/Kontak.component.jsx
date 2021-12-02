@@ -21,19 +21,16 @@ export default function Kontak() {
         <div className="my-10 w-100">
           <Card className="rounded-xl">
             <Row>
-              <Col
-                lg={6}
-                className="d-flex align-items-center px-15 px-md-20 py-lg-0 py-md-20 py-10"
-              >
-                <div className="max-w-180px max-w-sm-100 pr-10 pr-md-0">
+              <Col lg={6}>
+                <div className="p-15">
                   <p className="fw-600 fz-20">Alamat</p>
-                  <div className="fz-16">
-                    <div>Kementrian Komunikasi dan Informatika RI</div>
-                    <div>Jl. Medan Merdeka Barat No. 9</div>
-                    <div>Jakarta Pusat, 10110</div>
-                    <br />
-                    <div>digitalent@mail.kominfo.go.id</div>
-                  </div>
+                  <p className="mb-0 fz-16">
+                    Kementrian Komunikasi dan Informatika RI
+                  </p>
+                  <p className="mb-0 fz-16">Jl. Medan Merdeka Barat No. 9</p>
+                  <p className="mb-0 fz-16">Jakarta Pusat, 10110</p>
+                  <br />
+                  <p className="mb-0 fz-16">digitalent@mail.kominfo.go.id</p>
                 </div>
               </Col>
               <Col lg={6} className="align-self-center">

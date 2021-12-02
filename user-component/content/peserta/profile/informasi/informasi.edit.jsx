@@ -99,14 +99,12 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     // dispatch(dropdownTempatLahir(token));
 
     if (errorUpdateData) {
-      // toast.error(errorUpdateData);
       SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
-      // toast.success("Berhasil Update Data");
       dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
       if (wizzard) {
         funcViewEdit(2);
@@ -413,7 +411,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-                {!dataPribadi.foto &&
+                {!dataPribadi?.foto &&
                   simpleValidator.current.message("foto", upImg, "required", {
                     className: "text-danger",
                   })}
