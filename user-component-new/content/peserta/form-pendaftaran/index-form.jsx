@@ -65,11 +65,11 @@ const IndexForm = ({ token, session }) => {
       toast.error(error);
       dispatch(clearErrors());
     }
+
     if (success) {
-      console.log(pendaftaran, "ini pendaftaran");
       SweatAlert("Berhasil", "Anda berhasil mendaftar pelatihan", "success");
       setView(3);
-      dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
+      // dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
     }
   }, [error, success]);
 
@@ -111,9 +111,11 @@ const IndexForm = ({ token, session }) => {
                     <div className="d-flex flex-row flex-wrap">
                       <img
                         src={`${
-                          dataPelatihan && dataPelatihan.logo
-                            ? process.env.END_POINT_API_IMAGE_BEASISWA +
-                              dataPelatihan.logo
+                          dataPelatihan
+                            ? process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                                dataPelatihan.gambar_mitra ||
+                              process.env.END_POINT_API_IMAGE_BEASISWA +
+                                dataPelatihan.logo
                             : "/assets/media/default-card.png"
                         }`}
                         width={58}
@@ -127,7 +129,9 @@ const IndexForm = ({ token, session }) => {
                         <div className="d-flex flex-row">
                           <p className={`${style.text_mitra_card}`}>
                             {dataPelatihan
-                              ? dataPelatihan.mitra_nama || "-"
+                              ? dataPelatihan.mitra_nama ||
+                                dataPelatihan.penyelenggara ||
+                                "-"
                               : "-"}
                           </p>
                           <p className={`mx-3 ${style.text_grey}`}>•</p>
@@ -248,7 +252,7 @@ const IndexForm = ({ token, session }) => {
                       <div className="date d-flex align-items-center align-middle mr-7">
                         <i className="ri-time-line"></i>
                         <span className={`${style.text_date_register} pl-2`}>
-                          Pelatihan :{" "}
+                          Pelatihan :
                           {dataPelatihan
                             ? moment(dataPelatihan.pelatihan_mulai).format(
                                 "DD MMM YYYY"
