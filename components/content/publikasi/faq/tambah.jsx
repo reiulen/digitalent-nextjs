@@ -262,7 +262,7 @@ const TambahFaq = ({ token, id }) => {
                                         {simpleValidator.current.message(
                                             "jawaban",
                                             jawaban,
-                                            "required|min:100|max:7000",
+                                            "required|min:5|max:7000",
                                             { className: "text-danger" }
                                         )}
                                     </div>

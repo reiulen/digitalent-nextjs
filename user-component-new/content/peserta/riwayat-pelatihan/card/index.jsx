@@ -21,7 +21,7 @@ export default function CardTemplateOriginal({ data, session }) {
   useEffect(() => {
     if (data.status.includes("tidak") || data.status.includes("ditolak"))
       return setLabel("danger");
-    if (data.status.includes("menunggu") || data.status.includes("seleksi"))
+    if (data.status.includes("menunggu") || data.status.includes("seleksi")) 
       return setLabel("warning");
     if (
       data.status.includes("seleksi administrasi") ||
@@ -138,6 +138,8 @@ export default function CardTemplateOriginal({ data, session }) {
         >
           <Card.Body
             onClick={() => {
+              if(data.status.includes("tidak"))
+              return false
               if (data.status.includes("menunggu jadwal tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);

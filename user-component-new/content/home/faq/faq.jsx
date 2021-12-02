@@ -48,6 +48,8 @@ const FaqPage = () => {
 
     if (text.includes("<a")) {
       result = text.replace("<a", `<a target="_blank"`);
+    }else {
+      result = text
     }
 
     return result;
@@ -390,6 +392,8 @@ const FaqPage = () => {
                                 fontFamily: "Poppins",
                                 fontSize: "16px",
                                 color: "#464E5F",
+                                width: "max-content"
+                                
                               }}
                               dangerouslySetInnerHTML={{
                                 __html: handleLinkContent(row.jawaban),

@@ -13,6 +13,8 @@ export default function SeleksiAdministrasi() {
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
 
+ 
+
   const router = useRouter();
   const [description, setDescription] = useState(data?.deskripsi || "-");
   const [finalDescription, setFinalDescription] = useState();
@@ -38,9 +40,10 @@ export default function SeleksiAdministrasi() {
 
   useEffect(() => {
     const status = data?.status || "-";
-    if (status.includes("tidak" || "gagal")) return setLabel("danger");
+    if (status.includes("tidak") || status.includes("gagal")) return setLabel("danger");
     if (status.includes("lulus")) return setLabel("success");
-    if (status.includes("menunggu")) return setLabel("warning");
+    if (status.includes("menunggu"))
+      return setLabel("warning");
     if (status.includes("tes substansi")) return setLabel("primary");
   }, []);
 
@@ -107,22 +110,24 @@ export default function SeleksiAdministrasi() {
                       Bukti Pendaftaran
                     </Button>
                   </Col>
-                  <Col>
-                    <Button
-                      className="btn-rounded-full font-weight-bold btn-block justify-content-center"
-                      style={{ height: "40px", fontSize: "14px" }}
-                      onClick={() => {
-                        Cookies.set("id_tema", data?.tema_id);
-                        Cookies.set("id_pelatihan", data?.id);
-                        router.push(
-                          `/peserta/test-substansi/panduan-substansi`
-                        );
-                      }}
-                    >
-                      Test Substansi{" "}
-                      <i className="ri-arrow-right-s-line mr-2"></i>
-                    </Button>
-                  </Col>
+                  {data.status === "tes substansi" && (
+                    <Col>
+                      <Button
+                        className="btn-rounded-full font-weight-bold btn-block justify-content-center"
+                        style={{ height: "40px", fontSize: "14px" }}
+                        onClick={() => {
+                          Cookies.set("id_tema", data?.tema_id);
+                          Cookies.set("id_pelatihan", data?.id);
+                          router.push(
+                            `/peserta/test-substansi/panduan-substansi`
+                          );
+                        }}
+                      >
+                        Test Substansi{" "}
+                        <i className="ri-arrow-right-s-line mr-2"></i>
+                      </Button>
+                    </Col>
+                  )}
                 </Row>
               )}
 
