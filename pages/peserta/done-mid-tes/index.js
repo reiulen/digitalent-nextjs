@@ -24,7 +24,9 @@ const DoneMid = dynamic(
 );
 
 const Layout = dynamic(() =>
-  import("../../../user-component/components/template/Layout.component")
+  import(
+    "../../../user-component-new/components/template/Layout-peserta.component"
+  )
 );
 
 export default function SubvitDone(props) {

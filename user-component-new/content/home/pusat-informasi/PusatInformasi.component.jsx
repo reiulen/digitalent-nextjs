@@ -1,7 +1,9 @@
+import { useRouter } from "next/router";
+
 import React from "react";
 import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
-import { useRouter } from "next/router";
-import { Container } from "react-bootstrap";
+import styles from "./pusatInformasi.module.css";
+
 import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
 const PusatInformasi = () => {
@@ -23,9 +25,9 @@ const PusatInformasi = () => {
             id="myTab"
             role="tablist"
           >
-            <li className="nav-item" role="presentation">
+            <li className={`${styles.menu} nav-item`} role="presentation">
               <a
-                className="nav-link active fw-600 title-2 fz-20"
+                className={`${styles.menuPanduan} nav-link active fw-600 title-2 fz-20`}
                 id="home-tab"
                 data-toggle="tab"
                 href="#home"
@@ -36,9 +38,9 @@ const PusatInformasi = () => {
                 Panduan Tes Substansi
               </a>
             </li>
-            <li className="nav-item" role="presentation">
+            <li className={`${styles.menu} nav-item`} role="presentation">
               <a
-                className="nav-link fw-600 title-2 fz-20"
+                className={`${styles.menuHak} nav-link fw-600 title-2 fz-20`}
                 id="profile-tab"
                 data-toggle="tab"
                 href="#profile"
@@ -68,7 +70,11 @@ const PusatInformasi = () => {
                         menggunakan koneksi internet broadband dengan kecepatan
                         akses download 384 kbps ke atas). Cek hal ini melalui{" "}
                         <span>
-                          <a href="https://www.speedtest.net/" target="_blank">
+                          <a
+                            href="https://www.speedtest.net/"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
                             https://www.speedtest.net/
                           </a>
                         </span>
@@ -83,6 +89,7 @@ const PusatInformasi = () => {
                           <a
                             href="https://www.whatismybrowser.com/detect/is-javascript-enabled"
                             target="_blank"
+                            rel="noreferrer"
                           >
                             https://www.whatismybrowser.com/detect/is-javascript-enabled
                           </a>
@@ -95,6 +102,7 @@ const PusatInformasi = () => {
                         <a
                           href="https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
                         </a>
