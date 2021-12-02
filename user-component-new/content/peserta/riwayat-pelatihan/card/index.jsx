@@ -266,7 +266,7 @@ export default function CardTemplateOriginal({ data, session }) {
                     </div>
                   </Col>
                   <Col className="p-0 order-4 order-lg-3 my-5 my-lg-0 d-flex justify-content-start justify-content-lg-end ">
-                    {data.midtest ? (
+                    {data.midtest && data.trivia ? (
                       <p
                         style={{ borderRadius: "50px" }}
                         className={`label label-inline label-light-${
@@ -282,12 +282,14 @@ export default function CardTemplateOriginal({ data, session }) {
                       style={{ borderRadius: "50px" }}
                       className={`label label-inline label-light-${
                         data.survei ? "primary" : label
-                      } font-weight-bolder p-0 px-4  text-capitalize`}
+                      } font-weight-bolder p-0 px-4 py-4 text-capitalize`}
                     >
                       {data.lpj
                         ? "Kerjakan LPJ"
                         : data.survei
                         ? "Kerjakan Survei"
+                        : data.status == "pelatihan" && data.midtest && !data.trivia
+                        ? "Kerjakan Mid Test"
                         : data.status == "pelatihan" && data.trivia
                         ? "kerjakan trivia"
                         : data.status == "survey belum tersedia"
