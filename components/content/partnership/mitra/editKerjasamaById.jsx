@@ -425,7 +425,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                         className="form-search-date form-control-sm form-control cursor-pointer disabled-form"
                         onChange={date => onChangePeriodeDateStart(date)}
                         value={periodDateStart}
-                        minDate={moment().toDate()}
+                        // minDate={moment().toDate()}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />

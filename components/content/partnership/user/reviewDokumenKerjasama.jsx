@@ -169,7 +169,7 @@ function ReviewDokumenKerjasama({ token }) {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
@@ -177,7 +177,7 @@ function ReviewDokumenKerjasama({ token }) {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
@@ -185,7 +185,7 @@ function ReviewDokumenKerjasama({ token }) {
                   </div>
                 </div>
               </div>
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
@@ -202,7 +202,7 @@ function ReviewDokumenKerjasama({ token }) {
               </div>
 
              
-                <div className="col-2">
+                <div className="col-2 p-0">
                   <div className="progress-items">
                     <div className="line-progress active-line"></div>
                     <div className="circle-progress active-circle">
@@ -218,7 +218,7 @@ function ReviewDokumenKerjasama({ token }) {
                   </div>
                 </div>
 
-              <div className="col-2">
+              <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
