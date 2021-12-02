@@ -6,10 +6,9 @@ import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-import {
-  getAllRiwayatPelatihanPeserta,
-  getDetailRiwayatPelatihan,
-} from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+
+import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
+import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
 const TriviaPage = dynamic(
   () => import("../../../user-component-new/content/peserta/trivia"),
@@ -71,36 +70,23 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
 
-      console.log("data", data)
-      // if (!req.cookies.id_pelatihan) {
-      //   const { data } = await store.dispatch(
-      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-      //   );
-      //   if (!data) {
-      //     return (success = false);
-      //   } else {
-      //     const trivia = data.list.filter((item) => item.status === "trivia");
-      //     if (trivia.length > 0) {
-      //       await store.dispatch(
-      //         getDetailRiwayatPelatihan(
-      //           trivia[0].id,
-      //           session.user.user.data.user.token
-      //         )
-      //       );
-      //       success = true;
-      //     } else {
-      //       success = false;
-      //     }
-      //   }
-      // } else {
-      //   await store.dispatch(
-      //     getDetailRiwayatPelatihan(
-      //       req.cookies.id_pelatihan,
-      //       session.user.user.data.user.token
-      //     )
-      //   );
-      //   success = true;
-      // }
+      const status = data.pelatihan.pelatihan_berjalan.status || "";
+      if (!status || status == "") {
+        success = false;
+      } else if (
+        status.includes("trivia" || "belum tersedia" || "belum mengerjakan")
+      ) {
+        await store.dispatch(
+          getDetailRiwayatPelatihan(
+            data.pelatihan.pelatihan_berjalan.id,
+            session.user.user.data.user.token
+          )
+        );
+        success = true;
+      } else {
+        success = false;
+      }
+
       if (session) {
         await store.dispatch(
           getDataPribadi(session?.user.user.data.user.token)
