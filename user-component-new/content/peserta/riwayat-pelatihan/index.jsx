@@ -27,9 +27,7 @@ export default function RiwayatPelatihan({ session }) {
   const [showModal, setShowModal] = useState(false);
   const dataRiwayatPelatihan = useSelector(
     (state) => state.getAllRiwayatPelatihanPeserta
-  );
-
-
+  ); 
 
   const [status, setStatus] = useState({ value: "0", label: "Semua" });
   const [selected, setSelected] = useState(0);

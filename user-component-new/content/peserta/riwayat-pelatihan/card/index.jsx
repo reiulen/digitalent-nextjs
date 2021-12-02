@@ -286,7 +286,7 @@ export default function CardTemplateOriginal({ data, session }) {
                         style={{ borderRadius: "50px" }}
                         className={`label label-inline label-light-${
                           data.midtest ? "primary" : label
-                        } font-weight-bolder p-0 px-4 text-capitalize mr-5`}
+                        } font-weight-bolder p-0 px-4 py-4 text-capitalize mr-5`}
                       >
                         Kerjakan Mid Test
                       </p>
