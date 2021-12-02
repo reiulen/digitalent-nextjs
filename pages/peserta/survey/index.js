@@ -73,7 +73,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       const status = data.pelatihan.pelatihan_berjalan.status || "";
-      console.log(status);
+
       if (!status || status == "") {
         success = false;
       } else if (status.includes("administrasi akhir")) {
