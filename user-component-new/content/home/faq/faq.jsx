@@ -304,9 +304,10 @@ const FaqPage = () => {
           <div className="ml-3">
             <h2
               style={{
-                fontWeight: "700",
+                fontWeight: "bold",
                 marginTop: "10px",
                 color: "#203e80",
+                fontSize:'32px'
               }}
             >
               {title}
@@ -392,7 +393,6 @@ const FaqPage = () => {
                                 fontFamily: "Poppins",
                                 fontSize: "16px",
                                 color: "#464E5F",
-                                width: "max-content"
                                 
                               }}
                               dangerouslySetInnerHTML={{
