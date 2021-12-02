@@ -263,7 +263,6 @@ const Beranda = ({ session }) => {
   const handleCheckPelatihanReg = async (id, session) => {
     if (session) {
       const data = await dispatch(checkRegisterPelatihan(id, session.token));
-      console.log(data);
       if (data.status === true) {
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {

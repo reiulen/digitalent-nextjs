@@ -84,7 +84,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       await store.dispatch(getAllAkademi());
 
-      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
+      const data = await store.dispatch(
+        getDataPribadi(session?.user.user.data.user.token)
+      );
+
       await store.dispatch(
         getFormBuilder(session?.user.user.data.user.token, query.id)
       );
