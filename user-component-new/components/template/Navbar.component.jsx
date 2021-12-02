@@ -59,33 +59,36 @@ const Navigationbar = ({ session }) => {
     }
   }, []);
 
-  useEffect(() => {
-    async function getDataGeneral(token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (data) {
-          setSecondary(data.data.color[0].color);
+   const getDataGeneral = async(token) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
+      );
+
+      if (data) {
+        localStorage.setItem("navbar", data.data.color[0].color);
       }
+    } catch (error) {
     }
-    getDataGeneral();
-    if (secondary === "1") {
+  }
+
+  useEffect(() => {
+    if (!localStorage.getItem("navbar")) {
+      getDataGeneral();
+    }
+    if (localStorage.getItem("navbar") === "1") {
       setWarna("primary");
-    } else if (secondary === "2") {
+    } else if (localStorage.getItem("navbar") === "2") {
       setWarna("secondary");
-    } else if (secondary === "3") {
+    } else if (localStorage.getItem("navbar") === "3") {
       setWarna("extras");
     }
-  }, [secondary, router, session]);
+  }, []);
 
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
