@@ -2,121 +2,130 @@
   margin-left: 15px;
   display: inline-block;
 }
-
-.haloAdmin{
-    /* margin-left: 5px; */
-    /* margin: auto; */
+.paginationFold {
+  display: none;
 }
 
-.headImage{
-    position: absolute;
-    right: -40px;
-    top: -10px;
+.haloAdmin {
+  /* margin-left: 5px; */
+  /* margin: auto; */
+}
+
+.headImage {
+  position: absolute;
+  right: -40px;
+  top: -10px;
 }
 
 /* .barChart{
     width: 70%;
 } */
 
-.totalView{
-    text-align: right;
+.totalView {
+  text-align: right;
 }
 
-.kontenPublish{
-    margin: 35px 0 10px 0;
+.kontenPublish {
+  margin: 35px 0 10px 0;
 }
 
-.totalUser{
-    margin: 35px 0 10px 0;
+.totalUser {
+  margin: 35px 0 10px 0;
 }
 
-.topArtikel{
-    margin: 0 0 10px 0;
+.topArtikel {
+  margin: 0 0 10px 0;
 }
 
-.topBerita{
-    margin: 0 0 10px 0;
+.topBerita {
+  margin: 0 0 10px 0;
 }
 
-@media only screen and (max-width: 1600px){
-    .pagination2{
-        /* display: none; */
-        visibility: hidden;
-    }
+@media only screen and (max-width: 1600px) {
+  .pagination2 {
+    /* display: none; */
+    visibility: hidden;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
-    /* Dashboard Publikasi */
+  /* Dashboard Publikasi */
 
-    .headImage{
-        right: -50px;
-        top: 10px;
-        height: 200px;
-    }
+  .headImage {
+    right: -50px;
+    top: 10px;
+    height: 200px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    /* Dashboard Publikasi */
+  /* Dashboard Publikasi */
 
-    .kontenPublish{
-        margin: 35px 0 0 0;
-    }
-    
-    .totalUser{
-        margin: 10px 0 10px 0;
-    }
-    
-    .topVideo{
-        margin: 10px 0 0 0;
-    }
+  .kontenPublish {
+    margin: 35px 0 0 0;
+  }
+
+  .totalUser {
+    margin: 10px 0 10px 0;
+  }
+
+  .topVideo {
+    margin: 10px 0 0 0;
+  }
 }
 
 @media only screen and (max-width: 576px) {
-    .rightPag {
-        margin: auto;
-    }
+  .rightPag {
+    margin: auto;
+  }
 
-    .pagination {
-        margin-left: 28px;
-        width: 280px;
-      }
+  .pagination {
+    margin-left: 28px;
+    width: 280px;
+  }
 
-    /* Dashboard Publikasi */
+  /* Dashboard Publikasi */
 
-    .kontenPublish{
-        margin: 35px 0 0 0;
-    }
-    
-    .totalUser{
-        margin: 10px 0 10px 0;
-    }
-    
-    .topVideo{
-        margin: 10px 0 0 0;
-    }
-    
-    .totalView{
-        margin-top: 10px;
-        text-align: left;
-    }
+  .kontenPublish {
+    margin: 35px 0 0 0;
+  }
+
+  .totalUser {
+    margin: 10px 0 10px 0;
+  }
+
+  .topVideo {
+    margin: 10px 0 0 0;
+  }
+
+  .totalView {
+    margin-top: 10px;
+    text-align: left;
+  }
 }
 
-@media only screen and (max-width: 320px){
-    .pagination {
-        margin-left: 22px;
-    }
-    .rightPag {
-        margin-right: 13px;
-    }
+@media only screen and (max-width: 320px) {
+  .pagination {
+    margin-left: 22px;
+  }
+  .rightPag {
+    margin-right: 13px;
+  }
 }
 
-@media only screen and (max-width: 280px){
-    .pagination {
-        margin-left: 10px;
-        width: 210px;
-    }
-    .rightPag {
-        /* margin-right: 0px; */
-        width: 190px;
-    }
+@media only screen and (max-width: 280px) {
+  .pagination {
+    display: none;
+  }
+  .paginationFold {
+    display: block;
+  }
+  .textTotal {
+    font-size: 10px;
+    margin-left: 5px;
+  }
+  .rightPag {
+    /* margin-right: 0px; */
+    width: 190px;
+  }
 }

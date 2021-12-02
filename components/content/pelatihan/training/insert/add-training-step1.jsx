@@ -365,7 +365,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         sertifikasi: sertification,
         lpj_peserta: lpjUser,
         zonasi_id: zonasi,
-        batch: batch.label,
+        batch: batch,
         metode_pelatihan: metodeTraining,
         alamat: address,
         provinsi: province,
@@ -627,6 +627,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
                   onChange={onLogoHandler}
+                  name="logo-reference"
                 />
                 <label className="custom-file-label" htmlFor="customFile">
                   {logoName}
@@ -719,6 +720,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <div className="col-sm-10 my-auto">
               <div className="form-check form-check-inline">
                 <input
+                  id="metodeSwakelola"
                   type="radio"
                   name="metode"
                   value="Swakelola"
@@ -729,10 +731,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   }
                   className="form-check-input"
                 />
-                <label className="form-check-label">Swakelola</label>
+                <label className="form-check-label" htmlFor="metodeSwakelola">
+                  Swakelola
+                </label>
               </div>
               <div className="form-check form-check-inline">
                 <input
+                  id="metodeMitra"
                   type="radio"
                   name="metode"
                   className="form-check-input"
@@ -743,7 +748,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("metode pelaksanaan")
                   }
                 />
-                <label className="form-check-label">Mitra</label>
+                <label className="form-check-label" htmlFor="metodeMitra">
+                  Mitra
+                </label>
               </div>
               {simpleValidator.current.message(
                 "metode pelaksanaan",
@@ -1041,6 +1048,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <div className="col-sm-10 my-auto">
               <div className="form-check form-check-inline">
                 <input
+                  id="statusAvailable"
                   type="radio"
                   name="statusKuota"
                   className="form-check-input"
@@ -1051,10 +1059,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("status kuota")
                   }
                 />
-                <label className="form-check-label">Available</label>
+                <label className="form-check-label" htmlFor="statusAvailable">
+                  Available
+                </label>
               </div>
               <div className="form-check form-check-inline">
                 <input
+                  id="statusFull"
                   type="radio"
                   name="statusKuota"
                   className="form-check-input"
@@ -1065,7 +1076,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("status kuota")
                   }
                 />
-                <label className="form-check-label">Full</label>
+                <label className="form-check-label" htmlFor="statusFull">
+                  Full
+                </label>
               </div>
               {simpleValidator.current.message(
                 "status kuota",
@@ -1083,6 +1096,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <div className="col-sm-10">
               <div className="form-check mt-3">
                 <input
+                  id="plotRegistration1"
                   type="radio"
                   name="plotRegistration"
                   className="form-check-input"
@@ -1095,12 +1109,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("alur pendaftaran")
                   }
                 />
-                <label className="form-check-label">
+                <label className="form-check-label" htmlFor="plotRegistration1">
                   Administrasi - Test Substansi
                 </label>
               </div>
               <div className="form-check">
                 <input
+                  id="plotRegistration2"
                   type="radio"
                   name="plotRegistration"
                   className="form-check-input"
@@ -1113,12 +1128,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("alur pendaftaran")
                   }
                 />
-                <label className="form-check-label">
+                <label className="form-check-label" htmlFor="plotRegistration2">
                   Tes Substansi - Administrasi
                 </label>
               </div>
               <div className="form-check">
                 <input
+                  id="plotRegistration3"
                   type="radio"
                   name="plotRegistration"
                   className="form-check-input"
@@ -1133,7 +1149,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("alur pendaftaran")
                   }
                 />
-                <label className="form-check-label">
+                <label className="form-check-label" htmlFor="plotRegistration3">
                   Tanpa Tes Substansi & Administrasi
                 </label>
               </div>
@@ -1153,6 +1169,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <div className="col-sm-10 my-auto">
               <div className="form-check form-check-inline">
                 <input
+                  id="sertification1"
                   type="radio"
                   name="sertification"
                   className="form-check-input"
@@ -1163,10 +1180,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("sertifikasi")
                   }
                 />
-                <label className="form-check-label">Ya</label>
+                <label className="form-check-label" htmlFor="sertification1">
+                  Ya
+                </label>
               </div>
               <div className="form-check form-check-inline">
                 <input
+                  id="sertification0"
                   type="radio"
                   name="sertification"
                   className="form-check-input"
@@ -1177,7 +1197,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("sertifikasi")
                   }
                 />
-                <label className="form-check-label">Tidak</label>
+                <label className="form-check-label" htmlFor="sertification0">
+                  Tidak
+                </label>
               </div>
               {simpleValidator.current.message(
                 "sertifikasi",
@@ -1195,6 +1217,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <div className="col-sm-10 my-auto">
               <div className="form-check form-check-inline">
                 <input
+                  id="lpjPeserta1"
                   type="radio"
                   name="lpjPeserta"
                   className="form-check-input"
@@ -1205,10 +1228,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("lpj peserta")
                   }
                 />
-                <label className="form-check-label">Ya</label>
+                <label className="form-check-label" htmlFor="lpjPeserta1">
+                  Ya
+                </label>
               </div>
               <div className="form-check form-check-inline">
                 <input
+                  id="lpjPeserta0"
                   type="radio"
                   name="lpjPeserta"
                   className="form-check-input"
@@ -1219,7 +1245,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("lpj peserta")
                   }
                 />
-                <label className="form-check-label">Tidak</label>
+                <label className="form-check-label" htmlFor="lpjPeserta0">
+                  Tidak
+                </label>
               </div>
               {simpleValidator.current.message(
                 "lpj peserta",
@@ -1278,6 +1306,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <div className="col-sm-10 my-auto">
               <div className="form-check form-check-inline">
                 <input
+                  id="metodeTraining1"
                   type="radio"
                   name="metodeTraining"
                   className="form-check-input"
@@ -1288,10 +1317,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("metode pelatihan")
                   }
                 />
-                <label className="form-check-label">Offline</label>
+                <label className="form-check-label" htmlFor="metodeTraining1">
+                  Offline
+                </label>
               </div>
               <div className="form-check form-check-inline">
                 <input
+                  id="metodeTraining2"
                   type="radio"
                   name="metodeTraining"
                   className="form-check-input"
@@ -1302,10 +1334,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("metode pelatihan")
                   }
                 />
-                <label className="form-check-label">Online</label>
+                <label className="form-check-label" htmlFor="metodeTraining2">
+                  Online
+                </label>
               </div>
               <div className="form-check form-check-inline">
                 <input
+                  id="metodeTraining3"
                   type="radio"
                   name="metodeTraining"
                   className="form-check-input"
@@ -1316,7 +1351,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     simpleValidator.current.showMessageFor("metode pelatihan")
                   }
                 />
-                <label className="form-check-label">Online & Offline</label>
+                <label className="form-check-label" htmlFor="metodeTraining3">
+                  Online & Offline
+                </label>
               </div>
               {simpleValidator.current.message(
                 "metode pelatihan",

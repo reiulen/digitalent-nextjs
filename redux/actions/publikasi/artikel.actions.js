@@ -205,11 +205,16 @@ export const newArtikelPeserta = (artikelData, token) => async (dispatch) => {
       config
     );
 
-    Swal.fire("Berhasil", data.message, "success").then(() => {
-      window.location = "/peserta/artikel";
-    });
+    if(data.status === true){
+      Swal.fire("Berhasil", "Artikel Berhasil Dibuat", "success").then(() => {
+        window.location = "/peserta/artikel";
+      });
+    }else{
+      Swal.fire("Oops !", data.message, "error").then(() => {});
+    }
+
   } catch (error) {
-    Swal.fire("Gagal", data.message, "error").then(() => {});
+    Swal.fire("Oops !", data.message, "error").then(() => {});
   }
 };
 

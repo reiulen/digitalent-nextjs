@@ -59,7 +59,7 @@ function MyApp({ Component, pageProps }) {
     date_equals: ":attribute harus sama dengan :date.",
     email: ":attribute harus berupa alamat email yang valid.",
     in: ":attribute terpilih harus :values.",
-    integer: ":attribute harus berupa integer.",
+    integer: ":attribute harus berupa angka.",
     max: ":attribute harus kurang dari :max:type.",
     min: ":attribute harus lebih dari :min:type.",
     not_in: ":attribute terpilih tidak boleh sama dengan :values.",
@@ -76,17 +76,16 @@ function MyApp({ Component, pageProps }) {
   });
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (pageProps?.session?.user?.user?.data?.token) {
-      if (allSidebar.loading) {
+      if (!localStorage.getItem("sidebar")) {
         dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
       }
     }
   }, [
     dispatch,
     pageProps?.session?.user?.user?.data?.token,
-    allSidebar.loading,
   ]);
   moment.locale("id");
 

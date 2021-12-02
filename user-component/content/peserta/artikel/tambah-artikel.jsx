@@ -9,15 +9,16 @@ import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
-import { newArtikelPeserta } from '../../../../redux/actions/publikasi/artikel.actions'
+import { newArtikelPeserta } from "../../../../redux/actions/publikasi/artikel.actions";
 
-import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../../user-component-new/components/wrapper/Peserta.wrapper";
 import { Container } from "react-bootstrap";
+import { useQuill } from "react-quilljs";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 import gambarImage from "../../../../public/assets/media/default.jpg";
 
-const TambahArtikelPeserta = ({session}) => {
+const TambahArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -32,8 +33,6 @@ const TambahArtikelPeserta = ({session}) => {
   const allAkademi = useSelector((state) => state.allAkademi);
   const allKategori = useSelector((state) => state.allKategori);
 
-  const { CKEditor, ClassicEditor, Base64UploadAdapter } =
-    editorRef.current || {};
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
@@ -49,6 +48,9 @@ const TambahArtikelPeserta = ({session}) => {
   const [kategori, setKategori] = useState(null);
   const [tag, setTag] = useState([]);
   const [checkTag, setCheckTag] = useState(false);
+
+  const { quill, quillRef } = useQuill();
+  const limit = 12000
 
   let optionAkademi = allAkademi.akademi.map((item) => {
     return {
@@ -74,7 +76,7 @@ const TambahArtikelPeserta = ({session}) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
 
     if (type.includes(e.target?.files[0].type)) {
-      if (e.target.files[0]?.size > "2000000") {
+      if (e.target.files[0]?.size > "5000000") {
         e.target.value = null;
         Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
       } else {
@@ -96,32 +98,57 @@ const TambahArtikelPeserta = ({session}) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      isi_artikel: deskripsi,
-      judul_artikel: judul,
-      gambar: gambar,
-      kategori_akademi: akademi,
-      kategori_id: kategori,
-      tag: tag
+    if (simpleValidator.current.allValid()) {
+      const data = {
+        isi_artikel: deskripsi,
+        judul_artikel: judul,
+        gambar: gambar,
+        kategori_akademi: akademi,
+        kategori_id: kategori,
+        tag: tag
+      }
+      dispatch(newArtikelPeserta(data, session.token))
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
     }
-    dispatch(newArtikelPeserta(data, session.token))
   };
 
   useEffect(() => {
-    editorRef.current = {
-      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-    };
+    if (quill) {
+      quill.on('text-change', (delta, oldDelta, source) => {
+        setDeskripsi(quill.root.innerHTML); // Get innerHTML using quill
+
+        if (quill.root.innerText.length <= limit) {
+          return;
+        }
+        const { ops } = delta;
+        let updatedOps;
+        if (ops.length === 1) {
+          updatedOps = [{ delete: ops[0].insert.length }];
+        } else {
+          updatedOps = [ops[0], { delete: ops[1].insert.length }];
+        }
+        quill.updateContents({ ops: updatedOps });
+      });
+
+
+    }
 
     setEditorLoaded(true);
-  }, [dispatch, simpleValidator, router]);
+  }, [dispatch, simpleValidator, router, quill]);
 
   return (
     <>
       <PesertaWrapper fluid className="px-md-20 px-10 pb-10">
         <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
           <div className="card card-custom card-stretch gutter-b">
-            <div className="card-header">
+            <div className="card-header border-0">
               <h3 className="col-sm-4 card-title font-weight-bolder text-dark">
                 Tambah Artikel
               </h3>
@@ -146,7 +173,7 @@ const TambahArtikelPeserta = ({session}) => {
                         alt="image12s"
                         width={160}
                         height={160}
-                        objectFit="fill"
+                        objectFit="cover"
                       />
                     </figure>
                     <div className="position-relative">
@@ -161,16 +188,33 @@ const TambahArtikelPeserta = ({session}) => {
                         accept="image/*"
                         style={{ display: "none" }}
                         onChange={onChangeGambar}
-                        required
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("gambar")
+                        }
                       />
                     </div>
+                  </div>
+
+                  <div className="ml-4">
+                    {simpleValidator.current.message(
+                      "gambar",
+                      gambar,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                    {
+                      gambarName !== null ?
+                        <small className="text-danger">{gambarName}</small>
+                        :
+                        null
+                    }
                   </div>
 
                   <div
                     className={`${styles.resolusiTambah} mt-3 col-8 col-sm-6 col-md-4 col-lg-5 col-xl-4 text-muted`}
                   >
                     <p>
-                      *JPG/JPEG/PNG (Max.2 MB) Recommended resolution 1024*512.
+                      *JPG/JPEG/PNG (Max.5 MB) Recommended resolution 1024*512.
                     </p>
                   </div>
                 </div>
@@ -191,8 +235,16 @@ const TambahArtikelPeserta = ({session}) => {
                       onChange={(e) => {
                         setJudul(e.target.value);
                       }}
-                      required
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("judul")
+                      }
                     />
+                    {simpleValidator.current.message(
+                      "judul",
+                      judul,
+                      "required|min:5|max:200",
+                      { className: "text-danger" }
+                    )}
                   </div>
                 </div>
 
@@ -206,22 +258,23 @@ const TambahArtikelPeserta = ({session}) => {
                   <div className={`${styles.deskripsiTambah} col-sm-12`}>
                     <div className="ckeditor">
                       {editorLoaded ? (
-                        <CKEditor
-                      
-                          editor={ClassicEditor}
-                          config={{
-                            placeholder: "Tulis Deskripsi",
-                          }}
-                          data={deskripsi}
-                          onChange={(event, editor) => {
-                            const data = editor.getData();
-                            setDeskripsi(data);
-                          }}
-                        />
+                        <div style={{ width: "100%", height: "300px" }}>
+                          <div
+                            ref={quillRef}
+                          />
+                        </div>
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
                     </div>
+                  <div className="mt-13">
+                    {simpleValidator.current.message(
+                      "isi artikel",
+                      deskripsi,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
                   </div>
                 </div>
 
@@ -239,10 +292,13 @@ const TambahArtikelPeserta = ({session}) => {
                       }}
                       value={akademi}
                       className={`${styles.selectKategori} form-control dropdownArt`}
-                      required
+                      onBlur={(e) => {
+                        setAkademi(e.target.value);
+                        simpleValidator.current.showMessageFor("akademi");
+                      }}
                     >
                       <option value="" selected disabled>
-                        -------------------PILIH AKADEMI-------------------
+                        Pilih Akademi
                       </option>
                       {optionAkademi.map((item) => {
                         return (
@@ -252,6 +308,12 @@ const TambahArtikelPeserta = ({session}) => {
                         );
                       })}
                     </select>
+                    {simpleValidator.current.message(
+                      "akademi",
+                      akademi,
+                      "required",
+                      { className: "text-danger" }
+                    )}
                   </div>
                 </div>
 
@@ -269,10 +331,13 @@ const TambahArtikelPeserta = ({session}) => {
                       }}
                       value={kategori}
                       className={`${styles.selectKategori} form-control dropdownArt`}
-                      required
+                      onBlur={(e) => {
+                        setKategori(e.target.value);
+                        simpleValidator.current.showMessageFor("kategori");
+                      }}
                     >
                       <option value="" selected disabled>
-                        -------------------PILIH KATEGORI-------------------
+                        Pilih Kategori
                       </option>
                       {allKategori.kategori.kategori.map((item) => {
                         if (item.jenis_kategori === "Artikel")
@@ -283,6 +348,12 @@ const TambahArtikelPeserta = ({session}) => {
                           );
                       })}
                     </select>
+                    {simpleValidator.current.message(
+                      "kategori",
+                      kategori,
+                      "required",
+                      { className: "text-danger" }
+                    )}
                   </div>
                 </div>
 
@@ -307,9 +378,8 @@ const TambahArtikelPeserta = ({session}) => {
                         handleTag(data);
                       }}
                       name="fruits"
-                      placeHolder="Isi Tag disini"
+                      placeHolder="Isi Tag disini dan Enter"
                       seprators={["Enter", "Tab", "Space"]}
-                      
                     />
                     {checkTag && (
                       <span className="text-danger">Tag tidak boleh sama</span>
@@ -364,9 +434,7 @@ const TambahArtikelPeserta = ({session}) => {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div
-                className={`${styles.modalsPrevImage} modal-body text-center`}
-              >
+              <div className={`${styles.modalsPrevImage} modal-body text-center`}>
                 <Image
                   src={gambarPreview}
                   alt="image"
@@ -378,8 +446,7 @@ const TambahArtikelPeserta = ({session}) => {
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  data-dismiss="modal"
-                >
+                  data-dismiss="modal">
                   Tutup
                 </button>
               </div>

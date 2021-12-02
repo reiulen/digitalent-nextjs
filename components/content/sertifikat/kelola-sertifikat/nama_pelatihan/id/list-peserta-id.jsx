@@ -156,6 +156,17 @@ export default function ListPesertaID({ token }) {
                   >
                     {participant.data.tahun}
                   </div>
+                  <div
+                    className={`position-absolute w-100 text-center ${
+                      certificate?.data?.certificate?.background
+                        ? "responsive-margin-peserta-1"
+                        : "responsive-margin-without-background"
+                    } zindex-1`}
+                  >
+                    <span className="responsive-font-size-peserta font-weight-bolder">
+                      {query.name}
+                    </span>
+                  </div>
                   <Image
                     src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
                     alt={`image ${certificate.data.certificate.certificate_result}`}
@@ -164,17 +175,6 @@ export default function ListPesertaID({ token }) {
                     height={595}
                     key={certificate?.data?.certificate?.certificate_result}
                   />
-                  <div
-                    className={`position-absolute w-100 text-center ${
-                      certificate?.data?.certificate?.background
-                        ? "responsive-margin-peserta-1"
-                        : "responsive-margin-without-background"
-                    }`}
-                  >
-                    <span className="responsive-font-size-peserta font-weight-bolder">
-                      {query.name}
-                    </span>
-                  </div>
                 </div>
               </div>
               {/* END COL */}

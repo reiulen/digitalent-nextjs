@@ -19,6 +19,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allDetailPeserta = useSelector((state) => state.allDetailPeserta);
+  const [sideBar, setSideBar] = useState(true)
 
   const onNewReset = () => {
     router.replace("/site-management/role", undefined, {
@@ -36,11 +37,10 @@ const Table = ({ token }) => {
     margin: "0",
     marginTop: "1rem",
   };
-  const listLi = {};
   return (
     <PageWrapper>
       <div className="row">
-        <div className="col-12 col-xl-3 order-1">
+        <div className="col-12 col-xl-3 order-0">
           <div className="card card-custom card-stretch gutter-b px-10 py-12">
             <div className="form-group" style={{ maxWidth: "19rem" }}>
               <div>
@@ -53,13 +53,16 @@ const Table = ({ token }) => {
                     style={{ height: "19rem" }}
                   >
                     <Image
-                          src={allDetailPeserta.data.data.file_path +
-                            "/site-management/images/" +
-                            allDetailPeserta.data.data.foto}
-                          width="1000"
-                          height="1000"
-                          alt="user2"
-                        />
+                      src={
+                        allDetailPeserta.data.data.foto
+                          ? allDetailPeserta.data.data.file_path +
+                            allDetailPeserta.data.data.foto
+                          : "/assets/media/logos/default.png"
+                      }
+                      width="1000"
+                      height="1000"
+                      alt="user2"
+                    />
                   </div>
 
                   <span
@@ -79,30 +82,38 @@ const Table = ({ token }) => {
                     Ubah Data
                   </button>
                   <ul style={listUl}>
-                    <li style={listLi} className="p-4 listDTS" onClick={() => {
-                      router.push("/site-management/user/peserta-dts/detail-peserta-dts/"+ allDetailPeserta.data.data.id)
-                    }}>
+                    <li
+                      className={sideBar ? "p-4 listDTS isactive mb-2" : "p-4 listDTS mb-2"}
+                      style={{fontSize: "15px"}}
+                      onClick={() => {
+                        setSideBar(true)
+                      }}
+                    >
                       <div className="d-flex align-items-center">
                         <Image
-                          src="/assets/icon/user2.svg"
+                          src={sideBar ? "/assets/icon/user2.svg" : "/assets/icon/useract.svg"}
                           width="20"
                           height="20"
                           alt="user2"
                         />
-                        <p className="m-0 ml-4">Informasi Data Pribadi</p>
+                        <p className="m-0 ml-4 mt-1">Informasi Data Pribadi</p>
                       </div>
                     </li>
-                    <li style={listLi} className="p-4 listDTS" onClick={() => {
-                      router.push("/site-management/user/peserta-dts/list-peserta-perlatihan/"+ allDetailPeserta.data.data.id)
-                    }}>
+                    <li
+                      className={sideBar ? "p-4 listDTS" : "p-4 listDTS isactive"}
+                      style={{fontSize: "15px"}}
+                      onClick={() => {
+                        setSideBar(false)
+                      }}
+                    >
                       <div className="d-flex align-items-center">
                         <Image
-                          src="/assets/icon/Briefcase.svg"
+                          src={sideBar ? "/assets/icon/Briefcase.svg" : "/assets/icon/BriefcaseAct.svg"}
                           width="20"
                           height="20"
                           alt="user2"
                         />
-                        <p className="m-0 ml-4">Data Pelatihan</p>
+                        <p className="m-0 ml-4 mt-1">Data Pelatihan</p>
                       </div>
                     </li>
                   </ul>
@@ -111,7 +122,7 @@ const Table = ({ token }) => {
             </div>
           </div>
         </div>
-        <div className="col-12 col-xl-9 order-1">
+        {sideBar && <div className="col-12 col-xl-9 order-1">
           <div className="card card-custom card-stretch gutter-b px-4 px-sm-8 py-4">
             {/* Data Probadi */}
             <div>
@@ -279,7 +290,10 @@ const Table = ({ token }) => {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
+
+        {!sideBar && <ListPeserta />}
+        
       </div>
     </PageWrapper>
   );

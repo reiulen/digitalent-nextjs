@@ -18,7 +18,7 @@ const Artikel = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { artikel, loading: loadingArtikel } = useSelector((state) => state.allBerandaArtikel)
+    const { artikel, loading: loadingArtikel , error } = useSelector((state) => state.allBerandaArtikel)
     const { kategori } = useSelector((state) => state.kategoriBerandaArtikel)
     const { akademi } = useSelector((state) => state.allAkademi);
     const { tags } = useSelector((state) => state.allTagBerandaArtikel)
@@ -39,6 +39,7 @@ const Artikel = () => {
     const [ tagArtikel, setTagArtikel ] = useState([])
     const [ tagCards, setTagCards ] = useState ([])
     const [ kategoriToShow, setKategoriToShow ] = useState ([])
+    const [ showArrow, setShowArrow ] = useState(null)
 
     const getWindowDimensions = () => {
         const { innerWidth: width, innerHeight: height } = window;
@@ -69,6 +70,7 @@ const Artikel = () => {
     // Handle Empty Tag
     const handleEmptyTag = (tags) => {
         let arr = tags
+        let temps = []
         let result = []
 
         for (let i = 0; i < arr.length; i++){
@@ -82,11 +84,29 @@ const Artikel = () => {
                     )
 
                 {
-                    result.push (arr[i][j])
+                    result.push (arr[i][j].toUpperCase())
                 }
             }
         }
-        setTagArtikel (result)
+
+        for (let k = 0; k < temps.length; k++){
+            if (k === 0){
+                result.push(temps[k].toUpperCase())
+
+            } else {
+                if (result.includes (temps[k].toUpperCase()) === false){
+                result.push(temps[k].toUpperCase())
+                }
+            }
+        }
+
+        if (result.length <= 8){
+            setTagArtikel (result)
+
+        } else {
+            let tagResult = result.slice(0, 8)
+            setTagArtikel (tagResult)
+        }
     }
 
     // Handle Tag Each Card
@@ -114,12 +134,12 @@ const Artikel = () => {
                 }
                 
                 if (resultTags.length > 2){
-                    result.push (resultTags.splice(1, resultTags.length))
+                    result.push (resultTags.splice(0, 2))
 
                 } else {
                     result.push (resultTags)
 
-                }            
+                }             
             }
             setTagCards (result)
             
@@ -177,6 +197,13 @@ const Artikel = () => {
                 }
             }
             setKategoriToShow(result)
+
+            if (result.length > 3) {
+                setShowArrow (true)
+        
+            } else {
+                setShowArrow (false)
+            }
         }
        
     }
@@ -322,89 +349,177 @@ const Artikel = () => {
                                 "col-lg-8 col-12 pl-0 mt-10 mb-5 pr-10"
                         }
                     >
-                        <Splide
-                            options={{
-                                arrows: true,
-                                pagination: false,
-                                gap: "1rem",
-                                drag: "free",
-                                perPage: 4,
-                                breakpoints:{
-                                    830: {
-                                        perPage: 2,
-                                      },
-                                    450: {
-                                    perPage: 1,
-                                    },
-                                }
-                            }}
-                            className="px-20 mr-n10 mr-sm-0"
-                        >
-                            {
-                                kategoriArtikel === "" ?
-                                    <SplideSlide>
-                                        <div 
-                                            className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
-                                            style={{ cursor: "pointer", height:"40px" }}
-                                            onClick={() => handleFilterKategori("")}
-                                        >
-                                            <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                SEMUA
-                                            </div>
-                                        </div>
-                                    </SplideSlide>
-                                :
-                                    <SplideSlide>
-                                        <div 
-                                            className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                            style={{ cursor: "pointer", height:"40px" }}
-                                            onClick={() => handleFilterKategori("")}
-                                        >
-                                            <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                SEMUA
-                                            </div>
-                                        </div>
-                                    </SplideSlide>
-                                    
-                            }
-
-                            {
-                                kategoriToShow ?
-                                    kategoriToShow.map((el, i) => {
-                                        return (
-                                            kategoriArtikel == el ?
-                                                <SplideSlide>
-                                                    <div 
-                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
-                                                        style={{ cursor: "pointer", height:"40px" }}
-                                                        onClick={() => handleFilterKategori(el)}
-                                                        key={i}
-                                                    >
-                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                            {el.toString().toUpperCase()}
-                                                        </div>
+                        {
+                            showArrow === true ?
+                                <Splide
+                                    options={{
+                                        arrows: true,
+                                        pagination: false,
+                                        gap: "1rem",
+                                        drag: "free",
+                                        perPage: 4,
+                                        breakpoints:{
+                                            830: {
+                                                perPage: 2,
+                                            },
+                                            450: {
+                                            perPage: 1,
+                                            },
+                                        }
+                                    }}
+                                    className="px-20 mr-n10 mr-sm-0"
+                                >
+                                    {
+                                        kategoriArtikel === "" ?
+                                            <SplideSlide>
+                                                <div 
+                                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                    onClick={() => handleFilterKategori("")}
+                                                >
+                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                        SEMUA
                                                     </div>
-                                                </SplideSlide>
-                                            :
-                                                <SplideSlide>
-                                                    <div 
-                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
-                                                        style={{ cursor: "pointer", height:"40px" }}
-                                                        onClick={() => handleFilterKategori(el)}
-                                                        key={i}
-                                                    >
-                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                            {el.toString().toUpperCase()}
-                                                        </div>
-                                                    </div> 
-                                                </SplideSlide>
-                                                
-                                        )
-                                    })
-                                :
-                                    null
-                            }
-                        </Splide>
+                                                </div>
+                                            </SplideSlide>
+                                        :
+                                            <SplideSlide>
+                                                <div 
+                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                    onClick={() => handleFilterKategori("")}
+                                                >
+                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                        SEMUA
+                                                    </div>
+                                                </div>
+                                            </SplideSlide>
+                                            
+                                    }
+
+                                    {
+                                        kategoriToShow ?
+                                            kategoriToShow.map((el, i) => {
+                                                return (
+                                                    kategoriArtikel == el ?
+                                                        <SplideSlide>
+                                                            <div 
+                                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                                style={{ cursor: "pointer", height:"40px" }}
+                                                                onClick={() => handleFilterKategori(el)}
+                                                                key={i}
+                                                            >
+                                                                <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                                    {el.toString().toUpperCase()}
+                                                                </div>
+                                                            </div>
+                                                        </SplideSlide>
+                                                    :
+                                                        <SplideSlide>
+                                                            <div 
+                                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                                style={{ cursor: "pointer", height:"40px" }}
+                                                                onClick={() => handleFilterKategori(el)}
+                                                                key={i}
+                                                            >
+                                                                <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                                    {el.toString().toUpperCase()}
+                                                                </div>
+                                                            </div> 
+                                                        </SplideSlide>
+                                                        
+                                                )
+                                            })
+                                        :
+                                            null
+                                    }
+                                </Splide>
+                            :
+                                <Splide
+                                    options={{
+                                        arrows: false,
+                                        pagination: false,
+                                        gap: "1rem",
+                                        drag: "free",
+                                        perPage: 4,
+                                        breakpoints:{
+                                            830: {
+                                                perPage: 2,
+                                            },
+                                            450: {
+                                            perPage: 1,
+                                            },
+                                        }
+                                    }}
+                                    className="ml-5 mr-n10 mr-sm-0"
+                                >
+                                    {
+                                        kategoriArtikel === "" ?
+                                            <SplideSlide>
+                                                <div 
+                                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                    onClick={() => handleFilterKategori("")}
+                                                >
+                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                        SEMUA
+                                                    </div>
+                                                </div>
+                                            </SplideSlide>
+                                        :
+                                            <SplideSlide>
+                                                <div 
+                                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                    onClick={() => handleFilterKategori("")}
+                                                >
+                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                        SEMUA
+                                                    </div>
+                                                </div>
+                                            </SplideSlide>
+                                            
+                                    }
+
+                                    {
+                                        kategoriToShow ?
+                                            kategoriToShow.map((el, i) => {
+                                                return (
+                                                    kategoriArtikel == el ?
+                                                        <SplideSlide>
+                                                            <div 
+                                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                                style={{ cursor: "pointer", height:"40px" }}
+                                                                onClick={() => handleFilterKategori(el)}
+                                                                key={i}
+                                                            >
+                                                                <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                                    {el.toString().toUpperCase()}
+                                                                </div>
+                                                            </div>
+                                                        </SplideSlide>
+                                                    :
+                                                        <SplideSlide>
+                                                            <div 
+                                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                                style={{ cursor: "pointer", height:"40px" }}
+                                                                onClick={() => handleFilterKategori(el)}
+                                                                key={i}
+                                                            >
+                                                                <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                                    {el.toString().toUpperCase()}
+                                                                </div>
+                                                            </div> 
+                                                        </SplideSlide>
+                                                        
+                                                )
+                                            })
+                                        :
+                                            null
+                                    }
+                                </Splide>
+                        }
+                        
                     </div> 
                 ) : null}
             {/* End Filter Button */}
@@ -471,7 +586,7 @@ const Artikel = () => {
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
                                                                 onClick={() => handleFilterPublish("")}
-                                                                style={{fontFamily:"Poppins"}}
+                                                                style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 Terbaru
                                                             </button>
@@ -479,7 +594,7 @@ const Artikel = () => {
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
                                                                 onClick={() => handleFilterPublish("desc")}
-                                                                style={{fontFamily:"Poppins"}}
+                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 Terbaru
                                                             </button>
@@ -492,7 +607,7 @@ const Artikel = () => {
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
                                                                 onClick={() => handleFilterPublish("")}
-                                                                style={{fontFamily:"Poppins"}}
+                                                                style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 Terlama
                                                             </button>
@@ -500,7 +615,7 @@ const Artikel = () => {
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
                                                                 onClick={() => handleFilterPublish("asc")}
-                                                                style={{fontFamily:"Poppins"}}
+                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 Terlama
                                                             </button>
@@ -515,7 +630,7 @@ const Artikel = () => {
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
                                                                 onClick={() => handleSort("")}
-                                                                style={{fontFamily:"Poppins"}}
+                                                                style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 A-Z
                                                             </button>
@@ -523,7 +638,7 @@ const Artikel = () => {
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
                                                                 onClick={() => handleSort("asc")}
-                                                                style={{fontFamily:"Poppins"}}
+                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 A-Z
                                                             </button>
@@ -536,7 +651,7 @@ const Artikel = () => {
                                                             <button 
                                                                 className="btn btn-primary rounded-pill btn-block" 
                                                                 onClick={() => handleSort("")}
-                                                                style={{fontFamily:"Poppins"}}
+                                                                style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                             >
                                                                 Z-A
                                                             </button>
@@ -544,7 +659,7 @@ const Artikel = () => {
                                                             <button 
                                                                 className="btn btn-outline-light rounded-pill btn-block" 
                                                                 onClick={() => handleSort("desc")}
-                                                                style={{fontFamily:"Poppins"}}
+                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                             >
                                                                 Z-A
                                                             </button>
@@ -565,12 +680,13 @@ const Artikel = () => {
                                                         <select 
                                                             className="form-control rounded-pill"
                                                             onChange={(e) => handleCategoryAcademy(e.target.value)}
+                                                            style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                         >
-                                                            <option defaultValue="" style={{fontFamily:"Poppins"}} >Semua Akademi</option>
+                                                            <option defaultValue="" style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}} >Semua Akademi</option>
                                                             {
                                                                 akademi.map ((el, i) => {
                                                                     return (
-                                                                        <option value={el.slug} key={i} style={{fontFamily:"Poppins"}} >{el.slug}</option>
+                                                                        <option value={el.slug} key={i} style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}} >{el.slug}</option>
                                                                     )
                                                                 })
                                                             }
@@ -630,6 +746,35 @@ const Artikel = () => {
                         </div>
                     </form>
                     {/* End Search Tab */}
+
+                    {/* Error Alert */}
+                    {
+                        error ?
+                            <div
+                                className="alert alert-custom alert-light-danger fade show mb-5"
+                                role="alert"
+                            >
+                                <div className="alert-icon">
+                                <i className="flaticon-warning"></i>
+                                </div>
+                                <div className="alert-text">{error}</div>
+                                <div className="alert-close">
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="alert"
+                                    aria-label="Close"
+                                >
+                                    <span aria-hidden="true">
+                                    <i className="ki ki-close"></i>
+                                    </span>
+                                </button>
+                                </div>
+                            </div>
+                        :
+                            null
+                    }
+                    {/* End of Error Alert */}
 
                     {/* Card */}
                     {
@@ -846,7 +991,7 @@ const Artikel = () => {
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
                                                     onClick={() => handleFilterPublish("")}
-                                                    style={{fontFamily:"Poppins"}}
+                                                    style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     Terbaru
                                                 </button>
@@ -854,7 +999,7 @@ const Artikel = () => {
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
                                                     onClick={() => handleFilterPublish("desc")}
-                                                    style={{fontFamily:"Poppins"}}
+                                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     Terbaru
                                                 </button>
@@ -867,7 +1012,7 @@ const Artikel = () => {
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
                                                     onClick={() => handleFilterPublish("")}
-                                                    style={{fontFamily:"Poppins"}}
+                                                    style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     Terlama
                                                 </button>
@@ -875,7 +1020,7 @@ const Artikel = () => {
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
                                                     onClick={() => handleFilterPublish("asc")}
-                                                    style={{fontFamily:"Poppins"}}
+                                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     Terlama
                                                 </button>
@@ -890,7 +1035,7 @@ const Artikel = () => {
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
                                                     onClick={() => handleSort("")}
-                                                    style={{fontFamily:"Poppins"}}
+                                                    style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     A-Z
                                                 </button>
@@ -898,7 +1043,7 @@ const Artikel = () => {
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
                                                     onClick={() => handleSort("asc")}
-                                                    style={{fontFamily:"Poppins"}}
+                                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     A-Z
                                                 </button>
@@ -911,7 +1056,7 @@ const Artikel = () => {
                                                 <button 
                                                     className="btn btn-primary rounded-pill btn-block" 
                                                     onClick={() => handleSort("")}
-                                                    style={{fontFamily:"Poppins"}}
+                                                    style={{fontFamily: "Poppins", fontSize:'14px'}}
                                                 >
                                                     Z-A
                                                 </button>
@@ -919,7 +1064,7 @@ const Artikel = () => {
                                                 <button 
                                                     className="btn btn-outline-light rounded-pill btn-block" 
                                                     onClick={() => handleSort("desc")}
-                                                    style={{fontFamily:"Poppins"}}
+                                                    style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                                 >
                                                     Z-A
                                                 </button>
@@ -940,12 +1085,13 @@ const Artikel = () => {
                                             <select 
                                                 className="form-control rounded-pill"
                                                 onChange={(e) => handleCategoryAcademy(e.target.value)}
+                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
                                             >
-                                                <option value="" selected style={{fontFamily:"Poppins"}}>Semua Akademi</option>
+                                                <option value="" selected style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}>Semua Akademi</option>
                                                 {
                                                     akademi.map ((el, i) => {
                                                         return (
-                                                            <option value={el.slug} key={i} style={{fontFamily:"Poppins"}}>{el.slug}</option>
+                                                            <option value={el.slug} key={i} style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}>{el.slug}</option>
                                                         )
                                                     })
                                                 }

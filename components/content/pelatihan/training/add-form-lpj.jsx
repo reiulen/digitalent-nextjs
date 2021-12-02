@@ -45,6 +45,10 @@ const AddFormLpj = ({ token }) => {
   const handleDeleteForm = (index) => {
     const list = [...formLpj];
     list.splice(index, 1);
+    list.forEach((row, i) => {
+      let key = i + 1;
+      list[i]["key"] = key;
+    });
     setFormLpj(list);
   };
 
@@ -76,7 +80,7 @@ const AddFormLpj = ({ token }) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Isi data dengan benar !",
       });
     }
   };

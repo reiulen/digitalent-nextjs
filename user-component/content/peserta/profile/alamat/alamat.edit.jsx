@@ -264,7 +264,11 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Select
                 key={1}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
-                placeholder={(alamat && alamat.kota) || "Silahkan Pilih Kota"}
+                placeholder={
+                  kotaKtp !== null
+                    ? alamat && alamat.kota
+                    : "Silahkan Pilih Kota"
+                }
                 options={optionsKabupatenDomisili}
                 defaultValue={kotaDomisili}
                 onChange={(e) =>
@@ -291,7 +295,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
               <Select
                 placeholder={
-                  (alamat && alamat.kecamatan) === ""
+                  kecamatanKtp === null
                     ? "Silahkan Pilih Kecamatan"
                     : alamat && alamat.kecamatan
                 }
@@ -321,7 +325,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
               <Select
                 placeholder={
-                  (alamat && alamat.kelurahan) === ""
+                  kelurahanKtp === null
                     ? "Silahkan Pilih Kelurahan"
                     : alamat && alamat.kelurahan
                 }
@@ -637,7 +641,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Select
                 ref={(ref) => (selectRefKabupaten = ref)}
                 placeholder={
-                  (alamat && alamat.kota_ktp) === ""
+                  kotaKtp === null
                     ? "Silahkan Pilih Kota"
                     : alamat && alamat.kota_ktp
                 }
@@ -669,7 +673,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
               <Select
                 placeholder={
-                  (alamat && alamat.kecamatan_ktp) === ""
+                  kecamatanKtp === null
                     ? "Silahkan Pilih Kecamatan"
                     : alamat && alamat.kecamatan_ktp
                 }
@@ -699,7 +703,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
               <Select
                 placeholder={
-                  (alamat && alamat.kelurahan_ktp) === ""
+                  kelurahanKtp === null
                     ? "Silahkan Pilih Kelurahan"
                     : alamat && alamat.kelurahan_ktp
                 }
