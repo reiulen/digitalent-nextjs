@@ -9,6 +9,7 @@ import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { toPng } from "html-to-image";
 import moment from "moment";
+import axios from "axios";
 // #Icon
 
 export default function ListPesertaID({ token }) {
@@ -49,19 +50,27 @@ export default function ListPesertaID({ token }) {
   };
 
   const handleDownload = async () => {
-    const data = await convertDivToPng(divReference.current);
-    if (data) {
-      const link = document.createElement("a");
-      link.download = `Sertifikat - ${query.name}.png`;
-      link.href = data;
-      link.click();
-    }
-    if (type == "2 lembar") {
-      const image = document.getElementById("image2").getAttribute("src");
-      const link = document.createElement("a");
-      link.href = image;
-      link.download = "tes 123";
-      link.click();
+    const linkChecker = `http://192.168.11.38:8000/api/tte-p12/sign-pdf/check-pdf/${certificate?.data?.certificate?.training_id}`;
+    const check = await axios.get(linkChecker);
+    // check udh pernah di sign apa belum?
+    if (!check.data.status) {
+      const data = await convertDivToPng(divReference.current);
+      if (data) {
+        const formData = new FormData();
+        formData.append("certificate", data);
+        const link = `http://192.168.11.38:8000/api/tte-p12/sign-pdf/${certificate?.data?.certificate?.training_id}`;
+
+        const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
+        const a = document.createElement("a");
+        a.download = `Sertifikat - p12 ${query.name}.png`;
+        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
+        a.click();
+      }
+    } else {
+      const a = document.createElement("a");
+      a.download = `Sertifikat - p12 ${query.name}.png`;
+      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${certificate?.data?.certificate?.certificate_pdf}`;
+      a.click();
     }
   };
 

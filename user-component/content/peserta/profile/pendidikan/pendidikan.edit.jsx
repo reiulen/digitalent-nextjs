@@ -1458,17 +1458,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         ) : (
           <div className="button-aksi mt-5 float-right">
             <Button
-              className={`${style.button_profile_batal} rounded-xl mr-2`}
-              type="button"
-              onClick={() => {
-                if (wizzard) {
-                  return funcViewEdit(2);
-                }
-              }}
-            >
-              Kembali
-            </Button>
-            <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
             >

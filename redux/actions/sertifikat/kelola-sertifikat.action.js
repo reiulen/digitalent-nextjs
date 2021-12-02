@@ -199,7 +199,6 @@ export const getSingleSertifikat = (id, token) => async (dispatch) => {
 export const getPublishedSertifikat = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
-
     let link =
       process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
     const config = {
@@ -215,6 +214,7 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
         payload: data,
       });
     }
+    return data;
   } catch (error) {
     dispatch({
       type: PUBLISHED_SERTIFIKAT_FAIL,
