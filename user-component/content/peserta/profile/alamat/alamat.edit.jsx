@@ -270,6 +270,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 }
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
+                className={style.btnDisabled}
                 onChange={(e) => {
                   setKotaDomisili(null);
                   // selectRefKabupatenDomisili.select.clearValue();
@@ -717,7 +718,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onChange={(e) => {
                   setKelurahanKtp(null);
                   setKecamatanKtp({ label: e?.label, value: e?.value });
-                  console.log(e);
+
                   dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
@@ -747,8 +748,6 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 options={optionsKelurahan}
                 onChange={(e) => {
                   setKelurahanKtp({ label: e?.label, value: e?.value });
-                  console.log(e);
-                  dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kelurahan ktp")

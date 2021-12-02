@@ -434,7 +434,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Form.Label className={style.label}>Nama Lengkap</Form.Label>
               <Form.Control
                 className={style.formControl}
-                placeholder="Masukan Nama Lengkap"
+                placeholder="Masukkan Nama Lengkap"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onBlur={() =>
@@ -456,7 +456,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 className={style.formControl}
                 disabled
                 type="email"
-                placeholder="Masukan Email"
+                placeholder="Masukkan Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => simpleValidator.current.showMessageFor("email")}
@@ -473,7 +473,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 className={style.formControl}
                 disabled
                 type="text"
-                placeholder="Masukan NIK"
+                placeholder="Masukkan NIK"
                 value={nik}
                 onChange={(e) => setNik(e.target.value)}
                 onBlur={() => simpleValidator.current.showMessageFor("nik")}
@@ -513,7 +513,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 className={style.formControl}
                 disabled
                 type="text"
-                placeholder="Masukan Nomor Handphone"
+                placeholder="Masukkan Nomor Handphone"
                 value={nomorHandphone}
                 onChange={(e) => setNomorHandphone(e.target.value)}
                 onBlur={() =>
@@ -573,7 +573,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Form.Control
                 className={style.formControl}
                 type="text"
-                placeholder="Masukan Tempat Lahir"
+                placeholder="Masukkan Tempat Lahir"
                 value={tempatLahir}
                 onChange={(e) => handleTempatLahir(e)}
                 onBlur={() =>
@@ -621,7 +621,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
             <Form.Label>Nama Lengkap</Form.Label>
             <Form.Control
               className={style.formControl}
-              placeholder="Masukan Nama Lengkap"
+              placeholder="Masukkan Nama Lengkap"
               value={nameUrgent}
               onChange={(e) => setNameUrgent(e.target.value)}
               onBlur={() =>
@@ -645,7 +645,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 min={4}
                 max={14}
                 type="text"
-                placeholder="Masukan Nomor Handphone"
+                placeholder="Masukkan Nomor Handphone"
                 value={nomorUrgent}
                 onChange={(e) => {
                   if (
@@ -677,7 +677,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Form.Control
                 className={style.formControl}
                 type="text"
-                placeholder="Masukan Hubungan"
+                placeholder="Masukkan Hubungan"
                 value={hubunganUrgent}
                 onChange={(e) => handlehubungan(e)}
                 onBlur={() =>
