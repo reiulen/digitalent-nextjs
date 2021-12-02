@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 export default function CardTemplateOriginal({ data, session }) {
   const router = useRouter();
@@ -17,6 +18,10 @@ export default function CardTemplateOriginal({ data, session }) {
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [label, setLabel] = useState();
+
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
 
   useEffect(() => {
     if (data.status.includes("tidak") || data.status.includes("ditolak"))
@@ -374,9 +379,8 @@ export default function CardTemplateOriginal({ data, session }) {
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
-              
+
               <CustomButton
-              
                 disabled={!data.survei}
                 click={() => {
                   router.push("/peserta/survey");
@@ -471,10 +475,17 @@ export default function CardTemplateOriginal({ data, session }) {
                 </CustomButton>
               )}
               <CustomButton
-                click={() => handleClick("download", data.id_pendaftaran)}
+                click={() => {
+                  router.push(
+                    `/peserta/riwayat-pelatihan/${data.name
+                      .split(" ")
+                      .join("-")
+                      .toLowerCase()}/sertifikat/${data.id}`
+                  );
+                }}
               >
                 <i className="ri-download-2-fill mr-2"></i>
-                Bukti Pendaftaran
+                Lihat Sertifikat
               </CustomButton>
             </Fragment>
           ) : data.status == "tes substansi" ? (
