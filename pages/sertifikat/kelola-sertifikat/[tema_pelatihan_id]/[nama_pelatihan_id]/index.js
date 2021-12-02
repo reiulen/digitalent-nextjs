@@ -91,7 +91,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       if (query.status == "1") {
-        await store.dispatch(
+        const data = await store.dispatch(
           getPublishedSertifikat(query.id, session.user.user.data.token)
         );
         return {

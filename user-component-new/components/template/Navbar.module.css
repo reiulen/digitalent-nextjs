@@ -3,7 +3,7 @@
   background-color: black;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 992px) {
   .collapsed {
     max-height: 300px;
     max-width: 100%;
