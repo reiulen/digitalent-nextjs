@@ -18,7 +18,10 @@ import IconShare from "../../../../components/assets/icon/Share";
 
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
 
-import { checkRegisterPelatihan } from "../../../../redux/actions/beranda/detail-pelatihan.actions";
+import {
+  checkRegisterPelatihan,
+  getDetailPelatihan,
+} from "../../../../redux/actions/beranda/detail-pelatihan.actions";
 import axios from "axios";
 
 const DetailPelatihan = ({ session }) => {
@@ -54,24 +57,76 @@ const DetailPelatihan = ({ session }) => {
     window.location.href = silabus;
   };
 
+  //disini kurang
+  const handleBookmark = async (pelatihan) => {
+    const link = process.env.END_POINT_API_PELATIHAN;
+    const config = {
+      headers: {
+        Authorization: "Bearer " + session?.token,
+      },
+    };
+
+    const body = {
+      pelatihan_id: pelatihan.id,
+    };
+
+    if (!pelatihan.bookmark) {
+      try {
+        const data = await axios.post(
+          `${link}api/v1/bookmart-peserta/create`,
+          body,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "success"
+          );
+          dispatch(getDetailPelatihan(router.query.id, session?.token));
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    } else {
+      try {
+        const data = await axios.delete(
+          `${link}api/v1/bookmart-peserta/delete?pelatihan_id=${pelatihan.id}`,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menghapus pelatihan dari bookmark",
+            "success"
+          );
+
+          dispatch(getDetailPelatihan(router.query.id, session?.token));
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    }
+  };
+
   return (
     <>
       <HomeWrapper>
         <BreadcrumbComponent
           data={[
-            { link: `/detail/akademi/${akademiId}`, name: pelatihan.akademi },
-            { link: router.asPath, name: pelatihan.name },
+            { link: `/detail/akademi/${akademiId}`, name: pelatihan?.akademi },
+            { link: router.asPath, name: pelatihan?.name },
           ]}
         />
         <Row>
           <Col md={12} lg={8}>
             <div className="rounded my-5">
               <div className="ml-2 mb-3 title-pelatihan">
-                <h1 className="fw-700 fz-40">{pelatihan.name}</h1>
+                <h1 className="fw-700 fz-40">{pelatihan?.name}</h1>
 
                 <div className="d-flex align-items-center mt-5 mt-md-1">
-                  <p className="mr-6 fz-18 fw-500">{pelatihan.akademi}</p>
-                  <p className="badgess-green">{pelatihan.Status}</p>
+                  <p className="mr-6 fz-18 fw-500">{pelatihan?.akademi}</p>
+                  <p className="badgess-green">{pelatihan?.Status}</p>
                 </div>
 
                 <Row className="mt-8">
@@ -81,11 +136,11 @@ const DetailPelatihan = ({ session }) => {
                         Registrasi
                       </p>
                       <p className="fz-16 fw-400">
-                        {moment(pelatihan.pendaftaran_mulai).format(
+                        {moment(pelatihan?.pendaftaran_mulai).format(
                           "DD MMM YYYY"
                         )}{" "}
                         -{" "}
-                        {moment(pelatihan.pendaftaran_selesai).format(
+                        {moment(pelatihan?.pendaftaran_selesai).format(
                           "DD MMM YYYY"
                         )}
                       </p>
@@ -98,7 +153,7 @@ const DetailPelatihan = ({ session }) => {
                         Pelaksanaan
                       </p>
                       <p className="fz-16 fw-400">
-                        {pelatihan.metode_pelatihan}
+                        {pelatihan?.metode_pelatihan}
                       </p>
                     </div>
                   </div>
@@ -109,7 +164,7 @@ const DetailPelatihan = ({ session }) => {
                         Pendaftar
                       </p>
                       <p className="fz-16 fw-400">
-                        {pelatihan.kuota_peserta} Peserta
+                        {pelatihan?.kuota_peserta} Peserta
                       </p>
                     </div>
                   </div>
@@ -117,15 +172,32 @@ const DetailPelatihan = ({ session }) => {
                   <div className="col-6 col-sm-6 col-md-3">
                     <div className="d-flex align-items-center justify-content-md-end">
                       <ShareOverlay
-                        url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan.id}`}
-                        quote={pelatihan.name}
+                        url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
+                        quote={pelatihan?.name}
                       >
                         <button className="btn btn-white roundedss-border mr-4">
                           <IconShare />
                         </button>
                       </ShareOverlay>
-                      <button className="btn btn-white roundedss-border">
-                        <IconLove />
+                      <button
+                        className="btn btn-white roundedss-border"
+                        onClick={() => {
+                          if (!session) {
+                            router.push("/login");
+                          } else {
+                            const pelatihanObj = {
+                              bookmark: pelatihan?.bookmart,
+                              id: pelatihan?.id,
+                            };
+                            handleBookmark(pelatihanObj);
+                          }
+                        }}
+                      >
+                        {!pelatihan?.bookmart ? (
+                          <IconLove />
+                        ) : (
+                          <i className="ri-heart-fill text-danger p-0 fz-16" />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -136,9 +208,9 @@ const DetailPelatihan = ({ session }) => {
               >
                 <Image
                   src={
-                    (pelatihan.thumbnail &&
+                    (pelatihan?.thumbnail &&
                       process.env.END_POINT_API_IMAGE_BEASISWA +
-                        pelatihan.thumbnail) ||
+                        pelatihan?.thumbnail) ||
                     "/assets/media/default-card.png"
                   }
                   objectFit="cover"
@@ -148,7 +220,7 @@ const DetailPelatihan = ({ session }) => {
               </div>
               <div className="p-4 border rounded-xl mt-10">
                 <div
-                  dangerouslySetInnerHTML={{ __html: pelatihan.deskripsi }}
+                  dangerouslySetInnerHTML={{ __html: pelatihan?.deskripsi }}
                 ></div>
               </div>
             </div>
@@ -157,15 +229,15 @@ const DetailPelatihan = ({ session }) => {
             <div className="border rounded-xl p-6 mb-5 ikuti-pelatihan">
               <h4 className="fz-20 fw-600">Ikuti Pelatihan</h4>
               <span className="fz-16">
-                {moment(pelatihan.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
-                {moment(pelatihan.pelatihan_selesai).format("DD MMM YYYY")}
+                {moment(pelatihan?.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
+                {moment(pelatihan?.pelatihan_selesai).format("DD MMM YYYY")}
               </span>
               <div className="mt-7">
-                {pelatihan.status !== "Closed" && (
+                {pelatihan?.status !== "Closed" && (
                   <button
                     className="btn btn-primary-dashboard rounded-pill btn-block fw-500"
                     onClick={() =>
-                      handleCheckPelatihanReg(pelatihan.id, session)
+                      handleCheckPelatihanReg(pelatihan?.id, session)
                     }
                   >
                     Daftar Pelatihan
@@ -190,7 +262,7 @@ const DetailPelatihan = ({ session }) => {
                 </div>
                 <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Alamat</p>
-                  <p className="fz-16">{pelatihan.alamat}</p>
+                  <p className="fz-16">{pelatihan?.alamat}</p>
                 </div>
               </div>
               <div className="d-flex flex-wrap align-items-start mt-4">
@@ -204,8 +276,8 @@ const DetailPelatihan = ({ session }) => {
                 <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Jadwal Pelatihan</p>
                   <p className="fz-16">
-                    {moment(pelatihan.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
-                    {moment(pelatihan.pelatihan_selesai).format("DD MMM YYYY")}
+                    {moment(pelatihan?.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
+                    {moment(pelatihan?.pelatihan_selesai).format("DD MMM YYYY")}
                   </p>
                 </div>
               </div>
@@ -218,7 +290,7 @@ const DetailPelatihan = ({ session }) => {
 
                 <div className="ml-4">
                   <p className="fw-600 fz-18 mb-2">Kuota</p>
-                  <p className="fz-16">{pelatihan.kuota_pendaftar} peserta</p>
+                  <p className="fz-16">{pelatihan?.kuota_pendaftar} peserta</p>
                 </div>
               </div>
             </div>
@@ -230,12 +302,12 @@ const DetailPelatihan = ({ session }) => {
                   <div className="dot-bullet-detail">
                     <Image
                       src={
-                        (pelatihan.logo &&
+                        (pelatihan?.logo &&
                           process.env.END_POINT_API_IMAGE_BEASISWA +
-                            pelatihan.logo) ||
-                        (pelatihan.gambar_mitra &&
+                            pelatihan?.logo) ||
+                        (pelatihan?.gambar_mitra &&
                           process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                            pelatihan.gambar_mitra) ||
+                            pelatihan?.gambar_mitra) ||
                         "/assets/media/mitra-default.png"
                       }
                       width={60}
@@ -250,8 +322,8 @@ const DetailPelatihan = ({ session }) => {
                 </Col>
                 <Col md={12} sm={12} xl={10} lg={10}>
                   <div className="ml-md-3">
-                    <p className="fw-600 fz-16 mb-2">{pelatihan.mitra_nama}</p>
-                    <p style={{ color: "#6C6C6C" }}>{pelatihan.provinsi}</p>
+                    <p className="fw-600 fz-16 mb-2">{pelatihan?.mitra_nama}</p>
+                    <p style={{ color: "#6C6C6C" }}>{pelatihan?.provinsi}</p>
                   </div>
                 </Col>
               </Row>
