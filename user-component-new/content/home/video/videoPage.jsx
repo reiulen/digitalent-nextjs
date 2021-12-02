@@ -1137,7 +1137,7 @@ const VideoPage = () => {
                         <div className="mr-3">
                           {detail.nama_kategori === null ? null : (
                             <span className="p-2 badge badge-light font-weight-bold" style={{ color: "#0063CC", fontSize: "12px" }}>
-                              {(detail.nama_kategori).toUpperCase()}
+                              {detail.nama_kategori}
                             </span>
                           )}
                         </div>

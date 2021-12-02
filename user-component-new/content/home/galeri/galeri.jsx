@@ -433,7 +433,7 @@ const Galeri = () => {
                                         </h1>
                                     </div>
                                     :
-                                    galeri.gallery.map((el, i) => {
+                                    galeri?.gallery.map((el, i) => {
                                         return (
                                             <div
                                                 className="col-6 col-md-4 position-relative my-5"
