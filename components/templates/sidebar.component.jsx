@@ -189,8 +189,6 @@ const Sidebar = ({ session }) => {
     e.stopPropagation();
   };
 
-  console.log(menu)
-
   const handleActiveSubSubmenu = (e, iMenu, iSubMenu, iSubSubMenu) => {
     let _temp = [...menu];
     _temp.map((items, index) => {
