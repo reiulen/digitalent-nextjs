@@ -910,10 +910,11 @@ const ListTraining = ({ token }) => {
                                     )
                                   }
                                   disabled={
-                                    row.status_pelatihan ===
+                                    (row.status_pelatihan ===
                                       "review substansi" ||
-                                    row.status_pelatihan === "selesai" ||
-                                    (row.status_substansi === "ditolak" && true)
+                                      row.status_pelatihan === "selesai" ||
+                                      row.status_substansi === "ditolak") &&
+                                    true
                                   }
                                 >
                                   {row.status_pelatihan ===
@@ -950,6 +951,10 @@ const ListTraining = ({ token }) => {
                                     <option value="review substansi">
                                       Review Substansi
                                     </option>
+                                  )}
+
+                                  {row.status_pelatihan === "selesai" && (
+                                    <option value="selesai">Selesai</option>
                                   )}
 
                                   <option value="dibatalkan">Dibatalkan</option>
@@ -1078,15 +1083,24 @@ const ListTraining = ({ token }) => {
                                         <i className="ri-send-backward p-0 text-white"></i>
                                       </a>
                                     </Link>
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
-                                      onClick={() => handleDelete(row.id)}
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="Hapus"
-                                    >
-                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                    </button>
+                                    {!(
+                                      row.status_pelatihan ===
+                                        "menunggu pendaftaran" ||
+                                      row.status_pelatihan === "pendaftaran" ||
+                                      row.status_pelatihan === "seleksi" ||
+                                      row.status_pelatihan === "pelatihan" ||
+                                      row.status_pelatihan === "selesai"
+                                    ) && (
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary text-white"
+                                        onClick={() => handleDelete(row.id)}
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Hapus"
+                                      >
+                                        <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                      </button>
+                                    )}
                                   </div>
                                 )}
                               </div>

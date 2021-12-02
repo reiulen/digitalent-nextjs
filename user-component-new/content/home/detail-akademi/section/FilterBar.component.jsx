@@ -114,7 +114,7 @@ const FilterBar = () => {
       overflow: "hidden",
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
-      maxWidth: "12rem",
+      maxWidth: "11rem",
     }),
     valueContainer: (styles) => ({
       ...styles,
@@ -165,6 +165,7 @@ const FilterBar = () => {
 
     return (
       <components.ValueContainer {...props}>
+        {console.log(props)}
         {!props.selectProps.inputValue && displayChips}
         <div
           style={{
@@ -174,8 +175,7 @@ const FilterBar = () => {
             borderRadius: "30px",
           }}
         >
-          {shouldBadgeShow &&
-            `+ ${displayLength} ${length != 1 ? "" : ""} lainya`}
+          {shouldBadgeShow && `+ ${displayLength} ${length != 1 ? "" : ""} `}
         </div>
       </components.ValueContainer>
     );
@@ -200,7 +200,6 @@ const FilterBar = () => {
 
       <div className="mb-5 w-100 mr-md-4 mr-0 position-relative">
         <Select
-          closeMenuOnSelect={false}
           options={optionsTheme}
           styles={customStylesTheme}
           placeholder="Pilih Tema"
