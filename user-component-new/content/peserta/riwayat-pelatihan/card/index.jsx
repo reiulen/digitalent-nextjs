@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 export default function CardTemplateOriginal({ data, session }) {
   const router = useRouter();
@@ -18,10 +19,14 @@ export default function CardTemplateOriginal({ data, session }) {
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [label, setLabel] = useState();
 
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
+
   useEffect(() => {
     if (data.status.includes("tidak") || data.status.includes("ditolak"))
       return setLabel("danger");
-    if (data.status.includes("menunggu") || data.status.includes("seleksi"))
+    if (data.status.includes("menunggu") || data.status.includes("seleksi")) 
       return setLabel("warning");
     if (
       data.status.includes("seleksi administrasi") ||
@@ -138,6 +143,8 @@ export default function CardTemplateOriginal({ data, session }) {
         >
           <Card.Body
             onClick={() => {
+              if(data.status.includes("tidak"))
+              return false
               if (data.status.includes("menunggu jadwal tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
@@ -279,7 +286,7 @@ export default function CardTemplateOriginal({ data, session }) {
                         style={{ borderRadius: "50px" }}
                         className={`label label-inline label-light-${
                           data.midtest ? "primary" : label
-                        } font-weight-bolder p-0 px-4 text-capitalize mr-5`}
+                        } font-weight-bolder p-0 px-4 py-4 text-capitalize mr-5`}
                       >
                         Kerjakan Mid Test
                       </p>
@@ -354,6 +361,13 @@ export default function CardTemplateOriginal({ data, session }) {
           <Col lg={3} />
           {data.lpj ? (
             <Fragment>
+               <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
               <CustomButton
                 click={() => {
                   Cookies.set("id_pelatihan", data.id);
@@ -374,9 +388,8 @@ export default function CardTemplateOriginal({ data, session }) {
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
-              
+
               <CustomButton
-              
                 disabled={!data.survei}
                 click={() => {
                   router.push("/peserta/survey");
@@ -471,10 +484,17 @@ export default function CardTemplateOriginal({ data, session }) {
                 </CustomButton>
               )}
               <CustomButton
-                click={() => handleClick("download", data.id_pendaftaran)}
+                click={() => {
+                  router.push(
+                    `/peserta/riwayat-pelatihan/${data.name
+                      .split(" ")
+                      .join("-")
+                      .toLowerCase()}/sertifikat/${data.id}`
+                  );
+                }}
               >
                 <i className="ri-download-2-fill mr-2"></i>
-                Bukti Pendaftaran
+                Lihat Sertifikat
               </CustomButton>
             </Fragment>
           ) : data.status == "tes substansi" ? (

@@ -134,6 +134,7 @@ const Navigationbar = ({ session }) => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
+      console.log(search, "ini search");
       router.push(`/pencarian?cari=${search}`);
     }
   };
@@ -327,10 +328,12 @@ const Navigationbar = ({ session }) => {
                   border: "0px !important",
                 }}
                 onKeyDown={(e) => {
-                  setSearch(e.target.value);
                   if (e.code == "Enter") {
                     handleEnter(e);
                   }
+                }}
+                onChange={(e) => {
+                  setSearch(e.target.value);
                 }}
               />
               <IconSearch
@@ -603,22 +606,45 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
-                    <div className="p-4 fz-12" href="/berita">
-                      Berita
-                    </div>
-                    <hr className="w-100 p-0 m-0" />
-
-                    <div className="p-4 fz-12" href="/artikel">
-                      Artikel
-                    </div>
-                    <hr className="w-100 p-0 m-0" />
-
-                    <div className="p-4 fz-12" href="/galeri">
-                      Galeri
-                    </div>
-                    <hr className="w-100 p-0 m-0" />
-
-                    <div className="p-4 fz-12" href="/video">
+                    <Fragment>
+                      <div
+                        onClick={() => {
+                          router.push("/berita");
+                        }}
+                        className="p-4 fz-12"
+                      >
+                        Berita
+                      </div>
+                      <hr className="w-100 p-0 m-0" />
+                    </Fragment>
+                    <Fragment>
+                      <div
+                        onClick={() => {
+                          router.push("/artikel");
+                        }}
+                        className="p-4 fz-12"
+                      >
+                        Artikel
+                      </div>
+                      <hr className="w-100 p-0 m-0" />
+                    </Fragment>
+                    <Fragment>
+                      <div
+                        onClick={() => {
+                          router.push("/galeri");
+                        }}
+                        className="p-4 fz-12"
+                      >
+                        Galeri
+                      </div>
+                      <hr className="w-100 p-0 m-0" />
+                    </Fragment>
+                    <div
+                      className="p-4 fz-12"
+                      onClick={() => {
+                        router.push("/video");
+                      }}
+                    >
                       Video
                     </div>
                   </Dropdown.Menu>

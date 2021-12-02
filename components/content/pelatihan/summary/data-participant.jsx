@@ -345,7 +345,7 @@ const DataParticipant = ({ token }) => {
               <div className="col-md-4">
                 <p className="text-neutral-body my-0">Mid Test</p>
                 <p className="text-success">
-                  {peserta.list[0].status_midtes || "Belum Tersedia"}
+                  {peserta.list[0].status_mid_test || "Belum Tersedia"}
                 </p>
               </div>
               <div className="col-md-4">
@@ -396,7 +396,12 @@ const DataParticipant = ({ token }) => {
                         setStatusPeserta({ label: e.label, value: e.value })
                       }
                       isDisabled={
-                        peserta.list[0].status !== "seleksi akhir"
+                        peserta.list[0].status === "tes substansi" ||
+                        peserta.list[0].status ===
+                          "tidak lulus tes substansi" ||
+                        peserta.list[0].status === "seleksi administrasi" ||
+                        peserta.list[0].status === "tidak lulus administrasi" ||
+                        peserta.list[0].status === "tes substansi"
                           ? true
                           : false
                       }
@@ -429,8 +434,10 @@ const DataParticipant = ({ token }) => {
                           peserta.list[0].status ===
                             "tidak lulus tes substansi" ||
                           peserta.list[0].status === "seleksi akhir" ||
+                          peserta.list[0].status === "ditolak" ||
                           peserta.list[0].status === "diterima" ||
-                          peserta.list[0].status === "ditolak"
+                          peserta.list[0].status === "pelatihan" ||
+                          peserta.list[0].status === "administrasi akhir"
                         )
                           ? false
                           : true
@@ -478,7 +485,11 @@ const DataParticipant = ({ token }) => {
                           value: e.value,
                         })
                       }
-                      isDisabled
+                      isDisabled={
+                        peserta.list[0].status !== "seleksi akhir"
+                          ? true
+                          : false
+                      }
                     />
                   </div>
                   <div className="col-sm-12 col-md-6">

@@ -113,6 +113,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const { data } = await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
+      
       const status = data.pelatihan.pelatihan_berjalan.status || "";
       if (!status || status == "") {
         success = false;
