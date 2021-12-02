@@ -141,7 +141,7 @@ const SubtansiUser = ({ token }) => {
   const [multipleAnswer, setMultipleAnswer] = useState(multi);
   const [indexSoal, setIndexSoal] = useState(0);
 
-  const [count, setCount] = useState(random_survey && random_survey.time_left);
+  const [count, setCount] = useState(data && data.time_left);
   const [modalDone, setModalDone] = useState(false);
 
   const [hour, setHour] = useState(0);
@@ -331,19 +331,19 @@ const SubtansiUser = ({ token }) => {
     setModalDone(false);
   };
 
-  const handleTest = (e, i, it) => {
-    if (e.target.checked === true) {
-      localStorage.setItem(router.query.id + "/" + i, it.key);
-    } else {
-      localStorage.removeItem(router.query.id + "/" + i);
-    }
+  // const handleTest = (e, i, it) => {
+  //   if (e.target.checked === true) {
+  //     localStorage.setItem(router.query.id + "/" + i, it.key);
+  //   } else {
+  //     localStorage.removeItem(router.query.id + "/" + i);
+  //   }
 
-    let list22 = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      list22.push(localStorage.getItem(key));
-    }
-  };
+  //   let list22 = [];
+  //   for (let i = 0; i < localStorage.length; i++) {
+  //     const key = localStorage.key(i);
+  //     list22.push(localStorage.getItem(key));
+  //   }
+  // };
 
   return (
     <>
