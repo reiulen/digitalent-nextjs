@@ -66,35 +66,41 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       let success = false;
-      if (!req.cookies.id_pelatihan) {
-        const { data } = await store.dispatch(
-          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-        );
-        if (!data) {
-          return (success = false);
-        } else {
-          const trivia = data.list.filter((item) => item.status === "trivia");
-          if (trivia.length > 0) {
-            await store.dispatch(
-              getDetailRiwayatPelatihan(
-                trivia[0].id,
-                session.user.user.data.user.token
-              )
-            );
-            success = true;
-          } else {
-            success = false;
-          }
-        }
-      } else {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            req.cookies.id_pelatihan,
-            session.user.user.data.user.token
-          )
-        );
-        success = true;
-      }
+
+      const { data } = await store.dispatch(
+        getDashboardPeserta(session?.user.user.data.user.token)
+      );
+
+      console.log("data", data)
+      // if (!req.cookies.id_pelatihan) {
+      //   const { data } = await store.dispatch(
+      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+      //   );
+      //   if (!data) {
+      //     return (success = false);
+      //   } else {
+      //     const trivia = data.list.filter((item) => item.status === "trivia");
+      //     if (trivia.length > 0) {
+      //       await store.dispatch(
+      //         getDetailRiwayatPelatihan(
+      //           trivia[0].id,
+      //           session.user.user.data.user.token
+      //         )
+      //       );
+      //       success = true;
+      //     } else {
+      //       success = false;
+      //     }
+      //   }
+      // } else {
+      //   await store.dispatch(
+      //     getDetailRiwayatPelatihan(
+      //       req.cookies.id_pelatihan,
+      //       session.user.user.data.user.token
+      //     )
+      //   );
+      //   success = true;
+      // }
       if (session) {
         await store.dispatch(
           getDataPribadi(session?.user.user.data.user.token)
