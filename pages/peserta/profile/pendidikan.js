@@ -9,7 +9,9 @@ import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const Pendidikan = dynamic(
   () =>
-    import("../../../user-component/content/peserta/profile/pendidikan/index"),
+    import(
+      "../../../user-component-new/content/peserta/profile/pendidikan/index"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -36,7 +38,7 @@ export default function PendidikanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {

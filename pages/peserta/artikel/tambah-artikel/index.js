@@ -4,7 +4,7 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 import { getDashboardPeserta } from "../../../../redux/actions/pelatihan/dashboard-peserta.actions";
-import LoadingContent from "../../../../user-component/content/peserta/components/loader/LoadingContent";
+import LoadingContent from "../../../../user-component-new/components/loader/LoadingContent";
 import { useRouter } from "next/router";
 import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
@@ -14,7 +14,9 @@ import { wrapper } from "../../../../redux/store";
 
 const TambahArtikelPeserta = dynamic(
   () =>
-    import("../../../../user-component/content/peserta/artikel/tambah-artikel"),
+    import(
+      "../../../../user-component-new/content/peserta/artikel/tambah-artikel"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingContent />;
@@ -24,7 +26,9 @@ const TambahArtikelPeserta = dynamic(
 );
 
 const Layout = dynamic(() =>
-import("../../../../user-component/components/template/Layout.component")
+  import(
+    "../../../../user-component-new/components/template/Layout-peserta.component"
+  )
 );
 
 export default function TambahArtikel(props) {
@@ -62,7 +66,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           success = true;
         }
       }
-      
+
       await store.dispatch(getAllKategori(session.user.user.data.Token));
       await store.dispatch(getAllAkademi(session.user.user.data.Token));
 

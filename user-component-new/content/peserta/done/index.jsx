@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import doneImage from "../../../../public/assets/media/logos/Ilustrasi.png";
 
 import Image from "next/dist/client/image";
-import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
 import moment from "moment";
 import "moment/locale/id";

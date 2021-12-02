@@ -6,7 +6,7 @@ import { wrapper } from "../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 import { getDashboardPeserta } from "../../redux/actions/pelatihan/dashboard-peserta.actions";
-import LoadingContent from "../../user-component/content/peserta/components/loader/LoadingContent";
+import LoadingContent from "../../user-component-new/components/loader/LoadingContent";
 import { middlewareAuthPesertaSession } from "../../utils/middleware/authMiddleware";
 import { useRouter } from "next/router";
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";

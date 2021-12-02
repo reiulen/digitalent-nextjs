@@ -6,14 +6,14 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
-import LoadingContent from "../../../user-component/content/peserta/components/loader/LoadingContent";
+import LoadingContent from "../../../user-component-new/components/loader/LoadingContent";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { useRouter } from "next/router";
 import { cekLulus } from "../../../redux/actions/beranda/artikel.actions";
-import { getAllArtikelsPeserta } from '../../../redux/actions/publikasi/artikel.actions'
+import { getAllArtikelsPeserta } from "../../../redux/actions/publikasi/artikel.actions";
 
 const Dashboard = dynamic(
-  () => import("../../../user-component/content/peserta/artikel"),
+  () => import("../../../user-component-new/content/peserta/artikel/index"),
   {
     loading: function loadingNow() {
       return <LoadingContent />;
@@ -23,7 +23,9 @@ const Dashboard = dynamic(
 );
 
 const Layout = dynamic(() =>
-  import("../../../user-component/components/template/Layout.component")
+  import(
+    "../../../user-component-new/components/template/Layout-peserta.component"
+  )
 );
 
 export default function DashboardPage(props) {
@@ -70,9 +72,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
-      await store.dispatch(
-        cekLulus(session?.user.user.data.user.token)
-      );
+      await store.dispatch(cekLulus(session?.user.user.data.user.token));
 
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta", success },
