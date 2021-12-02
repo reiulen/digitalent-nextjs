@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import {
     Container,
-    Card
   } from "react-bootstrap";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
+import Select from "react-select";
 
 import { getAllBerandaBerita } from "../../../../redux/actions/beranda/berita.actions"
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
@@ -25,8 +25,6 @@ const Berita = () => {
     const { akademi } = useSelector((state) => state.allAkademi);
     const { tags } = useSelector((state) => state.allTagBerandaBerita)
 
-    const titleToTrim = 20
-    const categoryToTrim = 9
     const descToTrim = 120
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
@@ -45,6 +43,7 @@ const Berita = () => {
     const [ kategoriToShow, setKategoriToShow ] = useState ([])
     const [ showArrow, setShowArrow ] = useState(null)
     const [showDescButton, setShowDescButton ] = useState(false)
+    const [ optionAkademi, setOptionAkademi] = useState ([])
 
     const getWindowDimensions = () => {
 
@@ -72,6 +71,15 @@ const Berita = () => {
         handleTagEachCard()
         handleKategoriToShow()
     }, [])
+
+    useEffect(() => {
+        handleTagEachCard()
+        // handleKategoriToShow()
+    }, [berita])
+
+    useEffect(() => {
+        setOptionSelect()
+    },[akademi])
 
     useEffect(() => {
         if (router.query.tag){
@@ -167,21 +175,26 @@ const Berita = () => {
     const showTagCards = (index) => {
         if (tagCards) {
             let arr = tagCards
-            return (
-                arr[index].map ((el, i) => {
-                    return (
-                        <div
-                            className=" border px-2 py-1 my-1 mr-3"
-                            onClick={() => handleFilterTag(el)}
-                            style={{cursor:"pointer"}}
-                            key={i}
-                        >
-                            #{el.toUpperCase()}
-                        </div>
-                    )
-                })
-                
-            )
+            if (arr.length !== 0 && arr){
+                return (
+                    arr[index]?.map ((el, i) => {
+                        return (
+                            <div
+                                className=" border px-2 py-1 my-1 mr-3"
+                                onClick={() => handleFilterTag(el)}
+                                style={{cursor:"pointer"}}
+                                key={i}
+                            >
+                                #{el.toUpperCase()}
+                            </div>
+                        )
+                    })
+                    
+                )
+            } else {
+                return (null)
+            }
+            
         }
         
     }
@@ -219,6 +232,47 @@ const Berita = () => {
         }
        
     }
+
+    const setOptionSelect = () => {
+        if (akademi){
+            let result = [{value: "", label: "Semua Akademi"}]
+            
+            for (let i = 0; i < akademi.length; i++){
+                let obj = {
+                    value: akademi[i].slug,
+                    label: akademi[i].slug
+                }
+
+                result.push (obj)
+            }
+
+            setOptionAkademi(result)
+        }
+    }
+
+    // Style Select Filter
+    const customStyle = {
+        control: (styles) => ({
+          ...styles,
+          borderRadius: "30px",
+          paddingLeft: "25px",
+          fontFamily:"Poppins",
+          fontSize:"14px"
+        }),
+        multiValue: (styles) => ({
+          ...styles,
+          backgroundColor: "#E6F2FF",
+          borderRadius: "30px",
+          fontFamily:"Poppins",
+          fontSize:"14px"
+        }),
+        multiValueLabel: (styles) => ({
+          ...styles,
+          color:"#ADB5BD",
+          fontFamily:"Poppins",
+          fontSize:"14px"
+        }),
+    };
 
     const handleFilterKategori = (str) => {
         setActiveTitle("Ada Apa di Digitalent")
@@ -361,7 +415,7 @@ const Berita = () => {
 
             {/* Filter Button */}
             {
-                kategori ?
+                kategoriToShow ?
                     <div
                         className={
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
@@ -480,7 +534,7 @@ const Berita = () => {
                                         className="ml-0 ml-sm-3 mr-n5 mr-sm-n1"
                                     >
                                         {
-                                            kategoriBerita === "" ?
+                                            kategoriBerita   === "" ?
                                                 <SplideSlide>
                                                     <div 
                                                         className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
@@ -705,34 +759,20 @@ const Berita = () => {
                                                 </p>
                                             </div>
 
-                                            <div className="row mx-3 mb-7">
+                                            <div className="mx-3 mb-7">
                                                 {
-                                                    akademi && akademi.length !== 0 &&
-                                                        <select 
-                                                            className="form-control rounded-pill"
-                                                            onChange={(e) => handleCategoryAcademy(e.target.value)}
-                                                            style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
-                                                        >
-                                                            <option 
-                                                                defaultValue="" 
-                                                                style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
-                                                            >
-                                                                Semua Akademi
-                                                            </option>
-                                                            {
-                                                                akademi.map ((el, i) => {
-                                                                    return (
-                                                                        <option 
-                                                                            value={el.slug} 
-                                                                            key={i}
-                                                                            style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
-                                                                        >
-                                                                            {el.slug}
-                                                                        </option>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </select>
+                                                    optionAkademi && optionAkademi.length !== 0 ?
+                                                        <Select
+                                                            placeholder="Semua Akademi"
+                                                            options={optionAkademi}
+                                                            onChange={(e) => handleCategoryAcademy(e?.value)}
+                                                            styles={customStyle}
+                                                            components={{
+                                                                IndicatorSeparator: () => null
+                                                              }}
+                                                        />
+                                                    :
+                                                        null
                                                 }
                                                 
                                             </div>
@@ -921,7 +961,7 @@ const Berita = () => {
                                                     {/* Insert Tag(s) here */}
                                                     <div className="col-xl-7 col-12 d-flex flex-row flex-wrap mt-3 pl-2 ">
                                                         {   
-                                                            tagCards && tagCards.length !== 0 ?
+                                                          berita && berita.berita && berita.berita.length !== 0 && tagCards && tagCards.length !== 0 ?
                                                                 showTagCards(i)
                                                             :
                                                                 null
