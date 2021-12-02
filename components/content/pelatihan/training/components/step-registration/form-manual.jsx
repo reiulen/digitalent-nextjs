@@ -211,6 +211,7 @@ const FormManual = ({
           onBlur={() => simpleValidator.current.showMessageFor("judul form")}
           autoComplete="off"
           maxLength={100}
+          required
         />
 
         {simpleValidator.current.message(

@@ -134,6 +134,7 @@ const Navigationbar = ({ session }) => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
+      console.log(search, "ini search");
       router.push(`/pencarian?cari=${search}`);
     }
   };
@@ -327,10 +328,12 @@ const Navigationbar = ({ session }) => {
                   border: "0px !important",
                 }}
                 onKeyDown={(e) => {
-                  setSearch(e.target.value);
                   if (e.code == "Enter") {
                     handleEnter(e);
                   }
+                }}
+                onChange={(e) => {
+                  setSearch(e.target.value);
                 }}
               />
               <IconSearch
