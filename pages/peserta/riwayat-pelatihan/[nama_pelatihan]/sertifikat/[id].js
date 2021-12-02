@@ -9,6 +9,7 @@ import { middlewareAuthPesertaSession } from "../../../../../utils/middleware/au
 import { getDetailRiwayatPelatihan } from "../../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 import { getAllAkademi } from "../../../../../redux/actions/beranda/beranda.actions";
 import { getDashboardPeserta } from "../../../../../redux/actions/pelatihan/dashboard-peserta.actions";
+import { getSertifikatPeserta } from "../../../../../redux/actions/pelatihan/sertifikat.action";
 
 const SertifikatPeserta = dynamic(
   () =>
@@ -49,9 +50,9 @@ export default function RiwayatPelatihanPage(props) {
     <>
       <Layout title="Administrasi" session={session}>
         {!props.success ? (
-          <SertifikatPeserta session={session} />
-        ) : (
           <BelumTersedia />
+        ) : (
+          <SertifikatPeserta session={session} />
         )}
       </Layout>
     </>
@@ -78,31 +79,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!query.id) {
         success = false;
       } else {
-      }
-      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
-      await store.dispatch(getAllAkademi());
-
-      const { data } = await store.dispatch(
-        getDashboardPeserta(session?.user.user.data.user.token)
-      );
-      const status = data.pelatihan.pelatihan_selesi.status || "";
-      if (!status || status == "") {
-        success = false;
-      } else if (
-        !status.includes("substansi" || "belum tersedia" || "belum mengerjakan")
-      ) {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            data.pelatihan.pelatihan_selesi.id,
-            session.user.user.data.user.token
-          )
+        const data = await store.dispatch(
+          getSertifikatPeserta(session.user.user.data.user.token, query.id)
         );
-        success = true;
-      } else {
-        success = false;
+        if (data.data) {
+          success = true;
+        } else {
+          success = false;
+        }
       }
-
-      console.log(session.user.user.data.user.token);
 
       return {
         props: {
