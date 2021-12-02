@@ -201,7 +201,6 @@ const DetailAkademi = ({ session }) => {
     let tipe_pelatihan = null;
     let penyelenggara = null;
     let kategori_peserta = null;
-    let kata_kunci = null;
     let tanggal_mulai = null;
     let tanggal_akhir = null;
     let page = pageNumber;
@@ -214,7 +213,6 @@ const DetailAkademi = ({ session }) => {
         tipe_pelatihan,
         penyelenggara,
         kategori_peserta,
-        kata_kunci,
         tanggal_mulai,
         tanggal_akhir,
         page
@@ -227,7 +225,8 @@ const DetailAkademi = ({ session }) => {
     let data = {
       akademi_id: id,
       tema_id: tema_id || null,
-      kota: null,
+      provinsi: null,
+      tipe_pelatihan: null,
       penyelenggara:
         filterPenyelenggara !== null ? filterPenyelenggara.label : null,
       kategori_peserta: filterKategori !== null ? filterKategori.value : null,
@@ -239,8 +238,8 @@ const DetailAkademi = ({ session }) => {
       getAllPelatihanByAkademi(
         data.akademi_id,
         data.tema_id,
-        data.kota,
-        null,
+        data.provinsi,
+        data.tipe_pelatihan,
         data.penyelenggara,
         data.kategori_peserta,
         data.tanggal_mulai,
