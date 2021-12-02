@@ -259,7 +259,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
       )
       .then((res) => {
         setShowUpdateGambar(false);
-        toast.success("Berhasil Update");
+        SweatAlert("Berhasil", "Berhasil update foto", "success");
         dispatch(getDataPribadi(token));
       })
       .catch((err) => {

@@ -51,7 +51,7 @@ const FormKomitmen = ({
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Komitmen Harus Diisi !",
+          text: "Komitmen Harus Disetujui !",
         });
       }
     } else {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Badge } from "react-bootstrap";
-import style from "../../../styles/peserta/dashboard.module.css";
 import Image from "next/image";
+import moment from "moment";
 
 const CardPelatihanClose = ({ row }) => {
   return (
@@ -60,14 +60,16 @@ const CardPelatihanClose = ({ row }) => {
             className="d-flex justify-content-between position-relative pb-0 mb-0 flex-wrap"
             style={{ top: "-15px" }}
           >
-            <p className={`pl-18 my-0 text-mitra-new`}>{row.mitra}</p>
+            <p className={`pl-18 my-0 text-mitra-new text-truncate`}>
+              {row.mitra}
+            </p>
             <div className="status align-self-center">
               <p
                 className={`${
                   row.status === "Open"
                     ? "status-mitra-open-new"
                     : "status-mitra-close-new"
-                } text-uppercase mt-2 mt-lg-2 mt-xl-0 ml-md-17 ml-17`}
+                } text-uppercase mt-2 mt-lg-2 mt-xl-0 ml-md-0 ml-17`}
               >
                 {row.status}
               </p>
@@ -90,8 +92,8 @@ const CardPelatihanClose = ({ row }) => {
               <i className="ri-time-line"></i>
               <span className={`text-date-register-new pl-2`}>
                 Registrasi:{" "}
-                {moment(row.pendaftaran_mulai).format("DD MMMM YYYY")} -{" "}
-                {moment(row.pendaftaran_selesai).format("DD MMMM YYYY")}
+                {moment(row.pendaftaran_mulai).format("DD MMM YYYY")} -{" "}
+                {moment(row.pendaftaran_selesai).format("DD MMM YYYY")}
               </span>
             </div>
             <div className="date d-flex align-items-center align-middle">

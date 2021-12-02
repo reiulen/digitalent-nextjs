@@ -166,6 +166,7 @@ const AddMasterPelatihan = ({ token }) => {
               name="dataOption"
               value={row.dataOption}
               onChange={(e) => inputChangeHandler(e, i)}
+              required
             >
               <option value="" disabled selected>
                 -- PILIH --
@@ -194,6 +195,7 @@ const AddMasterPelatihan = ({ token }) => {
               placeholder="data1;data2"
               autoComplete="off"
               onChange={(e) => inputChangeHandler(e, i)}
+              required
             />
           </div>
         </div>
@@ -217,6 +219,7 @@ const AddMasterPelatihan = ({ token }) => {
                 name="option"
                 value={row.option}
                 onChange={(e) => inputChangeHandler(e, i)}
+                required
               >
                 <option value="" disabled selected>
                   -- PILIH --
@@ -386,7 +389,7 @@ const AddMasterPelatihan = ({ token }) => {
                 {simpleValidator.current.message(
                   "judul form",
                   title,
-                  "required",
+                  "required|max:100",
                   { className: "text-danger" }
                 )}
               </div>
@@ -406,6 +409,7 @@ const AddMasterPelatihan = ({ token }) => {
                         placeholder="Field"
                         autoComplete="off"
                         onChange={(e) => inputChangeHandler(e, i)}
+                        required
                       />
                     </div>
                   </div>
@@ -419,6 +423,7 @@ const AddMasterPelatihan = ({ token }) => {
                         name="element"
                         value={row.element}
                         onChange={(e) => inputChangeHandler(e, i)}
+                        required
                       >
                         <option value="" disabled selected>
                           -- PILIH --

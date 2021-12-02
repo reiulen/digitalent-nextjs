@@ -51,7 +51,6 @@ export default function NamaPelatihanID({ token }) {
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
   };
-  console.log(certificates);
   const options = [
     { value: "draft", label: "Draft" },
     { value: "not-yet-available", label: "Belum Tersedia" },
