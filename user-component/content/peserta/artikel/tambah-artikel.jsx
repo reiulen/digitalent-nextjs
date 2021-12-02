@@ -98,7 +98,6 @@ const TambahArtikelPeserta = ({ session }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-<<<<<<< HEAD
     if (simpleValidator.current.allValid()) {
       const data = {
         isi_artikel: deskripsi,
@@ -118,17 +117,6 @@ const TambahArtikelPeserta = ({ session }) => {
         text: "Isi data dengan benar !",
       });
     }
-=======
-    const data = {
-      isi_artikel: deskripsi,
-      judul_artikel: judul,
-      gambar: gambar,
-      kategori_akademi: akademi,
-      kategori_id: kategori,
-      tag: tag,
-    };
-    dispatch(newArtikelPeserta(data, session.token));
->>>>>>> 92697e5941015cfbb4030e30fe101da197485ad8
   };
 
   useEffect(() => {
@@ -250,19 +238,11 @@ const TambahArtikelPeserta = ({ session }) => {
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("judul")
                       }
-<<<<<<< HEAD
-=======
-                      required
->>>>>>> 92697e5941015cfbb4030e30fe101da197485ad8
                     />
                     {simpleValidator.current.message(
                       "judul",
                       judul,
-<<<<<<< HEAD
                       "required|min:5|max:200",
-=======
-                      "required|max:200",
->>>>>>> 92697e5941015cfbb4030e30fe101da197485ad8
                       { className: "text-danger" }
                     )}
                   </div>
@@ -278,25 +258,11 @@ const TambahArtikelPeserta = ({ session }) => {
                   <div className={`${styles.deskripsiTambah} col-sm-12`}>
                     <div className="ckeditor">
                       {editorLoaded ? (
-<<<<<<< HEAD
                         <div style={{ width: "100%", height: "300px" }}>
                           <div
                             ref={quillRef}
                           />
                         </div>
-=======
-                        <CKEditor
-                          editor={ClassicEditor}
-                          config={{
-                            placeholder: "Tulis Deskripsi",
-                          }}
-                          data={deskripsi}
-                          onChange={(event, editor) => {
-                            const data = editor.getData();
-                            setDeskripsi(data);
-                          }}
-                        />
->>>>>>> 92697e5941015cfbb4030e30fe101da197485ad8
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
@@ -414,10 +380,6 @@ const TambahArtikelPeserta = ({ session }) => {
                       name="fruits"
                       placeHolder="Isi Tag disini dan Enter"
                       seprators={["Enter", "Tab", "Space"]}
-<<<<<<< HEAD
-
-=======
->>>>>>> 92697e5941015cfbb4030e30fe101da197485ad8
                     />
                     {checkTag && (
                       <span className="text-danger">Tag tidak boleh sama</span>
