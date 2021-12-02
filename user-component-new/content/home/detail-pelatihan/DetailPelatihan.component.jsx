@@ -51,7 +51,7 @@ const DetailPelatihan = ({ session }) => {
 
   const handleDownloadSilabus = async () => {
     let silabus = pelatihan.file_path + pelatihan.silabus;
-    await axios.get(silabus);
+    window.location.href = silabus;
   };
 
   return (
