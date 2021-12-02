@@ -70,18 +70,15 @@ const Pencarian = ({ session }) => {
       tanggal_mulai: startDate,
       tanggal_akhir: endDate,
     };
-    if (data.penyelenggara) {
-      dispatch(setValuePenyelenggara(data.penyelenggara));
-    }
-    if (data.kategori_peserta) {
-      dispatch(setValueKategoriPeserta(data.kategori_peserta));
-    }
-    if (data.tanggal_mulai) {
-      dispatch(setValuePelatihanMulai(data.tanggal_mulai));
-    }
-    if (data.tanggal_akhir) {
-      dispatch(setValuePelatihanAkhir(data.tanggal_akhir));
-    }
+    router.push(
+      `/pencarian?cari=${
+        router.query.cari || ""
+      }&page=${1}&limit=${6}&penyelenggara=${
+        data.penyelenggara || ""
+      }&pelatihan_mulai=${data.tanggal_mulai || ""}&pelatihan_akhir=${
+        data.tanggal_akhir || ""
+      }&kategori_peserta=${data.kategori_peserta || ""}`
+    );
   };
 
   const handleReset = () => {
@@ -95,7 +92,16 @@ const Pencarian = ({ session }) => {
   };
 
   const handlePagination = (page) => {
-    dispatch(setValuePage(page));
+    router.push(
+      `/pencarian?cari=${
+        router.query.cari || ""
+      }&page=${page}&limit=${6}&penyelenggara=${
+        penyelenggara || ""
+      }&pelatihan_mulai=${tanggal_mulai || ""}&pelatihan_akhir=${
+        tanggal_akhir || ""
+      }&kategori_peserta=${kategori_peserta || ""}`
+    );
+    // dispatch(setValuePage(page));
   };
 
   return (
@@ -107,11 +113,11 @@ const Pencarian = ({ session }) => {
         <Row>
           <Col md={12}>
             <div className="ml-2 mb-3 title-pelatihan">
-              <h1 className="fw-700 fz-36">Pencarian {allPencarian?.cari}</h1>
+              <h1 className="fw-700 fz-36">Pencarian {router.query.cari}</h1>
 
               <div className="mt-5 mt-md-1">
                 <p className="mr-6 fz-18 text-muted fw-400">
-                  Pencarian Pelatihan Terkait dengan Design
+                  Pencarian Pelatihan Terkait dengan {router.query.cari}
                 </p>
               </div>
             </div>

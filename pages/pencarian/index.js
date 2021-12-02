@@ -61,7 +61,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.pelatihan_mulai || "",
           query.pelatihan_akhir || "",
           query.kategori_peserta || "",
-          token || ""
+          sessionToken || ""
         )
       );
 
