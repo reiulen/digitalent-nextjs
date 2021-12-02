@@ -24,6 +24,9 @@ import {
   IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_SUCCESS,
   IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_FAIL,
   CLEAR_ERRORS,
+  POST_RESULT_SURVEY_REQUEST,
+  POST_RESULT_SURVEY_SUCCESS,
+  POST_RESULT_SURVEY_FAIL,
 } from "../../types/subvit/survey-question-detail.type";
 
 import axios from "axios";
@@ -89,6 +92,36 @@ export const getRandomSurveyQuestionDetail =
       });
     }
   };
+
+export const postResultSurvey = (resultData, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: POST_RESULT_SURVEY_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_SUBVIT + "api/survey-question-banks/result",
+      resultData,
+      config
+    );
+
+    dispatch({
+      type: POST_RESULT_SURVEY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_RESULT_SURVEY_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const newSurveyQuestionDetail =
   (triviaDetailData, token) => async (dispatch) => {

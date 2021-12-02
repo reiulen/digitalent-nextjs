@@ -11,7 +11,9 @@ import LoadingFooter from "../../../../user-component/content/peserta/components
 
 const Navbar = dynamic(
   () =>
-    import("../../../../user-component/components/template/Navbar2.component"),
+    import(
+      "../../../../user-component-new/components/template/Navbar.component"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingNavbar />;
