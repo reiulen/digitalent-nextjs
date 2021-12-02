@@ -1,10 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
-import PageWrapper from "../../../wrapper/page.wrapper";
+import React, { useState, useRef } from "react";
 import { Card, Form, Col, Row, Button } from "react-bootstrap";
 import SimpleReactValidator from "simple-react-validator";
 import { SweatAlert } from "../../../../utils/middleware/helper/index";
 import axios from "axios";
-export default function EditTTEP12({ setUbah, data }) {
+import { useDispatch } from "react-redux";
+import { getTTEP12 } from "../../../../redux/actions/sertifikat/tte-p12.action";
+
+export default function EditTTEP12({ setUbah, data, token }) {
+  const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [name, setName] = useState("");
   const [position, setPosition] = useState("");
@@ -13,10 +16,10 @@ export default function EditTTEP12({ setUbah, data }) {
   const [hidePassword, setHidePassword] = useState(true);
 
   const [fileName, setFileName] = useState("");
-  const [filePreview, setFilePreview] = useState("");
 
   const onChangeFile = (e) => {
     const type = ["application/x-pkcs12"];
+
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
         if (e.target.files[0].size > 5000000) {
@@ -24,14 +27,6 @@ export default function EditTTEP12({ setUbah, data }) {
           Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
         } else {
           setFileUpload(e.target.files[0]);
-          // const reader = new FileReader();
-          // reader.onload = () => {
-          //   if (reader.readyState === 2) {
-          //     setFileUpload(reader.result);
-          //   }
-          // };
-          // reader.readAsDataURL(e.target.files[0]);
-          // setFilePreview(e.target.files[0]);
           setFileName(e.target.files[0].name);
         }
       } else {
@@ -46,15 +41,6 @@ export default function EditTTEP12({ setUbah, data }) {
   };
 
   const handleSubmit = async (name, position, password, fileUpload) => {
-    // setUbah(false);
-    // if (true) {
-    // } else {
-    //   SweatAlert(
-    //     "File p12 Tidak Sesuai",
-    //     "Maaf, file yang diunggah terdapat perbedaan. Pastikan file yang Anda unggah sudah sesuai dengan ketentuan",
-    //     "error"
-    //   );
-    // }
     const formData = new FormData();
 
     formData.append("name", name);
@@ -62,14 +48,20 @@ export default function EditTTEP12({ setUbah, data }) {
     formData.append("position", position);
     formData.append("p12", fileUpload);
 
-    const link = `http://192.168.1.78:8000/api/tte-p12/store`;
-    const body = {
-      name,
-      position,
-      password,
-      p12: fileUpload,
-    };
-    const test = axios.post(link, formData);
+    const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/store`;
+
+    try {
+      const data = await axios.post(link, formData);
+      if (data.status == 200) {
+        SweatAlert("Berhasil", "Anda berhasil mengunggah file p12", "success");
+        const success = await dispatch(getTTEP12(token));
+        if (success.status) {
+          setUbah(false);
+        }
+      }
+    } catch (e) {
+      SweatAlert("Gagal", "Anda gagal mengunggah file", "error");
+    }
   };
 
   return (
@@ -79,13 +71,14 @@ export default function EditTTEP12({ setUbah, data }) {
           <h1 className="fz-24">TTE P12</h1>
         </p>
         <p style={{ color: "#6C6C6C" }}>
-          Anda belum memiliki file p12, silahkan unggah file sesuai dengan
-          ketentuan
+          {data
+            ? "Silahkan unggah file p12 terbaru yang sesuai dengan ketentuan"
+            : "Anda belum memiliki file p12, silahkan unggah file sesuai dengan ketentuan"}
         </p>
       </Card.Title>
       <hr className="p-0 m-0" />
       <Card.Body>
-        <Row className=" fz-16">
+        <Row className="fz-16">
           <Col>
             <Form>
               <Form.Group className="mb-8 text-capitalize">
@@ -93,6 +86,7 @@ export default function EditTTEP12({ setUbah, data }) {
                 <Form.Control
                   type="text"
                   placeholder="Nama"
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
                 {simpleValidator.current.message("nama", name, "required", {
@@ -126,7 +120,7 @@ export default function EditTTEP12({ setUbah, data }) {
           <Col>
             <Form>
               <Form.Group className="mb-8 text-capitalize">
-                <Form.Label>Unggah File</Form.Label>
+                <Form.Label className="fz-16">Unggah File</Form.Label>
                 <div className="d-flex">
                   <div className="custom-file">
                     <input
@@ -162,7 +156,7 @@ export default function EditTTEP12({ setUbah, data }) {
           <Col>
             <Form>
               <Form.Group className="mb-8 text-capitalize">
-                <Form.Label>Password</Form.Label>
+                <Form.Label className="fz-16">Password</Form.Label>
                 <Form.Control
                   type={!hidePassword ? "text" : "password"}
                   placeholder="Password"

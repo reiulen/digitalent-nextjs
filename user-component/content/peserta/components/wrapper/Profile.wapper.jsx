@@ -179,21 +179,18 @@ const ProfileWrapper = ({
                   <p className={`${style.name_profile_wrapper} my-0`}>
                     {dataPribadi ? dataPribadi.name || "-" : "-"}{" "}
                     {/* KEBUTUHAN SPRINT DEPAN */}
-                    {
-                      (dataPribadi?.handphone_verifikasi,
-                      dataPribadi.email_verifikasi === true && (
-                        <span>
-                          <Button className={style.btnVerification}>
-                            <div className="d-flex flex-row">
-                              <div>
-                                <Image src={check} alt="verification" />
-                              </div>
-                              <div>Terverifikasi</div>
+                    {dataPribadi && dataPribadi.status_verified === true && (
+                      <span>
+                        <Button className={style.btnVerification}>
+                          <div className="d-flex flex-row">
+                            <div>
+                              <Image src={check} alt="verification" />
                             </div>
-                          </Button>
-                        </span>
-                      ))
-                    }
+                            <div>Terverifikasi</div>
+                          </div>
+                        </Button>
+                      </span>
+                    )}
                     {/* KEBUTUHAN SPRINT DEPAN */}
                   </p>
 

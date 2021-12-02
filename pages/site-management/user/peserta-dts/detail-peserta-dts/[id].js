@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import LoadingPage from "../../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../../redux/store";
-import {getDetailPesertaManage} from '../../../../../redux/actions/site-management/user/peserta-dts'
+import {getDetailPesertaManage, getPelatihanByPeserta} from '../../../../../redux/actions/site-management/user/peserta-dts'
 
 const PageDetail = dynamic(
   () =>
@@ -38,6 +38,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(
           getDetailPesertaManage(
+            session.user.user.data.token,
+            query.id
+          )
+        );
+
+        await store.dispatch(
+          getPelatihanByPeserta(
             session.user.user.data.token,
             query.id
           )

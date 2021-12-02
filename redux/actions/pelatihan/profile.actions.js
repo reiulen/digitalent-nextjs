@@ -34,8 +34,11 @@ import {
   UPDATE_PEKERJAAN_FAIL,
   CLEAR_ERRORS,
   GET_ASAL_SEKOLAH,
+  STORE_ALL_DATA_PRIBADI,
+  GET_DATA_PRIBADI_WIZZARD,
 } from "../../types/pelatihan/profile.type";
 import axios from "axios";
+import { ST } from "next/dist/shared/lib/utils";
 
 //DATA PRIBADI
 export const updateProfileDataPribadi =
@@ -177,20 +180,17 @@ export const updateProfilePendidikan =
   };
 
 export const getDataAsalSekolah =
-  (token, page, limit, keyword) => async (dispatch) => {
+  (token, keyword = "") =>
+  async (dispatch) => {
     try {
-      const params = {
-        page,
-        limit,
-        keyword,
-      };
-
       let link =
         process.env.END_POINT_API_SITE_MANAGEMENT +
         `api/option/origin-of-school`;
 
+      if (keyword === "0" ? "" : keyword)
+        link = link.concat(`&keyword=${keyword}`);
+
       const config = {
-        params,
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -326,3 +326,20 @@ export const clearErrors = () => async (dispatch) => {
     type: CLEAR_ERRORS,
   });
 };
+
+// export const getDataInformasiWizzard = () => async (dispatch, getState) => {
+//   dispatch({
+//     type: GET_DATA_PRIBADI_WIZZARD,
+//     payload: data,
+//   });
+// };
+
+// export const updateDataWizzard =
+//   (dataPribadi, params) => async (dispatch, getState) => {
+//     const current = getState().getDataPribadiWizzard;
+
+//     dispatch({
+//       type: STORE_ALL_DATA_PRIBADI,
+//       payload: data,
+//     });
+//   };

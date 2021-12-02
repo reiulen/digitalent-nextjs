@@ -41,17 +41,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     (state) => state.drowpdownAgama
   );
 
-  const { error: errorTempatLahir, data: dataTempatLahir } = useSelector(
-    (state) => state.drowpdownTempatLahir.data
-  );
-
-  let optionsTempatLahir = [];
-
-  dataTempatLahir &&
-    dataTempatLahir.city.map((item) => {
-      return optionsTempatLahir.push({ label: item.label, value: item.id });
-    });
-
   const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
   const [email, setEmail] = useState((dataPribadi && dataPribadi.email) || "");
   const [kelamin, setKelamin] = useState(
@@ -108,15 +97,14 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 
   useEffect(() => {
     dispatch(dropdownTempatLahir(token));
+
     if (errorUpdateData) {
-      // toast.error(errorUpdateData);
       SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
-      // toast.success("Berhasil Update Data");
       dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
       if (wizzard) {
         funcViewEdit(2);
@@ -423,7 +411,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-                {!dataPribadi.foto &&
+                {!dataPribadi?.foto &&
                   simpleValidator.current.message("foto", upImg, "required", {
                     className: "text-danger",
                   })}
