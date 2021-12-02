@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import Layout from "../../../../user-component/components/template/Layout.component";
+import Layout from "../../../../user-component-new/components/template/Layout-peserta.component";
 
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";

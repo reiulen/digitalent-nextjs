@@ -143,7 +143,17 @@ const Penyelenggara = () => {
             {!penyelenggara ||
               (penyelenggara && penyelenggara.data.list_mitras.length === 0 ? (
                 <Col md={12} className="text-center mb-10 mt-11">
-                  <h1>Data Kosong</h1>
+                  <Image
+                    src="/assets/media/empty-akademi-pelatihan.png"
+                    width={525}
+                    height={350}
+                  />
+                  <h1
+                    className="fw-600 fz-24 mt-14"
+                    style={{ color: "#1f1f1f" }}
+                  >
+                    Tidak ada penyelenggara terkait {`"${search}"`}
+                  </h1>
                 </Col>
               ) : (
                 penyelenggara.data.list_mitras.map((row, i) => (

@@ -233,11 +233,9 @@ const Navigationbar = ({ session }) => {
                 id="basic-nav-dropdown"
                 className="navdropdown-child position-relative w-100 text-menu"
               >
-                <Link href="/" passHref>
-                  <NavDropdown.Item className="navdropdown-child">
-                    Beranda
-                  </NavDropdown.Item>
-                </Link>
+                <NavDropdown.Item href="/" className="navdropdown-child">
+                  Beranda
+                </NavDropdown.Item>
                 <div className="btn-group dropright w-100">
                   <a
                     type="button"
