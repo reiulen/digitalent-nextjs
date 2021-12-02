@@ -28,7 +28,6 @@ const CardPelatihanOpen = ({
         Authorization: "Bearer " + session?.token,
       },
     };
-
     const body = {
       pelatihan_id: pelatihan.id,
     };
@@ -45,7 +44,20 @@ const CardPelatihanOpen = ({
             "Anda berhasil menambahkan pelatihan ke bookmark",
             "success"
           );
-          // dispatch(getAllPelatihanByAkademi(session?.token, router.query.id));
+          dispatch(
+            getAllPelatihanByAkademi(
+              router.query.id,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              session.token
+            )
+          );
         }
       } catch (e) {
         SweatAlert("Gagal", e.message, "error");
@@ -62,7 +74,20 @@ const CardPelatihanOpen = ({
             "Anda berhasil menghapus pelatihan dari bookmark",
             "success"
           );
-          // dispatch(getAllPelatihanByAkademi(session?.token, router.query.id));
+          dispatch(
+            getAllPelatihanByAkademi(
+              router.query.id,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              session.token
+            )
+          );
         }
       } catch (e) {
         SweatAlert("Gagal", e.message, "error");

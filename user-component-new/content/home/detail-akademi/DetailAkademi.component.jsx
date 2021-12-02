@@ -28,7 +28,6 @@ const DetailAkademi = ({ session }) => {
   const { pelatihan, loading: loadingPelatihan } = useSelector(
     (state) => state.allPelatihan
   );
-
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
     useSelector((state) => state.allPenyelenggaraPeserta);
 
@@ -216,7 +215,8 @@ const DetailAkademi = ({ session }) => {
         kategori_peserta,
         tanggal_mulai,
         tanggal_akhir,
-        page
+        page,
+        session.token
       )
     );
   };
@@ -245,7 +245,8 @@ const DetailAkademi = ({ session }) => {
         data.kategori_peserta,
         data.tanggal_mulai,
         data.tanggal_akhir,
-        1
+        1,
+        session.token
       )
     );
   };
@@ -262,6 +263,7 @@ const DetailAkademi = ({ session }) => {
       getAllPelatihanByAkademi(id, null, null, null, null, null, null, null, 1)
     );
   };
+
   return (
     <>
       <HomeWrapper>
@@ -483,6 +485,7 @@ const DetailAkademi = ({ session }) => {
                             row={el}
                             i={i}
                             akademi={akademi}
+                            session={session}
                             funcCheckPelatihan={(index) =>
                               handleCheckPelatihanReg(index)
                             }
