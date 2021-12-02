@@ -50,8 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(getAllTemaOriginal());
 
-      await store.dispatch(getDetailPelatihan(params.id));
-
+      await store.dispatch(getDetailPelatihan(params.id, sessionToken));
       return {
         props: {
           title: "Detail Pelatihan",

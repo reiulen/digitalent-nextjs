@@ -333,6 +333,7 @@ const Beranda = ({ session }) => {
       }
     }
   };
+
   return (
     <>
       <section className="image-carousel-new mt-10">
@@ -491,10 +492,16 @@ const Beranda = ({ session }) => {
                                                           color: "#6C6C6C",
                                                         }}
                                                         onClick={() => {
-                                                          handleBookmark(
-                                                            pelatihan[i]
-                                                              .pelatihan[j]
-                                                          );
+                                                          if (!session) {
+                                                            router.push(
+                                                              "/login"
+                                                            );
+                                                          } else {
+                                                            handleBookmark(
+                                                              pelatihan[i]
+                                                                .pelatihan[j]
+                                                            );
+                                                          }
                                                         }}
                                                       ></i>
                                                     </Button>
@@ -726,11 +733,18 @@ const Beranda = ({ session }) => {
                                                       color: "#6C6C6C",
                                                     }}
                                                     onClick={() => {
-                                                      const pelatihan = {
-                                                        id: cardId,
-                                                        bookmark: cardBookmark,
-                                                      };
-                                                      handleBookmark(pelatihan);
+                                                      if (!session) {
+                                                        router.push("/login");
+                                                      } else {
+                                                        const pelatihan = {
+                                                          id: cardId,
+                                                          bookmark:
+                                                            cardBookmark,
+                                                        };
+                                                        handleBookmark(
+                                                          pelatihan
+                                                        );
+                                                      }
                                                     }}
                                                   ></i>
                                                 </Button>
