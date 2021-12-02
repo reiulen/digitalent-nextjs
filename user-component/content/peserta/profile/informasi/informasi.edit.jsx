@@ -96,7 +96,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   }
 
   useEffect(() => {
-    dispatch(dropdownTempatLahir(token));
+    // dispatch(dropdownTempatLahir(token));
 
     if (errorUpdateData) {
       // toast.error(errorUpdateData);

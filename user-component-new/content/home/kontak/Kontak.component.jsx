@@ -15,7 +15,7 @@ export default function Kontak() {
         <div className="mt-5">
           <h1 className="fw-700 fz-40">Kontak</h1>
           <p className="mr-6 fz-18 text-muted fw-400">
-            Layanan Contact Center Digital Talent Scholarship
+            Layanan Pusat Informasi Digitalent Scholarship
           </p>
         </div>
         <div className="my-10 w-100">

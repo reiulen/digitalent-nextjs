@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import style from "../style.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+
 import {
   dropdownKabupaten,
   dropdownKabupatenDomisili,
@@ -53,6 +54,10 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
     success,
   } = useSelector((state) => state.updateAlamat);
 
+  const [isValid, setIsValid] = useState(false);
+
+  const [isProvinsi, setIsProvinsi] = useState(false);
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
@@ -93,6 +98,28 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   const [kodePosDomisili, setKodePosDomisili] = useState(
     (alamat && alamat.kode_pos) || ""
   );
+
+  const customStyles = {
+    // For the select it self, not the options of the select
+    control: (styles, { isDisabled }) => {
+      return {
+        ...styles,
+        cursor: isDisabled ? "not-allowed" : "default",
+        // This is an example: backgroundColor: isDisabled ? 'rgba(206, 217, 224, 0.5)' : 'white'
+        color: isDisabled ? "#aaa" : "white",
+      };
+    },
+    // For the options
+    option: (styles, { isDisabled }) => {
+      const color = chroma(data.color);
+      return {
+        ...styles,
+        backgroundColor: isDisabled ? "red" : blue,
+        color: "#FFF",
+        cursor: isDisabled ? "not-allowed" : "default",
+      };
+    },
+  };
 
   const optionsProvinsi = [];
   if (dataProvinsi) {
@@ -165,6 +192,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   }, [errorUpdateData, success, dispatch]);
 
   const handleSesuaiKtp = (val) => {
+    setIsValid(true);
     setSesuai(val);
     if (val) {
       setAlamatDomisili(alamatKtp);
@@ -213,6 +241,8 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1" key={1}>
             <Form.Label>Alamat Lengkap </Form.Label>
             <Form.Control
+              disabled={isValid}
+              styles={customStyles}
               placeholder="Silahkan Masukkan Alamat Lengkap"
               value={alamatDomisili}
               onChange={(e) => setAlamatDomisili(e.target.value)}
@@ -233,6 +263,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
             <Form.Group as={Col} md={6} controlId="formGridEmail">
               <Form.Label>Provinsi</Form.Label>
               <Select
+                isDisabled={isValid}
                 key={1}
                 placeholder={
                   (alamat && alamat.provinsi) || "Silahkan Pilih Provinsi"
@@ -262,6 +293,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
             <Form.Group as={Col} md={6} controlId="formGridKelamin">
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
+                isDisabled={isValid}
                 key={1}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
                 placeholder={
@@ -294,6 +326,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Kecamatan</Form.Label>
 
               <Select
+                isDisabled={isValid}
                 placeholder={
                   kecamatanKtp === null
                     ? "Silahkan Pilih Kecamatan"
@@ -324,6 +357,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Desa / Kelurahan</Form.Label>
 
               <Select
+                isDisabled={isValid}
                 placeholder={
                   kelurahanKtp === null
                     ? "Silahkan Pilih Kelurahan"
@@ -355,6 +389,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
             <Form.Group as={Col} md={6} controlId="formGridPassword">
               <Form.Label>Kode Pos</Form.Label>
               <Form.Control
+                disabled={isValid}
                 type="text"
                 placeholder="Silahkan Masukkan Kode Pos"
                 value={kodePosDomisili}
@@ -411,6 +446,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 options={optionsProvinsi}
                 onChange={(e) => {
                   setKotaDomisili(null);
+
                   // selectRefKabupatenDomisili.select.clearValue();
                   setProvinsiDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKabupatenDomisili(token, e.value));

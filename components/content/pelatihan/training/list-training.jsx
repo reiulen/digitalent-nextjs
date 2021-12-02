@@ -1319,7 +1319,7 @@ const ListTraining = ({ token }) => {
         </Modal.Body>
         <Modal.Footer>
           <button
-            className={`${styles} btn btn-rounded-full`}
+            className={`btn btn-rounded-full`}
             type="button"
             onClick={() => setShowModalRevisi(false)}
           >
