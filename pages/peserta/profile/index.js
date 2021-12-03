@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
-import LoadingContent from "../../../user-component/content/peserta/components/loader/LoadingContent";
+import LoadingContent from "../../../user-component-new/components/loader/LoadingContent";
 
 import {
   getDataPribadi,
@@ -23,7 +23,7 @@ import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMidd
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const Profile = dynamic(
-  () => import("../../../user-component/content/peserta/profile/index"),
+  () => import("../../../user-component-new/content/peserta/profile/index"),
   {
     loading: function loadingNow() {
       return <LoadingContent />;

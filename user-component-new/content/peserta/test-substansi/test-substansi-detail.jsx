@@ -13,7 +13,6 @@ export default function SeleksiAdministrasi() {
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
 
- 
 
   const router = useRouter();
   const [description, setDescription] = useState(data?.deskripsi || "-");
@@ -46,6 +45,11 @@ export default function SeleksiAdministrasi() {
       return setLabel("warning");
     if (status.includes("tes substansi")) return setLabel("primary");
   }, []);
+
+  const handleDownloadSilabus = async () => {
+    let silabus = process.env.END_POINT_API_IMAGE_BEASISWA + data.silabus;
+    window.location.href = silabus;
+  };
 
   return (
     <PesertaWrapper>
@@ -110,7 +114,7 @@ export default function SeleksiAdministrasi() {
                       Bukti Pendaftaran
                     </Button>
                   </Col>
-                  {data.status === "tes substansi" && (
+                  {data?.status === "tes substansi" && (
                     <Col>
                       <Button
                         className="btn-rounded-full font-weight-bold btn-block justify-content-center"
@@ -184,6 +188,7 @@ export default function SeleksiAdministrasi() {
                       fontSize: "14px",
                       fontFamily: "poppins",
                     }}
+                    onClick={() => handleDownloadSilabus()}
                   >
                     <i
                       className={`ri-download-cloud-fill mr-2 `}

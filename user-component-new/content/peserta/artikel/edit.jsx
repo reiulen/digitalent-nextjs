@@ -43,18 +43,18 @@ const EditArtikelPeserta = ({ session }) => {
   const [disablePublishDate, setDisablePublishDate] = useState(true);
   const [gambarDB, setGambarDB] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-    "publikasi/images/" +
-    detailArtikelsPeserta.artikel.data.gambar
+      "publikasi/images/" +
+      detailArtikelsPeserta.artikel.data.gambar
   );
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-    "publikasi/images/" +
-    detailArtikelsPeserta.artikel.data.gambar
+      "publikasi/images/" +
+      detailArtikelsPeserta.artikel.data.gambar
   );
   const [gambar, setGambar] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-    "publikasi/images/" +
-    detailArtikelsPeserta.artikel.data.gambar
+      "publikasi/images/" +
+      detailArtikelsPeserta.artikel.data.gambar
   );
 
   // const [gambar, setGambar] = useState("");
@@ -75,7 +75,7 @@ const EditArtikelPeserta = ({ session }) => {
   const [checkTag, setCheckTag] = useState(false);
 
   const { quill, quillRef } = useQuill();
-  const limit = 12000
+  const limit = 12000;
 
   let optionAkademi = allAkademi.akademi.map((item) => {
     return {
@@ -104,11 +104,7 @@ const EditArtikelPeserta = ({ session }) => {
       }
     } else {
       e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Thumbnail harus berupa data gambar.",
-        "error"
-      );
+      Swal.fire("Oops !", "Thumbnail harus berupa data gambar.", "error");
     }
   };
 
@@ -165,7 +161,7 @@ const EditArtikelPeserta = ({ session }) => {
   useEffect(() => {
     if (quill) {
       quill.clipboard.dangerouslyPasteHTML(deskripsi);
-      quill.on('text-change', (delta, oldDelta, source) => {
+      quill.on("text-change", (delta, oldDelta, source) => {
         setDeskripsi(quill.root.innerHTML); // Get innerHTML using quill
 
         if (quill.root.innerText.length <= limit) {
@@ -243,12 +239,9 @@ const EditArtikelPeserta = ({ session }) => {
                     "required",
                     { className: "text-danger" }
                   )}
-                  {
-                    gambarName !== null ?
-                      <small className="text-danger">{gambarName}</small>
-                      :
-                      null
-                  }
+                  {gambarName !== null ? (
+                    <small className="text-danger">{gambarName}</small>
+                  ) : null}
                 </div>
 
                 <div

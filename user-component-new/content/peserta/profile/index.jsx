@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "../../../../styles/peserta/profile.module.css";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
-import ProfileWrapper from "../components/wrapper/Profile.wapper";
+import ProfileWrapper from "../../../components/wrapper/Profile.wapper";
 
 const Informasi = dynamic(() => import("./informasi/informasi"), {
   loading: function loadingNow() {
@@ -88,14 +88,14 @@ const Profile = ({ session }) => {
           ? (localStorage.setItem("btn", 0),
             (
               <InformasiEdit
-                funcViewEdit={val => setViewEdit(val)}
+                funcViewEdit={(val) => setViewEdit(val)}
                 token={session.token}
               />
             ))
           : (localStorage.setItem("btn", 0),
             (
               <Informasi
-                funcViewEdit={val => setViewEdit(val)}
+                funcViewEdit={(val) => setViewEdit(val)}
                 token={session.token}
               />
             ));
@@ -105,7 +105,7 @@ const Profile = ({ session }) => {
           ? (localStorage.setItem("btn", 1),
             (
               <AlamatEdit
-                funcViewEdit={val => setViewEdit(val)}
+                funcViewEdit={(val) => setViewEdit(val)}
                 token={session.token}
               />
             ))
@@ -117,7 +117,7 @@ const Profile = ({ session }) => {
           ? (localStorage.setItem("btn", 2),
             (
               <PendidikanEdit
-                funcViewEdit={val => setViewEdit(val)}
+                funcViewEdit={(val) => setViewEdit(val)}
                 token={session.token}
               />
             ))
@@ -126,7 +126,7 @@ const Profile = ({ session }) => {
         break;
       case 4:
         return viewEdit ? (
-          <KeterampilanEdit funcViewEdit={val => setViewEdit(val)} />
+          <KeterampilanEdit funcViewEdit={(val) => setViewEdit(val)} />
         ) : (
           <Keterampilan />
         );
@@ -136,7 +136,7 @@ const Profile = ({ session }) => {
           ? (localStorage.setItem("btn", 3),
             (
               <PekerjaanEdit
-                funcViewEdit={val => setViewEdit(val)}
+                funcViewEdit={(val) => setViewEdit(val)}
                 token={session.token}
               />
             ))
@@ -164,8 +164,8 @@ const Profile = ({ session }) => {
               key={1}
               propsEdit={true}
               propsViewProfile={viewProfile}
-              funcViewEdit={val => setViewEdit(val)}
-              funcViewProfile={val => setViewProfile(val)}
+              funcViewEdit={(val) => setViewEdit(val)}
+              funcViewProfile={(val) => setViewProfile(val)}
               token={session.token}
             />
           ) : (
@@ -173,8 +173,8 @@ const Profile = ({ session }) => {
               key={2}
               propsEdit={false}
               propsViewProfile={viewProfile}
-              funcViewEdit={val => setViewEdit(val)}
-              funcViewProfile={val => setViewProfile(val)}
+              funcViewEdit={(val) => setViewEdit(val)}
+              funcViewProfile={(val) => setViewProfile(val)}
               token={session.token}
             />
           )}

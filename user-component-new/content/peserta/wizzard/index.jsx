@@ -2,14 +2,11 @@ import React, { useState, useEffect, Fragment } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 // import style from "../../../../styles/peserta/profile.module.css";
-import style from "./wizzard.module.css";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
-import ProfileWrapper from "../components/wrapper/Profile.wapper";
 import { Stepper, Step } from "react-form-stepper";
-import StepZilla from "react-stepzilla";
+// import StepZilla from "react-stepzilla";
 import Steppers from "./stepper";
 // const Informasi = dynamic(() => import("./informasi/informasi"), {
 const Informasi = dynamic(() => import("../profile/informasi/informasi"), {

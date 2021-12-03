@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import check from "../../../../../public/assets/media/logos/double.png";
+import check from "../../../public/assets/media/logos/double.png";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ReactCrop from "react-image-crop";
-import { getDataPribadi } from "../../../../../redux/actions/pelatihan/function.actions";
+import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import {
   Col,
   Card,
@@ -17,7 +17,7 @@ import {
   Row,
   Modal,
 } from "react-bootstrap";
-import style from "./style.module.css";
+import style from "./profileWrapper.module.css";
 import axios from "axios";
 
 const ProfileWrapper = ({

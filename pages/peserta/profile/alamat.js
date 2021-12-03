@@ -8,7 +8,8 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const Alamat = dynamic(
-  () => import("../../../user-component/content/peserta/profile/alamat/alamat"),
+  () =>
+    import("../../../user-component-new/content/peserta/profile/alamat/alamat"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -35,7 +36,7 @@ export default function AlamatPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {

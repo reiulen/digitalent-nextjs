@@ -4,10 +4,10 @@ import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import { Row, Col, Offcanvas, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
-import LoadingSidebar from "../../../../user-component/content/peserta/components/loader/LoadingSidebar";
-import LoadingHeader from "../../../../user-component/content/peserta/components/loader/LoadingHeader";
-import LoadingNavbar from "../../../../user-component/content/peserta/components/loader/LoadingNavbar";
-import LoadingFooter from "../../../../user-component/content/peserta/components/loader/LoadingFooter";
+import LoadingSidebar from "../../../components/loader/LoadingSidebar";
+import LoadingHeader from "../../../components/loader/LoadingHeader";
+import LoadingNavbar from "../../../components/loader/LoadingNavbar";
+import LoadingFooter from "../../../components/loader/LoadingFooter";
 
 const Navbar = dynamic(
   () =>
@@ -29,7 +29,9 @@ const Header = dynamic(() => import("./HeaderCustom.component"), {
 });
 const Sidebar = dynamic(
   () =>
-    import("../../../../user-component/components/template/Sidebar.component"),
+    import(
+      "../../../../user-component-new/components/template/Sidebar.component"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSidebar />;

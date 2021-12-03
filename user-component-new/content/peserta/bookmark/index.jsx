@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { Row, Col, Container, Card, Button, Badge } from "react-bootstrap";
 import Image from "next/image";
 import { useSelector } from "react-redux";

@@ -10,7 +10,7 @@ import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 const Keterampilan = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/profile/keterampilan/index"
+      "../../../user-component-new/content/peserta/profile/keterampilan/index"
     ),
   {
     loading: function loadingNow() {
@@ -38,7 +38,7 @@ export default function KeterampilanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {

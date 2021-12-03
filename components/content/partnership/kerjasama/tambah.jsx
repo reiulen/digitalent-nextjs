@@ -150,7 +150,6 @@ const Tambah = ({ token }) => {
         ...error,
         period: "Lama Periode maksimum 5 karakter.",
       });
-      console.log(true)
       // setPeriod("");
     } else {
       setPeriod(e.target.value);
@@ -217,13 +216,12 @@ const Tambah = ({ token }) => {
                         Lembaga
                       </label>
                       <Select
-                      placeholder="Silahkan Pilih Lembaga"
+                        placeholder="Silahkan Pilih Lembaga"
                         options={allMK?.stateListMitra.map((item, index) => {
-                          return (
-                            {
-                              label: item.label, value:item.label
-                            }
-                          );
+                          return {
+                            label: item.label,
+                            value: item.label,
+                          };
                         })}
                         onChange={(e) => changeInstitusi(e.label)}
                       />

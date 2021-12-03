@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
 import moment from "moment";
-import PulseLoaderRender from "../../../../user-component/components/loader/PulseLoader";
+import PulseLoaderRender from "../../../components/loader/PulseLoader";
 
 import {
   deleteArtikelPeserta,

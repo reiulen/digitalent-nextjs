@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import doneImage from "../../../../public/assets/media/logos/Ilustrasi.png";
 
 import Image from "next/dist/client/image";
-import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
 import moment from "moment";
 import "moment/locale/id";
@@ -60,7 +60,7 @@ const Done = () => {
                 {dataTraining ? dataTraining.name : "-"}
                 <br />
                 <span className={styles.trainingTitle}>
-                  {dataTraining ? dataTraining.mitra : "-"}
+                  {dataTraining ? dataTraining.mitra_nama : "-"}
                 </span>
                 <span className={styles.trainingTheme}>
                   {" "}

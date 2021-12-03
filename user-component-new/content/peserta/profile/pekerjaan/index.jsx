@@ -3,32 +3,32 @@ import { Row, Col, Card } from "react-bootstrap";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import PesertaWrapper from "../../../../components/wrapper/Peserta.wrapper";
-import ProfileWrapper from "../../components/wrapper/Profile.wapper";
+import ProfileWrapper from "../../../../components/wrapper/Profile.wapper";
 
-const Keterampilan = dynamic(() => import("./keterampilan"), {
+const Pekerjaan = dynamic(() => import("./pekerjaan"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
   },
   ssr: false,
 });
-const KeterampilanEdit = dynamic(() => import("./keterampilan.edit"), {
+const PekerjaanEdit = dynamic(() => import("./pekerjaan.edit"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
   },
   ssr: false,
 });
 
-const ProfileKeterampilan = ({ session }) => {
+const ProfilePekerjaan = ({ session }) => {
   const [viewProfile, setViewProfile] = useState(1);
   const [viewEdit, setViewEdit] = useState(false);
 
   const handleViewProfile = () => {
     switch (viewProfile) {
       case 1:
-        return viewEdit ? <KeterampilanEdit /> : <Keterampilan />;
+        return viewEdit ? <PekerjaanEdit /> : <Pekerjaan />;
         break;
       default:
-        return <Keterampilan />;
+        return <Pekerjaan />;
         break;
     }
   };
@@ -51,4 +51,4 @@ const ProfileKeterampilan = ({ session }) => {
   );
 };
 
-export default ProfileKeterampilan;
+export default ProfilePekerjaan;

@@ -88,7 +88,7 @@ export const getRandomSurveyQuestionDetail =
     } catch (error) {
       dispatch({
         type: SURVEY_QUESTION_RANDOM_DETAIL_FAIL,
-        payload: error.response.data.message,
+        payload: error.message,
       });
     }
   };

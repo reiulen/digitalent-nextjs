@@ -3,32 +3,33 @@ import { Row, Col, Card } from "react-bootstrap";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import PesertaWrapper from "../../../../components/wrapper/Peserta.wrapper";
-import ProfileWrapper from "../../components/wrapper/Profile.wapper";
+import ProfileWrapper from "../../../../components/wrapper/Profile.wapper";
 
-const Pekerjaan = dynamic(() => import("./pekerjaan"), {
-  loading: function loadingNow() {
-    return <LoadingSkeleton />;
-  },
-  ssr: false,
-});
-const PekerjaanEdit = dynamic(() => import("./pekerjaan.edit"), {
+const Pendidikan = dynamic(() => import("./pendidikan"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
   },
   ssr: false,
 });
 
-const ProfilePekerjaan = ({ session }) => {
+const PendidikanEdit = dynamic(() => import("./pendidikan.edit"), {
+  loading: function loadingNow() {
+    return <LoadingSkeleton />;
+  },
+  ssr: false,
+});
+
+const ProfilePendidikan = ({ session }) => {
   const [viewProfile, setViewProfile] = useState(1);
   const [viewEdit, setViewEdit] = useState(false);
 
   const handleViewProfile = () => {
     switch (viewProfile) {
       case 1:
-        return viewEdit ? <PekerjaanEdit /> : <Pekerjaan />;
+        return viewEdit ? <PendidikanEdit /> : <Pendidikan />;
         break;
       default:
-        return <Pekerjaan />;
+        return <Pendidikan />;
         break;
     }
   };
@@ -51,4 +52,4 @@ const ProfilePekerjaan = ({ session }) => {
   );
 };
 
-export default ProfilePekerjaan;
+export default ProfilePendidikan;

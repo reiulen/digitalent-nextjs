@@ -73,8 +73,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           null,
           null,
           null,
-          null,
-          1
+          1,
+          sessionToken
         )
       );
 
