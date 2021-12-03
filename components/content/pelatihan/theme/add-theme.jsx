@@ -139,15 +139,17 @@ const AddTheme = ({ token }) => {
                 <label className="col-form-label font-weight-bold">
                   Akademi
                 </label>
-                <Select
-                  placeholder="Silahkan Pilih Akademi"
-                  options={optionsAkademi}
-                  defaultValue={academy}
-                  onChange={(e) => setAcademy(e.value)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("akademi")
-                  }
-                />
+                <div className="position-relative" style={{zIndex: "5"}}>
+                  <Select
+                    placeholder="Silahkan Pilih Akademi"
+                    options={optionsAkademi}
+                    defaultValue={academy}
+                    onChange={(e) => setAcademy(e.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("akademi")
+                    }
+                  />
+                </div>
                 {simpleValidator.current.message(
                   "akademi",
                   academy,
