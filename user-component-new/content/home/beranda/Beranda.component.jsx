@@ -44,6 +44,7 @@ const Beranda = ({ session }) => {
   const [cardImage, setCardImage] = useState(null);
   const [cardStatus, setCardStatus] = useState(null);
   const [cardImageMitra, setCardImageMitra] = useState(null);
+  const [cardUrlMitra, setCardUrlMitra] = useState(null);
   const [cardAkademi, setCardAkademi] = useState(null);
   const [cardDeskripsi, setCardDeskripsi] = useState(null);
   const [cardName, setCardName] = useState(null);
@@ -213,6 +214,7 @@ const Beranda = ({ session }) => {
     image,
     status,
     image_mitra,
+    path_url,
     akademi,
     deskripsi,
     name,
@@ -237,6 +239,7 @@ const Beranda = ({ session }) => {
     setCardImage(image);
     setCardStatus(status);
     setCardImageMitra(image_mitra);
+    setCardUrlMitra(path_url);
     setCardAkademi(akademi);
     setCardDeskripsi(deskripsi);
     setCardName(name);
@@ -626,6 +629,7 @@ const Beranda = ({ session }) => {
                                                       row.gambar,
                                                       row.status,
                                                       row.gambar_mitra,
+                                                      row.file_path,
                                                       row.akademi,
                                                       row.deskripsi,
                                                       row.name,
@@ -689,9 +693,12 @@ const Beranda = ({ session }) => {
                                               <div className="dot-bullet">
                                                 <Image
                                                   src={
-                                                    process.env
-                                                      .END_POINT_API_IMAGE_PARTNERSHIP +
-                                                    cardImageMitra
+                                                    (cardImageMitra &&
+                                                      cardImageMitra !==
+                                                        "Belum ada file" &&
+                                                      cardUrlMitra +
+                                                        cardImageMitra) ||
+                                                    "/assets/media/mitra-default.png"
                                                   }
                                                   layout="fill"
                                                   objectFit="cover"

@@ -310,12 +310,18 @@ const Pencarian = ({ session }) => {
                 ) : (
                   allPencarian?.pelatihan?.list?.map((row, i) => (
                     <Col md={6} className={`col-sm-12 col-md-4 mb-5`} key={i}>
-                      <Card className="h-100 shadow-sm" key={i}>
+                      <Card
+                        className="h-100 shadow-sm"
+                        key={i}
+                        onClick={() => {
+                          router.push(`/detail/pelatihan/${row?.id}`);
+                        }}
+                        style={{ cursor: "pointer" }}
+                      >
                         <div>
                           <div className={`parent-image-pelatihan-new`}>
                             <Image
                               className={`image-list-pelatihan-new`}
-                              // src={"/assets/media/default-card.png"}
                               src={
                                 !row.gambar
                                   ? "/assets/media/default-card.png"
@@ -353,7 +359,6 @@ const Pencarian = ({ session }) => {
                                     }}
                                     onClick={() => {
                                       handleBookmark(row);
-                                      // console.log(row);
                                     }}
                                   ></i>
                                 </Button>
@@ -375,7 +380,11 @@ const Pencarian = ({ session }) => {
                             <div className="mitra-pelatihan-new">
                               <Image
                                 // src={"/assets/media/mitra-default.png"}
-                                src={`${process.env.END_POINT_API_IMAGE_PARTNERSHIP}${row?.gambar_mitra}`}
+                                src={
+                                  !row?.gambar_mitra
+                                    ? "/assets/media/default-card.png"
+                                    : `${process.env.END_POINT_API_IMAGE_PARTNERSHIP}${row?.gambar_mitra}`
+                                }
                                 width={60}
                                 height={60}
                                 objectFit="cover"
