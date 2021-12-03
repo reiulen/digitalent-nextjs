@@ -20,6 +20,7 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import {
   clearErrors,
   getRandomSurveyQuestionDetail,
+  postResultSurvey,
 } from "../../../../../redux/actions/subvit/survey-question-detail.action";
 
 import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
@@ -195,8 +196,8 @@ const SubtansiUser = ({ token }) => {
   ];
   let multi = [];
 
-  const [data, setData] = useState(initialData);
-  console.log(data);
+  const [data, setData] = useState();
+  // console.log(data);
   const [answer, setAnswer] = useState("");
   const [d, setD] = useState("");
 
@@ -338,6 +339,10 @@ const SubtansiUser = ({ token }) => {
     localStorage.setItem(`${router.query.id}a`, e.key);
   };
 
+  const handleObject = (e) => {
+    localStorage.setItem(`${router.query.id}`, e.key);
+  };
+
   const handleAnswer = (e, id) => {
     setIndexSoal(id);
     localStorage.setItem(router.query.id, e.key);
@@ -362,7 +367,7 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  console.log(data);
+  // console.log(data);
 
   for (let i = 0; i < data?.total_questions; i++) {
     number.push(i);
@@ -373,20 +378,22 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
-    // const setData = {
-    //   list: JSON.stringify(
-    //     data.list_questions.map((item, index) => {
-    //       return {
-    //         ...item,
-    //         participant_answer: localStorage.getItem(index + 1),
-    //       };
-    //     })
-    //   ),
-    //   training_id: router.query.training_id,
-    //   type: router.query.category === "Test Substansi" && "substansi",
-    // };
-    // dispatch(postResult(setData, token));
-    // localStorage.clear();
+    const setData = {
+      list: JSON.stringify(
+        data.list_questions.map((item, index) => {
+          console.log(item);
+          return {
+            ...item,
+
+            participant_answer: localStorage.getItem(index + 1),
+          };
+        })
+      ),
+      training_id: router.query.training_id,
+      type: "survey",
+    };
+    dispatch(postResultSurvey(setData, token));
+    localStorage.clear();
     router.push(`/peserta/done-survey`);
   };
 
@@ -465,12 +472,14 @@ const SubtansiUser = ({ token }) => {
           <Col sm={9}>
             <Card className={styles.cardSoal}>
               <p className={styles.totalSoal}>
-                Soal {parseInt(router.query.id)} dari {data && data.length}
+                Soal {parseInt(router.query.id)} dari{" "}
+                {data && data.total_questions}
               </p>
               <Row className={styles.soalResponsive}>
                 <Col sm={12} xs={12}>
                   <p className={styles.total}>
-                    Soal {parseInt(router.query.id)} dari {data && data.length}
+                    Soal {parseInt(router.query.id)} dari{" "}
+                    {data && data.total_questions}
                     <span
                       className={styles.clickSoal}
                       onClick={handleModalResponsive}
@@ -480,7 +489,7 @@ const SubtansiUser = ({ token }) => {
                   </p>
                 </Col>
               </Row>
-              {console.log(data[parseInt(router.query.id) - 1])}
+
               {data &&
                 data.list_questions[parseInt(router.query.id) - 1].type ===
                   "triggered_question" && (
@@ -605,6 +614,9 @@ const SubtansiUser = ({ token }) => {
                                           {item.key}
                                         </td>
                                         <td style={{ width: "15px" }}>.</td>
+                                        dispatch(postResult(setData, token)); //
+                                        localStorage.clear(); //
+                                        router.push(`/peserta/done-survey`);
                                         <td>{item.option} </td>
                                       </tr>
                                     </table>
@@ -613,10 +625,12 @@ const SubtansiUser = ({ token }) => {
                               </>
                             );
                           })
-                      : data[parseInt(router.query.id) - 1]?.answer &&
-                        data.list_questions[
-                          parseInt(router.query.id) - 1
-                        ]?.answer.map((item, index) => {
+                      : data.list_questions[parseInt(router.query.id) - 1]
+                          ?.answer &&
+                        JSON.parse(
+                          data.list_questions[parseInt(router.query.id) - 1]
+                            ?.answer
+                        ).map((item, index) => {
                           return (
                             <>
                               {item.image !== null && item.image !== "" ? (
@@ -693,6 +707,125 @@ const SubtansiUser = ({ token }) => {
 
               {data &&
                 data.list_questions[parseInt(router.query.id) - 1].type ===
+                  "objective" && (
+                  <>
+                    <h1 className={styles.soal}>
+                      {data &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== null &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== "" ? (
+                        <div className="d-flex flex-row">
+                          <div className="p-2">
+                            {" "}
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
+                              }
+                              alt=""
+                              width={150}
+                              ndl
+                              height={150}
+                            />
+                          </div>
+                          <div className="p-5">
+                            {data &&
+                              data.list_questions[parseInt(router.query.id) - 1]
+                                ?.question}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-2">
+                          {data &&
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question}
+                        </div>
+                      )}
+                    </h1>
+                    <hr />
+                    {data &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        ?.answer !== null &&
+                      JSON.parse(
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          ?.answer
+                      ).map((item, index) => {
+                        return (
+                          <>
+                            {item.image !== null && item.image !== "" ? (
+                              <div className="d-flex flex-row">
+                                <div className="p-2">
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.image || defaultImage
+                                    }
+                                    alt=""
+                                    width={70}
+                                    height={70}
+                                  />
+                                </div>
+                                <div
+                                  className="p-4"
+                                  style={{ width: "100%", height: "100%" }}
+                                >
+                                  <Card
+                                    className={
+                                      localStorage.getItem(router.query.id) ===
+                                      item.key
+                                        ? styles.answer
+                                        : styles.boxAnswer
+                                    }
+                                    key={index}
+                                    onClick={() => {
+                                      handleObject(item, index);
+                                    }}
+                                  >
+                                    <table>
+                                      <tr>
+                                        <td style={{ width: "5px" }}>
+                                          {item.key}
+                                        </td>
+                                        <td style={{ width: "15px" }}>.</td>
+                                        <td>{item.option}</td>
+                                      </tr>
+                                    </table>
+                                  </Card>
+                                </div>
+                              </div>
+                            ) : (
+                              <Card
+                                className={
+                                  localStorage.getItem(router.query.id) ===
+                                  item.key
+                                    ? styles.answer
+                                    : styles.boxAnswer
+                                }
+                                key={index}
+                                onClick={() => {
+                                  handleObject(item, index);
+                                }}
+                              >
+                                <table>
+                                  <tr>
+                                    <td style={{ width: "5px" }}>{item.key}</td>
+                                    <td style={{ width: "15px" }}>.</td>
+                                    <td>{item.option} </td>
+                                  </tr>
+                                </table>
+                              </Card>
+                            )}
+                          </>
+                        );
+                      })}
+                  </>
+                )}
+
+              {data &&
+                data.list_questions[parseInt(router.query.id) - 1].type ===
                   "multiple_choice" && (
                   <>
                     <h1 className={styles.soal}>
@@ -707,8 +840,9 @@ const SubtansiUser = ({ token }) => {
                             <Image
                               src={
                                 process.env.END_POINT_API_IMAGE_SUBVIT +
-                                  data[parseInt(router.query.id) - 1]
-                                    ?.question_image || defaultImage
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
                               }
                               alt=""
                               width={150}
@@ -742,80 +876,79 @@ const SubtansiUser = ({ token }) => {
                     </h1>
                     <hr />
                     {data &&
-                      data[parseInt(router.query.id) - 1]?.answer !== null &&
-                      data[parseInt(router.query.id) - 1]?.answer.map(
-                        (item, index) => {
-                          return (
-                            <>
-                              {item.image !== null && item.image !== "" ? (
-                                <div className="d-flex flex-row">
-                                  <div className="p-2">
-                                    <Image
-                                      src={
-                                        process.env.END_POINT_API_IMAGE_SUBVIT +
-                                          item.image || defaultImage
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                    />
-                                  </div>
-                                  <div
-                                    className="p-4"
-                                    style={{ width: "100%", height: "100%" }}
-                                  >
-                                    <Card
-                                      className={
-                                        localStorage.getItem(index + "a") ===
-                                        item.key
-                                          ? styles.answer
-                                          : styles.boxAnswer
-                                      }
-                                      key={index}
-                                      onClick={() => {
-                                        handleMultiple(item, index);
-                                      }}
-                                    >
-                                      <table>
-                                        <tr>
-                                          <td style={{ width: "5px" }}>
-                                            {item.key}
-                                          </td>
-                                          <td style={{ width: "15px" }}>.</td>
-                                          <td>{item.option}</td>
-                                        </tr>
-                                      </table>
-                                    </Card>
-                                  </div>
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        ?.answer !== null &&
+                      JSON.parse(
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          ?.answer
+                      ).map((item, index) => {
+                        return (
+                          <>
+                            {item.image !== null && item.image !== "" ? (
+                              <div className="d-flex flex-row">
+                                <div className="p-2">
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.image || defaultImage
+                                    }
+                                    alt=""
+                                    width={70}
+                                    height={70}
+                                  />
                                 </div>
-                              ) : (
-                                <Card
-                                  className={
-                                    localStorage.getItem(index + "a") ===
-                                    item.key
-                                      ? styles.answer
-                                      : styles.boxAnswer
-                                  }
-                                  key={index}
-                                  onClick={() => {
-                                    handleMultiple(item, index);
-                                  }}
+                                <div
+                                  className="p-4"
+                                  style={{ width: "100%", height: "100%" }}
                                 >
-                                  <table>
-                                    <tr>
-                                      <td style={{ width: "5px" }}>
-                                        {item.key}
-                                      </td>
-                                      <td style={{ width: "15px" }}>.</td>
-                                      <td>{item.option} </td>
-                                    </tr>
-                                  </table>
-                                </Card>
-                              )}
-                            </>
-                          );
-                        }
-                      )}
+                                  <Card
+                                    className={
+                                      localStorage.getItem(index + "a") ===
+                                      item.key
+                                        ? styles.answer
+                                        : styles.boxAnswer
+                                    }
+                                    key={index}
+                                    onClick={() => {
+                                      handleMultiple(item, index);
+                                    }}
+                                  >
+                                    <table>
+                                      <tr>
+                                        <td style={{ width: "5px" }}>
+                                          {item.key}
+                                        </td>
+                                        <td style={{ width: "15px" }}>.</td>
+                                        <td>{item.option}</td>
+                                      </tr>
+                                    </table>
+                                  </Card>
+                                </div>
+                              </div>
+                            ) : (
+                              <Card
+                                className={
+                                  localStorage.getItem(index + "a") === item.key
+                                    ? styles.answer
+                                    : styles.boxAnswer
+                                }
+                                key={index}
+                                onClick={() => {
+                                  handleMultiple(item, index);
+                                }}
+                              >
+                                <table>
+                                  <tr>
+                                    <td style={{ width: "5px" }}>{item.key}</td>
+                                    <td style={{ width: "15px" }}>.</td>
+                                    <td>{item.option} </td>
+                                  </tr>
+                                </table>
+                              </Card>
+                            )}
+                          </>
+                        );
+                      })}
                   </>
                 )}
 
@@ -835,8 +968,9 @@ const SubtansiUser = ({ token }) => {
                             <Image
                               src={
                                 process.env.END_POINT_API_IMAGE_SUBVIT +
-                                  data[parseInt(router.query.id) - 1]
-                                    ?.question_image || defaultImage
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
                               }
                               alt=""
                               width={150}
@@ -855,6 +989,9 @@ const SubtansiUser = ({ token }) => {
                           {data &&
                             data.list_questions[parseInt(router.query.id) - 1]
                               ?.question}
+                          dispatch(postResult(setData, token)); //
+                          localStorage.clear(); //
+                          router.push(`/peserta/done-survey`);
                         </div>
                       )}
                     </h1>
@@ -944,7 +1081,7 @@ const SubtansiUser = ({ token }) => {
                   className={styles.btnBottom}
                   style={{ textAlign: "right", margin: "10px " }}
                 >
-                  {parseInt(router.query.id) === data && data.length ? (
+                  {parseInt(router.query.id) === data?.total_questions ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
@@ -957,8 +1094,7 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleNext}
                       disabled={
-                        parseInt(router.query.id) === data &&
-                        data.total_questions
+                        parseInt(router.query.id) === data?.total_questions
                       }
                     >
                       <div className="d-flex flex-row">
@@ -984,7 +1120,7 @@ const SubtansiUser = ({ token }) => {
                     </Col>
 
                     <Col xs={6} style={{ textAlign: "center" }}>
-                      {parseInt(router.query.id) === data && data.length ? (
+                      {parseInt(router.query.id) === data?.total_questions ? (
                         <Button
                           className={styles.btnNext}
                           onClick={handleDone}

@@ -110,6 +110,7 @@ export const postResultSurvey = (resultData, token) => async (dispatch) => {
       resultData,
       config
     );
+    console.log(data);
 
     dispatch({
       type: POST_RESULT_SURVEY_SUCCESS,
