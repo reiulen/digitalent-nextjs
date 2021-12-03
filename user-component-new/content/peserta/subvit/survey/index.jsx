@@ -417,7 +417,6 @@ const SubtansiUser = ({ token }) => {
                   </p>
                 </Col>
               </Row>
-              {console.log(data[parseInt(router.query.id) - 1])}
               {data &&
                 data[parseInt(router.query.id) - 1].type ===
                   "triggered_question" && (
