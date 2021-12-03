@@ -134,7 +134,6 @@ const Navigationbar = ({ session }) => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
-      console.log(search, "ini search");
       router.push(`/pencarian?cari=${search}`);
     }
   };
@@ -562,12 +561,10 @@ const Navigationbar = ({ session }) => {
                       akademi.map((item, i) => {
                         return (
                           <Fragment key={item.id}>
-                            <div
-                              className="p-4 fz-12"
-                              href={`/detail/akademi/${item.id}`}
-                            >
-                              {item.slug}
-                            </div>
+                            <Link href={`/detail/akademi/${item.id}`} passHref>
+                              <div className="p-4 fz-12">{item.slug}</div>
+                            </Link>
+
                             {i !== akademi.length - 1 && (
                               <hr className="w-100 p-0 m-0" />
                             )}
