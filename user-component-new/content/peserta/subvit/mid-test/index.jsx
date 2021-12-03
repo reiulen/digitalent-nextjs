@@ -191,7 +191,7 @@ const SubtansiUser = ({ token }) => {
         })
       ),
       training_id: router.query.training_id,
-      type: router.query.category === "Test Substansi" && "substansi",
+      type: "midtest",
     };
     dispatch(postResult(setData, token));
     localStorage.clear();
