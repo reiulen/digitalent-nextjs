@@ -268,6 +268,8 @@ const Header = () => {
                           </>
                         ) : router.pathname.includes("form-lpj") ? (
                           "Survey & LPJ"
+                        ) : router.pathname.includes("pengaturan") ? (
+                          "Pengaturan"
                         ) : (
                           "Dashboard"
                         )}
