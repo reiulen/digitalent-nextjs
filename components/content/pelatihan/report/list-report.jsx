@@ -17,6 +17,7 @@ import LoadingTable from "../../../LoadingTable";
 import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 import { listsReportTraining } from "../../../../redux/actions/pelatihan/report-training.actions";
 import { set } from "js-cookie";
+import axios from "axios";
 
 const ListReport = ({ token }) => {
   const dispatch = useDispatch();
@@ -77,6 +78,15 @@ const ListReport = ({ token }) => {
       optionsPenyelenggara.push(val);
     }
   }
+
+  const downloadWord = (e, id) => {
+    e.preventDefault();
+    window.open(
+      process.env.END_POINT_API_PELATIHAN +
+        `api/v1/pelatihan/export-rekap-pendaftaran-data-doc?pelatihan_id=${id}`,
+      "_blank"
+    ); 
+  };
 
   const listReportTraining =
     getDataReportTraining.list?.length > 0 ? (
@@ -165,30 +175,29 @@ const ListReport = ({ token }) => {
                   "pelatihan.report_pelatihan.manage"
                 ) && (
                   <div className="d-flex">
-                    <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
-                      <a
-                        className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${
-                          item.status_pelatihan === "selesai" ? "" : "disabled"
-                        }`}
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Download As Word"
-                      >
-                        <i className="ri-file-word-fill text-white p-0"></i>
-                      </a>
-                    </Link>
-                    <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
-                      <a
-                        className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${
-                          item.status_pelatihan === "selesai" ? "" : "disabled"
-                        }`}
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Download As PDF"
-                      >
-                        <i className="ri-file-ppt-fill text-white p-0"></i>
-                      </a>
-                    </Link>
+                    <button
+                      type="button"
+                      className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${
+                        item.status_pelatihan === "selesai" ? "" : "disabled"
+                      }`}
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Download As Word"
+                      onClick={(e) => downloadWord(e, item.id)}
+                    >
+                      <i className="ri-file-word-fill text-white p-0"></i>
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${
+                        item.status_pelatihan === "selesai" ? "" : "disabled"
+                      }`}
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Download As PDF"
+                    >
+                      <i className="ri-file-ppt-fill text-white p-0"></i>
+                    </button>
                   </div>
                 )}
               </div>
