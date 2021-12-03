@@ -186,15 +186,11 @@ export const postResult = (resultData, token) => async (dispatch) => {
       },
     };
 
-    console.log(resultData);
-
     const { data } = await axios.post(
       process.env.END_POINT_API_SUBVIT + "api/subtance-question-banks/result",
       resultData,
       config
     );
-
-    console.log(data);
 
     dispatch({
       type: POST_RESULT_SUCCESS,
