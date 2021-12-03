@@ -10,7 +10,7 @@ import {
 } from "../../types/beranda/faq-content.type";
 
 export const getAllFaq =
-  (pinned = 1, category_name = "", keyword = "") =>
+  (pinned = 1, category_name = "", keyword = "", token = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: BERANDA_FAQ_REQUEST });
@@ -31,6 +31,7 @@ export const getAllFaq =
         type: BERANDA_FAQ_SUCCESS,
         payload: data,
       });
+      return data;
     } catch (error) {
       dispatch({
         type: BERANDA_FAQ_FAIL,

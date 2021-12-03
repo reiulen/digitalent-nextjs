@@ -67,7 +67,7 @@ export default function RilisMedia({ berita }) {
 
       <div className="container-fluid">
         <div className="row justify-content-center mt-15">
-          <Link href="/login">
+          <Link href="/berita">
             <a>
               <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12">
                 Lihat Selengkapnya >
