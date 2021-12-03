@@ -20,6 +20,7 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import {
   clearErrors,
   getRandomSurveyQuestionDetail,
+  postResultSurvey,
 } from "../../../../../redux/actions/subvit/survey-question-detail.action";
 
 import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
@@ -35,101 +36,168 @@ const SubtansiUser = ({ token }) => {
 
   const initialData = [
     {
-      id: 34,
-      survey_question_bank_id: 14,
-      question: "Apa Anda Suka Makanan Pedas?",
-      question_image: null,
-      type: "triggered_question",
-      open: false,
-      answer: [
+      training: "Pelatihan Android test update lima",
+      academy: "Goverment Transformation Academy",
+      theme: "Tema Akademi",
+      total_questions: 4,
+      time_left: 221,
+      list_questions: [
         {
-          key: "A",
-          option: "Tidak",
-          image: null,
-          type: "choose",
-          sub: [],
-        },
-        {
-          key: "B",
-          option: "Ya",
-          image: null,
-          type: "choose",
-          sub: [
+          id: 168,
+          survey_question_bank_id: 66,
+          question: "TRIGGERED?",
+          question_image:
+            "survey/images/ce303867-8933-49b6-8640-3c68bacfe8f0.jpeg",
+          type: "triggered_question",
+          answer: [
             {
-              question: "Apa Makanan Pedas Yang anda sukai?",
-              image: null,
-              answer: [
+              key: "A",
+              option: "Ada selanjutnya",
+              image: "survey/images/d3ff3103-8197-4d05-ba7d-c93a11643fb5.png",
+              imageName: "gambar1.png",
+              type: "choose",
+              is_next: true,
+              sub: [
                 {
-                  key: "A",
-                  option: "Seblak",
-                  image: null,
-                  type: "choose",
-                },
-                {
-                  key: "B",
-                  option: "Baso Aci",
-                  image: null,
-                  type: "choose",
-                },
-                {
-                  key: "C",
-                  option: "Keripik Setan",
-                  image: null,
-                  type: "choose",
-                },
-                {
-                  key: "D",
-                  option: "Ayam Geprek",
-                  image: null,
-                  type: "choose",
+                  key: 1,
+                  question: "ini selanjutnya",
+                  image:
+                    "survey/images/5b0a7a1c-0d01-4bcc-b408-8a379ed001d1.png",
+                  imageName: "gambar2.png",
+                  is_next: false,
+                  answer: [
+                    {
+                      key: "A",
+                      option: "jawab a",
+                      image:
+                        "survey/images/0a7e1e2d-7209-4873-abd9-0a6a11aefb6a.jpeg",
+                      imageName: "bezos.jpg",
+                      type: "choose",
+                    },
+                    {
+                      key: "B",
+                      option: "jawab b",
+                      image:
+                        "survey/images/695e1fb3-f789-44f8-88f0-829fc5e0f2ca.jpeg",
+                      imageName: "bill gates.jpg",
+                      type: "choose",
+                    },
+                    {
+                      key: "C",
+                      option: "jawab c",
+                      image:
+                        "survey/images/692b465a-3082-4a75-833f-7e84cc5f93fe.jpeg",
+                      imageName: "elon.jpg",
+                      type: "choose",
+                    },
+                  ],
                 },
               ],
+            },
+            {
+              key: "B",
+              option: "Unch",
+              image: null,
+              imageName: "Choose File",
+              type: "choose",
+              is_next: false,
+              sub: [],
+            },
+            {
+              key: "C",
+              option: "ga unch",
+              image: "survey/images/32dd0baf-263c-4eaa-9980-833c328d0dda.png",
+              imageName: "redhat academy.png",
+              type: "choose",
+              is_next: false,
+              sub: [],
+            },
+          ],
+        },
+        {
+          id: 166,
+          survey_question_bank_id: 66,
+          question: "TeslAAA",
+          question_image:
+            "survey/images/c28e548a-3a52-4a9a-a742-7a2711ea768b.jpeg",
+          type: "multiple_choice",
+          answer: [
+            {
+              key: "A",
+              option: "AAA",
+              image: "survey/images/b316765a-ebe4-49c0-857c-87730ad54e16.jpeg",
+              imageName: "bezos.jpg",
+            },
+            {
+              key: "B",
+              option: "BBB",
+              image: "survey/images/838e0a39-4ac6-46f7-9146-3851b6d94f1d.jpeg",
+              imageName: "bill gates.jpg",
+            },
+            {
+              key: "C",
+              option: "CCC",
+              image: "survey/images/a44700c7-3d36-482b-8d90-a3516a5ad680.png",
+              imageName: "gambar1.png",
+            },
+            {
+              key: "D",
+              option: "DDD",
+              image: "survey/images/34f85f50-6a01-4d98-982a-a88728db3f4a.png",
+              imageName: "gambar3.png",
+            },
+          ],
+        },
+        {
+          id: 167,
+          survey_question_bank_id: 66,
+          question: "OOOUCHH",
+          question_image:
+            "survey/images/1f14df13-8a2f-474e-8fda-a93365d15498.jpeg",
+          type: "pertanyaan_terbuka",
+          answer: null,
+        },
+        {
+          id: 165,
+          survey_question_bank_id: 66,
+          question: "SUUUU",
+          question_image:
+            "survey/images/9eb5241f-3598-4980-97b2-632cf3a42d53.jpeg",
+          type: "objective",
+          answer: [
+            {
+              key: "A",
+              option: "AAA",
+              image: "survey/images/cb596346-dd01-4f06-9dcd-cbe6822af969.jpeg",
+              imageName: "elon.jpg",
+            },
+            {
+              key: "B",
+              option: "BBB",
+              image: "survey/images/edad998d-49fe-47fb-98db-775706d7847b.jpeg",
+              imageName: "bill gates.jpg",
+            },
+            {
+              key: "C",
+              option: "SUUU",
+              image: "survey/images/286de9d5-27ca-44d0-9c46-3bdeb29c5dfa.jpeg",
+              imageName: "SUUU.jpg",
+            },
+            {
+              key: "D",
+              option: "DDD",
+              image: "survey/images/2de7a6d0-3bcf-4b16-a85b-53b949c7f0fa.jpeg",
+              imageName: "bezos.jpg",
             },
           ],
         },
       ],
-      participant_answer: '["A", "C"]',
-    },
-    {
-      id: 30,
-      survey_question_bank_id: 14,
-      question: "Tumbuhan apa yang memiliki akar serabut?",
-      question_image: "gambar1.png",
-      type: "multiple_choice",
-      open: false,
-      answer: [
-        {
-          key: "A",
-          option: "Ketela",
-          image: "gambar1.png",
-        },
-        {
-          key: "B",
-          option: "Ubi",
-          image: "gambar1.png",
-        },
-        {
-          key: "C",
-          option: "Kresen",
-          image: "gambar1.png",
-        },
-      ],
-      participant_answer: '["A", "C"]',
-    },
-    {
-      id: 32,
-      survey_question_bank_id: 14,
-      question: "seberaoa sering anda meninggalkan kewajiban anda?",
-      question_image: "gambar1.png",
-      type: "pertanyaan_terbuka",
-      open: false,
-      answer: null,
-      participant_answer: "TErlalu seri",
     },
   ];
   let multi = [];
 
   const [data, setData] = useState();
+  // console.log(data);
   const [answer, setAnswer] = useState("");
   const [d, setD] = useState("");
 
@@ -218,12 +286,6 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
-    if (error) {
-      dispatch(clearErrors());
-    }
-    if (error) {
-      SweatAlert("Error", error, "error");
-    }
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
@@ -236,7 +298,7 @@ const SubtansiUser = ({ token }) => {
     } else {
       localStorage.clear();
       // MASIH DIPAKE UNTUK SETELAH TESTING
-      router.push(`/peserta/done-survey`);
+      // router.push(`/peserta/done-survey`);
     }
   }, [count, data, error, dispatch, router]);
 
@@ -277,6 +339,10 @@ const SubtansiUser = ({ token }) => {
     localStorage.setItem(`${router.query.id}a`, e.key);
   };
 
+  const handleObject = (e) => {
+    localStorage.setItem(`${router.query.id}`, e.key);
+  };
+
   const handleAnswer = (e, id) => {
     setIndexSoal(id);
     localStorage.setItem(router.query.id, e.key);
@@ -301,7 +367,9 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  for (let i = 0; i < data && data.length; i++) {
+  // console.log(data);
+
+  for (let i = 0; i < data?.total_questions; i++) {
     number.push(i);
   }
 
@@ -310,20 +378,22 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
-    // const setData = {
-    //   list: JSON.stringify(
-    //     data.list_questions.map((item, index) => {
-    //       return {
-    //         ...item,
-    //         participant_answer: localStorage.getItem(index + 1),
-    //       };
-    //     })
-    //   ),
-    //   training_id: router.query.training_id,
-    //   type: router.query.category === "Test Substansi" && "substansi",
-    // };
-    // dispatch(postResult(setData, token));
-    // localStorage.clear();
+    const setData = {
+      list: JSON.stringify(
+        data.list_questions.map((item, index) => {
+          console.log(item);
+          return {
+            ...item,
+
+            participant_answer: localStorage.getItem(index + 1),
+          };
+        })
+      ),
+      training_id: router.query.training_id,
+      type: "survey",
+    };
+    dispatch(postResultSurvey(setData, token));
+    localStorage.clear();
     router.push(`/peserta/done-survey`);
   };
 
@@ -402,12 +472,14 @@ const SubtansiUser = ({ token }) => {
           <Col sm={9}>
             <Card className={styles.cardSoal}>
               <p className={styles.totalSoal}>
-                Soal {parseInt(router.query.id)} dari {data && data.length}
+                Soal {parseInt(router.query.id)} dari{" "}
+                {data && data.total_questions}
               </p>
               <Row className={styles.soalResponsive}>
                 <Col sm={12} xs={12}>
                   <p className={styles.total}>
-                    Soal {parseInt(router.query.id)} dari {data && data.length}
+                    Soal {parseInt(router.query.id)} dari{" "}
+                    {data && data.total_questions}
                     <span
                       className={styles.clickSoal}
                       onClick={handleModalResponsive}
@@ -417,24 +489,26 @@ const SubtansiUser = ({ token }) => {
                   </p>
                 </Col>
               </Row>
+
               {data &&
-                data[parseInt(router.query.id) - 1].type ===
+                data.list_questions[parseInt(router.query.id) - 1].type ===
                   "triggered_question" && (
                   <>
                     <h1 className={styles.soal}>
                       {data &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        null &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        "" ? (
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== null &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== "" ? (
                         <div className="d-flex flex-row">
                           <div className="p-2">
                             {" "}
                             <Image
                               src={
                                 process.env.END_POINT_API_IMAGE_SUBVIT +
-                                  data[parseInt(router.query.id) - 1]
-                                    ?.question_image || defaultImage
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
                               }
                               alt=""
                               width={150}
@@ -444,24 +518,33 @@ const SubtansiUser = ({ token }) => {
                           </div>
                           <div className="p-5">
                             {data &&
-                              data[parseInt(router.query.id) - 1]?.question}
+                              data.list_questions[parseInt(router.query.id) - 1]
+                                ?.question}
                           </div>
                         </div>
                       ) : (
                         <div className="p-2">
                           {data &&
-                            data[parseInt(router.query.id) - 1]?.question}
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question}
                         </div>
                       )}
                     </h1>
                     <hr
-                      hidden={data[parseInt(router.query.id) - 1].open === true}
+                      hidden={
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          .open === true
+                      }
                     />
                     {data &&
-                    data[parseInt(router.query.id) - 1]?.answer !== null &&
+                    data.list_questions[parseInt(router.query.id) - 1]
+                      ?.answer !== null &&
                     data &&
-                    data[parseInt(router.query.id) - 1].open === true
-                      ? data[parseInt(router.query.id) - 1]?.answer
+                    data.list_questions[parseInt(router.query.id) - 1].open ===
+                      true
+                      ? data.list_questions[
+                          parseInt(router.query.id) - 1
+                        ]?.answer
                           .filter(
                             (data) =>
                               data.key === localStorage.getItem(router.query.id)
@@ -531,6 +614,9 @@ const SubtansiUser = ({ token }) => {
                                           {item.key}
                                         </td>
                                         <td style={{ width: "15px" }}>.</td>
+                                        dispatch(postResult(setData, token)); //
+                                        localStorage.clear(); //
+                                        router.push(`/peserta/done-survey`);
                                         <td>{item.option} </td>
                                       </tr>
                                     </table>
@@ -539,137 +625,12 @@ const SubtansiUser = ({ token }) => {
                               </>
                             );
                           })
-                      : data[parseInt(router.query.id) - 1]?.answer &&
-                        data[parseInt(router.query.id) - 1]?.answer.map(
-                          (item, index) => {
-                            return (
-                              <>
-                                {item.image !== null && item.image !== "" ? (
-                                  <div className="d-flex flex-row">
-                                    <div className="p-2">
-                                      <Image
-                                        src={
-                                          process.env
-                                            .END_POINT_API_IMAGE_SUBVIT +
-                                            item.image || defaultImage
-                                        }
-                                        alt=""
-                                        width={70}
-                                        height={70}
-                                      />
-                                    </div>
-                                    <div
-                                      className="p-4"
-                                      style={{ width: "100%", height: "100%" }}
-                                    >
-                                      <Card
-                                        className={
-                                          localStorage.getItem(
-                                            router.query.id
-                                          ) === item.key
-                                            ? styles.answer
-                                            : styles.boxAnswer
-                                        }
-                                        key={index}
-                                        onClick={() => {
-                                          handleAnswer(item, index);
-                                        }}
-                                      >
-                                        <table>
-                                          <tr>
-                                            <td style={{ width: "5px" }}>
-                                              {item.key}
-                                            </td>
-                                            <td style={{ width: "15px" }}>.</td>
-                                            <td>{item.option}</td>
-                                          </tr>
-                                        </table>
-                                      </Card>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <Card
-                                    className={
-                                      localStorage.getItem(router.query.id) ===
-                                      item.key
-                                        ? styles.answer
-                                        : styles.boxAnswer
-                                    }
-                                    key={index}
-                                    onClick={() => {
-                                      handleAnswer(item, index);
-                                    }}
-                                  >
-                                    <table>
-                                      <tr>
-                                        <td style={{ width: "5px" }}>
-                                          {item.key}
-                                        </td>
-                                        <td style={{ width: "15px" }}>.</td>
-                                        <td>{item.option} </td>
-                                      </tr>
-                                    </table>
-                                  </Card>
-                                )}
-                              </>
-                            );
-                          }
-                        )}
-                  </>
-                )}
-
-              {data &&
-                data[parseInt(router.query.id) - 1].type ===
-                  "multiple_choice" && (
-                  <>
-                    <h1 className={styles.soal}>
-                      {data &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        null &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        "" ? (
-                        <div className="d-flex flex-row">
-                          <div className="p-2">
-                            {" "}
-                            <Image
-                              src={
-                                process.env.END_POINT_API_IMAGE_SUBVIT +
-                                  data[parseInt(router.query.id) - 1]
-                                    ?.question_image || defaultImage
-                              }
-                              alt=""
-                              width={150}
-                              ndl
-                              height={150}
-                            />
-                          </div>
-                          <div className="p-5">
-                            {data &&
-                              data[parseInt(router.query.id) - 1]?.question}
-                            <br />
-                            <br />
-                            <span className={styles.multipleChoice}>
-                              Anda dapat memilih lebih dari 1 jawaban
-                            </span>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="p-2">
-                          {data &&
-                            data[parseInt(router.query.id) - 1]?.question}
-                          <br />
-                          <br />
-                          <span className={styles.multipleChoice}>
-                            Anda dapat memilih lebih dari 1 jawaban
-                          </span>
-                        </div>
-                      )}
-                    </h1>
-                    <hr />
-                    {data &&
-                      data[parseInt(router.query.id) - 1]?.answer !== null &&
-                      data[parseInt(router.query.id) - 1]?.answer.map(
-                        (item, index) => {
+                      : data.list_questions[parseInt(router.query.id) - 1]
+                          ?.answer &&
+                        JSON.parse(
+                          data.list_questions[parseInt(router.query.id) - 1]
+                            ?.answer
+                        ).map((item, index) => {
                           return (
                             <>
                               {item.image !== null && item.image !== "" ? (
@@ -691,14 +652,15 @@ const SubtansiUser = ({ token }) => {
                                   >
                                     <Card
                                       className={
-                                        localStorage.getItem(index + "a") ===
-                                        item.key
+                                        localStorage.getItem(
+                                          router.query.id
+                                        ) === item.key
                                           ? styles.answer
                                           : styles.boxAnswer
                                       }
                                       key={index}
                                       onClick={() => {
-                                        handleMultiple(item, index);
+                                        handleAnswer(item, index);
                                       }}
                                     >
                                       <table>
@@ -716,14 +678,14 @@ const SubtansiUser = ({ token }) => {
                               ) : (
                                 <Card
                                   className={
-                                    localStorage.getItem(index + "a") ===
+                                    localStorage.getItem(router.query.id) ===
                                     item.key
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
                                   key={index}
                                   onClick={() => {
-                                    handleMultiple(item, index);
+                                    handleAnswer(item, index);
                                   }}
                                 >
                                   <table>
@@ -739,29 +701,29 @@ const SubtansiUser = ({ token }) => {
                               )}
                             </>
                           );
-                        }
-                      )}
+                        })}
                   </>
                 )}
 
               {data &&
-                data[parseInt(router.query.id) - 1].type ===
-                  "pertanyaan_terbuka" && (
+                data.list_questions[parseInt(router.query.id) - 1].type ===
+                  "objective" && (
                   <>
                     <h1 className={styles.soal}>
                       {data &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        null &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        "" ? (
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== null &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== "" ? (
                         <div className="d-flex flex-row">
                           <div className="p-2">
                             {" "}
                             <Image
                               src={
                                 process.env.END_POINT_API_IMAGE_SUBVIT +
-                                  data[parseInt(router.query.id) - 1]
-                                    ?.question_image || defaultImage
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
                               }
                               alt=""
                               width={150}
@@ -771,13 +733,265 @@ const SubtansiUser = ({ token }) => {
                           </div>
                           <div className="p-5">
                             {data &&
-                              data[parseInt(router.query.id) - 1]?.question}
+                              data.list_questions[parseInt(router.query.id) - 1]
+                                ?.question}
                           </div>
                         </div>
                       ) : (
                         <div className="p-2">
                           {data &&
-                            data[parseInt(router.query.id) - 1]?.question}
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question}
+                        </div>
+                      )}
+                    </h1>
+                    <hr />
+                    {data &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        ?.answer !== null &&
+                      JSON.parse(
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          ?.answer
+                      ).map((item, index) => {
+                        return (
+                          <>
+                            {item.image !== null && item.image !== "" ? (
+                              <div className="d-flex flex-row">
+                                <div className="p-2">
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.image || defaultImage
+                                    }
+                                    alt=""
+                                    width={70}
+                                    height={70}
+                                  />
+                                </div>
+                                <div
+                                  className="p-4"
+                                  style={{ width: "100%", height: "100%" }}
+                                >
+                                  <Card
+                                    className={
+                                      localStorage.getItem(router.query.id) ===
+                                      item.key
+                                        ? styles.answer
+                                        : styles.boxAnswer
+                                    }
+                                    key={index}
+                                    onClick={() => {
+                                      handleObject(item, index);
+                                    }}
+                                  >
+                                    <table>
+                                      <tr>
+                                        <td style={{ width: "5px" }}>
+                                          {item.key}
+                                        </td>
+                                        <td style={{ width: "15px" }}>.</td>
+                                        <td>{item.option}</td>
+                                      </tr>
+                                    </table>
+                                  </Card>
+                                </div>
+                              </div>
+                            ) : (
+                              <Card
+                                className={
+                                  localStorage.getItem(router.query.id) ===
+                                  item.key
+                                    ? styles.answer
+                                    : styles.boxAnswer
+                                }
+                                key={index}
+                                onClick={() => {
+                                  handleObject(item, index);
+                                }}
+                              >
+                                <table>
+                                  <tr>
+                                    <td style={{ width: "5px" }}>{item.key}</td>
+                                    <td style={{ width: "15px" }}>.</td>
+                                    <td>{item.option} </td>
+                                  </tr>
+                                </table>
+                              </Card>
+                            )}
+                          </>
+                        );
+                      })}
+                  </>
+                )}
+
+              {data &&
+                data.list_questions[parseInt(router.query.id) - 1].type ===
+                  "multiple_choice" && (
+                  <>
+                    <h1 className={styles.soal}>
+                      {data &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== null &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== "" ? (
+                        <div className="d-flex flex-row">
+                          <div className="p-2">
+                            {" "}
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
+                              }
+                              alt=""
+                              width={150}
+                              ndl
+                              height={150}
+                            />
+                          </div>
+                          <div className="p-5">
+                            {data &&
+                              data.list_questions[parseInt(router.query.id) - 1]
+                                ?.question}
+                            <br />
+                            <br />
+                            <span className={styles.multipleChoice}>
+                              Anda dapat memilih lebih dari 1 jawaban
+                            </span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-2">
+                          {data &&
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question}
+                          <br />
+                          <br />
+                          <span className={styles.multipleChoice}>
+                            Anda dapat memilih lebih dari 1 jawaban
+                          </span>
+                        </div>
+                      )}
+                    </h1>
+                    <hr />
+                    {data &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        ?.answer !== null &&
+                      JSON.parse(
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          ?.answer
+                      ).map((item, index) => {
+                        return (
+                          <>
+                            {item.image !== null && item.image !== "" ? (
+                              <div className="d-flex flex-row">
+                                <div className="p-2">
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.image || defaultImage
+                                    }
+                                    alt=""
+                                    width={70}
+                                    height={70}
+                                  />
+                                </div>
+                                <div
+                                  className="p-4"
+                                  style={{ width: "100%", height: "100%" }}
+                                >
+                                  <Card
+                                    className={
+                                      localStorage.getItem(index + "a") ===
+                                      item.key
+                                        ? styles.answer
+                                        : styles.boxAnswer
+                                    }
+                                    key={index}
+                                    onClick={() => {
+                                      handleMultiple(item, index);
+                                    }}
+                                  >
+                                    <table>
+                                      <tr>
+                                        <td style={{ width: "5px" }}>
+                                          {item.key}
+                                        </td>
+                                        <td style={{ width: "15px" }}>.</td>
+                                        <td>{item.option}</td>
+                                      </tr>
+                                    </table>
+                                  </Card>
+                                </div>
+                              </div>
+                            ) : (
+                              <Card
+                                className={
+                                  localStorage.getItem(index + "a") === item.key
+                                    ? styles.answer
+                                    : styles.boxAnswer
+                                }
+                                key={index}
+                                onClick={() => {
+                                  handleMultiple(item, index);
+                                }}
+                              >
+                                <table>
+                                  <tr>
+                                    <td style={{ width: "5px" }}>{item.key}</td>
+                                    <td style={{ width: "15px" }}>.</td>
+                                    <td>{item.option} </td>
+                                  </tr>
+                                </table>
+                              </Card>
+                            )}
+                          </>
+                        );
+                      })}
+                  </>
+                )}
+
+              {data &&
+                data.list_questions[parseInt(router.query.id) - 1].type ===
+                  "pertanyaan_terbuka" && (
+                  <>
+                    <h1 className={styles.soal}>
+                      {data &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== null &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== "" ? (
+                        <div className="d-flex flex-row">
+                          <div className="p-2">
+                            {" "}
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
+                              }
+                              alt=""
+                              width={150}
+                              ndl
+                              height={150}
+                            />
+                          </div>
+                          <div className="p-5">
+                            {data &&
+                              data.list_questions[parseInt(router.query.id) - 1]
+                                ?.question}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-2">
+                          {data &&
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question}
+                          dispatch(postResult(setData, token)); //
+                          localStorage.clear(); //
+                          router.push(`/peserta/done-survey`);
                         </div>
                       )}
                     </h1>
@@ -795,43 +1009,45 @@ const SubtansiUser = ({ token }) => {
                   </>
                 )}
 
-              {data && data[parseInt(router.query.id) - 1].open === true && (
-                <>
-                  <hr />
-                  <h1 className={styles.soal} style={{ margin: "20px 0px" }}>
+              {data &&
+                data.list_questions[parseInt(router.query.id) - 1].open ===
+                  true && (
+                  <>
+                    <hr />
+                    <h1 className={styles.soal} style={{ margin: "20px 0px" }}>
+                      {data.list_questions[parseInt(router.query.id) - 1]
+                        .answer[indexSoal].sub[0] &&
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          .answer[indexSoal].sub[0].question}
+                    </h1>
                     {data[parseInt(router.query.id) - 1].answer[indexSoal]
                       .sub[0] &&
-                      data[parseInt(router.query.id) - 1].answer[indexSoal]
-                        .sub[0].question}
-                  </h1>
-                  {data[parseInt(router.query.id) - 1].answer[indexSoal]
-                    .sub[0] &&
-                    data[parseInt(router.query.id) - 1].answer[
-                      indexSoal
-                    ].sub[0].answer.map((item, index) => {
-                      return (
-                        <Card
-                          className={
-                            localStorage.getItem(`${router.query.id}a`) ===
-                            item.key
-                              ? styles.answer
-                              : styles.boxAnswer
-                          }
-                          key={index}
-                          onClick={() => handleAnswerTriggered(item)}
-                        >
-                          <table>
-                            <tr>
-                              <td style={{ width: "5px" }}>{item.key}</td>
-                              <td style={{ width: "15px" }}>.</td>
-                              <td>{item.option} </td>
-                            </tr>
-                          </table>
-                        </Card>
-                      );
-                    })}
-                </>
-              )}
+                      data[parseInt(router.query.id) - 1].answer[
+                        indexSoal
+                      ].sub[0].answer.map((item, index) => {
+                        return (
+                          <Card
+                            className={
+                              localStorage.getItem(`${router.query.id}a`) ===
+                              item.key
+                                ? styles.answer
+                                : styles.boxAnswer
+                            }
+                            key={index}
+                            onClick={() => handleAnswerTriggered(item)}
+                          >
+                            <table>
+                              <tr>
+                                <td style={{ width: "5px" }}>{item.key}</td>
+                                <td style={{ width: "15px" }}>.</td>
+                                <td>{item.option} </td>
+                              </tr>
+                            </table>
+                          </Card>
+                        );
+                      })}
+                  </>
+                )}
 
               <Row style={{ marginTop: "20px" }}>
                 <Col className={styles.btnBackResponsive}>
@@ -865,7 +1081,7 @@ const SubtansiUser = ({ token }) => {
                   className={styles.btnBottom}
                   style={{ textAlign: "right", margin: "10px " }}
                 >
-                  {parseInt(router.query.id) === data && data.length ? (
+                  {parseInt(router.query.id) === data?.total_questions ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
@@ -878,8 +1094,7 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleNext}
                       disabled={
-                        parseInt(router.query.id) === data &&
-                        data.total_questions
+                        parseInt(router.query.id) === data?.total_questions
                       }
                     >
                       <div className="d-flex flex-row">
@@ -905,7 +1120,7 @@ const SubtansiUser = ({ token }) => {
                     </Col>
 
                     <Col xs={6} style={{ textAlign: "center" }}>
-                      {parseInt(router.query.id) === data && data.length ? (
+                      {parseInt(router.query.id) === data?.total_questions ? (
                         <Button
                           className={styles.btnNext}
                           onClick={handleDone}
