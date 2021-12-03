@@ -4,7 +4,7 @@ import { wrapper } from "../../../redux/store";
 import { getDetailPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
 import { getAllTemaOriginal } from "../../../redux/actions/beranda/beranda.actions";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-import LoadingDetailPelatihan from "../../../user-component/components/loader/DetailPelatihanLoader";
+import LoadingDetailPelatihan from "../../../user-component-new/components/loader/LoadingDetailPelatihan";
 
 const DetailPelatihan = dynamic(
   () =>
@@ -50,8 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(getAllTemaOriginal());
 
-      await store.dispatch(getDetailPelatihan(params.id));
-
+      await store.dispatch(getDetailPelatihan(params.id, sessionToken));
       return {
         props: {
           title: "Detail Pelatihan",

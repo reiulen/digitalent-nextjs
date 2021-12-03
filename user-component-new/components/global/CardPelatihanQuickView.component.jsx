@@ -13,6 +13,11 @@ import IconTime from "../../../components/assets/icon-dashboard-peserta/Time";
 import IconPeserta from "../../../components/assets/icon-dashboard-peserta/Peserta";
 
 import ShareOverlay from "./ShareOverlay.component";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { getAllPelatihanByAkademi } from "../../../redux/actions/beranda/detail-akademi.actions";
+import { SweatAlert } from "../../../utils/middleware/helper";
 
 const CardPelatihanQuickView = ({
   row,
@@ -20,6 +25,7 @@ const CardPelatihanQuickView = ({
   akademi,
   funcCheckPelatihan,
   funcClosePelatihan,
+  session,
 }) => {
   const printTextTrim = (str) => {
     let result = null;
@@ -32,6 +38,83 @@ const CardPelatihanQuickView = ({
 
     return result;
   };
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const handleBookmark = async (pelatihan) => {
+    const link = process.env.END_POINT_API_PELATIHAN;
+    const config = {
+      headers: {
+        Authorization: "Bearer " + session?.token,
+      },
+    };
+    const body = {
+      pelatihan_id: pelatihan.id,
+    };
+    if (!pelatihan.bookmart) {
+      try {
+        const data = await axios.post(
+          `${link}api/v1/bookmart-peserta/create`,
+          body,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "success"
+          );
+          dispatch(
+            getAllPelatihanByAkademi(
+              router.query.id,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              session.token
+            )
+          );
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    } else {
+      try {
+        const data = await axios.delete(
+          `${link}api/v1/bookmart-peserta/delete?pelatihan_id=${pelatihan.id}`,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menghapus pelatihan dari bookmark",
+            "success"
+          );
+          dispatch(
+            getAllPelatihanByAkademi(
+              router.query.id,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              session.token
+            )
+          );
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    }
+  };
+
   return (
     <>
       <Col md={12} key={i} className="order-0 mb-5">
@@ -81,8 +164,21 @@ const CardPelatihanQuickView = ({
                     </div>
                   </div>
                   <div className="d-flex align-items-start">
-                    <button className="roundedss-border btn btn-white">
-                      <IconLove className="cursor-pointer" />
+                    <button
+                      className="roundedss-border btn btn-white"
+                      onClick={() => {
+                        if (!session) {
+                          router.push("/login");
+                        } else {
+                          handleBookmark(row);
+                        }
+                      }}
+                    >
+                      {!row.bookmart ? (
+                        <IconLove className="cursor-pointer" />
+                      ) : (
+                        <i className="text-danger ri-heart-fill p-0" />
+                      )}
                     </button>
 
                     <ShareOverlay

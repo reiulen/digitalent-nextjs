@@ -97,7 +97,9 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
   return (
     <Fragment>
       <div className={screenClass}>
-        <div className={styles.titlePlatform}>PLATFORM</div>
+        <div className={styles.titlePlatform + " mx-md-0 mx-6 m-0"}>
+          PLATFORM
+        </div>
         <div
           className={
             drop && !router.pathname.includes("/peserta/profile")
@@ -363,7 +365,9 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
             </div>
           </a>
         </div>
-        <div className={styles.titleAkun}>{titleAkun}</div>
+        <div className={styles.titleAkun + " mx-md-0 mx-6 m-0"}>
+          {titleAkun}
+        </div>
         <div className={accountFalse}>
           <Link href="/peserta/profile" passHref>
             <div
@@ -393,7 +397,13 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
         </div>
 
         <Link href="/peserta/pengaturan" passHref>
-          <div className={styles.akunMenu}>
+          <div
+            className={
+              router.pathname === "/peserta/pengaturan"
+                ? styles.akunMenuActive
+                : styles.akunMenu
+            }
+          >
             <div className="d-flex flex-row">
               <div className="p-2">
                 <div

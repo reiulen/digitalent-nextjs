@@ -215,7 +215,8 @@ const DetailAkademi = ({ session }) => {
         kategori_peserta,
         tanggal_mulai,
         tanggal_akhir,
-        page
+        page,
+        session.token
       )
     );
   };
@@ -244,7 +245,8 @@ const DetailAkademi = ({ session }) => {
         data.kategori_peserta,
         data.tanggal_mulai,
         data.tanggal_akhir,
-        1
+        1,
+        session.token
       )
     );
   };
@@ -261,6 +263,7 @@ const DetailAkademi = ({ session }) => {
       getAllPelatihanByAkademi(id, null, null, null, null, null, null, null, 1)
     );
   };
+
   return (
     <>
       <HomeWrapper>
@@ -390,6 +393,7 @@ const DetailAkademi = ({ session }) => {
                       value={startDate}
                       onChange={(e) => {
                         setStartDate(e.target.value);
+                        setEndDate("");
                         setDisabledDate(false);
                       }}
                     />
@@ -468,6 +472,7 @@ const DetailAkademi = ({ session }) => {
                                     funcQuickView={(index) =>
                                       handleQuickView(index)
                                     }
+                                    session={session}
                                     show={show}
                                     row={el}
                                     i={i}
@@ -481,6 +486,7 @@ const DetailAkademi = ({ session }) => {
                             row={el}
                             i={i}
                             akademi={akademi}
+                            session={session}
                             funcCheckPelatihan={(index) =>
                               handleCheckPelatihanReg(index)
                             }

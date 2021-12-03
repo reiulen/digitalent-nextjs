@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap";
 import Image from "next/image";
 import { getAllFaq } from "../../../../redux/actions/beranda/faq-content.actions";
 import PulseLoaderRender from "../../../../user-component-new/components/loader/PulseLoader";
-import SubHeaderComponent from "../../../../user-component/components/template/Subheader.component";
+import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 import styles from "../faq/faq.module.css";
 
 const FaqPage = () => {
@@ -48,8 +48,8 @@ const FaqPage = () => {
 
     if (text.includes("<a")) {
       result = text.replace("<a", `<a target="_blank"`);
-    }else {
-      result = text
+    } else {
+      result = text;
     }
 
     return result;
@@ -307,7 +307,7 @@ const FaqPage = () => {
                 fontWeight: "bold",
                 marginTop: "10px",
                 color: "#203e80",
-                fontSize:'32px'
+                fontSize: "32px",
               }}
             >
               {title}
@@ -393,7 +393,6 @@ const FaqPage = () => {
                                 fontFamily: "Poppins",
                                 fontSize: "16px",
                                 color: "#464E5F",
-                                
                               }}
                               dangerouslySetInnerHTML={{
                                 __html: handleLinkContent(row.jawaban),

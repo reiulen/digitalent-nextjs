@@ -309,9 +309,11 @@ const Beranda = ({ session }) => {
             "Anda berhasil menambahkan pelatihan ke bookmark",
             "success"
           );
+          handleActive(0, akademi[0].id);
           dispatch(getTemaByAkademi(session?.token, akademi[0].id));
         }
       } catch (e) {
+        handleActive(0, akademi[0].id);
         SweatAlert("Gagal", e.message, "error");
       }
     } else {
@@ -326,13 +328,16 @@ const Beranda = ({ session }) => {
             "Anda berhasil menghapus pelatihan dari bookmark",
             "success"
           );
+          handleActive(0, akademi[0].id);
           dispatch(getTemaByAkademi(session?.token, akademi[0].id));
         }
       } catch (e) {
+        handleActive(0, akademi[0].id);
         SweatAlert("Gagal", e.message, "error");
       }
     }
   };
+
   return (
     <>
       <section className="image-carousel-new mt-10">
@@ -491,10 +496,16 @@ const Beranda = ({ session }) => {
                                                           color: "#6C6C6C",
                                                         }}
                                                         onClick={() => {
-                                                          handleBookmark(
-                                                            pelatihan[i]
-                                                              .pelatihan[j]
-                                                          );
+                                                          if (!session) {
+                                                            router.push(
+                                                              "/login"
+                                                            );
+                                                          } else {
+                                                            handleBookmark(
+                                                              pelatihan[i]
+                                                                .pelatihan[j]
+                                                            );
+                                                          }
                                                         }}
                                                       ></i>
                                                     </Button>
@@ -726,11 +737,18 @@ const Beranda = ({ session }) => {
                                                       color: "#6C6C6C",
                                                     }}
                                                     onClick={() => {
-                                                      const pelatihan = {
-                                                        id: cardId,
-                                                        bookmark: cardBookmark,
-                                                      };
-                                                      handleBookmark(pelatihan);
+                                                      if (!session) {
+                                                        router.push("/login");
+                                                      } else {
+                                                        const pelatihan = {
+                                                          id: cardId,
+                                                          bookmark:
+                                                            cardBookmark,
+                                                        };
+                                                        handleBookmark(
+                                                          pelatihan
+                                                        );
+                                                      }
                                                     }}
                                                   ></i>
                                                 </Button>

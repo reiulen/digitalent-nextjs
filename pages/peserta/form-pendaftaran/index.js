@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
-import LoadingContentFull from "../../../user-component/content/peserta/components/loader/LoadingContentFull";
+import LoadingContentFull from "../../../user-component-new/components/loader/LoadingContentFull";
 import { useDispatch, useSelector } from "react-redux";
 
 import { wrapper } from "../../../redux/store";

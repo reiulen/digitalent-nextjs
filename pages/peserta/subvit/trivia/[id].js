@@ -5,7 +5,7 @@ import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.act
 import { getRandomSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 import { getRandomTriviaQuestionDetail } from "../../../../redux/actions/subvit/trivia-question-detail.action";
 import { wrapper } from "../../../../redux/store";
-import Layout from "../../../../user-component/components/template/Layout.component";
+import Layout from "../../../../user-component-new/components/template/Layout-peserta.component";
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 
 const SubtansiUser = dynamic(
@@ -50,7 +50,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getRandomTriviaQuestionDetail(
           query.training_id,
           query.theme_id,
-
           session.user.user.data.token
         )
       );

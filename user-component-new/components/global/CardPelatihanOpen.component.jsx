@@ -3,6 +3,11 @@ import { Card, Button, Badge } from "react-bootstrap";
 import Image from "next/image";
 import ShareOverlay from "../global/ShareOverlay.component";
 import moment from "moment";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { SweatAlert } from "../../../utils/middleware/helper";
+import { getAllPelatihanByAkademi } from "../../../redux/actions/beranda/detail-akademi.actions";
+import { useDispatch } from "react-redux";
 
 const CardPelatihanOpen = ({
   funcMouseEnter,
@@ -11,7 +16,84 @@ const CardPelatihanOpen = ({
   show,
   row,
   i,
+  session,
 }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleBookmark = async (pelatihan) => {
+    const link = process.env.END_POINT_API_PELATIHAN;
+    const config = {
+      headers: {
+        Authorization: "Bearer " + session?.token,
+      },
+    };
+    const body = {
+      pelatihan_id: pelatihan.id,
+    };
+    if (!pelatihan.bookmart) {
+      try {
+        const data = await axios.post(
+          `${link}api/v1/bookmart-peserta/create`,
+          body,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "success"
+          );
+          dispatch(
+            getAllPelatihanByAkademi(
+              router.query.id,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              session.token
+            )
+          );
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    } else {
+      try {
+        const data = await axios.delete(
+          `${link}api/v1/bookmart-peserta/delete?pelatihan_id=${pelatihan.id}`,
+          config
+        );
+        if (data) {
+          SweatAlert(
+            "Berhasil",
+            "Anda berhasil menghapus pelatihan dari bookmark",
+            "success"
+          );
+          dispatch(
+            getAllPelatihanByAkademi(
+              router.query.id,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              session.token
+            )
+          );
+        }
+      } catch (e) {
+        SweatAlert("Gagal", e.message, "error");
+      }
+    }
+  };
   return (
     <>
       <div
@@ -54,12 +136,24 @@ const CardPelatihanOpen = ({
                   className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
                 >
                   <i
-                    className="ri-heart-line p-0"
+                    className={
+                      !row.bookmart
+                        ? `ri-heart-line p-0`
+                        : `ri-heart-fill p-0 text-danger`
+                    }
                     style={{
                       color: "#6C6C6C",
                     }}
+                    onClick={() => {
+                      if (!session) {
+                        router.push("/peserta");
+                      } else {
+                        handleBookmark(row);
+                      }
+                    }}
                   ></i>
                 </Button>
+
                 <ShareOverlay
                   url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
                   quote={row.name}

@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getRandomSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 import { wrapper } from "../../../../redux/store";
-import Layout from "../../../../user-component/components/template/Layout.component";
+import Layout from "../../../../user-component-new/components/template/Layout-peserta.component";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 
