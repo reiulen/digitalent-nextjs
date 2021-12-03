@@ -216,7 +216,7 @@ const DetailAkademi = ({ session }) => {
         tanggal_mulai,
         tanggal_akhir,
         page,
-        session.token
+        session?.token
       )
     );
   };
@@ -246,7 +246,7 @@ const DetailAkademi = ({ session }) => {
         data.tanggal_mulai,
         data.tanggal_akhir,
         1,
-        session.token
+        session?.token
       )
     );
   };
@@ -260,7 +260,18 @@ const DetailAkademi = ({ session }) => {
     setStartDate("");
     setEndDate("");
     dispatch(
-      getAllPelatihanByAkademi(id, null, null, null, null, null, null, null, 1)
+      getAllPelatihanByAkademi(
+        id,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        session?.token
+      )
     );
   };
 
@@ -340,7 +351,7 @@ const DetailAkademi = ({ session }) => {
         </section>
 
         <section className={`card-filter-bar`}>
-          <FilterBar />
+          <FilterBar session={session} />
         </section>
 
         <section className={`content-detail mt-4`}>
