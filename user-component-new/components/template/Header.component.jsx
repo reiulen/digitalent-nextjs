@@ -268,6 +268,8 @@ const Header = () => {
                           </>
                         ) : router.pathname.includes("form-lpj") ? (
                           "Survey & LPJ"
+                        ) : router.pathname.includes("pengaturan") ? (
+                          "Pengaturan"
                         ) : (
                           "Dashboard"
                         )}
@@ -535,6 +537,15 @@ const Header = () => {
                           marginRight: "15px",
                         }}
                       ></i>
+                    ) : router.pathname.includes("artikel") ? (
+                      <i
+                        className="ri-bar-chart-horizontal-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
                     ) : (
                       <i
                         className="ri-article-line"
@@ -583,6 +594,8 @@ const Header = () => {
                       ? "Favorit"
                       : router.pathname.includes("administrasi")
                       ? "Administrasi"
+                      : router.pathname.includes("artikel")
+                      ? "Artikel"
                       : "Dashboard"}
                   </div>
                 </div>
