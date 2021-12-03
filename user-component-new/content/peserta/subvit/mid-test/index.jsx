@@ -193,6 +193,7 @@ const SubtansiUser = ({ token }) => {
       training_id: router.query.training_id,
       type: "midtest",
     };
+
     dispatch(postResult(setData, token));
     localStorage.clear();
     router.push(`/peserta/done-mid-tes`);
