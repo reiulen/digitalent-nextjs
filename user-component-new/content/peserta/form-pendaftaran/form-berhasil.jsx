@@ -36,9 +36,11 @@ const FormBerhasil = ({ token }) => {
       if (data) {
         const link = document.createElement("a");
         link.download = `Form Pendaftaran.pdf`;
-        // link.target = "_blank";
+        link.target = "_blank";
+        console.log(data);
         link.href = data.data;
         link.click();
+        // window.location.href = data.data;
       }
     } catch (error) {
       Swal.fire("Gagal", `${error.response.data.message}`, "error");
@@ -84,7 +86,11 @@ const FormBerhasil = ({ token }) => {
                     </p>
                     <div className="d-flex flex-row">
                       <p className={`${style.text_mitra_card}`}>
-                        {dataPelatihan ? dataPelatihan.mitra_nama || "-" : "-"}
+                        {console.log(dataPelatihan)}
+                        {dataPelatihan
+                          ? dataPelatihan?.mitra_nama ||
+                            dataPelatihan?.penyelenggara
+                          : "-"}
                       </p>
                       <p className={`mx-3 ${style.text_grey}`}>•</p>
                       <p className={`${style.text_tema_card}`}>
