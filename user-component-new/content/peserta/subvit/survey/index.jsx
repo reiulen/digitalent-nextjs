@@ -141,7 +141,7 @@ const SubtansiUser = ({ token }) => {
   const [multipleAnswer, setMultipleAnswer] = useState(multi);
   const [indexSoal, setIndexSoal] = useState(0);
 
-  const [count, setCount] = useState(random_survey && random_survey.time_left);
+  const [count, setCount] = useState(9999999);
   const [modalDone, setModalDone] = useState(false);
 
   const [hour, setHour] = useState(0);
@@ -218,12 +218,6 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
-    if (error) {
-      dispatch(clearErrors());
-    }
-    if (error) {
-      SweatAlert("Error", error, "error");
-    }
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
@@ -301,7 +295,9 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  for (let i = 0; i < data && data.length; i++) {
+  console.log(data);
+
+  for (let i = 0; i < data?.total_questions; i++) {
     number.push(i);
   }
 
@@ -418,23 +414,24 @@ const SubtansiUser = ({ token }) => {
                 </Col>
               </Row>
               {data &&
-                data[parseInt(router.query.id) - 1].type ===
+                data.list_questions[parseInt(router.query.id) - 1].type ===
                   "triggered_question" && (
                   <>
                     <h1 className={styles.soal}>
                       {data &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        null &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        "" ? (
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== null &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== "" ? (
                         <div className="d-flex flex-row">
                           <div className="p-2">
                             {" "}
                             <Image
                               src={
                                 process.env.END_POINT_API_IMAGE_SUBVIT +
-                                  data[parseInt(router.query.id) - 1]
-                                    ?.question_image || defaultImage
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
                               }
                               alt=""
                               width={150}
@@ -444,24 +441,33 @@ const SubtansiUser = ({ token }) => {
                           </div>
                           <div className="p-5">
                             {data &&
-                              data[parseInt(router.query.id) - 1]?.question}
+                              data.list_questions[parseInt(router.query.id) - 1]
+                                ?.question}
                           </div>
                         </div>
                       ) : (
                         <div className="p-2">
                           {data &&
-                            data[parseInt(router.query.id) - 1]?.question}
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question}
                         </div>
                       )}
                     </h1>
                     <hr
-                      hidden={data[parseInt(router.query.id) - 1].open === true}
+                      hidden={
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          .open === true
+                      }
                     />
                     {data &&
-                    data[parseInt(router.query.id) - 1]?.answer !== null &&
+                    data.list_questions[parseInt(router.query.id) - 1]
+                      ?.answer !== null &&
                     data &&
-                    data[parseInt(router.query.id) - 1].open === true
-                      ? data[parseInt(router.query.id) - 1]?.answer
+                    data.list_questions[parseInt(router.query.id) - 1].open ===
+                      true
+                      ? data.list_questions[
+                          parseInt(router.query.id) - 1
+                        ]?.answer
                           .filter(
                             (data) =>
                               data.key === localStorage.getItem(router.query.id)
@@ -540,86 +546,85 @@ const SubtansiUser = ({ token }) => {
                             );
                           })
                       : data[parseInt(router.query.id) - 1]?.answer &&
-                        data[parseInt(router.query.id) - 1]?.answer.map(
-                          (item, index) => {
-                            return (
-                              <>
-                                {item.image !== null && item.image !== "" ? (
-                                  <div className="d-flex flex-row">
-                                    <div className="p-2">
-                                      <Image
-                                        src={
-                                          process.env
-                                            .END_POINT_API_IMAGE_SUBVIT +
-                                            item.image || defaultImage
-                                        }
-                                        alt=""
-                                        width={70}
-                                        height={70}
-                                      />
-                                    </div>
-                                    <div
-                                      className="p-4"
-                                      style={{ width: "100%", height: "100%" }}
-                                    >
-                                      <Card
-                                        className={
-                                          localStorage.getItem(
-                                            router.query.id
-                                          ) === item.key
-                                            ? styles.answer
-                                            : styles.boxAnswer
-                                        }
-                                        key={index}
-                                        onClick={() => {
-                                          handleAnswer(item, index);
-                                        }}
-                                      >
-                                        <table>
-                                          <tr>
-                                            <td style={{ width: "5px" }}>
-                                              {item.key}
-                                            </td>
-                                            <td style={{ width: "15px" }}>.</td>
-                                            <td>{item.option}</td>
-                                          </tr>
-                                        </table>
-                                      </Card>
-                                    </div>
+                        data.list_questions[
+                          parseInt(router.query.id) - 1
+                        ]?.answer.map((item, index) => {
+                          return (
+                            <>
+                              {item.image !== null && item.image !== "" ? (
+                                <div className="d-flex flex-row">
+                                  <div className="p-2">
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                          item.image || defaultImage
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                    />
                                   </div>
-                                ) : (
-                                  <Card
-                                    className={
-                                      localStorage.getItem(router.query.id) ===
-                                      item.key
-                                        ? styles.answer
-                                        : styles.boxAnswer
-                                    }
-                                    key={index}
-                                    onClick={() => {
-                                      handleAnswer(item, index);
-                                    }}
+                                  <div
+                                    className="p-4"
+                                    style={{ width: "100%", height: "100%" }}
                                   >
-                                    <table>
-                                      <tr>
-                                        <td style={{ width: "5px" }}>
-                                          {item.key}
-                                        </td>
-                                        <td style={{ width: "15px" }}>.</td>
-                                        <td>{item.option} </td>
-                                      </tr>
-                                    </table>
-                                  </Card>
-                                )}
-                              </>
-                            );
-                          }
-                        )}
+                                    <Card
+                                      className={
+                                        localStorage.getItem(
+                                          router.query.id
+                                        ) === item.key
+                                          ? styles.answer
+                                          : styles.boxAnswer
+                                      }
+                                      key={index}
+                                      onClick={() => {
+                                        handleAnswer(item, index);
+                                      }}
+                                    >
+                                      <table>
+                                        <tr>
+                                          <td style={{ width: "5px" }}>
+                                            {item.key}
+                                          </td>
+                                          <td style={{ width: "15px" }}>.</td>
+                                          <td>{item.option}</td>
+                                        </tr>
+                                      </table>
+                                    </Card>
+                                  </div>
+                                </div>
+                              ) : (
+                                <Card
+                                  className={
+                                    localStorage.getItem(router.query.id) ===
+                                    item.key
+                                      ? styles.answer
+                                      : styles.boxAnswer
+                                  }
+                                  key={index}
+                                  onClick={() => {
+                                    handleAnswer(item, index);
+                                  }}
+                                >
+                                  <table>
+                                    <tr>
+                                      <td style={{ width: "5px" }}>
+                                        {item.key}
+                                      </td>
+                                      <td style={{ width: "15px" }}>.</td>
+                                      <td>{item.option} </td>
+                                    </tr>
+                                  </table>
+                                </Card>
+                              )}
+                            </>
+                          );
+                        })}
                   </>
                 )}
 
               {data &&
-                data[parseInt(router.query.id) - 1].type ===
+                data.list_questions[parseInt(router.query.id) - 1].type ===
                   "multiple_choice" && (
                   <>
                     <h1 className={styles.soal}>
@@ -745,15 +750,15 @@ const SubtansiUser = ({ token }) => {
                 )}
 
               {data &&
-                data[parseInt(router.query.id) - 1].type ===
+                data.list_questions[parseInt(router.query.id) - 1].type ===
                   "pertanyaan_terbuka" && (
                   <>
                     <h1 className={styles.soal}>
                       {data &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        null &&
-                      data[parseInt(router.query.id) - 1].question_image !==
-                        "" ? (
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== null &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question_image !== "" ? (
                         <div className="d-flex flex-row">
                           <div className="p-2">
                             {" "}
@@ -771,13 +776,15 @@ const SubtansiUser = ({ token }) => {
                           </div>
                           <div className="p-5">
                             {data &&
-                              data[parseInt(router.query.id) - 1]?.question}
+                              data.list_questions[parseInt(router.query.id) - 1]
+                                ?.question}
                           </div>
                         </div>
                       ) : (
                         <div className="p-2">
                           {data &&
-                            data[parseInt(router.query.id) - 1]?.question}
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question}
                         </div>
                       )}
                     </h1>
@@ -795,43 +802,45 @@ const SubtansiUser = ({ token }) => {
                   </>
                 )}
 
-              {data && data[parseInt(router.query.id) - 1].open === true && (
-                <>
-                  <hr />
-                  <h1 className={styles.soal} style={{ margin: "20px 0px" }}>
+              {data &&
+                data.list_questions[parseInt(router.query.id) - 1].open ===
+                  true && (
+                  <>
+                    <hr />
+                    <h1 className={styles.soal} style={{ margin: "20px 0px" }}>
+                      {data.list_questions[parseInt(router.query.id) - 1]
+                        .answer[indexSoal].sub[0] &&
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          .answer[indexSoal].sub[0].question}
+                    </h1>
                     {data[parseInt(router.query.id) - 1].answer[indexSoal]
                       .sub[0] &&
-                      data[parseInt(router.query.id) - 1].answer[indexSoal]
-                        .sub[0].question}
-                  </h1>
-                  {data[parseInt(router.query.id) - 1].answer[indexSoal]
-                    .sub[0] &&
-                    data[parseInt(router.query.id) - 1].answer[
-                      indexSoal
-                    ].sub[0].answer.map((item, index) => {
-                      return (
-                        <Card
-                          className={
-                            localStorage.getItem(`${router.query.id}a`) ===
-                            item.key
-                              ? styles.answer
-                              : styles.boxAnswer
-                          }
-                          key={index}
-                          onClick={() => handleAnswerTriggered(item)}
-                        >
-                          <table>
-                            <tr>
-                              <td style={{ width: "5px" }}>{item.key}</td>
-                              <td style={{ width: "15px" }}>.</td>
-                              <td>{item.option} </td>
-                            </tr>
-                          </table>
-                        </Card>
-                      );
-                    })}
-                </>
-              )}
+                      data[parseInt(router.query.id) - 1].answer[
+                        indexSoal
+                      ].sub[0].answer.map((item, index) => {
+                        return (
+                          <Card
+                            className={
+                              localStorage.getItem(`${router.query.id}a`) ===
+                              item.key
+                                ? styles.answer
+                                : styles.boxAnswer
+                            }
+                            key={index}
+                            onClick={() => handleAnswerTriggered(item)}
+                          >
+                            <table>
+                              <tr>
+                                <td style={{ width: "5px" }}>{item.key}</td>
+                                <td style={{ width: "15px" }}>.</td>
+                                <td>{item.option} </td>
+                              </tr>
+                            </table>
+                          </Card>
+                        );
+                      })}
+                  </>
+                )}
 
               <Row style={{ marginTop: "20px" }}>
                 <Col className={styles.btnBackResponsive}>

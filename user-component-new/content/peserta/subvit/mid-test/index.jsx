@@ -129,7 +129,7 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      // router.push(`/peserta/done-mid-tes`);
+      router.push(`/peserta/done-mid-tes`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
