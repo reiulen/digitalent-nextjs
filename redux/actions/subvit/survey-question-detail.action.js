@@ -49,7 +49,6 @@ export const getAllSurveyQuestionDetail =
       if (keyword) link = link.concat(`&keyword=${keyword}`);
 
       const { data } = await axios.get(link, config);
-
       dispatch({
         type: SURVEY_QUESTION_DETAIL_SUCCESS,
         payload: data,

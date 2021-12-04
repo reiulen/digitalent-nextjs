@@ -128,11 +128,12 @@ const DashbardSubvit = ({ token }) => {
 
                       <div className="col-md-6">
                         <div
-                          className="ml-auto float-right ilustrator-dashboard"
+                          className={`${styles.imageDashboard} ml-auto float-right ilustrator-dashboard`}
                           style={{
                             position: "absolute",
-                            right: "10px",
-                            top: "-50px",
+                            right: "-50px",
+                            top: "-10px",
+                            width: "40%",
                           }}
                         >
                           <Image
