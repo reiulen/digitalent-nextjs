@@ -8,6 +8,7 @@ import StatistikWrapper from "../wrapper/statistik.wrapper";
 
 import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   BarChart,
@@ -26,43 +27,67 @@ const DashboardBeasiswa = () => {
     () => import("../component/map-digitalent.component"),
     { ssr: false }
   );
-  const dataBeasiwaDalamNegeri = [
-    {
-      name: "Khusus",
-      awardee: 2400,
-      pendaftar: 2000,
-    },
-    {
-      name: "S2 ASN",
-      awardee: 2210,
-      pendaftar: 2100,
-    },
-    {
-      name: "S2 Umum",
-      awardee: 2290,
-      pendaftar: 2200,
-    },
-    {
-      name: "S3 ASN",
-      awardee: 2000,
-      pendaftar: 2300,
-    },
-    {
-      name: "S3 Umum",
-      awardee: 2181,
-      pendaftar: 2500,
-    },
-    {
-      name: "S2 Internal",
-      awardee: 2500,
-      pendaftar: 2400,
-    },
-    {
-      name: "s3 Internal",
-      awardee: 2100,
-      pendaftar: 2300,
-    },
-  ];
+
+  const {
+    loading: loadingTotalPengguna,
+    error: errorTotalPengguna,
+    totalPengguna,
+  } = useSelector((state) => state.beasiswaTotalPengguna);
+  const {
+    loading: loadingTotalPendaftar,
+    error: errorTotalPendaftar,
+    totalPendaftar,
+  } = useSelector((state) => state.beasiswaTotalPendaftar);
+  const {
+    loading: loadingStatistikDalam,
+    error: errorStatistikDalam,
+    statistik: statistikDalam,
+  } = useSelector((state) => state.beasiswaStatistikDalam);
+  const {
+    loading: loadingStatistikLuar,
+    error: errorStatistikLuar,
+    statistik: statistikLuar,
+  } = useSelector((state) => state.beasiswaStatistikLuar);
+  const {
+    loading: loadingWilayah,
+    error: errorWilayah,
+    wilayah,
+  } = useSelector((state) => state.beasiswaMapPendaftar);
+  const {
+    loading: loadingProvinsiPendaftar,
+    error: errorProvinsiPendaftar,
+    provinsi: provinsiPendaftar,
+  } = useSelector((state) => state.beasiswaProvinsiPendaftar);
+
+  const dataBeasiwaDalamNegeri = [];
+  if (statistikDalam) {
+    statistikDalam.map((row, i) => {
+      let val = {
+        name: row.category,
+        pendaftar: row.type.peserta,
+        awardee: row.type.awardee,
+      };
+      dataBeasiwaDalamNegeri.push(val);
+    });
+  }
+  if (statistikLuar) {
+    statistikLuar.map((row, i) => {});
+  }
+
+  const dataBeasiswaMapPendaftar = [];
+  if (wilayah) {
+    wilayah.map((row, i) => {
+      let val = {
+        position: [row.lat, row.long],
+        provinsi: row.province,
+        totalLn: row.total_ln,
+        totalDn: row.total_dn,
+        type: "beasiswa",
+      };
+      dataBeasiswaMapPendaftar.push(val);
+    });
+  }
+
   const dataBeasiwaLuarNegeri = [
     {
       name: "Skema Reguler",
@@ -151,6 +176,9 @@ const DashboardBeasiswa = () => {
         <Header
           name={"Kepala Badan Litbang SDM Kementerian Kominfo"}
           text={"Beasiswa Kominfo"}
+          value={totalPengguna.all}
+          dailyAdd={totalPengguna.percetage}
+          statisticDay={totalPengguna.latest}
         />
       </section>
 
@@ -159,17 +187,17 @@ const DashboardBeasiswa = () => {
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Dalam Negeri"}
-              value={252.329}
-              dailyAdd={"23.21"}
-              statisticDay={"+20.220 "}
+              value={totalPendaftar.dn.all}
+              dailyAdd={totalPendaftar.dn.percetage}
+              statisticDay={totalPendaftar.dn.latest}
             />
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Luar Negeri"}
-              value={252.329}
-              dailyAdd={"23.21"}
-              statisticDay={"+20.220 "}
+              value={totalPendaftar.ln.all}
+              dailyAdd={totalPendaftar.ln.percetage}
+              statisticDay={totalPendaftar.ln.latest}
             />
           </div>
         </div>
@@ -266,7 +294,7 @@ const DashboardBeasiswa = () => {
             <div className="row">
               <div className="map-penyebaran col-md-12 mt-5">
                 <div id="map">
-                  <MapDigitalent />
+                  <MapDigitalent data={dataBeasiswaMapPendaftar} />
                 </div>
               </div>
             </div>
