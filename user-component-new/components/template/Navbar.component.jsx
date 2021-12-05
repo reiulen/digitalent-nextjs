@@ -654,16 +654,13 @@ const Navigationbar = ({ session }) => {
             </Row>
             <hr />
             {/* Start side bar */}
-            {session &&
-              !router.pathname.includes(routerPath) &&
-              session &&
-              session.roles[0] === "user" && (
-                <Sidebar
-                  screenClass={"d-block d-lg-none"}
-                  accountFalse={`d-none d-lg-block`}
-                  titleAkun={"Lainnya"}
-                />
-              )}
+            {session && !router.pathname.includes(routerPath) && (
+              <Sidebar
+                screenClass={"d-block d-lg-none"}
+                accountFalse={`d-none d-lg-block`}
+                titleAkun={"Lainnya"}
+              />
+            )}
             {/* End side bar */}
           </Nav>
         </Navbar.Collapse>
