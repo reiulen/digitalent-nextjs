@@ -158,16 +158,18 @@ const EditTheme = ({ token }) => {
                 <label className="col-form-label font-weight-bold">
                   Akademi
                 </label>
-                <Select
-                  options={optionsAkademi}
-                  defaultValue={academy}
-                  onChange={(e) =>
-                    setAcademy({ label: e.label, value: e.value })
-                  }
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("akademi")
-                  }
-                />
+                <div className="position-relative" style={{ zIndex: "5" }}>
+                  <Select
+                    options={optionsAkademi}
+                    defaultValue={academy}
+                    onChange={(e) =>
+                      setAcademy({ label: e.label, value: e.value })
+                    }
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("akademi")
+                    }
+                  />
+                </div>
                 {simpleValidator.current.message(
                   "akademi",
                   academy,

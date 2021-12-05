@@ -129,7 +129,7 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      // router.push(`/peserta/done-mid-tes`);
+      router.push(`/peserta/done-mid-tes`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
@@ -191,8 +191,9 @@ const SubtansiUser = ({ token }) => {
         })
       ),
       training_id: router.query.training_id,
-      type: router.query.category === "Test Substansi" && "substansi",
+      type: "midtest",
     };
+
     dispatch(postResult(setData, token));
     localStorage.clear();
     router.push(`/peserta/done-mid-tes`);

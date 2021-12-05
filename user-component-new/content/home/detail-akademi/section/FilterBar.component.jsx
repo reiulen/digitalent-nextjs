@@ -12,7 +12,7 @@ import {
   getAllTemaOriginal,
 } from "../../../../../redux/actions/beranda/beranda.actions";
 
-const FilterBar = () => {
+const FilterBar = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -153,7 +153,13 @@ const FilterBar = () => {
         data.akademi_id,
         data.tema_id,
         data.kota,
-        data.tipe_pelatihan
+        data.tipe_pelatihan,
+        null,
+        null,
+        null,
+        null,
+        null,
+        session?.token
       )
     );
   };
