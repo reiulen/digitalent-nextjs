@@ -54,7 +54,7 @@ const Navigationbar = ({ session }) => {
         Object.keys(dataPribadi).length !== 0 &&
         !dataPribadi.status
       ) {
-        router.push("/peserta/wizzard");
+        // router.push("/peserta/wizzard");
       }
     }
   }, []);

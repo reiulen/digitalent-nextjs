@@ -197,7 +197,6 @@ const SubtansiUser = ({ token }) => {
   let multi = [];
 
   const [data, setData] = useState();
-  // console.log(data);
   const [answer, setAnswer] = useState("");
   const [d, setD] = useState("");
 
@@ -367,8 +366,6 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  // console.log(data);
-
   for (let i = 0; i < data?.total_questions; i++) {
     number.push(i);
   }
@@ -381,7 +378,6 @@ const SubtansiUser = ({ token }) => {
     const setData = {
       list: JSON.stringify(
         data.list_questions.map((item, index) => {
-          console.log(item);
           return {
             ...item,
 

@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 
 export default function RiwayatPelatihanDetail(props) {
   const { state: data } = useSelector(
-    state => state.getDetailRiwayatPelatihanPeserta
+    (state) => state.getDetailRiwayatPelatihanPeserta
   );
   const [description, setDescription] = useState(data?.deskripsi || "-");
   const dateFrom = moment(data?.pendaftaran_mulai).format("LL");
@@ -57,9 +57,7 @@ export default function RiwayatPelatihanDetail(props) {
     },
   };
 
-  console.log(data);
-
-  const onChangeFile = e => {
+  const onChangeFile = (e) => {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
@@ -443,7 +441,7 @@ export default function RiwayatPelatihanDetail(props) {
                   type="file"
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
-                  onChange={e => {
+                  onChange={(e) => {
                     onChangeFile(e);
                   }}
                 />
