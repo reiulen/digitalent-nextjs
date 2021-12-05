@@ -26,22 +26,31 @@ export default function CardTemplateOriginal({ data, session }) {
   useEffect(() => {
     if (data.status.includes("tidak") || data.status.includes("ditolak"))
       return setLabel("danger");
+
     if (data.status.includes("menunggu") || data.status.includes("seleksi"))
       return setLabel("warning");
+
+    if (
+      data.status.includes("LPJ") ||
+      data.status.includes("lpj") ||
+      data.status == "survey belum tersedia" ||
+      data.status == "LPJ belum tersedia"
+    )
+      return setLabel("primary");
+
     if (
       data.status.includes("seleksi administrasi") ||
       data.status.includes("menunggu") ||
       data.status.includes("belum tersedia")
     )
       return setLabel("warning");
+
     if (data.status.includes("lulus") || data.status.includes("Lulus"))
       return setLabel("success");
+
     if (
-      data.status == "survey belum tersedia" ||
-      data.status == "LPJ belum tersedia" ||
       data.status.includes("tes substansi") ||
       data.status.includes("pelatihan") ||
-      data.status.includes("LPJ") ||
       data.status.includes("survey")
     )
       return setLabel("primary");
@@ -80,18 +89,12 @@ export default function CardTemplateOriginal({ data, session }) {
           config
         );
         if (data) {
-          // const a = document.createElement("a");
-          // a.href = data.data;
-          // a.download = "Bukti Pendaftaran.pdf";
-          // document.body.appendChild(a);
-          // a.click();
-          // document.body.removeChild(a);
-
           const link = document.createElement("a");
           link.download = `Bukti Pendaftaran.pdf`;
           link.target = "_blank";
           link.href = data.data;
           link.click();
+          document.body.removeChild(link);
         }
       } catch (error) {
         Swal.fire("Gagal", `${error.response.data.message}`, "error");
@@ -169,7 +172,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   `/peserta/riwayat-pelatihan/${data.name
                     .split(" ")
                     .join("-")
-                    .toLowerCase()}`
+                    .toLowerCase()}?no=${data.id}`
                 );
               }
             }}
@@ -250,9 +253,9 @@ export default function CardTemplateOriginal({ data, session }) {
                       } font-weight-bolder p-0 px-4 py-4 text-capitalize`}
                     >
                       {data.lpj
-                        ? "Kerjakan LPJ"
+                        ? "Isi LPJ"
                         : data.survei
-                        ? "Kerjakan Survei"
+                        ? "Isi Survey"
                         : data.status == "pelatihan" &&
                           data.midtest &&
                           !data.trivia
@@ -261,7 +264,8 @@ export default function CardTemplateOriginal({ data, session }) {
                         ? "kerjakan trivia"
                         : data.status == "survey belum tersedia"
                         ? "Isi survei"
-                        : data.status.includes("LPJ")
+                        : data.status.includes("LPJ") ||
+                          data.status.includes("lpj")
                         ? "Isi LPJ"
                         : data.status}
                     </p>
@@ -336,7 +340,7 @@ export default function CardTemplateOriginal({ data, session }) {
                 <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
             </Fragment>
-          ) : data.lpj || data.status == "LPJ belum tersedia" ? (
+          ) : data.lpj || data.status == "lpj belum tersedia" ? (
             <Fragment>
               <CustomButton
                 outline
@@ -428,7 +432,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   click={() => setShowModalSertifikasi(true)}
                 >
                   <i className="ri-upload-2-fill mr-2"></i>
-                  Upload Sertifikasi
+                  Unggah Sertifikasi
                 </CustomButton>
               )}
               <CustomButton
@@ -467,10 +471,15 @@ export default function CardTemplateOriginal({ data, session }) {
             </Fragment>
           ) : data.status == "diterima" ? (
             <Fragment>
-              <CustomButton outline click={() => setShowModalSertifikasi(true)}>
-                <i className="ri-upload-2-fill mr-2"></i>
-                Upload Sertifikasi
-              </CustomButton>
+              {data.sertifikasi == "1" && (
+                <CustomButton
+                  outline
+                  click={() => setShowModalSertifikasi(true)}
+                >
+                  <i className="ri-upload-2-fill mr-2"></i>
+                  Unggah Sertifikasi
+                </CustomButton>
+              )}
               <CustomButton
                 click={() => handleClick("download", data.id_pendaftaran)}
               >
@@ -509,7 +518,7 @@ export default function CardTemplateOriginal({ data, session }) {
                 Bukti Pendaftaran
               </CustomButton>
             </Fragment>
-          ) : data.status === "LPJ belum mengerjakan" ? (
+          ) : data.status === "lpj belum mengerjakan" ? (
             <Fragment>
               <CustomButton
                 disabled

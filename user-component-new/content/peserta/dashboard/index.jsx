@@ -305,6 +305,7 @@ const Dashboard = ({ session, success }) => {
                       width={400}
                       height={180}
                       objectFit="cover"
+                      alt="image"
                     />
                     <Card.ImgOverlay>
                       <Badge
