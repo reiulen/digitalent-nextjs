@@ -6,17 +6,20 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { Stepper, Step } from "react-form-stepper";
 import Steppers from "./stepper";
 
-const AlamatEdit = dynamic(() => import("../profile/alamat/alamat.edit"), {
-  loading: function loadingNow() {
-    return <LoadingSkeleton />;
-  },
-  ssr: false,
-});
+const PendidikanEdit = dynamic(
+  () => import("../profile/pendidikan/pendidikan.edit"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
-const Alamat = ({ session }) => {
+const Pendidikan = ({ session }) => {
   const router = useRouter();
 
-  const [viewProfile, setViewProfile] = useState(2);
+  const [viewProfile, setViewProfile] = useState(3);
   const [viewEdit, setViewEdit] = useState(true);
 
   const [step, setStep] = useState([1, 2, 3, 4]);
@@ -103,7 +106,8 @@ const Alamat = ({ session }) => {
           <Col md={12}>
             <Card className="card-custom gutter-b">
               <Card.Body>
-                <AlamatEdit wizzard={true} token={session.token} />
+                {/* {handleViewProfile()} */}
+                <PendidikanEdit wizzard={true} token={session.token} />
               </Card.Body>
             </Card>
           </Col>
@@ -113,4 +117,4 @@ const Alamat = ({ session }) => {
   );
 };
 
-export default Alamat;
+export default Pendidikan;

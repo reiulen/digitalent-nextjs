@@ -65,8 +65,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const data = session.user.user.data.user;
 
       await store.dispatch(getDataPribadi(data.token));
+      await store.dispatch(getProfileAlamat(data.token));
+      await store.dispatch(getProfilePendidikan(data.token));
 
+      await store.dispatch(dropdownProvinsi(data.token));
       await store.dispatch(dropdownAgama(data.token));
+      await store.dispatch(dropdownStatusPekerjaan(data.token));
+      await store.dispatch(dropdownPendidikan(data.token));
+      await store.dispatch(getProfilePekerjaan(data.token));
 
       return {
         props: { data: "auth", session, title: "Profile - Peserta" },

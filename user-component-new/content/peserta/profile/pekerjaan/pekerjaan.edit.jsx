@@ -86,12 +86,12 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
 
     if (success) {
+      SweatAlert("Berhasil", "Berhasil Update Data", "success");
       if (wizzard) {
         router.push("/peserta");
       } else {
         funcViewEdit(false);
       }
-      SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
