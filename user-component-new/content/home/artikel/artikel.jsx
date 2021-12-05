@@ -15,6 +15,8 @@ import { getAllBerandaArtikel } from "../../../../redux/actions/beranda/artikel.
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 
+import styles from "../artikel/artikel.module.css"
+
 const Artikel = () => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -389,17 +391,17 @@ const Artikel = () => {
 
             {/* Header */}
             <div className="col-12 mt-5 ml-n1">
-                <h1 className="fw-700">
+                <h1 className="fw-700" style={{fontSize: "40px", fontFamily:"Poppins"}}>
                     {activeTitle}
                 </h1>
 
                 {
                     activeTitle == "Ada Apa di Digitalent" ?
-                        <div className="mt-3">
+                        <div className="mt-3" style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                             Cerita mitra, berita seru, dan artikel terbaru. Baca semua artikel soal Digitalent di sini.
                         </div>
                     :
-                        <div className="mt-3">
+                        <div className="mt-3" style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                             Artikel terkait {activeTitle} di  Digital Talent Scholarship
                         </div>
                 }
@@ -525,7 +527,7 @@ const Artikel = () => {
                                                 },
                                             }
                                         }}
-                                        className= "ml-0 ml-sm-3 mr-n5 mr-sm-n3"
+                                        className= "ml-0 ml-sm-3 mr-n5 mr-sm-n5"
                                     >
                                         {
                                             kategoriArtikel === "" ?
@@ -628,7 +630,7 @@ const Artikel = () => {
                                         />
                                     </div>
                                     <div className="col-7 my-auto">
-                                        <h3 className=" font-weight-bolder">
+                                        <h3 className={`font-weight-bolder ${styles.fontText}`}>
                                             Filter
                                         </h3>
                                     </div>
@@ -911,7 +913,7 @@ const Artikel = () => {
                                                     <Link href={`/artikel/detail/${el.slug}`}>
                                                         <a>
                                                             <h1 
-                                                                className="text-dark"
+                                                                className={`text-dark font-weight-bolder ${styles.fontText}`}
                                                                 style=
                                                                 {{
                                                                     display:"-webkit-box", 
@@ -1056,7 +1058,7 @@ const Artikel = () => {
                                         />
                                     </div>
                                     <div className="col-9 my-auto">
-                                        <h3 className=" font-weight-bolder">
+                                        <h3 className={` font-weight-bolder ${styles.fontText}`}>
                                             Filter
                                         </h3>
                                     </div>
