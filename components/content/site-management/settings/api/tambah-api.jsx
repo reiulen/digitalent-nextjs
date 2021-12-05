@@ -16,7 +16,8 @@ import styles from "../../../../../styles/previewGaleri.module.css"
 const TambahApi = ({ token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
-
+  
+  let selectRefListApi = null;
   const router = useRouter();
   const listApi = useSelector((state) => state.listApi);
   const [nameApi, setNameApi] = useState("");
@@ -26,6 +27,11 @@ const TambahApi = ({ token }) => {
   const [field, setField] = useState([]);
   const [valueField, setValueField] = useState([]);
   const [optionListField, setOptionListField] = useState([]);
+  const [optionListApi, setOptionListApi] = useState(
+    listApi.listApi.map((items) => {
+      return { label: items.api_url, value: items.api_url, id: items.id };
+    })
+  );
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
 
@@ -36,6 +42,10 @@ const TambahApi = ({ token }) => {
     setTo(moment(date).format("YYYY-MM-DD"));
   };
 
+  const onChangeStatus = (e) => {
+    setStatus({ value: e.value, label: e.label });
+  };
+
   const changeListApi = (e) => {
     let resultSelect = e.map((items) => {
       return items.label;
@@ -44,8 +54,13 @@ const TambahApi = ({ token }) => {
     setField(resultSelect);
   };
 
+  const optionsStatus = [
+    { value: "1", label: "Aktif" },
+    { value: "0", label: "Tidak Aktif" },
+  ];
+
   const changeChoiceApi = (e) => {
-    setApiChoice(e.target.value);
+    setApiChoice(e.id);
     setValueField([]);
   };
 
@@ -70,7 +85,7 @@ const TambahApi = ({ token }) => {
             id_api: apiChoice,
             from_date: from,
             to_date: to,
-            status: status,
+            status: status.value,
             fields: field,
           };
           let { data } = await axios.post(
@@ -179,7 +194,20 @@ const TambahApi = ({ token }) => {
               </div>
               <div className="form-group">
                 <label>Status</label>
-                <select
+                <div className="" style={{ zIndex: '99', position: 'relative' }}>
+                  <Select
+                    placeholder="Pilih Status"
+                    className={`${styles.cari}`}
+                    options={optionsStatus}
+                    value={status}
+                    onChange={onChangeStatus}
+                    onBlur={(e) => {
+                      simpleValidator.current.showMessageFor("status");
+                    }}
+                  />
+                </div>
+
+                {/* <select
                   onChange={(e) => setStatus(e.target.value)}
                   className={`${styles.cari} form-control`}
                   onBlur={() =>
@@ -189,7 +217,7 @@ const TambahApi = ({ token }) => {
                   <option value="">Pilih status</option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
-                </select>
+                </select> */}
                 {simpleValidator.current.message("status", status, "required", {
                   className: "text-danger",
                 })}
@@ -197,22 +225,22 @@ const TambahApi = ({ token }) => {
 
               <div className="form-group">
                 <label>Pilih API</label>
-                <select
+                <Select
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("api")
                   }
+                  className={`${styles.cari} basic-single`}
+                  classNamePrefix="select"
+                  placeholder="Pilih API"
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
                   onChange={(e) => changeChoiceApi(e)}
-                  className={`${styles.cari} form-control`}
-                >
-                  <option value="">Pilih api</option>
-                  {listApi?.listApi?.map((items, index) => {
-                    return (
-                      <option key={index} value={items.id}>
-                        {items.api_url}
-                      </option>
-                    );
-                  })}
-                </select>
+                  name="color"
+                  options={optionListApi}
+                />
                 {simpleValidator.current.message(
                   "api",
                   apiChoice,
