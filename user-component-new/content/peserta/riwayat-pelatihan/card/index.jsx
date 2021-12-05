@@ -202,9 +202,14 @@ export default function CardTemplateOriginal({ data, session }) {
                     />
                   </Col>
                   <Col lg={7} className="my-auto order-3 order-lg-2 row p-0 ">
-                    <p className="font-weight-bolder d-flex justify-content-start justify-content-lg-start my-0 p-0 col-12 order-1 order-lg-1">
-                      {data.name}
-                    </p>
+                    <div className="d-flex justify-content-start justify-content-lg-start my-0 p-0 col-12 order-1 order-lg-1">
+                      <span
+                        className="font-weight-bolder text-truncate fz-18"
+                        style={{ maxWidth: "486px" }}
+                      >
+                        {data.name}
+                      </span>
+                    </div>
                     <div
                       className="d-flex align-items-center p-0 justify-content-lg-start justify-content-start order-1 order-lg-2 col-12"
                       style={{ color: "#203E80" }}
