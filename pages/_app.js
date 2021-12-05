@@ -78,15 +78,15 @@ function MyApp({ Component, pageProps }) {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const expiredDate = sessionStorage.getItem("token_expired_date");
-    const currentDate = moment(new Date()).format("DD-MM-YYYY HH:MM");
+  // useEffect(() => {
+  //   const expiredDate = sessionStorage.getItem("token_expired_date");
+  //   const currentDate = moment(new Date()).format("DD-MM-YYYY HH:MM");
 
-    if (expiredDate && currentDate > expiredDate) {
-      sessionStorage.removeItem("token_expired_date");
-      signOut();
-    }
-  }, []);
+  //   if (expiredDate && currentDate > expiredDate) {
+  //     sessionStorage.removeItem("token_expired_date");
+  //     signOut();
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (pageProps?.session?.user?.user?.data?.token) {

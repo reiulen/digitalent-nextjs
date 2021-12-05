@@ -20,13 +20,13 @@ export default function CardTemplateOriginal({ data, session }) {
   const [label, setLabel] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
 
   useEffect(() => {
     if (data.status.includes("tidak") || data.status.includes("ditolak"))
       return setLabel("danger");
-    if (data.status.includes("menunggu") || data.status.includes("seleksi")) 
+    if (data.status.includes("menunggu") || data.status.includes("seleksi"))
       return setLabel("warning");
     if (
       data.status.includes("seleksi administrasi") ||
@@ -88,21 +88,19 @@ export default function CardTemplateOriginal({ data, session }) {
           // document.body.removeChild(a);
 
           const link = document.createElement("a");
-          link.download = `Form Pendaftaran.pdf`;
-          // link.target = "_blank";
+          link.download = `Bukti Pendaftaran.pdf`;
+          link.target = "_blank";
           link.href = data.data;
           link.click();
         }
       } catch (error) {
         Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
-
-      // anchor.href = data.
     }
   };
 
   const [fileName, setFileName] = useState();
-  const onChangeFile = (e) => {
+  const onChangeFile = e => {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
@@ -143,8 +141,7 @@ export default function CardTemplateOriginal({ data, session }) {
         >
           <Card.Body
             onClick={() => {
-              if(data.status.includes("tidak"))
-              return false
+              if (data.status.includes("tidak")) return false;
               if (data.status.includes("menunggu jadwal tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
@@ -175,58 +172,6 @@ export default function CardTemplateOriginal({ data, session }) {
                     .toLowerCase()}`
                 );
               }
-              // switch (data.status) {
-              //   case "menunggu":
-              //     Cookies.set("id_pelatihan", data.id);
-              //     Cookies.set("id_tema", data.tema_id);
-              //     return router.push(`/peserta/administrasi`);
-              //   case "lulus pelatihan":
-              //     Cookies.set("id_pelatihan", data.id);
-              //     Cookies.set("id_tema", data.tema_id);
-              //     return router.push(
-              //       `/peserta/riwayat-pelatihan/${data.name
-              //         .split(" ")
-              //         .join("-")
-              //         .toLowerCase()}`
-              //     );
-              //   case "menunggu administrasi":
-              //     Cookies.set("id_pelatihan", data.id);
-              //     Cookies.set("id_tema", data.tema_id);
-              //     return router.push(`/peserta/administrasi`);
-              //   case "menunggu tes substansi":
-              //     Cookies.set("id_pelatihan", data.id);
-              //     Cookies.set("id_tema", data.tema_id);
-              //     return router.push(`/peserta/test-substansi`);
-              //   case "pelatihan":
-              //     Cookies.set("id_pelatihan", data.id);
-              //     Cookies.set("id_tema", data.tema_id);
-              //     return router.push(
-              //       `/peserta/riwayat-pelatihan/${data.name
-              //         .split(" ")
-              //         .join("-")}`
-              //     );
-              //   case "tes substansi":
-              //     Cookies.set("id_pelatihan", data.id);
-              //     Cookies.set("id_tema", data.tema_id);
-              //     return router.push(`/peserta/test-substansi`);
-              //   case "lulus tes substansi":
-              //     Cookies.set("id_pelatihan", data.id);
-              //     Cookies.set("id_tema", data.tema_id);
-              //     return router.push(`/peserta/test-substansi`);
-              //   case "diterima":
-              //     Cookies.set("id_pelatihan", data.id);
-              //     Cookies.set("id_tema", data.tema_id);
-              //     return router.push(
-              //       `/peserta/riwayat-pelatihan/${data.name
-              //         .split(" ")
-              //         .join("-")
-              //         .toLowerCase()}`
-              //     );
-              //   default:
-              //     Cookies.set("id_pelatihan", data.id);
-              //     Cookies.set("id_tema", data.tema_id);
-              //     return router.push(`/peserta/belum-tersedia`);
-              // }
             }}
           >
             <Row>
@@ -257,9 +202,9 @@ export default function CardTemplateOriginal({ data, session }) {
                     />
                   </Col>
                   <Col lg={7} className="my-auto order-3 order-lg-2 row p-0 ">
-                    <h4 className="font-weight-bolder d-flex justify-content-start justify-content-lg-start my-0 p-0 col-12 order-1 order-lg-1">
+                    <p className="font-weight-bolder d-flex justify-content-start justify-content-lg-start my-0 p-0 col-12 order-1 order-lg-1">
                       {data.name}
-                    </h4>
+                    </p>
                     <div
                       className="d-flex align-items-center p-0 justify-content-lg-start justify-content-start order-1 order-lg-2 col-12"
                       style={{ color: "#203E80" }}
@@ -314,21 +259,6 @@ export default function CardTemplateOriginal({ data, session }) {
                         : data.status.includes("LPJ")
                         ? "Isi LPJ"
                         : data.status}
-                      {/* {data.lpj
-                        ? "Kerjakan LPJ"
-                        : data.survei
-                        ? "Kerjakan Survei"
-                        : data.status == "pelatihan" && data.trivia
-                        ? "kerjakan trivia"
-                        : data.status == "pelatihan"
-                        ? "ikuti pelatihan"
-                        : data.status == "diterima"
-                        ? "lulus pelatihan"
-                        : data.status == "lulus tes substansi"
-                        ? "lolos substansi"
-                        : data.status == "ditolak"
-                        ? "tidak lulus"
-                        : data.status} */}
                     </p>
                   </Col>
                   <Col lg={12} className="order-5">
@@ -361,7 +291,7 @@ export default function CardTemplateOriginal({ data, session }) {
           <Col lg={3} />
           {data.lpj ? (
             <Fragment>
-               <CustomButton
+              <CustomButton
                 outline
                 click={() => handleClick("download", data.id_pendaftaran)}
               >
@@ -440,8 +370,7 @@ export default function CardTemplateOriginal({ data, session }) {
                 Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
             </Fragment>
-          ) :
-           data.status == "pelatihan" && data.midtest ? (
+          ) : data.status == "pelatihan" && data.midtest ? (
             <Fragment>
               <CustomButton
                 click={() => {
@@ -454,8 +383,7 @@ export default function CardTemplateOriginal({ data, session }) {
                 <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
             </Fragment>
-          ) :
-          data.status == "pelatihan" && data.trivia ? (
+          ) : data.status == "pelatihan" && data.trivia ? (
             <Fragment>
               <CustomButton
                 click={() => {
@@ -658,7 +586,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   type="file"
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
-                  onChange={(e) => {
+                  onChange={e => {
                     onChangeFile(e);
                   }}
                 />

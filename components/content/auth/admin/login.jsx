@@ -4,13 +4,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "react-toastify";
-import { getSession, signIn } from "next-auth/client";
+import { signIn } from "next-auth/client";
 import SimpleReactValidator from "simple-react-validator";
 import { SweatAlert } from "../../../../utils/middleware/helper/index";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
-import moment from "moment";
 
 const LoginAdmin = () => {
   const router = useRouter();
@@ -57,13 +56,6 @@ const LoginAdmin = () => {
         } else {
           router.push("/partnership/user/kerjasama");
         }
-      }
-      const session = await getSession();
-      if (session) {
-        sessionStorage.setItem(
-          "token_expired_date",
-          moment(session.expires).format("DD-MM-YYYY HH:MM")
-        );
       }
     } else {
       setLoading(false);
