@@ -1,3 +1,12 @@
+@media (max-width: 540px) {
+  .cardNumber {
+    margin-top: 20px;
+  }
+  .cardPanduan {
+    font-size: 8px !important;
+  }
+}
+
 @media (max-width: 426px) {
   .mainCard {
     padding: 20px !important;
@@ -95,6 +104,21 @@
     /* Brand/Primary/Primary */
 
     color: #007cff;
+  }
+}
+
+@media (max-width: 280px) {
+  .btnNext {
+    font-size: 10px !important;
+  }
+  .btnSkip {
+    font-size: 10px !important;
+  }
+  .btnBack {
+    font-size: 10px !important;
+  }
+  .cardPanduan {
+    font-size: 5px !important;
   }
 }
 
@@ -453,7 +477,7 @@
   letter-spacing: 0.015em;
 
   color: #ffffff;
-  margin-left: 30px;
+
   padding: 5px 15px;
 }
 .cardPanduan {
