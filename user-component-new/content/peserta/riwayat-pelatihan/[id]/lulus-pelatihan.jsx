@@ -7,6 +7,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import CustomButton from "../card/Buttons/CustomButton";
 import Cookies from "js-cookie";
+import { helperUserStatusColor } from "../../../../../utils/middleware/helper";
 
 export default function RiwayatPelatihanDetail(props) {
   const { state: data } = useSelector(
@@ -22,31 +23,7 @@ export default function RiwayatPelatihanDetail(props) {
   const [label, setLabel] = useState();
 
   useEffect(() => {
-    if (data.status.includes("tidak") || data.status.includes("ditolak"))
-      return setLabel("danger");
-
-    if (data.status.includes("menunggu") || data.status.includes("seleksi"))
-      return setLabel("warning");
-
-    if (
-      data.status == "survey belum tersedia" ||
-      data.status == "LPJ belum tersedia"
-    )
-      return setLabel("primary");
-
-    if (
-      data.status.includes("seleksi administrasi") ||
-      data.status.includes("menunggu") ||
-      data.status.includes("belum tersedia")
-    )
-      return setLabel("warning");
-
-    if (data.status.includes("lulus") || data.status.includes("Lulus"))
-      return setLabel("success");
-
-    if (data.status.includes("LPJ") || data.status.includes("survey"))
-      return setLabel("primary");
-    else return setLabel("primary");
+    helperUserStatusColor(data?.status, setLabel);
   }, []);
 
   const [imageSertifikasi, setImageSertifikasi] = useState();
@@ -100,6 +77,7 @@ export default function RiwayatPelatihanDetail(props) {
       Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
   };
+
   const handleClick = async (name, id) => {
     if (name == "download") {
       try {
@@ -109,7 +87,7 @@ export default function RiwayatPelatihanDetail(props) {
         );
         if (data) {
           const link = document.createElement("a");
-          link.download = `Bukti Pendaftaran.pdf`;
+          link.download = true;
           link.target = "_blank";
           link.href = data.data;
           link.click();
@@ -329,6 +307,10 @@ export default function RiwayatPelatihanDetail(props) {
                       height: "40px",
                       fontSize: "14px",
                       fontFamily: "poppins",
+                    }}
+                    onClick={() => {
+                      // handleClick()
+                      console.log(data, "ini data");
                     }}
                   >
                     <i
