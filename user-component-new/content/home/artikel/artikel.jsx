@@ -386,9 +386,6 @@ const Artikel = () => {
             <SubHeaderComponent 
                 data={[{ link: router.asPath, name: "Artikel" }]}
             />
-            {
-                console.log (artikel)
-            }
 
             {/* Header */}
             <div className="col-12 mt-5 ml-n1">
@@ -528,7 +525,7 @@ const Artikel = () => {
                                                 },
                                             }
                                         }}
-                                        className= "ml-0 ml-sm-3 mr-n5 mr-sm-n1"
+                                        className= "ml-0 ml-sm-3 mr-n5 mr-sm-n3"
                                     >
                                         {
                                             kategoriArtikel === "" ?
@@ -950,8 +947,8 @@ const Artikel = () => {
                                                 
                                                 <div className="row mb-3 d-flex align-items-center">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12 pl-3">
-                                                        {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
+                                                    <div className="text-muted col-xl-5 col-12 pl-4">
+                                                        {moment(el.tanggal_publish).format("DD MMM")} | {el.dibaca} dibaca
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
@@ -1216,7 +1213,7 @@ const Artikel = () => {
                         className={windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                                 "row d-flex flex-column mx-auto px-10 my-5 d-flex justify-content-center order-3"
                             :
-                                "row d-flex flex-column ml-5 mb-5 d-flex justify-content-center order-3"
+                                "row d-flex flex-column ml-0 ml-xl-5 mb-5 d-flex justify-content-center order-3"
                         }
                     >
                         <h3 className="font-weight-bolder"> 
