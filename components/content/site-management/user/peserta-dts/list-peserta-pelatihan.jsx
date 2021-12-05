@@ -43,41 +43,49 @@ const Table = ({ token }) => {
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState(null);
 
-
-    const listPelatihan =allListPelatihanByPeserta.data.data.map((item, index) => {
-      return  <tr key={index}>
-      <td className="align-middle text-left">{index + limit * (page - 1) + 1}</td>
-      <td className="align-middle text-left">{item.name}</td>
-      <td className="align-middle text-left">{item.id}</td>
-      <td className="align-middle text-left">
-        <div className="position-relative w-max-content">
-          <span className="badge badge-success">{item.status}</span>
-        </div>
+  const listPelatihan =
+    allListPelatihanByPeserta.data.data.length > 0 ? (
+      allListPelatihanByPeserta.data.data.map((item, index) => {
+        return (
+          <tr key={index}>
+            <td className="align-middle text-left">
+              {index + limit * (page - 1) + 1}
+            </td>
+            <td className="align-middle text-left">{item.name}</td>
+            <td className="align-middle text-left">{item.id}</td>
+            <td className="align-middle text-left">
+              <div className="position-relative w-max-content">
+                <span className="badge badge-success">{item.status}</span>
+              </div>
+            </td>
+            <td className="align-middle text-left">
+              <div className="d-flex align-items-center">
+                <button
+                  className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                  onClick={() => router.push(`/site-management/role/ubah-role`)}
+                >
+                  <IconPencil width="16" height="16" />
+                  <div className="text-hover-show-hapus">Ubah</div>
+                </button>
+                <button
+                  className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
+                  onClick={() =>
+                    router.push(`/site-management/role/detail-role`)
+                  }
+                >
+                  <IconEye width="16" height="16" />
+                  <div className="text-hover-show-hapus">Detail</div>
+                </button>
+              </div>
+            </td>
+          </tr>
+        );
+      })
+    ) : (
+      <td className="align-middle text-center" colSpan={8}>
+        Data Kosong
       </td>
-      <td className="align-middle text-left">
-        <div className="d-flex align-items-center">
-          <button
-            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-            onClick={() =>
-              router.push(`/site-management/role/ubah-role`)
-            }
-          >
-            <IconPencil width="16" height="16" />
-            <div className="text-hover-show-hapus">Ubah</div>
-          </button>
-          <button
-            className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
-            onClick={() =>
-              router.push(`/site-management/role/detail-role`)
-            }
-          >
-            <IconEye width="16" height="16" />
-            <div className="text-hover-show-hapus">Detail</div>
-          </button>
-        </div>
-      </td>
-    </tr>
-    })
+    );
 
   return (
     <PageWrapper>
@@ -147,9 +155,7 @@ const Table = ({ token }) => {
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>
-                   {listPelatihan}
-                  </tbody>
+                  <tbody>{listPelatihan}</tbody>
                 </table>
               </div>
 
