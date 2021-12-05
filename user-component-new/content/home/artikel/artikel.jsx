@@ -386,6 +386,9 @@ const Artikel = () => {
             <SubHeaderComponent 
                 data={[{ link: router.asPath, name: "Artikel" }]}
             />
+            {
+                console.log (artikel)
+            }
 
             {/* Header */}
             <div className="col-12 mt-5 ml-n1">
