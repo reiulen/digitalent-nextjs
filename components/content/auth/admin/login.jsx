@@ -4,12 +4,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "react-toastify";
-import { signIn } from "next-auth/client";
+import { getSession, signIn } from "next-auth/client";
 import SimpleReactValidator from "simple-react-validator";
 import { SweatAlert } from "../../../../utils/middleware/helper/index";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import moment from "moment";
 
 const LoginAdmin = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const LoginAdmin = () => {
 
   const [hidePassword, setHidePassword] = useState(true);
 
-  const handlerShowPassword = (value) => {
+  const handlerShowPassword = value => {
     setHidePassword(value);
     var input = document.getElementById("input-password");
     if (input.type === "password") {
@@ -33,7 +34,7 @@ const LoginAdmin = () => {
     }
   };
 
-  const handlerSubmit = async (e) => {
+  const handlerSubmit = async e => {
     e.preventDefault();
     setLoading(true);
     if (simpleValidator.current.allValid()) {
@@ -56,6 +57,13 @@ const LoginAdmin = () => {
         } else {
           router.push("/partnership/user/kerjasama");
         }
+      }
+      const session = await getSession();
+      if (session) {
+        sessionStorage.setItem(
+          "token_expired_date",
+          moment(session.expires).format("DD-MM-YYYY HH:MM")
+        );
       }
     } else {
       setLoading(false);
@@ -105,7 +113,7 @@ const LoginAdmin = () => {
                     type="email"
                     className="form-control form-control-auth"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                     placeholder="Masukkan Email"
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("Email")
@@ -128,7 +136,7 @@ const LoginAdmin = () => {
                       type="password"
                       className="form-control form-control-auth pr-10"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={e => setPassword(e.target.value)}
                       placeholder="Masukkan Password"
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("Password")

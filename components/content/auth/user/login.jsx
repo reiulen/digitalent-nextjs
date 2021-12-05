@@ -10,6 +10,7 @@ import { SweatAlert } from "../../../../utils/middleware/helper";
 import { getSession } from "next-auth/client";
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import moment from "moment";
 
 const LoginUser = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const LoginUser = () => {
 
   const [hidePassword, setHidePassword] = useState(true);
 
-  const handlerShowPassword = (value) => {
+  const handlerShowPassword = value => {
     setHidePassword(value);
     var input = document.getElementById("input-password");
     if (input.type === "password") {
@@ -33,7 +34,7 @@ const LoginUser = () => {
     }
   };
 
-  const handlerSubmit = async (e) => {
+  const handlerSubmit = async e => {
     e.preventDefault();
     setLoading(true);
     if (simpleValidator.current.allValid()) {
@@ -54,14 +55,21 @@ const LoginUser = () => {
         if (data.role === "admin") {
         } else if (data.role === "mitra") {
           router.push("/partnership/user/kerjasama");
-        } else {  
-          const session = await getSession()
-          if(!session.user.user.data.user.status){
-            router.push('/peserta/wizzard')
-          }else{
-            router.push('/peserta')
+        } else {
+          const session = await getSession();
+          if (!session.user.user.data.user.status) {
+            router.push("/peserta/wizzard");
+          } else {
+            router.push("/peserta");
           }
         }
+      }
+      const session = await getSession();
+      if (session) {
+        sessionStorage.setItem(
+          "token_expired_date",
+          moment(session.expires).format("DD-MM-YYYY HH:MM")
+        );
       }
     } else {
       setLoading(false);
@@ -111,7 +119,7 @@ const LoginUser = () => {
                     type="email"
                     className="form-control form-control-auth"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                     placeholder="Masukkan Email"
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("Email")
@@ -142,7 +150,7 @@ const LoginUser = () => {
                       type="password"
                       className="form-control form-control-auth pr-10"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={e => setPassword(e.target.value)}
                       placeholder="Masukkan Password"
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("Password")
