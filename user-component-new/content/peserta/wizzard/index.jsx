@@ -6,41 +6,8 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { Stepper, Step } from "react-form-stepper";
 import Steppers from "./stepper";
 
-const Informasi = dynamic(() => import("../profile/informasi/informasi"), {
-  loading: function loadingNow() {
-    return <LoadingSkeleton />;
-  },
-  ssr: false,
-});
-
 const InformasiEdit = dynamic(
   () => import("../profile/informasi/informasi.edit"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
-);
-
-const AlamatEdit = dynamic(() => import("../profile/alamat/alamat.edit"), {
-  loading: function loadingNow() {
-    return <LoadingSkeleton />;
-  },
-  ssr: false,
-});
-const PendidikanEdit = dynamic(
-  () => import("../profile/pendidikan/pendidikan.edit"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
-);
-
-const PekerjaanEdit = dynamic(
-  () => import("../profile/pekerjaan/pekerjaan.edit"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -54,47 +21,6 @@ const Profile = ({ session }) => {
 
   const [viewProfile, setViewProfile] = useState(1);
   const [viewEdit, setViewEdit] = useState(true);
-
-  const handleViewProfile = () => {
-    switch (viewProfile) {
-      case 1:
-        return (
-          <InformasiEdit
-            funcViewEdit={val => setViewProfile(val)}
-            token={session.token}
-            wizzard={true}
-          />
-        );
-      case 2:
-        return (
-          <AlamatEdit
-            funcViewEdit={val => setViewProfile(val)}
-            token={session.token}
-            wizzard={true}
-          />
-        );
-      case 3:
-        return (
-          <PendidikanEdit
-            funcViewEdit={val => setViewProfile(val)}
-            token={session.token}
-            wizzard={true}
-          />
-        );
-        break;
-      case 4:
-        return (
-          <PekerjaanEdit
-            funcViewEdit={val => setViewProfile(val)}
-            wizzard={true}
-            token={session.token}
-          />
-        );
-      default:
-        return <Informasi token={session.token} />;
-        break;
-    }
-  };
   const [step, setStep] = useState([1, 2, 3, 4]);
 
   const [label, setLabel] = useState([
