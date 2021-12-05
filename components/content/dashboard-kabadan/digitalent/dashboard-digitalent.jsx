@@ -161,7 +161,7 @@ const DashboardDigitalent = () => {
       <section className="total-pengguna mt-10">
         <h2 className="title-section-dashboard">total peserta</h2>
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar"}
               value={252.329}
@@ -169,7 +169,7 @@ const DashboardDigitalent = () => {
               statisticDay={"+20.220 "}
             />
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Peserta"}
               value={252.329}
@@ -183,7 +183,7 @@ const DashboardDigitalent = () => {
       <section className="statistik-peserta mt-5">
         <h2 className="title-section-dashboard">statistik peserta</h2>
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body py-4">
                 <StatistikWrapper
@@ -212,7 +212,7 @@ const DashboardDigitalent = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body py-4">
                 <StatistikWrapper
@@ -250,7 +250,7 @@ const DashboardDigitalent = () => {
       <section className="statistik-mitra mt-5">
         <h2 className="title-section-dashboard">statistik mitra</h2>
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -267,7 +267,7 @@ const DashboardDigitalent = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -348,7 +348,7 @@ const DashboardDigitalent = () => {
                 </p>
                 <div className="list-filter d-flex">
                   <div className="d-flex flex-wrap align-items-center mr-3">
-                    <p className="mt-3 mr-3 text-dashboard-gray-caption">
+                    <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Akademi:
                     </p>
                     <select className="border-0 p-0">
@@ -356,7 +356,7 @@ const DashboardDigitalent = () => {
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center mr-3">
-                    <p className="mt-3 mr-3 text-dashboard-gray-caption">
+                    <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Tema:
                     </p>
                     <select className="border-0 p-0">
@@ -364,7 +364,7 @@ const DashboardDigitalent = () => {
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
-                    <p className="mt-3 mr-3 text-dashboard-gray-caption">
+                    <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Tahun:
                     </p>
                     <select className="border-0 p-0">
@@ -384,7 +384,7 @@ const DashboardDigitalent = () => {
               </div>
             </div>
             <div className="row mt-10">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -402,7 +402,7 @@ const DashboardDigitalent = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -421,21 +421,21 @@ const DashboardDigitalent = () => {
               </div>
             </div>
             <div className="row mt-5">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo title={"Komposisi Usia Pendaftar"} data={dataUmur} />
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo title={"Komposisi Usia Peserta"} data={dataUmur} />
               </div>
             </div>
             <div className="row mt-5">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Total Pendaftar berdasarkan Jenis Kelamin"}
                   data={dataJenisKelamin}
                 />
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Total Peserta berdasarkan Jenis Kelamin"}
                   data={dataJenisKelamin}
@@ -444,13 +444,13 @@ const DashboardDigitalent = () => {
             </div>
 
             <div className="row mt-5">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Komposisi Pendidikan Pendaftar"}
                   data={dataPendidikan}
                 />
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Komposisi Pendidikan Peserta"}
                   data={dataPendidikan}

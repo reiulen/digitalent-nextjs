@@ -156,7 +156,7 @@ const DashboardBeasiswa = () => {
 
       <section className="total-pengguna mt-10">
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Dalam Negeri"}
               value={252.329}
@@ -164,7 +164,7 @@ const DashboardBeasiswa = () => {
               statisticDay={"+20.220 "}
             />
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Luar Negeri"}
               value={252.329}
@@ -177,7 +177,7 @@ const DashboardBeasiswa = () => {
 
       <section className="statistik-peserta mt-5">
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body py-4">
                 <StatistikWrapper
@@ -208,7 +208,7 @@ const DashboardBeasiswa = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body py-4">
                 <StatistikWrapper
@@ -252,7 +252,7 @@ const DashboardBeasiswa = () => {
                 </p>
                 <div className="list-filter d-flex">
                   <div className="d-flex align-items-center">
-                    <p className="mt-3 mr-3 text-dashboard-gray-caption">
+                    <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Filter By:
                     </p>
                     <select className="border-0 p-0">
@@ -271,7 +271,7 @@ const DashboardBeasiswa = () => {
               </div>
             </div>
             <div className="row mt-10">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -289,7 +289,7 @@ const DashboardBeasiswa = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -308,7 +308,7 @@ const DashboardBeasiswa = () => {
               </div>
             </div>
             <div className="row mt-5">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card">
                   <div className="card-body pb-3">
                     <StatistikWrapper
@@ -326,7 +326,7 @@ const DashboardBeasiswa = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card">
                   <div className="card-body pb-3">
                     <StatistikWrapper
@@ -346,13 +346,13 @@ const DashboardBeasiswa = () => {
               </div>
             </div>
             <div className="row mt-5">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Awardee Beasiswa Kominfo"}
                   data={dataAwardee}
                 />
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo title={"Alumni Beasiswa Kominfo"} data={dataAlumni} />
               </div>
             </div>
