@@ -154,3 +154,215 @@ export const getBeasiswaStatistikLuar = (token, year) => async (dispatch) => {
     });
   }
 };
+
+// BEASISWA MAP PENDAFTAR
+export const getBeasiswaPendaftarWilayah =
+  (token, year) => async (dispatch) => {
+    try {
+      dispatch({ type: BEASISWA_MAP_PENDAFTAR_REQUEST });
+
+      let link = process.env.END_POINT_API_BEASISWA + `maps`;
+      if (year) link = link.concat(`?year=${year}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: BEASISWA_MAP_PENDAFTAR_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: BEASISWA_STATISTIK_LUAR_FAIL,
+        payload: error.message,
+      });
+    }
+  };
+
+// BEASISWA PROVINSI PENDAFTAR
+export const getBeasiswaProvinsiPendaftar =
+  (token, page) => async (dispatch) => {
+    try {
+      dispatch({ type: BEASISWA_PROVINSI_PENDAFTAR_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_BEASISWA +
+        `progressbar-province?type=pendaftar`;
+      if (page) link = link.concat(`&page=${page}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: BEASISWA_PROVINSI_PENDAFTAR_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: BEASISWA_PROVINSI_PENDAFTAR_FAIL,
+        payload: error.message,
+      });
+    }
+  };
+
+// BEASISWA PROVINSI AWARDEE
+export const getBeasiswaProvinsiAwardee = (token, page) => async (dispatch) => {
+  try {
+    dispatch({ type: BEASISWA_PROVINSI_AWARDEE_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_BEASISWA + `progressbar-province?type=awardee`;
+    if (page) link = link.concat(`&page=${page}`);
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: BEASISWA_PROVINSI_AWARDEE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BEASISWA_PROVINSI_AWARDEE_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// BEASISWA UNIVERSITAS DALAM
+export const getBeasiswaUniversitasDalam =
+  (token, page) => async (dispatch) => {
+    try {
+      dispatch({ type: BEASISWA_UNIVERSITAS_DALAM_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_BEASISWA +
+        `progressbar-scholarship?type=dalam negeri`;
+      if (page) link = link.concat(`&page=${page}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: BEASISWA_UNIVERSITAS_DALAM_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: BEASISWA_UNIVERSITAS_DALAM_FAIL,
+        payload: error.message,
+      });
+    }
+  };
+
+// BEASISWA UNIVERSITAS LUAR
+export const getBeasiswaUniversitasLuar = (token, page) => async (dispatch) => {
+  try {
+    dispatch({ type: BEASISWA_UNIVERSITAS_LUAR_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_BEASISWA +
+      `progressbar-scholarship?type=luar negeri`;
+    if (page) link = link.concat(`&page=${page}`);
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: BEASISWA_UNIVERSITAS_LUAR_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BEASISWA_UNIVERSITAS_LUAR_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// BEASISWA ALUMNI
+export const getBeasiswaAlumni = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: BEASISWA_ALUMNI_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_BEASISWA + `progressbar-alumni?type=alumni`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: BEASISWA_ALUMNI_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BEASISWA_ALUMNI_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// BEASISWA AWARDEE
+export const getBeasiswaAwardee = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: BEASISWA_AWARDEE_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_BEASISWA + `progressbar-alumni?type=awardee`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: BEASISWA_AWARDEE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BEASISWA_AWARDEE_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const clearErrors = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
+};

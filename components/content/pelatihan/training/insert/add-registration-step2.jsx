@@ -270,22 +270,30 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
       titleStore;
     }
 
-    if (simpleValidator.current.allValid()) {
-      const data = {
-        judul_form: titleStore,
-        type_form: viewForm,
-        formBuilder: formBuilderStore,
-      };
-      dispatch(storeRegistrationStep2(data));
-      propsStep(3);
-    } else {
-      simpleValidator.current.showMessages();
-      forceUpdate(1);
+    if (!titleStore) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data dengan benar !",
+        text: "Isi judul form dengan benar !",
       });
+    } else {
+      if (simpleValidator.current.allValid()) {
+        const data = {
+          judul_form: titleStore,
+          type_form: viewForm,
+          formBuilder: formBuilderStore,
+        };
+        dispatch(storeRegistrationStep2(data));
+        propsStep(3);
+      } else {
+        simpleValidator.current.showMessages();
+        forceUpdate(1);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data dengan benar !",
+        });
+      }
     }
   };
 

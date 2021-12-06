@@ -17,7 +17,10 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
-import { helperRegexNumber } from "../../../../../utils/middleware/helper";
+import {
+  helperRegexNumber,
+  helperTextLimitMax,
+} from "../../../../../utils/middleware/helper";
 
 const StepThree = ({ token }) => {
   const dispatch = useDispatch();
@@ -301,6 +304,7 @@ const StepThree = ({ token }) => {
                   <div className="input-group">
                     <input
                       type="text"
+                      maxLength={3}
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
@@ -310,6 +314,9 @@ const StepThree = ({ token }) => {
                         simpleValidator.current.showMessageFor("durasi")
                       }
                       min={1}
+                      onKeyUp={(e) =>
+                        helperTextLimitMax(e.target.value, 0, 360, setDuration)
+                      }
                     />
                     <div className="input-group-append bg-sedondary">
                       <span

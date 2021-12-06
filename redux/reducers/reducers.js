@@ -13,6 +13,20 @@ import {
   digitalentJenisKelaminReducer,
   digitalentPendidikanReducer,
 } from "./dashboard-kabadan/dashboard/digitalent.reducers";
+// DASHBOARD BEASISWA
+import {
+  beasiswaTotalPenggunaReducer,
+  beasiswaTotalPendaftarReducer,
+  beasiswaStatistikDalamReducer,
+  beasiswaStatistikLuarReducer,
+  beasiswaMapPendaftarReducer,
+  beasiswaProvinsiPendaftarReducer,
+  beasiswaProvinsiAwardeeReducer,
+  beasiswaUniversitasDalamReducer,
+  beasiswaUniversitasLuarReducer,
+  beasiswaAlumniReducer,
+  beasiswaAlumniAwardeeReducer,
+} from "./dashboard-kabadan/dashboard/beasiswa.reducers";
 // DATA PESERTA
 import {
   allBeasiswaKandidatReducer,
@@ -410,6 +424,7 @@ import {
   updateKeterampilanReducer,
   updatePekerjaanReducer,
   getAsalSekolahReducer,
+  getRefPekerjaanReducer,
 } from "./pelatihan/peserta/profile.reducers";
 
 import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
@@ -561,6 +576,17 @@ const reducer = combineReducers({
   digitalentJenisKelamin: digitalentJenisKelaminReducer,
   digitalentPendidikan: digitalentPendidikanReducer,
   // ============= BEASISWA ============
+  beasiswaTotalPengguna: beasiswaTotalPenggunaReducer,
+  beasiswaTotalPendaftar: beasiswaTotalPendaftarReducer,
+  beasiswaStatistikDalam: beasiswaStatistikDalamReducer,
+  beasiswaStatistikLuar: beasiswaStatistikLuarReducer,
+  beasiswaMapPendaftar: beasiswaMapPendaftarReducer,
+  beasiswaProvinsiPendaftar: beasiswaProvinsiPendaftarReducer,
+  beasiswaProvinsiAwardee: beasiswaProvinsiAwardeeReducer,
+  beasiswaUniversitasDalam: beasiswaUniversitasDalamReducer,
+  beasiswaUniversitasLuar: beasiswaUniversitasLuarReducer,
+  beasiswaAlumni: beasiswaAlumniReducer,
+  beasiswaAlumniAwardee: beasiswaAlumniAwardeeReducer,
   allBeasiswaKandidat: allBeasiswaKandidatReducer,
   allBeasiswaFilter: allBeasiswaFilterReducer,
   // ============= SIMONAS ============
@@ -929,6 +955,7 @@ const reducer = combineReducers({
   updateKeterampilan: updateKeterampilanReducer,
   updatePekerjaan: updatePekerjaanReducer,
   getAsalSekolah: getAsalSekolahReducer,
+  getRefPekerjaan: getRefPekerjaanReducer,
   //END PELATIHAN
 
   //BERANDA

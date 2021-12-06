@@ -320,7 +320,7 @@ const Tambah = ({ token }) => {
                             <label htmlFor="exampleSelect1">
                               Kota / Kabupaten
                             </label>
-                            
+
                             <Select
                               value={items.value}
                               className="basic-single"
@@ -338,12 +338,6 @@ const Tambah = ({ token }) => {
                               onBlur={() => simpleValidator.current.showMessageFor("kabupaten")}
                             />
 
-                            {simpleValidator.current.message(
-                              "kabupaten",
-                              items.value,
-                              "required",
-                              { className: "text-danger" }
-                            )}
                           </div>
 
                           {index === 0 ? (
@@ -361,7 +355,14 @@ const Tambah = ({ token }) => {
                               <IconDelete />
                             </button>
                           )}
+
                         </div>
+                        {simpleValidator.current.message(
+                          "kabupaten",
+                          items.value,
+                          "required",
+                          { className: "text-danger" }
+                        )}
                       </div>
                     </div>
                   </div>

@@ -48,10 +48,10 @@ export default function RiwayatPelatihanPage(props) {
   return (
     <>
       <Layout title="Administrasi" session={session}>
-        {props.success ? (
-          <RiwayatPelatihanDetail session={session} />
-        ) : (
+        {!props.success ? (
           <BelumTersedia />
+        ) : (
+          <RiwayatPelatihanDetail session={session} />
         )}
       </Layout>
     </>
@@ -59,7 +59,7 @@ export default function RiwayatPelatihanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 
@@ -75,56 +75,28 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      // if (req.cookies.id_pelatihan) {
-      //   await store.dispatch(
-      //     getDetailRiwayatPelatihan(
-      //       req.cookies.id_pelatihan,
-      //       session.user.user.data.user.token
-      //     )
-      //   );
-      //   success = true;
-      // } else {
-      //   const { data } = await store.dispatch(
-      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-      //   );
-      //   if (data) {
-      //     const test_substansi = data.list.filter(
-      //       (item) => item.status == "tes substansi"
-      //     );
-      //     if (test_substansi.length > 0) {
-      //       await store.dispatch(
-      //         getDetailRiwayatPelatihan(
-      //           test_substansi[0].id,
-      //           session.user.user.data.user.token
-      //         )
-      //       );
-      //       success = true;
-      //     } else {
-      //       success = false;
-      //     }
-      //   } else {
-      //     success = false;
-      //   }
-      // }
+
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 
       const { data } = await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
+
       const status = data.pelatihan.pelatihan_selesi.status || "";
       if (!status || status == "") {
         success = false;
       } else if (
         !status.includes("substansi" || "belum tersedia" || "belum mengerjakan")
       ) {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            data.pelatihan.pelatihan_selesi.id,
-            session.user.user.data.user.token
-          )
+        const result = await store.dispatch(
+          getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
         );
-        success = true;
+        if (!result) {
+          success = false;
+        } else {
+          success = true;
+        }
       } else {
         success = false;
       }

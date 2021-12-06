@@ -28,11 +28,11 @@ const PusatInformasi = () => {
             <li className={`${styles.menu} nav-item`} role="presentation">
               <a
                 className={`${styles.menuPanduan} nav-link active fw-600 title-2 fz-20`}
-                id="home-tab"
+                id="panduan-tab"
                 data-toggle="tab"
-                href="#home"
+                href="#panduan"
                 role="tab"
-                aria-controls="home"
+                aria-controls="panduan"
                 aria-selected="true"
               >
                 Panduan Tes Substansi
@@ -41,11 +41,11 @@ const PusatInformasi = () => {
             <li className={`${styles.menu} nav-item`} role="presentation">
               <a
                 className={`${styles.menuHak} nav-link fw-600 title-2 fz-20`}
-                id="profile-tab"
+                id="hak-dan-kewajiban-tab"
                 data-toggle="tab"
-                href="#profile"
+                href="#hak-dan-kewajiban"
                 role="tab"
-                aria-controls="profile"
+                aria-controls="hak-dan-kewajiban"
                 aria-selected="false"
               >
                 Hak dan Kewajiban
@@ -55,9 +55,9 @@ const PusatInformasi = () => {
           <div className="tab-content" id="myTabContent">
             <div
               className="tab-pane fade show active"
-              id="home"
+              id="panduan"
               role="tabpanel"
-              aria-labelledby="home-tab"
+              aria-labelledby="panduan-tab"
             >
               <div className="mt-8 list-pusat-informasi">
                 <ol className="pl-4 text-break">
@@ -142,9 +142,9 @@ const PusatInformasi = () => {
             </div>
             <div
               className="tab-pane fade"
-              id="profile"
+              id="hak-dan-kewajiban"
               role="tabpanel"
-              aria-labelledby="profile-tab"
+              aria-labelledby="hak-dan-kewajiban-tab"
             >
               <div className="mt-8 list-pusat-informasi">
                 <p>

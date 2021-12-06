@@ -16,7 +16,7 @@ const BreadcrumbComponent = ({ data = [] }) => {
             </span>
             <Fragment>
               {i === data.length - 1 ? (
-                <span className="trim-text-mobile">{row.name}</span>
+                <span className="trim-text-mobile-last">{row.name}</span>
               ) : row.name.length > 25 ? (
                 <Link href={row.link} passHref>
                   <span
@@ -29,7 +29,7 @@ const BreadcrumbComponent = ({ data = [] }) => {
               ) : (
                 <Link href={row.link} passHref>
                   <span
-                    className="text-primary trim-text-mobile"
+                    className="text-primary"
                     style={{ cursor: "pointer" }}
                   >
                     {row.name}
