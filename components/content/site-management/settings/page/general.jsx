@@ -319,7 +319,7 @@ const GeneralPage = ({ token }) => {
   };
 
   const [imageSocialTemp, setImageSocialTemp] = useState("");
-  
+
   const handleChangeSocialMedia = (e, index) => {
     let selectedFile = e.target.files[0];
 
@@ -704,7 +704,7 @@ const GeneralPage = ({ token }) => {
                                 )}
                               </div>
                             </div>
-                            <div className="col-12 col-md-6 col-xl-6">
+                            <div className="col-12 col-md-6 col-xl-6" style={{ position: 'relative' }}>
                               <div className="row">
                                 <div className="col-12 col-md-11">
                                   <div className="form-group">
@@ -723,13 +723,6 @@ const GeneralPage = ({ token }) => {
                                         simpleValidator.current.showMessageFor("link")
                                       }
                                     />
-
-                                    {simpleValidator.current.message(
-                                      "link",
-                                      items.link_social_media,
-                                      "required|url",
-                                      { className: "text-danger" }
-                                    )}
                                   </div>
                                 </div>
 
@@ -759,6 +752,14 @@ const GeneralPage = ({ token }) => {
                                       </button>
                                     </div>
                                   </div>
+                                )}
+                              </div>
+                              <div className={`${styles2.validText}`}>
+                                {simpleValidator.current.message(
+                                  "link",
+                                  items.link_social_media,
+                                  "required|url",
+                                  { className: "text-danger" }
                                 )}
                               </div>
                             </div>
@@ -833,12 +834,6 @@ const GeneralPage = ({ token }) => {
                                       }
                                     />
 
-                                    {simpleValidator.current.message(
-                                      "linkExternalLinks",
-                                      items.link,
-                                      "required|url",
-                                      { className: "text-danger" }
-                                    )}
                                   </div>
                                 </div>
 
@@ -870,6 +865,14 @@ const GeneralPage = ({ token }) => {
                                       </button>
                                     </div>
                                   </div>
+                                )}
+                              </div>
+                              <div className={`${styles2.validText}`}>
+                                {simpleValidator.current.message(
+                                  "linkExternalLinks",
+                                  items.link,
+                                  "required|url",
+                                  { className: "text-danger" }
                                 )}
                               </div>
                             </div>

@@ -22,7 +22,6 @@ const InformasiEdit = dynamic(
     ssr: false,
   }
 );
-
 const AlamatEdit = dynamic(() => import("../profile/alamat/alamat.edit"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
@@ -52,7 +51,7 @@ const PekerjaanEdit = dynamic(
 const Profile = ({ session }) => {
   const router = useRouter();
 
-  const [viewProfile, setViewProfile] = useState(1);
+  const [viewProfile, setViewProfile] = useState(2);
   const [viewEdit, setViewEdit] = useState(true);
 
   const handleViewProfile = () => {
@@ -180,7 +179,7 @@ const Profile = ({ session }) => {
             <Card className="card-custom gutter-b">
               <Card.Body>
                 {/* {handleViewProfile()} */}
-                <InformasiEdit wizzard={true} token={session.token} />
+                <InformasiEdit wizzard={true} />
               </Card.Body>
             </Card>
           </Col>
