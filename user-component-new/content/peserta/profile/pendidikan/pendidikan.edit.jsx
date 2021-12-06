@@ -21,12 +21,13 @@ import {
   SweatAlert,
 } from "../../../../../utils/middleware/helper";
 import moment from "moment";
+import { useRouter } from "next/router";
 
 const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
-
+  const router = useRouter();
   const { data: dataAsalSekolah } = useSelector(
     (state) => state.getAsalSekolah
   );
@@ -68,7 +69,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   );
 
   const [ijazahName, setIjazahName] = useState(
-    pendidikan ? pendidikan.ijasah.split("/ijasah/") : "Belum ada file"
+    pendidikan ? pendidikan?.ijasah?.split("/ijasah/") : "Belum ada file"
   );
   const [ijazah, setIjazah] = useState("");
   const [ijazahPreview, setIjazahPreview] = useState("");
@@ -76,7 +77,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const [dataSearch, setDataSearch] = useState([]);
   const optionsJenjangPendidikan = [];
   if (dataPendidikan) {
-    for (let index = 0; index < dataPendidikan.data.length; index++) {
+    for (let index = 0; index < dataPendidikan?.data?.length; index++) {
       let val = {
         value: dataPendidikan.data[index].id,
         label: dataPendidikan.data[index].label,
@@ -109,7 +110,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_PENDIDIKAN_RESET });
       if (wizzard) {
-        funcViewEdit(4);
+        router.push("/peserta/wizzard/pekerjaan");
       } else {
         funcViewEdit(false);
       }

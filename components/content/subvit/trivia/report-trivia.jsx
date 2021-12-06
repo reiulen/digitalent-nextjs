@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
@@ -10,9 +8,10 @@ import LoadingTable from "../../../LoadingTable";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import styles from "../trivia/edit/step.module.css";
+
+import { useDispatch, useSelector } from "react-redux";
 
 const ReportTrivia = ({ token }) => {
   const dispatch = useDispatch();
@@ -21,6 +20,8 @@ const ReportTrivia = ({ token }) => {
   const { loading, error, trivia } = useSelector(
     (state) => state.allReportTriviaQuestionBanks
   );
+
+  const { theme, academy } = trivia.dataTitle;
 
   let { page = 1, id } = router.query;
   page = Number(page);
@@ -53,7 +54,14 @@ const ReportTrivia = ({ token }) => {
   const handleExportReport = async () => {
     let link = `http://dts-subvit-dev.majapahit.id/api/trivia-question-banks/report/export/${id}`;
     if (search) link = link.concat(`&keyword=${search}`);
-    await axios.get(link).then((res) => {
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios.get(link, config).then((res) => {
       window.location.href = res.data.data;
     });
   };
@@ -63,6 +71,7 @@ const ReportTrivia = ({ token }) => {
     let link = `${router.pathname}?id=${id}&page=${1}&card=${val}`;
     if (search) link = link.concat(`&keyword=${search}`);
     router.push(link);
+    setShowModal(false);
   };
 
   return (
@@ -151,7 +160,9 @@ const ReportTrivia = ({ token }) => {
                       publishValue.slice(1).replace("-", " ")
                     }`}
               </h3>
-              <p className="text-muted">FGA - Cloud Computing</p>
+              <p className="text-muted">
+                {academy} - {theme}
+              </p>
             </div>
             <div className="card-toolbar"></div>
           </div>
@@ -215,7 +226,7 @@ const ReportTrivia = ({ token }) => {
                       {trivia && trivia.data.reports.length === 0 ? (
                         <tr>
                           <td className="text-center" colSpan={7}>
-                            Data Masih Kosong
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (

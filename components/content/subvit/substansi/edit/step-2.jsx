@@ -226,6 +226,7 @@ const StepTwo = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     value={endDate}
+                    placeholderText="Silahkan Pilih Tanggal Sampai"
                     disabled={!startDate}
                   />
 
@@ -284,6 +285,7 @@ const StepTwo = ({ token }) => {
                   <div className="input-group">
                     <input
                       type="text"
+                      maxLength={3}
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}

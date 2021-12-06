@@ -60,7 +60,11 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   if (router.pathname === "/peserta/subvit/survey/[id]")
     routerPath = "/peserta/subvit/survey/[id]";
   if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
-  if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
+  if (
+    router.pathname == "/peserta/wizzard" ||
+    router.pathname.includes("wizzard")
+  )
+    routerPath = "/peserta/wizzard";
 
   return (
     <>
@@ -80,7 +84,11 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
         <Row>
           <Col md={3}>
             {!router.pathname.includes(routerPath) && (
-              <Sidebar screenClass={"d-none d-lg-block"} titleAkun={"AKUN"} session={session} />
+              <Sidebar
+                screenClass={"d-none d-lg-block"}
+                titleAkun={"AKUN"}
+                session={session}
+              />
             )}
           </Col>
           {children}

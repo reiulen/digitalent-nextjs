@@ -115,7 +115,9 @@ const DashbardSubvit = ({ token }) => {
                       <div className="col-md-6">
                         <div className="col-md-12 mt-5">
                           <h4 className="font-weight-bolder text-primary">
-                            Halo {dataPermission.user.name || "Admin "}
+                            Halo{" "}
+                            {(dataPermission && dataPermission.user.name) ||
+                              "Admin "}
                           </h4>
                         </div>
                         <div className="col-md-12">
@@ -128,11 +130,12 @@ const DashbardSubvit = ({ token }) => {
 
                       <div className="col-md-6">
                         <div
-                          className="ml-auto float-right ilustrator-dashboard"
+                          className={`${styles.imageDashboard} ml-auto float-right ilustrator-dashboard`}
                           style={{
                             position: "absolute",
-                            right: "10px",
-                            top: "-50px",
+                            right: "-50px",
+                            top: "-10px",
+                            width: "40%",
                           }}
                         >
                           <Image

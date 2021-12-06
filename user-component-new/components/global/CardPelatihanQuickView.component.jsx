@@ -138,7 +138,6 @@ const CardPelatihanQuickView = ({
                 className="rounded"
               />
             </Col>
-
             <Col md={8}>
               <div className="py-8 ml-3">
                 <div className="position-relative d-flex align-items-start justify-content-between">
@@ -146,8 +145,9 @@ const CardPelatihanQuickView = ({
                     <div className="">
                       <Image
                         src={
-                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          row.gambar_mitra
+                          (row.gambar_mitra &&
+                            row.file_path + row.gambar_mitra) ||
+                          "/assets/media/mitra-default.png"
                         }
                         width={80}
                         height={80}
@@ -181,6 +181,7 @@ const CardPelatihanQuickView = ({
                       )}
                     </button>
 
+                    {/* SHAREOVERLAY */}
                     <ShareOverlay
                       url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
                       quote={row.name}

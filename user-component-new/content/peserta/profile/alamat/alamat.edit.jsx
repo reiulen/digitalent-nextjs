@@ -13,19 +13,23 @@ import {
   dropdownKecamatanToDesa,
   dropdownProvinsiToDesa,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+
 import {
   updateProfileAlamat,
   clearErrors,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
+
 import { UPDATE_ALAMAT_RESET } from "../../../../../redux/types/pelatihan/profile.type";
+
 import {
   helperRegexNumber,
   SweatAlert,
 } from "../../../../../utils/middleware/helper";
+import { useRouter } from "next/router";
 
 const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const { error: errorAlamat, alamat } = useSelector(
     (state) => state.dataAlamat
   );
@@ -67,14 +71,16 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
     (alamat && alamat.address_ktp) || ""
   );
   const [provinsiKtp, setProvinsiKtp] = useState(
-    (alamat && alamat.provinsi_ktp) || null
+    (alamat && { label: alamat.provinsi_ktp }) || null
   );
-  const [kotaKtp, setKotaKtp] = useState((alamat && alamat.kota_ktp) || null);
+  const [kotaKtp, setKotaKtp] = useState(
+    (alamat && { label: alamat.kota_ktp }) || null
+  );
   const [kecamatanKtp, setKecamatanKtp] = useState(
-    (alamat && alamat.kecamatan_ktp) || null
+    (alamat && { label: alamat.kecamatan_ktp }) || null
   );
   const [kelurahanKtp, setKelurahanKtp] = useState(
-    (alamat && alamat.kelurahan_ktp) || null
+    (alamat && { label: alamat.kelurahan_ktp }) || null
   );
   const [kodePosKtp, setKodePosKtp] = useState(
     (alamat && alamat.kode_pos_ktp) || ""
@@ -84,16 +90,16 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
     (alamat && alamat.address) || ""
   );
   const [provinsiDomisili, setProvinsiDomisili] = useState(
-    (alamat && alamat.provinsi) || null
+    (alamat && { label: alamat.provinsi }) || null
   );
   const [kotaDomisili, setKotaDomisili] = useState(
-    (alamat && alamat.kota) || null
+    (alamat && { label: alamat.kota }) || null
   );
   const [kecamatanDomisili, setKecamatanDomisili] = useState(
-    (alamat && alamat.kecamatan) || null
+    (alamat && { label: alamat.kecamatan }) || null
   );
   const [kelurahanDomisili, setKelurahanDomisili] = useState(
-    (alamat && alamat.kelurahan) || null
+    (alamat && { label: alamat.kelurahan }) || null
   );
   const [kodePosDomisili, setKodePosDomisili] = useState(
     (alamat && alamat.kode_pos) || ""
@@ -114,6 +120,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   let selectRefKabupaten = null;
   let selectRefKecamatan = null;
   let selectRefKelurahan = null;
+
   const optionsKabupaten = [];
   if (dataKabupaten && dataKabupaten.length !== 0) {
     for (let index = 0; index < dataKabupaten.data.length; index++) {
@@ -153,16 +160,14 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   useEffect(() => {
     if (errorUpdateData) {
       SweatAlert("Gagal", errorUpdateData, "error");
-      // toast.error(errorUpdateData);
       dispatch(clearErrors());
     }
 
     if (success) {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
-      // toast.success("Berhasil Update Data");
       dispatch({ type: UPDATE_ALAMAT_RESET });
       if (wizzard) {
-        funcViewEdit(3);
+        router.push("/peserta/wizzard/pendidikan");
       } else {
         funcViewEdit(false);
       }
@@ -188,7 +193,14 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         value: "",
         label: "",
       });
-      setKecamatanDomisili("");
+      setKecamatanDomisili({
+        value: "",
+        label: "",
+      });
+      setKelurahanDomisili({
+        value: "",
+        label: "",
+      });
       setKodePosDomisili("");
     }
   };
@@ -431,6 +443,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("provinsi domisili")
                 }
+                value={provinsiDomisili}
               />
               {simpleValidator.current.message(
                 "provinsi domisili",
@@ -457,6 +470,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                   simpleValidator.current.showMessageFor("kota domisili")
                 }
                 value={kotaDomisili}
+                isDisabled={provinsiDomisili ? false : true}
               />
               {simpleValidator.current.message(
                 "kota domisili",
@@ -486,6 +500,8 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kecamatan")
                 }
+                value={kecamatanDomisili}
+                isDisabled={kotaDomisili ? false : true}
               />
 
               {simpleValidator.current.message(
@@ -515,6 +531,8 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kelurahan domisili")
                 }
+                value={kelurahanDomisili}
+                isDisabled={kecamatanDomisili ? false : true}
               />
 
               {simpleValidator.current.message(
@@ -639,6 +657,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("provinsi ktp")
                 }
+                value={provinsiKtp}
               />
               {simpleValidator.current.message(
                 "provinsi ktp",
@@ -669,6 +688,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                   simpleValidator.current.showMessageFor("kota ktp")
                 }
                 value={kotaKtp}
+                isDisabled={provinsiKtp ? false : true}
               />
               {simpleValidator.current.message(
                 "kota ktp",
@@ -694,13 +714,13 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onChange={(e) => {
                   setKelurahanKtp(null);
                   setKecamatanKtp({ label: e?.label, value: e?.value });
-
                   dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kecamatan ktp")
                 }
                 value={kecamatanKtp}
+                isDisabled={kotaKtp ? false : true}
               />
 
               {simpleValidator.current.message(
@@ -729,6 +749,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                   simpleValidator.current.showMessageFor("kelurahan ktp")
                 }
                 value={kelurahanKtp}
+                isDisabled={kecamatanKtp ? false : true}
               />
 
               {simpleValidator.current.message(

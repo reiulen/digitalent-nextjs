@@ -54,7 +54,7 @@ const Navigationbar = ({ session }) => {
         Object.keys(dataPribadi).length !== 0 &&
         !dataPribadi.status
       ) {
-        router.push("/peserta/wizzard");
+        // router.push("/peserta/wizzard");
       }
     }
   }, []);
@@ -125,7 +125,11 @@ const Navigationbar = ({ session }) => {
   if (router.pathname === "/peserta/subvit/survey/[id]")
     routerPath = "/peserta/subvit/survey/[id]";
   if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
-  if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
+  if (
+    router.pathname == "/peserta/wizzard" ||
+    router.pathname.includes("wizzard")
+  )
+    routerPath = "/peserta/wizzard";
   if (router.pathname == "/") routerPath = "/";
 
   const [search, setSearch] = useState("");
@@ -502,8 +506,8 @@ const Navigationbar = ({ session }) => {
               <>
                 {/* Button Masuk dan Daftar */}
                 <Link href="/login">
-                  <a className="mx-2">
-                    <button className="btn btn-sm btn-block btn-login-peserta btn-outline-primary-new m-2 justify-content-center py-3">
+                  <a className="mx-4 mx-md-2">
+                    <button className="btn btn-sm btn-block btn-login-peserta btn-outline-primary-new my-2 justify-content-center py-3">
                       {/* <IconLogin className="mr-2 icon-login" /> */}
                       <i className="ri-login-box-line mr-2"></i>
                       Masuk
@@ -511,9 +515,9 @@ const Navigationbar = ({ session }) => {
                   </a>
                 </Link>
                 <Link href="/register">
-                  <a className="mx-2">
+                  <a className="mx-4 mx-md-2">
                     <button
-                      className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} m-2 justify-content-center py-3`}
+                      className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} my-2 justify-content-center py-3`}
                     >
                       {/* <IconRegister className="mr-2 icon-register" /> */}
                       <div
@@ -654,13 +658,15 @@ const Navigationbar = ({ session }) => {
             </Row>
             <hr />
             {/* Start side bar */}
-            {session && !router.pathname.includes(routerPath) && (
-              <Sidebar
-                screenClass={"d-block d-lg-none"}
-                accountFalse={`d-none d-lg-block`}
-                titleAkun={"Lainnya"}
-              />
-            )}
+            {session &&
+              session.roles[0] === "user" &&
+              !router.pathname.includes(routerPath) && (
+                <Sidebar
+                  screenClass={"d-block d-lg-none"}
+                  accountFalse={`d-none d-lg-block`}
+                  titleAkun={"Lainnya"}
+                />
+              )}
             {/* End side bar */}
           </Nav>
         </Navbar.Collapse>

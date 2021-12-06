@@ -5,6 +5,9 @@ import { useSelector } from "react-redux";
 import PesertaWrapper from "../../../../components/wrapper/Peserta.wrapper";
 import axios from "axios";
 import Swal from "sweetalert2";
+import CustomButton from "../card/Buttons/CustomButton";
+import Cookies from "js-cookie";
+import { helperUserStatusColor } from "../../../../../utils/middleware/helper";
 
 export default function RiwayatPelatihanDetail(props) {
   const { state: data } = useSelector(
@@ -20,14 +23,9 @@ export default function RiwayatPelatihanDetail(props) {
   const [label, setLabel] = useState();
 
   useEffect(() => {
-    if (data?.status.includes("menunggu")) {
-      setLabel("warning");
-    } else if (data?.status == "pelatihan") {
-      setLabel("primary");
-    } else {
-      setLabel("success");
-    }
+    helperUserStatusColor(data?.status, setLabel);
   }, []);
+
   const [imageSertifikasi, setImageSertifikasi] = useState();
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
   const config = {
@@ -35,6 +33,7 @@ export default function RiwayatPelatihanDetail(props) {
       authorization: "Bearer " + props.session.token,
     },
   };
+
   const onChangeFile = (e) => {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
@@ -79,6 +78,27 @@ export default function RiwayatPelatihanDetail(props) {
     }
   };
 
+  const handleClick = async (name, id) => {
+    if (name == "download") {
+      try {
+        const { data } = await axios.get(
+          `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/export-pdf?id=${id}`,
+          config
+        );
+        if (data) {
+          const link = document.createElement("a");
+          link.download = true;
+          link.target = "_blank";
+          link.href = data.data;
+          link.click();
+          document.body.removeChild(link);
+        }
+      } catch (error) {
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      }
+    }
+  };
+
   return (
     <PesertaWrapper>
       <Col lg={12} className="px-0">
@@ -98,7 +118,21 @@ export default function RiwayatPelatihanDetail(props) {
                 className={`label label-inline label-light-${label} font-weight-bold text-capitalize`}
                 style={{ borderRadius: "25px" }}
               >
-                {data?.status == "diterima" ? "lulus pelatihan" : data?.status}
+                {data?.status == "diterima"
+                  ? "lulus pelatihan"
+                  : data.lpj
+                  ? "Kerjakan LPJ"
+                  : data.survei || data.status.includes("survey")
+                  ? "Isi Survey"
+                  : data.status == "pelatihan" && data.midtest && !data.trivia
+                  ? "Kerjakan Mid Test"
+                  : data.status == "pelatihan" && data.trivia
+                  ? "kerjakan trivia"
+                  : data.status == "survey belum tersedia"
+                  ? "Isi survei"
+                  : data.status.includes("LPJ")
+                  ? "Isi LPJ"
+                  : data.status}
               </span>
             </Col>
             <Col lg={12} className=" my-5">
@@ -127,32 +161,95 @@ export default function RiwayatPelatihanDetail(props) {
               <Row>
                 {data?.status.includes("tidak") ? (
                   ""
+                ) : data.lpj ? (
+                  <Fragment>
+                    <CustomButton
+                      outline
+                      click={() => handleClick("download", data.id_pendaftaran)}
+                    >
+                      <i className="ri-download-2-fill mr-2"></i>
+                      Bukti Pendaftaran
+                    </CustomButton>
+                    <CustomButton
+                      click={() => {
+                        Cookies.set("id_pelatihan", data.id);
+                        Cookies.set("id_tema", data.tema_id);
+                        router.push(`/peserta/form-lpj`);
+                      }}
+                    >
+                      <i className="ri-file-text-line mr-2"></i>
+                      Isi Laporan Pertangungjawaban
+                    </CustomButton>
+                  </Fragment>
+                ) : data.survei || data.status == "survey belum tersedia" ? (
+                  <Fragment>
+                    <CustomButton
+                      outline
+                      click={() => handleClick("download", data.id_pendaftaran)}
+                    >
+                      <i className="ri-download-2-fill mr-2"></i>
+                      Bukti Pendaftaran
+                    </CustomButton>
+
+                    <CustomButton
+                      disabled={!data.survei}
+                      click={() => {
+                        router.push("/peserta/survey");
+                        Cookies.set("id_pelatihan", data.id);
+                        Cookies.set("id_tema", data.tema_id);
+                      }}
+                    >
+                      Isi Survei
+                      <i className="ri-arrow-right-s-line mr-2"></i>
+                    </CustomButton>
+                  </Fragment>
+                ) : data.lpj || data.status == "LPJ belum tersedia" ? (
+                  <Fragment>
+                    <CustomButton
+                      outline
+                      click={() => handleClick("download", data.id_pendaftaran)}
+                    >
+                      <i className="ri-download-2-fill mr-2"></i>
+                      Bukti Pendaftaran
+                    </CustomButton>
+                    <CustomButton
+                      disabled={!data.lpj}
+                      click={() => {
+                        Cookies.set("id_pelatihan", data.id);
+                        Cookies.set("id_tema", data.tema_id);
+                        router.push(`/peserta/form-lpj`);
+                      }}
+                    >
+                      Isi Laporan Pertangung Jawaban
+                      <i className="ri-arrow-right-s-line mr-2"></i>
+                    </CustomButton>
+                  </Fragment>
                 ) : data?.status.includes("lulus") ? (
                   <Fragment>
-                    <Col className="d-flex justify-content-center ">
-                      <Button
-                        className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
-                        style={{ height: "40px", fontSize: "14px" }}
-                      >
-                        <i className="ri-download-2-fill mr-2"></i>
-                        Download Sertifikat
-                      </Button>
-                    </Col>
-                    <Col className="d-flex justify-content-center ">
-                      <Button
-                        className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                        style={{ height: "40px", fontSize: "14px" }}
-                        onClick={() => {
+                    {data.sertifikasi && (
+                      <CustomButton
+                        outline
+                        click={() => {
                           setShowModalSertifikasi(true);
                         }}
                       >
                         <i className="ri-upload-2-fill mr-2"></i>
                         Unggah Sertifikasi
-                      </Button>
-                    </Col>
+                      </CustomButton>
+                    )}
+
+                    <CustomButton>
+                      <i className="ri-download-2-fill mr-2"></i>
+                      Download Sertifikat
+                    </CustomButton>
                   </Fragment>
                 ) : (
-                  ""
+                  <CustomButton
+                    click={() => handleClick("download", data.id_pendaftaran)}
+                  >
+                    <i className="ri-download-2-fill mr-2"></i>
+                    Bukti Pendaftaran
+                  </CustomButton>
                 )}
               </Row>
 
@@ -210,6 +307,10 @@ export default function RiwayatPelatihanDetail(props) {
                       height: "40px",
                       fontSize: "14px",
                       fontFamily: "poppins",
+                    }}
+                    onClick={() => {
+                      // handleClick()
+                      console.log(data, "ini data");
                     }}
                   >
                     <i
