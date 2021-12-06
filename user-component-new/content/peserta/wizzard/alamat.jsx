@@ -6,94 +6,19 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { Stepper, Step } from "react-form-stepper";
 import Steppers from "./stepper";
 
-const Informasi = dynamic(() => import("../profile/informasi/informasi"), {
-  loading: function loadingNow() {
-    return <LoadingSkeleton />;
-  },
-  ssr: false,
-});
-
-const InformasiEdit = dynamic(
-  () => import("../profile/informasi/informasi.edit"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
-);
 const AlamatEdit = dynamic(() => import("../profile/alamat/alamat.edit"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
   },
   ssr: false,
 });
-const PendidikanEdit = dynamic(
-  () => import("../profile/pendidikan/pendidikan.edit"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
-);
 
-const PekerjaanEdit = dynamic(
-  () => import("../profile/pekerjaan/pekerjaan.edit"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
-);
-
-const Profile = ({ session }) => {
+const Alamat = ({ session }) => {
   const router = useRouter();
 
   const [viewProfile, setViewProfile] = useState(2);
   const [viewEdit, setViewEdit] = useState(true);
 
-  const handleViewProfile = () => {
-    switch (viewProfile) {
-      case 1:
-        return (
-          <InformasiEdit
-            funcViewEdit={val => setViewProfile(val)}
-            token={session.token}
-            wizzard={true}
-          />
-        );
-      case 2:
-        return (
-          <AlamatEdit
-            funcViewEdit={val => setViewProfile(val)}
-            token={session.token}
-            wizzard={true}
-          />
-        );
-      case 3:
-        return (
-          <PendidikanEdit
-            funcViewEdit={val => setViewProfile(val)}
-            token={session.token}
-            wizzard={true}
-          />
-        );
-        break;
-      case 4:
-        return (
-          <PekerjaanEdit
-            funcViewEdit={val => setViewProfile(val)}
-            wizzard={true}
-            token={session.token}
-          />
-        );
-      default:
-        return <Informasi token={session.token} />;
-        break;
-    }
-  };
   const [step, setStep] = useState([1, 2, 3, 4]);
 
   const [label, setLabel] = useState([
@@ -178,8 +103,7 @@ const Profile = ({ session }) => {
           <Col md={12}>
             <Card className="card-custom gutter-b">
               <Card.Body>
-                {/* {handleViewProfile()} */}
-                <InformasiEdit wizzard={true} />
+                <AlamatEdit wizzard={true} token={session.token} />
               </Card.Body>
             </Card>
           </Col>
@@ -189,4 +113,4 @@ const Profile = ({ session }) => {
   );
 };
 
-export default Profile;
+export default Alamat;

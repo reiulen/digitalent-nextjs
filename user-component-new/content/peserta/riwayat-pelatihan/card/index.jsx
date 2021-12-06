@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import { helperUserStatusColor } from "../../../../../utils/middleware/helper";
 
 export default function CardTemplateOriginal({ data, session }) {
   const router = useRouter();
@@ -20,42 +21,13 @@ export default function CardTemplateOriginal({ data, session }) {
   const [label, setLabel] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
 
   useEffect(() => {
-    if (data.status.includes("tidak") || data.status.includes("ditolak"))
-      return setLabel("danger");
-
-    if (data.status.includes("menunggu") || data.status.includes("seleksi"))
-      return setLabel("warning");
-
-    if (
-      data.status.includes("LPJ") ||
-      data.status.includes("lpj") ||
-      data.status == "survey belum tersedia" ||
-      data.status == "LPJ belum tersedia"
-    )
-      return setLabel("primary");
-
-    if (
-      data.status.includes("seleksi administrasi") ||
-      data.status.includes("menunggu") ||
-      data.status.includes("belum tersedia")
-    )
-      return setLabel("warning");
-
-    if (data.status.includes("lulus") || data.status.includes("Lulus"))
-      return setLabel("success");
-
-    if (
-      data.status.includes("tes substansi") ||
-      data.status.includes("pelatihan") ||
-      data.status.includes("survey")
-    )
-      return setLabel("primary");
-    else return setLabel("primary");
+    helperUserStatusColor(data.status, setLabel);
   }, []);
+
   const [imageSertifikasi, setImageSertifikasi] = useState();
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
   const config = {
@@ -103,7 +75,7 @@ export default function CardTemplateOriginal({ data, session }) {
   };
 
   const [fileName, setFileName] = useState();
-  const onChangeFile = e => {
+  const onChangeFile = (e) => {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
@@ -284,7 +256,12 @@ export default function CardTemplateOriginal({ data, session }) {
                   >
                     <div className="d-flex align-items-center align-middle ">
                       <i className="ri-map-pin-line"></i>
-                      <span className={` pl-2`}>Lokasi : {data.alamat}</span>
+                      <span
+                        style={{ maxWidth: "30rem" }}
+                        className={` pl-2 text-truncate`}
+                      >
+                        Lokasi : {data.alamat}
+                      </span>
                     </div>{" "}
                   </Col>
                 </Row>
@@ -600,7 +577,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   type="file"
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
-                  onChange={e => {
+                  onChange={(e) => {
                     onChangeFile(e);
                   }}
                 />

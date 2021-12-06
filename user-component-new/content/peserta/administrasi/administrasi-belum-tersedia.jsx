@@ -49,7 +49,7 @@ export default function SeleksiAdministrasi() {
                 router.push(`/peserta/test-substansi`);
               }}
             >
-              Kerjakan Tes Substansi
+              Cek Status
               <i
                 className="ri-arrow-right-s-line mr-2"
                 style={{ color: "white" }}
