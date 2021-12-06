@@ -179,7 +179,7 @@ export default function RiwayatPelatihan({ session }) {
                 className="font-weight-bolder mt-15 text-center fw-600 mb-10"
                 style={{ fontFamily: "Poppins", fontSize: "24px" }}
               >
-                Pencarian tidak ditemukan
+                Anda belum pernah mengikuti pelatihan
               </h1>
             </div>
           </div>
