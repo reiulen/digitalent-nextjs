@@ -44,7 +44,7 @@ const Table = ({ token }) => {
   const [search, setSearch] = useState(null);
 
   const listPelatihan =
-    allListPelatihanByPeserta.data.data.length > 0 ? (
+    allListPelatihanByPeserta.data.data !== null ? (
       allListPelatihanByPeserta.data.data.map((item, index) => {
         return (
           <tr key={index}>
@@ -55,7 +55,7 @@ const Table = ({ token }) => {
             <td className="align-middle text-left">{item.id}</td>
             <td className="align-middle text-left">
               <div className="position-relative w-max-content">
-                <span className="badge badge-success">{item.status}</span>
+                <p className="badge badge-success text-capitalize">{item.status}</p>
               </div>
             </td>
             <td className="align-middle text-left">
@@ -160,25 +160,24 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={1}
                     itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
+                      5
                     }
                     totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
+                     10
                     }
                     pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
+                    // onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
                     lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                 </div>
 
                 <div className="table-total ml-auto">

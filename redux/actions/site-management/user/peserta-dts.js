@@ -95,3 +95,34 @@ export const getAllListsPeserta =
       });
     }
   };
+
+  export const updatePesertaDts =
+  (token, data) =>
+  async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/participant/update/data-diri`,data,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(data)
+      if(data.status){
+        Swal.fire("Berhasil", data.message, "success").then(() => {
+          router.push("/partnership/user/auth/login");
+        });
+
+      }else{
+        Swal.fire("Ooopss  !", data.message, "error").then(() => {
+          router.push("/partnership/user/auth/login");
+        });
+      }
+
+
+    } catch (error) {
+      console.log(error)
+    }
+  };
