@@ -131,7 +131,7 @@ const DetailBerita = () => {
   };
 
   return (
-    <Container fluid className="px-3 pl-sm-15 pr-sm-10 py-10 bg-white">
+    <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
       {/* BreadCrumb */}
       <BreadcrumbComponent
         data={[
@@ -150,21 +150,24 @@ const DetailBerita = () => {
           </div>
 
           <div className="mt-5">
-            <h1 className="font-weight-bolder">
+            <h1 
+              className="font-weight-bolder"
+              // style={{fontSize:"40px", fontFamily:"Poppins"}}
+            >
               {/* Insert Title Here */}
               {detail.judul}
             </h1>
           </div>
 
           <div className="mt-5 d-flex flex-row align-items-center">
-            <span className="font-weight-bolder">
+            <span className="font-weight-bolder" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Akademi Here */}
               {detail.kategori_akademi}
             </span>
             <span className="mr-1 ml-3">
               <i className="ri-eye-line"></i>
             </span>
-            <span className="text-muted">
+            <span className="text-muted" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Views Here */}
               Dibaca {detail.dibaca}
             </span>
@@ -187,16 +190,18 @@ const DetailBerita = () => {
                 />
               </div>
               <div className="d-flex flex-column ml-3">
-                <div className="font-weight-bolder mb-2">
+                <div 
+                  className="font-weight-bolder mb-2"
+                  style={{fontSize:"14px", fontFamily:"Poppins"}}
+                >
                   {/* Insert Admin Here */}
                   {detail.dibuat}
                 </div>
-                <div className="text-muted">
+                <div className="text-muted" style={{fontSize:"14px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                   {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
                 </div>
               </div>
             </div>
-
             <div className="row ml-1">
               <div className="mr-3">
                 {/* SHAREOVERLAY */}
@@ -284,9 +289,15 @@ const DetailBerita = () => {
 
                 <div className="row ml-1">
                   <div className="mr-3">
-                    <button className="btn btn-sm btn-outline-light rounded-circle">
-                      <i className="ri-share-line px-0 py-1"></i>
-                    </button>
+                    {/* SHAREOVERLAY */}
+                    <ShareOverlay
+                      url={`http://dts-dev.majapahit.id/berita/detail/${id}`}
+                      quote={detail.judul}
+                    >
+                      <button className="btn btn-sm btn-outline-light rounded-circle">
+                        <i className="ri-share-line px-0 py-1"></i>
+                      </button>
+                    </ShareOverlay>
                   </div>
                 </div>
               </div>
@@ -311,7 +322,10 @@ const DetailBerita = () => {
                     />
                   </div>
                   <div className="col-9 my-auto">
-                    <h3 className=" font-weight-bolder">Pencarian</h3>
+                    <h4 
+                      className=" font-weight-bolder"
+                      style={{fontSize:"20px", fontFamily:"Poppins"}}
+                    >Pencarian</h4>
                   </div>
                 </div>
 
@@ -357,8 +371,8 @@ const DetailBerita = () => {
               </div>
 
               {/* Tag */}
-              <div className="row mt-10 d-flex flex-column mx-10">
-                <h3 className="font-weight-bolder">
+              <div className="row mt-10 d-flex flex-column mx-3 mx-lg-10">
+                <h3 className="font-weight-bolder" style={{fontSize:"20px", fontFamily:"Poppins"}}>
                   TEMUKAN LEBIH BANYAK APA YANG PENTING BAGI ANDA
                 </h3>
                 <div className=" d-flex flex-wrap flex-row">
