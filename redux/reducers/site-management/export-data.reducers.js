@@ -89,48 +89,56 @@ export const allExportDataReducer = (state = initialState, action) => {
   }
 };
 
-export const detailExportDataReducer = (state = initialState, action) => {
+export const detailExportDataReducer = (state = {}, action) => {
   switch (action.type) {
     case DETAIL_EXPORT_DATA_REQUEST:
       return {
         ...state,
-        status: statuslist.process,
+        loading: true
       };
 
     case DETAIL_EXPORT_DATA_SUCCESS:
       return {
         ...state,
-        status: statuslist.success,
         data: action.payload.data,
+        loading: false
       };
 
     case DETAIL_EXPORT_DATA_FAIL:
       return {
         ...state,
-        status: statuslist.error,
+        error: null,
+      };
+    case CLEAR_ERRORS:
+      return {
         error: null,
       };
 
-    case SEARCH_COORPORATION:
+    default:
+      return state;
+  }
+};
+
+export const filterExportDataReducer = (state = {loading: true}, action) => {
+  switch (action.type) {
+    case POST_EXPORT_DATA_REQUEST:
       return {
         ...state,
-        cari: action.text,
-        page: 1,
+        loading: true,
       };
 
-    case SET_PAGE:
+    case POST_EXPORT_DATA_SUCCESS:
       return {
         ...state,
-        page: action.page,
+        loading: false,
+        data: action.payload,
       };
 
-    case LIMIT_CONFIGURATION:
+    case POST_EXPORT_DATA_FAIL:
       return {
         ...state,
-        limit: action.limitValue,
-        page: 1,
+        error: null,
       };
-
     case CLEAR_ERRORS:
       return {
         error: null,

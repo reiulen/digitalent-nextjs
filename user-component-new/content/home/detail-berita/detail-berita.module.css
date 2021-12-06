@@ -1,3 +1,38 @@
 .detailBerita a {
     color:#007CFF !important;
 }
+
+.fontTitle{
+    font-size: 40px;
+    font-family: "Poppins";
+}
+
+@media only screen and (max-width: 1024px){
+    .fontTitle{
+        font-size: 40px;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .fontTitle{
+        font-size: 32px;
+    }
+}
+
+@media only screen and (max-width: 576px){
+    .fontTitle{
+        font-size: 32px;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .fontTitle{
+        font-size: 32px;
+    }
+}
+
+@media only screen and (max-width: 280px){
+    .fontTitle{
+        font-size: 32px;
+    }
+}

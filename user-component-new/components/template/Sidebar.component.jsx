@@ -23,7 +23,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
   const [dropBeasiswa, setDropBeasiswa] = useState(false);
   const [clickBeasiswa, setClickBeasiswa] = useState(1);
 
-  const fetchSimonas = e => {
+  const fetchSimonas = (e) => {
     e.preventDefault();
     axios
       .get(
@@ -35,12 +35,12 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
           },
         }
       )
-      .then(items => {
+      .then((items) => {
         window.open(items.data.data, "_blank");
       });
   };
 
-  const fetchBeasiswa = e => {
+  const fetchBeasiswa = (e) => {
     e.preventDefault();
     axios
       .get(
@@ -52,12 +52,12 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
           },
         }
       )
-      .then(items => {
+      .then((items) => {
         window.open(items.data.data, "_blank");
       });
   };
 
-  const handleDown = e => {
+  const handleDown = (e) => {
     setDrop(!drop);
     if (e.target.innerText === "Digital Talent Schoolarship") {
       setClick(click + 1);
@@ -105,7 +105,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
               ? styles.active
               : styles.subMenuTitle
           }
-          onClick={event => handleDown(event)}
+          onClick={(event) => handleDown(event)}
         >
           <div className="d-flex flex-row align-items-center">
             <div className="p-2">
@@ -113,7 +113,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                 src={Logo}
                 alt=""
                 className={styles.img}
-                onClick={event => handleDown(event)}
+                onClick={(event) => handleDown(event)}
               />
             </div>
             <div className="p-2">
@@ -180,7 +180,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                     router.pathname ===
                       "/peserta/test-substansi/panduan-substansi" ||
                     router.pathname === "/peserta/done-substansi" ||
-                    router.pathname === "/peserta/done-mid-test" ||
+                    router.pathname === "/peserta/done-mid-tes" ||
                     router.pathname === "/peserta/mid-test" ||
                     router.pathname === "/peserta/mid-test/panduan-mid-test"
                       ? styles.activeMenuItem
@@ -194,7 +194,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                         router.pathname ===
                           "/peserta/test-substansi/panduan-substansi" ||
                         router.pathname === "/peserta/done-substansi" ||
-                        router.pathname === "/peserta/done-mid-test" ||
+                        router.pathname === "/peserta/done-mid-tes" ||
                         router.pathname === "/peserta/mid-test" ||
                         router.pathname === "/peserta/mid-test/panduan-mid-test"
                           ? styles.activeIconMenu
@@ -340,7 +340,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
 
         <div
           className={dropSimonas ? styles.active : styles.subMenuTitle}
-          onClick={event => handleDown(event)}
+          onClick={(event) => handleDown(event)}
         >
           <a target="_blank" onClick={fetchSimonas}>
             <div className="d-flex flex-row align-items-center">
@@ -355,7 +355,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
         </div>
         <div
           className={dropBeasiswa ? styles.active : styles.subMenuTitle}
-          onClick={event => handleDown(event)}
+          onClick={(event) => handleDown(event)}
         >
           <a target="_blank" onClick={fetchBeasiswa}>
             <div className="d-flex flex-row align-items-center">

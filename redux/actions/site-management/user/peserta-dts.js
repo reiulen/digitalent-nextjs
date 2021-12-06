@@ -95,3 +95,32 @@ export const getAllListsPeserta =
       });
     }
   };
+
+  export const updatePesertaDts =
+  (token, datas) =>
+  async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/participant/update/data-diri`,datas,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if(data.status){
+        Swal.fire("Berhasil", data.message, "success").then(() => {
+          window.location = "/site-management/user/peserta-dts";
+        });
+
+      }else{
+        Swal.fire("Ooopss  !", data.message, "error").then(() => {
+        });
+      }
+
+
+    } catch (error) {
+      Swal.fire("Ooopss  !", JSON.stringify(error.message), "error").then(() => {
+      });
+    }
+  };

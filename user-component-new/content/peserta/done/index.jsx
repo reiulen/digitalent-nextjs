@@ -26,6 +26,7 @@ const Done = () => {
   // const handleDone = () => {
   //   router.push(`${router.pathname.slice(0, 8)}`);
   // };
+
   return (
     <>
       <PesertaWrapper>
@@ -48,7 +49,15 @@ const Done = () => {
               <div className="p-2">
                 {" "}
                 <Image
-                  src="/assets/media/default-card.png"
+                  src={
+                    (dataTraining.gambar_mitra &&
+                      process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        dataTraining.gambar_mitra) ||
+                    (dataTraining.logo &&
+                      process.env.END_POINT_API_IMAGE_BEASISWA +
+                        dataTraining.logo) ||
+                    "/assets/media/default-card.png"
+                  }
                   height={50}
                   width={50}
                   objectFit="cover"
