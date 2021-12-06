@@ -310,6 +310,7 @@ const StepThree = ({ token }) => {
                         simpleValidator.current.showMessageFor("durasi")
                       }
                       min={1}
+                      max={360}
                     />
                     <div className="input-group-append bg-sedondary">
                       <span
