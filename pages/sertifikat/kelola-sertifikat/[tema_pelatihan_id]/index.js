@@ -9,6 +9,7 @@ import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import Cookies from "js-cookie";
+import { getAllPermission } from "../../../../redux/actions/utils/utils.actions";
 
 const KelolaSertifikatNamaPelatihanID = dynamic(
   () =>
@@ -35,7 +36,7 @@ export default function KelokaSertifikatPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -57,6 +58,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      const data = await store.dispatch(
+        getAllPermission(session.user.user.data.token)
+      );
+      console.log(data, "ini di tema");
       return {
         props: { session, title: "List Nama Pelatihan - Sertifikat" },
       };
