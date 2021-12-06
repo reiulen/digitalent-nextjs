@@ -468,7 +468,7 @@ const StepTwo = ({ token }) => {
                         trivia_question_detail.list_questions &&
                         trivia_question_detail.list_questions.length === 0 ? (
                           <td className="align-middle text-center" colSpan={6}>
-                            Data Kosong
+                            Data Tidak Ditemukan
                           </td>
                         ) : (
                           trivia_question_detail &&
