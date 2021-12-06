@@ -14,6 +14,7 @@ import {
   getBeasiswaUniversitasLuar,
   getBeasiswaAlumni,
   getBeasiswaAwardee,
+  getBeasiswaYear,
 } from "../../redux/actions/dashboard-kabadan/dashboard/beasiswa.actions";
 
 import { wrapper } from "../../redux/store";
@@ -89,6 +90,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
       await store.dispatch(getBeasiswaAlumni(session.user.user.data.token));
       await store.dispatch(getBeasiswaAwardee(session.user.user.data.token));
+      await store.dispatch(getBeasiswaYear(session.user.user.data.token));
 
       return {
         props: { session, title: "Dashboard - Beasiswa" },

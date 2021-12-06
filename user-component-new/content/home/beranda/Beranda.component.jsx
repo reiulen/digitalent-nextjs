@@ -388,13 +388,13 @@ const Beranda = ({ session }) => {
                         >
                           {row.slug}
                         </h1>
-                        <div>
+                        <div className="module line-clamp">
                           <p
                             className={`mb-0 fw-600 fz-12 text-center ${
-                              activeTab === i && "text-white "
+                              activeTab === i && "text-white"
                             }`}
                           >
-                            {row.name.split(" ").splice(0, 3).join(" ")}
+                            {row.name}
                           </p>
                         </div>
                       </div>

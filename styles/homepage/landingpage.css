@@ -176,7 +176,7 @@
 
 .btn-disabled-pelatihan-new {
   background-color: #ffffff;
-  opacity: 0.5 !important;
+  opacity: 0.6 !important;
   cursor: default !important;
 }
 
@@ -450,4 +450,14 @@
     white-space: nowrap !important;
     max-width: 1rem !important;
   }
+}
+
+.module {
+  width: 250px;
+  overflow: hidden;
+}
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
