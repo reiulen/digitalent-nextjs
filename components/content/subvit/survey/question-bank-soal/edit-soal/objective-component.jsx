@@ -70,7 +70,7 @@ const ObjectiveComponent = ({
             return (
               <>
                 <div className="title row">
-                  {row.image_preview != "" ? (
+                  {row.image_preview != "" && row.image_preview !== null ? (
                     <div className="col-md-2 p-0 pl-3">
                       <Image
                         src={

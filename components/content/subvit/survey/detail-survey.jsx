@@ -217,11 +217,14 @@ const DetailSurvey = ({ token }) => {
                   </div>
                   <div className="col value-1">
                     <p>
-                      {moment(survey && survey.start_at).format("ll")} -{" "}
-                      {moment(survey && survey.end_at).format("ll")}
+                      {survey.start_at &&
+                        moment(survey && survey.start_at).format("ll")}{" "}
+                      -{" "}
+                      {survey.end_at &&
+                        moment(survey && survey.end_at).format("ll")}
                     </p>
-                    <p>{survey && survey.questions_to_share} Soal</p>
-                    <p>{survey && survey.duration} Menit</p>
+                    <p>{(survey && survey.questions_to_share) || "-"} Soal</p>
+                    <p>{(survey && survey.duration) || "-"} Menit</p>
                   </div>
                 </div>
               </div>
