@@ -21,6 +21,7 @@ import {
   setValuePenyelenggara,
   resetFilter,
 } from "../../../../redux/actions/pelatihan/pencarian.action";
+
 import axios from "axios";
 
 const Pencarian = ({ session }) => {
@@ -28,7 +29,6 @@ const Pencarian = ({ session }) => {
   const dispatch = useDispatch();
   const { query } = router;
   const allPencarian = useSelector((state) => state.allPencarian);
-
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
     useSelector((state) => state.allPenyelenggaraPeserta);
 
@@ -144,7 +144,7 @@ const Pencarian = ({ session }) => {
           );
         }
       } catch (e) {
-        SweatAlert("Gagal", e.message, "error");
+        router.push("/login");
       }
     } else {
       try {
@@ -186,7 +186,7 @@ const Pencarian = ({ session }) => {
         <Row>
           <Col md={12}>
             <div className="ml-2 mb-3 title-pelatihan">
-              <h1 className="fw-700 fz-36">Pencarian {router.query.cari}</h1>
+              <h1 className="fw-700 fz-36">Pencarian "{router.query.cari}"</h1>
 
               <div className="mt-5 mt-md-1">
                 <p className="mr-6 fz-18 text-muted fw-400">
@@ -325,7 +325,7 @@ const Pencarian = ({ session }) => {
                               src={
                                 !row.gambar
                                   ? "/assets/media/default-card.png"
-                                  : `${process.env.END_POINT_API_IMAGE_PARTNERSHIP}${row?.gambar}`
+                                  : `${process.env.END_POINT_API_IMAGE_BEASISWA}${row?.gambar}`
                               }
                               layout="fill"
                               objectFit="cover"
@@ -351,8 +351,8 @@ const Pencarian = ({ session }) => {
                                   <i
                                     className={
                                       !row.bookmart
-                                        ? `ri-heart-line p-0`
-                                        : `ri-heart-fill p-0 text-danger`
+                                        ? `ri-heart-line p-0 zIndex-5`
+                                        : `ri-heart-fill p-0 text-danger zIndex-5`
                                     }
                                     style={{
                                       color: "#6C6C6C",
@@ -383,7 +383,7 @@ const Pencarian = ({ session }) => {
                                 src={
                                   !row?.gambar_mitra
                                     ? "/assets/media/default-card.png"
-                                    : `${process.env.END_POINT_API_IMAGE_PARTNERSHIP}${row?.gambar_mitra}`
+                                    : `${row?.file_path}${row?.gambar_mitra}`
                                 }
                                 width={60}
                                 height={60}
@@ -425,11 +425,11 @@ const Pencarian = ({ session }) => {
                                 <span className={`text-date-register-new pl-2`}>
                                   Registrasi:{" "}
                                   {moment(row?.pendaftaran_mulai).format(
-                                    "DD MMMM YYYY"
+                                    "DD MMM YYYY"
                                   )}{" "}
                                   -{" "}
                                   {moment(row?.pendaftaran_selesai).format(
-                                    "DD MMMM YYYY"
+                                    "DD MMM YYYY"
                                   )}
                                 </span>
                               </div>
@@ -447,25 +447,27 @@ const Pencarian = ({ session }) => {
                   ))
                 )}
               </Row>
-              <Row className="my-5 d-flex justify-content-center">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={allPencarian?.page}
-                    itemsCountPerPage={allPencarian?.pelatihan?.perPage}
-                    totalItemsCount={allPencarian?.pelatihan?.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => handlePagination(page)}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-                {/* {pelatihan && pelatihan.perPage < pelatihan.total && (
+              {allPencarian?.pelatihan?.total > 6 && (
+                <Row className="my-5 d-flex justify-content-center">
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={allPencarian?.page}
+                      itemsCountPerPage={allPencarian?.pelatihan?.perPage}
+                      totalItemsCount={allPencarian?.pelatihan?.total}
+                      pageRangeDisplayed={3}
+                      onChange={(page) => handlePagination(page)}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                  {/* {pelatihan && pelatihan.perPage < pelatihan.total && (
                 )} */}
-              </Row>
+                </Row>
+              )}
             </Col>
           </Row>
         </section>
