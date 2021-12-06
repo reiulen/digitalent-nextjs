@@ -28,57 +28,6 @@ const Table = ({ token }) => {
     });
   };
 
-  // const allDetailPeserta = {
-  //   data: {
-  //     data: {
-  //       id: 30290,
-  //       user_id: 30454,
-  //       nik: "3030303030303030",
-  //       name: "Teresha Jesika",
-  //       email: "tereshajesika@gmail.com",
-  //       jenis_kelamin: "Perempuan",
-  //       nomor_handphone: "6281397992327",
-  //       agama: "Kristen (Protestan)",
-  //       tempat_lahir: "Medan",
-  //       tanggal_lahir: "2000-12-03T00:00:00Z",
-  //       hubungan: "Ibu",
-  //       Nama_kontak_darurat: "Roma Sinta",
-  //       nomor_handphone_darurat: "",
-  //       File_ktp: "/ktp/4a6bfac9-4d5b-459e-8381-ebd9cf0fc1bd-December.pdf",
-  //       file_path: "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com",
-  //       address: "",
-  //       deskripsi: "",
-  //       file_cv: "",
-  //       foto: "/ktp/795e57f6-e499-490d-aa4d-c926a9e754d3-December.jpeg",
-  //       portofolio: "",
-  //       email_verifikasi: false,
-  //       handphone_verifikasi: false,
-  //       provinsi: "",
-  //       kota: "",
-  //       kecamatan: "",
-  //       kode_pos: "",
-  //       address_ktp: "",
-  //       provinsi_ktp: "",
-  //       kota_ktp: "",
-  //       kecamatan_ktp: "",
-  //       kode_pos_ktp: "",
-  //       jenjang: "",
-  //       asal_pendidikan: "",
-  //       lainya: "",
-  //       program_studi: "",
-  //       ipk: "",
-  //       tahun_masuk: 0,
-  //       ijasah: "",
-  //       status_pekerjaan: "",
-  //       pekerjaan: "",
-  //       perusahaan: "",
-  //       penghasilan: "",
-  //       sekolah: "",
-  //       status_verified: false,
-  //     },
-  //   },
-  // };
-
   // style color
   const colorText = {
     color: "#6C6C6C",

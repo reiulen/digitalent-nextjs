@@ -231,6 +231,7 @@ import {
   detailExportDataReducer,
   updateExportDataReducer,
   deleteExportDataReducer,
+  filterExportDataReducer,
 } from "./site-management/export-data.reducers";
 // ============== provinces site ===============
 import { allProvincesSiteReducer } from "./site-management/option/option-provinces.reducers";
@@ -823,7 +824,7 @@ const reducer = combineReducers({
   deleteExportData: deleteExportDataReducer,
   allListPeserta: allListPesertaReducer,
   allDetailPeserta: allDetailPesertaReducer,
-
+  filterExportData: filterExportDataReducer,
   // END SITE MANAGEMENT
 
   //PELATIHAN

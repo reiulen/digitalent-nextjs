@@ -11,9 +11,15 @@ import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import Select from "react-select";
+import { toast } from "react-toastify";
 import moment from "moment";
-import { dropdownKabupaten } from "../../../../../redux/actions/pelatihan/function.actions";
-import {updatePesertaDts} from '../../../../../redux/actions/site-management/user/peserta-dts'
+import axios from 'axios'
+import {
+  dropdownKabupaten,
+  dropdownProvinsiToDesa,
+  dropdownKecamatanToDesa,
+} from "../../../../../redux/actions/pelatihan/function.actions";
+import { updatePesertaDts } from "../../../../../redux/actions/site-management/user/peserta-dts";
 
 import Image from "next/image";
 const TambahPage = ({ token }) => {
@@ -26,7 +32,7 @@ const TambahPage = ({ token }) => {
     });
   };
 
-  // const allDetailPeserta = useSelector((state) => state.allDetailPeserta);
+  const allDetailPeserta = useSelector((state) => state.allDetailPeserta);
   const { error: dropdownErrorProvinsi, data: dataProvinsi } = useSelector(
     (state) => state.drowpdownProvinsi
   );
@@ -35,58 +41,13 @@ const TambahPage = ({ token }) => {
     (state) => state.drowpdownKabupaten
   );
 
-  console.log(dataKabupaten);
+  const { error: errorKecamatan, data: dataKecamatan } = useSelector(
+    (state) => state.drowpdownProvinsiToDesa.data
+  );
 
-  const allDetailPeserta = {
-    data: {
-      data: {
-        id: 30258,
-        user_id: 30432,
-        nik: "3275011211000024",
-        name: "Rifky",
-        email: "pabin39486@tinydef.com",
-        jenis_kelamin: "Laki - Laki",
-        nomor_handphone: "6282124122172",
-        agama: "Islam",
-        tempat_lahir: "Jekartah",
-        tanggal_lahir: "2010-06-08T00:00:00Z",
-        hubungan: "Pembantu",
-        Nama_kontak_darurat: "Rifky",
-        nomor_handphone_darurat: "",
-        File_ktp: "/ktp/7b2a2a60-80cf-4ebd-a7d3-01309ef9c61f-December.png",
-        file_path: "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com",
-        address: "Jl. Mangga II Blok E22 No 25",
-        deskripsi: "",
-        file_cv: "",
-        foto: "/ktp/e6d57250-0006-4b61-b3c7-20d4efd73543-December.jpeg",
-        portofolio: "",
-        email_verifikasi: false,
-        handphone_verifikasi: false,
-        provinsi: "SUMATERA UTARA",
-        kota: "KABUPATEN NIAS",
-        kecamatan: "BAWOLATO",
-        kode_pos: "17111",
-        address_ktp: "Jl. Mangga II Blok E22 No 25",
-        provinsi_ktp: "SUMATERA UTARA",
-        kota_ktp: "KABUPATEN NIAS",
-        kecamatan_ktp: "BAWOLATO",
-        kode_pos_ktp: "17111",
-        jenjang: "SMP/Sederajat",
-        asal_pendidikan: "0",
-        lainya: "Tadika Mesra",
-        program_studi: "0",
-        ipk: "0",
-        tahun_masuk: 0,
-        ijasah: "/ijasah/2a36ca96-c7f5-4603-ad16-3b54a2ab96ca-December.jpeg",
-        status_pekerjaan: "Tidak Bekerja",
-        pekerjaan: "-",
-        perusahaan: "-",
-        penghasilan: "1",
-        sekolah: "-",
-        status_verified: true,
-      },
-    },
-  };
+  const { error: errorKelurahan, data: dataKelurahan } = useSelector(
+    (state) => state.drowpdownKecamatanToDesa.data
+  );
 
   const [name, setName] = useState(allDetailPeserta.data.data.name);
   const [email, setEmail] = useState(allDetailPeserta.data.data.email);
@@ -114,6 +75,10 @@ const TambahPage = ({ token }) => {
     allDetailPeserta.data.data.kode_pos_ktp
   );
 
+  const [fotoProfil, setFotoProfil] = useState(
+    allDetailPeserta.data.data.file_path + allDetailPeserta.data.data.foto
+  );
+
   const [alamat, setAlamat] = useState(allDetailPeserta.data.data.address);
   const [provinsi, setProvinsi] = useState(allDetailPeserta.data.data.provinsi);
   const [kota, setKota] = useState(allDetailPeserta.data.data.kota);
@@ -132,6 +97,19 @@ const TambahPage = ({ token }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirmConfirm] = useState(true);
   const [sideBar, setSideBar] = useState(true);
+  const [kecamatan, setKecamatan] = useState(
+    allDetailPeserta.data.data.kecamatan
+  );
+  const [kelurahan, setKelurahan] = useState(
+    allDetailPeserta.data.data.kelurahan || allDetailPeserta.data.data.kecamatan
+  );
+  const [kelurahanKtp, setKelurahanKtp] = useState(
+    allDetailPeserta.data.data.kelurahan_ktp ||
+      allDetailPeserta.data.data.kecamatan
+  );
+  const [kecamatanKtp, setKecamatanKtp] = useState(
+    allDetailPeserta.data.data.kecamatan_ktp
+  );
 
   const optionProvinsi = dataProvinsi.data.map((item) => {
     return {
@@ -145,6 +123,14 @@ const TambahPage = ({ token }) => {
       label: item.value,
       value: item.id,
     };
+  });
+
+  const optionKelurahan = dataKelurahan?.map((item) => {
+    return { label: item.value, value: item.id };
+  });
+
+  const optionKecamatan = dataKecamatan?.map((item) => {
+    return { label: item.value, value: item.id };
   });
 
   const handlerShowPassword = (value) => {
@@ -198,6 +184,59 @@ const TambahPage = ({ token }) => {
     }
   };
 
+  const onFotoHandler = (e) => {
+    const type = ["image/jpg", "image/png", "image/jpeg"];
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        if (e.target.files[0].size > 2000000) {
+          e.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang bisa dimasukkan maksimal hanya 2 MB.",
+            "error"
+          );
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setFotoProfil(reader.result);
+              const datas = {
+                foto: reader.result,
+                user_id: allDetailPeserta.data.data.user_id,
+              };
+          
+              const config = {
+                headers: {
+                  Authorization: "Bearer " + token,
+                },
+              };
+              axios
+              .post(
+                process.env.END_POINT_API_PELATIHAN + "api/v1/auth/update-foto",
+                datas,
+                config
+              )
+              .then((res) => {
+                toast.success("Berhasil Update");
+              })
+              .catch((err) => {
+                toast.error("gagal");
+              });
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa gambar.",
+          "error"
+        );
+      }
+    }
+  };
+
   const onIjasahHandler = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
@@ -232,30 +271,34 @@ const TambahPage = ({ token }) => {
 
   const onSubmit = () => {
     const data = {
+      user_id: allDetailPeserta.data.data.user_id,
       nik: nik,
       name: name,
       jenis_kelamin: jenisKelamin,
       agama: allDetailPeserta.data.data.agama,
       tempat_lahir: tempatLahir,
-      tanggal_lahir: tanggalLahir,
+      tanggal_lahir: moment(tanggalLahir).format("YYYY-MM-DD"),
       email: email,
       nomor_handphone: nomorHandphone,
       file_ktp: ktpBase,
       ijasah: ijazahBase,
       address: alamat,
       provinsi: provinsi?.label ? provinsi?.label : provinsi,
-      kota: kota?.label ? kota?.label : kota ,
+      kota: kota?.label ? kota?.label : kota,
       kode_pos: kodePost,
       address_ktp: alamatKtp,
       provinsi_ktp: provinsiKtp?.label ? provinsiKtp?.label : provinsiKtp,
-      kota_ktp: kotaKtp?.label ? kotaKtp?.label : kotaKtp,
+      kota_ktp: kota?.label ? kota?.label : kota,
       kode_pos_ktp: kodePostKtp,
       user_id: allDetailPeserta.data.data.user_id,
+      kecamatan_ktp: kecamatanKtp,
+      kelurahan_ktp: kelurahanKtp,
       password: password,
       konfirmasi_password: passwordConfirm,
+      kecamatan: kecamatan,
+      kelurahan: kelurahan,
     };
-    console.log(data)
-    dispatch(updatePesertaDts(token, data))
+    dispatch(updatePesertaDts(token, data));
   };
 
   const colorText = {
@@ -287,7 +330,30 @@ const TambahPage = ({ token }) => {
                   <div
                     className="image-input-wrapper w-100"
                     style={{ height: "19rem" }}
-                  ></div>
+                  >
+                    <Image
+                      src={
+                        fotoProfil
+                          ? fotoProfil
+                          : "/assets/media/logos/default.png"
+                      }
+                      width="1000"
+                      height="1500vh"
+                      alt="user2"
+                    />
+                  </div>
+
+                 
+
+                  <span
+                    className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                    data-action="cancel"
+                    data-toggle="tooltip"
+                    title="Cancel avatar"
+                    
+                  >
+                    <i className="ki ki-bold-close icon-xs text-muted"></i>
+                  </span>
 
                   <label
                     className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -301,26 +367,12 @@ const TambahPage = ({ token }) => {
                       type="file"
                       name="profile_avatar"
                       accept=".png, .jpg, .jpeg"
+                      onChange={(e) => {
+                        onFotoHandler(e)
+                      }}
                     />
                     <input type="hidden" name="profile_avatar_remove" />
                   </label>
-
-                  <span
-                    className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                    data-action="cancel"
-                    data-toggle="tooltip"
-                    title="Cancel avatar"
-                  >
-                    <i className="ki ki-bold-close icon-xs text-muted"></i>
-                  </span>
-
-                  <span
-                    className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                    data-action="remove"
-                    data-toggle="tooltip"
-                  >
-                    <i className="ki ki-bold-close icon-xs text-muted"></i>
-                  </span>
                 </div>
                 <div className="mt-4 w-100">
                   <ul style={listUl}>
@@ -508,6 +560,39 @@ const TambahPage = ({ token }) => {
                       options={optionProvinsi}
                     />
                   </div>
+                </div>
+                <div className="col-lg-6">
+                  <div className="form-group">
+                    <label htmlFor="exampleSelect1">Kota</label>
+                    <Select
+                      placeholder="Pilih Kota"
+                      options={optionKabupaten}
+                      defaultValue={{ label: kotaKtp, value: kotaKtp }}
+                      onChange={(e) => {
+                        dispatch(dropdownProvinsiToDesa(token, e.value));
+                        setKotaKtp({ label: e?.label, value: e?.value });
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-group row">
+                <div className="col-lg-6">
+                  <div className="form-group">
+                    <label>Kecamatan</label>
+                    <Select
+                      placeholder="Pilih Provinsi"
+                      defaultValue={{
+                        label: kecamatanKtp,
+                        value: kecamatanKtp,
+                      }}
+                      onChange={(e) => {
+                        setKecamatanKtp({ label: e?.label, value: e?.value });
+                        dispatch(dropdownKecamatanToDesa(token, e.value));
+                      }}
+                      options={optionKecamatan}
+                    />
+                  </div>
                   <div className="form-group">
                     <label>Kode Pos</label>
                     <input
@@ -523,18 +608,22 @@ const TambahPage = ({ token }) => {
                 </div>
                 <div className="col-lg-6">
                   <div className="form-group">
-                    <label htmlFor="exampleSelect1">Kota</label>
+                    <label htmlFor="exampleSelect1">Kelurahan</label>
                     <Select
                       placeholder="Pilih Kota"
-                      options={optionKabupaten}
-                      defaultValue={{ label: kotaKtp, value: kotaKtp }}
+                      options={optionKelurahan}
+                      defaultValue={{
+                        label: kelurahanKtp,
+                        value: kelurahanKtp,
+                      }}
                       onChange={(e) => {
-                        setKotaKtp({ label: e?.label, value: e?.value });
+                        setKelurahanKtp({ label: e?.label, value: e?.value });
                       }}
                     />
                   </div>
                 </div>
               </div>
+
               <div className="form-group">
                 <label>Alamat Domisili</label>
                 <input
@@ -561,6 +650,36 @@ const TambahPage = ({ token }) => {
                       options={optionProvinsi}
                     />
                   </div>
+                </div>
+                <div className="col-lg-6">
+                  <div className="form-group">
+                    <label htmlFor="exampleSelect1">Kota</label>
+                    <Select
+                      placeholder="Pilih Kota"
+                      options={optionKabupaten}
+                      defaultValue={{ label: kota, value: kota }}
+                      onChange={(e) => {
+                        dispatch(dropdownProvinsiToDesa(token, e.value));
+                        setKota({ label: e?.label, value: e?.value });
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-group row">
+                <div className="col-lg-6">
+                  <div className="form-group">
+                    <label>Kecamatan</label>
+                    <Select
+                      placeholder="Pilih Provinsi"
+                      defaultValue={{ label: kecamatan, value: kecamatan }}
+                      onChange={(e) => {
+                        dispatch(dropdownKecamatanToDesa(token, e.value));
+                        setKecamatan({ label: e?.label, value: e?.value });
+                      }}
+                      options={optionKecamatan}
+                    />
+                  </div>
                   <div className="form-group">
                     <label>Kode Pos</label>
                     <input
@@ -576,14 +695,14 @@ const TambahPage = ({ token }) => {
                 </div>
                 <div className="col-lg-6">
                   <div className="form-group">
-                    <label htmlFor="exampleSelect1">Kota</label>
+                    <label htmlFor="exampleSelect1">Kelurahan</label>
                     <Select
                       placeholder="Pilih Kota"
-                      options={optionKabupaten}
-                      defaultValue={{ label: kota, value: kota }}
+                      defaultValue={{ label: kelurahan, value: kelurahan }}
                       onChange={(e) => {
-                        setKota({ label: e?.label, value: e?.value });
+                        setKelurahan({ label: e?.label, value: e?.value });
                       }}
+                      options={optionKelurahan}
                     />
                   </div>
                 </div>

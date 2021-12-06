@@ -14,7 +14,7 @@ import AlertBar from "../../partnership/components/BarAlert";
 import Image from "next/image";
 
 import {
-  getDetailExportData,
+  getDetailsExportData,
   setPage,
   limitCooporation,
   searchCooporation,
@@ -28,7 +28,6 @@ const Table = ({ token }) => {
 
   const detailExportData = useSelector((state) => state.detailExportData);
 
-
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -36,19 +35,8 @@ const Table = ({ token }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(searchCooporation(valueSearch));
+    dispatch(getDetailsExportData(router.query.id, token, 1, valueSearch, 5));
   };
-
-  useEffect(() => {
-    dispatch(getDetailExportData(router.query.id, token));
-  }, [
-    dispatch,
-    detailExportData.cari,
-    detailExportData.page,
-    detailExportData.limit,
-    token,
-    router.query.id,
-  ]);
 
   return (
     <PageWrapper>
@@ -98,7 +86,7 @@ const Table = ({ token }) => {
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
-                {detailExportData.status === "process" ? (
+                {detailExportData.loading ? (
                   <LoadingTable />
                 ) : (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -113,35 +101,33 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {detailExportData.data.export.length === 0 ? (
+                      {detailExportData.data?.length === 0 || detailExportData.data === undefined ? (
                         <tr>
                           <td colSpan="4" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
+                            <h4>Data kosong</h4>
                           </td>
                         </tr>
                       ) : (
-                        detailExportData.data.export.map((items, index) => {
+                        detailExportData.data?.map((item, index) => {
                           return (
                             <tr key={index}>
-                              <td className="align-middle text-left">
-                                {detailExportData.page === 1
-                                  ? index + 1
-                                  : (detailExportData.page - 1) *
-                                      detailExportData.limit +
-                                    (index + 1)}
-                              </td>
-                              <td className="align-middle text-left">
-                                {items.name}
-                              </td>
-                              <td className="align-middle text-left">
-                                {items.training}
-                              </td>
-                              <td className="align-middle text-left">
-                                {moment(items.training_date).format(
-                                  "DD MMMM YYYY"
-                                )}
-                              </td>
-                            </tr>
+                            <td className="align-middle text-left">{index + 1}</td>
+                            <td className="align-middle text-left">
+                              <h6 className="font-weight-bolder mb-0">{item.nama_peserta}</h6>
+                              <p className="mb-0">{item.email}</p>
+                              <p>{item.nik}</p>
+                            </td>
+                            <td className="align-middle text-left">
+                              <h6 className="font-weight-bolder mb-0">{item.nama_akademi}</h6>
+                              <p>{item.nama_pelatihan}</p>
+                            </td>
+                            <td className="align-middle text-left">
+                              <h6 className="font-weight-bolder mb-0">
+                                {moment(item.pelatihan_mulai).format("D MMMM YYYY")}
+                              </h6>
+                              <p className="text-capitalize">{item.status_pelatihan}</p>
+                            </td>
+                          </tr>
                           );
                         })
                       )}
@@ -158,7 +144,7 @@ const Table = ({ token }) => {
                       Kembali
                     </a>
                   </Link>
-                  {/* <button
+                  <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                     onClick={() =>
@@ -166,7 +152,7 @@ const Table = ({ token }) => {
                     }
                   >
                     Export Data
-                  </button> */}
+                  </button>
                 </div>
               </div>
               {/* end footer btn */}

@@ -44,8 +44,6 @@ const Tables = ({ token }) => {
 
   const [pelatihan, setPelatihan] = useState(null);
 
-  console.log(getEditTraining);
-
   const handleChangePelatihan = (id) => {
     setPelatihan(id);
     dispatch(getEditTrainingStep1(id, token));
