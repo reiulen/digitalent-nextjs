@@ -13,6 +13,7 @@ import IconSearch from "../../../assets/icon/Search";
 import AlertBar from "../../partnership/components/BarAlert";
 import Image from "next/image";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 import {
   getAllExportData,
@@ -30,6 +31,24 @@ const Table = ({ token }) => {
   const allExportData = useSelector((state) => state.allExportData);
   const deleteExportData = useSelector((state) => state.deleteExportData);
 
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteExportDataAction(id, token));
+      }
+    });
+  };
+
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -42,12 +61,18 @@ const Table = ({ token }) => {
 
   useEffect(() => {
     dispatch(getAllExportData(token));
+    if (deleteExportData?.isDeleted) {
+      Swal.fire("Berhasil", "Data berhasil dihapus", "success").then(() => {
+        dispatch(getAllExportData(token));
+      });
+    }
   }, [
     dispatch,
     allExportData.cari,
     allExportData.page,
     allExportData.limit,
     token,
+    deleteExportData.isDeleted
   ]);
 
   return (
@@ -151,7 +176,7 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  {/* <button
+                                  <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                     onClick={() =>
                                       dispatch(exportFileCSV(items.id, token))
@@ -166,7 +191,7 @@ const Table = ({ token }) => {
                                     <div className="text-hover-show-hapus">
                                       Unduh
                                     </div>
-                                  </button> */}
+                                  </button>
 
                                   {/* <button
                             className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
@@ -193,11 +218,7 @@ const Table = ({ token }) => {
 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      dispatch(
-                                        deleteExportDataAction(items.id, token)
-                                      )
-                                    }
+                                    onClick={(e) => handleDelete(e, items.id)}
                                   >
                                     <IconDelete width="16" height="16" />
                                     <div className="text-hover-show-hapus">

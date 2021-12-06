@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
@@ -10,13 +10,12 @@ import { useSelector } from "react-redux";
 import Select from "react-select";
 import SimpleReactValidator from "simple-react-validator";
 
-
 const Tambah = ({ token }) => {
   const router = useRouter();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   let selectRefDataReference = null;
-  const [labelReference, setLabeReferencel] = useState("")
+  const [labelReference, setLabeReferencel] = useState("");
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
 
@@ -44,16 +43,16 @@ const Tambah = ({ token }) => {
   const [optionFromReference, setOptionFromReference] = useState([]);
   const changeListDataReference = (e) => {
     setFormReferenceAndText([
-        {
-          relasi_id: "",
-          value: [
-            {
-              label: "",
-            },
-          ],
-          values: [],
-        },
-      ]);
+      {
+        relasi_id: "",
+        value: [
+          {
+            label: "",
+          },
+        ],
+        values: [],
+      },
+    ]);
     setIdReference(e.key);
     setNameListFromReference(e.value);
   };
@@ -75,7 +74,7 @@ const Tambah = ({ token }) => {
     transformed.map((items) => {
       return {
         ...items,
-        values:items.label,
+        values: items.label,
         value: items.value.map((itemx) => {
           return { ...itemx, label: itemx.value, label_old: itemx.value };
         }),
@@ -146,8 +145,8 @@ const Tambah = ({ token }) => {
   };
 
   const handleCHangeNameReference = (e, index) => {
-    let _tempOption = [...optionFromReference]
-    let _newTempOption = _tempOption.filter(items => items.label !== e.label)
+    let _tempOption = [...optionFromReference];
+    let _newTempOption = _tempOption.filter((items) => items.label !== e.label);
     setOptionFromReference(_newTempOption);
     let _temp = [...formReferenceAndText];
     let _tempValue = [...formReferenceAndTextValue];
@@ -198,23 +197,20 @@ const Tambah = ({ token }) => {
     }
   };
 
-  
-  const handleInputChange =(e)=>{
-    setLabeReferencel(e)
-  }
+  const handleInputChange = (e) => {
+    setLabeReferencel(e);
+  };
 
   const submit = async (e) => {
     e.preventDefault();
-    if (!formReferenceAndText[0].relasi_id || !formReferenceAndText[0].value[0].label ) {
-      Swal.fire(
-        "Gagal",
-        `List data dan value tidak boleh kosong`,
-        "error"
-      );
-    } 
-
-    else {
-
+    if (
+      !formReferenceAndText[0].relasi_id ||
+      !formReferenceAndText[0].value[0].label
+    ) {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire("Gagal", `Value tidak boleh kosong`, "error");
+    } else {
       formReferenceAndTextValue.map((items, index) => {
         items.value.map((itemz, idx) => {
           if (!itemz.label_old) {
@@ -230,7 +226,6 @@ const Tambah = ({ token }) => {
         data_references_relasi_id: idReference,
         data: formReferenceAndTextValue,
       };
-
 
       try {
         let { data } = await axios.post(
@@ -248,12 +243,12 @@ const Tambah = ({ token }) => {
         });
       } catch (error) {
         simpleValidator.current.showMessages();
-      forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
+        forceUpdate(1);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data dengan benar !",
+        });
       }
     }
   };
@@ -266,7 +261,7 @@ const Tambah = ({ token }) => {
   }, [tempOptionsReference]);
 
   useEffect(() => {
-    if (idReference || (labelReference.length > 3)) {
+    if (idReference || labelReference.length > 3) {
       async function getAllDataFromIdReference(token, id) {
         try {
           let { data } = await axios.get(
@@ -278,7 +273,7 @@ const Tambah = ({ token }) => {
             }
           );
           let resultOptionReferenceChooce = data.data.map((items) => {
-           return { ...items, label: items.label,value: items.label };
+            return { ...items, label: items.label, value: items.label };
           });
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
@@ -288,16 +283,14 @@ const Tambah = ({ token }) => {
 
       getAllDataFromIdReference(token, idReference);
     }
-  }, [token, idReference,labelReference]);
+  }, [token, idReference, labelReference]);
 
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1 mb-0"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1 mb-0">
               Ubah Reference Dengan Relasi
             </h3>
           </div>
@@ -332,20 +325,19 @@ const Tambah = ({ token }) => {
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                     onBlur={() =>
-                    simpleValidator.current.showMessageFor("status")
-                  }
+                      simpleValidator.current.showMessageFor("status")
+                    }
                   >
                     <option value="1">Aktif</option>
                     <option value="0">Tidak aktif</option>
                   </select>
-                  
                 ) : (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                     onBlur={() =>
-                    simpleValidator.current.showMessageFor("status")
-                  }
+                      simpleValidator.current.showMessageFor("status")
+                    }
                   >
                     <option value="0">Tidak aktif</option>
                     <option value="1">Aktif</option>
@@ -458,7 +450,18 @@ const Tambah = ({ token }) => {
                                     onClick={() => handleDelete(idx, index)}
                                   >
                                     {/* <IconDelete width="11" height="11" /> */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(255,255,255,1)"/></svg>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 24 24"
+                                      width="16"
+                                      height="16"
+                                    >
+                                      <path fill="none" d="M0 0h24v24H0z" />
+                                      <path
+                                        d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                        fill="rgba(255,255,255,1)"
+                                      />
+                                    </svg>
                                   </button>
                                 )}
                               </div>
