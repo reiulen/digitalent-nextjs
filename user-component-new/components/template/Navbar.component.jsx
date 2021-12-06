@@ -42,7 +42,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
@@ -59,7 +59,7 @@ const Navigationbar = ({ session }) => {
     }
   }, []);
 
-  const getDataGeneral = async (token) => {
+  const getDataGeneral = async token => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
@@ -130,7 +130,7 @@ const Navigationbar = ({ session }) => {
 
   const [search, setSearch] = useState("");
 
-  const handleEnter = (e) => {
+  const handleEnter = e => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
@@ -185,7 +185,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={(e) => {
+              onClick={e => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -210,7 +210,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   setSearch(e.target.value);
                   if (e.code == "Enter") {
                     handleEnter(e);
@@ -324,12 +324,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.code == "Enter") {
                     handleEnter(e);
                   }
                 }}
-                onChange={(e) => {
+                onChange={e => {
                   setSearch(e.target.value);
                 }}
               />
@@ -502,8 +502,8 @@ const Navigationbar = ({ session }) => {
               <>
                 {/* Button Masuk dan Daftar */}
                 <Link href="/login">
-                  <a className="mx-2">
-                    <button className="btn btn-sm btn-block btn-login-peserta btn-outline-primary-new m-2 justify-content-center py-3">
+                  <a className="mx-4">
+                    <button className="btn btn-sm btn-block btn-login-peserta btn-outline-primary-new my-2 justify-content-center py-3">
                       {/* <IconLogin className="mr-2 icon-login" /> */}
                       <i className="ri-login-box-line mr-2"></i>
                       Masuk
@@ -511,9 +511,9 @@ const Navigationbar = ({ session }) => {
                   </a>
                 </Link>
                 <Link href="/register">
-                  <a className="mx-2">
+                  <a className="mx-4">
                     <button
-                      className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} m-2 justify-content-center py-3`}
+                      className={`btn btn-sm btn-block btn-register-peserta color-primary-${warna} my-2 justify-content-center py-3`}
                     >
                       {/* <IconRegister className="mr-2 icon-register" /> */}
                       <div
@@ -654,13 +654,15 @@ const Navigationbar = ({ session }) => {
             </Row>
             <hr />
             {/* Start side bar */}
-            {session && !router.pathname.includes(routerPath) && (
-              <Sidebar
-                screenClass={"d-block d-lg-none"}
-                accountFalse={`d-none d-lg-block`}
-                titleAkun={"Lainnya"}
-              />
-            )}
+            {session &&
+              session.roles[0] === "user" &&
+              !router.pathname.includes(routerPath) && (
+                <Sidebar
+                  screenClass={"d-block d-lg-none"}
+                  accountFalse={`d-none d-lg-block`}
+                  titleAkun={"Lainnya"}
+                />
+              )}
             {/* End side bar */}
           </Nav>
         </Navbar.Collapse>

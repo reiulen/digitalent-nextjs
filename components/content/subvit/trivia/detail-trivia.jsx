@@ -97,14 +97,14 @@ const DetailTrivia = ({ token }) => {
     });
   };
 
-  const handleSearch = () => {
-    if (limit != null) {
-      router.push(
-        `${router.pathname}?id=${id}&page=1&keyword=${search}&limit=${limit}`
-      );
-    } else {
-      router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}`);
+  const handleSearchEnter = (e) => {
+    if (e.key === "Enter") {
+      dispatch(getAllTriviaQuestionDetail(id, 1, search, 5, token));
     }
+  };
+
+  const handleSearch = () => {
+    dispatch(getAllTriviaQuestionDetail(id, 1, search, 5, token));
   };
 
   return (
@@ -267,6 +267,7 @@ const DetailTrivia = ({ token }) => {
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
+                      onKeyUp={(event) => handleSearchEnter(event)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -309,7 +310,7 @@ const DetailTrivia = ({ token }) => {
                     trivia_question_detail.list_questions &&
                     trivia_question_detail.list_questions.length === 0 ? (
                       <td className="align-middle text-center" colSpan={8}>
-                        Data Masih Kosong
+                        Data Tidak Ditemukan
                       </td>
                     ) : (
                       trivia_question_detail &&

@@ -5,6 +5,9 @@
     width: 400px !important;
     left: -30px !important;
   }
+  .imageDashboard {
+    width: 54% !important;
+  }
   .cardBackground {
     height: 210px !important;
   }
@@ -46,6 +49,9 @@
   }
   .displayNormal {
     display: none;
+  }
+  .imageDashboard {
+    width: 80% !important;
   }
 
   .pieChart {
