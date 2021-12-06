@@ -61,12 +61,17 @@ const DashboardBeasiswa = ({ token }) => {
     error: errorProvinsiPendaftar,
     provinsi: provinsiPendaftar,
   } = useSelector((state) => state.beasiswaProvinsiPendaftar);
-
   const {
     loading: loadingProvinsiAwardee,
     error: errorProvinsiAwardee,
     provinsi: provinsiAwardee,
   } = useSelector((state) => state.beasiswaProvinsiAwardee);
+
+  const {
+    loading: loadingUniversitasDalam,
+    error: errorUniversitasDalam,
+    universitas: UniversitasDalam,
+  } = useSelector((state) => state.beasiswaUniversitasDalam);
 
   const dataBeasiwaDalamNegeri = [];
   if (statistikDalam) {
@@ -122,40 +127,19 @@ const DashboardBeasiswa = ({ token }) => {
     });
   }
 
-  const dataProvinsi = [
-    { id: 1, title: "DKI Jakarta", percent: 50, total: "3.000" },
-    { id: 2, title: "Jawa Barat", percent: 30, total: "2.000" },
-    { id: 3, title: "Jawa Timur", percent: 40, total: "1.000" },
-    { id: 4, title: "Sumatra Utara", percent: 10, total: "50" },
-    { id: 5, title: "Nusa Tenggara Timur", percent: 10, total: "50" },
-  ];
-  const dataUniversitasDalam = [
-    { id: 1, title: "Universitas Indonesia", percent: 50, total: "3.000" },
-    {
-      id: 2,
-      title: "Institute Teknologi Bandung",
-      percent: 30,
-      total: "2.000",
-    },
-    {
-      id: 3,
-      title: "Universitas Gadjah Mada",
-      percent: 20,
-      total: "1.000",
-    },
-    {
-      id: 4,
-      title: "Institute Teknologi Sepuluh Nopember",
-      percent: 40,
-      total: "3.000",
-    },
-    {
-      id: 5,
-      title: "Universitas Airlangga",
-      percent: 50,
-      total: "6.000",
-    },
-  ];
+  const dataUniversitasDalam = [];
+  if (UniversitasDalam) {
+    UniversitasDalam.list.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.univ,
+        percent: row.percetage,
+        total: row.total,
+      };
+      dataUniversitasDalam.push(val);
+    });
+  }
+
   const dataUniversitasLuarNegeri = [
     { id: 1, title: "Tsinghua University", percent: 50, total: "3.000" },
     {
@@ -347,8 +331,8 @@ const DashboardBeasiswa = ({ token }) => {
                     </p>
                     <ListCardInfo data={dataProvinsiAwardee} />
                     <PaginationDashboard
-                      total={10}
-                      perPage={5}
+                      total={provinsiAwardee.total}
+                      perPage={provinsiAwardee.perPage}
                       title="Awardee"
                       activePage={1}
                       funcPagination={(value) => {}}
@@ -367,8 +351,8 @@ const DashboardBeasiswa = ({ token }) => {
                     />
                     <ListCardInfo data={dataUniversitasDalam} />
                     <PaginationDashboard
-                      total={10}
-                      perPage={5}
+                      total={UniversitasDalam.total}
+                      perPage={UniversitasDalam.perPage}
                       title="Perguruan Tinggi"
                       activePage={1}
                       funcPagination={(value) => {}}
