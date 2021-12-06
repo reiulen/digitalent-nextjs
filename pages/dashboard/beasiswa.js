@@ -18,7 +18,7 @@ import {
 
 import { wrapper } from "../../redux/store";
 
-export default function DashboardBeasiswaPage() {
+export default function DashboardBeasiswaPage(props) {
   const DashboardBeasiswa = dynamic(
     () =>
       import(
@@ -29,17 +29,18 @@ export default function DashboardBeasiswaPage() {
   const MyMap = dynamic(
     () =>
       import(
-        "../../components/content/dashboard-kabadan/component/map-digitalent.component"
+        "../../components/content/dashboard-kabadan/component/map-beasiswa.component"
       ),
     { ssr: false }
   );
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         <div id="map" style={{ display: "none" }}>
           <MyMap />
         </div>
-        <DashboardBeasiswa />
+        <DashboardBeasiswa token={session.token} />
       </div>
     </>
   );

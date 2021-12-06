@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 
@@ -9,6 +9,7 @@ import StatistikWrapper from "../wrapper/statistik.wrapper";
 import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
 import { useDispatch, useSelector } from "react-redux";
+import { getBeasiswaPendaftarWilayah } from "../../../../redux/actions/dashboard-kabadan/dashboard/beasiswa.actions";
 
 import {
   BarChart,
@@ -22,9 +23,15 @@ import Pagination from "react-js-pagination";
 
 import PaginationDashboard from "../component/pagination-dashbaord.component";
 
-const DashboardBeasiswa = () => {
+const DashboardBeasiswa = ({ token }) => {
+  const dispatch = useDispatch();
+
   const MapDigitalent = dynamic(
     () => import("../component/map-digitalent.component"),
+    { ssr: false }
+  );
+  const MapBeasiswa = dynamic(
+    () => import("../component/map-beasiswa.component"),
     { ssr: false }
   );
 
@@ -48,16 +55,18 @@ const DashboardBeasiswa = () => {
     error: errorStatistikLuar,
     statistik: statistikLuar,
   } = useSelector((state) => state.beasiswaStatistikLuar);
-  const {
-    loading: loadingWilayah,
-    error: errorWilayah,
-    wilayah,
-  } = useSelector((state) => state.beasiswaMapPendaftar);
+
   const {
     loading: loadingProvinsiPendaftar,
     error: errorProvinsiPendaftar,
     provinsi: provinsiPendaftar,
   } = useSelector((state) => state.beasiswaProvinsiPendaftar);
+
+  const {
+    loading: loadingProvinsiAwardee,
+    error: errorProvinsiAwardee,
+    provinsi: provinsiAwardee,
+  } = useSelector((state) => state.beasiswaProvinsiAwardee);
 
   const dataBeasiwaDalamNegeri = [];
   if (statistikDalam) {
@@ -74,20 +83,6 @@ const DashboardBeasiswa = () => {
     statistikLuar.map((row, i) => {});
   }
 
-  const dataBeasiswaMapPendaftar = [];
-  if (wilayah) {
-    wilayah.map((row, i) => {
-      let val = {
-        position: [row.lat, row.long],
-        provinsi: row.province,
-        totalLn: row.total_ln,
-        totalDn: row.total_dn,
-        type: "beasiswa",
-      };
-      dataBeasiswaMapPendaftar.push(val);
-    });
-  }
-
   const dataBeasiwaLuarNegeri = [
     {
       name: "Skema Reguler",
@@ -100,6 +95,33 @@ const DashboardBeasiswa = () => {
       pendaftar: 2100,
     },
   ];
+
+  const dataProvinsiPendaftar = [];
+  if (provinsiPendaftar) {
+    provinsiPendaftar.list.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.province,
+        percent: row.percetage,
+        total: row.total,
+      };
+      dataProvinsiPendaftar.push(val);
+    });
+  }
+
+  const dataProvinsiAwardee = [];
+  if (provinsiAwardee) {
+    provinsiAwardee.list.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.province,
+        percent: row.percetage,
+        total: row.total,
+      };
+      dataProvinsiAwardee.push(val);
+    });
+  }
+
   const dataProvinsi = [
     { id: 1, title: "DKI Jakarta", percent: 50, total: "3.000" },
     { id: 2, title: "Jawa Barat", percent: 30, total: "2.000" },
@@ -294,7 +316,7 @@ const DashboardBeasiswa = () => {
             <div className="row">
               <div className="map-penyebaran col-md-12 mt-5">
                 <div id="map">
-                  <MapDigitalent data={dataBeasiswaMapPendaftar} />
+                  <MapBeasiswa />
                 </div>
               </div>
             </div>
@@ -305,11 +327,11 @@ const DashboardBeasiswa = () => {
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Asal Provinsi Pendaftar Beasiwa
                     </p>
-                    <ListCardInfo data={dataProvinsi} />
+                    <ListCardInfo data={dataProvinsiPendaftar} />
 
                     <PaginationDashboard
-                      total={10}
-                      perPage={5}
+                      total={provinsiPendaftar.total}
+                      perPage={provinsiPendaftar.perPage}
                       title="Pendaftar"
                       activePage={1}
                       funcPagination={(value) => {}}
@@ -323,7 +345,7 @@ const DashboardBeasiswa = () => {
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Asal Provinsi Awardee Beasiswa
                     </p>
-                    <ListCardInfo data={dataProvinsi} />
+                    <ListCardInfo data={dataProvinsiAwardee} />
                     <PaginationDashboard
                       total={10}
                       perPage={5}

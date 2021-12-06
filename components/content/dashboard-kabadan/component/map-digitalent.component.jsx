@@ -22,7 +22,7 @@ const MapDigitalent = ({ data = [] }) => {
           url={`https://api.mapbox.com/styles/v1/dendylords/cku54tvb11wve17mqhnl3yiuz/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.TOKEN_MAP}`}
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
         />
-        {data.map((row, i) => (
+        {dataMap.map((row, i) => (
           <Marker key={i} position={row.position} animate={true}>
             <Popup>
               <div className="row">
