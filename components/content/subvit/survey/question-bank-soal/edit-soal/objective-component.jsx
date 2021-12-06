@@ -44,14 +44,19 @@ const ObjectiveComponent = ({
     const { name, value } = e.target;
     const list = [...answer];
     list[index][name] = value;
-    if (name === "image") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          list[index]["image"] = reader.result;
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
+
+    if (name === "question_image") {
+      if (e.target.files[0]) {
+        list[index]["image_preview"] = URL.createObjectURL(e.target.files[0]);
+        list[index]["image_name"] = e.target.files[0].name;
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            list[index]["image"] = reader.result;
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
     }
     setAnswer(list);
     sendPropsAnswer(list);
@@ -65,10 +70,16 @@ const ObjectiveComponent = ({
             return (
               <>
                 <div className="title row">
-                  {row.image != "" ? (
+                  {row.image_preview != "" ? (
                     <div className="col-md-2 p-0 pl-3">
                       <Image
-                        src="/assets/media/Gambar.svg"
+                        src={
+                          row.image_preview &&
+                          row.image_preview.includes("blob")
+                            ? row.image_preview
+                            : process.env.END_POINT_API_IMAGE_SUBVIT +
+                              row.image_preview
+                        }
                         alt="logo"
                         width={148}
                         height={90}
@@ -93,10 +104,13 @@ const ObjectiveComponent = ({
                         type="file"
                         className="custom-file-input"
                         name="question_image"
+                        onChange={(e) => handleInputChange(e, i)}
                         accept="image/png, image/gif, image/jpeg , image/jpg"
                       />
                       <label className="custom-file-label" htmlFor="customFile">
-                        Choose file
+                        {row.image_name ||
+                          (row.image_preview && row.image_preview.substr(16)) ||
+                          "Choose File"}
                       </label>
                     </div>
                   </div>

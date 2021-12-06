@@ -8,16 +8,13 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import LoadingTable from "../../../LoadingTable";
 
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { Modal } from "react-bootstrap";
 import styles from "../trivia/edit/step.module.css";
+import axios from "axios";
 
-import {
-  getAllSubtanceQuestionBanks,
-  clearErrors,
-} from "/redux/actions/subvit/subtance.actions";
-import { NEW_TRIVIA_QUESTION_DETAIL_FAIL } from "../../../../redux/types/subvit/trivia-question-detail.type";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal } from "react-bootstrap";
+
+import { clearErrors } from "/redux/actions/subvit/subtance.actions";
 
 const ListSubstansi = ({ token }) => {
   const dispatch = useDispatch();
@@ -27,10 +24,12 @@ const ListSubstansi = ({ token }) => {
     (state) => state.allReportSubtanceQuestionBanks
   );
 
+  const { theme, academy } = subtance.dataTitle;
+
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [status, setStatus] = useState("");
-  const [pelatihan, setPelatihan] = useState(null);
+
   const [nilai, setNilai] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -46,7 +45,7 @@ const ListSubstansi = ({ token }) => {
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
     if (nilai) link = link.concat(`&nilai=${nilai}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+
     router.push(link);
   };
 
@@ -69,9 +68,14 @@ const ListSubstansi = ({ token }) => {
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
     if (nilai) link = link.concat(`&nilai=${nilai}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
 
-    await axios.get(link).then((res) => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios.get(link, config).then((res) => {
       window.location.href = res.data.data;
     });
   };
@@ -80,8 +84,9 @@ const ListSubstansi = ({ token }) => {
     let link = `${router.pathname}?id=${id}&page=${1}`;
     if (status) link = link.concat(`&status=${status}`);
     if (nilai) link = link.concat(`&nilai=${nilai}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+
     router.push(link);
+    setShowModal(false);
   };
 
   const handlePublish = (val) => {
@@ -90,7 +95,7 @@ const ListSubstansi = ({ token }) => {
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
     if (nilai) link = link.concat(`&nilai=${nilai}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+
     router.push(link);
   };
 
@@ -248,7 +253,9 @@ const ListSubstansi = ({ token }) => {
                       publishValue.slice(1).replace("-", " ")
                     }`}
               </h3>
-              <p className="text-muted">FGA - Cloud Computing</p>
+              <p className="text-muted">
+                {academy} - {theme}
+              </p>
             </div>
             <div className="col-lg-2 col-xl-2"></div>
             <div className="card-toolbar"></div>
@@ -330,7 +337,7 @@ const ListSubstansi = ({ token }) => {
                       {subtance && subtance.data.reports.length === 0 ? (
                         <tr>
                           <td className="text-center" colSpan={7}>
-                            Data Masih Kosong
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (
@@ -475,16 +482,17 @@ const ListSubstansi = ({ token }) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Filter</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
         </Modal.Header>
         <Modal.Body>
-          <div className="form-group mb-5">
-            <label className="p-0">Pelatihan</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
-          </div>
           <div className="form-group mb-5">
             <label className="p-0">Status</label>
             <select
@@ -525,6 +533,13 @@ const ListSubstansi = ({ token }) => {
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
             type="reset"
+            onClick={() => {
+              setStatus("");
+              setNilai("");
+              let link = `${router.pathname}?id=${id}&page=${1}`;
+              router.push(link);
+              setShowModal(false);
+            }}
           >
             Reset
           </button>

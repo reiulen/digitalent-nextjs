@@ -17,6 +17,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "./step.module.css";
+import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -37,8 +38,10 @@ const StepTwo = ({ token }) => {
   const [endDate, setEndDate] = useState(
     trivia.end_at ? new Date(trivia.end_at) : new Date(Date.now())
   );
-  const [duration, setDuration] = useState(trivia.duration);
-  const [jumlah_soal, setJumlahSoal] = useState(trivia.questions_to_share);
+  const [duration, setDuration] = useState(trivia.duration || "");
+  const [jumlah_soal, setJumlahSoal] = useState(
+    trivia.questions_to_share || ""
+  );
   const [status, setStatus] = useState(trivia.status);
   const [, forceUpdate] = useState();
 
@@ -181,6 +184,7 @@ const StepTwo = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     value={startDate}
+                    placeholderText="Silahkan Pilih Tanggal Dari"
                   />
 
                   {simpleValidator.current.message(
@@ -203,6 +207,7 @@ const StepTwo = ({ token }) => {
                     className="form-control"
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
+                    placeholderText="Silahkan Pilih Tanggal Sampai"
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("tanggal sampai")
                     }
@@ -235,11 +240,19 @@ const StepTwo = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
+                      placeholder="20"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={jumlah_soal}
-                      onChange={(e) => setJumlahSoal(e.target.value)}
+                      onChange={(e) => {
+                        if (
+                          e.target.value === "" ||
+                          helperRegexNumber.test(e.target.value)
+                        ) {
+                          setJumlahSoal(e.target.value);
+                        }
+                      }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("jumlah soal")
                       }
@@ -270,11 +283,20 @@ const StepTwo = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
+                      placeholder="123"
+                      maxLength={3}
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
-                      onChange={(e) => setDuration(e.target.value)}
+                      onChange={(e) => {
+                        if (
+                          e.target.value === "" ||
+                          helperRegexNumber.test(e.target.value)
+                        ) {
+                          setDuration(e.target.value);
+                        }
+                      }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
