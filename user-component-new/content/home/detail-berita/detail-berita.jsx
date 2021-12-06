@@ -151,8 +151,7 @@ const DetailBerita = () => {
 
           <div className="mt-5">
             <h1 
-              className="font-weight-bolder"
-              // style={{fontSize:"40px", fontFamily:"Poppins"}}
+              className={`${styles.fontTitle} font-weight-bolder`}
             >
               {/* Insert Title Here */}
               {detail.judul}
