@@ -379,11 +379,13 @@ const Artikel = () => {
             category_academy,
             tag
         ))
+
+        window.scrollTo(0,0)
     }
 
 
     return (
-        <Container fluid className="px-10 py-10 bg-white">
+        <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
             {/* BreadCrumb */}
             <SubHeaderComponent 
                 data={[{ link: router.asPath, name: "Artikel" }]}
