@@ -78,7 +78,6 @@ const IndexForm = ({ token, session }) => {
         return breadcrumb;
     }
   }, [view]);
-
   const showViewForm = () => {
     switch (view) {
       case 1:
@@ -103,12 +102,11 @@ const IndexForm = ({ token, session }) => {
                     <div className="d-flex flex-row flex-wrap">
                       <img
                         src={`${
-                          dataPelatihan
-                            ? process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                dataPelatihan.gambar_mitra ||
-                              process.env.END_POINT_API_IMAGE_BEASISWA +
-                                dataPelatihan.logo
-                            : "/assets/media/default-card.png"
+                          !dataPelatihan?.logo || !dataPelatihan?.gambar_mitra
+                            ? "/assets/media/default-card.png"
+                            : dataPelatihan?.file_path + dataPelatihan.logo ||
+                              dataPelatihan?.file_path +
+                                dataPelatihan?.gambar_mitra
                         }`}
                         width={58}
                         height={58}
