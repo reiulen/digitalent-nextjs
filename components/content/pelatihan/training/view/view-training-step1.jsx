@@ -169,7 +169,13 @@ const ViewTrainingStep1 = () => {
             <div className="row mt-3">
               <div className="col-md-6">
                 <p className="text-neutral-body mb-2 fz-14">Silabus</p>
-                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                <p
+                  className="fz-16 text-primary"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    window.open(review.file_path + review.silabus, "_blank")
+                  }
+                >
                   {dataPelatihan.silabus.split("/")[2]}
                 </p>
               </div>
@@ -339,15 +345,17 @@ const ViewTrainingStep1 = () => {
             <div className="row mt-3">
               <div className="col-md-12">
                 <p className="text-neutral-body mb-2 fz-14">Disabilitas</p>
-                {review.umum === "1" && <p className="text-dark mb-1">Umum</p>}
+                {review.umum === "1" && (
+                  <p className="text-dark fz-16 mb-1">Umum</p>
+                )}
                 {review.tuna_netra === "1" && (
-                  <p className="text-dark mb-1">Tuna Netra</p>
+                  <p className="text-dark fz-16 mb-1">Tuna Netra</p>
                 )}
                 {review.tuna_rungu === "1" && (
-                  <p className="text-dark mb-1">Tuna Rungu</p>
+                  <p className="text-dark fz-16 mb-1">Tuna Rungu</p>
                 )}
                 {review.tuna_daksa === "1" && (
-                  <p className="text-dark mb-1">Tuna Daksa</p>
+                  <p className="text-dark fz-16 mb-1">Tuna Daksa</p>
                 )}
               </div>
             </div>

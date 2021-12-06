@@ -4,7 +4,8 @@ import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddle
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getAllAcademy } from "../../../redux/actions/pelatihan/academy.actions";
-import { getSidebar } from '../../../redux/actions/site-management/role.actions'
+import { getSidebar } from "../../../redux/actions/site-management/role.actions";
+import { getBeasiswaPendaftarWilayah } from "../../../redux/actions/dashboard-kabadan/dashboard/beasiswa.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
@@ -52,6 +53,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.limit,
           session.user.user.data.token
         )
+      );
+      await store.dispatch(
+        getBeasiswaPendaftarWilayah(session.user.user.data.token)
       );
 
       await store.dispatch(getAllPermission(session.user.user.data.token));

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import Image from "next/image";
 import ShareOverlay from "../global/ShareOverlay.component";
@@ -17,9 +17,31 @@ const CardPelatihanOpen = ({
   row,
   i,
   session,
+  akademi = null,
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
@@ -97,8 +119,20 @@ const CardPelatihanOpen = ({
   return (
     <>
       <div
-        onMouseEnter={() => funcMouseEnter(i)}
-        onMouseLeave={() => funcMouseLeave(i)}
+        onMouseEnter={() => {
+          windowDimensions.width > 770 ? funcMouseEnter(i) : null;
+        }}
+        onMouseLeave={() => {
+          windowDimensions.width > 770 ? funcMouseLeave(i) : null;
+        }}
+        onClick={() => {
+          windowDimensions.width > 770
+            ? null
+            : row.status === "Dibuka" &&
+              router.push(
+                `/detail/pelatihan/${row.id}?akademiId=${akademi.id}`
+              );
+        }}
       >
         <div
           className={
@@ -111,6 +145,7 @@ const CardPelatihanOpen = ({
             className={`image-list-pelatihan-new`}
             src={
               (row.gambar &&
+                row.gambar !== "Belum ada file" &&
                 process.env.END_POINT_API_IMAGE_BEASISWA + row.gambar) ||
               "/assets/media/default-card.png"
             }
@@ -153,7 +188,7 @@ const CardPelatihanOpen = ({
                     }}
                   ></i>
                 </Button>
-
+                {/* SHAREOVERLAY */}
                 <ShareOverlay
                   url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
                   quote={row.name}
@@ -178,7 +213,9 @@ const CardPelatihanOpen = ({
           <div className="mitra-pelatihan-new">
             <Image
               src={
-                (row.gambar_mitra && row.file_path + row.gambar_mitra) ||
+                (row.gambar_mitra &&
+                  row.gambar_mitra !== "Belum ada file" &&
+                  row.file_path + row.gambar_mitra) ||
                 "/assets/media/mitra-default.png"
               }
               width={60}
