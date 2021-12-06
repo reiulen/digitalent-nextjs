@@ -10,6 +10,7 @@ import { SweatAlert } from "../../../../utils/middleware/helper/index";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import axios from "axios";
 
 const LoginAdmin = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const LoginAdmin = () => {
 
   const [hidePassword, setHidePassword] = useState(true);
 
-  const handlerShowPassword = value => {
+  const handlerShowPassword = (value) => {
     setHidePassword(value);
     var input = document.getElementById("input-password");
     if (input.type === "password") {
@@ -33,7 +34,7 @@ const LoginAdmin = () => {
     }
   };
 
-  const handlerSubmit = async e => {
+  const handlerSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     if (simpleValidator.current.allValid()) {
@@ -56,6 +57,27 @@ const LoginAdmin = () => {
         } else {
           router.push("/partnership/user/kerjasama");
         }
+        // GET ROLES
+        const setData = {
+          email: email,
+          password: password,
+        };
+        axios
+          .post(
+            process.env.END_POINT_API_SITE_MANAGEMENT + "/api/auth/login",
+            setData
+          )
+          .then((res) => {
+            // TAMBAH SESUAI ROLE
+            if (
+              res.data.data &&
+              res.data.data.user.roles.includes("admin subvit")
+            ) {
+              router.push(
+                "/subvit?page_substansi=1&page_trivia=1&page_survey=1"
+              );
+            }
+          });
       }
     } else {
       setLoading(false);
@@ -105,7 +127,7 @@ const LoginAdmin = () => {
                     type="email"
                     className="form-control form-control-auth"
                     value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Masukkan Email"
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("Email")
@@ -128,7 +150,7 @@ const LoginAdmin = () => {
                       type="password"
                       className="form-control form-control-auth pr-10"
                       value={password}
-                      onChange={e => setPassword(e.target.value)}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="Masukkan Password"
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("Password")
