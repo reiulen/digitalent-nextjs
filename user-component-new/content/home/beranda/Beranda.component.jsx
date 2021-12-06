@@ -56,8 +56,6 @@ const Beranda = ({ session }) => {
   const [cardMetode, setCardMetode] = useState(null);
   const [cardBookmark, setCardBookmark] = useState(null);
 
-  const textToTrim = 325;
-
   const optionsSplide = {
     gap: "1rem",
     drag: "free",
@@ -112,6 +110,18 @@ const Beranda = ({ session }) => {
     },
   };
 
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
   useEffect(() => {
     handleAkademiStart();
     handlePelatihanCard();
@@ -121,6 +131,13 @@ const Beranda = ({ session }) => {
     if (tema) {
       handlePelatihanCard();
     }
+
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [tema]);
 
   const handleAkademiStart = () => {
@@ -404,7 +421,7 @@ const Beranda = ({ session }) => {
               {tema ? (
                 tema.map((row, i) => (
                   <div key={i}>
-                    {row.pelatihan !== null && (
+                    {row.pelatihan !== null ? (
                       <div className="mb-25">
                         <div
                           className="d-flex justify-content-between header-pelatihan-new mb-10 flex-wrap"
@@ -432,12 +449,24 @@ const Beranda = ({ session }) => {
                                   <Col md={6} lg={4} className="mb-5" key={j}>
                                     <Card
                                       className="h-100 shadow-sm border-0"
-                                      onMouseEnter={() =>
-                                        handleMouseEnter(i, j)
-                                      }
-                                      onMouseLeave={() =>
-                                        handleMouseLeave(i, j)
-                                      }
+                                      onMouseEnter={() => {
+                                        windowDimensions.width > 770
+                                          ? handleMouseEnter(i, j)
+                                          : null;
+                                      }}
+                                      onMouseLeave={() => {
+                                        windowDimensions.width > 770
+                                          ? handleMouseLeave(i, j)
+                                          : null;
+                                      }}
+                                      onClick={() => {
+                                        windowDimensions.width > 770
+                                          ? null
+                                          : row.status === "Dibuka" &&
+                                            router.push(
+                                              `/detail/pelatihan/${row.id}?akademiId=${akademiId}`
+                                            );
+                                      }}
                                     >
                                       {row.status !== "Dibuka" ? (
                                         <CardPelatihanClose row={row} />
@@ -512,6 +541,7 @@ const Beranda = ({ session }) => {
                                                         }}
                                                       ></i>
                                                     </Button>
+                                                    {/* SHAREOVERLAY */}
                                                     <ShareOverlay
                                                       url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
                                                       quote={row.name}
@@ -655,6 +685,7 @@ const Beranda = ({ session }) => {
                                   </Col>
                                 ))
                               ) : (
+                                //QUICK VIEW
                                 <>
                                   <div className="container-fluid">
                                     <div className="row border">
@@ -759,6 +790,7 @@ const Beranda = ({ session }) => {
                                                     }}
                                                   ></i>
                                                 </Button>
+                                                {/* SHAREOVERLAY */}
                                                 <ShareOverlay
                                                   url={`http://dts-dev.majapahit.id/detail/pelatihan/${cardId}`}
                                                   quote={cardName}
@@ -894,28 +926,37 @@ const Beranda = ({ session }) => {
                           </Row>
                         </div>
                       </div>
+                    ) : (
+                      tema.length <= 1 && (
+                        <div className="row">
+                          <h1 className="text-center text-muted col-12 font-weight-bolder">
+                            Pelatihan Belum Tersedia
+                          </h1>
+                        </div>
+                      )
                     )}
                   </div>
                 ))
               ) : (
-                <div className="mt-10">
-                  <div className="row">
-                    <h1 className="text-center text-muted col-12 font-weight-bolder">
-                      Tema Belum Tersedia
-                    </h1>
-                  </div>
+                <div className="row">
+                  <h1 className="text-center text-muted col-12 font-weight-bolder">
+                    Tema Belum Tersedia
+                  </h1>
                 </div>
               )}
 
-              {tema && tema.length > 1 && (
-                <div className="d-flex justify-content-center">
-                  <Link href={`/detail/akademi/${akademiId}`}>
-                    <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12">
-                      Lebih Banyak Tema {">"}
-                    </button>
-                  </Link>
-                </div>
-              )}
+              {tema &&
+                tema.length > 1 &&
+                tema[0].pelatihan !== null &&
+                tema[0].pelatihan.length > 1 && (
+                  <div className="d-flex justify-content-center">
+                    <Link href={`/detail/akademi/${akademiId}`}>
+                      <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12">
+                        Lebih Banyak Tema {">"}
+                      </button>
+                    </Link>
+                  </div>
+                )}
             </div>
           )}
         </Container>

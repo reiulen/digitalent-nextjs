@@ -52,7 +52,7 @@ const ViewTrainingStep2 = () => {
       case "text":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <input
@@ -67,10 +67,15 @@ const ViewTrainingStep2 = () => {
       case "select":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
-            <select name="" className="form-control" required={row.required} disabled>
+            <select
+              name=""
+              className="form-control"
+              required={row.required}
+              disabled
+            >
               {row.option === "manual"
                 ? row.dataOption.split(";").map((dat, i) => (
                     <option value={dat} key={i}>
@@ -85,7 +90,7 @@ const ViewTrainingStep2 = () => {
       case "checkbox":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <div className="my-auto">
@@ -111,7 +116,7 @@ const ViewTrainingStep2 = () => {
       case "textarea":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <textarea
@@ -128,7 +133,7 @@ const ViewTrainingStep2 = () => {
       case "radio":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <div className="my-auto">
@@ -154,7 +159,7 @@ const ViewTrainingStep2 = () => {
       case "file_image":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <div className="custom-file">
@@ -175,7 +180,7 @@ const ViewTrainingStep2 = () => {
       case "file_doc":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <div className="custom-file">
@@ -196,7 +201,7 @@ const ViewTrainingStep2 = () => {
       case "date":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <input
@@ -222,16 +227,16 @@ const ViewTrainingStep2 = () => {
         title2="Form Pendaftaran"
         title3="Form Komitmen"
         title4="Parameter"
-        link1={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${id}`}
-        link2={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-form-pendaftaran/${id}`}
-        link3={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-komitmen/${id}`}
-        link4={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-parameter/${id}`}
+        link1={`/pelatihan/pelatihan/view-pelatihan/${id}`}
+        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`}
+        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
-            <h3 className="font-weight-bolder pb-5 pt-4">{titleForm}</h3>
+            <h3 className="text-neutral-bodyer pb-5 pt-4">{titleForm}</h3>
 
             <div className="row">
               {formBuilder.map((row, i) => (
@@ -244,7 +249,9 @@ const ViewTrainingStep2 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() => router.push(`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${id}`)}
+                  onClick={() =>
+                    router.push(`/pelatihan/pelatihan/view-pelatihan/${id}`)
+                  }
                 >
                   Kembali
                 </button>

@@ -319,6 +319,18 @@ const DataParticipant = ({ token }) => {
               {peserta.list[0].name} - {peserta.list[0].nik}
             </h1>
             <div className="card-toolbar">
+              {index - 1 > 0 && (
+                <Link
+                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${pelatihan_id}&index=${
+                    index - 1
+                  }`}
+                >
+                  <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-2 mt-2 mr-2">
+                    <i className="ri-skip-back-mini-fill ml-2"></i>
+                    Peserta Sebelumnya
+                  </a>
+                </Link>
+              )}
               {index + 1 <= peserta.total && (
                 <Link
                   href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${pelatihan_id}&index=${

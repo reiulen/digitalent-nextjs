@@ -26,10 +26,10 @@ const ViewTrainingStep3 = () => {
         title2="Form Pendaftaran"
         title3="Form Komitmen"
         title4="Parameter"
-        link1={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${id}`}
-        link2={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-form-pendaftaran/${id}`}
-        link3={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-komitmen/${id}`}
-        link4={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-parameter/${id}`}
+        link1={`/pelatihan/pelatihan/view-pelatihan/${id}`}
+        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`}
+        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">
@@ -39,13 +39,20 @@ const ViewTrainingStep3 = () => {
 
             <div className="row">
               <div className="col-md-12">
-                <p className="text-neutral-body">Komitmen Peserta</p>
-                <p className="text-dark">{komitmenPeserta}</p>
+                <p className="text-neutral-body mb-2 fz-14">Komitmen Peserta</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {komitmenPeserta}
+                </p>
               </div>
-              <div className="col-md-12 mt-4">
-                <p className="font-weight-400">Form Komitmen</p>
-               <div className="border px-4 py-4 rounded text-gray" dangerouslySetInnerHTML={{__html: formKomitmen}} />
-              </div>
+              {review.komitmen === "1" && (
+                <div className="col-md-12 mt-4">
+                  <p className="text-neutral-body mb-2 fz-14">Form Komitmen</p>
+                  <div
+                    className="border px-4 py-4 rounded text-gray"
+                    dangerouslySetInnerHTML={{ __html: formKomitmen }}
+                  />
+                </div>
+              )}
             </div>
 
             <div className="button my-5">
@@ -53,7 +60,11 @@ const ViewTrainingStep3 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() => router.push(`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-form-pendaftaran/${id}`)}
+                  onClick={() =>
+                    router.push(
+                      `/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`
+                    )
+                  }
                 >
                   Kembali
                 </button>
