@@ -17,7 +17,7 @@ const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
-    (state) => state.dashboardPeserta
+    state => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
   // useEffect(() => {
@@ -305,6 +305,7 @@ const Dashboard = ({ session, success }) => {
                       width={400}
                       height={180}
                       objectFit="cover"
+                      alt="image"
                     />
                     <Card.ImgOverlay>
                       <Badge
@@ -320,8 +321,11 @@ const Dashboard = ({ session, success }) => {
                         <Image
                           src={
                             (pelatihan.pelatihan_berjalan.gambar_mitra &&
-                              process.env.END_POINT_API_IMAGE_BEASISWA +
+                              process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                                 pelatihan.pelatihan_berjalan.gambar_mitra) ||
+                            (pelatihan.pelatihan_berjalan.logo &&
+                              process.env.END_POINT_API_IMAGE_BEASISWA +
+                                pelatihan.pelatihan_berjalan.logo) ||
                             `/assets/media/default-card.png`
                           }
                           width={62}
@@ -330,6 +334,7 @@ const Dashboard = ({ session, success }) => {
                           thumbnail
                           roundedCircle
                           className={`${style.image_card_pelatihan} img-fluild`}
+                          alt="Image"
                         />
                       </div>
                       <div
@@ -337,7 +342,9 @@ const Dashboard = ({ session, success }) => {
                         style={{ top: "-15px" }}
                       >
                         <p className={`pl-20 my-0 ${style.text_mitra}`}>
-                          {pelatihan.pelatihan_berjalan.mitra || "-"}
+                          {pelatihan.pelatihan_berjalan.mitra ||
+                            pelatihan.pelatihan_berjalan.penyelenggara ||
+                            "-"}
                         </p>
                       </div>
 
@@ -436,6 +443,7 @@ const Dashboard = ({ session, success }) => {
                       width={400}
                       height={180}
                       objectFit="cover"
+                      alt="image"
                     />
                     <Card.ImgOverlay>
                       <Badge
@@ -455,6 +463,7 @@ const Dashboard = ({ session, success }) => {
                           thumbnail
                           roundedCircle
                           className={`${style.image_card_pelatihan} img-fluild`}
+                          alt="image"
                         />
                       </div>
                       <div
@@ -510,6 +519,7 @@ const Dashboard = ({ session, success }) => {
             </Col>
           )}
         </Row>
+        {/* .map simonas & beasiswa */}
         <Row className="mx-1">
           <Col md={6} className="mb-4 px-2">
             <Card className="rounded-xl h-100">
