@@ -17,7 +17,6 @@ const TambahApi = ({ token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   
-  let selectRefListApi = null;
   const router = useRouter();
   const listApi = useSelector((state) => state.listApi);
   const [nameApi, setNameApi] = useState("");
