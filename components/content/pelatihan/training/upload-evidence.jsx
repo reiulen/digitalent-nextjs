@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import axios from 'axios'
+import axios from "axios";
 
 import Swal from "sweetalert2";
 import moment from "moment";
@@ -45,11 +45,10 @@ const UploadEvidence = ({ token }) => {
   const [image, setImage] = useState(
     getFormEvidence?.gambar?.length > 0
       ? getFormEvidence?.gambar.map((item, index) => {
-
           return {
             key: 1,
             imagePreview:
-            process.env.END_POINT_API_IMAGE_BEASISWA + item.gambar,
+              process.env.END_POINT_API_IMAGE_BEASISWA + item.gambar,
             imageFile: item.gambar,
             imageName: item.gambar,
           };
@@ -70,7 +69,6 @@ const UploadEvidence = ({ token }) => {
   );
 
   const [name, setName] = useState("");
-
 
   useEffect(() => {
     editorRef.current = {

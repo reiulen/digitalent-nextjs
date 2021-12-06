@@ -10,6 +10,7 @@ import {
   updateProfilePekerjaan,
   clearErrors,
   getDataAsalSekolah,
+  getDataRefPekerjaan,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 import router from "next/router";
@@ -27,6 +28,10 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   );
   const { data: dataAsalSekolah } = useSelector(
     (state) => state.getAsalSekolah
+  );
+
+  const { dataRefPekerjaan } = useSelector(
+    (state) => state.getRefPekerjaan
   );
 
   const { error: errorStatusPekerjaan, data: dataStatusPekerjaan } =
@@ -77,21 +82,31 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   }
 
+  const optionsDataRefPekerjaan = [];
+  if (dataRefPekerjaan){
+    for (let i = 0; i < dataRefPekerjaan.length; i++){
+      let obj = {
+        value: dataRefPekerjaan[i].id,
+        label: dataRefPekerjaan[i].label,
+      }
+      optionsDataRefPekerjaan.push (obj)
+    }
+  }
+
   useEffect(() => {
     dispatch(getDataAsalSekolah(token, 1, 100, sekolah));
-
     if (errorUpdateData) {
       SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
+      SweatAlert("Berhasil", "Berhasil Update Data", "success");
       if (wizzard) {
         router.push("/peserta");
       } else {
         funcViewEdit(false);
       }
-      SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -173,6 +188,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   useEffect(() => {
     const today = new Date();
     setYear(today.getFullYear());
+    dispatch (getDataRefPekerjaan(token))
   }, []);
 
   useEffect(() => {
@@ -225,14 +241,17 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="formGridAddress1">
                   <Form.Label>Pekerjaan</Form.Label>
-                  <Form.Control
-                    placeholder="Silahkan Masukkan Pekerjaan"
-                    value={pekerjaanNama}
-                    onChange={(e) => setPekerjaan(e.target.value)}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("pekerjaan")
-                    }
-                  />
+                  <div className="position-relative">
+                    <Select
+                      placeholder={pekerjaanNama || "Silahkan Masukkan Pekerjaan"}
+                      options={optionsDataRefPekerjaan}
+                      selectedValue={pekerjaanNama}
+                      onChange={(e) => setPekerjaan(e.label)}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("pekerjaan")
+                      }
+                    />
+                  </div>
                   {simpleValidator.current.message(
                     "pekerjaan",
                     pekerjaanNama,

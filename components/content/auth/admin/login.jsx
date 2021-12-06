@@ -10,6 +10,7 @@ import { SweatAlert } from "../../../../utils/middleware/helper/index";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import axios from "axios";
 
 const LoginAdmin = () => {
   const router = useRouter();
@@ -56,6 +57,27 @@ const LoginAdmin = () => {
         } else {
           router.push("/partnership/user/kerjasama");
         }
+        // GET ROLES
+        const setData = {
+          email: email,
+          password: password,
+        };
+        axios
+          .post(
+            process.env.END_POINT_API_SITE_MANAGEMENT + "/api/auth/login",
+            setData
+          )
+          .then((res) => {
+            // TAMBAH SESUAI ROLE
+            if (
+              res.data.data &&
+              res.data.data.user.roles.includes("admin subvit")
+            ) {
+              router.push(
+                "/subvit?page_substansi=1&page_trivia=1&page_survey=1"
+              );
+            }
+          });
       }
     } else {
       setLoading(false);

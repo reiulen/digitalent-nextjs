@@ -6,6 +6,7 @@ import Link from "next/link";
 import styles from "./substansi.module.css";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
+import LoadingPage from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -18,7 +19,7 @@ const DetailSubstansi = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { subtance_question_detail } = useSelector(
+  const { loading, subtance_question_detail } = useSelector(
     (state) => state.allSubtanceQuestionDetail
   );
 
@@ -124,9 +125,36 @@ const DetailSubstansi = ({ token }) => {
     setShowModal(false);
   };
 
+  const handleSearchEnter = (e) => {
+    if (e.key === "Enter") {
+      dispatch(
+        getAllSubtanceQuestionDetail(
+          id,
+          1,
+          search,
+          5,
+          status,
+          kategori,
+          pelatihan,
+          token
+        )
+      );
+    }
+  };
+
   const handleSearch = () => {
-    let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`;
-    router.push(link);
+    dispatch(
+      getAllSubtanceQuestionDetail(
+        id,
+        1,
+        search,
+        5,
+        status,
+        kategori,
+        pelatihan,
+        token
+      )
+    );
   };
 
   const handleResetError = () => {
@@ -516,6 +544,7 @@ const DetailSubstansi = ({ token }) => {
                       className={`${styles.inputSearch} form-control pl-10`}
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
+                      onKeyUp={(event) => handleSearchEnter(event)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -573,6 +602,7 @@ const DetailSubstansi = ({ token }) => {
                       )}
                     </tr>
                   </thead>
+
                   <tbody>
                     {subtance_question_detail &&
                     subtance_question_detail.list_questions &&

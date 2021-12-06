@@ -308,8 +308,14 @@ const ViewReviewTraining = ({ token }) => {
             <div className="row mt-2">
               <div className="col-md-6">
                 <p className="text-neutral-body mb-2 fz-14">Silabus</p>
-                <p className="fz-16" style={{ color: "#1f1f1f" }}>
-                  {dataPelatihan.silabus}
+                <p
+                  className="fz-16 text-primary"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    window.open(review.file_path + review.silabus, "_blank")
+                  }
+                >
+                  {dataPelatihan.silabus.split("/")[2]}
                 </p>
               </div>
               <div className="col-md-6">

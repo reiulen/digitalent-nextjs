@@ -4,23 +4,26 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../detail-artikel/detail-artikel.module.css";
 import { useRouter } from "next/router";
-import {
-  Container,
-} from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
+import ShareOverlay from "../../../components/global/ShareOverlay.component";
 
 const DetailArtikel = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { detail, loading: loadingDetail } = useSelector((state) => state.detailBerandaArtikel);
+  const { id } = router.query;
+
+  const { detail, loading: loadingDetail } = useSelector(
+    (state) => state.detailBerandaArtikel
+  );
   const { tags } = useSelector((state) => state.allTagBerandaArtikel);
 
-  const [ keyword, setKeyword ] = useState(null);
-  const [ resultText, setResultText ] = useState(null)
-  const [ detailContent, setDetailContent ] = useState("")
-  const [ tagArtikel, setTagArtikel ] = useState([])
-  
+  const [keyword, setKeyword] = useState(null);
+  const [resultText, setResultText] = useState(null);
+  const [detailContent, setDetailContent] = useState("");
+  const [tagArtikel, setTagArtikel] = useState([]);
+
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
     return {
@@ -29,9 +32,7 @@ const DetailArtikel = () => {
     };
   };
 
-  const [windowDimensions, setWindowDimensions] = useState(
-    {}
-  );
+  const [windowDimensions, setWindowDimensions] = useState({});
 
   useEffect(() => {
     function handleResize() {
@@ -45,70 +46,66 @@ const DetailArtikel = () => {
   useEffect(() => {}, [windowDimensions]);
 
   useEffect(() => {
-    handleLinkContent()
-  }, [detail])
+    handleLinkContent();
+  }, [detail]);
 
   useEffect(() => {
-      handleEmptyTag()
-  },[])
+    handleEmptyTag();
+  }, []);
 
   const handleLinkContent = () => {
-    if (detail){
-        let text = detail.isi_artikel 
+    if (detail) {
+      let text = detail.isi_artikel;
 
-        let result = ""
+      let result = "";
 
-        if (text.includes ("<a")){
-            result = text.replace("<a", `<a target="_blank"`)
-        } else {
-          result = text
-        }
-
-        setDetailContent(result)
-    }
-}
-
-// Handle Empty Tag
-const handleEmptyTag = () => {
-  if (tags){
-      let arr = tags?.tag
-      let temps = []
-      let result = []
-
-      for (let i = 0; i < arr?.length; i++){
-          if (
-              arr[i].length !== 0 && 
-              arr[i] !== null &&
-              arr[i] !== undefined && 
-              arr[i] !== " " &&
-              arr[i] !== ""
-              )
-
-          {
-              temps.push (arr[i].toUpperCase())
-          }
-      }
-
-      for (let k = 0; k < temps.length; k++){
-          if (k === 0){
-              result.push(temps[k].toUpperCase())
-
-          } else {
-              if (result.includes (temps[k].toUpperCase()) === false){
-              result.push(temps[k].toUpperCase())
-              }
-          }
-      }
-
-      if (result.length <= 8){
-          setTagArtikel (result)
-
+      if (text.includes("<a")) {
+        result = text.replace("<a", `<a target="_blank"`);
       } else {
-          let tagResult = result.slice(0, 8)
-          setTagArtikel (tagResult)
+        result = text;
       }
-  }
-}
+
+      setDetailContent(result);
+    }
+  };
+
+  // Handle Empty Tag
+  const handleEmptyTag = () => {
+    if (tags) {
+      let arr = tags?.tag;
+      let temps = [];
+      let result = [];
+
+      for (let i = 0; i < arr?.length; i++) {
+        if (
+          arr[i].length !== 0 &&
+          arr[i] !== null &&
+          arr[i] !== undefined &&
+          arr[i] !== " " &&
+          arr[i] !== ""
+        ) {
+          temps.push(arr[i].toUpperCase());
+        }
+      }
+
+      for (let k = 0; k < temps.length; k++) {
+        if (k === 0) {
+          result.push(temps[k].toUpperCase());
+        } else {
+          if (result.includes(temps[k].toUpperCase()) === false) {
+            result.push(temps[k].toUpperCase());
+          }
+        }
+      }
+
+      if (result.length <= 8) {
+        setTagArtikel(result);
+      } else {
+        let tagResult = result.slice(0, 8);
+        setTagArtikel(tagResult);
+      }
+    }
+  };
 
   const handleFilterTag = (str) => {
     router.push(`/artikel?tag=${str}`);
@@ -135,14 +132,13 @@ const handleEmptyTag = () => {
   };
 
   return (
-    <Container fluid className="px-3 pl-sm-15 pr-sm-10 py-10 bg-white">
-
+    <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
       {/* BreadCrumb */}
-      <SubHeaderComponent 
-          data={[
-            { link: "/artikel", name: "Artikel" }, 
-            { link: router.asPath, name: "Detail Artikel" }
-          ]}
+      <SubHeaderComponent
+        data={[
+          { link: "/artikel", name: "Artikel" },
+          { link: router.asPath, name: "Detail Artikel" },
+        ]}
       />
 
       {/* Header */}
@@ -154,21 +150,23 @@ const handleEmptyTag = () => {
             </div>
           </div>
           <div className="mt-5">
-            <h1 className="font-weight-bolder">
+            <h1 
+              className={`${styles.fontTitle} font-weight-bolder`}
+            >
               {/* Insert Title Here */}
               {detail.judul}
             </h1>
           </div>
 
           <div className="mt-5 d-flex flex-row align-items-center">
-            <span className="font-weight-bolder">
+            <span className="font-weight-bolder" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Akademi Here */}
               {detail.kategori_akademi}
             </span>
             <span className="mr-1 ml-3">
               <i className="ri-eye-line"></i>
             </span>
-            <span className="text-muted">
+            <span className="text-muted" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Views Here */}
               Dibaca {detail.dibaca}
             </span>
@@ -195,7 +193,7 @@ const handleEmptyTag = () => {
                   {/* Insert Admin Here */}
                   {detail.dibuat}
                 </div>
-                <div className="text-muted">
+                <div className="text-muted" style={{fontSize:"14px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                   {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
                 </div>
               </div>
@@ -203,9 +201,15 @@ const handleEmptyTag = () => {
 
             <div className="row ml-1">
               <div className="mr-3">
+                {/* SHAREOVERLAY */}
+                <ShareOverlay
+                  url={`http://dts-dev.majapahit.id/artikel/detail/${id}`}
+                  quote={detail.judul}
+                >
                   <button className="btn btn-sm btn-outline-light rounded-circle">
-                      <i className="ri-share-line px-0 py-1"></i>
+                    <i className="ri-share-line px-0 py-1"></i>
                   </button>
+                </ShareOverlay>
               </div>
             </div>
           </div>
@@ -217,12 +221,13 @@ const handleEmptyTag = () => {
       {detail ? (
         <div className="row mt-10">
           {/* Left Side */}
-          <div 
+          <div
             className={
-              windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                "col-12 col-lg-8 pr-20"
-              :
-                "col-12 col-lg-8"
+              windowDimensions &&
+              windowDimensions.width &&
+              windowDimensions.width > 770
+                ? "col-12 col-lg-8 pr-20"
+                : "col-12 col-lg-8"
             }
           >
             {/* Image */}
@@ -241,33 +246,35 @@ const handleEmptyTag = () => {
 
             {/* Artikel */}
             <div className="border rounded-lg mb-5 mt-15">
-                <div 
-                  className="row my-5 mx-5 text-justify"
-                  style={{width: '95%',wordBreak:'break-word'}}
-                >
-                  {
-                    detailContent ?
-                        resultText ?
-                            <div 
-                                dangerouslySetInnerHTML={{__html: resultText}}
-                                className={ `${styles.detailArtikel}`}
-                            />
-                        :
-                            <div 
-                                dangerouslySetInnerHTML={{__html: detailContent}}
-                                className={ `${styles.detailArtikel}`}
-                            />
-                    :
-                        null
-                  }
-                </div>
+              <div
+                className="row my-5 mx-5 text-justify"
+                style={{ width: "95%", wordBreak: "break-word" }}
+              >
+                {detailContent ? (
+                  resultText ? (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: resultText }}
+                      className={`${styles.detailArtikel}`}
+                    />
+                  ) : (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: detailContent }}
+                      className={`${styles.detailArtikel}`}
+                    />
+                  )
+                ) : null}
+              </div>
 
               <div className="row m-3 d-flex justify-content-between pb-5">
                 <div className="row d-flex justify-content-between ml-1">
                   {detail && detail.tag && detail.tag.length !== 0
                     ? detail.tag.map((el, i) => {
                         return (
-                          <div className="mr-3 border p-3 rounded mb-3" key={i} style={{height:"38px"}}>
+                          <div
+                            className="mr-3 border p-3 rounded mb-3"
+                            key={i}
+                            style={{ height: "38px" }}
+                          >
                             #{el.toString().toUpperCase()}
                           </div>
                         );
@@ -277,11 +284,15 @@ const handleEmptyTag = () => {
 
                 <div className="row ml-1">
                   <div className="mr-3">
+                    <ShareOverlay
+                      url={`http://dts-dev.majapahit.id/artikel/detail/${id}`}
+                      quote={detail.judul}
+                    >
                       <button className="btn btn-sm btn-outline-light rounded-circle">
-                          <i className="ri-share-line px-0 py-1"></i>
+                        <i className="ri-share-line px-0 py-1"></i>
                       </button>
+                    </ShareOverlay>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -305,7 +316,7 @@ const handleEmptyTag = () => {
                     />
                   </div>
                   <div className="col-9 my-auto">
-                    <h3 className=" font-weight-bolder">Pencarian</h3>
+                    <h4 className=" font-weight-bolder" style={{fontSize:"20px", fontFamily:"Poppins"}}>Pencarian</h4>
                   </div>
                 </div>
 
@@ -330,32 +341,30 @@ const handleEmptyTag = () => {
                       onChange={(e) => setKeyword(e.target.value)}
                     />
 
-                    {
-                      detailContent ?
-                        <div>
-                          <button
-                            className="btn btn-primary-dashboard"
-                            onClick={(e) => handleHighlightWords(e, detailContent)}
-                            style={{
-                              borderTopRightRadius: "150px",
-                              borderBottomRightRadius: "150px",
-                            }}
-                            type="submit"
-                          >
-                            Cari
-                          </button>
-                        </div>
-                      :
-                        null
-                    }
-                    
+                    {detailContent ? (
+                      <div>
+                        <button
+                          className="btn btn-primary-dashboard"
+                          onClick={(e) =>
+                            handleHighlightWords(e, detailContent)
+                          }
+                          style={{
+                            borderTopRightRadius: "150px",
+                            borderBottomRightRadius: "150px",
+                          }}
+                          type="submit"
+                        >
+                          Cari
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 </form>
               </div>
 
               {/* Tag */}
               <div className="row mt-10 d-flex flex-column mx-10">
-                <h3 className="font-weight-bolder">
+                <h3 className="font-weight-bolder" style={{fontSize:"20px", fontFamily:"Poppins"}}>
                   TEMUKAN LEBIH BANYAK APA YANG PENTING BAGI ANDA
                 </h3>
                 <div className=" d-flex flex-wrap flex-row">

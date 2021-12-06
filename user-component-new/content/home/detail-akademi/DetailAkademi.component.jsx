@@ -110,10 +110,9 @@ const DetailAkademi = ({ session }) => {
       pelatihan.list &&
       pelatihan.list.length !== 0
     ) {
-      for (let i = 0; i < pelatihan.list.length; i++) {
+      pelatihan.list.map((row, i) => {
         arr.push(false);
-      }
-
+      });
       setShow(arr);
       setShowDetail(arr);
     }
@@ -122,7 +121,7 @@ const DetailAkademi = ({ session }) => {
   const handleMouseEnter = (index) => {
     let arr = [...show];
     for (let i = 0; i < arr.length; i++) {
-      arr.splice(i, i, false);
+      arr[i] = false;
       if (i === index) {
         arr.splice(i, 1, true);
       }
@@ -487,6 +486,7 @@ const DetailAkademi = ({ session }) => {
                                     show={show}
                                     row={el}
                                     i={i}
+                                    akademi={akademi}
                                   />
                                 )}
                               </Card>

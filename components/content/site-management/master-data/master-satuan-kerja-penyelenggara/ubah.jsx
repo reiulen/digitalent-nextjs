@@ -66,7 +66,6 @@ const TambahApi = ({ token }) => {
       else {
         Swal.fire({
           title: "Apakah anda yakin simpan ?",
-          // text: "Data ini tidak bisa dikembalikan !",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -209,7 +208,7 @@ const TambahApi = ({ token }) => {
 
                 {simpleValidator.current.message(
                   "provinsi",
-                  valueProvinsi,
+                  optionTempProvList,
                   "required",
                   { className: "text-danger" }
                 )}

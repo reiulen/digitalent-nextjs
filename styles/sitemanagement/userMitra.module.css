@@ -4,11 +4,24 @@
     right: 10px;
 }
 
+/* SETTING General */
+
+.validText{
+    position: absolute;
+    top: 65px;
+}
+
 @media only screen and (max-width: 1024px) {
     /* MENU GENERAL */
     
     .btnTambahContent{
         font-size: 11px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .validText{
+     top: 60px;   
     }
 }
 

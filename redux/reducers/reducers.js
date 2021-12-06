@@ -13,6 +13,20 @@ import {
   digitalentJenisKelaminReducer,
   digitalentPendidikanReducer,
 } from "./dashboard-kabadan/dashboard/digitalent.reducers";
+// DASHBOARD BEASISWA
+import {
+  beasiswaTotalPenggunaReducer,
+  beasiswaTotalPendaftarReducer,
+  beasiswaStatistikDalamReducer,
+  beasiswaStatistikLuarReducer,
+  beasiswaMapPendaftarReducer,
+  beasiswaProvinsiPendaftarReducer,
+  beasiswaProvinsiAwardeeReducer,
+  beasiswaUniversitasDalamReducer,
+  beasiswaUniversitasLuarReducer,
+  beasiswaAlumniReducer,
+  beasiswaAlumniAwardeeReducer,
+} from "./dashboard-kabadan/dashboard/beasiswa.reducers";
 // DATA PESERTA
 import {
   allBeasiswaKandidatReducer,
@@ -231,6 +245,7 @@ import {
   detailExportDataReducer,
   updateExportDataReducer,
   deleteExportDataReducer,
+  filterExportDataReducer,
 } from "./site-management/export-data.reducers";
 // ============== provinces site ===============
 import { allProvincesSiteReducer } from "./site-management/option/option-provinces.reducers";
@@ -409,6 +424,7 @@ import {
   updateKeterampilanReducer,
   updatePekerjaanReducer,
   getAsalSekolahReducer,
+  getRefPekerjaanReducer,
 } from "./pelatihan/peserta/profile.reducers";
 
 import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
@@ -560,6 +576,17 @@ const reducer = combineReducers({
   digitalentJenisKelamin: digitalentJenisKelaminReducer,
   digitalentPendidikan: digitalentPendidikanReducer,
   // ============= BEASISWA ============
+  beasiswaTotalPengguna: beasiswaTotalPenggunaReducer,
+  beasiswaTotalPendaftar: beasiswaTotalPendaftarReducer,
+  beasiswaStatistikDalam: beasiswaStatistikDalamReducer,
+  beasiswaStatistikLuar: beasiswaStatistikLuarReducer,
+  beasiswaMapPendaftar: beasiswaMapPendaftarReducer,
+  beasiswaProvinsiPendaftar: beasiswaProvinsiPendaftarReducer,
+  beasiswaProvinsiAwardee: beasiswaProvinsiAwardeeReducer,
+  beasiswaUniversitasDalam: beasiswaUniversitasDalamReducer,
+  beasiswaUniversitasLuar: beasiswaUniversitasLuarReducer,
+  beasiswaAlumni: beasiswaAlumniReducer,
+  beasiswaAlumniAwardee: beasiswaAlumniAwardeeReducer,
   allBeasiswaKandidat: allBeasiswaKandidatReducer,
   allBeasiswaFilter: allBeasiswaFilterReducer,
   // ============= SIMONAS ============
@@ -823,7 +850,7 @@ const reducer = combineReducers({
   deleteExportData: deleteExportDataReducer,
   allListPeserta: allListPesertaReducer,
   allDetailPeserta: allDetailPesertaReducer,
-
+  filterExportData: filterExportDataReducer,
   // END SITE MANAGEMENT
 
   //PELATIHAN
@@ -928,6 +955,7 @@ const reducer = combineReducers({
   updateKeterampilan: updateKeterampilanReducer,
   updatePekerjaan: updatePekerjaanReducer,
   getAsalSekolah: getAsalSekolahReducer,
+  getRefPekerjaan: getRefPekerjaanReducer,
   //END PELATIHAN
 
   //BERANDA

@@ -14,7 +14,8 @@ import Select from "react-select";
 import { getAllBerandaBerita } from "../../../../redux/actions/beranda/berita.actions"
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
-import { route } from "next/dist/server/router";
+
+import styles from "../artikel/artikel.module.css"
 
 const Berita = () => {
     const dispatch = useDispatch();
@@ -384,10 +385,12 @@ const Berita = () => {
             category_academy,
             tag
         ))
+
+        window.scrollTo(0,0)
     }
 
     return (
-        <Container fluid className=" px-10 py-10 bg-white">
+        <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
 
             {/* BreadCrumb */}
             <SubHeaderComponent 
@@ -396,17 +399,17 @@ const Berita = () => {
 
             {/* Header */}
             <div className="col-12 mt-5 ml-n1">
-                <h1 className="fw-700">
+                <h1 className="fw-700" style={{fontSize: "40px", fontFamily:"Poppins"}}>
                     {activeTitle}
                 </h1>
 
                 {
                     activeTitle == "Ada Apa di Digitalent" ?
-                        <div className="mt-3">
+                        <div className="mt-3" style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                             Cerita mitra, berita seru, dan Berita terbaru. Baca semua berita soal Digitalent di sini.
                         </div>
                     :
-                        <div className="mt-3">
+                        <div className="mt-3" style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                             Berita terkait {activeTitle} di  Digital Talent Scholarship
                         </div>
                 }
@@ -636,7 +639,7 @@ const Berita = () => {
                                         />
                                     </div>
                                     <div className="col-7 my-auto">
-                                        <h3 className=" font-weight-bolder">
+                                        <h3 className={`font-weight-bolder ${styles.fontText}`}>
                                             Filter
                                         </h3>
                                     </div>
@@ -659,7 +662,7 @@ const Berita = () => {
                                     showFilter === true ?
                                         <>
                                             <div className="row ml-3 mt-5">
-                                                <p>
+                                                <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                                     Urutkan Berdasarkan
                                                 </p>
                                             </div>
@@ -754,7 +757,7 @@ const Berita = () => {
                                             </div>
 
                                             <div className="row ml-3 mt-5">
-                                                <p>
+                                                <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                                     Akademi
                                                 </p>
                                             </div>
@@ -919,7 +922,7 @@ const Berita = () => {
                                                     <Link href={`/berita/detail/${el.slug}`}>
                                                         <a>
                                                             <h1 
-                                                                className="text-dark"
+                                                                className={`text-dark font-weight-bolder ${styles.fontText}`}
                                                                 style=
                                                                 {{
                                                                     display:"-webkit-box", 
@@ -945,7 +948,8 @@ const Berita = () => {
                                                             <div 
                                                                 dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}}
                                                                 className="text-wrap d-flex flex-wrap overflow-hidden"
-                                                                style={{maxWidth:"450px"}}
+                                                                style={{maxWidth:"450px", fontSize:"16px", fontFamily:"Poppins" }}
+                                                                // className={`${styles.fontContent} text-wrap d-flex flex-wrap overflow-hidden`}
                                                             />
                                                         </div>
                                                     :
@@ -955,7 +959,7 @@ const Berita = () => {
                                                 <div className="row mb-3 d-flex align-items-center">
                                                     {/* Insert Date and View Here */}
                                                     <div className="text-muted col-xl-5 col-12 pl-3">
-                                                        {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
+                                                        {moment(el.tanggal_publish).format("DD MMM")} | {el.dibaca} dibaca
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
@@ -1063,14 +1067,14 @@ const Berita = () => {
                                         />
                                     </div>
                                     <div className="col-9 my-auto">
-                                        <h3 className=" font-weight-bolder">
+                                        <h3 className={` font-weight-bolder ${styles.fontText}`}>
                                             Filter
                                         </h3>
                                     </div>
                                 </div>
 
                                 <div className="row ml-3 mt-5">
-                                    <p>
+                                    <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                         Urutkan Berdasarkan
                                     </p>
                                 </div>
@@ -1165,7 +1169,7 @@ const Berita = () => {
                                 </div>
 
                                 <div className="row ml-3 mt-5">
-                                    <p>
+                                    <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                         Akademi
                                     </p>
                                 </div>
@@ -1232,7 +1236,7 @@ const Berita = () => {
                         className={windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                                 "row d-flex flex-column mx-auto px-10 my-5 d-flex justify-content-center order-3"
                             :
-                                "row d-flex flex-column ml-5 mb-5 d-flex justify-content-center order-3"
+                                "row d-flex flex-column ml-0 ml-xl-5 mb-5 d-flex justify-content-center order-3"
                         }
                     >
                         <h3 className="font-weight-bolder"> 

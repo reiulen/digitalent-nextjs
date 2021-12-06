@@ -209,6 +209,7 @@ const DetailPelatihan = ({ session }) => {
                 <Image
                   src={
                     (pelatihan?.thumbnail &&
+                      pelatihan.thumbnail !== "Belum ada file" &&
                       process.env.END_POINT_API_IMAGE_BEASISWA +
                         pelatihan?.thumbnail) ||
                     "/assets/media/default-card.png"
@@ -302,12 +303,9 @@ const DetailPelatihan = ({ session }) => {
                   <div className="dot-bullet-detail">
                     <Image
                       src={
-                        (pelatihan?.logo &&
-                          process.env.END_POINT_API_IMAGE_BEASISWA +
-                            pelatihan?.logo) ||
                         (pelatihan?.gambar_mitra &&
-                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                            pelatihan?.gambar_mitra) ||
+                          pelatihan.gambar_mitra !== "Belum ada file" &&
+                          pelatihan.file_path + pelatihan?.gambar_mitra) ||
                         "/assets/media/mitra-default.png"
                       }
                       width={60}

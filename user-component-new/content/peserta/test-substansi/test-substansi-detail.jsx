@@ -7,12 +7,12 @@ import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import { helperUserStatusColor } from "../../../../utils/middleware/helper";
 
 export default function SeleksiAdministrasi() {
   const { state: data, error } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
-
 
   const router = useRouter();
   const [description, setDescription] = useState(data?.deskripsi || "-");
@@ -38,12 +38,7 @@ export default function SeleksiAdministrasi() {
   const [label, setLabel] = useState();
 
   useEffect(() => {
-    const status = data?.status || "-";
-    if (status.includes("tidak") || status.includes("gagal")) return setLabel("danger");
-    if (status.includes("lulus")) return setLabel("success");
-    if (status.includes("menunggu"))
-      return setLabel("warning");
-    if (status.includes("tes substansi")) return setLabel("primary");
+    helperUserStatusColor(data?.status, setLabel);
   }, []);
 
   const handleDownloadSilabus = async () => {

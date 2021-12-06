@@ -342,12 +342,6 @@ const Tambah = ({ token }) => {
                                 onBlur={() => simpleValidator.current.showMessageFor("kabupaten")}
                               />
 
-                              {simpleValidator.current.message(
-                                "kabupaten",
-                                items.value,
-                                "required",
-                                { className: "text-danger" }
-                              )}
                             </div>
 
                             {index === 0 ? (
@@ -366,6 +360,12 @@ const Tambah = ({ token }) => {
                               </button>
                             )}
                           </div>
+                          {simpleValidator.current.message(
+                            "kabupaten",
+                            items.value,
+                            "required",
+                            { className: "text-danger" }
+                          )}
                         </div>
                       </div>
                     </div>
