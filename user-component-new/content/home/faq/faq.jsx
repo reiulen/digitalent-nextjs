@@ -20,8 +20,9 @@ const FaqPage = () => {
   const { kategori } = useSelector((state) => state.kategoriBerandaFaq);
 
   const [title, setTitle] = useState("Pertanyaan Populer");
-  const [keyword, setKeyword] = useState(null);
+  const [keyword, setKeyword] = useState("");
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
+  const [ kategoriToShow, setKategoriToShow ] = useState ([])
 
   const [content, setContent] = useState(
     faq?.faq.map((row, i) => {
@@ -32,6 +33,36 @@ const FaqPage = () => {
     })
   );
 
+  useEffect(() => {
+    handleKategoriToShow()
+  }, [])
+  
+  // Handle Empty Kategori not show
+  const handleKategoriToShow = () => {
+    if (faq){
+      let obj = faq?.faq
+      let arr = []
+      let result = []
+
+      for (let i = 0; i < obj.length; i++){
+        arr.push (obj[i]?.nama_kategori)
+      }
+
+      for (let j = 0; j < arr.length; j++){
+
+        if (j === 0){
+            result.push (arr[j])
+  
+        } else {
+            if (result.includes (arr[j]) === false){
+                result.push (arr[j])
+            }
+        }
+      }
+      setKategoriToShow(result.sort())
+    }
+  }
+
   const handleFilterKeyword = (e) => {
     e.preventDefault();
     dispatch(getAllFaq(null, null, keyword));
@@ -40,6 +71,7 @@ const FaqPage = () => {
     if (keyword === "") {
       handlePinnedFaq();
     }
+    window.scrollTo(0,0)
   };
 
   const handleLinkContent = (string) => {
@@ -58,11 +90,17 @@ const FaqPage = () => {
   const handlePinnedFaq = () => {
     dispatch(getAllFaq(1, null, null));
     setTitle("Pertanyaan Populer");
+
+    setKeyword("")
+    window.scrollTo(0,0)
   };
 
   const handleCategoryFaq = (str) => {
     dispatch(getAllFaq(null, str, null));
     setTitle(str);
+
+    setKeyword("")
+    window.scrollTo(0,0)
   };
 
   return (
@@ -120,6 +158,7 @@ const FaqPage = () => {
               value={keyword}
               style={{ borderRadius: "30px", backgroundColor: "#fafafb" }}
               onChange={(e) => setKeyword(e.target.value)}
+              id="inputKeyword"
             />
             <button
               className="btn btn-primary text-white right-center-absolute"
@@ -169,36 +208,38 @@ const FaqPage = () => {
                 </div>
               </div>
             </div>
-
-            {kategori && kategori.length !== 0
-              ? kategori.map((el, i) => {
-                  return (
-                    <div key={i}>
-                      <div className={`d-flex flex-row ${styles.menuItem}`}>
-                        <div
-                          className="d-flex align-items-center my-5 font-weight-bolder"
-                          style={
-                            title === el.nama_kategori
-                              ? { cursor: "pointer", color: "#007CFF" }
-                              : { cursor: "pointer", color: "#6C6C6C" }
-                          }
-                          onClick={() => handleCategoryFaq(el.nama_kategori)}
-                        >
+              {
+                kategoriToShow && kategori.length !== 0 ?
+                  kategoriToShow.map ((el, i) => {
+                    return (
+                      <div key={i}>
+                        <div className={`d-flex flex-row ${styles.menuItem}`}>
                           <div
-                            className="fas fa-arrow-right mr-3"
+                            className="d-flex align-items-center my-5 font-weight-bolder"
                             style={
-                              title === el.nama_kategori
+                              title === el
                                 ? { cursor: "pointer", color: "#007CFF" }
                                 : { cursor: "pointer", color: "#6C6C6C" }
                             }
-                          />
-                          <td>{el.nama_kategori}</td>
+                            onClick={() => handleCategoryFaq(el)}
+                          >
+                            <div
+                              className="fas fa-arrow-right mr-3"
+                              style={
+                                title === el
+                                  ? { cursor: "pointer", color: "#007CFF" }
+                                  : { cursor: "pointer", color: "#6C6C6C" }
+                              }
+                            />
+                            <td>{el}</td>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
-              : null}
+                    );
+                  })
+                :
+                  null
+              }
           </div>
 
           {/* Filter on Mobile */}

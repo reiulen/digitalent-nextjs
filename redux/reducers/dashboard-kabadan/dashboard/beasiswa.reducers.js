@@ -111,22 +111,54 @@ export const beasiswaTotalPendaftarReducer = (
 };
 
 // BEASISWA STATISTIK
-export const beasiswaStatistikReducer = (state = { statistik: [] }, action) => {
+export const beasiswaStatistikDalamReducer = (
+  state = { statistik: [] },
+  action
+) => {
   switch (action.type) {
     case BEASISWA_STATISTIK_DALAM_REQUEST:
-    case BEASISWA_STATISTIK_LUAR_REQUEST:
       return {
         loading: true,
       };
 
     case BEASISWA_STATISTIK_DALAM_SUCCESS:
-    case BEASISWA_STATISTIK_LUAR_SUCCESS:
       return {
         loading: false,
         statistik: action.payload.data,
       };
 
     case BEASISWA_STATISTIK_DALAM_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const beasiswaStatistikLuarReducer = (
+  state = { statistik: [] },
+  action
+) => {
+  switch (action.type) {
+    case BEASISWA_STATISTIK_LUAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case BEASISWA_STATISTIK_LUAR_SUCCESS:
+      return {
+        loading: false,
+        statistik: action.payload.data,
+      };
+
     case BEASISWA_STATISTIK_LUAR_FAIL:
       return {
         loading: false,
@@ -179,7 +211,10 @@ export const beasiswaMapPendaftarReducer = (
 };
 
 // BEASISWA PROVINSI
-export const beasiswaProvinsiReducer = (state = { provinsi: [] }, action) => {
+export const beasiswaProvinsiPendaftarReducer = (
+  state = { provinsi: [] },
+  action
+) => {
   switch (action.type) {
     case BEASISWA_PROVINSI_PENDAFTAR_REQUEST:
     case BEASISWA_PROVINSI_AWARDEE_REQUEST:
@@ -211,27 +246,89 @@ export const beasiswaProvinsiReducer = (state = { provinsi: [] }, action) => {
       return state;
   }
 };
+export const beasiswaProvinsiAwardeeReducer = (
+  state = { provinsi: [] },
+  action
+) => {
+  switch (action.type) {
+    case BEASISWA_PROVINSI_AWARDEE_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case BEASISWA_PROVINSI_AWARDEE_SUCCESS:
+      return {
+        loading: false,
+        provinsi: action.payload.data,
+      };
+
+    case BEASISWA_PROVINSI_AWARDEE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
 
 // BEASISWA UNIVERSITAS
-export const beasiswaUniversitasReducer = (
+export const beasiswaUniversitasDalamReducer = (
   state = { universitas: [] },
   action
 ) => {
   switch (action.type) {
     case BEASISWA_UNIVERSITAS_DALAM_REQUEST:
-    case BEASISWA_UNIVERSITAS_LUAR_REQUEST:
       return {
         loading: true,
       };
 
     case BEASISWA_UNIVERSITAS_DALAM_SUCCESS:
-    case BEASISWA_UNIVERSITAS_LUAR_SUCCESS:
       return {
         loading: false,
         universitas: action.payload.data,
       };
 
     case BEASISWA_UNIVERSITAS_DALAM_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const beasiswaUniversitasLuarReducer = (
+  state = { universitas: [] },
+  action
+) => {
+  switch (action.type) {
+    case BEASISWA_UNIVERSITAS_LUAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case BEASISWA_UNIVERSITAS_LUAR_SUCCESS:
+      return {
+        loading: false,
+        universitas: action.payload.data,
+      };
+
     case BEASISWA_UNIVERSITAS_LUAR_FAIL:
       return {
         loading: false,
@@ -253,19 +350,49 @@ export const beasiswaUniversitasReducer = (
 export const beasiswaAlumniReducer = (state = { alumni: [] }, action) => {
   switch (action.type) {
     case BEASISWA_ALUMNI_REQUEST:
-    case BEASISWA_AWARDEE_REQUEST:
       return {
         loading: true,
       };
 
     case BEASISWA_ALUMNI_SUCCESS:
-    case BEASISWA_AWARDEE_SUCCESS:
       return {
         loading: false,
         alumni: action.payload.data,
       };
 
     case BEASISWA_ALUMNI_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const beasiswaAlumniAwardeeReducer = (
+  state = { alumni: [] },
+  action
+) => {
+  switch (action.type) {
+    case BEASISWA_AWARDEE_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case BEASISWA_AWARDEE_SUCCESS:
+      return {
+        loading: false,
+        alumni: action.payload.data,
+      };
+
     case BEASISWA_AWARDEE_FAIL:
       return {
         loading: false,

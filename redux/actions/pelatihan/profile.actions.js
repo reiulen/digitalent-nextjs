@@ -28,6 +28,9 @@ import {
   //PEKERJAAN
   GET_PEKERJAAN_SUCCESS,
   GET_PEKERJAAN_FAIL,
+  GET_REF_PEKERJAAN_REQUEST,
+  GET_REF_PEKERJAAN_SUCCESS,
+  GET_REF_PEKERJAAN_FAIL,
   UPDATE_PEKERJAAN_REQUEST,
   UPDATE_PEKERJAAN_SUCCESS,
   UPDATE_PEKERJAAN_RESET,
@@ -272,7 +275,6 @@ export const getProfilePekerjaan = (token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
-
     dispatch({
       type: GET_PEKERJAAN_SUCCESS,
       payload: data,
@@ -313,6 +315,34 @@ export const updateProfilePekerjaan =
       });
     }
   };
+
+export const getDataRefPekerjaan = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_REF_PEKERJAAN_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+      `api/option/reference-choose-name/Bidang Pekerjaan?paginate=false`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+    dispatch({
+      type: GET_REF_PEKERJAAN_SUCCESS,
+      payload: data
+    });
+
+  } catch (error) {
+    dispatch({
+      type: GET_REF_PEKERJAAN_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 //END PEKERJAAN
 

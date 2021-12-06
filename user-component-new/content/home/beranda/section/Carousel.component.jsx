@@ -111,8 +111,7 @@ export default function Carousel({ data }) {
                 objectFit="cover"
                 className="img-carousel"
                 onClick={() => {
-                  row.url_link &&
-                    router.push(window.open(row.url_link, "_blank"));
+                  row.url_link && window.open(row.url_link, "_blank");
                 }}
               />
             </div>

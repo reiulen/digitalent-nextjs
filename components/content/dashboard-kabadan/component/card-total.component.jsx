@@ -14,7 +14,7 @@ const CardTotal = ({ title, value, dailyAdd, statisticDay }) => {
             </div>
           </div>
           <p className="text-success fz-16 fw-500">
-            {statisticDay}
+            +{statisticDay}
             <span className="text-dashboard-neutral font-italic">
               {" "}
               (Total Penambahan Data Kemarin)

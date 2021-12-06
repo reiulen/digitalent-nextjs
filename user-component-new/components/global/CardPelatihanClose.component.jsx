@@ -43,8 +43,7 @@ const CardPelatihanClose = ({ row }) => {
               src={
                 (row.gambar_mitra &&
                   row.gambar_mitra !== "Belum ada file" &&
-                  process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                    row.gambar_mitra) ||
+                  row.file_path + row.gambar_mitra) ||
                 "/assets/media/mitra-default.png"
               }
               width={60}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 
@@ -8,6 +8,8 @@ import StatistikWrapper from "../wrapper/statistik.wrapper";
 
 import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
+import { useDispatch, useSelector } from "react-redux";
+import { getBeasiswaPendaftarWilayah } from "../../../../redux/actions/dashboard-kabadan/dashboard/beasiswa.actions";
 
 import {
   BarChart,
@@ -21,48 +23,71 @@ import Pagination from "react-js-pagination";
 
 import PaginationDashboard from "../component/pagination-dashbaord.component";
 
-const DashboardBeasiswa = () => {
+const DashboardBeasiswa = ({ token }) => {
+  const dispatch = useDispatch();
+
   const MapDigitalent = dynamic(
     () => import("../component/map-digitalent.component"),
     { ssr: false }
   );
-  const dataBeasiwaDalamNegeri = [
-    {
-      name: "Khusus",
-      awardee: 2400,
-      pendaftar: 2000,
-    },
-    {
-      name: "S2 ASN",
-      awardee: 2210,
-      pendaftar: 2100,
-    },
-    {
-      name: "S2 Umum",
-      awardee: 2290,
-      pendaftar: 2200,
-    },
-    {
-      name: "S3 ASN",
-      awardee: 2000,
-      pendaftar: 2300,
-    },
-    {
-      name: "S3 Umum",
-      awardee: 2181,
-      pendaftar: 2500,
-    },
-    {
-      name: "S2 Internal",
-      awardee: 2500,
-      pendaftar: 2400,
-    },
-    {
-      name: "s3 Internal",
-      awardee: 2100,
-      pendaftar: 2300,
-    },
-  ];
+  const MapBeasiswa = dynamic(
+    () => import("../component/map-beasiswa.component"),
+    { ssr: false }
+  );
+
+  const {
+    loading: loadingTotalPengguna,
+    error: errorTotalPengguna,
+    totalPengguna,
+  } = useSelector((state) => state.beasiswaTotalPengguna);
+  const {
+    loading: loadingTotalPendaftar,
+    error: errorTotalPendaftar,
+    totalPendaftar,
+  } = useSelector((state) => state.beasiswaTotalPendaftar);
+  const {
+    loading: loadingStatistikDalam,
+    error: errorStatistikDalam,
+    statistik: statistikDalam,
+  } = useSelector((state) => state.beasiswaStatistikDalam);
+  const {
+    loading: loadingStatistikLuar,
+    error: errorStatistikLuar,
+    statistik: statistikLuar,
+  } = useSelector((state) => state.beasiswaStatistikLuar);
+
+  const {
+    loading: loadingProvinsiPendaftar,
+    error: errorProvinsiPendaftar,
+    provinsi: provinsiPendaftar,
+  } = useSelector((state) => state.beasiswaProvinsiPendaftar);
+  const {
+    loading: loadingProvinsiAwardee,
+    error: errorProvinsiAwardee,
+    provinsi: provinsiAwardee,
+  } = useSelector((state) => state.beasiswaProvinsiAwardee);
+
+  const {
+    loading: loadingUniversitasDalam,
+    error: errorUniversitasDalam,
+    universitas: UniversitasDalam,
+  } = useSelector((state) => state.beasiswaUniversitasDalam);
+
+  const dataBeasiwaDalamNegeri = [];
+  if (statistikDalam) {
+    statistikDalam.map((row, i) => {
+      let val = {
+        name: row.category,
+        pendaftar: row.type.peserta,
+        awardee: row.type.awardee,
+      };
+      dataBeasiwaDalamNegeri.push(val);
+    });
+  }
+  if (statistikLuar) {
+    statistikLuar.map((row, i) => {});
+  }
+
   const dataBeasiwaLuarNegeri = [
     {
       name: "Skema Reguler",
@@ -75,40 +100,46 @@ const DashboardBeasiswa = () => {
       pendaftar: 2100,
     },
   ];
-  const dataProvinsi = [
-    { id: 1, title: "DKI Jakarta", percent: 50, total: "3.000" },
-    { id: 2, title: "Jawa Barat", percent: 30, total: "2.000" },
-    { id: 3, title: "Jawa Timur", percent: 40, total: "1.000" },
-    { id: 4, title: "Sumatra Utara", percent: 10, total: "50" },
-    { id: 5, title: "Nusa Tenggara Timur", percent: 10, total: "50" },
-  ];
-  const dataUniversitasDalam = [
-    { id: 1, title: "Universitas Indonesia", percent: 50, total: "3.000" },
-    {
-      id: 2,
-      title: "Institute Teknologi Bandung",
-      percent: 30,
-      total: "2.000",
-    },
-    {
-      id: 3,
-      title: "Universitas Gadjah Mada",
-      percent: 20,
-      total: "1.000",
-    },
-    {
-      id: 4,
-      title: "Institute Teknologi Sepuluh Nopember",
-      percent: 40,
-      total: "3.000",
-    },
-    {
-      id: 5,
-      title: "Universitas Airlangga",
-      percent: 50,
-      total: "6.000",
-    },
-  ];
+
+  const dataProvinsiPendaftar = [];
+  if (provinsiPendaftar) {
+    provinsiPendaftar.list.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.province,
+        percent: row.percetage,
+        total: row.total,
+      };
+      dataProvinsiPendaftar.push(val);
+    });
+  }
+
+  const dataProvinsiAwardee = [];
+  if (provinsiAwardee) {
+    provinsiAwardee.list.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.province,
+        percent: row.percetage,
+        total: row.total,
+      };
+      dataProvinsiAwardee.push(val);
+    });
+  }
+
+  const dataUniversitasDalam = [];
+  if (UniversitasDalam) {
+    UniversitasDalam.list.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.univ,
+        percent: row.percetage,
+        total: row.total,
+      };
+      dataUniversitasDalam.push(val);
+    });
+  }
+
   const dataUniversitasLuarNegeri = [
     { id: 1, title: "Tsinghua University", percent: 50, total: "3.000" },
     {
@@ -151,25 +182,28 @@ const DashboardBeasiswa = () => {
         <Header
           name={"Kepala Badan Litbang SDM Kementerian Kominfo"}
           text={"Beasiswa Kominfo"}
+          value={totalPengguna.all}
+          dailyAdd={totalPengguna.percetage}
+          statisticDay={totalPengguna.latest}
         />
       </section>
 
       <section className="total-pengguna mt-10">
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Dalam Negeri"}
-              value={252.329}
-              dailyAdd={"23.21"}
-              statisticDay={"+20.220 "}
+              value={totalPendaftar.dn.all}
+              dailyAdd={totalPendaftar.dn.percetage}
+              statisticDay={totalPendaftar.dn.latest}
             />
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Luar Negeri"}
-              value={252.329}
-              dailyAdd={"23.21"}
-              statisticDay={"+20.220 "}
+              value={totalPendaftar.ln.all}
+              dailyAdd={totalPendaftar.ln.percetage}
+              statisticDay={totalPendaftar.ln.latest}
             />
           </div>
         </div>
@@ -177,7 +211,7 @@ const DashboardBeasiswa = () => {
 
       <section className="statistik-peserta mt-5">
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body py-4">
                 <StatistikWrapper
@@ -208,7 +242,7 @@ const DashboardBeasiswa = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body py-4">
                 <StatistikWrapper
@@ -252,7 +286,7 @@ const DashboardBeasiswa = () => {
                 </p>
                 <div className="list-filter d-flex">
                   <div className="d-flex align-items-center">
-                    <p className="mt-3 mr-3 text-dashboard-gray-caption">
+                    <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Filter By:
                     </p>
                     <select className="border-0 p-0">
@@ -266,22 +300,22 @@ const DashboardBeasiswa = () => {
             <div className="row">
               <div className="map-penyebaran col-md-12 mt-5">
                 <div id="map">
-                  <MapDigitalent />
+                  <MapBeasiswa />
                 </div>
               </div>
             </div>
             <div className="row mt-10">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Asal Provinsi Pendaftar Beasiwa
                     </p>
-                    <ListCardInfo data={dataProvinsi} />
+                    <ListCardInfo data={dataProvinsiPendaftar} />
 
                     <PaginationDashboard
-                      total={10}
-                      perPage={5}
+                      total={provinsiPendaftar.total}
+                      perPage={provinsiPendaftar.perPage}
                       title="Pendaftar"
                       activePage={1}
                       funcPagination={(value) => {}}
@@ -289,16 +323,16 @@ const DashboardBeasiswa = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Asal Provinsi Awardee Beasiswa
                     </p>
-                    <ListCardInfo data={dataProvinsi} />
+                    <ListCardInfo data={dataProvinsiAwardee} />
                     <PaginationDashboard
-                      total={10}
-                      perPage={5}
+                      total={provinsiAwardee.total}
+                      perPage={provinsiAwardee.perPage}
                       title="Awardee"
                       activePage={1}
                       funcPagination={(value) => {}}
@@ -308,7 +342,7 @@ const DashboardBeasiswa = () => {
               </div>
             </div>
             <div className="row mt-5">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card">
                   <div className="card-body pb-3">
                     <StatistikWrapper
@@ -317,8 +351,8 @@ const DashboardBeasiswa = () => {
                     />
                     <ListCardInfo data={dataUniversitasDalam} />
                     <PaginationDashboard
-                      total={10}
-                      perPage={5}
+                      total={UniversitasDalam.total}
+                      perPage={UniversitasDalam.perPage}
                       title="Perguruan Tinggi"
                       activePage={1}
                       funcPagination={(value) => {}}
@@ -326,7 +360,7 @@ const DashboardBeasiswa = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card">
                   <div className="card-body pb-3">
                     <StatistikWrapper
@@ -346,13 +380,13 @@ const DashboardBeasiswa = () => {
               </div>
             </div>
             <div className="row mt-5">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Awardee Beasiswa Kominfo"}
                   data={dataAwardee}
                 />
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo title={"Alumni Beasiswa Kominfo"} data={dataAlumni} />
               </div>
             </div>

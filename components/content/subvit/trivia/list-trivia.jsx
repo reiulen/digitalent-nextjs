@@ -317,7 +317,7 @@ const ListTrivia = ({ token }) => {
                       {!trivia ||
                       (trivia && trivia.list_trivia.length === 0) ? (
                         <td className="align-middle text-center" colSpan={6}>
-                          Data Kosong
+                          Data Tidak Ditemukan
                         </td>
                       ) : (
                         trivia &&

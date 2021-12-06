@@ -15,6 +15,8 @@ import { getAllBerandaArtikel } from "../../../../redux/actions/beranda/artikel.
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 
+import styles from "../artikel/artikel.module.css"
+
 const Artikel = () => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -377,11 +379,13 @@ const Artikel = () => {
             category_academy,
             tag
         ))
+
+        window.scrollTo(0,0)
     }
 
 
     return (
-        <Container fluid className="px-10 py-10 bg-white">
+        <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
             {/* BreadCrumb */}
             <SubHeaderComponent 
                 data={[{ link: router.asPath, name: "Artikel" }]}
@@ -389,17 +393,17 @@ const Artikel = () => {
 
             {/* Header */}
             <div className="col-12 mt-5 ml-n1">
-                <h1 className="fw-700">
+                <h1 className="fw-700" style={{fontSize: "40px", fontFamily:"Poppins"}}>
                     {activeTitle}
                 </h1>
 
                 {
                     activeTitle == "Ada Apa di Digitalent" ?
-                        <div className="mt-3">
+                        <div className="mt-3" style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                             Cerita mitra, berita seru, dan artikel terbaru. Baca semua artikel soal Digitalent di sini.
                         </div>
                     :
-                        <div className="mt-3">
+                        <div className="mt-3" style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                             Artikel terkait {activeTitle} di  Digital Talent Scholarship
                         </div>
                 }
@@ -525,7 +529,7 @@ const Artikel = () => {
                                                 },
                                             }
                                         }}
-                                        className= "ml-0 ml-sm-3 mr-n5 mr-sm-n1"
+                                        className= "ml-0 ml-sm-3 mr-n5 mr-sm-n5"
                                     >
                                         {
                                             kategoriArtikel === "" ?
@@ -628,7 +632,7 @@ const Artikel = () => {
                                         />
                                     </div>
                                     <div className="col-7 my-auto">
-                                        <h3 className=" font-weight-bolder">
+                                        <h3 className={`font-weight-bolder ${styles.fontText}`}>
                                             Filter
                                         </h3>
                                     </div>
@@ -651,7 +655,7 @@ const Artikel = () => {
                                     showFilter === true ?
                                         <>
                                             <div className="row ml-3 mt-5">
-                                                <p>
+                                                <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                                     Urutkan Berdasarkan
                                                 </p>
                                             </div>
@@ -746,7 +750,7 @@ const Artikel = () => {
                                             </div>
 
                                             <div className="row ml-3 mt-5">
-                                                <p>
+                                                <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                                     Akademi
                                                 </p>
                                             </div>
@@ -911,7 +915,7 @@ const Artikel = () => {
                                                     <Link href={`/artikel/detail/${el.slug}`}>
                                                         <a>
                                                             <h1 
-                                                                className="text-dark"
+                                                                className={`text-dark font-weight-bolder ${styles.fontText}`}
                                                                 style=
                                                                 {{
                                                                     display:"-webkit-box", 
@@ -937,8 +941,8 @@ const Artikel = () => {
                                                             {/* Insert Desc Here */}
                                                             <div 
                                                                 dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}}
-                                                                className="text-wrap d-flex flex-wrap overflow-hidden"
-                                                                style={{maxWidth:"450px"}}
+                                                                className={`${styles.fontContent} text-wrap d-flex flex-wrap overflow-hidden`}
+                                                                style={{maxWidth:"450px", fontSize:"16px", fontFamily:"Poppins"}}
                                                             />
                                                         </div>
                                                     :
@@ -947,8 +951,8 @@ const Artikel = () => {
                                                 
                                                 <div className="row mb-3 d-flex align-items-center">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12 pl-3">
-                                                        {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
+                                                    <div className="text-muted col-xl-5 col-12 pl-4">
+                                                        {moment(el.tanggal_publish).format("DD MMM")} | {el.dibaca} dibaca
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
@@ -1056,14 +1060,14 @@ const Artikel = () => {
                                         />
                                     </div>
                                     <div className="col-9 my-auto">
-                                        <h3 className=" font-weight-bolder">
+                                        <h3 className={` font-weight-bolder ${styles.fontText}`}>
                                             Filter
                                         </h3>
                                     </div>
                                 </div>
 
                                 <div className="row ml-3 mt-5">
-                                    <p>
+                                    <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                         Urutkan Berdasarkan
                                     </p>
                                 </div>
@@ -1158,7 +1162,7 @@ const Artikel = () => {
                                 </div>
 
                                 <div className="row ml-3 mt-5">
-                                    <p>
+                                    <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                         Akademi
                                     </p>
                                 </div>
@@ -1213,7 +1217,7 @@ const Artikel = () => {
                         className={windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                                 "row d-flex flex-column mx-auto px-10 my-5 d-flex justify-content-center order-3"
                             :
-                                "row d-flex flex-column ml-5 mb-5 d-flex justify-content-center order-3"
+                                "row d-flex flex-column ml-0 ml-xl-5 mb-5 d-flex justify-content-center order-3"
                         }
                     >
                         <h3 className="font-weight-bolder"> 

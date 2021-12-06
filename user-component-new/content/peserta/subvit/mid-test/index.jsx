@@ -473,7 +473,7 @@ const SubtansiUser = ({ token }) => {
                           onClick={handleNext}
                           disabled={
                             parseInt(router.query.id) === data &&
-                            data.total_questions
+                            data?.total_questions
                           }
                         >
                           Lanjut

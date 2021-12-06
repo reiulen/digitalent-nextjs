@@ -65,7 +65,7 @@ const DashboardSimonas = () => {
       <section className="total-perusahaan mt-10">
         <h2 className="title-section-dashboard">perusahaan</h2>
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Lowongan Pekerjaan"}
               value={252.329}
@@ -73,7 +73,7 @@ const DashboardSimonas = () => {
               statisticDay={"+20.220"}
             />
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Proyek"}
               value={252.329}
@@ -84,7 +84,7 @@ const DashboardSimonas = () => {
         </div>
 
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom border bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -102,7 +102,7 @@ const DashboardSimonas = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom border bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -125,7 +125,7 @@ const DashboardSimonas = () => {
       <section className="total-pelamar mt-5">
         <h2 className="title-section-dashboard">pelamar</h2>
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Lamaran"}
               value={252.329}
@@ -133,7 +133,7 @@ const DashboardSimonas = () => {
               statisticDay={"+20.220"}
             />
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Lamaran Aktif"}
               value={252.329}
@@ -144,7 +144,7 @@ const DashboardSimonas = () => {
         </div>
 
         <div className="row mt-5">
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom border bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -162,7 +162,7 @@ const DashboardSimonas = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6 mb-5">
+          <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <div className="card card-custom border bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -192,7 +192,7 @@ const DashboardSimonas = () => {
                 </p>
                 <div className="list-filter d-flex flex-wrap">
                   <div className="d-flex align-items-center mr-5">
-                    <p className="mt-3 mr-3 text-dashboard-gray-caption">
+                    <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Status
                     </p>
                     <select className="border-0 p-0">
@@ -204,7 +204,7 @@ const DashboardSimonas = () => {
                     </select>
                   </div>
                   <div className="d-flex align-items-center">
-                    <p className="mt-3 mr-3 text-dashboard-gray-caption">
+                    <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Tahun
                     </p>
                     <select className="border-0 p-0">
@@ -223,7 +223,7 @@ const DashboardSimonas = () => {
               </div>
             </div>
             <div className="row mt-10">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -241,7 +241,7 @@ const DashboardSimonas = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -260,13 +260,13 @@ const DashboardSimonas = () => {
               </div>
             </div>
             <div className="row mt-5">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Umur Pelamar Lamaran Kerja"}
                   data={dataUmur}
                 />
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Pelamar Kerja berdasarkan Jenis Kelamin"}
                   data={dataJenisKelamin}
@@ -274,13 +274,13 @@ const DashboardSimonas = () => {
               </div>
             </div>
             <div className="row mt-5">
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Pendidikan Pelamar Kerja"}
                   data={dataPendidikan}
                 />
               </div>
-              <div className="col-md-6 mb-5">
+              <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Pendidikan Pelamar Proyek"}
                   data={dataPendidikan}
