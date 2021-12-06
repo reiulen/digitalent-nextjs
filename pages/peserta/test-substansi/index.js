@@ -91,7 +91,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           success = false;
         }
       } else {
-        success = false;
+        const { data } = await store.dispatch(
+          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+        );
+        console.log(data, "ini data");
       }
 
       return {

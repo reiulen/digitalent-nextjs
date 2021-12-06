@@ -47,7 +47,11 @@ export default function CardTemplateOriginal({ data, session }) {
                 Cookies.set("id_tema", data.tema_id);
                 return router.push(`/peserta/test-substansi`);
               }
-
+              if (
+                data.status.includes("administrasi") &&
+                !data.status.includes("administrasi akhir")
+              )
+                return router.push(`/peserta/administrasi?id=${data.id}`);
               if (data.status.includes("seleksi akhir")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);

@@ -60,8 +60,7 @@ export default function SeleksiAdministrasi() {
                 className="font-weight-bolder my-0"
                 style={{ fontSize: "32px" }}
               >
-                {data?.name || "-"} aku adalah anak gembala selalu riang sehat
-                sentosa
+                {data?.name || "-"}
               </h1>
               <div className="text-muted "></div>
             </Col>
