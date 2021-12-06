@@ -8,8 +8,9 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { helperUserStatusColor } from "../../../../utils/middleware/helper";
+import ButtonStatusPeserta from "../../../components/global/StatusPesertaButton";
 
-export default function SeleksiAdministrasi() {
+export default function SeleksiAdministrasi({ session }) {
   const { state: data } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
@@ -101,21 +102,7 @@ export default function SeleksiAdministrasi() {
             </Col>
             <Col md={12} className="py-10 ">
               <Row>
-                {data.status !== "tidak lulus administrasi" && (
-                  <Col>
-                    <Button
-                      className="btn-rounded-full font-weight-bold btn-block justify-content-center"
-                      style={{ height: "40px", fontSize: "14px" }}
-                      onClick={() => {}}
-                    >
-                      <i
-                        className="ri-download-2-fill mr-2"
-                        style={{ color: "white" }}
-                      ></i>
-                      Bukti Pendaftaran
-                    </Button>
-                  </Col>
-                )}
+                <ButtonStatusPeserta data={data} token={session.token} />
               </Row>
 
               <hr className="my-12" />
@@ -210,7 +197,6 @@ export default function SeleksiAdministrasi() {
                       </div>
                       <div style={{ fontSize: "12px" }}>
                         {data?.lokasi_mitra || "-"}
-                        {console.log(data)}
                       </div>
                     </div>
                   </div>
