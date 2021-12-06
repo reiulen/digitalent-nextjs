@@ -28,10 +28,7 @@ const SeleksiAdministrasi = dynamic(
 );
 
 const BelumTersedia = dynamic(
-  () =>
-    import(
-      "../../../user-component-new/content/peserta/administrasi/administrasi-belum-tersedia.jsx"
-    ),
+  () => import("../../../user-component-new/content/peserta/empty-state/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -63,7 +60,7 @@ export default function RiwayatPelatihanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 

@@ -89,7 +89,6 @@ const Dashboard = ({ session, success }) => {
       throw error;
     }
   };
-  console.log(beasiswa, "ini beasiswa");
 
   const getBeasiswa = async () => {
     // const link = "https://beasiswa-dev.majapahit.id/api/get-scholarship-data";
@@ -139,6 +138,8 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
+
+  console.log(dataDashboard);
 
   return (
     <>
@@ -330,7 +331,9 @@ const Dashboard = ({ session, success }) => {
                         className="d-flex justify-content-between position-relative pb-0 mb-0"
                         style={{ top: "-15px" }}
                       >
-                        <p className={`pl-20 my-0 ${style.text_mitra}`}>
+                        <p
+                          className={`pl-20 my-0 text-truncate ${style.text_mitra}`}
+                        >
                           {pelatihan.pelatihan_berjalan.mitra ||
                             pelatihan.pelatihan_berjalan.penyelenggara ||
                             "-"}
@@ -447,7 +450,6 @@ const Dashboard = ({ session, success }) => {
                       objectFit="cover"
                       alt="image"
                     />
-                    {console.log(dataDashboard?.pelatihan)}
                     <Card.ImgOverlay>
                       <Badge
                         bg={` rounded-xl py-3 px-4 ${style.badge_card}`}

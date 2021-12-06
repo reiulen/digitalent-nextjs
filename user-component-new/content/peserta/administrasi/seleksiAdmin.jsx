@@ -55,18 +55,22 @@ export default function SeleksiAdministrasi() {
       <Col lg={12} className="px-0">
         <Card className="card-custom card-stretch gutter-b p-0">
           <Row className="p-10 m-0">
-            <Col className="d-flex align-items-start">
+            <Col md={9} className="d-flex align-items-start">
               <h1
                 className="font-weight-bolder my-0"
-                style={{ fontSize: "36px" }}
+                style={{ fontSize: "32px" }}
               >
-                {data?.name || "-"}
+                {data?.name || "-"} aku adalah anak gembala selalu riang sehat
+                sentosa
               </h1>
               <div className="text-muted "></div>
             </Col>
-            <Col className="d-flex justify-content-end">
+            <Col
+              md={3}
+              className="d-flex justify-content-md-end justify-content-start"
+            >
               <span
-                className={`label label-inline label-light-${label} font-weight-bold text-capitalize`}
+                className={`label label-inline label-light-${label}  text-center font-weight-bold text-capitalize`}
                 style={{ borderRadius: "25px" }}
               >
                 {data?.status || "-"}
@@ -153,8 +157,8 @@ export default function SeleksiAdministrasi() {
                   )}
                 </Card.Body>
               </Card>
-              <Row>
-                <Col>
+              <Row className="m-0 p-0">
+                <Col md={6} className="px-md-4 px-0">
                   <p
                     className="font-weight-bolder"
                     style={{ fontSize: "16px" }}
@@ -177,7 +181,7 @@ export default function SeleksiAdministrasi() {
                     Unduh Silabus
                   </Button>
                 </Col>
-                <Col className="px-10">
+                <Col md={6} className="px-md-10 px-0 mt-12 mt-md-0">
                   <p
                     style={{ fontSize: "16px" }}
                     className="font-weight-bolder"
@@ -187,9 +191,11 @@ export default function SeleksiAdministrasi() {
                   <div className="d-flex">
                     <img
                       src={
-                        !data?.gambar_mitra
+                        !data?.gambar_mitra || data?.logo
                           ? "/assets/media/default-card.png"
-                          : `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
+                          : data?.logo
+                          ? data?.file_path + data?.logo
+                          : data?.file_path + data.gambar_mitra
                       }
                       width={58}
                       height={58}
@@ -201,10 +207,11 @@ export default function SeleksiAdministrasi() {
                         className="font-weight-bolder"
                         style={{ fontSize: "14px" }}
                       >
-                        {data?.mitra || "-"}
+                        {data?.mitra || data?.penyelenggara || "-"}
                       </div>
                       <div style={{ fontSize: "12px" }}>
                         {data?.lokasi_mitra || "-"}
+                        {console.log(data)}
                       </div>
                     </div>
                   </div>

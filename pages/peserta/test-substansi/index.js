@@ -27,10 +27,7 @@ const TesSubstansiDetail = dynamic(
 );
 
 const BelumTersedia = dynamic(
-  () =>
-    import(
-      "../../../user-component-new/content/peserta/test-substansi/belum-tersedia.jsx"
-    ),
+  () => import("../../../user-component-new/content/peserta/empty-state/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -76,57 +73,23 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      // if (!req.cookies.id_pelatihan) {
-      //   const { data } = await store.dispatch(
-      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-      //   );
-      //   if (!data) {
-      //     return (success = false);
-      //   } else {
-      //     const test_substansi = data.list.filter(
-      //       (item) => item.status === "tes substansi"
-      //     );
-      //     if (test_substansi.length > 0) {
-      //       await store.dispatch(
-      //         getDetailRiwayatPelatihan(
-      //           test_substansi[0].id,
-      //           session.user.user.data.user.token
-      //         )
-      //       );
-      //       success = true;
-      //     } else {
-      //       success = false;
-      //     }
-      //   }
-      // } else {
-      //   await store.dispatch(
-      //     getDetailRiwayatPelatihan(
-      //       req.cookies.id_pelatihan,
-      //       session.user.user.data.user.token
-      //     )
-      //   );
-      //   success = true;
-      // }
+
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 
-      const { data } = await store.dispatch(
-        getDashboardPeserta(session?.user.user.data.user.token)
-      );
-      
-      const status = data.pelatihan.pelatihan_berjalan.status || "";
-      if (!status || status == "") {
-        success = false;
-      } else if (
-        status.includes("substansi" || "belum tersedia" || "belum mengerjakan")
-      ) {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            data.pelatihan.pelatihan_berjalan.id,
-            session.user.user.data.user.token
-          )
+      if (query.id) {
+        const { data } = await store.dispatch(
+          getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
         );
-        success = true;
+        if (
+          data.status.includes(
+            "substansi" || "belum tersedia" || "belum mengerjakan"
+          )
+        ) {
+          success = true;
+        } else {
+          success = false;
+        }
       } else {
         success = false;
       }
