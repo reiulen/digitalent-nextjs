@@ -139,6 +139,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
               <div className="col-sm-10 my-auto">
                 <div className="form-check form-check-inline">
                   <input
+                    id="radioYa"
                     type="radio"
                     name="commitment"
                     className="form-check-input"
@@ -149,10 +150,13 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
                       simpleValidator.current.showMessageFor("komitmen")
                     }
                   />
-                  <label className="form-check-label">Ya</label>
+                  <label className="form-check-label" htmlFor="radioYa">
+                    Ya
+                  </label>
                 </div>
                 <div className="form-check form-check-inline">
                   <input
+                    id="radioTidak"
                     type="radio"
                     name="commitment"
                     value="0"
@@ -166,7 +170,9 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
                       simpleValidator.current.showMessageFor("komitmen")
                     }
                   />
-                  <label className="form-check-label">Tidak</label>
+                  <label className="form-check-label" htmlFor="radioTidak">
+                    Tidak
+                  </label>
                 </div>
                 {simpleValidator.current.message(
                   "komitmen",
