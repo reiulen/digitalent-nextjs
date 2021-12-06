@@ -14,7 +14,6 @@
   background-color: #ecf5fc;
   color: #1f1f1f;
   font-weight: 600;
-  /* width: 295px; */
   width: 95%;
 }
 
@@ -176,6 +175,18 @@
   color: #1F1F1F;
 }
 
+.data-daerah-provinsi {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #1F1F1F;
+  position: sticky;
+  left: 50px;
+  width: 150px;
+  flex-wrap: wrap;
+}
+
 .total-peserta {
   font-family: Poppins;
   font-style: normal;
@@ -234,17 +245,21 @@
   color: #fff;
 }
 
-.text-gray a {
-  color: gray;
+.data-head{
+  position: absolute;
+  top: 24px;
+  right: 0;
 }
 
+.data-head-2{
+  position: absolute;
+  top: 15px;
+  right: 0;
+  background-color: #203E80;
+}
 
-.data-daerah {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  color: #1f1f1f;
+.text-gray a {
+  color: gray;
 }
 
 .total-peserta {
@@ -305,7 +320,12 @@
 }
 
 .provinsi-styling{
-  margin-right: 30px;
+  margin-right: -30px;
+}
+
+.provinsi-styling-2{
+  margin-right: -30px;
+  background-color: #203E80;
 }
 
 .styling-unduh > div {
@@ -341,6 +361,50 @@
   } 
 }
 
+@media only screen and (max-width: 1222px) {
+  
+  .data-daerah {
+    font-size: 14px;
+  }
+  .data-peserta{
+    font-size: 13px;
+  }
+  .berdasarkan{
+    font-size: 9px;
+  }
+  .data-head-2{
+    font-size: 10px;
+    padding: 8px;
+    right: 25px;
+  }
+  .data-head{
+    font-size: 10px;
+    padding: 8px;
+    right: 20px;
+    top: 15px;
+  }
+  .provinsi-styling{
+    font-size: 10px;
+    padding: 8px;
+    position: absolute;
+    top: 15px;
+    right: 22px;
+  }
+  .provinsi-styling-2{
+    font-size: 10px;
+    padding: 8px;
+    position: absolute;
+    top: 15px;
+    right: 22px;
+  }
+  .data-daerah-provinsi{
+    font-size: 11px;
+  }
+  .total-peserta{
+    font-size: 11px;
+  }
+}
+
 @media only screen and (max-width: 1024px) {
   .styling-content-pelatihan {
     margin-left: 12px;
@@ -366,13 +430,49 @@
   /* DASHBOARD SITE MANAGEMENT */
   
   .cardDataPeserta{
-    /* margin: 0 2px 0 10px; */
     width: 77%;
   }
+  
   .data-daerah {
     font-size: 14px;
   }
-
+  .data-peserta{
+    font-size: 13px;
+  }
+  .berdasarkan{
+    font-size: 9px;
+  }
+  .data-head-2{
+    font-size: 10px;
+    padding: 8px;
+    right: 25px;
+  }
+  .data-head{
+    font-size: 10px;
+    padding: 8px;
+    right: 20px;
+    top: 15px;
+  }
+  .provinsi-styling{
+    font-size: 10px;
+    padding: 8px;
+    position: absolute;
+    top: 15px;
+    right: 22px;
+  }
+  .provinsi-styling-2{
+    font-size: 10px;
+    padding: 8px;
+    position: absolute;
+    top: 15px;
+    right: 22px;
+  }
+  .data-daerah-provinsi{
+    font-size: 11px;
+  }
+  .total-peserta{
+    font-size: 11px;
+  }
 }
 
 @media only screen and (max-width: 991px) {
@@ -405,6 +505,37 @@
   }
   .styling-upload > div {
     margin: 5px 0;
+  }
+
+  /* DASHBOARD Site Management */
+  .data-daerah-provinsi{
+    width: 100%;
+  }
+  .data-head-2{
+    padding: 8px;
+    right: 40px;
+  }
+  .data-head{
+    font-size: 10px;
+    padding: 8px;
+    right: 20px;
+    top: 15px;
+  }
+  .provinsi-styling{
+    padding: 8px;
+    position: absolute;
+    top: 15px;
+    right: 60px;
+  }
+  .provinsi-styling-2{
+    font-size: 10px;
+    padding: 8px;
+    position: absolute;
+    top: 15px;
+    right: 60px;
+  }
+  .cardDataPeserta{
+    width: 100%;
   }
 }
 
