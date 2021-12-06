@@ -4,14 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import style from "./style.module.css";
 import { useRouter } from "next/router";
-import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import { helperUserStatusColor } from "../../../../utils/middleware/helper";
-import ButtonStatusPeserta from "../../../components/global/StatusPesertaButton";
 import moment from "moment";
+import { helperUserStatusColor } from "../../../../utils/middleware/helper";
+import ButtonStatusPeserta from "../StatusPesertaButton";
+import PesertaWrapper from "../../wrapper/Peserta.wrapper";
 
-export default function SeleksiAdministrasi({ session }) {
+export default function RiwayatPelatihanDetail({ session }) {
   const { state: data } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );

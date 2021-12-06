@@ -9,7 +9,7 @@ import Pagination from "react-js-pagination";
 import style from "./style.module.css";
 import { useSelector } from "react-redux";
 import Image from "next/image";
-import LoadingTable from '../../../../components/LoadingTable'
+import LoadingTable from "../../../../components/LoadingTable";
 
 import {
   getAllRiwayatPelatihanPeserta,
@@ -34,7 +34,10 @@ export default function RiwayatPelatihan({ session }) {
   const [status, setStatus] = useState(null);
   const [selected, setSelected] = useState(0);
 
-  const handleClose = () => {setShowModal(false); setStatus(null)};
+  const handleClose = () => {
+    setShowModal(false);
+    setStatus(null);
+  };
   const handleShow = () => setShowModal(true);
 
   const handleFilter = () => {
@@ -112,7 +115,11 @@ export default function RiwayatPelatihan({ session }) {
                     }}
                     onClick={handleShow}
                   >
-                    <div className={`d-flex align-items-center ${status ? "" : "text-muted"}`}>
+                    <div
+                      className={`d-flex align-items-center ${
+                        status ? "" : "text-muted"
+                      }`}
+                    >
                       <IconFilter className="mr-3" />
                       {status ? status?.label : "Pilih Filter"}
                     </div>
@@ -125,9 +132,6 @@ export default function RiwayatPelatihan({ session }) {
                     return (
                       <Col md={2} sm={3} key={i} className="d-flex w-100">
                         <Button
-                          // variant={
-                          //   selected == i ? "primary" : "outline-secondary"
-                          // }
                           onClick={(e) => {
                             setSelected(i);
                             dispatch(setValuePeserta(filter[i].value));
@@ -149,14 +153,20 @@ export default function RiwayatPelatihan({ session }) {
           </Card>
         </Col>
         {/* <Administrasi /> */}
-        {dataRiwayatPelatihan.loading && <div className="mb-2"><LoadingTable /></div>}
-        {dataRiwayatPelatihan.listPelatihan.list.length > 0 ? dataRiwayatPelatihan.listPelatihan.list.map((el, i) => {
-          return (
-            <Fragment key={i}>
-              <CardPeserta status={"test"} data={el} session={session} />
-            </Fragment>
-          );
-        }) : (
+        {dataRiwayatPelatihan.loading && (
+          <div className="mb-2">
+            <LoadingTable />
+          </div>
+        )}
+        {dataRiwayatPelatihan?.listPelatihan?.list?.length > 0 ? (
+          dataRiwayatPelatihan?.listPelatihan?.list?.map((el, i) => {
+            return (
+              <Fragment key={i}>
+                <CardPeserta status={"test"} data={el} session={session} />
+              </Fragment>
+            );
+          })
+        ) : (
           <div className="row mx-auto bg-white rounded">
             <div className="col col-12 d-flex flex-column justify-content-center">
               <Image

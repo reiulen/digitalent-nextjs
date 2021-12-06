@@ -29,10 +29,10 @@ export default function ButtonStatusPeserta({ data, token }) {
 
       const { data } = await axios.post(link, body, config);
       if (data) {
-        Swal.fire(data.message, "Berhasil upload sertifikasi", "success");
+        Swal.fire(data?.message, "Berhasil upload sertifikasi", "success");
       }
     } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      Swal.fire("Gagal", `${error.response.data?.message}`, "error");
     }
   };
 
@@ -73,31 +73,31 @@ export default function ButtonStatusPeserta({ data, token }) {
           const link = document.createElement("a");
           link.download = `Bukti Pendaftaran.pdf`;
           link.target = "_blank";
-          link.href = data.data;
+          link.href = data?.data;
           link.click();
           document.body.removeChild(link);
         }
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error.response.data?.message}`, "error");
       }
     }
   };
 
   return (
     <Fragment>
-      {data.lpj ? (
+      {data?.lpj ? (
         <Fragment>
           <CustomButton
             outline
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
           <CustomButton
             click={() => {
-              Cookies.set("id_pelatihan", data.id);
-              Cookies.set("id_tema", data.tema_id);
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
               router.push(`/peserta/form-lpj`);
             }}
           >
@@ -105,52 +105,52 @@ export default function ButtonStatusPeserta({ data, token }) {
             Isi Laporan Pertangungjawaban
           </CustomButton>
         </Fragment>
-      ) : data.survei || data.status == "survey belum tersedia" ? (
+      ) : data?.survei || data?.status == "survey belum tersedia" ? (
         <Fragment>
           <CustomButton
             outline
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
 
           <CustomButton
-            disabled={!data.survei}
+            disabled={!data?.survei}
             click={() => {
               router.push("/peserta/survey");
-              Cookies.set("id_pelatihan", data.id);
-              Cookies.set("id_tema", data.tema_id);
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Isi Survei
             <i className="ri-arrow-right-s-line mr-2"></i>
           </CustomButton>
         </Fragment>
-      ) : data.lpj || data.status == "lpj belum tersedia" ? (
+      ) : data?.lpj || data?.status == "lpj belum tersedia" ? (
         <Fragment>
           <CustomButton
             outline
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
           <CustomButton
-            disabled={!data.lpj}
-            click={() => handleClick("download", data.id_pendaftaran)}
+            disabled={!data?.lpj}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             Isi Laporan Pertangung Jawaban
             <i className="ri-arrow-right-s-line mr-2"></i>
           </CustomButton>
         </Fragment>
-      ) : data.status == "pelatihan" && data.trivia && data.midtest ? (
+      ) : data?.status == "pelatihan" && data?.trivia && data?.midtest ? (
         <Fragment>
           <CustomButton
             click={() => {
               router.push(`/peserta/mid-test/panduan-mid-test`);
-              Cookies.set("id_pelatihan", data.id);
-              Cookies.set("id_tema", data.tema_id);
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Kerjakan Mid Test
@@ -159,61 +159,61 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(`/peserta/trivia`);
-              Cookies.set("id_pelatihan", data.id);
-              Cookies.set("id_tema", data.tema_id);
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
           </CustomButton>
         </Fragment>
-      ) : data.status == "pelatihan" && data.midtest ? (
+      ) : data?.status == "pelatihan" && data?.midtest ? (
         <Fragment>
           <CustomButton
             click={() => {
               router.push(`/peserta/mid-test/panduan-mid-test`);
-              Cookies.set("id_pelatihan", data.id);
-              Cookies.set("id_tema", data.tema_id);
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Kerjakan Mid Test
             <i className="ri-arrow-right-s-line mr-2"></i>
           </CustomButton>
         </Fragment>
-      ) : data.status == "pelatihan" && data.trivia ? (
+      ) : data?.status == "pelatihan" && data?.trivia ? (
         <Fragment>
           <CustomButton
             click={() => {
               router.push(`/peserta/trivia`);
-              Cookies.set("id_pelatihan", data.id);
-              Cookies.set("id_tema", data.tema_id);
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
           </CustomButton>
         </Fragment>
-      ) : data.status == "pelatihan" ? (
+      ) : data?.status == "pelatihan" ? (
         <Fragment>
           <CustomButton
             outline
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
         </Fragment>
-      ) : data.status == "menunggu" ? (
+      ) : data?.status == "menunggu" ? (
         <Fragment>
           <CustomButton
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
         </Fragment>
-      ) : data.status == "lulus pelatihan" ||
-        data.status == "Lulus Pelatihan" ? (
+      ) : data?.status == "lulus pelatihan" ||
+        data?.status == "Lulus Pelatihan" ? (
         <Fragment>
-          {data.sertifikasi == "1" && (
+          {data?.sertifikasi == "1" && (
             <CustomButton outline click={() => setShowModalSertifikasi(true)}>
               <i className="ri-upload-2-fill mr-2"></i>
               Unggah Sertifikasi
@@ -222,10 +222,10 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/riwayat-pelatihan/${data.name
+                `/peserta/riwayat-pelatihan/${data?.name
                   .split(" ")
                   .join("-")
-                  .toLowerCase()}/sertifikat/${data.id}`
+                  .toLowerCase()}/sertifikat/${data?.id}`
               );
             }}
           >
@@ -233,78 +233,78 @@ export default function ButtonStatusPeserta({ data, token }) {
             Lihat Sertifikat
           </CustomButton>
         </Fragment>
-      ) : data.status == "tes substansi" ? (
+      ) : data?.status == "tes substansi" ? (
         <Fragment>
           <CustomButton
             outline
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
           <CustomButton
             click={() => {
-              Cookies.set("id_pelatihan", data.id);
-              Cookies.set("id_tema", data.tema_id);
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
               router.push(`/peserta/test-substansi/panduan-substansi`);
             }}
-            disabled={!data.tes_subtansi}
+            disabled={!data?.tes_subtansi}
           >
             Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
           </CustomButton>
         </Fragment>
-      ) : data.status == "diterima" ? (
+      ) : data?.status == "diterima" ? (
         <Fragment>
-          {data.sertifikasi == "1" && (
+          {data?.sertifikasi == "1" && (
             <CustomButton outline click={() => setShowModalSertifikasi(true)}>
               <i className="ri-upload-2-fill mr-2"></i>
               Unggah Sertifikasi
             </CustomButton>
           )}
           <CustomButton
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
         </Fragment>
-      ) : data.status.includes("seleksi administrasi") ||
-        data.status.includes("seleksi") ? (
+      ) : data?.status.includes("seleksi administrasi") ||
+        data?.status.includes("seleksi") ? (
         <Fragment>
           <CustomButton
             outline
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
         </Fragment>
-      ) : data.status.includes("menunggu") ? (
+      ) : data?.status.includes("menunggu") ? (
         <Fragment>
           <CustomButton
             outline
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
         </Fragment>
-      ) : data.status.includes("belum tersedia") ? (
+      ) : data?.status.includes("belum tersedia") ? (
         <Fragment>
           <CustomButton
             outline
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran
           </CustomButton>
         </Fragment>
-      ) : data.status === "lpj belum mengerjakan" ? (
+      ) : data?.status === "lpj belum mengerjakan" ? (
         <Fragment>
           <CustomButton
             disabled
             outline
-            click={() => handleClick("download", data.id_pendaftaran)}
+            click={() => handleClick("download", data?.id_pendaftaran)}
           >
             <i className="ri-file-text-line mr-2"></i>
             Isi Laporan Pertangungjawaban
@@ -399,7 +399,7 @@ export default function ButtonStatusPeserta({ data, token }) {
             className="btn btn-primary-rounded-full"
             type="button"
             onClick={() => {
-              uploadSertifikasi(imageSertifikasi, data.id_pendaftaran);
+              uploadSertifikasi(imageSertifikasi, data?.id_pendaftaran);
             }}
           >
             Upload
