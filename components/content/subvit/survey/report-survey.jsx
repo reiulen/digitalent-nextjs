@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
@@ -24,13 +22,14 @@ const ReportSurvey = ({ token }) => {
     (state) => state.allReportSurveyQuestionBanks
   );
 
+  const { theme, academy } = survey.dataTitle;
+
   let { page = 1, id } = router.query;
   page = Number(page);
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [status, setStatus] = useState("");
-  const [pelatihan, setPelatihan] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -45,7 +44,7 @@ const ReportSurvey = ({ token }) => {
     if (limit) link = link.concat(`&limit=${limit}`);
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+
     router.push(link);
   };
 
@@ -67,9 +66,14 @@ const ReportSurvey = ({ token }) => {
     let link = `http://dts-subvit-dev.majapahit.id/api/survey-question-banks/report/export/${id}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
 
-    await axios.get(link).then((res) => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios.get(link, config).then((res) => {
       window.location.href = res.data.data;
     });
   };
@@ -77,8 +81,9 @@ const ReportSurvey = ({ token }) => {
   const handleFilter = () => {
     let link = `${router.pathname}?id=${id}&page=${1}`;
     if (status) link = link.concat(`&status=${status}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+
     router.push(link);
+    setShowModal(false);
   };
 
   const handlePublish = (val) => {
@@ -86,7 +91,7 @@ const ReportSurvey = ({ token }) => {
     let link = `${router.pathname}?id=${id}&page=${1}&card=${val}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+
     router.push(link);
   };
 
@@ -176,7 +181,9 @@ const ReportSurvey = ({ token }) => {
                       publishValue.slice(1).replace("-", " ")
                     }`}
               </h3>
-              <p className="text-muted">FGA - Cloud Computing</p>
+              <p className="text-muted">
+                {academy} - {theme}
+              </p>
             </div>
             <div className="card-toolbar"></div>
           </div>
@@ -266,7 +273,7 @@ const ReportSurvey = ({ token }) => {
                       {survey && survey.data.reports.length === 0 ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (
@@ -402,16 +409,17 @@ const ReportSurvey = ({ token }) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Filter</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
         </Modal.Header>
         <Modal.Body>
-          <div className="form-group mb-5">
-            <label className="p-0">Pelatihan</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
-          </div>
           <div className="form-group mb-5">
             <label className="p-0">Status</label>
             <select
@@ -423,8 +431,8 @@ const ReportSurvey = ({ token }) => {
               <option value="" selected>
                 Semua
               </option>
-              <option value={1}>Diterima</option>
-              <option value={0}>Ditolak</option>
+              <option value={0}>Diterima</option>
+              <option value={1}>Ditolak</option>
             </select>
           </div>
         </Modal.Body>
@@ -432,6 +440,12 @@ const ReportSurvey = ({ token }) => {
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
             type="reset"
+            onClick={() => {
+              setShowModal(false);
+              setStatus("");
+              let link = `${router.pathname}?id=${id}&page=${1}`;
+              router.push(link);
+            }}
           >
             Reset
           </button>

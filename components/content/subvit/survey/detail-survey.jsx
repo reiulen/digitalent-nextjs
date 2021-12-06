@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
-import Image from "next/image";
+
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
-import ButtonAction from "../../../ButtonAction";
+
 import moment from "moment";
 import "moment/locale/id";
 
@@ -105,13 +105,14 @@ const DetailSurvey = ({ token }) => {
     });
   };
 
-  // const handleSearch = () => {
-  //   let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`;
-  //   router.push(link);
-  // };
+  const handleSearchEnter = (e) => {
+    if (e.key === "Enter") {
+      dispatch(getAllSurveyQuestionDetail(id, 1, 5, search, token));
+    }
+  };
 
   const handleSearch = () => {
-    router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}`);
+    dispatch(getAllSurveyQuestionDetail(id, 1, 5, search, token));
   };
 
   const handleTextSearch = (e) => {
@@ -270,6 +271,7 @@ const DetailSurvey = ({ token }) => {
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(event) => handleTextSearch(event)}
+                      onKeyUp={(event) => handleSearchEnter(event)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -312,7 +314,7 @@ const DetailSurvey = ({ token }) => {
                     survey_question_detail.list_questions &&
                     survey_question_detail.list_questions.length === 0 ? (
                       <td className="align-middle text-center" colSpan={8}>
-                        Data Kosong
+                        Data Tidak Ditemukan
                       </td>
                     ) : (
                       survey_question_detail &&

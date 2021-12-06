@@ -87,11 +87,10 @@ const Header = () => {
             <Col sm={3} hidden={router.pathname.includes(routerPath)}>
               <center>
                 <Image
-                  src={`${
-                    dataPribadi && dataPribadi.foto
+                  src={`${dataPribadi && dataPribadi.foto
                       ? dataPribadi.file_path + dataPribadi.foto
                       : "/assets/media/logos/default.png"
-                  }`}
+                    }`}
                   alt=""
                   className={styles.imageProfile}
                   width="120px"
@@ -134,6 +133,10 @@ const Header = () => {
                           "Mid Test"
                         ) : router.pathname.includes("bookmark") ? (
                           "Favorit"
+                        ) : router.pathname.includes("tambah-artikel") ? (
+                          "Artikel > Tambah Artikel"
+                        ) : router.pathname.includes("artikel") ? (
+                          "Artikel"
                         ) : router.pathname.includes("profile") &&
                           localStorage.getItem("btn") === "0" ? (
                           <>
@@ -325,8 +328,8 @@ const Header = () => {
                             ) : router.pathname.includes("test-subtansi") ? (
                               "Test Substansi"
                             ) : router.pathname.includes(
-                                "riwayat-pelatihan"
-                              ) ? (
+                              "riwayat-pelatihan"
+                            ) ? (
                               "Riwayat Pelatihan"
                             ) : router.pathname.includes("administrasi") ? (
                               "Administrasi"
