@@ -295,6 +295,11 @@ a {
   background: #fdeaec;
 }
 
+.select-pelatihan-warning {
+  color: #ffa800;
+  background: #fff7e6;
+}
+
 .box-hide-arrow {
   position: absolute;
   height: 77%;
@@ -313,7 +318,7 @@ a {
 }
 
 .img-carousel {
-  border-radius: 12px;
+  border-radius: 5px;
 }
 
 .slick-list {
@@ -345,7 +350,7 @@ a {
   margin-right: 0px !important;
 }
 
-p > img{
+p > img {
   width: 85%;
   margin-left: 55px;
 }

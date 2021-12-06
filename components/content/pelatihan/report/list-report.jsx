@@ -56,6 +56,7 @@ const ListReport = ({ token }) => {
   const [page, setPage] = useState(1);
   const [dateRegister, setDateRegister] = useState([null, null]);
   const [dateRegisterStart, dateRegisterEnd] = dateRegister;
+  const [statusPelatihan, setStatusPelatihan] = useState(null);
 
   const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
   const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
@@ -79,13 +80,23 @@ const ListReport = ({ token }) => {
     }
   }
 
+  const optionsStatusPelatihan = [
+    { value: "review substansi", label: "Review Substansi" },
+    { value: "menunggu pendaftaran", label: "Menunggu Pendaftaran" },
+    { value: "pendaftaran", label: "Pendaftaran" },
+    { value: "seleksi", label: "Seleksi" },
+    { value: "pelatihan", label: "Pelatihan" },
+    { value: "selesai", label: "Selesai" },
+    { value: "dibatalkan", label: "Dibatalkan" },
+  ];
+
   const downloadWord = (e, id) => {
     e.preventDefault();
     window.open(
       process.env.END_POINT_API_PELATIHAN +
         `api/v1/pelatihan/export-rekap-pendaftaran-data-doc?pelatihan_id=${id}`,
       "_blank"
-    ); 
+    );
   };
 
   const listReportTraining =
@@ -470,7 +481,6 @@ const ListReport = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              isDisabled={academy.value === ""}
               options={drowpdownTemabyAkademi.data.data}
               defaultValue={theme}
               value={theme}
@@ -479,9 +489,14 @@ const ListReport = ({ token }) => {
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={optionsStatusPelatihan}
+              defaultValue={statusPelatihan}
+              value={statusPelatihan}
+              onChange={(e) =>
+                setStatusPelatihan({ value: e.value, label: e.label })
+              }
+            />
           </div>
           <div className="row">
             <div className="form-group mb-5 col-md-6">
@@ -531,6 +546,20 @@ const ListReport = ({ token }) => {
               setTheme({ label: "", value: "" });
               setDateRegister([null, null]);
               setDatePelaksanaan([null, null]);
+              dispatch(
+                listsReportTraining(
+                  token,
+                  1,
+                  5,
+                  "",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                )
+              );
             }}
           >
             Reset
@@ -557,7 +586,10 @@ const ListReport = ({ token }) => {
                   academy.label,
                   theme.label,
                   register[0] === "Invalid date" ? "" : register.join(","),
-                  pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(",")
+                  pelaksanaan[0] === "Invalid date"
+                    ? ""
+                    : pelaksanaan.join(","),
+                  statusPelatihan.label
                 )
               );
             }}

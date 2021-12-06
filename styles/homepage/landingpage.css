@@ -115,7 +115,6 @@
   font-weight: 600;
   color: #6c6c6c;
   text-align: start;
-  max-width: 20rem;
 }
 
 .status-mitra-open-new {
@@ -141,10 +140,6 @@
   font-size: 18px;
   color: #1f1f1f;
   text-align: start;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  max-width: 40rem !important;
 }
 
 .text-date-register-new {
@@ -369,13 +364,23 @@
 }
 /* END PENYELENGGARA */
 
+.image-thumbnail-detail {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+
 @media (min-width: 768px) {
+  .image-thumbnail-detail {
+    position: relative;
+    width: 100%;
+    height: 380px;
+  }
   .text-mitra-new {
     font-size: 14px;
     font-weight: 600;
     color: #6c6c6c;
     text-align: start;
-    max-width: 17rem;
   }
 
   .title-step-register h1 {
@@ -417,12 +422,6 @@
   .padding-content-tema {
     padding: 32px 18px;
   }
-  .title-card-new {
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-    max-width: 11rem !important;
-  }
   .padding-content-footer {
     padding: 20px 30px;
   }
@@ -455,9 +454,25 @@
 .module {
   width: 250px;
   overflow: hidden;
-}
-.line-clamp {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.module-pelatihan-mitra {
+  width: 400px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  line-height: 25px;
+}
+
+.module-pelatihan-name {
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  line-height: 25px;
 }

@@ -87,7 +87,7 @@ export default function Carousel({ data }) {
         breakpoint: 790,
         settings: {
           variableWidth: false,
-          centerMode: true,
+          centerMode: false,
           centerPadding: "40px",
         },
       },
