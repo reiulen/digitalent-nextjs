@@ -87,16 +87,13 @@ export const deleteExportDataAction = (id, token) => async (dispatch) => {
   }
 };
 
-export const getDetailExportData =
-  (id, token) => async (dispatch, getState) => {
-    let pageState = getState().detailExportData.page || 1;
-    let cariState = getState().detailExportData.cari || "";
-    let limitState = getState().detailExportData.limit || 5;
-
+export const getDetailsExportData =
+  (id, token, page = 1, cari = "", limit = 5) =>
+  async (dispatch) => {
     const params = {
-      page: pageState,
-      cari: cariState,
-      limit: limitState,
+      page: page,
+      cari: cari,
+      limit: limit,
     };
 
     try {
@@ -117,7 +114,7 @@ export const getDetailExportData =
 
       dispatch({
         type: DETAIL_EXPORT_DATA_SUCCESS,
-        payload: data,
+        payload: data.exports,
       });
     } catch (error) {
       dispatch({
@@ -125,6 +122,40 @@ export const getDetailExportData =
       });
     }
   };
+
+export const postFilterExportData = (token, datas) => async (dispatch) => {
+  try {
+    dispatch({
+      type: POST_EXPORT_DATA_REQUEST,
+    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/store`;
+
+    const { data } = await axios.post(link, datas, config);
+
+    if(datas.button_type === 1){
+      Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
+        router.push("/site-management/export-data");
+      });
+    }
+
+    dispatch({
+      type: POST_EXPORT_DATA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    Swal.fire("Ooppss", JSON.stringify(error.message), "error").then(() => {
+    });
+    dispatch({
+      type: POST_EXPORT_DATA_FAIL,
+    });
+  }
+};
 
 export const setPage = (page) => {
   return {
@@ -150,7 +181,7 @@ export const limitCooporation = (value) => {
 export const exportFileCSV = (id, token) => {
   return async () => {
     try {
-      let urlExport = await axios.get(
+      let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/export/download/${id}`,
         {
           headers: {
@@ -158,21 +189,7 @@ export const exportFileCSV = (id, token) => {
           },
         }
       );
-      var url = urlExport.config.url;
-
-      fetch(url, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.blob())
-        .then((blob) => {
-          var _url = window.URL.createObjectURL(blob);
-          window.open(_url, "_blank").focus();
-        })
-        .catch((error) => {
-          alert(error.response.data.message);
-        });
+      window.open(data.data, "_blank");
     } catch (error) {
       alert(error.response.data.message);
     }

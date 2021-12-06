@@ -655,7 +655,7 @@ const Artikel = () => {
                                     showFilter === true ?
                                         <>
                                             <div className="row ml-3 mt-5">
-                                                <p>
+                                                <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                                     Urutkan Berdasarkan
                                                 </p>
                                             </div>
@@ -750,7 +750,7 @@ const Artikel = () => {
                                             </div>
 
                                             <div className="row ml-3 mt-5">
-                                                <p>
+                                                <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                                     Akademi
                                                 </p>
                                             </div>
@@ -941,8 +941,8 @@ const Artikel = () => {
                                                             {/* Insert Desc Here */}
                                                             <div 
                                                                 dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}}
-                                                                className="text-wrap d-flex flex-wrap overflow-hidden"
-                                                                style={{maxWidth:"450px"}}
+                                                                className={`${styles.fontContent} text-wrap d-flex flex-wrap overflow-hidden`}
+                                                                style={{maxWidth:"450px", fontSize:"16px", fontFamily:"Poppins"}}
                                                             />
                                                         </div>
                                                     :
@@ -1067,7 +1067,7 @@ const Artikel = () => {
                                 </div>
 
                                 <div className="row ml-3 mt-5">
-                                    <p>
+                                    <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                         Urutkan Berdasarkan
                                     </p>
                                 </div>
@@ -1162,7 +1162,7 @@ const Artikel = () => {
                                 </div>
 
                                 <div className="row ml-3 mt-5">
-                                    <p>
+                                    <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
                                         Akademi
                                     </p>
                                 </div>

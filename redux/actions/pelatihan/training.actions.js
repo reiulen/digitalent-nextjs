@@ -857,12 +857,18 @@ export const postEvidence = (token, datas) => async (dispatch) => {
       },
     };
 
-    await axios.post(link, datas, config);
-    Swal.fire("Berhasil", "Evidence berhasil di Upload", "success").then(() => {
-      window.location = "/pelatihan/pelatihan";
-    });
+    const { data } = await axios.post(link, datas, config);
+    if (data.status) {
+      Swal.fire("Berhasil", "Evidence berhasil di Upload", "success").then(
+        () => {
+          window.location = "/pelatihan/pelatihan";
+        }
+      );
+    } else {
+      Swal.fire("Opppss !", data.message, "error").then(() => {});
+    }
   } catch (error) {
-    throw error;
+    Swal.fire("Opppss !", error.message, "error").then(() => {});
   }
 };
 
