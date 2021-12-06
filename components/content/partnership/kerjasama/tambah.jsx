@@ -383,7 +383,9 @@ const Tambah = ({ token }) => {
                 <div className="form-group">
                   <div className="d-flex justify-content-end flex-column flex-md-row">
                     <Link href="/partnership/kerjasama">
-                      <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-sm-5 mr-0 d-flex justify-content-center">
+                      <a 
+                        className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-sm-5 mr-0 d-flex justify-content-center"
+                      >
                         Kembali
                       </a>
                     </Link>

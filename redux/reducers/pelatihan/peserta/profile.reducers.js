@@ -27,6 +27,9 @@ import {
   //PEKERJAAN
   GET_PEKERJAAN_SUCCESS,
   GET_PEKERJAAN_FAIL,
+  GET_REF_PEKERJAAN_REQUEST,
+  GET_REF_PEKERJAAN_SUCCESS,
+  GET_REF_PEKERJAAN_FAIL,
   UPDATE_PEKERJAAN_REQUEST,
   UPDATE_PEKERJAAN_SUCCESS,
   UPDATE_PEKERJAAN_RESET,
@@ -215,6 +218,37 @@ export const getAsalSekolahReducer = (state = [], action) => {
       return {
         ...state,
         data: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// GET REF DATA PEKERJAAN
+export const getRefPekerjaanReducer = (state = { dataRefPekerjaan: [] }, action) => {
+  switch (action.type) {
+    case GET_REF_PEKERJAAN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_REF_PEKERJAAN_SUCCESS:
+      return {
+        loading: false,
+        dataRefPekerjaan: action.payload.data
+      };
+
+    case GET_REF_PEKERJAAN_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
 
     default:
