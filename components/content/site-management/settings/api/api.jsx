@@ -303,7 +303,7 @@ const Table = ({ token }) => {
                       </div>
                       <div className="col-8 my-auto">
                         <p
-                          className="align-middle mt-3"
+                          className="align-middle mt-6"
                           style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                         >
                           Total Data {allApi.data && allApi.data.total} List Data
