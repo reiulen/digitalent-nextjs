@@ -10,6 +10,10 @@
     height: 197px;
 }
 
+.welcome{
+    font-size: 16px;
+}
+
 @media only screen and (max-width: 1024px) {
     .imageAdmin{
         top: 2px;
@@ -25,6 +29,55 @@
     .nameUser{
         position: relative;
         z-index: -1;
-        /* height: 197px; */
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .imageAdmin{
+        top: 2px;
+        left: 550px;
+        z-index: -1;
+        width: 190px;
+        height: 195px;
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .imageAdmin{
+        top: 2px;
+        left: 158px;
+        z-index: -1;
+        width: 190px;
+        height: 195px;
+        opacity: 0.2;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .imageAdmin{
+        top: 2px;
+        left: 102px;
+        z-index: -1;
+        width: 190px;
+        height: 195px;
+        opacity: 0.2;
+    }
+    .welcome{
+        font-size: 10px;
+    }
+}
+
+@media only screen and (max-width: 280px) {
+    .imageAdmin{
+        top: 2px;
+        left: 63px;
+        z-index: -1;
+        width: 190px;
+        height: 195px;
+        opacity: 0.2;
+    }
+    .welcome{
+        font-size: 10px;
     }
 }
