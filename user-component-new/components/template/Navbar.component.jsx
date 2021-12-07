@@ -47,6 +47,8 @@ const Navigationbar = ({ session }) => {
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
 
+  const { footer, loading } = useSelector((state) => state.berandaFooter);
+
   useEffect(() => {
     if (session) {
       if (
@@ -54,7 +56,18 @@ const Navigationbar = ({ session }) => {
         Object.keys(dataPribadi).length !== 0 &&
         !dataPribadi.status
       ) {
-        // router.push("/peserta/wizzard");
+        if (dataPribadi.wizard == 1) {
+          return router.push("/peserta/wizzard");
+        }
+        if (dataPribadi.wizard == 2) {
+          return router.push("/peserta/wizzard/alamat");
+        }
+        if (dataPribadi.wizard == 3) {
+          return router.push("/peserta/wizzard/pendidikan");
+        }
+        if (dataPribadi.wizard == 4) {
+          return router.push("/peserta/wizzard/pekerjaan");
+        }
       }
     }
   }, []);
@@ -153,13 +166,21 @@ const Navigationbar = ({ session }) => {
         <Col
           sm={12}
           lg={1}
-          className=" d-flex justify-content-between justify-content-lg-center align-items-center"
+          className="d-flex justify-content-between justify-content-lg-center align-items-center"
         >
           <Navbar.Brand href="/">
             <Image
-              src={`/assets/icon/mainlogo.svg`}
+              // src={}
+              src={
+                footer && footer?.header_logo
+                  ? process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                    "site-management/images/" +
+                    footer.header_logo
+                  : `/assets/icon/mainlogo.svg`
+              }
               width={50}
               height={50}
+              objectFit="cover"
               alt="brand-navbar"
             />
           </Navbar.Brand>
