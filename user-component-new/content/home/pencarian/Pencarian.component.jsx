@@ -180,7 +180,6 @@ const Pencarian = ({ session }) => {
       }
     }
   };
-  console.log(allPencarian, "ini ");
   return (
     <>
       <HomeWrapper>
