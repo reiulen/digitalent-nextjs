@@ -148,7 +148,9 @@ export default function ButtonStatusPeserta({ data, token }) {
         <Fragment>
           <CustomButton
             click={() => {
-              router.push(`/peserta/mid-test/panduan-mid-test`);
+              router.push(
+                `/peserta/mid-test/panduan-mid-test?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+              );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
             }}
@@ -170,7 +172,9 @@ export default function ButtonStatusPeserta({ data, token }) {
         <Fragment>
           <CustomButton
             click={() => {
-              router.push(`/peserta/mid-test/panduan-mid-test`);
+              router.push(
+                `/peserta/mid-test/panduan-mid-test?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+              );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
             }}
@@ -246,7 +250,9 @@ export default function ButtonStatusPeserta({ data, token }) {
             click={() => {
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
-              router.push(`/peserta/test-substansi/panduan-substansi`);
+              router.push(
+                `/peserta/test-substansi/panduan-substansi?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+              );
             }}
             disabled={!data?.tes_subtansi}
           >
