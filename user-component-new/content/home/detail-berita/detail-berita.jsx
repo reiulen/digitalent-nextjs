@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Container } from "react-bootstrap";
 import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
+import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
 const DetailBerita = () => {
   const dispatch = useDispatch();
@@ -131,7 +132,7 @@ const DetailBerita = () => {
   };
 
   return (
-    <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
+    <HomeWrapper>
       {/* BreadCrumb */}
       <BreadcrumbComponent
         data={[
@@ -413,7 +414,7 @@ const DetailBerita = () => {
       )}
 
       {/* End of Content */}
-    </Container>
+    </HomeWrapper>
   );
 };
 

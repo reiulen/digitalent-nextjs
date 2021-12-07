@@ -26,11 +26,11 @@ export default function BerandaArtikel(props) {
     }
 
     return (
-        <>
+        <div className="bg-white">
             <Layout title="Artikel" session={session}>
                 <Artikel session={session} ></Artikel>
             </Layout>
-        </>
+        </div>
     )
 }
 

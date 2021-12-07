@@ -21,8 +21,6 @@ const ReportTrivia = ({ token }) => {
     (state) => state.allReportTriviaQuestionBanks
   );
 
-  const { theme, academy } = trivia.dataTitle;
-
   let { page = 1, id } = router.query;
   page = Number(page);
 
@@ -49,6 +47,8 @@ const ReportTrivia = ({ token }) => {
 
   const handleLimit = (val) => {
     setLimit(val);
+    let link = `${router.pathname}?id=${id}&page=1&limit=${val}`;
+    router.push(link);
   };
 
   const handleExportReport = async () => {
@@ -71,7 +71,6 @@ const ReportTrivia = ({ token }) => {
     let link = `${router.pathname}?id=${id}&page=${1}&card=${val}`;
     if (search) link = link.concat(`&keyword=${search}`);
     router.push(link);
-    setShowModal(false);
   };
 
   return (
@@ -161,7 +160,8 @@ const ReportTrivia = ({ token }) => {
                     }`}
               </h3>
               <p className="text-muted">
-                {academy} - {theme}
+                {(trivia && trivia.dataTitle.academy) || "-"} -{" "}
+                {(trivia && trivia.dataTitle.theme) || "-"}
               </p>
             </div>
             <div className="card-toolbar"></div>
@@ -218,6 +218,7 @@ const ReportTrivia = ({ token }) => {
                         <th className="text-center">No</th>
                         <th>Peserta Test</th>
                         <th>Pelatihan</th>
+                        <th>Nilai</th>
                         <th>Total Pengerjaan</th>
                         <th className="align-middle text-center">Status</th>
                       </tr>
@@ -255,6 +256,9 @@ const ReportTrivia = ({ token }) => {
                                   </p> */}
                                   <p className="my-0">{row.training.name}</p>
                                 </div>
+                              </td>
+                              <td className="align-middle">
+                                {row.score || "-"}
                               </td>
                               <td className="align-middle">
                                 <div>
@@ -296,7 +300,7 @@ const ReportTrivia = ({ token }) => {
               </div>
 
               <div className="row">
-                {trivia && trivia.total > 5 && (
+                {trivia && trivia.perPage < trivia.total && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}

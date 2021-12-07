@@ -388,13 +388,13 @@ const Beranda = ({ session }) => {
                         >
                           {row.slug}
                         </h1>
-                        <div>
+                        <div className="module">
                           <p
                             className={`mb-0 fw-600 fz-12 text-center ${
-                              activeTab === i && "text-white "
+                              activeTab === i && "text-white"
                             }`}
                           >
-                            {row.name.split(" ").splice(0, 3).join(" ")}
+                            {row.name}
                           </p>
                         </div>
                       </div>
@@ -446,7 +446,14 @@ const Beranda = ({ session }) => {
                               pelatihan[i].showDetail !== true ? (
                                 pelatihan[i].pelatihan.length > 0 &&
                                 pelatihan[i].pelatihan.map((row, j) => (
-                                  <Col md={6} lg={4} className="mb-5" key={j}>
+                                  <Col
+                                    lg={4}
+                                    md={6}
+                                    sm={6}
+                                    xs={12}
+                                    className="mb-5"
+                                    key={j}
+                                  >
                                     <Card
                                       className="h-100 shadow-sm border-0"
                                       onMouseEnter={() => {
@@ -586,11 +593,13 @@ const Beranda = ({ session }) => {
                                               className="d-flex justify-content-between position-relative pb-0 mb-0"
                                               style={{ top: "-15px" }}
                                             >
-                                              <p
-                                                className={`pl-18 my-0 text-mitra-new`}
-                                              >
-                                                {row.mitra}
-                                              </p>
+                                              <div className="module-pelatihan-mitra">
+                                                <p
+                                                  className={`pl-18 my-0 text-mitra-new`}
+                                                >
+                                                  {row.mitra}
+                                                </p>
+                                              </div>
                                               <div className="status align-self-center">
                                                 <p
                                                   className={`${
@@ -603,19 +612,23 @@ const Beranda = ({ session }) => {
                                                 </p>
                                               </div>
                                             </div>
-                                            <p
-                                              className={`my-0 title-card-new`}
-                                            >
-                                              {row.name}
-                                            </p>
-                                            <p
-                                              style={{
-                                                fontSize: "14px",
-                                                color: "#6C6C6C",
-                                              }}
-                                            >
-                                              {row.akademi}
-                                            </p>
+                                            <div className="module-pelatihan-name">
+                                              <p
+                                                className={`my-0 title-card-new`}
+                                              >
+                                                {row.name}
+                                              </p>
+                                            </div>
+                                            <div className="module-pelatihan-name">
+                                              <p
+                                                style={{
+                                                  fontSize: "14px",
+                                                  color: "#6C6C6C",
+                                                }}
+                                              >
+                                                {row.akademi}
+                                              </p>
+                                            </div>
                                             <hr />
                                             {pelatihan[i].pelatihan[j].hover !==
                                             true ? (
@@ -968,14 +981,60 @@ const Beranda = ({ session }) => {
             <h1>
               Tahapan Pendaftaran <br /> Digital Talent Scholarship
             </h1>
-            <Col md={12} className="p-0">
-              <div className="mt-md-20 mt-10 ">
+
+            <div className="mt-25 p-0 m-0 d-flex justify-content-center justify-content-md-between flex-wrap">
+              <div className="content">
                 <img
-                  src="/assets/media/image-step-register.png"
-                  style={{ width: "100%" }}
+                  src="/assets/media/pendaftaran-illustration-new.svg"
+                  className="caption-image-new"
                 />
+                <div className="caption d-flex align-items-center flex-column mt-6">
+                  <h4 className="title-tahapan-new mb-2">pendaftaran</h4>
+                  <p className="caption-tahapan-new">
+                    Pilih pada pelatihan yang diinginkan dan lakukan pendaftaran
+                  </p>
+                </div>
               </div>
-            </Col>
+              <div className="content">
+                <img
+                  src="/assets/media/seleksi-illustration-new.svg"
+                  className="caption-image-new"
+                />
+                <div className="caption d-flex align-items-center flex-column mt-6">
+                  <h4 className="title-tahapan-new mb-2">seleksi</h4>
+                  <p className="caption-tahapan-new">
+                    Ikuti tahap seleksi peserta (seleksi administrasi dan/atau
+                    tes substansi)
+                  </p>
+                </div>
+              </div>
+              <div className="content">
+                <img
+                  src="/assets/media/verifikasi-illustration-new.svg"
+                  className="caption-image-new"
+                />
+                <div className="caption d-flex align-items-center flex-column mt-6">
+                  <h4 className="title-tahapan-new mb-2">verifikasi</h4>
+                  <p className="caption-tahapan-new">
+                    Penyelenggara akan melakukan verifikasi pada aplikasi
+                    pendaftaran anda
+                  </p>
+                </div>
+              </div>
+              <div className="content">
+                <img
+                  src="/assets/media/pelatihan-illustration-new.svg"
+                  className="caption-image-new"
+                />
+                <div className="caption d-flex align-items-center flex-column mt-6">
+                  <h4 className="title-tahapan-new mb-2">ikut pelatihan</h4>
+                  <p className="caption-tahapan-new">
+                    Ikuti pelatihan sesuai jadwal apabila telah dinyatakan
+                    sebagai peserta pelatihan
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </section>
@@ -988,6 +1047,7 @@ const Beranda = ({ session }) => {
                 ? publikasi.berita
                 : null
             }
+            dimension={windowDimensions}
           />
         </Container>
       </section>

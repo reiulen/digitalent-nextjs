@@ -49,6 +49,12 @@ const Tables = ({ token }) => {
     dispatch(getEditTrainingStep1(id, token));
   };
 
+  useEffect(() => {
+    
+    dispatch(getEditTrainingStep1(router.query.pelatihan_id, token));
+    
+  }, [dispatch, token])
+
   // style color
   const colorText = {
     color: "#6C6C6C",
@@ -77,7 +83,6 @@ const Tables = ({ token }) => {
             <div className="form-group">
               <label htmlFor="exampleSelect1">Pilih Pelatihan</label>
               <Select
-                value={pelatihan}
                 placeholder="Silahkan Pilih Pelatihan"
                 options={optionPelatihan}
                 onChange={(e) => handleChangePelatihan(e?.value)}
@@ -85,8 +90,6 @@ const Tables = ({ token }) => {
             </div>
           </div>
         </div>
-
-        {pelatihan !== null && (
           <div
             className="card card-custom card-stretch gutter-b"
             style={{ height: "max-content" }}
@@ -170,18 +173,18 @@ const Tables = ({ token }) => {
                   </div>
                 </div>
                 <div className="form-group row">
-                  <div className="col-sm-12 d-flex justify-content-end">
-                    <Link href="/site-management/user">
+                  <div className="col-sm-12 d-flex justify-content-end" onClick={e => {
+                    e.preventDefault();
+                    router.back()
+                  }}>
                       <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
                         Kembali
                       </a>
-                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        )}
       </div>
     </PageWrapper>
   );

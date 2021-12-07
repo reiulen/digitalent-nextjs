@@ -105,12 +105,6 @@ const DetailSurvey = ({ token }) => {
     });
   };
 
-  const handleSearchEnter = (e) => {
-    if (e.key === "Enter") {
-      dispatch(getAllSurveyQuestionDetail(id, 1, 5, search, token));
-    }
-  };
-
   const handleSearch = () => {
     dispatch(getAllSurveyQuestionDetail(id, 1, 5, search, token));
   };
@@ -274,7 +268,6 @@ const DetailSurvey = ({ token }) => {
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(event) => handleTextSearch(event)}
-                      onKeyUp={(event) => handleSearchEnter(event)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"

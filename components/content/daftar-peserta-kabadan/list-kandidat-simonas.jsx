@@ -5,6 +5,7 @@ import Select from "react-select";
 import Pagination from "react-js-pagination";
 import {
   getAllSimonasKandidat,
+  getSimonasFilterStatus,
   clearErrors,
 } from "../../../redux/actions/dashboard-kabadan/data-peserta/simonas.actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,37 +17,170 @@ const ListKandidatSimonas = ({ token }) => {
   const { loading, error, kandidat } = useSelector(
     (state) => state.allSimonasKandidat
   );
+  const {
+    loading: loadingCompany,
+    error: errorCompany,
+    company,
+  } = useSelector((state) => state.allSimonasFilterCompany);
+  const {
+    loading: loadingStatus,
+    error: errorStatus,
+    status,
+  } = useSelector((state) => state.allSimonasFilterStatus);
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
 
+  const [companyFilter, setCompanyFilter] = useState(null);
+  const [statusJobFilter, setStatusJobFilter] = useState(null);
+  const [categoryFilter, setCategoryFilter] = useState(null);
+  const [statusFilter, setStatusFilter] = useState(null);
+
   const [showModal, setShowModal] = useState(false);
+
+  let count = kandidat?.data?.total;
+  if (search) {
+    count = kandidat?.data?.totalFiltered;
+  }
 
   const handleSearch = () => {
     setPage(1);
+    const data = {
+      companyFilter: companyFilter !== null ? companyFilter.value : null,
+      statusJobFilter: statusJobFilter !== null ? statusJobFilter.value : null,
+      categoryFilter: categoryFilter !== null ? categoryFilter.value : null,
+      statusFilter: statusFilter !== null ? statusFilter.value : null,
+    };
+    dispatch(
+      getAllSimonasKandidat(
+        token,
+        1,
+        search,
+        limit,
+        data.companyFilter,
+        data.statusJobFilter,
+        data.categoryFilter,
+        data.statusFilter
+      )
+    );
   };
 
   const handleFilter = () => {
     setShowModal(false);
     setPage(1);
+    const data = {
+      companyFilter: companyFilter !== null ? companyFilter.value : null,
+      statusJobFilter: statusJobFilter !== null ? statusJobFilter.value : null,
+      categoryFilter: categoryFilter !== null ? categoryFilter.value : null,
+      statusFilter: statusFilter !== null ? statusFilter.value : null,
+    };
+    dispatch(
+      getAllSimonasKandidat(
+        token,
+        1,
+        search,
+        limit,
+        data.companyFilter,
+        data.statusJobFilter,
+        data.categoryFilter,
+        data.statusFilter
+      )
+    );
   };
 
   const handleReset = () => {
     setShowModal(false);
+    setLimit(null);
+    setPage(1);
+    setSearch("");
+    setLimit(null);
+    setCompanyFilter(null);
+    setStatusJobFilter(null);
+    setCategoryFilter(null);
+    setStatusFilter(null);
+    dispatch(
+      getAllSimonasKandidat(token, 1, null, null, null, null, null, null)
+    );
   };
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
-    dispatch(getAllSimonasKandidat(token, pageNumber));
+    const data = {
+      companyFilter: companyFilter !== null ? companyFilter.value : null,
+      statusJobFilter: statusJobFilter !== null ? statusJobFilter.value : null,
+      categoryFilter: categoryFilter !== null ? categoryFilter.value : null,
+      statusFilter: statusFilter !== null ? statusFilter.value : null,
+    };
+    dispatch(
+      getAllSimonasKandidat(
+        token,
+        pageNumber,
+        search,
+        limit,
+        data.companyFilter,
+        data.statusJobFilter,
+        data.categoryFilter,
+        data.statusFilter
+      )
+    );
   };
 
   const handleLimit = (val) => {
     setLimit(val);
     setPage(1);
+    const data = {
+      companyFilter: companyFilter !== null ? companyFilter.value : null,
+      statusJobFilter: statusJobFilter !== null ? statusJobFilter.value : null,
+      categoryFilter: categoryFilter !== null ? categoryFilter.value : null,
+      statusFilter: statusFilter !== null ? statusFilter.value : null,
+    };
+    dispatch(
+      getAllSimonasKandidat(
+        token,
+        1,
+        search,
+        val,
+        data.companyFilter,
+        data.statusJobFilter,
+        data.categoryFilter,
+        data.statusFilter
+      )
+    );
   };
 
-  const options = [{ label: "Buahh", value: "Buah" }];
+  const optionsCompany = [];
+  if (company) {
+    company.map((row, i) => {
+      let val = {
+        value: row.id_perusahaan,
+        label: row.nama_perusahaan,
+      };
+      optionsCompany.push(val);
+    });
+  }
+
+  const optionsCategoryCompany = [
+    { value: "vacancy", label: "Vacancy" },
+    { value: "project", label: "Project" },
+  ];
+
+  const optionsStatusWork = [
+    { value: "closed", label: "Closed" },
+    { value: "opened", label: "Opened" },
+  ];
+
+  const optionsStatus = [];
+  if (status) {
+    status.map((row, i) => {
+      let val = {
+        value: row.id,
+        label: row.name,
+      };
+      optionsStatus.push(val);
+    });
+  }
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -69,6 +203,7 @@ const ListKandidatSimonas = ({ token }) => {
                     <input
                       type="text"
                       className="form-control pl-10"
+                      value={search}
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
@@ -202,6 +337,7 @@ const ListKandidatSimonas = ({ token }) => {
             <div className="row">
               {kandidat &&
                 kandidat.data &&
+                kandidat.data.list.length > 0 &&
                 kandidat.data.perPage < kandidat.data.total && (
                   <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                     <Pagination
@@ -278,19 +414,48 @@ const ListKandidatSimonas = ({ token }) => {
         <Modal.Body>
           <div className="form-group mb-5">
             <label className="p-0">Perusahaan</label>
-            <Select options={options} placeholder="Pilih Perusahaan" />
+            <Select
+              options={optionsCompany}
+              placeholder="Pilih Perusahaan"
+              defaultValue={companyFilter}
+              onChange={(e) =>
+                setCompanyFilter({ label: e.label, value: e.value })
+              }
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Kategori Pekerjaan</label>
-            <Select options={options} placeholder="Pilih Kategori Pekerjaan" />
+            <Select
+              options={optionsCategoryCompany}
+              placeholder="Pilih Kategori Pekerjaan"
+              defaultValue={categoryFilter}
+              onChange={(e) => {
+                setCategoryFilter({ label: e.label, value: e.value });
+                dispatch(getSimonasFilterStatus(token, e.value));
+              }}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status Pekerjaan</label>
-            <Select options={options} placeholder="Pilih Status Pekerjaan" />
+            <Select
+              options={optionsStatusWork}
+              placeholder="Pilih Status Pekerjaan"
+              defaultValue={statusJobFilter}
+              onChange={(e) => {
+                setStatusJobFilter({ label: e.label, value: e.value });
+              }}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status</label>
-            <Select options={options} placeholder="Pilih Tahap Status" />
+            <Select
+              options={optionsStatus}
+              placeholder="Pilih Tahap Status"
+              defaultValue={statusFilter}
+              onChange={(e) =>
+                setStatusFilter({ label: e.label, value: e.value })
+              }
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>

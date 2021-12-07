@@ -30,7 +30,7 @@ export default function FaqDetail(props) {
   }
 
   return (
-    <div>
+    <div className="bg-white">
       <Layout title="FAQ" session={session}>
         <FaqPage session={session} />
       </Layout>

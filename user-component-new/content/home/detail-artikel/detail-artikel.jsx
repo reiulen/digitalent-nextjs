@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Container } from "react-bootstrap";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
+import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
 const DetailArtikel = () => {
   const dispatch = useDispatch();
@@ -132,7 +133,7 @@ const DetailArtikel = () => {
   };
 
   return (
-    <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
+    <HomeWrapper>
       {/* BreadCrumb */}
       <SubHeaderComponent
         data={[
@@ -406,7 +407,7 @@ const DetailArtikel = () => {
       )}
 
       {/* End of Content */}
-    </Container>
+    </HomeWrapper>
   );
 };
 

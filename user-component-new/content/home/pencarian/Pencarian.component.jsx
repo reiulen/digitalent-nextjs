@@ -21,6 +21,7 @@ import {
   setValuePenyelenggara,
   resetFilter,
 } from "../../../../redux/actions/pelatihan/pencarian.action";
+import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
 
 import axios from "axios";
 
@@ -29,6 +30,7 @@ const Pencarian = ({ session }) => {
   const dispatch = useDispatch();
   const { query } = router;
   const allPencarian = useSelector((state) => state.allPencarian);
+
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
     useSelector((state) => state.allPenyelenggaraPeserta);
 
@@ -36,6 +38,8 @@ const Pencarian = ({ session }) => {
   const [filterKategori, setFilterKategori] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  const [disabledDate, setDisabledDate] = useState(true);
 
   let selectRefKategoriPeserta = null;
   const optionsKategoriPeserta = [
@@ -91,19 +95,26 @@ const Pencarian = ({ session }) => {
     setStartDate("");
     setEndDate("");
     dispatch(resetFilter());
+    router.push(`/pencarian?cari=${router.query.cari || ""}`);
   };
 
   const handlePagination = (page) => {
+    let data = {
+      penyelenggara:
+        filterPenyelenggara !== null ? filterPenyelenggara.label : null,
+      kategori_peserta: filterKategori !== null ? filterKategori.value : null,
+      tanggal_mulai: startDate,
+      tanggal_akhir: endDate,
+    };
     router.push(
       `/pencarian?cari=${
         router.query.cari || ""
       }&page=${page}&limit=${6}&penyelenggara=${
-        penyelenggara || ""
-      }&pelatihan_mulai=${tanggal_mulai || ""}&pelatihan_akhir=${
-        tanggal_akhir || ""
-      }&kategori_peserta=${kategori_peserta || ""}`
+        data.penyelenggara || ""
+      }&pelatihan_mulai=${data.tanggal_mulai || ""}&pelatihan_akhir=${
+        data.tanggal_akhir || ""
+      }&kategori_peserta=${data.kategori_peserta || ""}`
     );
-    // dispatch(setValuePage(page));
   };
 
   const handleBookmark = async (pelatihan) => {
@@ -144,7 +155,7 @@ const Pencarian = ({ session }) => {
           );
         }
       } catch (e) {
-        router.push("/login");
+        SweatAlert("Gagal", e.message, "error");
       }
     } else {
       try {
@@ -186,7 +197,7 @@ const Pencarian = ({ session }) => {
         <Row>
           <Col md={12}>
             <div className="ml-2 mb-3 title-pelatihan">
-              <h1 className="fw-700 fz-36">Pencarian "{router.query.cari}"</h1>
+              <h1 className="fw-700 fz-36">Pencarian {router.query.cari}</h1>
 
               <div className="mt-5 mt-md-1">
                 <p className="mr-6 fz-18 text-muted fw-400">
@@ -245,7 +256,11 @@ const Pencarian = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      onChange={(e) => {
+                        setStartDate(e.target.value);
+                        setEndDate("");
+                        setDisabledDate(false);
+                      }}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -258,6 +273,8 @@ const Pencarian = ({ session }) => {
                       type="date"
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
+                      min={startDate}
+                      disabled={disabledDate}
                     />
                   </Form.Group>
                 </div>
@@ -318,130 +335,146 @@ const Pencarian = ({ session }) => {
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        <div>
-                          <div className={`parent-image-pelatihan-new`}>
-                            <Image
-                              className={`image-list-pelatihan-new`}
-                              src={
-                                !row.gambar
-                                  ? "/assets/media/default-card.png"
-                                  : `${process.env.END_POINT_API_IMAGE_BEASISWA}${row?.gambar}`
-                              }
-                              layout="fill"
-                              objectFit="cover"
-                              alt="Image Thumbnail"
-                            />
-                          </div>
-                          <Card.ImgOverlay>
-                            <div className="d-flex justify-content-between">
-                              <div className="align-self-start">
-                                <Badge
-                                  bg={`py-3 px-4 badge-card-pelatihan-new`}
-                                  classNam="d-flex "
-                                >
-                                  {row.metode_pelatihan}
-                                </Badge>
-                              </div>
-
-                              <div className="whishlist align-self-end float-right">
-                                <Button
-                                  variant="light"
-                                  className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
-                                >
-                                  <i
-                                    className={
-                                      !row.bookmart
-                                        ? `ri-heart-line p-0 zIndex-5`
-                                        : `ri-heart-fill p-0 text-danger zIndex-5`
-                                    }
-                                    style={{
-                                      color: "#6C6C6C",
-                                    }}
-                                    onClick={() => {
-                                      handleBookmark(row);
-                                    }}
-                                  ></i>
-                                </Button>
-                                <Button
-                                  variant="light"
-                                  className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
-                                >
-                                  <i
-                                    className="ri-share-line p-0"
-                                    style={{
-                                      color: "#6C6C6C",
-                                    }}
-                                  ></i>
-                                </Button>
-                              </div>
-                            </div>
-                          </Card.ImgOverlay>
-                          <Card.Body className="position-relative">
-                            <div className="mitra-pelatihan-new">
+                        {row.status !== "Dibuka" ? (
+                          <CardPelatihanClose row={row} />
+                        ) : (
+                          <div>
+                            <div className={`parent-image-pelatihan-new`}>
                               <Image
-                                // src={"/assets/media/mitra-default.png"}
+                                className={`image-list-pelatihan-new`}
                                 src={
-                                  !row?.gambar_mitra
+                                  !row.gambar
                                     ? "/assets/media/default-card.png"
-                                    : `${row?.file_path}${row?.gambar_mitra}`
+                                    : `${process.env.END_POINT_API_IMAGE_BEASISWA}${row?.gambar}`
                                 }
-                                width={60}
-                                height={60}
+                                layout="fill"
                                 objectFit="cover"
-                                thumbnail
-                                roundedCircle
-                                className={`mitra-pelatihan-image-new`}
-                                alt="Image Mitra"
+                                alt="Image Thumbnail"
                               />
                             </div>
-                            <div
-                              className="d-flex justify-content-between position-relative pb-0 mb-0"
-                              style={{ top: "-15px" }}
-                            >
-                              <p className={`pl-18 my-0 text-mitra-new`}>
-                                {row?.mitra}
-                              </p>
-                              <div className="status align-self-center">
-                                <p
-                                  className={`${"status-mitra-open-new"} text-uppercase my-0`}
-                                >
-                                  {row?.status}
+                            <Card.ImgOverlay>
+                              <div className="d-flex justify-content-between">
+                                <div className="align-self-start">
+                                  <Badge
+                                    bg={`py-3 px-4 badge-card-pelatihan-new`}
+                                    classNam="d-flex "
+                                  >
+                                    {row.metode_pelatihan}
+                                  </Badge>
+                                </div>
+
+                                <div className="whishlist align-self-end float-right">
+                                  <Button
+                                    variant="light"
+                                    className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
+                                  >
+                                    <i
+                                      className={
+                                        !row.bookmart
+                                          ? `ri-heart-line p-0 zIndex-5`
+                                          : `ri-heart-fill p-0 text-danger zIndex-5`
+                                      }
+                                      style={{
+                                        color: "#6C6C6C",
+                                      }}
+                                      onClick={() => {
+                                        handleBookmark(row);
+                                      }}
+                                    ></i>
+                                  </Button>
+                                  <Button
+                                    variant="light"
+                                    className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                                  >
+                                    <i
+                                      className="ri-share-line p-0"
+                                      style={{
+                                        color: "#6C6C6C",
+                                      }}
+                                    ></i>
+                                  </Button>
+                                </div>
+                              </div>
+                            </Card.ImgOverlay>
+                            <Card.Body className="position-relative">
+                              <div className="mitra-pelatihan-new">
+                                <Image
+                                  // src={"/assets/media/mitra-default.png"}
+                                  src={
+                                    !row?.gambar_mitra
+                                      ? "/assets/media/default-card.png"
+                                      : `${row?.file_path}${row?.gambar_mitra}`
+                                  }
+                                  width={60}
+                                  height={60}
+                                  objectFit="cover"
+                                  thumbnail
+                                  roundedCircle
+                                  className={`mitra-pelatihan-image-new`}
+                                  alt="Image Mitra"
+                                />
+                              </div>
+                              <div
+                                className="d-flex justify-content-between position-relative pb-0 mb-0"
+                                style={{ top: "-15px" }}
+                              >
+                                <div className="module-pelatihan-mitra">
+                                  <p className={`pl-18 my-0 text-mitra-new`}>
+                                    {row?.mitra}
+                                  </p>
+                                </div>
+                                <div className="status align-self-center">
+                                  <p
+                                    className={`${"status-mitra-open-new"} text-uppercase my-0`}
+                                  >
+                                    {row?.status}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="module-pelatihan-name">
+                                <p className={`my-0 title-card-new`}>
+                                  {row?.name}
                                 </p>
                               </div>
-                            </div>
-                            <p className={`my-0 title-card-new`}>{row?.name}</p>
-                            <p
-                              style={{
-                                fontSize: "14px",
-                                color: "#6C6C6C",
-                              }}
-                            >
-                              {row?.akademi}
-                            </p>
-                            <hr />
-                            <div className="d-flex flex-column">
-                              <div className="date d-flex align-items-center align-middle">
-                                <i className="ri-time-line"></i>
-                                <span className={`text-date-register-new pl-2`}>
-                                  Registrasi:{" "}
-                                  {moment(row?.pendaftaran_mulai).format(
-                                    "DD MMM YYYY"
-                                  )}{" "}
-                                  -{" "}
-                                  {moment(row?.pendaftaran_selesai).format(
-                                    "DD MMM YYYY"
-                                  )}
-                                </span>
+                              <div className="module-pelatihan-name">
+                                <p
+                                  style={{
+                                    fontSize: "14px",
+                                    color: "#6C6C6C",
+                                  }}
+                                >
+                                  {row?.akademi}
+                                </p>
                               </div>
-                              <div className="date d-flex align-items-center align-middle">
-                                <i className="ri-group-line"></i>
-                                <span className={`text-date-register-new pl-2`}>
-                                  Kuota: {row?.kuota_peserta} Peserta
-                                </span>
+                              <hr />
+                              <div className="d-flex flex-column">
+                                <div className="date d-flex align-items-center align-middle">
+                                  <i className="ri-time-line"></i>
+                                  <span
+                                    className={`text-date-register-new pl-2`}
+                                  >
+                                    Registrasi:{" "}
+                                    {moment(row?.pendaftaran_mulai).format(
+                                      "DD MMM YYYY"
+                                    )}{" "}
+                                    -{" "}
+                                    {moment(row?.pendaftaran_selesai).format(
+                                      "DD MMM YYYY"
+                                    )}
+                                  </span>
+                                </div>
+                                <div className="date d-flex align-items-center align-middle">
+                                  <i className="ri-group-line"></i>
+                                  <span
+                                    className={`text-date-register-new pl-2`}
+                                  >
+                                    Kuota: {row?.kuota_peserta} Peserta
+                                  </span>
+                                </div>
                               </div>
-                            </div>
-                          </Card.Body>
-                        </div>
+                            </Card.Body>
+                          </div>
+                        )}
                       </Card>
                     </Col>
                   ))
@@ -451,7 +484,7 @@ const Pencarian = ({ session }) => {
                 <Row className="my-5 d-flex justify-content-center">
                   <div className="table-pagination">
                     <Pagination
-                      activePage={allPencarian?.page}
+                      activePage={parseInt(router.query.page)}
                       itemsCountPerPage={allPencarian?.pelatihan?.perPage}
                       totalItemsCount={allPencarian?.pelatihan?.total}
                       pageRangeDisplayed={3}
@@ -464,8 +497,6 @@ const Pencarian = ({ session }) => {
                       linkClass="page-link"
                     />
                   </div>
-                  {/* {pelatihan && pelatihan.perPage < pelatihan.total && (
-                )} */}
                 </Row>
               )}
             </Col>

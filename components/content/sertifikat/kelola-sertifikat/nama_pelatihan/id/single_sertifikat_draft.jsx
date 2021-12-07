@@ -102,7 +102,7 @@ export default function KelolasertifikatID({ token }) {
                     )}
                     <div className="row align-items-center zindex-1">
                       <div className="position-relative">
-                        <div className="m-6 text-center px-4 border-2">
+                        <div className="my-14 mx-8 text-center px-4 border-2">
                           Nomor Sertifikat
                         </div>
                       </div>

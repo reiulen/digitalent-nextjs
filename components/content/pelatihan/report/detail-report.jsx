@@ -191,7 +191,7 @@ const DetailReport = ({ token }) => {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-                maxWidth: "4rem",
+                maxWidth: "12rem",
               }}
             >
               {item.alamat}
@@ -345,7 +345,7 @@ const DetailReport = ({ token }) => {
                   >
                     <a
                       target="_blank"
-                      className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
+                      className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2 d-flex justify-content-center"
                     >
                       {" "}
                       Export
