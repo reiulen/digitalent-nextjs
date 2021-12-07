@@ -1,0 +1,113 @@
+.fontText{
+    font-size: 20px;
+    font-family: "Poppins";
+}
+
+.fontContent{
+    font-size: 16px;
+    font-family: "Poppins";
+    /* color: #6C6C6C !important; */
+}
+
+.sizeModal{
+    width: 1000px !important;
+    /* max-width: 1000px !important; */
+
+    height: 760px !important;
+    /* max-height: 760px !important; */
+}
+
+.heightPlayer{
+    height: 50vh !important;
+}
+
+@media only screen and (max-width: 1024px){
+    .fontText{
+        font-size: 20px;
+    }
+
+    .sizeModal{
+        width: 1000px !important;
+        /* max-width: 1000px !important; */
+
+        height: 760px !important;
+        /* max-height: 760px !important; */
+    }
+
+    .heightPlayer{
+        height: 50vh !important;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .fontText{
+        font-size: 20px;
+    }
+
+    .sizeModal{
+        width: 1000px !important;
+        /* max-width: 1000px !important; */
+
+        height: 760px !important;
+        /* max-height: 760px !important; */
+    }
+
+    .heightPlayer{
+        height: 25vh !important;
+    }
+}
+
+@media only screen and (max-width: 576px){
+    .fontText{
+        font-size: 16px;
+    }
+
+    .sizeModal{
+        width: 704px !important;
+        /* max-width: 704px !important; */
+
+        height: 696px !important;
+        /* max-height: 696px !important; */
+    }
+
+    .heightPlayer{
+        height: 15vh !important;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .fontText{
+        font-size: 16px;
+    }
+
+    .sizeModal{
+        width: 360px !important;
+        /* max-width: 360px !important; */
+
+        /* height: 50% !important; */
+        max-height: 100px !important;
+    }
+
+    .heightPlayer{
+        height: 15vh !important;
+    }
+}
+
+@media only screen and (max-width: 280px){
+    .fontText{
+        font-size: 16px;
+    }
+
+    .sizeModal{
+        width: 360px !important;
+        /* max-width: 360px !important; */
+
+        height: 580px !important;
+        /* max-height: 580px !important; */
+    }
+
+    .heightPlayer{
+        height: 15vh !important;
+    }
+}
+

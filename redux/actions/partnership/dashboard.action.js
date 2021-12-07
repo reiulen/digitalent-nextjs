@@ -16,10 +16,13 @@ export const fetchDashboard = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
+
       dispatch(successFetchDashboard(data));
+
     } catch (error) {
       dispatch({ type: DASHBOARD_FAIL });
     }
