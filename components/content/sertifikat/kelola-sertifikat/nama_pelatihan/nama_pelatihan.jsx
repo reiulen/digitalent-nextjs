@@ -24,6 +24,7 @@ export default function NamaPelatihanID({ token }) {
     error,
     certificate: certificates,
   } = useSelector((state) => state.detailCertificates);
+
   // #Pagination
   const [limit, setLimit] = useState(null);
   const [search, setSearch] = useState("");
@@ -37,8 +38,6 @@ export default function NamaPelatihanID({ token }) {
     );
     setListPermission(filterPermission);
   }, []);
-
-  console.log(certificates);
 
   const [status, setStatus] = useState(null);
 

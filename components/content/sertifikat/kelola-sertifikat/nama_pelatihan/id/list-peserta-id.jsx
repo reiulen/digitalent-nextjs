@@ -119,7 +119,7 @@ export default function ListPesertaID({ token }) {
             <div className="card-toolbar">
               <Link
                 passHref
-                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${query.id}`}
+                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${query.id_pelatihan}`}
               >
                 <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3">
                   Kembali
@@ -149,11 +149,11 @@ export default function ListPesertaID({ token }) {
                     } font-weight-boldest zindex-1 responsive-date-text`}
                   >
                     {moment(participant?.data?.pelatihan_mulai).format(
-                      "DD MMMM"
+                      "DD/MM/YYYY"
                     )}{" "}
                     -{" "}
                     {moment(participant?.data?.pelatihan_selesai).format(
-                      "DD MMMM YYYY"
+                      "DD MM YYYY"
                     )}
                   </div>
                   <div
