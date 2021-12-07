@@ -54,6 +54,20 @@ const Navigationbar = ({ session }) => {
         Object.keys(dataPribadi).length !== 0 &&
         !dataPribadi.status
       ) {
+        console.log(dataPribadi, "ini data pribadi");
+        if (dataPribadi.wizard == 1) {
+          return router.push("/peserta/wizzard");
+        }
+        if (dataPribadi.wizard == 2) {
+          return router.push("/peserta/wizzard/alamat");
+        }
+        if (dataPribadi.wizard == 3) {
+          return router.push("/peserta/wizzard/pendidikan");
+        }
+        if (dataPribadi.wizard == 4) {
+          return router.push("/peserta/wizzard/pekerjaan");
+        }
+
         // router.push("/peserta/wizzard");
       }
     }
