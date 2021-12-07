@@ -59,9 +59,9 @@ const CardPelatihanClose = ({ row }) => {
             className="d-flex justify-content-between position-relative pb-0 mb-0 flex-wrap"
             style={{ top: "-15px" }}
           >
-            <p className={`pl-18 my-0 text-mitra-new text-truncate`}>
-              {row.mitra}
-            </p>
+            <div className="module-pelatihan-mitra">
+              <p className={`pl-18 my-0 text-mitra-new`}>{row.mitra}</p>
+            </div>
             <div className="status align-self-center">
               <p
                 className={`${
@@ -74,16 +74,20 @@ const CardPelatihanClose = ({ row }) => {
               </p>
             </div>
           </div>
-          <p className={`my-0 title-card-new`}>{row.name}</p>
-          <p
-            style={{
-              fontSize: "14px",
-              color: "#6C6C6C",
-            }}
-            className=" text-left"
-          >
-            {row.akademi}
-          </p>
+          <div className="module-pelatihan-name">
+            <p className={`my-0 title-card-new`}>{row.name}</p>
+          </div>
+          <div className="module-pelatihan-name">
+            <p
+              className="text-left"
+              style={{
+                fontSize: "14px",
+                color: "#6C6C6C",
+              }}
+            >
+              {row.akademi}
+            </p>
+          </div>
           <hr />
 
           <div className="d-flex flex-column">

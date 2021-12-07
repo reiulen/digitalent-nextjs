@@ -69,6 +69,7 @@ const RegisterUser = () => {
         if (res.data.status) {
           setCount(60);
           setOtpDisabled(false);
+          SweatAlert("Informasi", res.data.message, "info");
         }
       })
       .catch((err) => {

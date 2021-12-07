@@ -359,6 +359,33 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
+            <h3 className="font-weight-bolder pb-5 pt-4">Status Pelatihan</h3>
+            <div className="row">
+              <div className="col-md-12">
+                <p className="text-neutral-body mb-2 fz-14">Status Publish</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  Unlisted
+                </p>
+              </div>
+              <div className="col-md-12">
+                <p className="text-neutral-body mb-2 fz-14">
+                  Link Detail Pelatihan
+                </p>
+                <p
+                  className="fz-16 text-primary"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    window.open(
+                      `http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`,
+                      "_blank"
+                    )
+                  }
+                >
+                  {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
+                </p>
+              </div>
+            </div>
+
             <div className="button my-5">
               <div className="text-right">
                 <button

@@ -119,7 +119,7 @@ const AddFormLpj = ({ token }) => {
                       className="form-control w-100"
                       value={row.name}
                       onChange={(e) => handleInputForm(e.target.value, i)}
-                      maxLength={100}
+                      maxLength={749}
                     />
                     {simpleValidator.current.message(
                       `nama field ${i + 1}`,
