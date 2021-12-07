@@ -187,7 +187,7 @@ const Pencarian = ({ session }) => {
       }
     }
   };
-
+  console.log(allPencarian, "ini ");
   return (
     <>
       <HomeWrapper>
@@ -327,18 +327,56 @@ const Pencarian = ({ session }) => {
                 ) : (
                   allPencarian?.pelatihan?.list?.map((row, i) => (
                     <Col md={6} className={`col-sm-12 col-md-4 mb-5`} key={i}>
-                      <Card
-                        className="h-100 shadow-sm"
-                        key={i}
-                        onClick={() => {
-                          router.push(`/detail/pelatihan/${row?.id}`);
-                        }}
-                        style={{ cursor: "pointer" }}
-                      >
+                      <Card className="p-0 m-0">
+                        {row.status === "Dibuka" && (
+                          <div className="whishlist position-absolute shadow-none m-5 zindex-5 align-self-end float-right">
+                            <Button
+                              variant="light"
+                              className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
+                            >
+                              <i
+                                className={
+                                  !row.bookmart
+                                    ? `ri-heart-line p-0 zIndex-5`
+                                    : `ri-heart-fill p-0 text-danger zIndex-5`
+                                }
+                                style={{
+                                  color: "#6C6C6C",
+                                }}
+                                onClick={() => {
+                                  if (!session) {
+                                    router.push("/login");
+                                  } else {
+                                    handleBookmark(row);
+                                  }
+                                }}
+                              ></i>
+                            </Button>
+                            <Button
+                              variant="light"
+                              className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                            >
+                              <i
+                                className="ri-share-line p-0"
+                                style={{
+                                  color: "#6C6C6C",
+                                }}
+                              ></i>
+                            </Button>
+                          </div>
+                        )}
+
                         {row.status !== "Dibuka" ? (
                           <CardPelatihanClose row={row} />
                         ) : (
-                          <div>
+                          <Card
+                            className="h-100 shadow-sm"
+                            key={i}
+                            onClick={() => {
+                              router.push(`/detail/pelatihan/${row?.id}`);
+                            }}
+                            style={{ cursor: "pointer" }}
+                          >
                             <div className={`parent-image-pelatihan-new`}>
                               <Image
                                 className={`image-list-pelatihan-new`}
@@ -361,38 +399,6 @@ const Pencarian = ({ session }) => {
                                   >
                                     {row.metode_pelatihan}
                                   </Badge>
-                                </div>
-
-                                <div className="whishlist align-self-end float-right">
-                                  <Button
-                                    variant="light"
-                                    className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
-                                  >
-                                    <i
-                                      className={
-                                        !row.bookmart
-                                          ? `ri-heart-line p-0 zIndex-5`
-                                          : `ri-heart-fill p-0 text-danger zIndex-5`
-                                      }
-                                      style={{
-                                        color: "#6C6C6C",
-                                      }}
-                                      onClick={() => {
-                                        handleBookmark(row);
-                                      }}
-                                    ></i>
-                                  </Button>
-                                  <Button
-                                    variant="light"
-                                    className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
-                                  >
-                                    <i
-                                      className="ri-share-line p-0"
-                                      style={{
-                                        color: "#6C6C6C",
-                                      }}
-                                    ></i>
-                                  </Button>
                                 </div>
                               </div>
                             </Card.ImgOverlay>
@@ -473,7 +479,7 @@ const Pencarian = ({ session }) => {
                                 </div>
                               </div>
                             </Card.Body>
-                          </div>
+                          </Card>
                         )}
                       </Card>
                     </Col>
