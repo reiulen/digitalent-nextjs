@@ -17,7 +17,7 @@ import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-
 const SeleksiAdministrasi = dynamic(
   () =>
     import(
-      "../../../user-component-new/content/peserta/administrasi/seleksiAdmin.jsx"
+      "../../../user-component-new/components/global/Riwayat-pelatihan-detail/index"
     ),
   {
     loading: function loadingNow() {

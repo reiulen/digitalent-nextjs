@@ -15,7 +15,7 @@ import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 const TesSubstansiDetail = dynamic(
   () =>
     import(
-      "../../../user-component-new/content/peserta/test-substansi/test-substansi-detail"
+      "../../../user-component-new/components/global/Riwayat-pelatihan-detail/index"
     ),
   {
     loading: function loadingNow() {
@@ -75,36 +75,70 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      if (!req.cookies.id_pelatihan) {
+
+      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
+      await store.dispatch(getAllAkademi());
+
+      if (query.id) {
+        //jika ada query id
         const { data } = await store.dispatch(
-          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+          getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
         );
-        if (!data) {
-          return (success = false);
+        if (
+          data?.status.includes(
+            "substansi" || "belum tersedia" || "belum mengerjakan"
+          )
+        ) {
+          success = true;
         } else {
-          const test_substansi = data.list.filter(
-            (item) => item.status === "tes substansi"
+          success = false;
+        }
+      } else {
+        // jika gak ada gw cek di dashboard ada gak status tes substansi?
+        const dataDashboard = await store.dispatch(
+          getDashboardPeserta(session?.user.user.data.user.token)
+        );
+        const status =
+          dataDashboard?.data.pelatihan.pelatihan_berjalan.status || "";
+
+        if (!status || status == "") {
+          success = false;
+        } else if (
+          status?.includes(
+            "substansi" || "belum tersedia" || "belum mengerjakan"
+          )
+        ) {
+          await store.dispatch(
+            getDetailRiwayatPelatihan(
+              dataDashboard?.data.pelatihan.pelatihan_berjalan.id,
+              session.user.user.data.user.token
+            )
           );
-          if (test_substansi.length > 0) {
+          success = true;
+        } else {
+          //jika gak ada gw cek di riwayat pelatihan ada gak datanya
+          const { data } = await store.dispatch(
+            getAllRiwayatPelatihanPeserta(session?.user.user.data.user.token)
+          );
+          success = false;
+          const list = data.list.filter((item) => {
+            return item.status.includes(
+              "substansi" || "belum tersedia" || "belum mengerjakan"
+            );
+          });
+
+          if (list.length == 0 || !list) {
+            success = false;
+          } else {
             await store.dispatch(
               getDetailRiwayatPelatihan(
-                test_substansi[0].id,
+                list[0].id,
                 session.user.user.data.user.token
               )
             );
             success = true;
-          } else {
-            success = false;
           }
         }
-      } else {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            req.cookies.id_pelatihan,
-            session.user.user.data.user.token
-          )
-        );
-        success = true;
       }
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
