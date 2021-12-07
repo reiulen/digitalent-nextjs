@@ -24,17 +24,7 @@ export default function ListPesertaID({ token }) {
   const [type, setType] = useState(
     certificate?.data?.certificate?.certificate_type
   );
-  const [currentUser, setCurrentUser] = useState([]);
 
-  useEffect(() => {
-    const data = participant?.data?.list?.filter((el) => el.user == query.name);
-    setCurrentUser(data);
-    console.log(participant, "ini participant");
-  }, [participant, query.name]);
-
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -53,6 +43,7 @@ export default function ListPesertaID({ token }) {
     return data;
   };
 
+  console.log(certificate);
   const handleDownload = async () => {
     const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${certificate?.data?.certificate?.training_id}`;
     const check = await axios.get(linkChecker);
@@ -62,8 +53,9 @@ export default function ListPesertaID({ token }) {
       if (data) {
         const formData = new FormData();
         formData.append("certificate", data);
-        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/${certificate?.data?.certificate?.training_id}`;
+        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/${certificate?.data?.pelatihan?.id}`;
         const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
+        console.log(result, "ini result");
         const a = document.createElement("a");
         a.download = `Sertifikat - p12 ${query.name}.png`;
         a.target = "_blank";
@@ -142,30 +134,28 @@ export default function ListPesertaID({ token }) {
                 id="sertifikat1"
                 ref={divReference}
               >
-                <div className="position-relative">
-                  <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
-                    {participant?.data?.nomor_registrasi}
-                  </div>
-                  <div
-                    className={`position-absolute w-100 text-center ${
-                      certificate?.data?.certificate?.background
-                        ? "responsive-margin-peserta-1"
-                        : "responsive-margin-without-background"
-                    } zindex-1`}
-                  >
-                    <span className="responsive-font-size-peserta font-weight-bolder">
-                      {participant?.data?.nama_peserta}
-                    </span>
-                  </div>
-                  <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
-                    alt={`image ${certificate.data.certificate.certificate_result}`}
-                    objectFit="fill"
-                    width={842}
-                    height={595}
-                    key={certificate?.data?.certificate?.certificate_result}
-                  />
+                <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
+                  {participant?.data?.nomor_registrasi}
                 </div>
+                <div
+                  className={`position-absolute w-100 text-center ${
+                    certificate?.data?.certificate?.background
+                      ? "responsive-margin-peserta-1"
+                      : "responsive-margin-without-background"
+                  } zindex-1`}
+                >
+                  <span className="responsive-font-size-peserta font-weight-bolder">
+                    {participant?.data?.nama_peserta}
+                  </span>
+                </div>
+                <Image
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
+                  alt={`image ${certificate.data.certificate.certificate_result}`}
+                  objectFit="fill"
+                  width={842}
+                  height={595}
+                  key={certificate?.data?.certificate?.certificate_result}
+                />
               </div>
               {/* END COL */}
             </div>
