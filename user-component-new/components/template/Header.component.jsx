@@ -133,6 +133,8 @@ const Header = () => {
                           "Mid Test"
                         ) : router.pathname.includes("bookmark") ? (
                           "Favorit"
+                        ) : router.pathname.includes("edit") ? (
+                          "Artikel > Edit Artikel"
                         ) : router.pathname.includes("tambah-artikel") ? (
                           "Artikel > Tambah Artikel"
                         ) : router.pathname.includes("artikel") ? (

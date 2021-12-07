@@ -15,11 +15,17 @@ import styles from "../../../../../styles/previewGaleri.module.css";
 import { postTemplate } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 
 export default function Template(props) {
+  const editorRef = useRef();
+
+  const [editorLoaded, setEditorLoaded] = useState(false);
+  const { CKEditor, ClassicEditor, Base64UploadAdapter } =
+    editorRef.current || {};
+
   const [status, setStatus] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
 
-  const selectReset = useRef()
+  // const selectReset = useRef()
   const router = useRouter();
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -64,6 +70,13 @@ export default function Template(props) {
   };
 
   useEffect(() => {
+    editorRef.current = {
+      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
+      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
+    };
+
+    setEditorLoaded(true);
+
     axios
       .get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status}`,
@@ -76,7 +89,10 @@ export default function Template(props) {
       .then((items) => {
         setSubject(items.data.data.training_rules.subject);
         setBody(items.data.data.training_rules.body);
-      });
+      })
+      // .catch((error) => {
+        
+      // })
   }, [props.token, status]);
 
   return (
@@ -129,23 +145,29 @@ export default function Template(props) {
               )}
             </div>
             <div className="form-group mr-4">
-              <CKEditor
-                editor={ClassicEditor}
-                data={body}
-                onChange={(event, editor) => {
-                  let data = editor.getData();
-                  setBody(data);
-                }}
-                onBlur={(e) => {
-                  simpleValidator.current.showMessageFor("data");
-                }}
-              />
-              {simpleValidator.current.message(
-                "data",
-                body,
-                "required",
-                { className: "text-danger" }
-              )}
+              <div className="ckeditor">
+                {editorLoaded ? (
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={body}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setBody(data);
+                    }}
+                    onBlur={(e) => {
+                      simpleValidator.current.showMessageFor("data");
+                    }}
+                  />
+                ) : (
+                  <p>Tunggu Sebentar</p>
+                )}
+                {simpleValidator.current.message(
+                  "data",
+                  body,
+                  "required",
+                  { className: "text-danger" }
+                )}
+              </div>
             </div>
           </div>
           <div className="d-flex justify-content-end mb-5 mr-4">
