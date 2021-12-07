@@ -395,6 +395,9 @@
   .padding-content-akademi-slider {
     padding: 40px 56px;
   }
+  .caption-image-new {
+    width: 284px;
+  }
 }
 
 @media (max-width: 350px) {
@@ -412,6 +415,9 @@
   }
   .padding-content-footer {
     padding: 40px 32px;
+  }
+  .caption-image-new {
+    width: 328px;
   }
 }
 
@@ -437,6 +443,9 @@
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
     max-width: 20rem !important;
+  }
+  .caption-image-new {
+    width: 100%;
   }
 }
 
@@ -482,4 +491,18 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   line-height: 25px;
+}
+
+.title-tahapan-new {
+  text-transform: uppercase;
+  color: #007cff;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.caption-tahapan-new {
+  font-size: 16px;
+  color: #6c6c6c;
+  width: 252px;
+  text-align: center;
 }
