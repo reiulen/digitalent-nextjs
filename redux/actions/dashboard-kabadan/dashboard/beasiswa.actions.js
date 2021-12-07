@@ -39,6 +39,10 @@ import {
   BEASISWA_ALUMNI_REQUEST,
   BEASISWA_ALUMNI_SUCCESS,
   BEASISWA_ALUMNI_FAIL,
+  // BEASISWA YEAR
+  BEASISWA_YEAR_REQUEST,
+  BEASISWA_YEAR_SUCCESS,
+  BEASISWA_YEAR_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/dashboard-kabadan/dashboard/beasiswa.type";
 import axios from "axios";
@@ -246,7 +250,7 @@ export const getBeasiswaProvinsiAwardee = (token, page) => async (dispatch) => {
 
 // BEASISWA UNIVERSITAS DALAM
 export const getBeasiswaUniversitasDalam =
-  (token, page) => async (dispatch) => {
+  (token, page, year) => async (dispatch) => {
     try {
       dispatch({ type: BEASISWA_UNIVERSITAS_DALAM_REQUEST });
 
@@ -254,6 +258,7 @@ export const getBeasiswaUniversitasDalam =
         process.env.END_POINT_API_BEASISWA +
         `progressbar-scholarship?type=dalam negeri`;
       if (page) link = link.concat(`&page=${page}`);
+      if (year) link = link.concat(`&year=${year}`);
 
       const config = {
         headers: {
@@ -276,34 +281,36 @@ export const getBeasiswaUniversitasDalam =
   };
 
 // BEASISWA UNIVERSITAS LUAR
-export const getBeasiswaUniversitasLuar = (token, page) => async (dispatch) => {
-  try {
-    dispatch({ type: BEASISWA_UNIVERSITAS_LUAR_REQUEST });
+export const getBeasiswaUniversitasLuar =
+  (token, page, year) => async (dispatch) => {
+    try {
+      dispatch({ type: BEASISWA_UNIVERSITAS_LUAR_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_BEASISWA +
-      `progressbar-scholarship?type=luar negeri`;
-    if (page) link = link.concat(`&page=${page}`);
+      let link =
+        process.env.END_POINT_API_BEASISWA +
+        `progressbar-scholarship?type=luar negeri`;
+      if (page) link = link.concat(`&page=${page}`);
+      if (year) link = link.concat(`&year=${year}`);
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: BEASISWA_UNIVERSITAS_LUAR_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: BEASISWA_UNIVERSITAS_LUAR_FAIL,
-      payload: error.message,
-    });
-  }
-};
+      dispatch({
+        type: BEASISWA_UNIVERSITAS_LUAR_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: BEASISWA_UNIVERSITAS_LUAR_FAIL,
+        payload: error.message,
+      });
+    }
+  };
 
 // BEASISWA ALUMNI
 export const getBeasiswaAlumni = (token) => async (dispatch) => {
@@ -356,6 +363,33 @@ export const getBeasiswaAwardee = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: BEASISWA_AWARDEE_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// BEASISWA YEAR
+export const getBeasiswaYear = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: BEASISWA_YEAR_REQUEST });
+
+    let link = process.env.END_POINT_API_BEASISWA + `get-year`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: BEASISWA_YEAR_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BEASISWA_YEAR_FAIL,
       payload: error.message,
     });
   }
