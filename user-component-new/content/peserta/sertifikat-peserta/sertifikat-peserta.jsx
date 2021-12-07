@@ -103,8 +103,8 @@ export default function RiwayatPelatihanDetail(props) {
                   <div
                     className={`position-absolute w-100 text-center ${
                       data?.data_sertifikat?.certificate?.background
-                        ? `${style.responsive_margin_peserta_1}`
-                        : `${style.responsive_margin_without_background}`
+                        ? ` responsive-margin-peserta-1`
+                        : ` responsive-margin-without-background`
                     } zindex-1`}
                   >
                     <span
