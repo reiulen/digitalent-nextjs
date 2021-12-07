@@ -71,7 +71,7 @@ const Dashboard = ({ session, success }) => {
 
   const [simonasData, setSimonasData] = useState([]);
   const [beasiswa, setBeasiswa] = useState([]);
-
+  const [loadingSimonas, setLoadingSimonas] = useState(true);
   const getSimonasData = async () => {
     try {
       const config = {
@@ -84,6 +84,7 @@ const Dashboard = ({ session, success }) => {
         config
       );
       if (data) {
+        setLoadingSimonas(false);
         return setSimonasData(data.data);
       } else {
         return;
@@ -558,8 +559,7 @@ const Dashboard = ({ session, success }) => {
                     </Link>
                   </div>
                 </Card.Title>
-                {simonasData &&
-                  simonasData.length !== 0 &&
+                {simonasData && simonasData.length > 0 ? (
                   simonasData?.map((row, i, arr) => (
                     <div
                       key={i}
@@ -575,10 +575,10 @@ const Dashboard = ({ session, success }) => {
                         <Image
                           src={
                             !row?.logo
-                              ? "/assets/media/mitra-icon/telkom-1.svg"
+                              ? "/assets/media/default-card.png"
                               : row?.logo
                           }
-                          objectFit="contain"
+                          objectFit="cover"
                           width={55}
                           height={52}
                           alt={row?.logo}
@@ -613,7 +613,12 @@ const Dashboard = ({ session, success }) => {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div>
+                    <LoadingTable loading={loadingSimonas} />
+                  </div>
+                )}
               </Card.Body>
             </Card>
           </Col>
@@ -661,7 +666,7 @@ const Dashboard = ({ session, success }) => {
                           // src="/assets/media/mitra-icon/logo-itb-1.svg"
                           src={
                             !row.logo
-                              ? "/assets/media/mitra-icon/logo-itb-1.svg"
+                              ? "/assets/media/default-card.png"
                               : `${process.env.END_POINT_API_IMAGE_BEASISWA}/${row.logo}`
                           }
                           width={55}
