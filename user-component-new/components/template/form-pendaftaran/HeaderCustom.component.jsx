@@ -12,10 +12,10 @@ const Header = ({ breadcrumb }) => {
   const router = useRouter();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const { error: errorPelatihan, pelatihan } = useSelector(
-    (state) => state.getPelatihan
+    state => state.getPelatihan
   );
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
@@ -64,7 +64,7 @@ const Header = ({ breadcrumb }) => {
     }, 1000);
   };
 
-  const set = (e) => {
+  const set = e => {
     e = e < 10 ? "0" + e : e;
     return e;
   };
@@ -72,91 +72,13 @@ const Header = ({ breadcrumb }) => {
 
   return (
     <>
-      <Container fluid className={styles.back}>
-        <Container
-          fluid
-          className={
-            router.pathname.includes(routerPath) ? styles.testBody : styles.body
-          }
-        >
-          <Row>
-            <Col sm={3} hidden={router.pathname.includes(routerPath)}>
-              <center>
-                <Image
-                  src={`${
-                    dataPribadi && dataPribadi.foto
-                      ? dataPribadi.file_path + dataPribadi.foto
-                      : "/assets/media/logos/default.png"
-                  }`}
-                  alt=""
-                  className={styles.imageProfile}
-                  width="120px"
-                  height="120px"
-                />
-                <h1 className={styles.name}>
-                  {dataPribadi ? dataPribadi.name || "-" : "-"}
-                </h1>
-                <p className={styles.nik}>
-                  {dataPribadi ? dataPribadi.nik || "-" : "-"}
-                </p>
-              </center>
-            </Col>
-            <Col sm={router.pathname.includes(routerPath) ? 12 : 9}>
-              <Card
-                className={styles.cardBody}
-                hidden={router.pathname.includes(routerPath)}
-              >
-                <Row>
-                  <Col
-                    className={`${styles.textCardLeft} d-flex justify-content-between`}
-                  >
-                    <div className="d-flex flex-row " style={{ float: "left" }}>
-                      <div className="p-1">
-                        {router.pathname.includes("substansi")
-                          ? "Test Substansi"
-                          : router.pathname.includes("survey")
-                          ? "Survey & LPJ"
-                          : router.pathname.includes("trivia")
-                          ? "Trivia"
-                          : router.pathname.includes("test-subtansi")
-                          ? "Test Substansi"
-                          : router.pathname.includes("riwayat-pelatihan")
-                          ? "Riwayat Pelatihan"
-                          : router.pathname.includes("administrasi")
-                          ? "Administrasi"
-                          : router.pathname.includes("mid-test")
-                          ? "Mid Test"
-                          : router.pathname.includes("done-mid-tes")
-                          ? "Mid Test"
-                          : "Dashboard"}
-                      </div>
-                    </div>
-                    <div className="d-flex">
-                      <div className="p-1">
-                        <i
-                          className={`${styles.icon} ri-time-fill`}
-                          style={{
-                            color: "#fff",
-                            fontSize: "16px",
-                          }}
-                        ></i>
-                      </div>
-                      <div className="p-1">
-                        {thisDay} , <span id="jam">{jam}</span>
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
-              </Card>
-              <h1
-                className={styles.mainText + " p-0"}
-                hidden={router.pathname.includes(routerPath)}
-              >
-                Digital Talent Scholarship
-              </h1>
+      <Container fluid className={`${styles.back}`}>
+        <Container fluid className={`${styles.testBody}`}>
+          <Row className="mx-10">
+            <Col sm={12} className="p-0">
               {router.pathname.includes(routerPath) && (
                 <Fragment>
-                  <Card className={styles.cardBody}>
+                  <Card className={`${styles.cardBody} `}>
                     <Row>
                       <Col
                         className={`${styles.textCardLeft} d-flex justify-content-between`}
@@ -185,22 +107,96 @@ const Header = ({ breadcrumb }) => {
                             ) : router.pathname.includes("done-mid-tes") ? (
                               "Mid Test"
                             ) : router.pathname.includes("form-pendaftaran") ? (
+                              // <Fragment>
+                              //   <div
+                              //     className="h-100 align-self-center d-block my-auto"
+                              //     style={{ fontSize: "14px" }}
+                              //   >
+                              //     <Link href="/" passHref>
+                              //       <span className="d-inline-block text-truncate ">
+                              //         <span
+                              //           style={{
+                              //             textDecoration: "underline",
+                              //           }}
+                              //         >
+                              //           Beranda
+                              //         </span>
+                              //         <div
+                              //           style={{ textDecoration: "none" }}
+                              //           className="mx-3 p-0 d-inline-block"
+                              //         >
+                              //           &gt;
+                              //         </div>
+                              //       </span>
+                              //     </Link>
+                              //     <span className="d-inline-block text-truncate   max-w-md-100 max-w-45px">
+                              //       <span
+                              //         style={{
+                              //           textDecoration: "underline",
+                              //         }}
+                              //       >
+                              //         {pelatihan?.akademi}
+                              //       </span>
+                              //       <div
+                              //         style={{ textDecoration: "none" }}
+                              //         className="mx-3 p-0 d-inline-block"
+                              //       >
+                              //         &gt;
+                              //       </div>
+                              //     </span>
+                              //     <div
+                              //       style={{ textDecoration: "none" }}
+                              //       className="mx-3 p-0 d-inline-block text-truncate d-md-none"
+                              //     >
+                              //       &gt;
+                              //     </div>
+                              //     <span className="d-inline-block text-truncate max-w-md-100 max-w-45px ">
+                              //       <span
+                              //         style={{ textDecoration: "underline" }}
+                              //       >
+                              //         {pelatihan?.name}
+                              //       </span>
+                              //     </span>
+                              //     <div
+                              //       style={{ textDecoration: "none" }}
+                              //       className="mx-3 p-0 d-inline-block text-truncate d-md-none"
+                              //     >
+                              //       &gt;
+                              //     </div>
+                              //     <div
+                              //       style={{ textDecoration: "none" }}
+                              //       className="mx-3 p-0 text-truncate d-none d-lg-inline-block"
+                              //     >
+                              //       &gt;
+                              //     </div>
+                              //     <span className="font-weight-bold text-truncate d-inline-block">
+                              //       {breadcrumb}
+                              //     </span>
+                              //   </div>
+                              // </Fragment>
                               <Fragment>
                                 <div
                                   className="h-100 align-self-center d-block my-auto"
-                                  style={{ fontSize: "14px" }}
+                                  style={{
+                                    fontSize: "14px",
+                                    fontWeight: "500",
+                                  }}
                                 >
                                   <Link href="/" passHref>
                                     <span className="d-inline-block text-truncate ">
                                       <span
                                         style={{
                                           textDecoration: "underline",
+                                          cursor: "pointer",
                                         }}
                                       >
                                         Beranda
                                       </span>
                                       <div
-                                        style={{ textDecoration: "none" }}
+                                        style={{
+                                          textDecoration: "none",
+                                          fontWeight: "500",
+                                        }}
                                         className="mx-3 p-0 d-inline-block"
                                       >
                                         &gt;
@@ -211,32 +207,45 @@ const Header = ({ breadcrumb }) => {
                                     <span
                                       style={{
                                         textDecoration: "underline",
+                                        fontWeight: "500",
                                       }}
                                     >
                                       {pelatihan?.akademi}
                                     </span>
                                     <div
-                                      style={{ textDecoration: "none" }}
+                                      style={{
+                                        textDecoration: "none",
+                                        fontWeight: "500",
+                                      }}
                                       className="mx-3 p-0 d-inline-block"
                                     >
                                       &gt;
                                     </div>
                                   </span>
                                   <div
-                                    style={{ textDecoration: "none" }}
+                                    style={{
+                                      textDecoration: "none",
+                                      fontWeight: "500",
+                                    }}
                                     className="mx-3 p-0 d-inline-block text-truncate d-md-none"
                                   >
                                     &gt;
                                   </div>
                                   <span className="d-inline-block text-truncate max-w-md-100 max-w-45px ">
                                     <span
-                                      style={{ textDecoration: "underline" }}
+                                      style={{
+                                        textDecoration: "underline",
+                                        fontWeight: "500",
+                                      }}
                                     >
                                       {pelatihan?.name}
                                     </span>
                                   </span>
                                   <div
-                                    style={{ textDecoration: "none" }}
+                                    style={{
+                                      textDecoration: "none",
+                                      fontWeight: "500",
+                                    }}
                                     className="mx-3 p-0 d-inline-block text-truncate d-md-none"
                                   >
                                     &gt;
@@ -248,8 +257,21 @@ const Header = ({ breadcrumb }) => {
                                     &gt;
                                   </div>
                                   <span className="font-weight-bold text-truncate d-inline-block">
-                                    {breadcrumb}
+                                    Pendaftaran Pelatihan
                                   </span>
+                                  {breadcrumb && (
+                                    <Fragment>
+                                      <div
+                                        style={{ textDecoration: "none" }}
+                                        className="mx-3 p-0 text-truncate d-none d-lg-inline-block"
+                                      >
+                                        &gt;
+                                      </div>
+                                      <span className="font-weight-bold text-truncate d-inline-block">
+                                        {breadcrumb}
+                                      </span>
+                                    </Fragment>
+                                  )}
                                 </div>
                               </Fragment>
                             ) : (
@@ -274,7 +296,7 @@ const Header = ({ breadcrumb }) => {
                       </Col>
                     </Row>
                   </Card>
-                  <Col xs={12} className="p-0">
+                  <Col xs={12} className="p-0 ">
                     <h1 className={styles.mainText}>
                       Digital Talent Scholarship
                     </h1>
@@ -282,7 +304,7 @@ const Header = ({ breadcrumb }) => {
                 </Fragment>
               )}
               <p className={styles.subText}>
-                <div className="d-flex flex-row" style={{ float: "left" }}>
+                <div className="d-flex flex-row " style={{ float: "left" }}>
                   <div className="p-1">
                     {router.pathname.includes("substansi") ? (
                       <i
@@ -340,23 +362,7 @@ const Header = ({ breadcrumb }) => {
                       ></i>
                     )}
                   </div>
-                  <div className="p-1">
-                    {router.pathname.includes("substansi")
-                      ? "Test Substansi"
-                      : router.pathname.includes("survey")
-                      ? "Survey & LPJ"
-                      : router.pathname.includes("trivia")
-                      ? "Trivia"
-                      : router.pathname.includes("test-subtansi")
-                      ? "Test Substansi"
-                      : router.pathname.includes("mid-test")
-                      ? "Mid Test"
-                      : router.pathname.includes("done-mid-tes")
-                      ? "Mid Test"
-                      : router.pathname.includes("form-pendaftaran")
-                      ? "Pendaftaran Pelatihan"
-                      : "Dashboard"}
-                  </div>
+                  <div className="p-1">Pendaftaran Pelatihan</div>
                 </div>
               </p>
             </Col>

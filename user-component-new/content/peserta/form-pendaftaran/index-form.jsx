@@ -23,20 +23,20 @@ const IndexForm = ({ token, session }) => {
   const router = useRouter();
 
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
-    (state) => state.getFormBuilder
+    state => state.getFormBuilder
   );
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
-    (state) => state.getPelatihan
+    state => state.getPelatihan
   );
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const {
     error: errorNewPendaftaran,
     pendaftaran,
     loading,
     success,
-  } = useSelector((state) => state.newPendaftaranPelatihan);
+  } = useSelector(state => state.newPendaftaranPelatihan);
 
   let error;
   if (errorFormBuilder) error = errorFormBuilder;
@@ -69,7 +69,7 @@ const IndexForm = ({ token, session }) => {
   useEffect(() => {
     switch (view) {
       case 1:
-        return setBreadcrumb("Pendaftaran Pelatihan");
+        return setBreadcrumb("");
       case 2:
         return setBreadcrumb("Form Komitmen");
       case 3:
@@ -167,7 +167,7 @@ const IndexForm = ({ token, session }) => {
               <FormPendaftaran
                 token={token}
                 propsTitle={title}
-                funcView={(val) => setView(val)}
+                funcView={val => setView(val)}
               />
             </Card>
           </>
@@ -181,7 +181,7 @@ const IndexForm = ({ token, session }) => {
               propsDataPribadi={dataPeserta}
               propsDataPelatihan={dataPelatihan}
               token={token}
-              funcView={(val) => setView(val)}
+              funcView={val => setView(val)}
             />
           </Card>
         );
@@ -270,7 +270,7 @@ const IndexForm = ({ token, session }) => {
             <Card className="card-custom gutter-b">
               <FormPendaftaran
                 propsTitle={title}
-                funcView={(val) => setView(val)}
+                funcView={val => setView(val)}
               />
             </Card>
           </>
@@ -286,7 +286,9 @@ const IndexForm = ({ token, session }) => {
         session={session}
         breadcrumb={breadcrumb}
       >
-        <Container fluid>{showViewForm()}</Container>
+        <Container fluid className="mx-7">
+          {showViewForm()}
+        </Container>
       </Layout>
     </>
   );
