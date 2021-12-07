@@ -688,7 +688,7 @@ const SubtansiUser = ({ token }) => {
         </ModalHeader>
         <ModalBody className={styles.bodyKonfirmasi}>
           Apakah anda ingin menyelesaikan Test Substansi dan mengirim semua
-          hasil jawaban anda?Jika “Ya” maka anda sudah dinyatakan selesai
+          hasil jawaban anda?Jika “Selesai” maka anda sudah dinyatakan selesai
           mengikuti Test Substansi, dan anda tidak dapat memperbaiki jawaban
           anda. <br />
           <br />

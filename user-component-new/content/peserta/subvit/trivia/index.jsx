@@ -80,6 +80,7 @@ const SubtansiUser = ({ token }) => {
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
+  const [modalNext, setModalNext] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
   const [count, setCount] = useState(random_trivia && random_trivia.time_left);
   const [modalDone, setModalDone] = useState(false);
@@ -139,12 +140,17 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handleNext = () => {
+    setModalNext(true);
+  };
+
+  const handlePageNext = () => {
     const page = parseInt(router.query.id) + 1;
     router.push(
       `${router.pathname.slice(0, 23)}/${page}?theme_id=${
         router.query.theme_id
       }&training_id=${router.query.training_id}`
     );
+    setModalNext(false);
   };
 
   const handleCloseModal = () => {
@@ -239,6 +245,7 @@ const SubtansiUser = ({ token }) => {
   const handleCloseModalDone = () => {
     setModalDone(false);
   };
+
   return (
     <>
       <Container className={styles.baseAll} fluid>
@@ -304,9 +311,9 @@ const SubtansiUser = ({ token }) => {
                 <Col className={styles.align}>
                   <p className={styles.totalSoal2}>
                     00:00:0
-                    {data.list_questions &&
+                    {/* {data &&
                       data.list_questions[parseInt(router.query.id) - 1]
-                        .duration}
+                        .duration} */}
                   </p>
                 </Col>
               </Row>
@@ -445,33 +452,7 @@ const SubtansiUser = ({ token }) => {
                 )}
 
               <Row style={{ marginTop: "20px" }}>
-                <Col className={styles.btnBackResponsive}>
-                  <Button
-                    variant="link"
-                    className={styles.btnBack}
-                    onClick={handleBack}
-                    disabled={parseInt(router.query.id) === 1}
-                  >
-                    <div className="d-flex flex-row">
-                      <div
-                        className="p-2"
-                        aria-disabled={parseInt(router.query.id) === 1}
-                      >
-                        <i
-                          className="ri-arrow-left-s-line"
-                          style={
-                            parseInt(router.query.id) === 1
-                              ? {
-                                  color: "#d3d3d3",
-                                }
-                              : { color: "#007CFF", cursor: "pointer" }
-                          }
-                        ></i>
-                      </div>
-                      <div className={` p-2`}>Kembali</div>
-                    </div>
-                  </Button>
-                </Col>
+                <Col className={styles.btnBackResponsive}></Col>
 
                 <Col
                   className={styles.btnBottom}
@@ -505,16 +486,7 @@ const SubtansiUser = ({ token }) => {
                 </Col>
                 <Col xs={12} className={styles.btnBottomResponsive}>
                   <Row>
-                    <Col xs={6} style={{ textAlign: "center" }}>
-                      <Button
-                        variant="link"
-                        className={styles.btnBack}
-                        onClick={handleBack}
-                        disabled={parseInt(router.query.id) === 1}
-                      >
-                        Kembali
-                      </Button>
-                    </Col>
+                    <Col xs={6} style={{ textAlign: "center" }}></Col>
 
                     <Col xs={6} style={{ textAlign: "center" }}>
                       {parseInt(router.query.id) === data?.length ? (
@@ -865,6 +837,28 @@ const SubtansiUser = ({ token }) => {
             })}
           </Row>
         </ModalBody>
+      </Modal>
+
+      <Modal show={modalNext} onHide={() => setModalNext(false)}>
+        <ModalHeader className={styles.headerModal}>
+          Konfirmasi Jawaban{" "}
+        </ModalHeader>
+        <ModalBody className={styles.bodyKonfirmasi}>
+          Apakah Anda yakin lanjut ke soal selanjutnya? Karena{" "}
+          <b>Anda tidak dapat kembali</b> ke soal trivia sebelumnya
+        </ModalBody>
+        <div style={{ textAlign: "right", padding: "20px" }}>
+          <Button
+            variant="link"
+            onClick={() => setModalNext(false)}
+            className={styles.btnBatal}
+          >
+            Batal
+          </Button>
+          <Button onClick={handlePageNext} className={styles.btnMulai}>
+            Ya
+          </Button>
+        </div>
       </Modal>
     </>
   );
