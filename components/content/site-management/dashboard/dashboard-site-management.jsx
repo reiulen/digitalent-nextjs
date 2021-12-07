@@ -82,7 +82,7 @@ const DashboardSiteManagement = ({ token, user }) => {
           </td>
           <td className="data-daerah-provinsi">{item.provinsi}</td>
         </div>
-        <td className="total-peserta text-center" colSpan={2}>{item?.total} Zonasi</td>
+        <td className="total-peserta">{item?.total} Zonasi</td>
       </tr>
     );
   });
@@ -96,7 +96,7 @@ const DashboardSiteManagement = ({ token, user }) => {
           </td>
           <td className="data-daerah-provinsi">{item.provinsi}</td>
         </div>
-        <td className="total-peserta text-center" colSpan={2}>{item.total} Peserta</td>
+        <td className="total-peserta">{item.total} Peserta</td>
       </tr>
     );
   });
@@ -110,7 +110,7 @@ const DashboardSiteManagement = ({ token, user }) => {
   return (
     <>
       <PageWrapper>
-        <div className="container">
+        <div className="row">
           <div className="col-lg-12 col-md-12">
             <div className="row">
               {/* card 1 */}
@@ -144,116 +144,106 @@ const DashboardSiteManagement = ({ token, user }) => {
             </div>
           </div>
         </div>
-        <div className="container">
-          <div className="row mx-0">
-            <div className={`${styles.cardName} col-lg-6 overflow-hidden d-flex justify-content-between position-relative`}>
-              <div className={`${styles.nameUser} bg-white px-2 mt-2 br-12 py-10 px-6 w-100 overflow-hidden`}>
-                <div className={`${styles.textName}`}>
-                  <h5 className="text-blue-primary fw-600 fz-24">
-                    Hallo {user.name} !
-                  </h5>
-                  <p className="fw-600 fz-16">
-                    Selamat Datang di Dashboard <br /> Site Management
-                  </p>
-                </div>
-              </div>
-              <div className={`${styles.imageAdmin} d-flex mr-auto`}>
-                <Image src={ImageHero} alt="imagehero" />
+        <div className="row mx-0">
+          <div className={`${styles.cardName} col-lg-6 overflow-hidden d-flex justify-content-between position-relative`}>
+            <div className={`${styles.nameUser} bg-white px-2 mt-2 br-12 py-10 px-6 w-100 overflow-hidden`}>
+              <div className={`${styles.textName}`}>
+                <h5 className="text-blue-primary fw-600 fz-24">
+                  Hallo {user.name} !
+                </h5>
+                <p className="fw-600 welcome">
+                  Selamat Datang di Dashboard <br /> Site Management
+                </p>
               </div>
             </div>
-            <div className="col-lg-3 mt-2 hover-subm">
-              <CardDashboardSiteManagement
-                background="bg-white"
-                icon="/assets/icon/Account.svg"
-                hover="/assets/icon/HoverSUBM.svg"
-                color="text-black"
-                title="SUBM"
-                link="/site-management/setting/pelatihan?sidebar=SUBM"
-              ></CardDashboardSiteManagement>
-            </div>
-            <div className="col-lg-3 mt-2">
-              <CardDashboardSiteManagement
-                background="bg-white"
-                hover="/assets/icon/HoverZonasi.svg"
-                icon="/assets/icon/Map.svg"
-                color="text-black"
-                title="Zonasi"
-                link="/site-management/master-data/master-zonasi"
-              ></CardDashboardSiteManagement>
+            <div className={`${styles.imageAdmin} d-flex mr-auto`}>
+              <Image src={ImageHero} alt="imagehero" />
             </div>
           </div>
+          <div className="col-lg-3 mt-2 hover-subm">
+            <CardDashboardSiteManagement
+              background="bg-white"
+              icon="/assets/icon/Account.svg"
+              hover="/assets/icon/HoverSUBM.svg"
+              color="text-black"
+              title="SUBM"
+              link="/site-management/setting/pelatihan?sidebar=SUBM"
+            ></CardDashboardSiteManagement>
+          </div>
+          <div className="col-lg-3 mt-2">
+            <CardDashboardSiteManagement
+              background="bg-white"
+              hover="/assets/icon/HoverZonasi.svg"
+              icon="/assets/icon/Map.svg"
+              color="text-black"
+              title="Zonasi"
+              link="/site-management/master-data/master-zonasi"
+            ></CardDashboardSiteManagement>
+          </div>
         </div>
-        <div className="container mt-8">
+        <div className="mt-8">
           <div className="row mx-0">
             <div className="col-lg-6 mt-2">
               <div className="content-data bg-white">
-                <table className={`cardDataPeserta table table-borderless rounded position-relative`}>
-                  <thead>
-                    <tr>
-                      <th>
-                        <div className="data-peserta">Data Peserta</div>
-                        <div className="berdasarkan">
-                          Berdasarkan{" "}
-                          {typePeserta === "city" ? "Daerah" : "Provinsi"}
-                        </div>
-                      </th>
-                      <th className="position-relative">
-                        <div
-                          className={
-                            typePeserta === "city"
-                              ? "btn text-white type-styling data-head-2"
-                              : "text-gray pb-3 data-head"
-                          }
-                        >
-                          <a
-                            href="#"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setTypePeserta("city");
-                              setPagePeserta(1);
-                            }}
-                          >
-                            Kota / Kabupaten
-                          </a>
-                        </div>
-                      </th>
-                      <th>
-                        <div
-                          className={
-                            typePeserta === "province"
-                              ? "btn text-white type-styling provinsi-styling-2"
-                              : "text-gray pb-3 provinsi-styling"
-                          }
-                        >
-                          <a
-                            href="#"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setTypePeserta("province");
-                              setPagePeserta(1);
-                            }}
-                          >
-                            Provinsi
-                          </a>
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
+                <div className="row">
+                  <div className="col-lg-12 ml-5 my-4">
+                    <div className="data-peserta">Data Peserta</div>
+                    <div className="berdasarkan">
+                      Berdasarkan{" "}
+                      {typePeserta === "city" ? "Daerah" : "Provinsi"}
+                    </div>
+                  </div>
+                  <div className="col-lg-12 row justify-content-evenly mb-4">
+                    <div
+                      className={
+                        typePeserta === "city"
+                          ? "btn text-white type-styling data-head-2 mx-9"
+                          : "text-gray pt-3 mx-9"
+                      }
+                    >
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setTypePeserta("city");
+                          setPagePeserta(1);
+                        }}
+                      >
+                        Kota / Kabupaten
+                      </a>
+                    </div>
+                    <div
+                      className={
+                        typePeserta === "province"
+                          ? "btn text-white type-styling provinsi-styling-2"
+                          : "text-gray pt-3 provinsi-styling"
+                      }
+                    >
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setTypePeserta("province");
+                          setPagePeserta(1);
+                        }}
+                      >
+                        Provinsi
+                      </a>
+                    </div>
+                  </div>
+                </div>
 
-                  {/* <tbody> */}
-                  {tablePeserta.length > 0 ? tablePeserta : emptyData}
-                  {/* </tbody> */}
+                {tablePeserta.length > 0 ? tablePeserta : emptyData}
 
-                </table>
-                <div className="d-flex ml-6 justify-content-between">
-                  <p className="pt-6">
+                <div className="d-flex ml-6 justify-content-between align-items-center pagination-button">
+                  <p className="pt-5">
                     Total:{" "}
                     {allDataPeserta &&
                       allDataPeserta.length > 0 &&
                       allDataPeserta[0].totalPeserta}{" "}
                     Peserta
                   </p>
-                  <div className="ml-auto mx-10 my-4">
+                  <div className="ml-auto mx-7 my-4">
                     <button
                       className={
                         pagePeserta === 1
@@ -309,81 +299,60 @@ const DashboardSiteManagement = ({ token, user }) => {
             </div>
             <div className="col-lg-6 mt-2">
               <div className="content-data bg-white">
-                <table className="table table-borderless rounded cardDataPeserta position-relative">
-                  <thead>
-                    <tr>
-                      <th>
-                        <div className="data-peserta">Data Zonasi</div>
-                        <div className="berdasarkan">
-                          Berdasarkan {type === "city" ? "Daerah" : "Provinsi"}
-                        </div>
-                      </th>
-                      <th className="position-relative">
-                        <div
-                          className={
-                            type === "city"
-                            ? "btn text-white type-styling data-head-2"
-                            : "text-gray pb-3 data-head"
-                          }
-                        >
-                          <a
-                            href="#"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setType("city");
-                              setPageZonasi(1);
-                            }}
-                          >
-                            Kota / Kabupaten
-                          </a>
-                        </div>
-                      </th>
-                      <th>
-                        <div
-                          className={
-                            type === "province"
-                              ? "btn text-white type-styling provinsi-styling-2"
-                              : "text-gray pb-3 provinsi-styling"
-                          }
-                        >
-                          <a
-                            href="#"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setType("province");
-                              setPageZonasi(1);
-                            }}
-                          >
-                            Provinsi
-                          </a>
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  {/* <tbody> */}
-                  {tableZonasi.length > 0 ?
-                    // { tableZonasi }
-                    allDataZonasi.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <div className="d-flex align-items-center">
-                            <td className="data-daerah py-4">
-                              <span className="nomor">{item.nomor}</span>
-                            </td>
-                            <td className="data-daerah-provinsi">{item.provinsi}</td>
-                          </div>
-                          <td className="total-peserta text-center" colSpan={2}>{item?.total} Zonasi</td>
-                        </tr>
-                      )
-                    })
-                    : emptyData}
-                  {/* </tbody> */}
-                </table>
-                <div className="d-flex ml-6 justify-content-between">
-                  <p className="pt-6">
+                <div className="row">
+                  <div className="col-lg-12 ml-5 my-4">
+                    <div className="data-peserta">Data Zonasi</div>
+                    <div className="berdasarkan">
+                      Berdasarkan {type === "city" ? "Daerah" : "Provinsi"}
+                    </div>
+                  </div>
+                  <div className="col-lg-12 row justify-content-evenly mb-4">
+                    <div
+                      className={
+                        type === "city"
+                          ? "btn text-white type-styling data-head-2 mx-9"
+                          : "text-gray pt-3 mx-9"
+                      }
+                    >
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setType("city");
+                          setPageZonasi(1);
+                        }}
+                      >
+                        Kota / Kabupaten
+                      </a>
+                    </div>
+                    <div
+                      className={
+                        type === "province"
+                          ? "btn text-white type-styling provinsi-styling-2"
+                          : "text-gray pt-3 provinsi-styling"
+                      }
+                    >
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setType("province");
+                          setPageZonasi(1);
+                        }}
+                      >
+                        Provinsi
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {tableZonasi.length > 0 ? tableZonasi : emptyData}
+
+                <div className="d-flex ml-6 justify-content-between align-items-center pagination-button">
+                  <p className="pt-5">
                     Total: {allDataZonasi[0]?.totalZonasi} Zonasi
                   </p>
-                  <div className="ml-auto mx-10 my-4">
+                  <div className="ml-auto mx-7 my-4">
                     <button
                       className={
                         pageZonasi === 1

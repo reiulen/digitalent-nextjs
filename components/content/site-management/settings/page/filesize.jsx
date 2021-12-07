@@ -80,7 +80,7 @@ export default function FileSize(props) {
             {simpleValidator.current.message(
               "size image",
               image,
-              "required",
+              "required|numeric|max:20 MB,num",
               { className: "text-danger" }
             )}
           </div>
@@ -108,7 +108,7 @@ export default function FileSize(props) {
             {simpleValidator.current.message(
               "size document",
               document,
-              "required",
+              "required|numeric|max:20 MB,num",
               { className: "text-danger" }
             )}
           </div>

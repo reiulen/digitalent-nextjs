@@ -532,8 +532,9 @@ export default function SUBM(props) {
           <div className="update-status mt-4">
             <h3 className="judul mb-4">Update Status Seleksi Peserta</h3>
             <span className="d-flex switch switch-primary status-peserta">
-              <label>
+              <label className="checkbox-button">
                 <input
+                  
                   type="checkbox"
                   name="select"
                   checked={participantSelectionStatusUpdate}
@@ -606,7 +607,7 @@ export default function SUBM(props) {
                 />
                 <span></span>
               </label>
-              <h3 className="mt-2 isAktif">
+              <h3 className="mt-2 judul">
                 {broadcastEmailSendNotification ? "Aktif" : "Tidak Aktif"}
               </h3>
             </span>
