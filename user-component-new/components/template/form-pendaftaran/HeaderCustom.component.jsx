@@ -83,201 +83,110 @@ const Header = ({ breadcrumb }) => {
                       <Col
                         className={`${styles.textCardLeft} d-flex justify-content-between`}
                       >
-                        <div
-                          className="d-flex flex-row align-items-center"
-                          style={{ float: "left" }}
-                        >
-                          <div className="p-1">
-                            {router.pathname.includes("substansi") ? (
-                              "Test Substansi"
-                            ) : router.pathname.includes("survey") ? (
-                              "Survey & LPJ"
-                            ) : router.pathname.includes("trivia") ? (
-                              "Trivia"
-                            ) : router.pathname.includes("test-subtansi") ? (
-                              "Test Substansi"
-                            ) : router.pathname.includes(
-                                "riwayat-pelatihan"
-                              ) ? (
-                              "Riwayat Pelatihan"
-                            ) : router.pathname.includes("administrasi") ? (
-                              "Administrasi"
-                            ) : router.pathname.includes("mid-test") ? (
-                              "Mid Test"
-                            ) : router.pathname.includes("done-mid-tes") ? (
-                              "Mid Test"
-                            ) : router.pathname.includes("form-pendaftaran") ? (
-                              // <Fragment>
-                              //   <div
-                              //     className="h-100 align-self-center d-block my-auto"
-                              //     style={{ fontSize: "14px" }}
-                              //   >
-                              //     <Link href="/" passHref>
-                              //       <span className="d-inline-block text-truncate ">
-                              //         <span
-                              //           style={{
-                              //             textDecoration: "underline",
-                              //           }}
-                              //         >
-                              //           Beranda
-                              //         </span>
-                              //         <div
-                              //           style={{ textDecoration: "none" }}
-                              //           className="mx-3 p-0 d-inline-block"
-                              //         >
-                              //           &gt;
-                              //         </div>
-                              //       </span>
-                              //     </Link>
-                              //     <span className="d-inline-block text-truncate   max-w-md-100 max-w-45px">
-                              //       <span
-                              //         style={{
-                              //           textDecoration: "underline",
-                              //         }}
-                              //       >
-                              //         {pelatihan?.akademi}
-                              //       </span>
-                              //       <div
-                              //         style={{ textDecoration: "none" }}
-                              //         className="mx-3 p-0 d-inline-block"
-                              //       >
-                              //         &gt;
-                              //       </div>
-                              //     </span>
-                              //     <div
-                              //       style={{ textDecoration: "none" }}
-                              //       className="mx-3 p-0 d-inline-block text-truncate d-md-none"
-                              //     >
-                              //       &gt;
-                              //     </div>
-                              //     <span className="d-inline-block text-truncate max-w-md-100 max-w-45px ">
-                              //       <span
-                              //         style={{ textDecoration: "underline" }}
-                              //       >
-                              //         {pelatihan?.name}
-                              //       </span>
-                              //     </span>
-                              //     <div
-                              //       style={{ textDecoration: "none" }}
-                              //       className="mx-3 p-0 d-inline-block text-truncate d-md-none"
-                              //     >
-                              //       &gt;
-                              //     </div>
-                              //     <div
-                              //       style={{ textDecoration: "none" }}
-                              //       className="mx-3 p-0 text-truncate d-none d-lg-inline-block"
-                              //     >
-                              //       &gt;
-                              //     </div>
-                              //     <span className="font-weight-bold text-truncate d-inline-block">
-                              //       {breadcrumb}
-                              //     </span>
-                              //   </div>
-                              // </Fragment>
-                              <Fragment>
-                                <div
-                                  className="h-100 align-self-center d-block my-auto"
+                        <div className={`p-1 d-flex align-items-center `}>
+                          <Fragment>
+                            <div
+                              className=""
+                              style={{
+                                fontSize: "14px",
+                                fontWeight: "500",
+                              }}
+                            >
+                              <Link href="/" passHref>
+                                <span className="d-inline-block text-truncate ">
+                                  <span
+                                    style={{
+                                      textDecoration: "underline",
+                                      cursor: "pointer",
+                                    }}
+                                  >
+                                    Beranda
+                                  </span>
+                                  <div
+                                    style={{
+                                      textDecoration: "none",
+                                      fontWeight: "500",
+                                    }}
+                                    className="mx-1 mx-md-3 p-0 d-inline-block"
+                                  >
+                                    &gt;
+                                  </div>
+                                </span>
+                              </Link>
+                              <span
+                                className={`d-inline-block text-truncate max-w-lg-100 max-w-45px`}
+                              >
+                                <span
                                   style={{
-                                    fontSize: "14px",
+                                    textDecoration: "underline",
                                     fontWeight: "500",
                                   }}
                                 >
-                                  <Link href="/" passHref>
-                                    <span className="d-inline-block text-truncate ">
-                                      <span
-                                        style={{
-                                          textDecoration: "underline",
-                                          cursor: "pointer",
-                                        }}
-                                      >
-                                        Beranda
-                                      </span>
-                                      <div
-                                        style={{
-                                          textDecoration: "none",
-                                          fontWeight: "500",
-                                        }}
-                                        className="mx-3 p-0 d-inline-block"
-                                      >
-                                        &gt;
-                                      </div>
-                                    </span>
-                                  </Link>
-                                  <span className="d-inline-block text-truncate   max-w-md-100 max-w-45px">
-                                    <span
-                                      style={{
-                                        textDecoration: "underline",
-                                        fontWeight: "500",
-                                      }}
-                                    >
-                                      {pelatihan?.akademi}
-                                    </span>
-                                    <div
-                                      style={{
-                                        textDecoration: "none",
-                                        fontWeight: "500",
-                                      }}
-                                      className="mx-3 p-0 d-inline-block"
-                                    >
-                                      &gt;
-                                    </div>
-                                  </span>
-                                  <div
-                                    style={{
-                                      textDecoration: "none",
-                                      fontWeight: "500",
-                                    }}
-                                    className="mx-3 p-0 d-inline-block text-truncate d-md-none"
-                                  >
-                                    &gt;
-                                  </div>
-                                  <span className="d-inline-block text-truncate max-w-md-100 max-w-45px ">
-                                    <span
-                                      style={{
-                                        textDecoration: "underline",
-                                        fontWeight: "500",
-                                      }}
-                                    >
-                                      {pelatihan?.name}
-                                    </span>
-                                  </span>
-                                  <div
-                                    style={{
-                                      textDecoration: "none",
-                                      fontWeight: "500",
-                                    }}
-                                    className="mx-3 p-0 d-inline-block text-truncate d-md-none"
-                                  >
-                                    &gt;
-                                  </div>
+                                  {pelatihan?.akademi}
+                                </span>
+                                <div
+                                  style={{
+                                    textDecoration: "none",
+                                    fontWeight: "500",
+                                  }}
+                                  className="mx-1 mx-md-3 p-0 d-inline-block"
+                                >
+                                  &gt;
+                                </div>
+                              </span>
+                              <div
+                                style={{
+                                  textDecoration: "none",
+                                  fontWeight: "500",
+                                }}
+                                className="mx-1 mx-md-3 p-0 d-inline-block text-truncate d-md-none"
+                              >
+                                &gt;
+                              </div>
+                              <span className="d-inline-block text-truncate max-w-md-100 max-w-45px ">
+                                <span
+                                  style={{
+                                    textDecoration: "underline",
+                                    fontWeight: "500",
+                                  }}
+                                >
+                                  {pelatihan?.name}
+                                </span>
+                              </span>
+                              <div
+                                style={{
+                                  textDecoration: "none",
+                                  fontWeight: "500",
+                                }}
+                                className="mx-1 mx-md-3 p-0 d-inline-block text-truncate d-lg-none"
+                              >
+                                &gt;
+                              </div>
+                              <div
+                                style={{ textDecoration: "none" }}
+                                className="mx-1 mx-md-3 p-0 text-truncate d-none d-lg-inline-block"
+                              >
+                                &gt;
+                              </div>
+                              <span className="font-weight-bold text-truncate d-inline-block text-truncate max-w-lg-100 max-w-45px">
+                                Pendaftaran Pelatihan
+                              </span>
+
+                              {breadcrumb && (
+                                <Fragment>
                                   <div
                                     style={{ textDecoration: "none" }}
-                                    className="mx-3 p-0 text-truncate d-none d-lg-inline-block"
+                                    className="mx-3 p-0 text-truncate d-none d-md-inline-block"
                                   >
                                     &gt;
                                   </div>
                                   <span className="font-weight-bold text-truncate d-inline-block">
-                                    Pendaftaran Pelatihan
+                                    {breadcrumb}
                                   </span>
-                                  {breadcrumb && (
-                                    <Fragment>
-                                      <div
-                                        style={{ textDecoration: "none" }}
-                                        className="mx-3 p-0 text-truncate d-none d-lg-inline-block"
-                                      >
-                                        &gt;
-                                      </div>
-                                      <span className="font-weight-bold text-truncate d-inline-block">
-                                        {breadcrumb}
-                                      </span>
-                                    </Fragment>
-                                  )}
-                                </div>
-                              </Fragment>
-                            ) : (
-                              "Dashboard"
-                            )}
-                          </div>
+                                </Fragment>
+                              )}
+                            </div>
+                          </Fragment>
                         </div>
                         <div className="d-md-flex d-none">
                           <div className="p-1">

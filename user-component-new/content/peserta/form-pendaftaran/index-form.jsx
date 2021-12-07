@@ -95,6 +95,7 @@ const IndexForm = ({ token, session }) => {
                             dataPelatihan.thumbnail
                           : "/assets/media/default-card.png"
                       }`}
+                      alt="Thumbnail"
                       style={{ height: "105px", objectFit: "cover" }}
                     />
                   </Col>
@@ -111,6 +112,7 @@ const IndexForm = ({ token, session }) => {
                         width={58}
                         height={58}
                         className={`${style.image_mitra}`}
+                        alt="mitra"
                       />
                       <div className="tema-mitra d-flex flex-column ml-5">
                         <p className={`my-0 ${style.text_title_card}`}>
