@@ -87,10 +87,11 @@ const Header = () => {
             <Col sm={3} hidden={router.pathname.includes(routerPath)}>
               <center>
                 <Image
-                  src={`${dataPribadi && dataPribadi.foto
+                  src={`${
+                    dataPribadi && dataPribadi.foto
                       ? dataPribadi.file_path + dataPribadi.foto
                       : "/assets/media/logos/default.png"
-                    }`}
+                  }`}
                   alt=""
                   className={styles.imageProfile}
                   width="120px"
@@ -111,9 +112,12 @@ const Header = () => {
               >
                 <Row>
                   <Col
-                    className={`${styles.textCardLeft} d-flex justify-content-between`}
+                    className={`${styles.textCardLeft} d-flex justify-content-between `}
                   >
-                    <div className="d-flex flex-row " style={{ float: "left" }}>
+                    <div
+                      className="d-flex flex-row align-items-center"
+                      style={{ float: "left" }}
+                    >
                       <div className="p-1">
                         {router.pathname.includes("substansi") ? (
                           "Test Substansi"
@@ -133,6 +137,8 @@ const Header = () => {
                           "Mid Test"
                         ) : router.pathname.includes("bookmark") ? (
                           "Favorit"
+                        ) : router.pathname.includes("edit") ? (
+                          "Artikel > Edit Artikel"
                         ) : router.pathname.includes("tambah-artikel") ? (
                           "Artikel > Tambah Artikel"
                         ) : router.pathname.includes("artikel") ? (
@@ -328,8 +334,8 @@ const Header = () => {
                             ) : router.pathname.includes("test-subtansi") ? (
                               "Test Substansi"
                             ) : router.pathname.includes(
-                              "riwayat-pelatihan"
-                            ) ? (
+                                "riwayat-pelatihan"
+                              ) ? (
                               "Riwayat Pelatihan"
                             ) : router.pathname.includes("administrasi") ? (
                               "Administrasi"

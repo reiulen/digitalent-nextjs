@@ -330,7 +330,7 @@ const UbahApi = ({ token }) => {
                       className={`${styles.cari} form-search-date form-control cursor-pointer`}
                       onChange={(date) => onChangePeriodeDateEnd(date)}
                       value={to}
-                      disabled={!isFrom}
+                      // disabled={!isFrom}
                       dateFormat="YYYY-MM-DD"
                       placeholderText="To"
                       minDate={moment(from).toDate()}

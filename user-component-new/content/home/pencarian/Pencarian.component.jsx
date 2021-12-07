@@ -30,6 +30,7 @@ const Pencarian = ({ session }) => {
   const dispatch = useDispatch();
   const { query } = router;
   const allPencarian = useSelector((state) => state.allPencarian);
+
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
     useSelector((state) => state.allPenyelenggaraPeserta);
 
@@ -154,7 +155,7 @@ const Pencarian = ({ session }) => {
           );
         }
       } catch (e) {
-        router.push("/login");
+        SweatAlert("Gagal", e.message, "error");
       }
     } else {
       try {
@@ -196,7 +197,7 @@ const Pencarian = ({ session }) => {
         <Row>
           <Col md={12}>
             <div className="ml-2 mb-3 title-pelatihan">
-              <h1 className="fw-700 fz-36">Pencarian "{router.query.cari}"</h1>
+              <h1 className="fw-700 fz-36">Pencarian {router.query.cari}</h1>
 
               <div className="mt-5 mt-md-1">
                 <p className="mr-6 fz-18 text-muted fw-400">
@@ -496,8 +497,6 @@ const Pencarian = ({ session }) => {
                       linkClass="page-link"
                     />
                   </div>
-                  {/* {pelatihan && pelatihan.perPage < pelatihan.total && (
-                )} */}
                 </Row>
               )}
             </Col>
