@@ -54,6 +54,19 @@ export default function TambahMasterSertifikat({ token }) {
     }
   }, [newCertificate, query.theme_name, query.theme_id, router]);
 
+  const [pelatihan, setPelatihan] = useState();
+
+  useEffect(() => {
+    const filter = certificate.data.pelatihan.list.filter(
+      (item) => item.training == query.theme_name
+    );
+    setPelatihan(filter[0]);
+  }, []);
+
+  useEffect(() => {
+    console.log(pelatihan);
+  }, [pelatihan]);
+
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -534,7 +547,7 @@ export default function TambahMasterSertifikat({ token }) {
                         className="text-center font-weight-bolder w-100 "
                         style={{ fontSize: "125%" }}
                       >
-                        {certificate?.data.tema.name || "Tema Sertifikat"}
+                        {query.theme_name || "Nama Pelatihan"}
                       </div>
                       <div className="mt-2 w-100">
                         <span className="w-100">
@@ -545,19 +558,25 @@ export default function TambahMasterSertifikat({ token }) {
                           Selama
                         </span>
                         <span
-                          className="mx-2 px-2 border-2 w-100"
+                          className="px-2 border-2 w-100 font-weight-boldest"
                           style={{ width: "19px" }}
                         >
-                          {tanggal}
+                          {moment(pelatihan?.pendaftaran_mulai).format(
+                            "DD/MM/YYYY"
+                          )}{" "}
+                          -{" "}
+                          {moment(pelatihan?.pendaftaran_selesai).format(
+                            "DD/MM/YYYY"
+                          )}
                         </span>
                       </div>
                       <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
                         <span
-                          className="mx-2 px-2 border-2"
+                          className="px-2 border-2 font-weight-boldest"
                           style={{ width: "19px" }}
                         >
-                          {tahun}
+                          {moment(pelatihan?.pendaftaran_mulai).format("YYYY")}
                         </span>
                       </div>
                       <div className="my-4 w-100 text-center">

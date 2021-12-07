@@ -493,7 +493,7 @@ export default function NamaPelatihanID({ token }) {
                                         "sertifikat.manage"
                                       ) && (
                                         <Link
-                                          href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificates.data.tema.id}&theme_name=${certificates.data.tema.name}`}
+                                          href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificates.data.tema.id}&theme_name=${certificate.training}`}
                                           passHref
                                         >
                                           <a
@@ -523,7 +523,7 @@ export default function NamaPelatihanID({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificates && certificates?.data?.pelatihan?.total < 5 && (
+                {certificates && certificates?.data?.pelatihan?.total > 5 && (
                   <div className="table-pagination col">
                     <Pagination
                       activePage={+page}
@@ -540,7 +540,7 @@ export default function NamaPelatihanID({ token }) {
                     />
                   </div>
                 )}
-                {certificates && certificates.data.pelatihan.total < 5 ? (
+                {certificates && certificates.data.pelatihan.total > 5 ? (
                   <div className="table-total ml-au qto">
                     <div className="row mt-3">
                       <div className="col-4 mr-0 p-0 my-auto">
