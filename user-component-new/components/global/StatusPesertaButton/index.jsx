@@ -82,7 +82,6 @@ export default function ButtonStatusPeserta({ data, token }) {
       }
     }
   };
-
   return (
     <Fragment>
       {data?.lpj ? (

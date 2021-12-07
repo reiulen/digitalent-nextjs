@@ -15,7 +15,6 @@ export default function RiwayatPelatihanDetail({ session }) {
   const { state: data } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
-
   const handleDownloadSilabus = async () => {
     let silabus = process.env.END_POINT_API_IMAGE_BEASISWA + data.silabus;
     window.location.href = silabus;
