@@ -63,10 +63,6 @@ export default function TambahMasterSertifikat({ token }) {
     setPelatihan(filter[0]);
   }, []);
 
-  useEffect(() => {
-    console.log(pelatihan);
-  }, [pelatihan]);
-
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
