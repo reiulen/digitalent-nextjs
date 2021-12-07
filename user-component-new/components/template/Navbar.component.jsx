@@ -50,10 +50,6 @@ const Navigationbar = ({ session }) => {
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
   useEffect(() => {
-    console.log(footer, "test 123");
-  }, [footer]);
-
-  useEffect(() => {
     if (session) {
       if (
         dataPribadi &&

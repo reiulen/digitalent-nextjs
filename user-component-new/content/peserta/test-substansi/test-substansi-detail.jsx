@@ -14,6 +14,7 @@ export default function SeleksiAdministrasi() {
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
 
+  console.log("masuk sini");
   const router = useRouter();
   const [description, setDescription] = useState(data?.deskripsi || "-");
   const [finalDescription, setFinalDescription] = useState();
