@@ -38,7 +38,7 @@ const Table = ({ token }) => {
             <td className="align-middle text-left">
               <div className="d-flex align-items-center">
                 <Link
-                  href={`/site-management/user/peserta-dts/ubah-peserta-dts/${item.id}`}
+                  href={`/site-management/user/peserta-dts/ubah-peserta-dts/${item.user_id}`}
                 >
                   <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                     <IconPencil width="16" height="16" />
@@ -46,7 +46,7 @@ const Table = ({ token }) => {
                   </a>
                 </Link>
                 <Link
-                  href={`/site-management/user/peserta-dts/detail-peserta-dts/${item.id}`}
+                  href={`/site-management/user/peserta-dts/detail-peserta-dts/${item.user_id}`}
                 >
                   <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
                     <IconEye width="16" height="16" />
@@ -202,7 +202,7 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data {allListPeserta?.data?.data?.totalFiltered}
+                        Total Data {allListPeserta?.data?.data?.total}
                       </p>
                     </div>
                   </div>

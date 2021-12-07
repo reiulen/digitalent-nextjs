@@ -246,6 +246,7 @@ import {
   detailExportDataReducer,
   updateExportDataReducer,
   deleteExportDataReducer,
+  filterExportDataReducer,
 } from "./site-management/export-data.reducers";
 // ============== provinces site ===============
 import { allProvincesSiteReducer } from "./site-management/option/option-provinces.reducers";
@@ -424,6 +425,7 @@ import {
   updateKeterampilanReducer,
   updatePekerjaanReducer,
   getAsalSekolahReducer,
+  getRefPekerjaanReducer,
 } from "./pelatihan/peserta/profile.reducers";
 
 import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
@@ -850,7 +852,7 @@ const reducer = combineReducers({
   deleteExportData: deleteExportDataReducer,
   allListPeserta: allListPesertaReducer,
   allDetailPeserta: allDetailPesertaReducer,
-
+  filterExportData: filterExportDataReducer,
   // END SITE MANAGEMENT
 
   //PELATIHAN
@@ -955,6 +957,7 @@ const reducer = combineReducers({
   updateKeterampilan: updateKeterampilanReducer,
   updatePekerjaan: updatePekerjaanReducer,
   getAsalSekolah: getAsalSekolahReducer,
+  getRefPekerjaan: getRefPekerjaanReducer,
   //END PELATIHAN
 
   //BERANDA

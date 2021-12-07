@@ -7,7 +7,10 @@ import {
   clearErrors,
 } from "../../../../../redux/actions/subvit/trivia-question.actions";
 import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux/types/subvit/trivia-question.type";
-import { helperRegexNumber } from "../../../../../utils/middleware/helper";
+import {
+  helperRegexNumber,
+  helperTextLimitMax,
+} from "../../../../../utils/middleware/helper";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
@@ -304,6 +307,7 @@ const StepThree = ({ token }) => {
                   <div className="input-group">
                     <input
                       type="text"
+                      maxLength={3}
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
@@ -313,6 +317,9 @@ const StepThree = ({ token }) => {
                         simpleValidator.current.showMessageFor("durasi")
                       }
                       min={1}
+                      onKeyUp={(e) =>
+                        helperTextLimitMax(e.target.value, 0, 360, setDuration)
+                      }
                     />
                     <div className="input-group-append bg-sedondary">
                       <span

@@ -429,7 +429,14 @@
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
-    max-width: 11rem !important;
+    max-width: 12rem !important;
+  }
+
+  .trim-text-mobile-last {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 20rem !important;
   }
 }
 

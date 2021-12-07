@@ -3,7 +3,7 @@ import { getSession } from "next-auth/client";
 // import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../redux/store";
 import LoadingPage from "../../../../components/LoadingPage";
-import { getDetailExportData } from "../../../../redux/actions/site-management/export-data.actions";
+import { getDetailsExportData } from "../../../../redux/actions/site-management/export-data.actions";
 
 const UbahRole = dynamic(
   () =>
@@ -31,7 +31,7 @@ export default function UbahRoles(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ params, req, query }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -43,8 +43,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailExportData(params.id, session.user.user.data.token)
-      );
+        getDetailsExportData(query.id, session.user.user.data.token)
+      );  
       return {
         props: {
           session,

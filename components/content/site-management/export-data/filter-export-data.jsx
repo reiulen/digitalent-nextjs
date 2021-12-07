@@ -14,15 +14,20 @@ import IconPlus from "../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../public/assets/icon/Minus.svg";
 import Image from "next/image";
 import Select from "react-select";
+import moment from "moment";
 import {
   dropdownKabupaten,
   dropdownPelatihanbyTema,
   dropdownTemabyAkademi,
 } from "../../../../redux/actions/pelatihan/function.actions";
+import { postFilterExportData } from "../../../../redux/actions/site-management/export-data.actions";
+import { temaByAkademiReducer } from "../../../../redux/reducers/beranda/beranda.reducers";
 
 const UbahRole = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+
+  const filterExportData = useSelector((state) => state.filterExportData);
 
   const [tahun, setTahun] = useState(null);
   const [akademi, setAkademi] = useState(null);
@@ -70,6 +75,81 @@ const UbahRole = ({ token }) => {
       shallow: true,
     });
   };
+
+  const handleFilter = () => {
+    const data = {
+      button_type: 0,
+      tahun: tahun ? tahun.label : "",
+      akademi: akademi ? akademi.label : "",
+      tema: tema ? tema.label : "",
+      penyelenggara: penyelenggara ? penyelenggara.label : "",
+      pelatihan: pelatihan ? pelatihan.label : "",
+      provinsi: provinsi ? provinsi.label : "",
+      kota: kota ? kota.label : "",
+    };
+
+    dispatch(postFilterExportData(token, data));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const data = {
+      button_type: 1,
+      tahun: tahun ? tahun.label : "",
+      akademi: akademi ? akademi.label : "",
+      tema: tema ? tema.label : "",
+      penyelenggara: penyelenggara ? penyelenggara.label : "",
+      pelatihan: pelatihan ? pelatihan.label : "",
+      provinsi: provinsi ? provinsi.label : "",
+      kota: kota ? kota.label : "",
+    };
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(postFilterExportData(token, data));
+      }
+    });
+  };
+
+  const listFilter =
+    filterExportData?.data?.data?.length > 0 ? (
+      filterExportData.data.data.map((item, index) => {
+        return (
+          <tr key={index}>
+            <td className="align-middle text-left">{index + 1}</td>
+            <td className="align-middle text-left">
+              <h6 className="font-weight-bolder mb-0">{item.nama_peserta}</h6>
+              <p className="mb-0">{item.email}</p>
+              <p>{item.nik}</p>
+            </td>
+            <td className="align-middle text-left">
+              <h6 className="font-weight-bolder mb-0">{item.nama_akademi}</h6>
+              <p>{item.nama_pelatihan}</p>
+            </td>
+            <td className="align-middle text-left">
+              <h6 className="font-weight-bolder mb-0">
+                {moment(item.pelatihan_mulai).format("D MMMM YYYY")}
+              </h6>
+              <p className="text-capitalize">{item.status_pelatihan}</p>
+            </td>
+          </tr>
+        );
+      })
+    ) : (
+      <tr>
+        <td className="align-middle text-center" colSpan="8">
+          Data Kosong
+        </td>
+      </tr>
+    );
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -160,7 +240,7 @@ const UbahRole = ({ token }) => {
                     };
                   })}
                   onChange={(e) => {
-                    setKota(null)
+                    setKota(null);
                     setProvinsi({ value: e?.value, label: e?.label });
                     dispatch(dropdownKabupaten(token, e?.value));
                   }}
@@ -183,7 +263,10 @@ const UbahRole = ({ token }) => {
                   }
                 />
               </div>
-              <div className="d-flex align-items-center justify-content-end">
+              <div
+                className="d-flex align-items-center justify-content-end"
+                onClick={handleFilter}
+              >
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
@@ -206,40 +289,34 @@ const UbahRole = ({ token }) => {
               </div>
             </form>
 
-            {/* <div className="table-page mt-5">
-              <h3
-                className="card-title font-weight-bolder  w-100  mt-5 mb-0"
-                style={{ fontSize: "24px", color: "#04AA77" }}
-              >
-                Pencarian Sukses
-              </h3>
-              <p className="mb-0" style={{ color: "#6C6C6C" }}>
-                200 Total Data
-              </p>
-              <div className="table-responsive mt-10">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">Nama Peserta</th>
-                      <th className="text-left align-middle">Pelatihan</th>
-                      <th className="text-left align-middle">
-                        Tanggal Pelatihan
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">email</td>
-                      <td className="align-middle text-left">08973383733</td>
-                      <td className="align-middle text-left">tgl </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            {!filterExportData.loading && (
+              <div className="table-page mt-5">
+                <h3
+                  className="card-title font-weight-bolder  w-100  mt-5 mb-0"
+                  style={{ fontSize: "24px", color: "#04AA77" }}
+                >
+                  Pencarian Sukses
+                </h3>
+                <p className="mb-0" style={{ color: "#6C6C6C" }}>
+                  {filterExportData?.data?.data?.length} Total Data
+                </p>
+                <div className="table-responsive mt-10">
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">Nama Peserta</th>
+                        <th className="text-left align-middle">Pelatihan</th>
+                        <th className="text-left align-middle">
+                          Tanggal Pelatihan
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>{listFilter}</tbody>
+                  </table>
+                </div>
 
-              <div className="row px-4">
+                {/* <div className="row px-4">
                 <div className="table-pagination">
                   pagination
                 
@@ -276,23 +353,25 @@ const UbahRole = ({ token }) => {
                     </div>
                   </div>
                 </div>
+              </div> */}
+                <div className="form-group row mt-10">
+                  <div className="col-sm-12 d-flex justify-content-end">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                      onClick={(e) => {
+                        handleSubmit(e)
+                      }}
+                    >
+                      Simpan
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div> */}
+            )}
 
             {/* start footer btn */}
-            <div className="form-group row mt-10">
-              <div className="col-sm-12 d-flex justify-content-end">
-                <button
-                  type="button"
-                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                  onClick={() => {
-                    router.push("/site-management/export-data")
-                  }}
-                >
-                  Simpan
-                </button>
-              </div>
-            </div>
+
             {/* end footer btn */}
           </div>
         </div>
