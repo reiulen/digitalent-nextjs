@@ -5,6 +5,7 @@ import { wrapper } from "../../../../../redux/store";
 import {
   getDetailPesertaManage,
   getPelatihanByPeserta,
+  getPelatihanWithPagination
 } from "../../../../../redux/actions/site-management/user/peserta-dts";
 import {dropdownProvinsi} from '../../../../../redux/actions/pelatihan/function.actions'
 
@@ -46,6 +47,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(
         getPelatihanByPeserta(session.user.user.data.token, query.id)
+      );
+
+      await store.dispatch(
+        getPelatihanWithPagination(
+          session.user.user.data.token,
+          query.id
+        )
       );
 
       await store.dispatch(dropdownProvinsi(session.user.user.data.token));
