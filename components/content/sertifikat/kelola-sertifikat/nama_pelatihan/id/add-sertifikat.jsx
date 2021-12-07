@@ -517,7 +517,7 @@ export default function TambahMasterSertifikat({ token }) {
                     <div
                       className={`col-12 text-center font-weight-normal p-0 justify-content-center `}
                     >
-                      <label className="font-weight-boldest w-100 responsive-font-size-sertifikat">
+                      <label className="mt-10 font-weight-boldest w-100 responsive-font-size-sertifikat">
                         SERTIFIKAT
                       </label>
                       <div className="w-100">Diberikan kepada</div>

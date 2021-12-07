@@ -611,7 +611,7 @@ export default function EditSertifikat({ token }) {
                         className="col-12 text-center font-weight-normal p-0 justify-content-center"
                         style={{ marginTop: "-20px" }}
                       >
-                        <label className="font-weight-boldest w-100 responsive-font-size-sertifikat">
+                        <label className="mt-17 font-weight-boldest w-100 responsive-font-size-sertifikat">
                           SERTIFIKAT
                         </label>
                         <div className="w-100">Diberikan kepada</div>
