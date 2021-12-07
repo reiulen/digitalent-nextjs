@@ -34,6 +34,7 @@ export async function getStatus(token) {
     {
       headers: {
         authorization: `Bearer ${token}`,
+        permissionToken: localStorage.getItem("token-permission")
       },
     }
   );
@@ -44,6 +45,7 @@ export async function getCooperation(token) {
     {
       headers: {
         authorization: `Bearer ${token}`,
+        permissionToken: localStorage.getItem("token-permission")
       },
     }
   );
@@ -55,6 +57,7 @@ export async function getCooperationActiveSelect(token) {
     {
       headers: {
         authorization: `Bearer ${token}`,
+        permissionToken: localStorage.getItem("token-permission")
       },
     }
   );
@@ -66,6 +69,7 @@ export async function getCooperationActiveSelectById(id, token) {
     {
       headers: {
         authorization: `Bearer ${token}`,
+        permissionToken: localStorage.getItem("token-permission")
       },
     }
   );
@@ -79,6 +83,7 @@ export async function getMCooporationUserApi(params, token) {
       params,
       headers: {
         authorization: `Bearer ${token}`,
+        permissionToken: localStorage.getItem("token-permission")
       },
     }
   );
@@ -104,6 +109,7 @@ export const reqCooperationUser = (token) => async (dispatch, getState) => {
       {
         headers: {
           authorization: `Bearer ${token}`,
+          permissionToken: localStorage.getItem("token-permission")
         },
       }
     );
@@ -114,6 +120,7 @@ export const reqCooperationUser = (token) => async (dispatch, getState) => {
       {
         headers: {
           authorization: `Bearer ${token}`,
+          permissionToken: localStorage.getItem("token-permission")
         },
       }
     );
@@ -314,6 +321,7 @@ export const getSingleCooperation = (id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -338,6 +346,7 @@ export const deleteCooperation = (id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -363,6 +372,7 @@ export const rejectCooperation = (id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -396,6 +406,7 @@ export const exportFileCSV = (token) => {
           paramssz,
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
           },
         }
       );

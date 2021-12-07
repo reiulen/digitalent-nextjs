@@ -224,6 +224,9 @@ const Galeri = () => {
 
     return (
         <Container fluid className="px-md-30 px-10 py-10 bg-white">
+            {
+                console.log (kategoriGaleri)
+            }
 
             {/* BreadCrumb */}
             <SubHeaderComponent

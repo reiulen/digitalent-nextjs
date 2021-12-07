@@ -26,11 +26,11 @@ export default function BerandaBerita(props) {
   }
 
   return (
-    <>
+    <div className="bg-white">
       <Layout title="Berita" session={session}>
         <Berita session={session}></Berita>
       </Layout>
-    </>
+    </div>
   );
 }
 

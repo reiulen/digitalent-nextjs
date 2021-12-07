@@ -17,6 +17,7 @@ export const getPartnershipPermissions = (token) => async (dispatch) => {
         const config = {
             headers: {
               Authorization: "Bearer " + token,
+            //   permissionToken: localStorage.getItem("token-permission")
             },
         };
 
@@ -31,8 +32,10 @@ export const getPartnershipPermissions = (token) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: FETCH_PARTNERSHIP_PERMISSION_FAIL,
-            payload: error.response.data.message,
+            payload: error.response.data.message
         });
+        // console.log (error)
+
     }
 }
 

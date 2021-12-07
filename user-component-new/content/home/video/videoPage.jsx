@@ -14,12 +14,15 @@ import {
 
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
+import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
 import {
   playVideoContent,
   getAllVideoContent,
   getDetailBerandaVideo,
 } from "../../../../redux/actions/beranda/video-content.actions";
+
+import styles from "../video/videoPage.module.css"
 
 const VideoPage = () => {
   const dispatch = useDispatch();
@@ -35,14 +38,12 @@ const VideoPage = () => {
   const { kategori } = useSelector((state) => state.kategoriVideoContent);
   const { loading: playLoading } = useSelector((state) => state.playVideoContent)
 
-  const descToTrim = 500;
-
   const [video_playing, setVideoPlaying] = useState(false);
   const [kategoriVideo, setKategoriVideo] = useState("");
   const [tag, setTag] = useState("");
   const [filterPublish, setFilterPublish] = useState("");
   const [activePage, setActivePage] = useState(1);
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState(null);
   const [sort, setSort] = useState("");
   const [category_id, setCategoryId] = useState("");
   const [limit, setLimit] = useState("");
@@ -54,6 +55,7 @@ const VideoPage = () => {
   const [kategoriToShow, setKategoriToShow] = useState([])
   const [showArrow, setShowArrow] = useState(null)
   const [videoContent, setVideoContent] = useState([])
+  const [showDescButton, setShowDescButton ] = useState(false)
 
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
@@ -168,29 +170,57 @@ const VideoPage = () => {
         tag
       )
     );
+
+    window.scrollTo(0,0)
   };
 
-  const handleDescToTrim = (str) => {
+  const handleDescToTrim = (str, size) => {
     let result = null;
 
-    if (str.length > descToTrim) {
-      result = str.slice(0, descToTrim) + "...";
-    } else {
-      result = str;
-    }
+    let trimLg = 350
+    let trimMd = 150
+    let trimSm = 50
 
-    return result;
+    if (size === "lg"){
+
+      if (str.length > trimLg) {
+          result = str.slice(0, trimLg) + "...";
+        } else {
+          result = str;
+        }
+    
+        return result;
+    } else if (size === "md"){
+
+      if (str.length > trimMd) {
+        result = str.slice(0, trimMd) + "...";
+      } else {
+        result = str;
+      }
+  
+      return result;
+    } else if (size === "sm"){
+
+      if (str.length > trimMd) {
+        result = str.slice(0, trimSm) + "...";
+      } else {
+        result = str;
+      }
+  
+      return result;
+    }
+    
   };
 
   const handleFilterTag = (str) => {
     if (str === "") {
       setActiveTitle("Video Terupdate dan Terkini")
     }
-    setActiveTitle(`#${str.toUpperCase()}`)
+    setActiveTitle(`#${str.toString().toUpperCase()}`)
 
     dispatch(
       getAllVideoContent(
-        activePage,
+        1,
         keyword,
         limit,
         filterPublish,
@@ -200,12 +230,14 @@ const VideoPage = () => {
         str
       )
     );
+
+    window.scrollTo(0,0)
   };
 
   const submitFilter = () => {
     dispatch(
       getAllVideoContent(
-        activePage,
+        1,
         keyword,
         limit,
         filterPublish,
@@ -215,13 +247,15 @@ const VideoPage = () => {
         tag
       )
     );
+
+    window.scrollTo(0,0)
   };
 
   const handleFilterKeyword = (e) => {
     e.preventDefault();
     dispatch(
       getAllVideoContent(
-        activePage,
+        1,
         keyword,
         limit,
         filterPublish,
@@ -231,16 +265,20 @@ const VideoPage = () => {
         tag
       )
     );
+
+    window.scrollTo(0,0)
   };
 
-  const handleFilterPublish = (publish) => {
+  const handleFilterPublish = (publish, status) => {
     setFilterPublish(publish);
+    setShowDescButton(status)
     setSort("")
   };
 
-  const handleSort = (sort) => {
+  const handleSort = (sort, filter) => {
     setSort(sort);
-    setFilterPublish("")
+    setShowDescButton(false)
+    setFilterPublish(filter)
   };
 
   const handleFilterKategori = (str) => {
@@ -248,7 +286,7 @@ const VideoPage = () => {
     setActiveTitle("Video Terupdate dan Terkini")
     dispatch(
       getAllVideoContent(
-        activePage,
+        1,
         keyword,
         limit,
         filterPublish,
@@ -258,6 +296,8 @@ const VideoPage = () => {
         tag
       )
     );
+
+    window.scrollTo(0,0)
   };
 
   const handlePreview = (
@@ -286,7 +326,7 @@ const VideoPage = () => {
 
   return (
     <>
-      <Container fluid className="px-md-30 px-10 pt-10 bg-white">
+      <HomeWrapper>
         {/* BreadCrumb */}
         <SubHeaderComponent
           data={[{ link: router.asPath, name: "Video" }]}
@@ -301,7 +341,7 @@ const VideoPage = () => {
           >
             {activeTitle}
           </h1>
-          <span>
+          <span style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
             Temukan konten terupdate dan terkini mengenai Digital Talent
             Scholarship
           </span>
@@ -309,176 +349,353 @@ const VideoPage = () => {
         {/* End of Header */}
 
         {/* Filter Button */}
+        {/* Filter on Desktop */}
         <div
-          className="col-xl-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-0 pr-xxl-11"
+          className="col-xl-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-0 pr-xxl-11 d-none d-lg-block"
         >
           {
-            showArrow === true ?
-              <Splide
-                options={{
-                  arrows: true,
-                  pagination: true,
-                  gap: "1rem",
-                  drag: "free",
-                  perPage: 4,
-                  breakpoints: {
-                    830: {
-                      perPage: 2,
-                    },
-                    450: {
-                      perPage: 1,
-                    },
+            showArrow === null ?
+              <div className="col col-12">
+                <PulseLoaderRender />
+              </div> 
+            :
+
+              showArrow === true ?
+                <Splide
+                  options={{
+                    arrows: true,
+                    pagination: false,
+                    gap: "1rem",
+                    drag: "free",
+                    perPage: 4,
+                    breakpoints: {
+                      830: {
+                        perPage: 2,
+                      },
+                      450: {
+                        perPage: 1,
+                      },
+                    }
+                  }}
+                  className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
+                >
+
+                  {kategoriVideo === "" ? (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
+                        style={{ cursor: "pointer", height: "40px"}}
+                        onClick={() => handleFilterKategori("")}
+                      >
+                        <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
+                      </div>
+                    </SplideSlide>
+
+                  ) : (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                        style={{ cursor: "pointer", height: "40px"}}
+                        onClick={() => handleFilterKategori("")}
+                      >
+                        <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
+                      </div>
+                    </SplideSlide>
+                  )}
+
+                  {
+                    kategoriToShow ?
+                      kategoriToShow.map((row, i) => {
+                        return kategoriVideo === row ? (
+                          <SplideSlide>
+                            <div
+                              className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
+                              style={{ cursor: "pointer", height: "40px"}}
+                              onClick={() => handleFilterKategori(row)}
+                              key={i}
+                            >
+                              <div className="my-1 mx-auto py-1 px-auto text-white text-center">
+                                {row.toString().toUpperCase()}
+                                {/* {row.toString()} */}
+                              </div>
+                            </div>
+                          </SplideSlide>
+
+                        ) : (
+                          <SplideSlide>
+                            <div
+                              className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                              style={{ cursor: "pointer", height: "40px"}}
+                              onClick={() => handleFilterKategori(row)}
+                              key={i}
+                            >
+                              <div className="my-1 mx-auto py-1 px-auto text-muted text-center">
+                                {row.toString().toUpperCase()}
+                                {/* {row.toString()} */}
+                              </div>
+                            </div>
+                          </SplideSlide>
+                        );
+                      })
+                      :
+                      null
                   }
-                }}
-                className="px-20 "
-              >
 
-                {kategoriVideo === "" ? (
-                  <SplideSlide>
-                    <div
-                      className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
-                      style={{ cursor: "pointer", height: "40px", minWidth: "150px" }}
-                      onClick={() => handleFilterKategori("")}
-                    >
-                      <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
-                    </div>
-                  </SplideSlide>
+                </Splide>
+                :
+                <Splide
+                  options={{
+                    arrows: false,
+                    pagination: false,
+                    gap: "1rem",
+                    drag: "free",
+                    perPage: 4,
+                    breakpoints: {
+                      830: {
+                        perPage: 2,
+                      },
+                      450: {
+                        perPage: 1,
+                      },
+                    }
+                  }}
+                  className= "ml-2 ml-sm-3 mr-3 pr-0 mr-lg-5"
+                >
 
-                ) : (
-                  <SplideSlide>
-                    <div
-                      className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                      style={{ cursor: "pointer", height: "40px", minWidth: "150px" }}
-                      onClick={() => handleFilterKategori("")}
-                    >
-                      <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
-                    </div>
-                  </SplideSlide>
-                )}
+                  {kategoriVideo === "" ? (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
+                        style={{ cursor: "pointer", height: "40px" }}
+                        onClick={() => handleFilterKategori("")}
+                      >
+                        <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
+                      </div>
+                    </SplideSlide>
 
-                {
-                  kategoriToShow ?
-                    kategoriToShow.map((row, i) => {
-                      return kategoriVideo === row ? (
-                        <SplideSlide>
-                          <div
-                            className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
-                            style={{ cursor: "pointer", height: "40px", minWidth: "150px" }}
-                            onClick={() => handleFilterKategori(row)}
-                            key={i}
-                          >
-                            <div className="my-1 mx-auto py-1 px-auto text-white text-center">
-                              {/* {row.toString().toUpperCase()} */}
-                              {row.toString()}
+                  ) : (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                        style={{ cursor: "pointer", height: "40px" }}
+                        onClick={() => handleFilterKategori("")}
+                      >
+                        <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
+                      </div>
+                    </SplideSlide>
+                  )}
+
+                  {
+                    kategoriToShow ?
+                      kategoriToShow.map((row, i) => {
+                        return kategoriVideo === row ? (
+                          <SplideSlide>
+                            <div
+                              className="d-flex w-100 align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
+                              style={{ cursor: "pointer", height: "40px"}}
+                              onClick={() => handleFilterKategori(row)}
+                              key={i}
+                            >
+                              <div className="my-1 mx-auto py-1 px-auto text-white text-center">
+                                {row.toString().toUpperCase()}
+                                {/* {row.toString()} */}
+                              </div>
                             </div>
-                          </div>
-                        </SplideSlide>
+                          </SplideSlide>
 
-                      ) : (
-                        <SplideSlide>
-                          <div
-                            className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                            style={{ cursor: "pointer", height: "40px", minWidth: "150px" }}
-                            onClick={() => handleFilterKategori(row)}
-                            key={i}
-                          >
-                            <div className="my-1 mx-auto py-1 px-auto text-muted text-center">
-                              {/* {row.toString().toUpperCase()} */}
-                              {row.toString()}
+                        ) : (
+                          <SplideSlide>
+                            <div
+                              className="d-flex w-100 align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                              style={{ cursor: "pointer", height: "40px"}}
+                              onClick={() => handleFilterKategori(row)}
+                              key={i}
+                            >
+                              <div className="my-1 mx-auto py-1 px-auto text-muted text-center">
+                                {row.toString().toUpperCase()}
+                                {/* {row.toString()} */}
+                              </div>
                             </div>
-                          </div>
-                        </SplideSlide>
-                      );
-                    })
-                    :
-                    null
-                }
-
-              </Splide>
-              :
-              <Splide
-                options={{
-                  arrows: false,
-                  pagination: false,
-                  gap: "1rem",
-                  drag: "free",
-                  perPage: 4,
-                  breakpoints: {
-                    830: {
-                      perPage: 2,
-                    },
-                    450: {
-                      perPage: 1,
-                    },
+                          </SplideSlide>
+                        );
+                      })
+                      :
+                      null
                   }
-                }}
-                className="ml-2"
-              >
 
-                {kategoriVideo === "" ? (
-                  <SplideSlide>
-                    <div
-                      className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
-                      style={{ cursor: "pointer", height: "40px", minWidth: "150px" }}
-                      onClick={() => handleFilterKategori("")}
-                    >
-                      <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
-                    </div>
-                  </SplideSlide>
-
-                ) : (
-                  <SplideSlide>
-                    <div
-                      className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                      style={{ cursor: "pointer", height: "40px", minWidth: "150px" }}
-                      onClick={() => handleFilterKategori("")}
-                    >
-                      <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
-                    </div>
-                  </SplideSlide>
-                )}
-
-                {
-                  kategoriToShow ?
-                    kategoriToShow.map((row, i) => {
-                      return kategoriVideo === row ? (
-                        <SplideSlide>
-                          <div
-                            className="d-flex w-100 align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
-                            style={{ cursor: "pointer", height: "40px", minWidth: "150px" }}
-                            onClick={() => handleFilterKategori(row)}
-                            key={i}
-                          >
-                            <div className="my-1 mx-auto py-1 px-auto text-white text-center">
-                              {/* {row.toString().toUpperCase()} */}
-                              {row.toString()}
-                            </div>
-                          </div>
-                        </SplideSlide>
-
-                      ) : (
-                        <SplideSlide>
-                          <div
-                            className="d-flex w-100 align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                            style={{ cursor: "pointer", height: "40px", minWidth: "150px" }}
-                            onClick={() => handleFilterKategori(row)}
-                            key={i}
-                          >
-                            <div className="my-1 mx-auto py-1 px-auto text-muted text-center">
-                              {/* {row.toString().toUpperCase()} */}
-                              {row.toString()}
-                            </div>
-                          </div>
-                        </SplideSlide>
-                      );
-                    })
-                    :
-                    null
-                }
-
-              </Splide>
+                </Splide>
           }
 
+        </div>
+        
+        {/* Filter on Tablet */}
+        <div className="col-xl-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-0 pr-xxl-11 d-none d-md-block d-lg-none">
+          <Splide
+            options={{
+              arrows: true,
+              pagination: true,
+              gap: "1rem",
+              drag: "free",
+              perPage: 4,
+              breakpoints: {
+                830: {
+                  perPage: 2,
+                },
+                450: {
+                  perPage: 1,
+                },
+              }
+            }}
+            className="px-20"
+          >
+
+            {kategoriVideo === "" ? (
+              <SplideSlide>
+                <div
+                  className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
+                  style={{ cursor: "pointer", height: "40px"}}
+                  onClick={() => handleFilterKategori("")}
+                >
+                  <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
+                </div>
+              </SplideSlide>
+
+            ) : (
+              <SplideSlide>
+                <div
+                  className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                  style={{ cursor: "pointer", height: "40px"}}
+                  onClick={() => handleFilterKategori("")}
+                >
+                  <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
+                </div>
+              </SplideSlide>
+            )}
+
+            {
+              kategoriToShow ?
+                kategoriToShow.map((row, i) => {
+                  return kategoriVideo === row ? (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
+                        style={{ cursor: "pointer", height: "40px"}}
+                        onClick={() => handleFilterKategori(row)}
+                        key={i}
+                      >
+                        <div className="my-1 mx-auto py-1 px-auto text-white text-center">
+                          {row.toString().toUpperCase()}
+                          {/* {row.toString()} */}
+                        </div>
+                      </div>
+                    </SplideSlide>
+
+                  ) : (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                        style={{ cursor: "pointer", height: "40px"}}
+                        onClick={() => handleFilterKategori(row)}
+                        key={i}
+                      >
+                        <div className="my-1 mx-auto py-1 px-auto text-muted text-center">
+                          {row.toString().toUpperCase()}
+                          {/* {row.toString()} */}
+                        </div>
+                      </div>
+                    </SplideSlide>
+                  );
+                })
+                :
+                null
+            }
+
+          </Splide>
+        </div>
+
+        {/* Filter on Mobile */}
+        <div className="col-xl-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-0 pr-xxl-11 d-block d-md-none">
+          <Splide
+            options={{
+              arrows: true,
+              pagination: false,
+              gap: "1rem",
+              drag: "free",
+              perPage: 4,
+              breakpoints: {
+                830: {
+                  perPage: 2,
+                },
+                450: {
+                  perPage: 1,
+                },
+              }
+            }}
+            className="px-20"
+          >
+
+            {kategoriVideo === "" ? (
+              <SplideSlide>
+                <div
+                  className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
+                  style={{ cursor: "pointer", height: "40px"}}
+                  onClick={() => handleFilterKategori("")}
+                >
+                  <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
+                </div>
+              </SplideSlide>
+
+            ) : (
+              <SplideSlide>
+                <div
+                  className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                  style={{ cursor: "pointer", height: "40px"}}
+                  onClick={() => handleFilterKategori("")}
+                >
+                  <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
+                </div>
+              </SplideSlide>
+            )}
+
+            {
+              kategoriToShow ?
+                kategoriToShow.map((row, i) => {
+                  return kategoriVideo === row ? (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
+                        style={{ cursor: "pointer", height: "40px"}}
+                        onClick={() => handleFilterKategori(row)}
+                        key={i}
+                      >
+                        <div className="my-1 mx-auto py-1 px-auto text-white text-center text-truncate">
+                          {row.toString().toUpperCase()}
+                          {/* {row.toString()} */}
+                        </div>
+                      </div>
+                    </SplideSlide>
+
+                  ) : (
+                    <SplideSlide>
+                      <div
+                        className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                        style={{ cursor: "pointer", height: "40px"}}
+                        onClick={() => handleFilterKategori(row)}
+                        key={i}
+                      >
+                        <div className="my-1 mx-auto py-1 px-auto text-muted text-center text-truncate">
+                          {row.toString().toUpperCase()}
+                          {/* {row.toString()} */}
+                        </div>
+                      </div>
+                    </SplideSlide>
+                  );
+                })
+                :
+                null
+            }
+
+          </Splide>
         </div>
 
         {/* End of Filter Button */}
@@ -498,7 +715,7 @@ const VideoPage = () => {
 
             {/* Filter at mobile screen */}
 
-            {
+            {/* {
               windowDimensions && windowDimensions.width && windowDimensions.width <= 1024 ?
                 <div className="card mb-15 p-5 ml-4">
                   <div className="row  mt-3">
@@ -531,12 +748,12 @@ const VideoPage = () => {
                     showFilter === true ?
                       <>
                         <div className="card-body">
-                          <h5 style={{ marginLeft: "-10px" }}>Urutkan Berdasarkan</h5>
+                          <h5 style={{fontSize:"16px", fontFamily:"Poppins"}}>Urutkan Berdasarkan</h5>
                           <div className="row justify-content-between">
                             <div className="col-6">
                               {filterPublish === "desc" && sort === "" ? (
                                 <button
-                                  className="btn btn-primary rounded-pill btn-block text-truncate"
+                                  className="btn btn-primary rounded-pill btn-block"
                                   onClick={() => handleFilterPublish("")}
                                   style={{ fontSize: "14px", fontFamily: "Poppins" }}
                                 >
@@ -544,7 +761,7 @@ const VideoPage = () => {
                                 </button>
                               ) : (
                                 <button
-                                  className="btn btn-outline-light rounded-pill btn-block text-truncate"
+                                  className="btn btn-outline-light rounded-pill btn-block"
                                   onClick={() => handleFilterPublish("desc")}
                                   style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                 >
@@ -556,7 +773,7 @@ const VideoPage = () => {
                             <div className="col-6">
                               {filterPublish === "asc" && sort === "" ? (
                                 <button
-                                  className="btn btn-primary rounded-pill btn-block text-truncate"
+                                  className="btn btn-primary rounded-pill btn-block"
                                   onClick={() => handleFilterPublish("")}
                                   style={{ fontSize: "14px", fontFamily: "Poppins" }}
                                 >
@@ -564,7 +781,7 @@ const VideoPage = () => {
                                 </button>
                               ) : (
                                 <button
-                                  className="btn btn-outline-light rounded-pill btn-block text-truncate"
+                                  className="btn btn-outline-light rounded-pill btn-block"
                                   onClick={() => handleFilterPublish("asc")}
                                   style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                 >
@@ -577,7 +794,7 @@ const VideoPage = () => {
                             <div className="col-6">
                               {sort === "asc" && filterPublish === "" ? (
                                 <button
-                                  className="btn btn-primary rounded-pill btn-block text-truncate"
+                                  className="btn btn-primary rounded-pill btn-block"
                                   onClick={() => handleSort("")}
                                   style={{ fontSize: "14px", fontFamily: "Poppins" }}
                                 >
@@ -585,7 +802,7 @@ const VideoPage = () => {
                                 </button>
                               ) : (
                                 <button
-                                  className="btn btn-outline-light rounded-pill btn-block text-truncate"
+                                  className="btn btn-outline-light rounded-pill btn-block"
                                   onClick={() => handleSort("asc")}
                                   style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                 >
@@ -597,7 +814,7 @@ const VideoPage = () => {
                             <div className="col-6">
                               {sort === "desc" && filterPublish === "" ? (
                                 <button
-                                  className="btn btn-primary rounded-pill btn-block text-truncate"
+                                  className="btn btn-primary rounded-pill btn-block"
                                   onClick={() => handleSort("")}
                                   style={{ fontSize: "14px", fontFamily: "Poppins" }}
                                 >
@@ -605,7 +822,7 @@ const VideoPage = () => {
                                 </button>
                               ) : (
                                 <button
-                                  className="btn btn-outline-light rounded-pill btn-block text-truncate"
+                                  className="btn btn-outline-light rounded-pill btn-block"
                                   onClick={() => handleSort("desc")}
                                   style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                                 >
@@ -630,7 +847,181 @@ const VideoPage = () => {
                 </div>
                 :
                 null
-            }
+            } */}
+
+                {
+                        
+                  windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                      <div className="border rounded-lg p-2 order-1 mb-10 ml-3">
+                          <div className="row "> 
+                              <div className="col-2 my-auto ml-3">
+                                  <Image 
+                                      src={`/assets/media/logo-filter.svg`}
+                                      width={40}
+                                      height={40}
+                                      alt="Logo filter"
+                                  />
+                              </div>
+                              <div className="col-7 my-auto">
+                                  <h3 className={`font-weight-bolder ${styles.fontText}`}>
+                                      Filter
+                                  </h3>
+                              </div>
+                              <div className="col-2 my-auto text-right">
+                                  {
+                                      showFilter === false ?
+                                          <div onClick={() => setShowFilter(true)}>
+                                              <i className="ri-arrow-right-s-line"></i>
+                                          </div>
+                                      :
+                                          <div onClick={() => setShowFilter(false)}>
+                                              <i className="ri-arrow-down-s-line"></i>
+                                          </div>
+                                  }
+                                  
+                              </div>
+                          </div>
+
+                          {
+                              showFilter === true ?
+                                  <>
+                                      <div className="row ml-3 mt-5">
+                                          <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
+                                              Urutkan Berdasarkan
+                                          </p>
+                                      </div>
+
+                                      <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                          <div className=" col-6">
+                                              {
+                                                  showDescButton === true && sort === "" ?
+                                                      <button 
+                                                          className="btn btn-primary rounded-pill btn-block" 
+                                                          onClick={() => handleFilterPublish("", false)}
+                                                          style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                      >
+                                                          Terbaru
+                                                      </button>
+                                                  :
+                                                      <button 
+                                                          className="btn btn-outline-light rounded-pill btn-block" 
+                                                          onClick={() => handleFilterPublish("desc", true)}
+                                                          style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                      >
+                                                          Terbaru
+                                                      </button>
+                                              }
+                                          </div>
+
+                                          <div className="col-6">
+                                              {
+                                                  filterPublish === "asc"  && sort === "" ?
+                                                      <button 
+                                                          className="btn btn-primary rounded-pill btn-block" 
+                                                          onClick={() => handleFilterPublish("desc", false)}
+                                                          style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                      >
+                                                          Terlama
+                                                      </button>
+                                                  :
+                                                      <button 
+                                                          className="btn btn-outline-light rounded-pill btn-block" 
+                                                          onClick={() => handleFilterPublish("asc", false)}
+                                                          style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                      >
+                                                          Terlama
+                                                      </button>
+                                              }
+                                          </div>
+                                      </div>
+
+                                      <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                          <div className="col-6">
+                                              {
+                                                  sort === "asc" && showDescButton === false   ?
+                                                      <button 
+                                                          className="btn btn-primary rounded-pill btn-block" 
+                                                          onClick={() => handleSort("", "desc")}
+                                                          style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                      >
+                                                          A-Z
+                                                      </button>
+                                                  :
+                                                      <button 
+                                                          className="btn btn-outline-light rounded-pill btn-block" 
+                                                          onClick={() => handleSort("asc", "")}
+                                                          style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                      >
+                                                          A-Z
+                                                      </button>
+                                              }
+                                          </div>
+
+                                          <div className="col-6">
+                                              {
+                                                  sort === "desc" &&  showDescButton === false   ?
+                                                      <button 
+                                                          className="btn btn-primary rounded-pill btn-block" 
+                                                          onClick={() => handleSort("", "desc")}
+                                                          style={{fontFamily: "Poppins", fontSize:'14px'}}
+                                                      >
+                                                          Z-A
+                                                      </button>
+                                                  :
+                                                      <button 
+                                                          className="btn btn-outline-light rounded-pill btn-block" 
+                                                          onClick={() => handleSort("desc", "")}
+                                                          style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
+                                                      >
+                                                          Z-A
+                                                      </button>
+                                              }
+                                              
+                                          </div>
+                                      </div>
+
+                                      {/* <div className="row ml-3 mt-5">
+                                          <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
+                                              Akademi
+                                          </p>
+                                      </div>
+
+                                      <div className="mx-3 mb-7">
+                                          {
+                                              optionAkademi && optionAkademi.length !== 0 ?
+                                                  <Select
+                                                      placeholder="Semua Akademi"
+                                                      options={optionAkademi}
+                                                      onChange={(e) => handleCategoryAcademy(e?.value)}
+                                                      styles={customStyle}
+                                                      components={{
+                                                          IndicatorSeparator: () => null
+                                                        }}
+                                                  />
+                                              :
+                                                  null
+                                          }
+                                          
+                                      </div> */}
+
+                                      <div className="row mx-3 mb-3">
+                                          <button 
+                                              className="btn btn-primary-dashboard rounded-pill btn-block"
+                                              onClick={() => submitFilter()}
+                                          >
+                                              Tampilkan
+                                          </button>
+                                      </div>
+                                  </>
+                              :
+                                  null
+                          }
+                          
+
+                      </div>
+                  :
+                      null
+                }
 
             {/* Search Field */}
             <form className="mb-10 pr-0 pr-xl-13 ml-4">
@@ -725,7 +1116,7 @@ const VideoPage = () => {
                                 }
                                 width={394}
                                 height={260}
-                                objectFit="fit"
+                                objectFit="cover"
                                 className="rounded"
                                 data-target="#videoPlayerModal"
                                 data-toggle="modal"
@@ -791,7 +1182,7 @@ const VideoPage = () => {
 
             {/* PAGINATION */}
             <div className="d-flex justify-content-center">
-              {video && video.total !== 0 && video.total >= 6 ? (
+              {video && video.total !== 0 && video.total > 6 ? (
                 <div
                   className={
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
@@ -841,13 +1232,13 @@ const VideoPage = () => {
                     </h3>
                   </div>
                   <div className="card-body">
-                    <h5 style={{ marginLeft: "-10px" }}>Urutkan Berdasarkan</h5>
+                    <h5 style={{ marginLeft: "-10px" }} style={{fontSize:"16px", fontFamily:"Poppins"}}>Urutkan Berdasarkan</h5>
                     <div className="row justify-content-between">
                       <div className="col-md-6 col-12">
-                        {filterPublish === "desc" && sort === "" ? (
+                        {showDescButton === true && sort === "" ? (
                           <button
                             className="btn btn-primary rounded-pill btn-block text-truncate"
-                            onClick={() => handleFilterPublish("")}
+                            onClick={() => handleFilterPublish("", false)}
                             style={{ fontSize: "14px", fontFamily: "Poppins" }}
                           >
                             Terbaru
@@ -855,7 +1246,7 @@ const VideoPage = () => {
                         ) : (
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
-                            onClick={() => handleFilterPublish("desc")}
+                            onClick={() => handleFilterPublish("desc",true)}
                             style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                           >
                             Terbaru
@@ -867,7 +1258,7 @@ const VideoPage = () => {
                         {filterPublish === "asc" && sort === "" ? (
                           <button
                             className="btn btn-primary rounded-pill btn-block text-truncate"
-                            onClick={() => handleFilterPublish("")}
+                            onClick={() => handleFilterPublish("desc", false)}
                             style={{ fontSize: "14px", fontFamily: "Poppins" }}
                           >
                             Terlama
@@ -875,7 +1266,7 @@ const VideoPage = () => {
                         ) : (
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
-                            onClick={() => handleFilterPublish("asc")}
+                            onClick={() => handleFilterPublish("asc", false)}
                             style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                           >
                             Terlama
@@ -885,10 +1276,10 @@ const VideoPage = () => {
                     </div>
                     <div className="row justify-content-between mt-3">
                       <div className="col-md-6 col-12">
-                        {sort === "asc" && filterPublish === "" ? (
+                        {sort === "asc" && showDescButton === false ? (
                           <button
                             className="btn btn-primary rounded-pill btn-block text-truncate"
-                            onClick={() => handleSort("")}
+                            onClick={() => handleSort("", "desc")}
                             style={{ fontSize: "14px", fontFamily: "Poppins" }}
                           >
                             A-Z
@@ -896,7 +1287,7 @@ const VideoPage = () => {
                         ) : (
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
-                            onClick={() => handleSort("asc")}
+                            onClick={() => handleSort("asc", "")}
                             style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                           >
                             A-Z
@@ -905,10 +1296,10 @@ const VideoPage = () => {
                       </div>
 
                       <div className="col-md-6 col-12">
-                        {sort === "desc" && filterPublish === "" ? (
+                        {sort === "desc" &&  showDescButton === false ? (
                           <button
                             className="btn btn-primary rounded-pill btn-block"
-                            onClick={() => handleSort("")}
+                            onClick={() => handleSort("", "desc")}
                             style={{ fontSize: "14px", fontFamily: "Poppins" }}
                           >
                             Z-A
@@ -916,7 +1307,7 @@ const VideoPage = () => {
                         ) : (
                           <button
                             className="btn btn-outline-light rounded-pill btn-block"
-                            onClick={() => handleSort("desc")}
+                            onClick={() => handleSort("desc", "")}
                             style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                           >
                             Z-A
@@ -962,7 +1353,7 @@ const VideoPage = () => {
                           key={i}
                         >
                           {/* #{row.toUpperCase()} */}
-                          #{row}
+                          #{row.toString().toUpperCase()}
                         </div>
                       );
                     })
@@ -986,17 +1377,13 @@ const VideoPage = () => {
         {
           detail ?
             <Modal
-              size="lg"
+              size={windowDimensions && windowDimensions.width && windowDimensions.width <= 576 ? "sm" : "lg"}
               onHide={() => handleToggleModal()}
               show={show}
-              className={
-                windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                  "rounded-lg mx-auto"
-                  :
-                  "rounded-lg"
-              }
               centered
+              dialogClassName="mx-10 mx-md-auto"
             >
+              
               <Modal.Header>
                 <div
                   className="col-12 d-flex justify-content-end"
@@ -1013,8 +1400,9 @@ const VideoPage = () => {
                   url={detail.url_video}
                   controls
                   width="100%"
-                  height={
-                    windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                  height=
+                  {
+                    windowDimensions && windowDimensions.width && windowDimensions.width <= 576 ?
                       "25vh"
                       :
                       "50vh"
@@ -1024,7 +1412,7 @@ const VideoPage = () => {
                 />
               </Modal.Body>
               <Modal.Footer>
-                <div className="col-12">
+                <div className="col-12 max-h-350px max-md-h-293px max-lg-h-212px overflow-auto">
 
                   {
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 770 && detail.nama_kategori ?
@@ -1064,7 +1452,28 @@ const VideoPage = () => {
                     {
                       showDesc === false && detail.isi_video ?
                         <div className="mx-0 px-0 text-justify" style={{fontSize:'14px'}}>
-                          {handleDescToTrim(detail.isi_video)}
+                          {/* {handleDescToTrim(detail.isi_video, "lg")} */}
+                         
+                          {
+                            windowDimensions && windowDimensions.width && windowDimensions.width > 768 ?
+                              handleDescToTrim(detail.isi_video, "lg")
+                            :
+                              null
+                          }
+
+                          {
+                            windowDimensions && windowDimensions.width && windowDimensions.width <= 768 && windowDimensions.width > 576?
+                              handleDescToTrim(detail.isi_video, "md")
+                            :
+                              null
+                          }
+
+                          {
+                            windowDimensions && windowDimensions.width && windowDimensions.width <= 576 ?
+                              handleDescToTrim(detail.isi_video, "sm")
+                            :
+                              null
+                          }
 
                           <div
                             className="mt-1 mb-3 text-primary"
@@ -1169,7 +1578,7 @@ const VideoPage = () => {
         }
 
         {/* End of Modal */}
-      </Container>
+      </HomeWrapper>
     </>
   );
 };

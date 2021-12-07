@@ -22,7 +22,7 @@ export default function VideoDetail(props) {
     session = props.session.user.user.data.user;
   }
   return (
-    <div>
+    <div className="bg-white">
       <Layout title="Video" session={session}>
         <VideoPage session={session} />
       </Layout>
