@@ -33,7 +33,11 @@ import {
   allBeasiswaKandidatReducer,
   allBeasiswaFilterReducer,
 } from "./dashboard-kabadan/data-peserta/beasiswa.reducers";
-import { allSimonasKandidatReducer } from "./dashboard-kabadan/data-peserta/simonas.reducers";
+import {
+  allSimonasKandidatReducer,
+  allSimonasFilterCompanyReducer,
+  allSimonasFilterStatusReducer,
+} from "./dashboard-kabadan/data-peserta/simonas.reducers";
 // END DASHBOARD KABADAN
 
 // PUBLIKASI
@@ -593,6 +597,8 @@ const reducer = combineReducers({
   beasiswaYear: beasiswaYearReducer,
   // ============= SIMONAS ============
   allSimonasKandidat: allSimonasKandidatReducer,
+  allSimonasFilterCompany: allSimonasFilterCompanyReducer,
+  allSimonasFilterStatus: allSimonasFilterStatusReducer,
   // END DASHBOARD KABADAN
 
   // PUBLIKASI
