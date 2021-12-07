@@ -48,10 +48,6 @@ export default function Bookmark({ session }) {
   };
 
   useEffect(() => {
-    console.log(allBookmark, "ini all bookmark");
-  }, [allBookmark]);
-
-  useEffect(() => {
     dispatch(getAllBookmark(session?.token));
   }, [dispatch, allBookmark.page]);
 

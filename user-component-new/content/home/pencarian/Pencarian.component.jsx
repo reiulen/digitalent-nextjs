@@ -12,13 +12,6 @@ import moment from "moment";
 
 import {
   getPencarian,
-  setValuePage,
-  searchKeyword,
-  setValueKategoriPeserta,
-  setValueLimit,
-  setValuePelatihanAkhir,
-  setValuePelatihanMulai,
-  setValuePenyelenggara,
   resetFilter,
 } from "../../../../redux/actions/pelatihan/pencarian.action";
 import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
