@@ -54,12 +54,12 @@ const LoginUser = () => {
         if (data.role === "admin") {
         } else if (data.role === "mitra") {
           router.push("/partnership/user/kerjasama");
-        } else {  
-          const session = await getSession()
-          if(!session.user.user.data.user.status){
-            router.push('/peserta/wizzard')
-          }else{
-            router.push('/peserta')
+        } else {
+          const session = await getSession();
+          if (!session.user.user.data.user.status) {
+            router.push("/peserta/wizzard");
+          } else {
+            router.push("/peserta");
           }
         }
       }

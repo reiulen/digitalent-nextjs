@@ -99,34 +99,34 @@ export const helperTextLimitMax = (value, min, max, funct) => {
 
 export const helperUserStatusColor = (status, setLabel) => {
   // get data.status and setLabel for the tags on the top right screen
-  if (status.includes("tidak") || status.includes("ditolak"))
+  if (status?.includes("tidak") || status?.includes("ditolak"))
     return setLabel("danger");
 
-  if (status.includes("menunggu") || status.includes("seleksi"))
+  if (status?.includes("menunggu") || status?.includes("seleksi"))
     return setLabel("warning");
 
   if (
-    status.includes("LPJ") ||
-    status.includes("lpj") ||
+    status?.includes("LPJ") ||
+    status?.includes("lpj") ||
     status == "survey belum tersedia" ||
     status == "LPJ belum tersedia"
   )
     return setLabel("primary");
 
   if (
-    status.includes("seleksi administrasi") ||
-    status.includes("menunggu") ||
-    status.includes("belum tersedia")
+    status?.includes("seleksi administrasi") ||
+    status?.includes("menunggu") ||
+    status?.includes("belum tersedia")
   )
     return setLabel("warning");
 
-  if (status.includes("lulus") || status.includes("Lulus"))
+  if (status?.includes("lulus") || status?.includes("Lulus"))
     return setLabel("success");
 
   if (
-    status.includes("tes substansi") ||
-    status.includes("pelatihan") ||
-    status.includes("survey")
+    status?.includes("tes substansi") ||
+    status?.includes("pelatihan") ||
+    status?.includes("survey")
   )
     return setLabel("primary");
   else return setLabel("primary");

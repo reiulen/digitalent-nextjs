@@ -33,7 +33,7 @@ import { allSidebarReducer } from "../redux/reducers/site-management/role.reduce
 import { signOut } from "next-auth/client";
 
 function MyApp({ Component, pageProps }) {
-  const allSidebar = useSelector(state => state.allSidebar);
+  const allSidebar = useSelector((state) => state.allSidebar);
 
   SimpleReactValidator.addLocale("id", {
     accepted: ":attribute harus diterima.",
@@ -77,16 +77,6 @@ function MyApp({ Component, pageProps }) {
   });
 
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const expiredDate = sessionStorage.getItem("token_expired_date");
-  //   const currentDate = moment(new Date()).format("DD-MM-YYYY HH:MM");
-
-  //   if (expiredDate && currentDate > expiredDate) {
-  //     sessionStorage.removeItem("token_expired_date");
-  //     signOut();
-  //   }
-  // }, []);
 
   useEffect(() => {
     if (pageProps?.session?.user?.user?.data?.token) {
