@@ -28,16 +28,16 @@ export default function Template(props) {
   let dispatch = useDispatch();
 
   const optionsStatus = [
-    { value: "Menunggu", label: "Menunggu" },
-    { value: "Tidak Lulus Administrasi", label: "Tidak Lulus Administrasi" },
-    { value: "Tes Substansi", label: "Tes Substansi" },
-    { value: "Tidak Lulus Tes Substansi", label: "Tidak Lulus Tes Substansi" },
-    { value: "Lulus Tes Substansi", label: "Lulus Tes Substansi" },
-    { value: "Ditolak", label: "Ditolak" },
-    { value: "Diterima", label: "Diterima" },
-    { value: "Pelatihan", label: "Pelatihan" },
-    { value: "Lulus Pelatihan", label: "Lulus Pelatihan" },
-    { value: "Tidak Lulus Pelatihan", label: "Tidak Lulus Pelatihan" },
+    { value: "menunggu", label: "Menunggu" },
+    { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
+    { value: "tes substansi", label: "Tes Substansi" },
+    { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
+    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "ditolak", label: "Ditolak" },
+    { value: "diterima", label: "Diterima" },
+    { value: "pelatihan", label: "Pelatihan" },
+    { value: "lulus pelatihan", label: "Lulus Pelatihan" },
+    { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
 
   const onChangeStatus = (e) => {
@@ -66,7 +66,7 @@ export default function Template(props) {
   useEffect(() => {
     axios
       .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status}`,
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status?.value}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
