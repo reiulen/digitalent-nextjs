@@ -56,7 +56,7 @@ const CardPelatihanClose = ({ row }) => {
             />
           </div>
           <div
-            className="d-flex justify-content-between position-relative pb-0 mb-0 flex-wrap"
+            className="d-flex justify-content-between position-relative pb-0 mb-0"
             style={{ top: "-15px" }}
           >
             <div className="module-pelatihan-mitra">
@@ -68,16 +68,16 @@ const CardPelatihanClose = ({ row }) => {
                   row.status === "Open"
                     ? "status-mitra-open-new"
                     : "status-mitra-close-new"
-                } text-uppercase mt-2 mt-lg-2 mt-xl-0 ml-md-0 ml-17`}
+                } text-uppercase my-0`}
               >
                 {row.status}
               </p>
             </div>
           </div>
           <div className="module-pelatihan-name">
-            <p className={`my-0 title-card-new`}>{row.name}</p>
+            <p className={`my-0 title-card-new `}>{row.name}</p>
           </div>
-          <div className="module-pelatihan-name">
+          <div className="module-pelatihan-name mt-0">
             <p
               className="text-left"
               style={{

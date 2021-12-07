@@ -14,6 +14,7 @@ import AlertBar from "../../../partnership/components/BarAlert";
 import Image from "next/image";
 import ListPeserta from "./list-peserta-pelatihan";
 import Tables from "./detail-list-peserta-pelatihan";
+import UbahPelatihan from './ubah-list-peserta-pelatihan'
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -42,7 +43,7 @@ const Table = ({ token }) => {
   return (
     <PageWrapper>
       <div className="row ">
-        <div className="col-12 col-xl-3 order-0 d-flex align-items-self">
+        {!router.query.ubah_pelatihan_id &&   <div className="col-12 col-xl-3 order-0 d-flex align-items-self">
           <div className="card card-custom card-stretch gutter-b px-10 py-12">
             <div className="form-group" style={{ maxWidth: "19rem" }}>
               <div>
@@ -138,8 +139,9 @@ const Table = ({ token }) => {
               </div>
             </div>
           </div>
-        </div>
-        {sideBar && (
+        </div>}
+       
+        {sideBar && !router.query.ubah_pelatihan_id && (
           <div className="col-12 col-xl-9 order-1">
             <div className="card card-custom card-stretch gutter-b px-4 px-sm-8 py-4">
               {/* Data Probadi */}
@@ -321,7 +323,10 @@ const Table = ({ token }) => {
           </div>
         )}
 
-        {!sideBar && <ListPeserta token={token} />}
+        {!sideBar && !router.query.pelatihan_id && !router.query.ubah_pelatihan_id ?  <ListPeserta token={token} /> : null}
+        {!sideBar && router.query.pelatihan_id ?  <Tables token={token} /> : null}
+        { router.query.ubah_pelatihan_id ?  <UbahPelatihan token={token} /> : null}
+
       </div>
     </PageWrapper>
   );

@@ -151,7 +151,7 @@ const Navigationbar = ({ session }) => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
-      router.push(`/pencarian?cari=${search}`);
+      router.push(`/pencarian?cari=${search}&page=1`);
     }
   };
 

@@ -214,11 +214,14 @@ export const getSidebar = (token) => async (dispatch) => {
       type: GET_SIDEBAR,
       payload: data,
     });
+
     localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
     localStorage.setItem("token-permission", data.data.tokenPermission)
-    Cookies.set("token-permission", data.data.tokenPermission)
+    localStorage.setItem("permissions", data.data.permissions)
     
-  } catch (error) {}
+  } catch (error) {
+    
+  }
 };
 
 export const setPage = (page) => {
