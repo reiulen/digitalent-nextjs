@@ -10,7 +10,7 @@ export default function ChatBot() {
   return (
     <div className={`${style.Chatbot_container} shadow`}>
       <div
-        className={`${style.chatbot_box} ${style.one} d-flex justify-content-end `}
+        className={`${style.chatbot_box} ${style.one} d-flex  justify-content-end `}
         style={clicked ? { width: "280px" } : {}}
       >
         <button
