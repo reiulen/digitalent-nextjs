@@ -79,15 +79,19 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       if (query.id) {
         //jika ada query id
-        const { data } = await store.dispatch(
+        const data = await store.dispatch(
           getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
         );
-        if (
-          data?.status.includes(
-            "substansi" || "belum tersedia" || "belum mengerjakan"
-          )
-        ) {
-          success = true;
+        if (data) {
+          if (
+            data?.data?.status?.includes(
+              "substansi" || "belum tersedia" || "belum mengerjakan"
+            )
+          ) {
+            success = true;
+          } else {
+            success = false;
+          }
         } else {
           success = false;
         }

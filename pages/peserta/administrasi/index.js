@@ -17,7 +17,7 @@ import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-
 const SeleksiAdministrasi = dynamic(
   () =>
     import(
-      "../../../user-component-new/content/peserta/administrasi/seleksiAdmin.jsx"
+      "../../../user-component-new/components/global/Riwayat-pelatihan-detail/index"
     ),
   {
     loading: function loadingNow() {
@@ -147,14 +147,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       if (query.id) {
         //jika ada query id
-        const { data } = await store.dispatch(
+        const data = await store.dispatch(
           getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
         );
-        if (
-          data.status.includes("administrasi") &&
-          !data.status.includes("administrasi akhir")
-        ) {
-          success = true;
+        if (data) {
+          if (
+            data?.data?.status?.includes("administrasi") &&
+            !data?.data?.status?.includes("administrasi akhir")
+          ) {
+            success = true;
+          } else {
+            success = false;
+          }
         } else {
           success = false;
         }
