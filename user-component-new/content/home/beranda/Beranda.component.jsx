@@ -329,8 +329,14 @@ const Beranda = ({ session }) => {
             "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
-          handleActive(0, akademi[0].id);
-          dispatch(getTemaByAkademi(session?.token, akademi[0].id));
+          handleActive(activeTab, akademiId || akademi[0].id);
+          dispatch(
+            getTemaByAkademi(session?.token, akademiId || akademi[0].id)
+          );
+          // setActiveTab(index);
+          // setAkademiId(id);
+          // handleActive(0, akademi[0].id);
+          // dispatch(getTemaByAkademi(session?.token, akademi[0].id));
         }
       } catch (e) {
         handleActive(0, akademi[0].id);
@@ -348,8 +354,12 @@ const Beranda = ({ session }) => {
             "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
-          handleActive(0, akademi[0].id);
-          dispatch(getTemaByAkademi(session?.token, akademi[0].id));
+          handleActive(activeTab, akademiId || akademi[0].id);
+          dispatch(
+            getTemaByAkademi(session?.token, akademiId || akademi[0].id)
+          );
+          // handleActive(0, akademi[0].id);
+          // dispatch(getTemaByAkademi(session?.token, akademi[0].id));
         }
       } catch (e) {
         handleActive(0, akademi[0].id);
