@@ -981,14 +981,60 @@ const Beranda = ({ session }) => {
             <h1>
               Tahapan Pendaftaran <br /> Digital Talent Scholarship
             </h1>
-            <Col md={12} className="p-0">
-              <div className="mt-md-20 mt-10 ">
+
+            <div className="mt-25 p-0 m-0 d-flex justify-content-center justify-content-md-between flex-wrap">
+              <div className="content">
                 <img
-                  src="/assets/media/image-step-register.png"
-                  style={{ width: "100%" }}
+                  src="/assets/media/pendaftaran-illustration-new.svg"
+                  className="caption-image-new"
                 />
+                <div className="caption d-flex align-items-center flex-column mt-6">
+                  <h4 className="title-tahapan-new mb-2">pendaftaran</h4>
+                  <p className="caption-tahapan-new">
+                    Pilih pada pelatihan yang diinginkan dan lakukan pendaftaran
+                  </p>
+                </div>
               </div>
-            </Col>
+              <div className="content">
+                <img
+                  src="/assets/media/seleksi-illustration-new.svg"
+                  className="caption-image-new"
+                />
+                <div className="caption d-flex align-items-center flex-column mt-6">
+                  <h4 className="title-tahapan-new mb-2">seleksi</h4>
+                  <p className="caption-tahapan-new">
+                    Ikuti tahap seleksi peserta (seleksi administrasi dan/atau
+                    tes substansi)
+                  </p>
+                </div>
+              </div>
+              <div className="content">
+                <img
+                  src="/assets/media/verifikasi-illustration-new.svg"
+                  className="caption-image-new"
+                />
+                <div className="caption d-flex align-items-center flex-column mt-6">
+                  <h4 className="title-tahapan-new mb-2">verifikasi</h4>
+                  <p className="caption-tahapan-new">
+                    Penyelenggara akan melakukan verifikasi pada aplikasi
+                    pendaftaran anda
+                  </p>
+                </div>
+              </div>
+              <div className="content">
+                <img
+                  src="/assets/media/pelatihan-illustration-new.svg"
+                  className="caption-image-new"
+                />
+                <div className="caption d-flex align-items-center flex-column mt-6">
+                  <h4 className="title-tahapan-new mb-2">ikut pelatihan</h4>
+                  <p className="caption-tahapan-new">
+                    Ikuti pelatihan sesuai jadwal apabila telah dinyatakan
+                    sebagai peserta pelatihan
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </section>
