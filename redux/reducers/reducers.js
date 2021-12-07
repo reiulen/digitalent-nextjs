@@ -26,6 +26,7 @@ import {
   beasiswaUniversitasLuarReducer,
   beasiswaAlumniReducer,
   beasiswaAlumniAwardeeReducer,
+  beasiswaYearReducer,
 } from "./dashboard-kabadan/dashboard/beasiswa.reducers";
 // DATA PESERTA
 import {
@@ -590,6 +591,7 @@ const reducer = combineReducers({
   beasiswaAlumniAwardee: beasiswaAlumniAwardeeReducer,
   allBeasiswaKandidat: allBeasiswaKandidatReducer,
   allBeasiswaFilter: allBeasiswaFilterReducer,
+  beasiswaYear: beasiswaYearReducer,
   // ============= SIMONAS ============
   allSimonasKandidat: allSimonasKandidatReducer,
   // END DASHBOARD KABADAN

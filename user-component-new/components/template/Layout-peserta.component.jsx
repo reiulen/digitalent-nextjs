@@ -80,7 +80,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
         <Header session={session} />
       )}
       <ToastContainer position="top-right" />
-      <div className="container-fluid py-5">
+      <div className="container-fluid py-5 px-10">
         <Row>
           <Col md={3}>
             {!router.pathname.includes(routerPath) && (

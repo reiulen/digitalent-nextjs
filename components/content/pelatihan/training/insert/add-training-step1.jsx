@@ -649,7 +649,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </button>
             </div>
             <small className="text-muted">
-              Format File (.png/.jpg) & Max 2 mb
+              Format Image (.png/.jpg), Rekomendasi 1024x1024. dan Max size 2MB
             </small>
           </div>
 
@@ -679,7 +679,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </button>
             </div>
             <small className="text-muted">
-              Format File (.png/.jpg) & Max 2 mb
+              Format Image (.png/.jpg), Rekomendasi 837 x 380. dan Max size 2MB
             </small>
           </div>
 

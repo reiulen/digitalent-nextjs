@@ -20,6 +20,7 @@ export async function fetchSignatureApi(params, token) {
       params,
       headers: {
         authorization: `Bearer ${token}`,
+        permissionToken: localStorage.getItem("token-permission")
       },
     }
   );
@@ -81,6 +82,7 @@ export const deleteTandaTangan = (id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -107,6 +109,7 @@ export const changeStatusList = (formData, id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
