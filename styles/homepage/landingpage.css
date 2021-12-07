@@ -7,6 +7,16 @@
   color: #ffffff !important;
 }
 
+.btn-beranda-gosh {
+  background-color: transparent !important;
+  color: #007cff !important;
+}
+
+.btn-beranda-gosh:hover {
+  background-color: #e6f2ff !important;
+  color: #007cff !important;
+}
+
 .text-beranda-primary {
   color: #007cff !important;
 }

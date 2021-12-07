@@ -350,7 +350,10 @@ const DetailAkademi = ({ session }) => {
         </section>
 
         <section className={`card-filter-bar`}>
-          <FilterBar session={session} />
+          <FilterBar
+            session={session}
+            funcSetPage={(val) => setActivePage(val)}
+          />
         </section>
 
         <section className={`content-detail mt-4`}>
@@ -422,22 +425,22 @@ const DetailAkademi = ({ session }) => {
                       disabled={disabledDate}
                     />
                   </Form.Group>
-                </div>
-                <div className="mt-7">
-                  <div className="row d-flex justify-content-around">
-                    <button
-                      className="btn btn-white-ghost-rounded-full text-beranda-primary"
-                      onClick={() => handleReset()}
-                    >
-                      Reset
-                    </button>
+                  <div className="mt-8">
+                    <div className=" d-flex justify-content-between">
+                      <button
+                        className="btn btn-beranda-gosh rounded-pill fw-600 btn-block mr-7"
+                        onClick={() => handleReset()}
+                      >
+                        Reset
+                      </button>
 
-                    <button
-                      className="btn btn-beranda-primary rounded-pill px-5 fw-600"
-                      onClick={() => handleFilter()}
-                    >
-                      Tampilkan
-                    </button>
+                      <button
+                        className="btn btn-beranda-primary rounded-pill fw-600 btn-block mt-0"
+                        onClick={() => handleFilter()}
+                      >
+                        Tampilkan
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -465,7 +468,7 @@ const DetailAkademi = ({ session }) => {
                               md={6}
                               sm={6}
                               xs={12}
-                              className={`mb-5 order-${i + 1}`}
+                              className={`mb-8 order-${i + 1}`}
                               key={i}
                             >
                               <Card className="h-100 shadow-sm">

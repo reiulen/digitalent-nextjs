@@ -10,7 +10,10 @@ const BreadcrumbComponent = ({ data = [] }) => {
       {data &&
         data.length > 0 &&
         data.map((row, i) => (
-          <div className="link-bredcumd d-flex align-items-center" key={i}>
+          <div
+            className="link-bredcumd d-flex align-items-center module-pelatihan-mitra"
+            key={i}
+          >
             <span className="mx-2">
               <i className="ri-arrow-right-s-line"></i>
             </span>
@@ -28,10 +31,7 @@ const BreadcrumbComponent = ({ data = [] }) => {
                 </Link>
               ) : (
                 <Link href={row.link} passHref>
-                  <span
-                    className="text-primary"
-                    style={{ cursor: "pointer" }}
-                  >
+                  <span className="text-primary" style={{ cursor: "pointer" }}>
                     {row.name}
                   </span>
                 </Link>
