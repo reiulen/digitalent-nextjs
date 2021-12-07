@@ -27,6 +27,7 @@ import {
 
 import axios from "axios";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 export const getAllRoles = (token) => async (dispatch, getState) => {
   try {
@@ -215,6 +216,7 @@ export const getSidebar = (token) => async (dispatch) => {
     });
     localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
     localStorage.setItem("token-permission", data.data.tokenPermission)
+    Cookies.set("token-permission", data.data.tokenPermission)
     
   } catch (error) {}
 };
