@@ -1,5 +1,5 @@
 // #Next & React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -28,6 +28,15 @@ export default function NamaPelatihanID({ token }) {
   const [limit, setLimit] = useState(null);
   const [search, setSearch] = useState("");
   // #Pagination
+
+  const [listPermission, setListPermission] = useState([]);
+  const { permission } = useSelector((state) => state.adminPermission);
+  useEffect(() => {
+    const filterPermission = permission.permissions.filter((item) =>
+      item.includes("sertifi")
+    );
+    setListPermission(filterPermission);
+  }, []);
 
   const [status, setStatus] = useState(null);
 

@@ -39,6 +39,10 @@ import {
   BEASISWA_ALUMNI_REQUEST,
   BEASISWA_ALUMNI_SUCCESS,
   BEASISWA_ALUMNI_FAIL,
+  // BEASISWA YEAR
+  BEASISWA_YEAR_REQUEST,
+  BEASISWA_YEAR_SUCCESS,
+  BEASISWA_YEAR_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/dashboard-kabadan/dashboard/beasiswa.type";
 
@@ -217,20 +221,17 @@ export const beasiswaProvinsiPendaftarReducer = (
 ) => {
   switch (action.type) {
     case BEASISWA_PROVINSI_PENDAFTAR_REQUEST:
-    case BEASISWA_PROVINSI_AWARDEE_REQUEST:
       return {
         loading: true,
       };
 
     case BEASISWA_PROVINSI_PENDAFTAR_SUCCESS:
-    case BEASISWA_PROVINSI_AWARDEE_SUCCESS:
       return {
         loading: false,
         provinsi: action.payload.data,
       };
 
     case BEASISWA_PROVINSI_PENDAFTAR_FAIL:
-    case BEASISWA_PROVINSI_AWARDEE_FAIL:
       return {
         loading: false,
         error: action.payload,
@@ -394,6 +395,37 @@ export const beasiswaAlumniAwardeeReducer = (
       };
 
     case BEASISWA_AWARDEE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// BEASISWA YEAR
+export const beasiswaYearReducer = (state = { year: [] }, action) => {
+  switch (action.type) {
+    case BEASISWA_YEAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case BEASISWA_YEAR_SUCCESS:
+      return {
+        loading: false,
+        year: action.payload.data,
+      };
+
+    case BEASISWA_YEAR_FAIL:
       return {
         loading: false,
         error: action.payload,

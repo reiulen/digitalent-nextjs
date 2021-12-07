@@ -875,7 +875,9 @@ const ListTraining = ({ token }) => {
                                   className={`select-pelatihan ${
                                     row.status_publish === "1"
                                       ? "select-pelatihan-success"
-                                      : "select-pelatihan-danger"
+                                      : row.status_publish === "0"
+                                      ? "select-pelatihan-danger"
+                                      : "select-pelatihan-warning"
                                   }`}
                                   key={i}
                                   value={row.status_publish}
@@ -891,6 +893,7 @@ const ListTraining = ({ token }) => {
                                 >
                                   <option value="1">Publish</option>
                                   <option value="0">Unpublish</option>
+                                  <option value="2">Unlisted</option>
                                 </select>
                               </div>
                             </td>

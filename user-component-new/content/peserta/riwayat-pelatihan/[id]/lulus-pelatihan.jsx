@@ -309,8 +309,7 @@ export default function RiwayatPelatihanDetail(props) {
                       fontFamily: "poppins",
                     }}
                     onClick={() => {
-                      // handleClick()
-                      console.log(data, "ini data");
+                      handleClick();
                     }}
                   >
                     <i

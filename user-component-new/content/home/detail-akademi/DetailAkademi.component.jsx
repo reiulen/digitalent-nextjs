@@ -309,7 +309,7 @@ const DetailAkademi = ({ session }) => {
                     </h2>
                   </Card.Title>
                   <Card.Text>
-                    {akademi.deskripsi.length > textToTrim ? (
+                    {akademi && akademi.deskripsi.length > textToTrim ? (
                       seeMoreStatus === false ? (
                         <>
                           <div
@@ -463,9 +463,9 @@ const DetailAkademi = ({ session }) => {
                           <>
                             <Col
                               md={6}
-                              className={`col-sm-12 col-md-4 mb-5 order-${
-                                i + 1
-                              }`}
+                              sm={6}
+                              xs={12}
+                              className={`mb-5 order-${i + 1}`}
                               key={i}
                             >
                               <Card className="h-100 shadow-sm">

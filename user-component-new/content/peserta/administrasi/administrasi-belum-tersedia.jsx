@@ -26,27 +26,21 @@ export default function SeleksiAdministrasi() {
             />
           </div>
           <p
-            className="d-flex justify-content-center font-weight-bolder"
+            className="d-flex justify-content-center font-weight-bolder mt-15 m-0 p-0"
             style={{ fontSize: "24px" }}
           >
-            Halaman Belum Tersedia...
+            Halaman Belum Tersedia
           </p>
-          <p
-            className="d-flex justify-content-center "
-            style={{ fontSize: "16px" }}
-          >
-            Silahkan lakukan Test Substansi terlebih dahulu...
-          </p>
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center m-0 p-0">
             <Button
-              className="btn-rounded-full font-weight-bold btn-block d-flex justify-content-center mt-5 w-50"
+              className="btn-rounded-full font-weight-bold btn-block d-flex justify-content-center mt-10 w-50"
               style={{
                 height: "40px",
                 fontFamily: "poppins",
                 fontSize: "14px",
               }}
               onClick={() => {
-                router.push(`/peserta/test-substansi`);
+                router.push(`/peserta/riwayat-pelatihan`);
               }}
             >
               Cek Status
