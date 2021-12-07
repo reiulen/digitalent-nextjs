@@ -53,7 +53,7 @@ export default function Bookmark({ session }) {
 
   useEffect(() => {
     dispatch(getAllBookmark(session?.token));
-  }, [allBookmark.page]);
+  }, [dispatch, allBookmark.page]);
 
   return (
     <PesertaWrapper>
