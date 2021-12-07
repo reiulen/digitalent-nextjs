@@ -150,11 +150,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
         const data = await store.dispatch(
           getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
         );
-        if (
-          data?.data?.status?.includes("administrasi") &&
-          !data?.data?.status?.includes("administrasi akhir")
-        ) {
-          success = true;
+        if (data) {
+          if (
+            data?.data?.status?.includes("administrasi") &&
+            !data?.data?.status?.includes("administrasi akhir")
+          ) {
+            success = true;
+          } else {
+            success = false;
+          }
         } else {
           success = false;
         }
