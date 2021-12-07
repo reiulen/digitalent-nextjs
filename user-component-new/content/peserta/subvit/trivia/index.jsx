@@ -74,7 +74,7 @@ const SubtansiUser = ({ token }) => {
   //   },
   // ];
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -164,36 +164,22 @@ const SubtansiUser = ({ token }) => {
   const handleNumber = (val) => {
     setNumberPage(val);
 
-    router.push(
-      `/peserta/subvit/trivia/${parseInt(val.target.innerHTML)}?theme_id=${
-        router.query.theme_id
-      }&training_id=${router.query.training_id}`
-    );
-  };
-
-  const handleBack = () => {
-    const page = parseInt(router.query.id) - 1;
-    if (parseInt(router.query.id) === 1) {
+    if (val.target.innerHTML === router.query.id) {
       router.push(
-        `${router.pathname.slice(0, 23)}/1?theme_id=${
+        `/peserta/subvit/trivia/${parseInt(val.target.innerHTML)}?theme_id=${
           router.query.theme_id
         }&training_id=${router.query.training_id}`
       );
     } else {
-      router.push(
-        `${router.pathname.slice(0, 23)}/${page}?theme_id=${
-          router.query.theme_id
-        }&training_id=${router.query.training_id}`
-      );
     }
   };
 
   const secondsToTime = (secs) => {
-    var hours = Math.floor(secs / (60 * 60));
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
+    let hours = Math.floor(secs / (60 * 60));
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
     return {
       h: hours,
       m: minutes,
@@ -225,21 +211,21 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
-    const setData = {
-      list: JSON.stringify(
-        data.list_questions.map((item, index) => {
-          return {
-            ...item,
-            participant_answer: localStorage.getItem(index + 1),
-          };
-        })
-      ),
-      training_id: router.query.training_id,
-      type: router.query.category === "Test Substansi" && "substansi",
-    };
-    dispatch(postResult(setData, token));
+    // const setData = {
+    //   list: JSON.stringify(
+    //     data.list_questions.map((item, index) => {
+    //       return {
+    //         ...item,
+    //         participant_answer: localStorage.getItem(index + 1),
+    //       };
+    //     })
+    //   ),
+    //   training_id: router.query.training_id,
+    //   type: router.query.category === "Test Substansi" && "substansi",
+    // };
+    // dispatch(postResult(setData, token));
     localStorage.clear();
-    router.push(`/peserta/done-substansi`);
+    router.push(`/peserta/done-trivia`);
   };
 
   const handleCloseModalDone = () => {
@@ -309,12 +295,21 @@ const SubtansiUser = ({ token }) => {
                   </p>
                 </Col>
                 <Col className={styles.align}>
-                  <p className={styles.totalSoal2}>
-                    00:00:0
-                    {/* {data &&
-                      data.list_questions[parseInt(router.query.id) - 1]
-                        .duration} */}
-                  </p>
+                  {(data &&
+                    data.list_questions[parseInt(router.query.id) - 1].type ===
+                      "checkbox") ||
+                  (data &&
+                    data.list_questions[parseInt(router.query.id) - 1].type ===
+                      "fill_in_the_blank") ? (
+                    <p className={styles.totalSoal2}>
+                      00:00:0
+                      {data &&
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          .duration}
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </Col>
               </Row>
 
@@ -458,11 +453,11 @@ const SubtansiUser = ({ token }) => {
                   className={styles.btnBottom}
                   style={{ textAlign: "right", margin: "10px " }}
                 >
-                  {parseInt(router.query.id) === data?.length ? (
+                  {parseInt(router.query.id) === data?.total_questions ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
-                      // disabled={!listAnswer.includes(data?.total_questions)}
+                      // disabled={listAnswer.includes(data?.total_questions)}
                       // MASIH DIPAKE
                     >
                       Selesai
@@ -472,7 +467,8 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleNext}
                       disabled={
-                        parseInt(router.query.id) === data && data.length
+                        parseInt(router.query.id) === data &&
+                        data.total_questions
                       }
                     >
                       <div className="d-flex flex-row">
@@ -489,7 +485,7 @@ const SubtansiUser = ({ token }) => {
                     <Col xs={6} style={{ textAlign: "center" }}></Col>
 
                     <Col xs={6} style={{ textAlign: "center" }}>
-                      {parseInt(router.query.id) === data?.length ? (
+                      {parseInt(router.query.id) === data?.total_questions ? (
                         <Button
                           className={styles.btnNext}
                           onClick={handleDone}
@@ -503,7 +499,8 @@ const SubtansiUser = ({ token }) => {
                           className={styles.btnNext}
                           onClick={handleNext}
                           disabled={
-                            parseInt(router.query.id) === data && data.length
+                            parseInt(router.query.id) === data &&
+                            data.total_questions
                           }
                         >
                           Lanjut
