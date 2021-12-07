@@ -62,7 +62,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const data = await store.dispatch(
         getAllPermission(session.user.user.data.token)
       );
-      console.log(data, "ini di tema");
       return {
         props: { session, title: "List Nama Pelatihan - Sertifikat" },
       };

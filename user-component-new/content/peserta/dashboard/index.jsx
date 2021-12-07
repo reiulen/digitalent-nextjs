@@ -139,8 +139,6 @@ const Dashboard = ({ session, success }) => {
     }
   }, []);
 
-  console.log(dataDashboard);
-
   return (
     <>
       <PesertaWrapper padding={"10"}>
