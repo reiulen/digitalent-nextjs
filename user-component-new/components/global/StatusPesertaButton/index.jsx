@@ -118,7 +118,9 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             disabled={!data?.survei}
             click={() => {
-              router.push("/peserta/survey");
+              router.push(
+                `/peserta/survey?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+              );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
             }}
@@ -160,7 +162,9 @@ export default function ButtonStatusPeserta({ data, token }) {
           </CustomButton>
           <CustomButton
             click={() => {
-              router.push(`/peserta/trivia`);
+              router.push(
+                `/peserta/trivia?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+              );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
             }}
@@ -187,7 +191,9 @@ export default function ButtonStatusPeserta({ data, token }) {
         <Fragment>
           <CustomButton
             click={() => {
-              router.push(`/peserta/trivia`);
+              router.push(
+                `/peserta/trivia?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+              );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
             }}
