@@ -30,11 +30,11 @@ const Beranda = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { publikasi } = useSelector((state) => state.allPublikasiBeranda);
+  const { publikasi } = useSelector(state => state.allPublikasiBeranda);
   const { tema, loading: loadingTema } = useSelector(
-    (state) => state.temaByAkademi
+    state => state.temaByAkademi
   );
-  const { akademi } = useSelector((state) => state.allAkademi);
+  const { akademi } = useSelector(state => state.allAkademi);
   const [activeTab, setActiveTab] = useState(0);
   const [akademiId, setAkademiId] = useState(null);
 
@@ -269,7 +269,7 @@ const Beranda = ({ session }) => {
     setCardBookmark(bookmark);
   };
 
-  const handleCloseQuickView = (indexTema) => {
+  const handleCloseQuickView = indexTema => {
     let obj = [...pelatihan];
 
     for (let i = 0; i < obj.length; i++) {
@@ -294,7 +294,7 @@ const Beranda = ({ session }) => {
     }
   };
 
-  const PrintTextTrim = (word) => {
+  const PrintTextTrim = word => {
     let str = null;
     if (word.length > 200) {
       str = word.slice(0, 200) + "...";
@@ -305,7 +305,7 @@ const Beranda = ({ session }) => {
     return str;
   };
 
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -326,7 +326,7 @@ const Beranda = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           handleActive(0, akademi[0].id);
@@ -345,7 +345,7 @@ const Beranda = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
           handleActive(0, akademi[0].id);

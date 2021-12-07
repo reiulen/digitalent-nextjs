@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { Row, Col, Container, Card, Button, Badge } from "react-bootstrap";
 import Image from "next/image";
@@ -18,9 +18,9 @@ import { useRouter } from "next/router";
 export default function Bookmark({ session }) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const allBookmark = useSelector((state) => state.allBookmark);
+  const allBookmark = useSelector(state => state.allBookmark);
 
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -37,7 +37,7 @@ export default function Bookmark({ session }) {
       if (data) {
         SweatAlert(
           "Berhasil",
-          "Anda berhasil menghapus pelatihan dari bookmark",
+          "Anda berhasil menghapus pelatihan dari favorit",
           "success"
         );
         dispatch(getAllBookmark(session?.token));
@@ -46,6 +46,15 @@ export default function Bookmark({ session }) {
       SweatAlert("Gagal", e.message, "error");
     }
   };
+
+  useEffect(() => {
+    console.log(allBookmark, "ini all bookmark");
+  }, [allBookmark]);
+
+  useEffect(() => {
+    dispatch(getAllBookmark(session?.token));
+  }, [allBookmark.page]);
+
   return (
     <PesertaWrapper>
       <Row className="my-n10 my-md-0">
@@ -240,14 +249,14 @@ export default function Bookmark({ session }) {
         })}
       </Row>
       <div className=" d-flex justify-content-center my-18 align-align-items-center">
-        {allBookmark && allBookmark?.bookmark?.total >= 5 && (
+        {allBookmark && allBookmark?.bookmark?.total > 6 && (
           <div className="table-pagination my-auto">
             <Pagination
               activePage={allBookmark?.page}
               itemsCountPerPage={allBookmark?.bookmark?.perPage}
               totalItemsCount={allBookmark?.bookmark?.total}
               pageRangeDisplayed={3}
-              onChange={(page) => dispatch(setValuePage(page))}
+              onChange={page => dispatch(setValuePage(page))}
               nextPageText={">"}
               prevPageText={"<"}
               firstPageText={"<<"}

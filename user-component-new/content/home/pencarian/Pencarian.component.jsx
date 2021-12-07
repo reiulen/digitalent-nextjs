@@ -27,10 +27,10 @@ const Pencarian = ({ session }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { query } = router;
-  const allPencarian = useSelector((state) => state.allPencarian);
+  const allPencarian = useSelector(state => state.allPencarian);
 
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
-    useSelector((state) => state.allPenyelenggaraPeserta);
+    useSelector(state => state.allPenyelenggaraPeserta);
 
   const [filterPenyelenggara, setFilterPenyelenggara] = useState("");
   const [filterKategori, setFilterKategori] = useState("");
@@ -57,7 +57,7 @@ const Pencarian = ({ session }) => {
   }
 
   const customStylesSide = {
-    control: (styles) => ({
+    control: styles => ({
       ...styles,
       borderRadius: "30px",
       paddingLeft: "10px",
@@ -93,7 +93,7 @@ const Pencarian = ({ session }) => {
     dispatch(resetFilter());
   };
 
-  const handlePagination = (page) => {
+  const handlePagination = page => {
     router.push(
       `/pencarian?cari=${
         router.query.cari || ""
@@ -106,7 +106,7 @@ const Pencarian = ({ session }) => {
     // dispatch(setValuePage(page));
   };
 
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -127,7 +127,7 @@ const Pencarian = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(
@@ -155,7 +155,7 @@ const Pencarian = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
           dispatch(
@@ -217,23 +217,23 @@ const Pencarian = ({ session }) => {
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Penyelenggara</Form.Label>
                     <Select
-                      ref={(ref) => (selectRefPenyelenggara = ref)}
+                      ref={ref => (selectRefPenyelenggara = ref)}
                       options={optionsPenyelenggara}
                       styles={customStylesSide}
                       placeholder="Pilih Penyelenggara"
                       isClearable
-                      onChange={(e) => setFilterPenyelenggara(e)}
+                      onChange={e => setFilterPenyelenggara(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Kategori Peserta</Form.Label>
                     <Select
-                      ref={(ref) => (selectRefKategoriPeserta = ref)}
+                      ref={ref => (selectRefKategoriPeserta = ref)}
                       options={optionsKategoriPeserta}
                       styles={customStylesSide}
                       placeholder="Pilih Kategori Peserta"
                       isClearable
-                      onChange={(e) => setFilterKategori(e)}
+                      onChange={e => setFilterKategori(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -245,7 +245,7 @@ const Pencarian = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      onChange={e => setStartDate(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -257,7 +257,7 @@ const Pencarian = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
+                      onChange={e => setEndDate(e.target.value)}
                     />
                   </Form.Group>
                 </div>
@@ -454,7 +454,7 @@ const Pencarian = ({ session }) => {
                     itemsCountPerPage={allPencarian?.pelatihan?.perPage}
                     totalItemsCount={allPencarian?.pelatihan?.total}
                     pageRangeDisplayed={3}
-                    onChange={(page) => handlePagination(page)}
+                    onChange={page => handlePagination(page)}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
