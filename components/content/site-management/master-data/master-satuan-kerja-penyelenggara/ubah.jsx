@@ -20,15 +20,30 @@ const TambahApi = ({ token }) => {
 
   const detailUnitWork = useSelector((state) => state.detailUnitWork);
   let sortirOptionTempProv = detailUnitWork?.unitWork?.provinsi
+
   let optionTempProv = sortirOptionTempProv.map((items) => {
     return { ...items, label: items.provinsi, region: items.provinsi }
   })
-  const allProvincesSite = useSelector((state) => state.
-    allProvincesSite);
+
+  const allProvincesSite = useSelector((state) => state.allProvincesSite);
   let sortirOptionTempProvList = allProvincesSite?.data
+
   let optionTempProvList = sortirOptionTempProvList.map((items) => {
     return { ...items, value: items.label }
   })
+
+  let province = optionTempProvList.filter((items, i) => {
+    for (let j = 0; j < optionTempProv.length; j++) {
+      if (items.label !== optionTempProv[j].label) {
+        return { ...items }
+      }
+      // if (items.label !== optionTempProv[0].label) {
+      //   return { ...items }
+      // }
+    }
+  })
+
+
   const [valueProvinsi, setValueProvinsi] = useState([]);
   const [nameUnitWork, setNameUnitWork] = useState(detailUnitWork.unitWork.name);
   const [status, setStatus] = useState(detailUnitWork.unitWork.status);
@@ -202,7 +217,7 @@ const TambahApi = ({ token }) => {
                   isSearchable={true}
                   name="color"
                   onChange={(e) => changeListProvinsi(e)}
-                  options={optionTempProvList}
+                  options={province}
                   onBlur={() => simpleValidator.current.showMessageFor("provinsi")}
                 />
 

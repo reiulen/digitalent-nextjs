@@ -192,11 +192,11 @@ const Table = ({ token }) => {
                               <option selected disabled value="">
                                 -- Halaman --
                               </option>
-                              {!allPage || (allPage && allPage.data.setting_page.length === 0) ? (
+                              {!allPage || (allPage && allPage.data?.setting_page.length === 0) ? (
                                 <option value="">Data kosong</option>
                               ) : (
                                 allPage &&
-                                allPage.data.setting_page.map((row) => {
+                                allPage.data?.setting_page.map((row) => {
                                   return (
                                     <option key={row.id} value={row.id} >
                                       {row.name}
