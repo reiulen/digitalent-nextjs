@@ -32,6 +32,7 @@
   font-weight: 600;
   color: #6c6c6c;
   text-align: start;
+  max-width: max-content;
 }
 
 .status_mitra_open {
@@ -165,13 +166,11 @@
   background-color: #ffffff;
 }
 
-
 .dashboar_nameBox {
   max-width: 256px;
 }
 
 @media (max-width: 768px) {
-
   .dashboar_nameBox {
     max-width: 200px;
   }
@@ -198,10 +197,7 @@
 }
 
 @media (max-width: 320px) {
-
   .dashboar_nameBox {
     max-width: 100px;
   }
-
-
 }

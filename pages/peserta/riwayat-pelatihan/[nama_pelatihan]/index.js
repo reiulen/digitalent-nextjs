@@ -59,7 +59,7 @@ export default function RiwayatPelatihanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 
@@ -87,7 +87,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!status || status == "") {
         success = false;
       } else if (
-        !status.includes("substansi" || "belum tersedia" || "belum mengerjakan")
+        !status.includes(
+          "substansi" ||
+            "belum tersedia" ||
+            "belum mengerjakan" ||
+            "administrasi"
+        ) ||
+        status.includes("pelatihan")
       ) {
         const result = await store.dispatch(
           getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)

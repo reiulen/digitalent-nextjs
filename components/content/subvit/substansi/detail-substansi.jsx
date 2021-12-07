@@ -125,23 +125,6 @@ const DetailSubstansi = ({ token }) => {
     setShowModal(false);
   };
 
-  const handleSearchEnter = (e) => {
-    if (e.key === "Enter") {
-      dispatch(
-        getAllSubtanceQuestionDetail(
-          id,
-          1,
-          search,
-          5,
-          status,
-          kategori,
-          pelatihan,
-          token
-        )
-      );
-    }
-  };
-
   const handleSearch = () => {
     dispatch(
       getAllSubtanceQuestionDetail(
@@ -544,7 +527,6 @@ const DetailSubstansi = ({ token }) => {
                       className={`${styles.inputSearch} form-control pl-10`}
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
-                      onKeyUp={(event) => handleSearchEnter(event)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"

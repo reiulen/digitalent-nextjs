@@ -129,6 +129,7 @@ const CardPelatihanQuickView = ({
               <Image
                 src={
                   (row.gambar &&
+                    row.gambar !== "Belum ada file" &&
                     process.env.END_POINT_API_IMAGE_BEASISWA + row.gambar) ||
                   "/assets/media/default-card.png"
                 }
@@ -146,6 +147,7 @@ const CardPelatihanQuickView = ({
                       <Image
                         src={
                           (row.gambar_mitra &&
+                            row.gambar_mitra !== "Belum ada file" &&
                             row.file_path + row.gambar_mitra) ||
                           "/assets/media/mitra-default.png"
                         }

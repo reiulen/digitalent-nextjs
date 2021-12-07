@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 
@@ -9,7 +9,15 @@ import StatistikWrapper from "../wrapper/statistik.wrapper";
 import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
 import { useDispatch, useSelector } from "react-redux";
-import { getBeasiswaPendaftarWilayah } from "../../../../redux/actions/dashboard-kabadan/dashboard/beasiswa.actions";
+import {
+  getBeasiswaPendaftarWilayah,
+  getBeasiswaStatistikDalam,
+  getBeasiswaStatistikLuar,
+  getBeasiswaProvinsiPendaftar,
+  getBeasiswaProvinsiAwardee,
+  getBeasiswaUniversitasDalam,
+  getBeasiswaUniversitasLuar,
+} from "../../../../redux/actions/dashboard-kabadan/dashboard/beasiswa.actions";
 
 import {
   BarChart,
@@ -19,17 +27,13 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import Pagination from "react-js-pagination";
 
 import PaginationDashboard from "../component/pagination-dashbaord.component";
+import LoadingDashboard from "../component/loading-dashboard.component";
 
 const DashboardBeasiswa = ({ token }) => {
   const dispatch = useDispatch();
 
-  const MapDigitalent = dynamic(
-    () => import("../component/map-digitalent.component"),
-    { ssr: false }
-  );
   const MapBeasiswa = dynamic(
     () => import("../component/map-beasiswa.component"),
     { ssr: false }
@@ -66,12 +70,42 @@ const DashboardBeasiswa = ({ token }) => {
     error: errorProvinsiAwardee,
     provinsi: provinsiAwardee,
   } = useSelector((state) => state.beasiswaProvinsiAwardee);
-
   const {
     loading: loadingUniversitasDalam,
     error: errorUniversitasDalam,
     universitas: UniversitasDalam,
   } = useSelector((state) => state.beasiswaUniversitasDalam);
+  const {
+    loading: loadingUniversitasLuar,
+    error: errorUniversitasLuar,
+    universitas: universitasLuar,
+  } = useSelector((state) => state.beasiswaUniversitasLuar);
+  const {
+    loading: loadingBeasiswaAlumni,
+    error: errorBeasiswaAlumni,
+    alumni: beasiswaAlumni,
+  } = useSelector((state) => state.beasiswaAlumni);
+  const {
+    loading: loadingBeasiswaAlumniAwardee,
+    error: errorBeasiswaAlumniAwardee,
+    alumni: beasiswaAlumniAwardee,
+  } = useSelector((state) => state.beasiswaAlumniAwardee);
+  const {
+    loading: loadingBeasiswaYear,
+    error: errorBeasiswaYear,
+    year: beasiswaYear,
+  } = useSelector((state) => state.beasiswaYear);
+
+  const [filterStatistikDalam, setFilterStatistikDalam] = useState("");
+  const [filterStatistikLuar, setFilterStatistikLuar] = useState("");
+  const [filterPeta, setFilterPeta] = useState("");
+  const [filterUniversitasDalam, setFilterUniversitasDalam] = useState("");
+  const [filterUniversitasLuar, setFilterUniversitasLuar] = useState("");
+
+  const [pageProvinsiPendaftar, setPageProvinsiPendaftar] = useState(1);
+  const [pageProvinsiAwardee, setPageProvinsiAwardee] = useState(1);
+  const [pageUniversitasDalam, setPageUniversitasDalam] = useState(1);
+  const [pageUniversitasLuar, setPageUniversitasLuar] = useState(1);
 
   const dataBeasiwaDalamNegeri = [];
   if (statistikDalam) {
@@ -140,41 +174,44 @@ const DashboardBeasiswa = ({ token }) => {
     });
   }
 
-  const dataUniversitasLuarNegeri = [
-    { id: 1, title: "Tsinghua University", percent: 50, total: "3.000" },
-    {
-      id: 2,
-      title: "University of Twente",
-      percent: 30,
-      total: "2.000",
-    },
-    {
-      id: 3,
-      title: "Eötvös Loránd UniversityEötvös Loránd University",
-      percent: 20,
-      total: "1.000",
-    },
-    {
-      id: 4,
-      title: "The University of Electro-Communications",
-      percent: 40,
-      total: "3.000",
-    },
-    {
-      id: 5,
-      title: "IIIT-Bangalore",
-      percent: 50,
-      total: "6.000",
-    },
-  ];
-  const dataAwardee = [
-    { id: 1, title: "Dalam Negeri", percent: 50, total: "3.000" },
-    { id: 2, title: "Luar Negeri", percent: 40, total: "2.000" },
-  ];
-  const dataAlumni = [
-    { id: 1, title: "Dalam Negeri", percent: 50, total: "3.000" },
-    { id: 2, title: "Luar Negeri", percent: 40, total: "2.000" },
-  ];
+  const dataUniversitasLuarNegeri = [];
+  if (universitasLuar) {
+    universitasLuar.list.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.univ,
+        percent: row.percetage,
+        total: row.total,
+      };
+      dataUniversitasLuarNegeri.push(val);
+    });
+  }
+
+  const dataAlumni = [];
+  if (beasiswaAlumni) {
+    beasiswaAlumni.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.label,
+        percent: row.percetage,
+        total: row.total,
+      };
+      dataAlumni.push(val);
+    });
+  }
+
+  const dataAwardee = [];
+  if (beasiswaAlumniAwardee) {
+    beasiswaAlumniAwardee.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.label,
+        percent: row.percetage,
+        total: row.total,
+      };
+      dataAwardee.push(val);
+    });
+  }
 
   return (
     <PageWrapper>
@@ -212,63 +249,77 @@ const DashboardBeasiswa = ({ token }) => {
       <section className="statistik-peserta mt-5">
         <div className="row mt-5">
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-            <div className="card card-custom bg-white">
+            <div className="card card-custom bg-white h-100">
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Statistik Beasiswa Dalam Negeri"}
-                  funcFilterYear={(value) => {}}
+                  funcFilterYear={(value) => {
+                    setFilterStatistikDalam(value);
+                    dispatch(getBeasiswaStatistikDalam(token, value));
+                  }}
                 />
 
                 <div className="chard-bar mt-5">
-                  <ResponsiveContainer width={"100%"} height={300}>
-                    <BarChart
-                      data={dataBeasiwaDalamNegeri}
-                      margin={{
-                        top: 5,
-                        right: 30,
-                        left: -10,
-                        bottom: 5,
-                      }}
-                    >
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip cursor={{ fill: "transparent" }} />
+                  {loadingStatistikDalam ? (
+                    <LoadingDashboard loading={loadingStatistikDalam} />
+                  ) : (
+                    <ResponsiveContainer width={"100%"} height={300}>
+                      <BarChart
+                        data={dataBeasiwaDalamNegeri}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: -10,
+                          bottom: 5,
+                        }}
+                      >
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip cursor={{ fill: "transparent" }} />
 
-                      <Bar dataKey="awardee" fill="#0063CC" />
-                      <Bar dataKey="pendaftar" fill="#1A3266" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                        <Bar dataKey="awardee" fill="#0063CC" />
+                        <Bar dataKey="pendaftar" fill="#1A3266" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  )}
                 </div>
               </div>
             </div>
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-            <div className="card card-custom bg-white">
+            <div className="card card-custom bg-white h-100">
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Statistik Beasiswa Luar Negeri"}
-                  funcFilterYear={(value) => {}}
+                  funcFilterYear={(value) => {
+                    setFilterStatistikLuar(value);
+                    dispatch(getBeasiswaStatistikLuar(token, value));
+                  }}
                 />
 
                 <div className="chard-bar mt-5">
-                  <ResponsiveContainer width={"100%"} height={300}>
-                    <BarChart
-                      data={dataBeasiwaLuarNegeri}
-                      margin={{
-                        top: 5,
-                        right: 30,
-                        left: -10,
-                        bottom: 5,
-                      }}
-                    >
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip cursor={{ fill: "transparent" }} />
+                  {loadingStatistikLuar ? (
+                    <LoadingDashboard loading={loadingStatistikLuar} />
+                  ) : (
+                    <ResponsiveContainer width={"100%"} height={300}>
+                      <BarChart
+                        data={dataBeasiwaLuarNegeri}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: -10,
+                          bottom: 5,
+                        }}
+                      >
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip cursor={{ fill: "transparent" }} />
 
-                      <Bar dataKey="awardee" fill="#0063CC" />
-                      <Bar dataKey="pendaftar" fill="#1A3266" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                        <Bar dataKey="awardee" fill="#0063CC" />
+                        <Bar dataKey="pendaftar" fill="#1A3266" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  )}
                 </div>
               </div>
             </div>
@@ -287,10 +338,18 @@ const DashboardBeasiswa = ({ token }) => {
                 <div className="list-filter d-flex">
                   <div className="d-flex align-items-center">
                     <p className="mt-4 mr-3 text-dashboard-gray-caption">
-                      Filter By:
+                      Tahun:
                     </p>
-                    <select className="border-0 p-0">
-                      <option value="2021">Tahun</option>
+                    <select
+                      className="border-0 p-0"
+                      onChange={(e) => {
+                        setFilterPeta(e.target.value);
+                        dispatch(
+                          getBeasiswaPendaftarWilayah(token, e.target.value)
+                        );
+                      }}
+                    >
+                      <option value="2021">2021</option>
                       <option value="2020">2020</option>
                     </select>
                   </div>
@@ -306,75 +365,144 @@ const DashboardBeasiswa = ({ token }) => {
             </div>
             <div className="row mt-10">
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <div className="card card-custom border bg-white">
+                <div className="card card-custom border bg-white h-100">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Asal Provinsi Pendaftar Beasiwa
                     </p>
-                    <ListCardInfo data={dataProvinsiPendaftar} />
 
-                    <PaginationDashboard
-                      total={provinsiPendaftar.total}
-                      perPage={provinsiPendaftar.perPage}
-                      title="Pendaftar"
-                      activePage={1}
-                      funcPagination={(value) => {}}
-                    />
+                    {loadingProvinsiPendaftar ? (
+                      <LoadingDashboard loading={loadingProvinsiPendaftar} />
+                    ) : (
+                      <>
+                        <ListCardInfo data={dataProvinsiPendaftar} />
+
+                        <PaginationDashboard
+                          total={provinsiPendaftar.total}
+                          perPage={provinsiPendaftar.perPage}
+                          title="Pendaftar"
+                          activePage={pageProvinsiPendaftar}
+                          funcPagination={(value) => {
+                            setPageProvinsiPendaftar(value);
+                            dispatch(
+                              getBeasiswaProvinsiPendaftar(token, value)
+                            );
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <div className="card card-custom border bg-white">
+                <div className="card card-custom border bg-white h-100">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Asal Provinsi Awardee Beasiswa
                     </p>
-                    <ListCardInfo data={dataProvinsiAwardee} />
-                    <PaginationDashboard
-                      total={provinsiAwardee.total}
-                      perPage={provinsiAwardee.perPage}
-                      title="Awardee"
-                      activePage={1}
-                      funcPagination={(value) => {}}
-                    />
+                    {loadingProvinsiAwardee ? (
+                      <LoadingDashboard loading={loadingProvinsiAwardee} />
+                    ) : (
+                      <>
+                        <ListCardInfo data={dataProvinsiAwardee} />
+                        <PaginationDashboard
+                          total={provinsiAwardee.total}
+                          perPage={provinsiAwardee.perPage}
+                          title="Awardee"
+                          activePage={pageProvinsiAwardee}
+                          funcPagination={(value) => {
+                            setPageProvinsiAwardee(value);
+                            dispatch(getBeasiswaProvinsiAwardee(token, value));
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
             <div className="row mt-5">
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <div className="card">
+                <div className="card h-100">
                   <div className="card-body pb-3">
                     <StatistikWrapper
                       title={"Perguruan Tinggi Dalam Negeri Tujuan Beasiswa"}
-                      funcFilterYear={(value) => {}}
+                      funcFilterYear={(value) => {
+                        setFilterUniversitasDalam(value);
+                        dispatch(
+                          getBeasiswaUniversitasDalam(
+                            token,
+                            pageUniversitasDalam,
+                            value
+                          )
+                        );
+                      }}
                     />
-                    <ListCardInfo data={dataUniversitasDalam} />
-                    <PaginationDashboard
-                      total={UniversitasDalam.total}
-                      perPage={UniversitasDalam.perPage}
-                      title="Perguruan Tinggi"
-                      activePage={1}
-                      funcPagination={(value) => {}}
-                    />
+                    {loadingUniversitasDalam ? (
+                      <LoadingDashboard loading={loadingUniversitasDalam} />
+                    ) : (
+                      <>
+                        <ListCardInfo data={dataUniversitasDalam} />
+                        <PaginationDashboard
+                          total={UniversitasDalam.total}
+                          perPage={UniversitasDalam.perPage}
+                          title="Perguruan Tinggi"
+                          activePage={pageUniversitasDalam}
+                          funcPagination={(value) => {
+                            setPageUniversitasDalam(value);
+                            dispatch(
+                              getBeasiswaUniversitasDalam(
+                                token,
+                                value,
+                                filterUniversitasDalam
+                              )
+                            );
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <div className="card">
+                <div className="card h-100">
                   <div className="card-body pb-3">
                     <StatistikWrapper
                       title={"Universitas Luar Negeri Tujuan Beasiswa"}
-                      funcFilterYear={(value) => {}}
+                      funcFilterYear={(value) => {
+                        setFilterUniversitasLuar(value);
+                        dispatch(
+                          getBeasiswaUniversitasLuar(
+                            token,
+                            pageUniversitasLuar,
+                            value
+                          )
+                        );
+                      }}
                     />
-                    <ListCardInfo data={dataUniversitasDalam} />
-                    <PaginationDashboard
-                      total={10}
-                      perPage={5}
-                      title="Universitas"
-                      activePage={1}
-                      funcPagination={(value) => {}}
-                    />
+                    {loadingUniversitasLuar ? (
+                      <LoadingDashboard loading={loadingUniversitasLuar} />
+                    ) : (
+                      <>
+                        <ListCardInfo data={dataUniversitasLuarNegeri} />
+                        <PaginationDashboard
+                          total={universitasLuar.total}
+                          perPage={universitasLuar.perPage}
+                          title="Universitas"
+                          activePage={pageUniversitasLuar}
+                          funcPagination={(value) => {
+                            setPageUniversitasLuar(value);
+                            dispatch(
+                              getBeasiswaUniversitasLuar(
+                                token,
+                                value,
+                                filterUniversitasLuar
+                              )
+                            );
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
