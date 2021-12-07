@@ -54,6 +54,7 @@ export default function TambahMasterSertifikat({ token }) {
     }
   }, [newCertificate, query.theme_name, query.theme_id, router]);
 
+  console.log(certificate);
   const [pelatihan, setPelatihan] = useState();
 
   useEffect(() => {
@@ -423,9 +424,8 @@ export default function TambahMasterSertifikat({ token }) {
   const [akademi, setAkademi] = useState();
 
   useEffect(() => {
-    const str = certificate?.data?.tema?.akademi || "- -";
-    const data = acronym(str);
-    setAkademi(data);
+    const str = certificate?.data?.tema?.slug;
+    setAkademi(str);
   }, []);
 
   return (
