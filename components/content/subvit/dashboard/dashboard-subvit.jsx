@@ -627,7 +627,7 @@ const DashbardSubvit = ({ token }) => {
                             <div
                               className={`${styles.theme} col-sm-5 col-xs-8 col-md-7 col-lg-7 col-xl-5 col-xxl-7`}
                             >
-                              {item.academy ? item.academy.slug : "-"}
+                              {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
                                 {item.theme ? item.theme.name : "-"}
@@ -738,7 +738,7 @@ const DashbardSubvit = ({ token }) => {
                               </div>
                             </div>
                             <div className={`${styles.theme} col-sm-5`}>
-                              {item.academy ? item.academy.slug : "-"}
+                              {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
                                 {item.theme ? item.theme.name : "-"}
@@ -845,7 +845,7 @@ const DashbardSubvit = ({ token }) => {
                               </div>
                             </div>
                             <div className={`${styles.theme} col-sm-5`}>
-                              {item.academy ? item.academy.slug : "-"}
+                              {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
                                 {item.theme ? item.theme.name : "-"}
