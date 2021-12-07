@@ -5,7 +5,11 @@ import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 import { wrapper } from "../../redux/store";
 
-import { getAllSimonasKandidat } from "../../redux/actions/dashboard-kabadan/data-peserta/simonas.actions";
+import {
+  getAllSimonasKandidat,
+  getSimonasFilterCompany,
+  getSimonasFilterStatus,
+} from "../../redux/actions/dashboard-kabadan/data-peserta/simonas.actions";
 
 const ListKandidatSimonas = dynamic(
   () =>
@@ -46,6 +50,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getAllSimonasKandidat(session.user.user.data.token));
+      await store.dispatch(
+        getSimonasFilterCompany(session.user.user.data.token)
+      );
 
       return {
         props: { session, title: "Daftar Kandidat - Simonas" },

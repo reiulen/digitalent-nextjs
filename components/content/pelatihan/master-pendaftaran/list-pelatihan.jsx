@@ -193,7 +193,7 @@ export default function MasterPelatihan({ token }) {
                   className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
                 >
                   <i className="ri-add-fill"></i>
-                  Tambah Form Pendaftaran
+                  Form Pendaftaran
                 </a>
               </Link>
             </div>
@@ -424,10 +424,7 @@ export default function MasterPelatihan({ token }) {
                                   "pelatihan.master_pendaftaran.view"
                                 ) && (
                                   <Link
-                                    href={`/pelatihan/master-pendaftaran/${item.judul_form
-                                      ?.split(" ")
-                                      .join("-")
-                                      .toLowerCase()}?id=${item.id}`}
+                                    href={`/pelatihan/master-pendaftaran/view-master-pendaftaran?id=${item.id}`}
                                     passHref
                                   >
                                     <a

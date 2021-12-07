@@ -15,11 +15,17 @@ import styles from "../../../../../styles/previewGaleri.module.css";
 import { postTemplate } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 
 export default function Template(props) {
+  const editorRef = useRef();
+
+  const [editorLoaded, setEditorLoaded] = useState(false);
+  const { CKEditor, ClassicEditor, Base64UploadAdapter } =
+    editorRef.current || {};
+
   const [status, setStatus] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
 
-  const selectReset = useRef()
+  // const selectReset = useRef()
   const router = useRouter();
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -28,16 +34,16 @@ export default function Template(props) {
   let dispatch = useDispatch();
 
   const optionsStatus = [
-    { value: "Menunggu", label: "Menunggu" },
-    { value: "Tidak Lulus Administrasi", label: "Tidak Lulus Administrasi" },
-    { value: "Tes Substansi", label: "Tes Substansi" },
-    { value: "Tidak Lulus Tes Substansi", label: "Tidak Lulus Tes Substansi" },
-    { value: "Lulus Tes Substansi", label: "Lulus Tes Substansi" },
-    { value: "Ditolak", label: "Ditolak" },
-    { value: "Diterima", label: "Diterima" },
-    { value: "Pelatihan", label: "Pelatihan" },
-    { value: "Lulus Pelatihan", label: "Lulus Pelatihan" },
-    { value: "Tidak Lulus Pelatihan", label: "Tidak Lulus Pelatihan" },
+    { value: "menunggu", label: "Menunggu" },
+    { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
+    { value: "tes substansi", label: "Tes Substansi" },
+    { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
+    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "ditolak", label: "Ditolak" },
+    { value: "diterima", label: "Diterima" },
+    { value: "pelatihan", label: "Pelatihan" },
+    { value: "lulus pelatihan", label: "Lulus Pelatihan" },
+    { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
 
   const onChangeStatus = (e) => {
@@ -64,9 +70,16 @@ export default function Template(props) {
   };
 
   useEffect(() => {
+    editorRef.current = {
+      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
+      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
+    };
+
+    setEditorLoaded(true);
+
     axios
       .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status}`,
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status?.value}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
@@ -76,7 +89,10 @@ export default function Template(props) {
       .then((items) => {
         setSubject(items.data.data.training_rules.subject);
         setBody(items.data.data.training_rules.body);
-      });
+      })
+      // .catch((error) => {
+        
+      // })
   }, [props.token, status]);
 
   return (
@@ -129,23 +145,29 @@ export default function Template(props) {
               )}
             </div>
             <div className="form-group mr-4">
-              <CKEditor
-                editor={ClassicEditor}
-                data={body}
-                onChange={(event, editor) => {
-                  let data = editor.getData();
-                  setBody(data);
-                }}
-                onBlur={(e) => {
-                  simpleValidator.current.showMessageFor("data");
-                }}
-              />
-              {simpleValidator.current.message(
-                "data",
-                body,
-                "required",
-                { className: "text-danger" }
-              )}
+              <div className="ckeditor">
+                {editorLoaded ? (
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={body}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setBody(data);
+                    }}
+                    onBlur={(e) => {
+                      simpleValidator.current.showMessageFor("data");
+                    }}
+                  />
+                ) : (
+                  <p>Tunggu Sebentar</p>
+                )}
+                {simpleValidator.current.message(
+                  "data",
+                  body,
+                  "required",
+                  { className: "text-danger" }
+                )}
+              </div>
             </div>
           </div>
           <div className="d-flex justify-content-end mb-5 mr-4">

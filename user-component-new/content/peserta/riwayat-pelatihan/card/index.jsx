@@ -24,7 +24,7 @@ export default function CardTemplateOriginal({ data, session }) {
 
   useEffect(() => {
     helperUserStatusColor(data.status, setLabel);
-  }, []);
+  }, [data.status]);
 
   return (
     <Fragment>
@@ -45,7 +45,7 @@ export default function CardTemplateOriginal({ data, session }) {
               if (data.status.includes("menunggu jadwal tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
-                return router.push(`/peserta/test-substansi`);
+                return router.push(`/peserta/test-substansi?id=${data.id}`);
               }
               if (
                 data.status.includes("administrasi") &&
@@ -65,6 +65,7 @@ export default function CardTemplateOriginal({ data, session }) {
               if (data.status.includes("tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
+                console.log("klik ini");
                 return router.push(`/peserta/test-substansi?id=${data.id}`);
               } else {
                 Cookies.set("id_pelatihan", data.id);
@@ -105,7 +106,7 @@ export default function CardTemplateOriginal({ data, session }) {
                       style={{ borderRadius: "50%", objectFit: "cover" }}
                     />
                   </Col>
-                  <Col lg={7} className="my-auto order-3 order-lg-2 row p-0 ">
+                  <Col lg={6} className="my-auto order-3 order-lg-2 row p-0 ">
                     <div className="d-flex justify-content-start justify-content-lg-start my-0 p-0 col-12 order-1 order-lg-1">
                       <span
                         className="font-weight-bolder text-truncate fz-18"

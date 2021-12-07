@@ -23,7 +23,6 @@ export const loadDataPrompt = (token) => {
         payload: data,
       });
     } catch (error) {
-      // notify(error.response.data.message);
       Swal.fire("Oops...", "Isi data dengan benar !", "error");
     }
   };
@@ -50,7 +49,7 @@ export const postTemplate = (token, subject, body, status) => {
         });
       })
       .catch((error) => {
-        Swal.fire("Oops...", "Isi data dengan benar !", "error");
+        Swal.fire("Oops...", error.response.data.message, "error");
       });
   };
 };
