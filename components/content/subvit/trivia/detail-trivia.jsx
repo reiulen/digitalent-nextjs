@@ -97,12 +97,6 @@ const DetailTrivia = ({ token }) => {
     });
   };
 
-  const handleSearchEnter = (e) => {
-    if (e.key === "Enter") {
-      dispatch(getAllTriviaQuestionDetail(id, 1, search, 5, token));
-    }
-  };
-
   const handleSearch = () => {
     dispatch(getAllTriviaQuestionDetail(id, 1, search, 5, token));
   };
@@ -267,7 +261,6 @@ const DetailTrivia = ({ token }) => {
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
-                      onKeyUp={(event) => handleSearchEnter(event)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"

@@ -14,6 +14,7 @@ import Select from "react-select";
 import { getAllBerandaBerita } from "../../../../redux/actions/beranda/berita.actions"
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
+import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
 import styles from "../artikel/artikel.module.css"
 
@@ -390,7 +391,7 @@ const Berita = () => {
     }
 
     return (
-        <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
+        <HomeWrapper>
 
             {/* BreadCrumb */}
             <SubHeaderComponent 
@@ -417,14 +418,15 @@ const Berita = () => {
             </div>
 
             {/* Filter Button */}
+            {/* Filter on Desktop */}
             {
                 kategoriToShow ?
                     <div
                         className={
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                                "col-12 pl-0 ml-4 mt-10 mb-5"
+                                "col-12 pl-0 ml-4 mt-10 mb-5 d-none d-lg-block"
                             :
-                                "col-lg-8 col-12 pl-0 ml-n2 mt-10 mb-5 pr-10"
+                                "col-lg-8 col-12 pl-0 ml-n2 mt-10 mb-5 pr-10 d-none d-lg-block"
                         }
                     >
                         {
@@ -609,6 +611,179 @@ const Berita = () => {
                 :
                     null
             }
+            {/* Filter on Tablet */}
+            <div className="col-12 pl-0 ml-4 mt-10 mb-5 d-none d-md-block d-lg-none">
+                <Splide
+                    options={{
+                        arrows: true,
+                        pagination: false,
+                        gap: "1rem",
+                        drag: "free",
+                        perPage: 4,
+                        breakpoints:{
+                            830: {
+                                perPage: 2,
+                            },
+                            450: {
+                                perPage: 1,
+                                },
+                        }
+                    }}
+                    className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
+                >
+                    {
+                        kategoriBerita === "" ?
+                            <SplideSlide>
+                                <div 
+                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
+                                    style={{ cursor: "pointer", height:"40px" }}
+                                    onClick={() => handleFilterKategori("")}
+                                >
+                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                        SEMUA
+                                    </div>
+                                </div>
+                            </SplideSlide>
+                        :
+                            <SplideSlide>
+                                <div 
+                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                    style={{ cursor: "pointer", height:"40px" }}
+                                    onClick={() => handleFilterKategori("")}
+                                >
+                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                        SEMUA
+                                    </div>
+                                </div>
+                            </SplideSlide>
+                            
+                    }
+                    {
+                        kategoriToShow ?
+                            kategoriToShow.map((el, i) => {
+                                return (
+                                    kategoriBerita == el ?
+                                        <SplideSlide>
+                                            <div 
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                style={{ cursor: "pointer", height:"40px" }}
+                                                onClick={() => handleFilterKategori(el)}
+                                                key={i}
+                                            >
+                                                <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
+                                                    {el.toString().toUpperCase()}
+                                                </div>
+                                            </div>
+                                        </SplideSlide>
+                                    :
+                                        <SplideSlide>
+                                            <div 
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                style={{ cursor: "pointer", height:"40px" }}
+                                                onClick={() => handleFilterKategori(el)}
+                                                key={i}
+                                            >
+                                                <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
+                                                    {el.toString().toUpperCase()}
+                                                </div>
+                                            </div> 
+                                        </SplideSlide>
+                                        
+                                )
+                            })
+                        :
+                            null
+                    }
+
+                </Splide>
+            </div>
+
+            {/* Filter on Mobile */}
+            <div className="col-12 pl-0 ml-4 mt-10 mb-5 d-block d-md-none">
+            <Splide
+                    options={{
+                        arrows: true,
+                        pagination: false,
+                        gap: "1rem",
+                        drag: "free",
+                        perPage: 4,
+                        breakpoints:{
+                            830: {
+                                perPage: 2,
+                            },
+                            450: {
+                                perPage: 1,
+                                },
+                        }
+                    }}
+                    className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
+                >
+                    {
+                        kategoriBerita === "" ?
+                            <SplideSlide>
+                                <div 
+                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
+                                    style={{ cursor: "pointer", height:"40px" }}
+                                    onClick={() => handleFilterKategori("")}
+                                >
+                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                        SEMUA
+                                    </div>
+                                </div>
+                            </SplideSlide>
+                        :
+                            <SplideSlide>
+                                <div 
+                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                    style={{ cursor: "pointer", height:"40px" }}
+                                    onClick={() => handleFilterKategori("")}
+                                >
+                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                        SEMUA
+                                    </div>
+                                </div>
+                            </SplideSlide>
+                            
+                    }
+                    {
+                        kategoriToShow ?
+                            kategoriToShow.map((el, i) => {
+                                return (
+                                    kategoriBerita == el ?
+                                        <SplideSlide>
+                                            <div 
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                style={{ cursor: "pointer", height:"40px" }}
+                                                onClick={() => handleFilterKategori(el)}
+                                                key={i}
+                                            >
+                                                <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
+                                                    {el.toString().toUpperCase()}
+                                                </div>
+                                            </div>
+                                        </SplideSlide>
+                                    :
+                                        <SplideSlide>
+                                            <div 
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                style={{ cursor: "pointer", height:"40px" }}
+                                                onClick={() => handleFilterKategori(el)}
+                                                key={i}
+                                            >
+                                                <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
+                                                    {el.toString().toUpperCase()}
+                                                </div>
+                                            </div> 
+                                        </SplideSlide>
+                                        
+                                )
+                            })
+                        :
+                            null
+                    }
+
+                </Splide>
+            </div>
             {/* End Filter Button */}
 
             {/* Content */}
@@ -991,6 +1166,7 @@ const Berita = () => {
                                                             height={250}
                                                             alt="Card Image"
                                                             className="rounded-lg"
+                                                            objectFit="cover"
                                                         />
                                                     </a>
                                                 </Link>
@@ -1279,7 +1455,7 @@ const Berita = () => {
             
             
             
-        </Container>
+        </HomeWrapper>
     )
 }
 
