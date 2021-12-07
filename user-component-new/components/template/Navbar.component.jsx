@@ -54,7 +54,6 @@ const Navigationbar = ({ session }) => {
         Object.keys(dataPribadi).length !== 0 &&
         !dataPribadi.status
       ) {
-        console.log(dataPribadi, "ini data pribadi");
         if (dataPribadi.wizard == 1) {
           return router.push("/peserta/wizzard");
         }
@@ -67,8 +66,6 @@ const Navigationbar = ({ session }) => {
         if (dataPribadi.wizard == 4) {
           return router.push("/peserta/wizzard/pekerjaan");
         }
-
-        // router.push("/peserta/wizzard");
       }
     }
   }, []);
