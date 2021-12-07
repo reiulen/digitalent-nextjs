@@ -147,12 +147,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       if (query.id) {
         //jika ada query id
-        const { data } = await store.dispatch(
+        const data = await store.dispatch(
           getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
         );
         if (
-          data.status.includes("administrasi") &&
-          !data.status.includes("administrasi akhir")
+          data?.data?.status?.includes("administrasi") &&
+          !data?.data?.status?.includes("administrasi akhir")
         ) {
           success = true;
         } else {

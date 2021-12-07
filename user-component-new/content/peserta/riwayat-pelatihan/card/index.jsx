@@ -45,7 +45,7 @@ export default function CardTemplateOriginal({ data, session }) {
               if (data.status.includes("menunggu jadwal tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
-                return router.push(`/peserta/test-substansi`);
+                return router.push(`/peserta/test-substansi?id=${data.id}`);
               }
               if (
                 data.status.includes("administrasi") &&
@@ -65,6 +65,7 @@ export default function CardTemplateOriginal({ data, session }) {
               if (data.status.includes("tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
+                console.log("klik ini");
                 return router.push(`/peserta/test-substansi?id=${data.id}`);
               } else {
                 Cookies.set("id_pelatihan", data.id);

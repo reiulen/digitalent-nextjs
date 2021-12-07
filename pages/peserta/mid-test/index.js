@@ -11,6 +11,7 @@ import {
   getDetailRiwayatPelatihan,
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
 
 const TesSubstansiDetail = dynamic(
   () =>
@@ -81,11 +82,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       if (query.id) {
         //jika ada query id
-        const { data } = await store.dispatch(
+        const data = await store.dispatch(
           getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
         );
         if (
-          data?.status.includes(
+          data?.data?.status.includes(
             "substansi" || "belum tersedia" || "belum mengerjakan"
           )
         ) {
