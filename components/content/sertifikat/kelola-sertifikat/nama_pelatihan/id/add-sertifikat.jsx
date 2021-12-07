@@ -557,11 +557,11 @@ export default function TambahMasterSertifikat({ token }) {
                           className="px-2 border-2 w-100 font-weight-boldest"
                           style={{ width: "19px" }}
                         >
-                          {moment(pelatihan?.pendaftaran_mulai).format(
+                          {moment(pelatihan?.pelatihan_mulai).format(
                             "DD/MM/YYYY"
                           )}{" "}
                           -{" "}
-                          {moment(pelatihan?.pendaftaran_selesai).format(
+                          {moment(pelatihan?.pelatihan_selesai).format(
                             "DD/MM/YYYY"
                           )}
                         </span>

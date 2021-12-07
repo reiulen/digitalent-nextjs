@@ -644,19 +644,29 @@ export default function EditSertifikat({ token }) {
                         <div className="mt-2 w-100">
                           <span className="w-100">
                             Program{" "}
-                            <span className="font-weight-bold w-100">
-                              {certificate?.data?.pelatihan?.akademi ||
+                            <span className="font-weight-boldest w-100">
+                              {certificate?.data?.pelatihan?.slug ||
                                 "Nama Akademi"}
                             </span>{" "}
                             Selama
                           </span>
-                          <span className="mx-2 px-2 border-2 w-100">
-                            {tanggal}
+                          <span className="px-2 border-2 w-100 font-weight-boldest">
+                            {moment(
+                              certificate?.data?.pelatihan?.pelatihan_mulai
+                            ).format("DD/MM/YYYY") || "-"}{" "}
+                            -{" "}
+                            {moment(
+                              certificate?.data?.pelatihan?.pelatihan_selesai
+                            ).format("DD/MM/YYYY") || "-"}
                           </span>
                         </div>
                         <div className="mt-2 w-100">
                           <span>Digital Talent Scholarship</span>
-                          <span className="mx-2 px-2 border-2">{tahun}</span>
+                          <span className="font-weight-boldest px-2 border-2">
+                            {moment(
+                              certificate?.data?.pelatihan?.pelatihan_mulai
+                            ).format("YYYY") || "-"}
+                          </span>
                         </div>
                         <div className="my-4 w-100 text-center">
                           <span className="mx-2 px-2 border-2">

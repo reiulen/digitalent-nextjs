@@ -29,8 +29,12 @@ export default function ListPesertaID({ token }) {
   useEffect(() => {
     const data = participant?.data?.list?.filter((el) => el.user == query.name);
     setCurrentUser(data);
+    console.log(participant, "ini participant");
   }, [participant, query.name]);
 
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -59,16 +63,17 @@ export default function ListPesertaID({ token }) {
         const formData = new FormData();
         formData.append("certificate", data);
         const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/${certificate?.data?.certificate?.training_id}`;
-
         const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
         const a = document.createElement("a");
         a.download = `Sertifikat - p12 ${query.name}.png`;
+        a.target = "_blank";
         a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
         a.click();
       }
     } else {
       const a = document.createElement("a");
       a.download = `Sertifikat - p12 ${query.name}.png`;
+      a.target = "_blank";
       a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${certificate?.data?.certificate?.certificate_pdf}`;
       a.click();
     }
@@ -142,30 +147,6 @@ export default function ListPesertaID({ token }) {
                     {participant?.data?.nomor_registrasi}
                   </div>
                   <div
-                    className={`position-absolute ${
-                      certificate?.data?.certificate.background
-                        ? "responsive-date-from"
-                        : "responsive-date-from-without-background"
-                    } font-weight-boldest zindex-1 responsive-date-text`}
-                  >
-                    {moment(participant?.data?.pelatihan_mulai).format(
-                      "DD/MM/YYYY"
-                    )}{" "}
-                    -{" "}
-                    {moment(participant?.data?.pelatihan_selesai).format(
-                      "DD MM YYYY"
-                    )}
-                  </div>
-                  <div
-                    className={`position-absolute ${
-                      certificate?.data?.certificate?.background
-                        ? "responsive-year"
-                        : "responsive-year-without-background"
-                    } font-weight-boldest zindex-1 responsive-date-text`}
-                  >
-                    {participant.data.tahun}
-                  </div>
-                  <div
                     className={`position-absolute w-100 text-center ${
                       certificate?.data?.certificate?.background
                         ? "responsive-margin-peserta-1"
@@ -173,7 +154,7 @@ export default function ListPesertaID({ token }) {
                     } zindex-1`}
                   >
                     <span className="responsive-font-size-peserta font-weight-bolder">
-                      {query.name}
+                      {participant?.data?.nama_peserta}
                     </span>
                   </div>
                   <Image
