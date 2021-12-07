@@ -48,6 +48,8 @@ const Layout = ({ children, title = "Dashboard" }) => {
   const handlerLogout = () => {
     signOut();
     localStorage.removeItem("sidebar")
+    localStorage.removeItem("token-permission")
+    localStorage.removeItem("permissions")
     // {
     //   callbackUrl: `${window.location.origin}/login/admin`,
     // } LAGI DEVELOP JANGAN DIHAPUS

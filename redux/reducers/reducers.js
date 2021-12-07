@@ -564,6 +564,7 @@ import { allPencarianReducer } from "./pelatihan/peserta/pencarian.reducer";
 import {
   allDetailPesertaReducer,
   allListPelatihanByPesertaReducer,
+  allListPelatihanPaginationReducer,
   allListPesertaReducer,
 } from "./site-management/user/peserta-dts.reducers";
 import { TTEP12DataReducer } from "./sertifikat/TTE-P12.reducer";
@@ -812,6 +813,7 @@ const reducer = combineReducers({
   allAcademyList: allAcademyListReducer,
   allListPelatihan: allListPelatihanReducer,
   allListPelatihanByPeserta: allListPelatihanByPesertaReducer,
+  allListPelatihanPagination: allListPelatihanPaginationReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,

@@ -52,6 +52,8 @@ export default function RiwayatPelatihanDetail({ session }) {
 
   const [truncate, setTruncate] = useState(true);
 
+  console.log(data, "ini data");
+
   return (
     <PesertaWrapper>
       <Col lg={12} className="px-0">
@@ -182,7 +184,8 @@ export default function RiwayatPelatihanDetail({ session }) {
                           ? "/assets/media/default-card.png"
                           : data?.logo
                           ? data?.file_path + data?.logo
-                          : data?.file_path + data.gambar_mitra
+                          : process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                            data.gambar_mitra
                       }
                       width={58}
                       height={58}
