@@ -575,7 +575,7 @@ const Dashboard = ({ session, success }) => {
                         <Image
                           src={
                             !row?.logo
-                              ? "/assets/media/default-card.png"
+                              ? "/assets/icon/logo-dts-if-empty.png"
                               : row?.logo
                           }
                           objectFit="cover"
@@ -666,13 +666,14 @@ const Dashboard = ({ session, success }) => {
                           // src="/assets/media/mitra-icon/logo-itb-1.svg"
                           src={
                             !row.logo
-                              ? "/assets/media/default-card.png"
+                              ? "/assets/icon/logo-dts-if-empty.png"
                               : `${process.env.END_POINT_API_IMAGE_BEASISWA}/${row.logo}`
                           }
                           width={55}
                           height={55}
                           objectFit="cover"
                           alt={row?.name}
+                          className="rounded-full"
                         />
                         <div className="pekerjaan-pt ml-7">
                           <p
