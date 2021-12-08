@@ -71,7 +71,7 @@ export const fetchMitra = (token) => {
           params,
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -109,7 +109,7 @@ export const deleteMitra = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -141,7 +141,7 @@ export const getProvinces = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -179,7 +179,7 @@ export const exportFileCSV = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -188,7 +188,7 @@ export const exportFileCSV = (token) => {
       fetch(url, {
         headers: {
           authorization: `Bearer ${token}`,
-          permissionToken: localStorage.getItem("token-permission")
+          // permissionToken: localStorage.getItem("token-permission")
         },
       })
         .then((response) => response.blob())
@@ -236,7 +236,7 @@ export const getSingleValue = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -292,7 +292,7 @@ export const exportFileCSVDetail = (token, id) => {
           paramssz,
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -305,7 +305,7 @@ export const exportFileCSVDetail = (token, id) => {
         paramssz,
         headers: {
           authorization: `Bearer ${token}`,
-          permissionToken: localStorage.getItem("token-permission")
+          // permissionToken: localStorage.getItem("token-permission")
         },
       })
         .then((response) => response.blob())
@@ -331,7 +331,7 @@ export const fetchListSelectCooperation = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -362,7 +362,7 @@ export const fetchListSelectStatus = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -406,7 +406,7 @@ export const deleteCooperation = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -438,7 +438,7 @@ export const changeStatusList = (token, formData, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -464,7 +464,7 @@ export const changeStatusListCooperation = (token, formData, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
