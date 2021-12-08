@@ -142,7 +142,6 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
-
   return (
     <>
       <PesertaWrapper padding={"10"}>
@@ -385,7 +384,7 @@ const Dashboard = ({ session, success }) => {
                           <div className="date d-flex align-items-center align-middle">
                             <i className="ri-history-fill"></i>
                             <span
-                              className={`${style.text_date_register} pl-2`}
+                              className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
                               Status :{" "}
                               {
@@ -554,7 +553,7 @@ const Dashboard = ({ session, success }) => {
                           <div className="date d-flex align-items-center align-middle">
                             <i className="ri-history-fill"></i>
                             <span
-                              className={`${style.text_date_register} pl-2`}
+                              className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
                               Status :{" "}
                               {dataDashboard?.pelatihan.pelatihan_selesi.status}

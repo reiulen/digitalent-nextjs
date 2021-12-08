@@ -53,7 +53,7 @@ const Navigationbar = ({ session }) => {
     if (!session) {
       return;
     }
-    if (session) {
+    if (session && session.roles[0] == "user") {
       if (
         !dataPribadi || // 👈 null and undefined check
         (dataPribadi && Object.keys(dataPribadi).length === 0)

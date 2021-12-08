@@ -26,7 +26,6 @@ export default function RiwayatPelatihanDetail({ session }) {
   const [finalDescription, setFinalDescription] = useState();
   const dateFrom = moment(data?.pendaftaran_mulai).format("LL") || "-";
   const dateTo = moment(data?.pendaftaran_selesai).format("LL") || "-";
-  console.log(data);
   useEffect(() => {
     let newText = description.split(" ");
     let test = [];
@@ -59,7 +58,7 @@ export default function RiwayatPelatihanDetail({ session }) {
           <Row className="p-10 m-0">
             <Col md={9} className="d-flex align-items-start">
               <h1
-                className="font-weight-bolder my-0"
+                className="font-weight-bolder my-0 max-w-sm-100 max-w-200px mb-5 mb-md-0"
                 style={{ fontSize: "32px" }}
               >
                 {data?.name || "-"}
