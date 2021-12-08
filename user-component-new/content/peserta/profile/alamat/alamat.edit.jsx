@@ -223,15 +223,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
       setKotaDomisili("");
       setKelurahanDomisili("");
     }
-  }, [
-    sesuai,
-    alamatKtp,
-    provinsiKtp,
-    kecamatanKtp,
-    kodePosKtp,
-    kotaKtp,
-    kelurahanKtp,
-  ]);
+  }, [sesuai]);
 
   const handleViewDomisili = () => {
     if (sesuai) {
@@ -498,9 +490,9 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Kecamatan</Form.Label>
               <Select
                 placeholder={
-                  (alamat && alamat.kecamatan) === ""
-                    ? "Silahkan Pilih Kecamatan"
-                    : alamat && alamat.kecamatan
+                  alamat && alamat.kecamatan
+                    ? alamat && alamat.kecamatan
+                    : "Silahkan Pilih Kecamatan"
                 }
                 defaultValue={kecamatanDomisili}
                 options={optionsKecamatan}
@@ -530,9 +522,9 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
               <Select
                 placeholder={
-                  (alamat && alamat.kelurahan) === ""
-                    ? "Silahkan Pilih Kelurahan"
-                    : alamat && alamat.kelurahan
+                  alamat && alamat.kelurahan
+                    ? alamat && alamat.kelurahan
+                    : "Silahkan Pilih Kelurahan"
                 }
                 options={optionsKelurahan}
                 defaultValue={kelurahanDomisili}

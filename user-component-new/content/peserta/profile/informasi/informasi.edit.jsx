@@ -164,7 +164,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
         nomorHandphone,
         email,
       };
-      console.log(data, "ini data");
       dispatch(updateProfileDataPribadi(data, token));
       window.scrollTo(0, 0);
     } else {

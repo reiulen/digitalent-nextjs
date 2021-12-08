@@ -26,8 +26,6 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
   const [dropBeasiswa, setDropBeasiswa] = useState(false);
   const [clickBeasiswa, setClickBeasiswa] = useState(1);
 
-  console.log(dataPribadi?.lulus, "ini datar pribadi");
-
   const fetchSimonas = (e) => {
     e.preventDefault();
     axios

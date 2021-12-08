@@ -16,11 +16,9 @@ import LoadingTable from "../../../../components/LoadingTable";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
-  console.log(session, "ini session");
   const { error: errorDashboard, dataDashboard } = useSelector(
     (state) => state.dashboardPeserta
   );
-  console.log(dataDashboard, "ini data dashboard");
   // useEffect(() => {
   //   if (!success) {
   //     router.push("/peserta/wizzard");
