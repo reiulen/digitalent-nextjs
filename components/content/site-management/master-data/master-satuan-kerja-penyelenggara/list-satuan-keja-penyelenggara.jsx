@@ -27,7 +27,7 @@ const Table = ({ token }) => {
   const allUnitWork = useSelector((state) => state.allUnitWork);
   const [valueSearch, setValueSearch] = useState("");
   const [limit, setLimit] = useState(null);
-  
+
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -49,8 +49,6 @@ const Table = ({ token }) => {
     getWindowDimensions()
   );
 
-
-
   useEffect(() => {
     dispatch(getAllUnitWork(token));
 
@@ -60,7 +58,6 @@ const Table = ({ token }) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-
   }, [dispatch, allUnitWork.cari, allUnitWork.page, allUnitWork.limit, token]);
 
   return (
@@ -68,26 +65,35 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header row border-0">
-            <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-7 col-xl-9`}>
+            <h3
+              className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-7 col-xl-9`}
+            >
               List Satuan Kerja Penyelenggara
             </h3>
-            <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
-              <Link
-                href="/site-management/master-data/master-satuan-kerja-penyelenggara/tambah-satuan-kerja-penyelenggara"
-                passHref
-              >
-                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Master Satuan Kerja
-                </a>
-              </Link>
-            </div>
+            {localStorage
+              .getItem("permissions")
+              .includes("site_management.master-data.manage") && (
+              <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
+                <Link
+                  href="/site-management/master-data/master-satuan-kerja-penyelenggara/tambah-satuan-kerja-penyelenggara"
+                  passHref
+                >
+                  <a
+                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
+                  >
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Master Satuan Kerja
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="card-body">
             <div className="table-filter">
               <div className="row">
                 <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                  <div className="position-relative overflow-hidden mt-3"
+                  <div
+                    className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
                     <i className="ri-search-line left-center-absolute ml-2"></i>
@@ -96,9 +102,7 @@ const Table = ({ token }) => {
                       type="text"
                       className={`${styles.cari} form-control pl-10`}
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) =>
-                        handleChangeValueSearch(e.target.value)
-                      }
+                      onChange={(e) => handleChangeValueSearch(e.target.value)}
                     />
                     <button
                       type="button"
@@ -114,7 +118,6 @@ const Table = ({ token }) => {
                   </div>
                 </div>
               </div>
-
 
               {/* <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
@@ -152,7 +155,6 @@ const Table = ({ token }) => {
                   </div>
                 </div>
               </div> */}
-
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
@@ -171,7 +173,8 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allUnitWork?.data?.unit_work?.length === 0 || allUnitWork?.data === undefined ? (
+                      {allUnitWork?.data?.unit_work?.length === 0 ||
+                      allUnitWork?.data === undefined ? (
                         <td className="align-middle text-center" colSpan="4">
                           Data Kosong
                         </td>
@@ -183,7 +186,7 @@ const Table = ({ token }) => {
                                 {allUnitWork.page === 1
                                   ? index + 1
                                   : (allUnitWork.page - 1) * allUnitWork.limit +
-                                  (index + 1)}
+                                    (index + 1)}
                               </td>
                               <td className="align-middle text-left p-part-t text-overflow-ens">
                                 {items.name}
@@ -207,27 +210,39 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <Link
-                                    href={`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara/${items.id}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </a>
-                                  </Link>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.master-data.manage"
+                                    ) && (
+                                    <Link
+                                      href={`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara/${items.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                        <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
 
-                                  <Link
-                                    href={`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara/${items.id}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
-                                      <IconEye width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Detail
-                                      </div>
-                                    </a>
-                                  </Link>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.master-data.view"
+                                    ) && (
+                                    <Link
+                                      href={`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara/${items.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
+                                        <IconEye width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
                                 </div>
                               </td>
                             </tr>
@@ -240,27 +255,32 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                {allUnitWork && allUnitWork?.data?.perPage < allUnitWork?.data?.total &&
-                  <>
-                    <div className={`${stylesPag.pagination} table-pagination`}>
-                      <Pagination
-                        activePage={allUnitWork?.page}
-                        itemsCountPerPage={allUnitWork?.data?.perPage}
-                        totalItemsCount={allUnitWork?.data?.total}
-                        pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
-                        onChange={(page) => dispatch(setPage(page))}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  </>
-                }
+                {allUnitWork &&
+                  allUnitWork?.data?.perPage < allUnitWork?.data?.total && (
+                    <>
+                      <div
+                        className={`${stylesPag.pagination} table-pagination`}
+                      >
+                        <Pagination
+                          activePage={allUnitWork?.page}
+                          itemsCountPerPage={allUnitWork?.data?.perPage}
+                          totalItemsCount={allUnitWork?.data?.total}
+                          pageRangeDisplayed={
+                            windowDimensions.width > 320 ? 3 : 1
+                          }
+                          onChange={(page) => dispatch(setPage(page))}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
+                      </div>
+                    </>
+                  )}
 
-                {allUnitWork ?
+                {allUnitWork ? (
                   <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row align-items-center">
                       <div className="col-4 mr-0">
@@ -290,13 +310,15 @@ const Table = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                         >
-                          Total Data {allUnitWork.data && allUnitWork.data.total}{" "}
-                          List Data
+                          Total Data{" "}
+                          {allUnitWork.data && allUnitWork.data.total} List Data
                         </p>
                       </div>
                     </div>
-                  </div> : ""
-                }
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

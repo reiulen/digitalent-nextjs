@@ -92,7 +92,7 @@ export const getRandomTriviaQuestionDetail =
     } catch (error) {
       dispatch({
         type: TRIVIA_QUESTION_RANDOM_DETAIL_FAIL,
-        payload: error.message,
+        payload: error.response.data.message || error.message,
       });
     }
   };
