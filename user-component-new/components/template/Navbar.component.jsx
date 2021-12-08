@@ -42,7 +42,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
@@ -52,7 +52,7 @@ const Navigationbar = ({ session }) => {
       : null
   );
 
-  const { footer, loading } = useSelector((state) => state.berandaFooter);
+  const { footer, loading } = useSelector(state => state.berandaFooter);
 
   useEffect(() => {
     if (!session) {
@@ -89,7 +89,7 @@ const Navigationbar = ({ session }) => {
     }
   }, []);
 
-  const getDataGeneral = async (token) => {
+  const getDataGeneral = async token => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
@@ -106,7 +106,7 @@ const Navigationbar = ({ session }) => {
     } catch (error) {}
   };
 
-  const getMenu = async (token) => {
+  const getMenu = async token => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
@@ -182,7 +182,7 @@ const Navigationbar = ({ session }) => {
 
   const [search, setSearch] = useState("");
 
-  const handleEnter = (e) => {
+  const handleEnter = e => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
@@ -190,6 +190,17 @@ const Navigationbar = ({ session }) => {
     }
   };
 
+  const [notification, setNotification] = useState(false);
+  const data = [
+    { icon: "Fail", text: "test" },
+    { icon: "Success", text: "test" },
+    { icon: "Warning", text: "test" },
+    { icon: "File", text: "test" },
+    { icon: "Fail", text: "test" },
+    { icon: "Success", text: "test" },
+    { icon: "Warning", text: "test" },
+    { icon: "File", text: "test" },
+  ];
   return (
     <>
       <Navbar
@@ -245,7 +256,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={(e) => {
+              onClick={e => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -270,7 +281,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   setSearch(e.target.value);
                   if (e.code == "Enter") {
                     handleEnter(e);
@@ -390,8 +401,6 @@ const Navigationbar = ({ session }) => {
                           );
                         })
                       : null}
-
-                   
                   </div>
                 </div>
               </NavDropdown>
@@ -410,12 +419,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.code == "Enter") {
                     handleEnter(e);
                   }
                 }}
-                onChange={(e) => {
+                onChange={e => {
                   setSearch(e.target.value);
                 }}
               />
@@ -428,7 +437,7 @@ const Navigationbar = ({ session }) => {
 
           {/* Icon */}
           {session && session.roles[0] === "user" && (
-            <div className="row mr-3 d-lg-block d-none">
+            <div className="row mr-3 d-lg-block d-none position-relative">
               <Link href="/helpdesk/live-chat" passHref>
                 <a className="col-4 col-sm-4 col-md-4 col-xl-4 text-center">
                   <i className="ri-customer-service-2-line ri-2x  text-gray"></i>
@@ -443,8 +452,44 @@ const Navigationbar = ({ session }) => {
                 href="#"
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
               >
-                <i className="ri-notification-4-line ri-2x  text-gray"></i>
+                <i
+                  onClick={() => setNotification(!notification)}
+                  className="ri-notification-4-line ri-2x  text-gray"
+                ></i>
               </a>
+              {notification && (
+                <div
+                  className="position-absolute px-5 bg-white w-400px right-0 p-12"
+                  style={{ color: "#6C6C6C" }}
+                >
+                  <div className="d-flex align-items-center fz-20 justify-content-between mb-9">
+                    <div>Notification</div>
+                    <img
+                      src="/assets/media/notification/Close_Button.png"
+                      alt="close_button"
+                      onClick={() => setNotification(!notification)}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                  {data.map((el, i) => {
+                    return (
+                      <Fragment key={i}>
+                        <div className="d-flex align-items-center position-relative">
+                          <img
+                            src={`/assets/media/notification/${el.icon}.png`}
+                            alt="success"
+                            style={{ objectFit: "cover" }}
+                          />
+                          <span className="ml-5 fz-14 text-capitalize">
+                            dokumen anda sedang di tahap pengumuman akhir
+                          </span>
+                        </div>
+                        <hr className="my-3" />
+                      </Fragment>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
           <hr />
@@ -755,21 +800,23 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
-
-                    {menu ? menu.map((item, index) => {
-                      return  <Fragment key={index}>
-                      <div
-                        onClick={() => {
-                          router.push("/lainnya/" + item.url);
-                        }}
-                        className="p-4 fz-12"
-                      >
-                        {item.name}
-                      </div>
-                      <hr className="w-100 p-0 m-0" />
-                    </Fragment>
-                    }) : null}
-                   
+                    {menu
+                      ? menu.map((item, index) => {
+                          return (
+                            <Fragment key={index}>
+                              <div
+                                onClick={() => {
+                                  router.push("/lainnya/" + item.url);
+                                }}
+                                className="p-4 fz-12"
+                              >
+                                {item.name}
+                              </div>
+                              <hr className="w-100 p-0 m-0" />
+                            </Fragment>
+                          );
+                        })
+                      : null}
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
