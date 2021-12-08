@@ -876,7 +876,7 @@ const Beranda = ({ session }) => {
                                                 className="ml-3"
                                                 style={{ color: "#6C6C6C" }}
                                               >
-                                                Kuota: {cardKuota}
+                                                Kuota: {cardKuota} Peserta
                                               </span>
                                             </div>
                                             <div className="date d-flex align-items-center align-middle">
