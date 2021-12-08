@@ -1,20 +1,19 @@
 .back {
   background: rgb(67, 158, 255);
-  background: linear-gradient(0deg,
-      rgba(67, 158, 255, 1) 0%,
-      rgba(0, 124, 255, 1) 35%);
+  background: linear-gradient(
+    0deg,
+    rgba(67, 158, 255, 1) 0%,
+    rgba(0, 124, 255, 1) 35%
+  );
 }
 
 .truncateBreadcrumb {
-
   overflow: hidden;
   width: 60px;
   direction: rtl;
-  TEXT-ALIGN: right;
+  text-align: right;
   margin-left: 15px;
   white-space: nowrap;
-
-
 }
 
 .truncateBreadcrumb:after {
@@ -100,8 +99,6 @@
 
   color: #ffffff;
 }
-
-
 
 .body {
   padding: 40px 0px 45px 0px;
@@ -233,11 +230,12 @@
 }
 
 @media (max-width: 320px) {
-  .responsive_truncation {
+  .responsive_display {
+    display: none;
+  }
+}
+@media (min-width: 321px) {
+  .responsive_display {
     display: inline-block;
-    white-space: nowrap;
-    width: 50px;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }

@@ -12,10 +12,10 @@ const Header = ({ breadcrumb }) => {
   const router = useRouter();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
   const { error: errorPelatihan, pelatihan } = useSelector(
-    state => state.getPelatihan
+    (state) => state.getPelatihan
   );
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
@@ -64,7 +64,7 @@ const Header = ({ breadcrumb }) => {
     }, 1000);
   };
 
-  const set = e => {
+  const set = (e) => {
     e = e < 10 ? "0" + e : e;
     return e;
   };
@@ -93,28 +93,32 @@ const Header = ({ breadcrumb }) => {
                               }}
                             >
                               <Link href="/" passHref>
-                                <span className="d-inline-block text-truncate ">
+                                <Fragment>
                                   <span
-                                    style={{
-                                      textDecoration: "underline",
-                                      cursor: "pointer",
-                                    }}
+                                    className={`${styles.responsive_display} text-truncate max-w-lg-100 max-w-sm-60px max-w-10px`}
                                   >
-                                    Beranda
+                                    <span
+                                      style={{
+                                        textDecoration: "underline",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      Beranda
+                                    </span>
                                   </span>
-                                  <div
+                                  <span
                                     style={{
                                       textDecoration: "none",
                                       fontWeight: "500",
                                     }}
-                                    className="mx-1 mx-md-3 p-0 d-inline-block"
+                                    className={`${styles.responsive_display} mx-1 mx-md-3 p-0 text-truncate`}
                                   >
                                     &gt;
-                                  </div>
-                                </span>
+                                  </span>
+                                </Fragment>
                               </Link>
                               <span
-                                className={`d-inline-block text-truncate max-w-lg-100 max-w-45px`}
+                                className={`${styles.responsive_display} text-truncate max-w-lg-100 max-w-sm-60px max-w-10px`}
                               >
                                 <span
                                   style={{
@@ -124,26 +128,20 @@ const Header = ({ breadcrumb }) => {
                                 >
                                   {pelatihan?.akademi}
                                 </span>
-                                <div
-                                  style={{
-                                    textDecoration: "none",
-                                    fontWeight: "500",
-                                  }}
-                                  className="mx-1 mx-md-3 p-0 d-inline-block"
-                                >
-                                  &gt;
-                                </div>
                               </span>
-                              <div
+                              <span
                                 style={{
                                   textDecoration: "none",
                                   fontWeight: "500",
                                 }}
-                                className="mx-1 mx-md-3 p-0 d-inline-block text-truncate d-md-none"
+                                className={` ${styles.responsive_display} mx-1 mx-md-3 p-0  text-truncate`}
                               >
                                 &gt;
-                              </div>
-                              <span className="d-inline-block text-truncate max-w-md-100 max-w-45px ">
+                              </span>
+
+                              <span
+                                className={`${styles.responsive_display} text-truncate  max-w-lg-100 max-w-sm-60px max-w-10px`}
+                              >
                                 <span
                                   style={{
                                     textDecoration: "underline",
@@ -153,22 +151,28 @@ const Header = ({ breadcrumb }) => {
                                   {pelatihan?.name}
                                 </span>
                               </span>
-                              <div
+                              <span
                                 style={{
                                   textDecoration: "none",
                                   fontWeight: "500",
                                 }}
-                                className="mx-1 mx-md-3 p-0 d-inline-block text-truncate d-lg-none"
+                                className={`${styles.responsive_display} mx-1 mx-md-3 p-0  text-truncate d-lg-none`}
                               >
                                 &gt;
-                              </div>
+                              </span>
                               <div
                                 style={{ textDecoration: "none" }}
                                 className="mx-1 mx-md-3 p-0 text-truncate d-none d-lg-inline-block"
                               >
                                 &gt;
                               </div>
-                              <span className="font-weight-bold text-truncate d-inline-block text-truncate max-w-lg-100 max-w-45px">
+                              <span
+                                className={`font-weight-bold text-truncate  text-truncate max-w-lg-100 ${
+                                  breadcrumb
+                                    ? `${styles.responsive_display} max-w-sm-60px max-w-15px`
+                                    : `d-inline-block`
+                                }`}
+                              >
                                 Pendaftaran Pelatihan
                               </span>
 
@@ -176,7 +180,7 @@ const Header = ({ breadcrumb }) => {
                                 <Fragment>
                                   <div
                                     style={{ textDecoration: "none" }}
-                                    className="mx-3 p-0 text-truncate d-none d-md-inline-block"
+                                    className={`mx-md-3 mx-1 p-0 text-truncate ${styles.responsive_display}`}
                                   >
                                     &gt;
                                   </div>
