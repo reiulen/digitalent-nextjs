@@ -22,7 +22,10 @@ import {
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
 import {} from "../../../../../redux/actions/site-management/role.actions";
 
-import { DETAIL_ADMIN_SITE_RESET, RESET_UPDATE_STATUS_REDUCER } from "../../../../../redux/types/site-management/user/admin-site.type";
+import {
+  DETAIL_ADMIN_SITE_RESET,
+  RESET_UPDATE_STATUS_REDUCER,
+} from "../../../../../redux/types/site-management/user/admin-site.type";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -67,7 +70,6 @@ const Table = ({ token }) => {
         (result) => {
           if (result.isConfirmed) {
             dispatch(getAllAdminSite(token));
-            
           }
         }
       );
@@ -124,17 +126,21 @@ const Table = ({ token }) => {
             <h3 className="card-title font-weight-bolder text-dark titles-1">
               List Administrator
             </h3>
-            <div className="card-toolbar">
-              <Link
-                href="/site-management/user/administrator/tambah-data-administrator"
-                passHref
-              >
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Administrator
-                </a>
-              </Link>
-            </div>
+            {localStorage
+              .getItem("permissions")
+              .includes("site_management.user.administrator.manage") && (
+              <div className="card-toolbar">
+                <Link
+                  href="/site-management/user/administrator/tambah-data-administrator"
+                  passHref
+                >
+                  <a className="btn btn-rounded-full bg-blue-primary text-white">
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah Administrator
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
@@ -263,41 +269,60 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <Link
-                                    href={{
-                                      pathname:
-                                        "/site-management/user/administrator/edit-data-administrator",
-                                      query: { id: items.id },
-                                    }}
-                                    passHref
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </a>
-                                  </Link>
-                                  <Link
-                                    href={`/site-management/user/administrator/detail-administrator/${items.id}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
-                                      <IconEye width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Detail
-                                      </div>
-                                    </a>
-                                  </Link>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.user.administrator.manage"
+                                    ) && (
+                                    <Link
+                                      href={{
+                                        pathname:
+                                          "/site-management/user/administrator/edit-data-administrator",
+                                        query: { id: items.id },
+                                      }}
+                                      passHref
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                        <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
 
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() => handleDelete(items.id)}
-                                  >
-                                    <IconDelete width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Hapus
-                                    </div>
-                                  </button>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.user.administrator.view"
+                                    ) && (
+                                    <Link
+                                      href={`/site-management/user/administrator/detail-administrator/${items.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                        <IconEye width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
+
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.user.administrator.manage"
+                                    ) && (
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                      onClick={() => handleDelete(items.id)}
+                                    >
+                                      <IconDelete width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Hapus
+                                      </div>
+                                    </button>
+                                  )}
                                 </div>
                               </td>
                             </tr>

@@ -40,7 +40,7 @@ const Table = ({ token }) => {
                 <Link
                   href={`/site-management/user/peserta-dts/ubah-peserta-dts/${item.user_id}`}
                 >
-                  <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                  <a className={`btn btn-link-action bg-blue-secondary position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.manage")}`}>
                     <IconPencil width="16" height="16" />
                     <div className="text-hover-show-hapus">Ubah</div>
                   </a>
@@ -48,7 +48,7 @@ const Table = ({ token }) => {
                 <Link
                   href={`/site-management/user/peserta-dts/detail-peserta-dts/${item.user_id}`}
                 >
-                  <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
+                  <a className={`btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.view")}`}>
                     <IconEye width="16" height="16" />
                     <div className="text-hover-show-hapus">Detail</div>
                   </a>
@@ -89,7 +89,7 @@ const Table = ({ token }) => {
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
-                      <div className="col-12 col-sm-6">
+                      <div className="col-12 col-sm-4">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
@@ -138,7 +138,7 @@ const Table = ({ token }) => {
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>{listPeserta}</tbody>
+                  <tbody>{allListPeserta?.data?.data?.list.length > 0 ? listPeserta : <tr><td colSpan="8" className="align-middle text-center">Data Kosong</td></tr>}</tbody>
                 </table>
               </div>
 
