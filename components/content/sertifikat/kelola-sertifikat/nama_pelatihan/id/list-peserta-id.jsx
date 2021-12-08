@@ -16,10 +16,8 @@ export default function ListPesertaID({ token }) {
   const router = useRouter();
   const { query } = router;
 
-  const { error, certificate } = useSelector(
-    (state) => state.publishCertificate
-  );
-  const { participant } = useSelector((state) => state.detailParticipant);
+  const { error, certificate } = useSelector(state => state.publishCertificate);
+  const { participant } = useSelector(state => state.detailParticipant);
 
   const [type, setType] = useState(
     certificate?.data?.certificate?.certificate_type
@@ -33,7 +31,7 @@ export default function ListPesertaID({ token }) {
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
 
-  const convertDivToPng = async (div) => {
+  const convertDivToPng = async div => {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -54,7 +52,6 @@ export default function ListPesertaID({ token }) {
         formData.append("certificate", data);
         const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/${certificate?.data?.pelatihan?.id}`;
         const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
-        console.log(result, "ini result");
         const a = document.createElement("a");
         a.download = `Sertifikat - p12 ${query.name}.png`;
         a.target = "_blank";
@@ -201,7 +198,7 @@ export default function ListPesertaID({ token }) {
               </div>
               <div className="row mt-10 col-12 p-0 m-0">
                 <div
-                  onClick={(e) => {
+                  onClick={e => {
                     handleDownload();
                   }}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"

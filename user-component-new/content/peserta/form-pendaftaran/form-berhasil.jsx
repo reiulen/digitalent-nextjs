@@ -70,10 +70,11 @@ const FormBerhasil = ({ token }) => {
                 <div className="d-flex flex-row">
                   <img
                     src={`${
-                      dataPelatihan.logo !== "" && dataPelatihan
-                        ? process.env.END_POINT_API_IMAGE_BEASISWA +
-                          dataPelatihan.logo
-                        : "/assets/media/default-card.png"
+                      !dataPelatihan?.logo && !dataPelatihan?.gambar_mitra
+                        ? "/assets/media/default-card.png"
+                        : dataPelatihan?.file_path + dataPelatihan.logo ||
+                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                            dataPelatihan?.gambar_mitra
                     }`}
                     width={58}
                     height={58}
