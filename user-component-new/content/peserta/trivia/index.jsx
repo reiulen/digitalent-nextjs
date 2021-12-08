@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Card, Button, Modal, ModalBody } from "react-bootstrap";
@@ -7,12 +8,12 @@ import styles from "./survey.module.css";
 
 const TestSubstansi = () => {
   const router = useRouter();
+  const temaId = Cookies.get("id_tema");
+  const pelatihanId = Cookies.get("id_pelatihan");
 
   const handlePage = () => {
     router.push(
-      `/peserta/subvit/trivia/1?theme_id=${
-        router.query.theme_id || 1
-      }&training_id=${router.query.training_id || 1}`
+      `/peserta/subvit/trivia/1?theme_id=${temaId}&training_id=${pelatihanId}`
     );
   };
 

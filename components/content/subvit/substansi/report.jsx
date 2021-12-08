@@ -62,19 +62,6 @@ const ListSubstansi = ({ token }) => {
     let link = `${router.pathname}?id=${id}&page=1&limit=${val}`;
     router.push(link);
     setLimit(val);
-    // dispatch(
-    //   allReportSubtanceQuestionBanks(
-    //     id,
-    //     page,
-    //     "",
-    //     val,
-    //     null,
-    //     null,
-    //     null,
-    //     null,
-    //     token
-    //   )
-    // );
   };
 
   const handleExportReport = async () => {
@@ -208,7 +195,7 @@ const ListSubstansi = ({ token }) => {
             value={subtance ? subtance.data.total_peserta : 0}
             titleValue=""
             title="Total Peserta"
-            publishedVal=""
+            publishedVal={null}
             routePublish={() => handlePublish("")}
           />
           <CardPage

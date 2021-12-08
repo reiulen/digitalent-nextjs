@@ -3,6 +3,10 @@ import styles from "../step-2/step2-trivia.module.css";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import {
+  helperRegexNumber,
+  helperTextLimitMax,
+} from "../../../../../../utils/middleware/helper";
 
 const CheckboxComponent = ({
   props_answer,
@@ -49,7 +53,7 @@ const CheckboxComponent = ({
     },
   ]);
   const [answer_key, setAnswerKey] = useState("");
-  const [duration, setDuration] = useState(null);
+  const [duration, setDuration] = useState("");
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -248,16 +252,31 @@ const CheckboxComponent = ({
           </label>
           <div className="input-group">
             <input
-              type="number"
+              type="text"
               className="form-control"
               aria-describedby="basic-addon2"
               value={duration}
               onChange={(e) => {
-                setDuration(e.target.value);
-                props_duration(e.target.value);
+                if (
+                  e.target.value === "" ||
+                  helperRegexNumber.test(e.target.value)
+                ) {
+                  setDuration(e.target.value);
+                  props_duration(e.target.value);
+                }
               }}
               min={1}
-              placeholder="120"
+              maxLength={3}
+              placeholder="300"
+              onKeyUp={(e) =>
+                helperTextLimitMax(
+                  e.target.value,
+                  0,
+                  300,
+
+                  setDuration
+                )
+              }
             />
             <div className="input-group-append">
               <span

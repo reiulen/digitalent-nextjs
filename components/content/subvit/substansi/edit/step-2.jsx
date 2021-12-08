@@ -252,6 +252,7 @@ const StepTwo = ({ token }) => {
                       type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
+                      placeholder="20"
                       value={jumlah_soal}
                       onChange={(e) => handleTotalSoal(e.target.value)}
                       onBlur={() =>
@@ -294,6 +295,7 @@ const StepTwo = ({ token }) => {
                         simpleValidator.current.showMessageFor("durasi")
                       }
                       min={1}
+                      placeholder="360"
                     />
                     <div className="input-group-append bg-sedondary">
                       <span
