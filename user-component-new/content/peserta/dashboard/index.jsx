@@ -688,7 +688,7 @@ const Dashboard = ({ session, success }) => {
                             {row.name}
                           </p>
                           <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                            S1 psikologi
+                            {row?.study[0]?.name}
                           </p>
                         </div>
 
