@@ -50,6 +50,19 @@ const Navigationbar = ({ session }) => {
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
+    if (session) {
+      if (
+        !dataPribadi || // 👈 null and undefined check
+        (dataPribadi && Object.keys(dataPribadi).length === 0)
+      ) {
+        signOut();
+        // console.log("masuk sini");
+      }
+    }
+
     if (session) {
       if (
         dataPribadi &&

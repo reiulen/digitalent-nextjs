@@ -29,7 +29,7 @@ const DetailPelatihan = ({ session }) => {
   const { akademiId } = router.query;
 
   const dispatch = useDispatch();
-  const { pelatihan } = useSelector((state) => state.detailPelatihan);
+  const { pelatihan } = useSelector(state => state.detailPelatihan);
 
   useEffect(() => {
     if (pelatihan.Status === "Close") {
@@ -58,7 +58,7 @@ const DetailPelatihan = ({ session }) => {
   };
 
   //disini kurang
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -80,7 +80,7 @@ const DetailPelatihan = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(getDetailPelatihan(router.query.id, session?.token));
@@ -97,7 +97,7 @@ const DetailPelatihan = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
 

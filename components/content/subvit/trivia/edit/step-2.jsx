@@ -284,7 +284,7 @@ const StepTwo = ({ token }) => {
                   <div className="input-group">
                     <input
                       type="text"
-                      placeholder="123"
+                      placeholder="360"
                       maxLength={3}
                       className="form-control"
                       aria-describedby="basic-addon2"

@@ -112,17 +112,18 @@ export const getRandomSubtanceQuestionDetail =
   };
 
 export const getDashboardSubvit =
-  (page_substansi = 1, page_trivia = 1, page_survey = 1, token) =>
+  (page_substansi = 1, page_triva = 1, page_survey = 1, token) =>
   async (dispatch) => {
     try {
       dispatch({ type: DASHBOARD_SUBVIT_REQUEST });
 
       let link = process.env.END_POINT_API_SUBVIT + `api/dashboard?`;
 
-      if (page_survey) link = link.concat(`&page_survey=${page_survey}`);
-      if (page_trivia) link = link.concat(`&page_trivia=${page_trivia}`);
+      if (page_survey) link = link.concat(`page_survey=${page_survey}`);
       if (page_substansi)
         link = link.concat(`&page_substansi=${page_substansi}`);
+      if (page_triva) link = link.concat(`&page_trivia=${page_triva}`);
+
       const config = {
         headers: {
           Authorization: "Bearer " + token,

@@ -74,12 +74,13 @@ const SubtansiUser = ({ token }) => {
   //   },
   // ];
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
+  const [modalNext, setModalNext] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
   const [count, setCount] = useState(random_trivia && random_trivia.time_left);
   const [modalDone, setModalDone] = useState(false);
@@ -139,12 +140,17 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handleNext = () => {
+    setModalNext(true);
+  };
+
+  const handlePageNext = () => {
     const page = parseInt(router.query.id) + 1;
     router.push(
       `${router.pathname.slice(0, 23)}/${page}?theme_id=${
         router.query.theme_id
       }&training_id=${router.query.training_id}`
     );
+    setModalNext(false);
   };
 
   const handleCloseModal = () => {
@@ -158,36 +164,22 @@ const SubtansiUser = ({ token }) => {
   const handleNumber = (val) => {
     setNumberPage(val);
 
-    router.push(
-      `/peserta/subvit/trivia/${parseInt(val.target.innerHTML)}?theme_id=${
-        router.query.theme_id
-      }&training_id=${router.query.training_id}`
-    );
-  };
-
-  const handleBack = () => {
-    const page = parseInt(router.query.id) - 1;
-    if (parseInt(router.query.id) === 1) {
+    if (val.target.innerHTML === router.query.id) {
       router.push(
-        `${router.pathname.slice(0, 23)}/1?theme_id=${
+        `/peserta/subvit/trivia/${parseInt(val.target.innerHTML)}?theme_id=${
           router.query.theme_id
         }&training_id=${router.query.training_id}`
       );
     } else {
-      router.push(
-        `${router.pathname.slice(0, 23)}/${page}?theme_id=${
-          router.query.theme_id
-        }&training_id=${router.query.training_id}`
-      );
     }
   };
 
   const secondsToTime = (secs) => {
-    var hours = Math.floor(secs / (60 * 60));
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
+    let hours = Math.floor(secs / (60 * 60));
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
     return {
       h: hours,
       m: minutes,
@@ -219,26 +211,27 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
-    const setData = {
-      list: JSON.stringify(
-        data.list_questions.map((item, index) => {
-          return {
-            ...item,
-            participant_answer: localStorage.getItem(index + 1),
-          };
-        })
-      ),
-      training_id: router.query.training_id,
-      type: router.query.category === "Test Substansi" && "substansi",
-    };
-    dispatch(postResult(setData, token));
+    // const setData = {
+    //   list: JSON.stringify(
+    //     data.list_questions.map((item, index) => {
+    //       return {
+    //         ...item,
+    //         participant_answer: localStorage.getItem(index + 1),
+    //       };
+    //     })
+    //   ),
+    //   training_id: router.query.training_id,
+    //   type: router.query.category === "Test Substansi" && "substansi",
+    // };
+    // dispatch(postResult(setData, token));
     localStorage.clear();
-    router.push(`/peserta/done-substansi`);
+    router.push(`/peserta/done-trivia`);
   };
 
   const handleCloseModalDone = () => {
     setModalDone(false);
   };
+
   return (
     <>
       <Container className={styles.baseAll} fluid>
@@ -302,12 +295,21 @@ const SubtansiUser = ({ token }) => {
                   </p>
                 </Col>
                 <Col className={styles.align}>
-                  <p className={styles.totalSoal2}>
-                    00:00:0
-                    {data.list_questions &&
-                      data.list_questions[parseInt(router.query.id) - 1]
-                        .duration}
-                  </p>
+                  {(data &&
+                    data.list_questions[parseInt(router.query.id) - 1].type ===
+                      "checkbox") ||
+                  (data &&
+                    data.list_questions[parseInt(router.query.id) - 1].type ===
+                      "fill_in_the_blank") ? (
+                    <p className={styles.totalSoal2}>
+                      00:00:0
+                      {data &&
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          .duration}
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </Col>
               </Row>
 
@@ -445,43 +447,17 @@ const SubtansiUser = ({ token }) => {
                 )}
 
               <Row style={{ marginTop: "20px" }}>
-                <Col className={styles.btnBackResponsive}>
-                  <Button
-                    variant="link"
-                    className={styles.btnBack}
-                    onClick={handleBack}
-                    disabled={parseInt(router.query.id) === 1}
-                  >
-                    <div className="d-flex flex-row">
-                      <div
-                        className="p-2"
-                        aria-disabled={parseInt(router.query.id) === 1}
-                      >
-                        <i
-                          className="ri-arrow-left-s-line"
-                          style={
-                            parseInt(router.query.id) === 1
-                              ? {
-                                  color: "#d3d3d3",
-                                }
-                              : { color: "#007CFF", cursor: "pointer" }
-                          }
-                        ></i>
-                      </div>
-                      <div className={` p-2`}>Kembali</div>
-                    </div>
-                  </Button>
-                </Col>
+                <Col className={styles.btnBackResponsive}></Col>
 
                 <Col
                   className={styles.btnBottom}
                   style={{ textAlign: "right", margin: "10px " }}
                 >
-                  {parseInt(router.query.id) === data?.length ? (
+                  {parseInt(router.query.id) === data?.total_questions ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
-                      // disabled={!listAnswer.includes(data?.total_questions)}
+                      // disabled={listAnswer.includes(data?.total_questions)}
                       // MASIH DIPAKE
                     >
                       Selesai
@@ -491,7 +467,8 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleNext}
                       disabled={
-                        parseInt(router.query.id) === data && data.length
+                        parseInt(router.query.id) === data &&
+                        data.total_questions
                       }
                     >
                       <div className="d-flex flex-row">
@@ -505,19 +482,10 @@ const SubtansiUser = ({ token }) => {
                 </Col>
                 <Col xs={12} className={styles.btnBottomResponsive}>
                   <Row>
-                    <Col xs={6} style={{ textAlign: "center" }}>
-                      <Button
-                        variant="link"
-                        className={styles.btnBack}
-                        onClick={handleBack}
-                        disabled={parseInt(router.query.id) === 1}
-                      >
-                        Kembali
-                      </Button>
-                    </Col>
+                    <Col xs={6} style={{ textAlign: "center" }}></Col>
 
                     <Col xs={6} style={{ textAlign: "center" }}>
-                      {parseInt(router.query.id) === data?.length ? (
+                      {parseInt(router.query.id) === data?.total_questions ? (
                         <Button
                           className={styles.btnNext}
                           onClick={handleDone}
@@ -531,7 +499,8 @@ const SubtansiUser = ({ token }) => {
                           className={styles.btnNext}
                           onClick={handleNext}
                           disabled={
-                            parseInt(router.query.id) === data && data.length
+                            parseInt(router.query.id) === data &&
+                            data.total_questions
                           }
                         >
                           Lanjut
@@ -865,6 +834,28 @@ const SubtansiUser = ({ token }) => {
             })}
           </Row>
         </ModalBody>
+      </Modal>
+
+      <Modal show={modalNext} onHide={() => setModalNext(false)}>
+        <ModalHeader className={styles.headerModal}>
+          Konfirmasi Jawaban{" "}
+        </ModalHeader>
+        <ModalBody className={styles.bodyKonfirmasi}>
+          Apakah Anda yakin lanjut ke soal selanjutnya? Karena{" "}
+          <b>Anda tidak dapat kembali</b> ke soal trivia sebelumnya
+        </ModalBody>
+        <div style={{ textAlign: "right", padding: "20px" }}>
+          <Button
+            variant="link"
+            onClick={() => setModalNext(false)}
+            className={styles.btnBatal}
+          >
+            Batal
+          </Button>
+          <Button onClick={handlePageNext} className={styles.btnMulai}>
+            Ya
+          </Button>
+        </div>
       </Modal>
     </>
   );
