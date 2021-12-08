@@ -258,6 +258,7 @@ const StepTwo = ({ token }) => {
                       type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
+                      placeholder="20"
                       value={jumlah_soal}
                       onChange={(e) => handleTotalSoal(e.target.value)}
                       onBlur={() =>
@@ -293,6 +294,7 @@ const StepTwo = ({ token }) => {
                     <input
                       type="text"
                       className="form-control"
+                      placeholder="360"
                       aria-describedby="basic-addon2"
                       value={duration}
                       onChange={(e) => handleDuration(e.target.value)}

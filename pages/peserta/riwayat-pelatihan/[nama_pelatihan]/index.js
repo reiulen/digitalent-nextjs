@@ -13,7 +13,7 @@ import { getDashboardPeserta } from "../../../../redux/actions/pelatihan/dashboa
 const RiwayatPelatihanDetail = dynamic(
   () =>
     import(
-      "../../../../user-component-new/content/peserta/riwayat-pelatihan/[id]/lulus-pelatihan"
+      "../../../../user-component-new/components/global/Riwayat-pelatihan-detail/index"
     ),
   {
     loading: function loadingNow() {

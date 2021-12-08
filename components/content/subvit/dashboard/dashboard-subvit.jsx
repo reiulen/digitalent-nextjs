@@ -133,9 +133,9 @@ const DashbardSubvit = ({ token }) => {
                           className={`${styles.imageDashboard} ml-auto float-right ilustrator-dashboard`}
                           style={{
                             position: "absolute",
-                            right: "-50px",
-                            top: "-10px",
-                            width: "40%",
+                            right: "-40px",
+                            top: "0px",
+                            width: "37%",
                           }}
                         >
                           <Image

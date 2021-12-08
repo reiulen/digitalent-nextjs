@@ -13,13 +13,16 @@ import IconSearch from "../../../../assets/icon/Search";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import moment from "moment";
-import axios from 'axios'
+import axios from "axios";
 import {
   dropdownKabupaten,
   dropdownProvinsiToDesa,
   dropdownKecamatanToDesa,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { updatePesertaDts } from "../../../../../redux/actions/site-management/user/peserta-dts";
+import ListPelatihan from './list-peserta-pelatihan'
+import Tables from "./detail-list-peserta-pelatihan";
+import UbahPelatihan from './ubah-list-peserta-pelatihan'
 
 import Image from "next/image";
 const TambahPage = ({ token }) => {
@@ -204,24 +207,25 @@ const TambahPage = ({ token }) => {
                 foto: reader.result,
                 user_id: allDetailPeserta.data.data.user_id,
               };
-          
+
               const config = {
                 headers: {
                   Authorization: "Bearer " + token,
                 },
               };
               axios
-              .post(
-                process.env.END_POINT_API_PELATIHAN + "api/v1/auth/update-foto",
-                datas,
-                config
-              )
-              .then((res) => {
-                toast.success("Berhasil Update");
-              })
-              .catch((err) => {
-                toast.error("gagal");
-              });
+                .post(
+                  process.env.END_POINT_API_PELATIHAN +
+                    "api/v1/auth/update-foto",
+                  datas,
+                  config
+                )
+                .then((res) => {
+                  toast.success("Berhasil Update");
+                })
+                .catch((err) => {
+                  toast.error("gagal");
+                });
             }
           };
           reader.readAsDataURL(e.target.files[0]);
@@ -316,7 +320,7 @@ const TambahPage = ({ token }) => {
   return (
     <PageWrapper>
       <div className="row">
-        <div className="col-12 col-xl-3">
+        {!router.query.ubah_pelatihan_id && <div className="col-12 col-xl-3">
           <div
             className="card card-custom card-stretch gutter-b px-10 py-12"
             style={{ height: "470px" }}
@@ -338,41 +342,39 @@ const TambahPage = ({ token }) => {
                           : "/assets/media/logos/default.png"
                       }
                       width="1000"
-                      height="1500vh"
+                      height="1000"
                       alt="user2"
                     />
                   </div>
-
-                 
+                  <label
+                    className="btn btn-xs btn-icon btn-circle btn-primary btn-hover-text-primary btn-shadow bg-blue-primary"
+                    data-action="change"
+                    data-toggle="tooltip"
+                    title=""
+                    data-original-title="Change avatar"
+                    style={{width: "40px", height: "40px",}}
+                  >
+                    <i className="fa fa-pen icon-sm text-muted text-white"></i>
+                    <input
+                      type="file"
+                      name="profile_avatar"
+                      accept=".png, .jpg, .jpeg"
+                      onChange={(e) => {
+                        onFotoHandler(e);
+                      }}
+                      
+                    />
+                    <input type="hidden" name="profile_avatar_remove" />
+                  </label>
 
                   <span
                     className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                     data-action="cancel"
                     data-toggle="tooltip"
                     title="Cancel avatar"
-                    
                   >
                     <i className="ki ki-bold-close icon-xs text-muted"></i>
                   </span>
-
-                  <label
-                    className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                    data-action="change"
-                    data-toggle="tooltip"
-                    title=""
-                    data-original-title="Change avatar"
-                  >
-                    <i className="fa fa-pen icon-sm text-muted"></i>
-                    <input
-                      type="file"
-                      name="profile_avatar"
-                      accept=".png, .jpg, .jpeg"
-                      onChange={(e) => {
-                        onFotoHandler(e)
-                      }}
-                    />
-                    <input type="hidden" name="profile_avatar_remove" />
-                  </label>
                 </div>
                 <div className="mt-4 w-100">
                   <ul style={listUl}>
@@ -429,9 +431,10 @@ const TambahPage = ({ token }) => {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
+        
 
-        <div className="col-12 col-xl-9">
+        {sideBar && !router.query.ubah_pelatihan_id && <div className="col-12 col-xl-9">
           <div className="card card-custom card-stretch gutter-b px-4 px-sm-8 py-4">
             <div className="card-header border-0">
               <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
@@ -834,7 +837,13 @@ const TambahPage = ({ token }) => {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
+
+        {!sideBar && !router.query.pelatihan_id && !router.query.ubah_pelatihan_id ?  <ListPelatihan token={token} /> : null}
+        {!sideBar && router.query.pelatihan_id ?  <Tables token={token} /> : null}
+        { router.query.ubah_pelatihan_id ?  <UbahPelatihan token={token} /> : null}
+
+        
       </div>
     </PageWrapper>
   );

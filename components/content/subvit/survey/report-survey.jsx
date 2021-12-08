@@ -288,7 +288,7 @@ const ReportSurvey = ({ token }) => {
                                     {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">
-                                    {row.total_workmanship_time}
+                                    {row.total_workmanship_time} Menit
                                   </p>
                                 </div>
                               </td>

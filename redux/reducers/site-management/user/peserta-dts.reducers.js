@@ -8,6 +8,9 @@ import {
   LIST_PELATIHAN_BY_PESERTA_REQUEST,
   LIST_PELATIHAN_BY_PESERTA_SUCCESS,
   LIST_PELATIHAN_BY_PESERTA_FAIL,
+  LIST_PELATIHAN_PAGINATION_REQUEST,
+  LIST_PELATIHAN_PAGINATION_SUCCESS,
+  LIST_PELATIHAN_PAGINATION_FAIL,
   DETAIL_PELATIHAN_PESERTA_REQUEST,
   DETAIL_PELATIHAN_PESERTA_SUCCESS,
   DETAIL_PELATIHAN_PESERTA_FAIL,
@@ -76,6 +79,7 @@ export const allDetailPesertaReducer = (state = {}, action) => {
       return state;
   }
 };
+
 export const allListPelatihanByPesertaReducer = (state = {}, action) => {
   switch (action.type) {
     case LIST_PELATIHAN_BY_PESERTA_REQUEST:
@@ -92,6 +96,33 @@ export const allListPelatihanByPesertaReducer = (state = {}, action) => {
       };
 
     case LIST_PELATIHAN_BY_PESERTA_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allListPelatihanPaginationReducer = (state = {}, action) => {
+  switch (action.type) {
+    case LIST_PELATIHAN_PAGINATION_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LIST_PELATIHAN_PAGINATION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+      };
+
+    case LIST_PELATIHAN_PAGINATION_FAIL:
       return {
         ...state,
         loading: false,

@@ -79,7 +79,7 @@ export default function Template(props) {
 
     axios
       .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status.value}`,
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status?.value}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
