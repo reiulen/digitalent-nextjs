@@ -210,7 +210,7 @@ const FaqPage = () => {
               </div>
             </div>
               {
-                kategoriToShow && kategori.length !== 0 ?
+                kategoriToShow && kategoriToShow.length !== 0 ?
                   kategoriToShow.map ((el, i) => {
                     return (
                       <div key={i}>
