@@ -17,82 +17,115 @@ import Image from "next/dist/client/image";
 import Dot from "../../../../../public/assets/media/logos/dot.png";
 import { useSelector } from "react-redux";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-import {
-  getRandomSubtanceQuestionDetail,
-  postResult,
-} from "../../../../../redux/actions/subvit/subtance-question-detail.action";
+
+import { postResultTrivia } from "../../../../../redux/actions/subvit/trivia-question-detail.action";
 
 import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+import { parseInt } from "lodash";
 
 const SubtansiUser = ({ token }) => {
   const dispatch = useDispatch();
-  const { random_trivia } = useSelector((state) => state.randomTrivia);
+  const { error, random_trivia } = useSelector((state) => state.randomTrivia);
 
   const router = useRouter();
 
-  // const initialData = [
-  //   {
-  //     id: 3,
-  //     trivia_question_bank_id: 2,
-  //     question: "Tivia Polling Transportasi darat",
-  //     question_image: null,
-  //     type: "poliing",
-  //     answer:
-  //       '[{"key":"A","option":"Kapal","image":null},{"key":"B","option":"Pesawat","image":null},{"key":"C","option":"Mobil","image":null},{"key":"D","option":"Sampan","image":null},{"key":"E","option":"Rakit","image":null}]',
-  //     participant_answer: "A",
-  //   },
-  //   {
-  //     id: 8,
-  //     trivia_question_bank_id: 2,
-  //     question: "Trivia Fill In The Blank Makanan bika ambon berasal dari?",
-  //     question_image: null,
-  //     type: "pertanyaan_terbuka",
-  //     answer: null,
-  //     participant_answer: "medan",
-  //   },
-  //   {
-  //     id: 4,
-  //     trivia_question_bank_id: 2,
-  //     question: "Tivia Polling Makanan bika ambon berasal dari?",
-  //     question_image: null,
-  //     type: "poliing",
-  //     answer:
-  //       '[{"key":"A","option":"Ambon","image":null},{"key":"B","option":"Maluku","image":null},{"key":"C","option":"Jakarta","image":null},{"key":"D","option":"Medan","image":null}]',
-  //     participant_answer: "A",
-  //   },
-  //   {
-  //     id: 6,
-  //     trivia_question_bank_id: 2,
-  //     question: "Trivia Checkbox Makanan bika ambon berasal dari?",
-  //     question_image: null,
-  //     type: "checkbox",
-  //     answer:
-  //       '[{"key":"A","option":"Ambon","image":null,"value":3},{"key":"B","option":"Maluku","image":null,"value":3},{"key":"C","option":"Jakarta","image":null,"value":3},{"key":"D","option":"Medan","image":null,"value":1}]',
-  //     participant_answer: ["A", "B"],
-  //   },
-  // ];
+  const initialData = {
+    training: "Leader Tim IT",
+    academy: "Digital Leadersip Academy",
+    theme: "Pelatihan Leader Tim",
+    total_questions: 2,
+    time_left: 37336,
+    list_questions: [
+      {
+        id: 172,
+        trivia_question_bank_id: 66,
+        question: "Polling dulu ga sih",
+        type: "polling",
+        question_image: "",
+        answer:
+          '[{"key":"A","type":"","value":"","option":"Close the door!","image":"trivia\\/images\\/79a97af8-6bc7-4290-ad0b-88f2c7890951.jpeg"},{"key":"B","type":"","value":"","option":"SUUUU","image":"trivia\\/images\\/3a045a49-56a6-423d-8236-f899c8d97895.jpeg"},{"key":"C","type":"","value":"","option":"WWE","image":"trivia\\/images\\/e7a8db31-ea64-437f-acf4-409c3a04e74e.jpeg"},{"key":"D","type":"","value":"","option":"Pelaut","image":"trivia\\/images\\/85d92034-f1e0-43d9-9c7f-3d8e03bca473.jpeg"}]',
+        duration: 30000,
+      },
+      {
+        id: 174,
+        trivia_question_bank_id: 66,
+        question: "1 + 1",
+        type: "checkbox",
+        question_image: "",
+        answer:
+          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
+        duration: 20000,
+      },
+      {
+        id: 173,
+        trivia_question_bank_id: 66,
+        question: "Polling lg",
+        type: "polling",
+        question_image:
+          "trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg",
+        answer:
+          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
+        duration: 1,
+      },
+    ],
+  };
 
   const [data, setData] = useState();
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
-  const [numberPage, setNumberPage] = useState("");
-  const [numberAnswer, setNumberAnswer] = useState(false);
+
   const [modalSoal, setModalSoal] = useState(false);
   const [modalNext, setModalNext] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
   const [count, setCount] = useState(random_trivia && random_trivia.time_left);
   const [modalDone, setModalDone] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(
-    sessionStorage.getItem("targetDate")
-  );
+
+  function startTimer(duration, display) {
+    let timer = duration,
+      minutes,
+      seconds;
+    setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      if (display) {
+        display.textContent = minutes + ":" + seconds;
+      }
+
+      if (--timer <= 5) {
+        if (parseInt(router.query.id) === data?.total_questions) {
+          handlePage();
+        } else {
+          handlePageNext();
+        }
+      }
+    }, 1000);
+  }
+
+  window.onload = function () {
+    let fiveMinutes =
+        data &&
+        (data.list_questions[parseInt(router.query.id) - 1].duration / 60000) *
+          60,
+      display = document.querySelector("#time2");
+    startTimer(fiveMinutes, display);
+  };
 
   useEffect(() => {
+    // Handle Error akan langsung ke done
+    if (error) {
+      // router.push(`/peserta/done-trivia`);
+    }
+
+    // Hitung Waktu Mundur
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
@@ -104,23 +137,15 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      // MASIH DIPAKE AKAN DIBUKA SETELAH NO BUGS
+
       // router.push(`/peserta/done-trivia`);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count]);
+  }, [count, router]);
 
   useEffect(() => {
-    // MASIH DIPAKE AKAN DIBUKA SETELAH NO BUGS
-    // setData(initialData);
-    setData(random_trivia);
-
-    // axios
-    //   .get("https://run.mocky.io/v3/8d2f8ee5-8871-4b37-979a-0a83762c4e4e")
-    //   .then((res) => {
-    //     setData(res.data.data);
-    //   });
-  }, [data, random_trivia]);
+    // setData(random_trivia);
+    setData(initialData);
+  }, []);
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -143,16 +168,6 @@ const SubtansiUser = ({ token }) => {
     setModalNext(true);
   };
 
-  const handlePageNext = () => {
-    const page = parseInt(router.query.id) + 1;
-    router.push(
-      `${router.pathname.slice(0, 23)}/${page}?theme_id=${
-        router.query.theme_id
-      }&training_id=${router.query.training_id}`
-    );
-    setModalNext(false);
-  };
-
   const handleCloseModal = () => {
     setModalSoal(false);
   };
@@ -162,8 +177,6 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handleNumber = (val) => {
-    setNumberPage(val);
-
     if (val.target.innerHTML === router.query.id) {
       router.push(
         `/peserta/subvit/trivia/${parseInt(val.target.innerHTML)}?theme_id=${
@@ -192,10 +205,10 @@ const SubtansiUser = ({ token }) => {
   const handleAnswer = (e) => {
     setAnswer(e.key);
 
-    localStorage.setItem(`${router.query.id}`, e.key);
+    sessionStorage.setItem(`${router.query.id}`, e.key);
 
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i);
       list.push(key);
       setListAnswer(key);
     }
@@ -211,25 +224,103 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
-    // const setData = {
-    //   list: JSON.stringify(
-    //     data.list_questions.map((item, index) => {
-    //       return {
-    //         ...item,
-    //         participant_answer: localStorage.getItem(index + 1),
-    //       };
-    //     })
-    //   ),
-    //   training_id: router.query.training_id,
-    //   type: router.query.category === "Test Substansi" && "substansi",
-    // };
-    // dispatch(postResult(setData, token));
+    const setData = {
+      list: JSON.stringify(
+        data.list_questions.map((item, index) => {
+          return {
+            ...item,
+            participant_answer: localStorage.getItem(index + 1),
+          };
+        })
+      ),
+      training_id: router.query.training_id,
+      type: router.query.category === "Test Substansi" && "substansi",
+    };
+    dispatch(postResultTrivia(setData, token));
     localStorage.clear();
+    sessionStorage.clear();
     router.push(`/peserta/done-trivia`);
   };
 
   const handleCloseModalDone = () => {
     setModalDone(false);
+  };
+
+  let multi = [];
+
+  const handleAnswerCheckbox = (e, idx) => {
+    if (multi.includes(e.key)) {
+      multi.splice(multi.indexOf(e.key), 1);
+      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+    } else {
+      multi.push(e.key);
+      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+    }
+
+    if (e.key.includes(localStorage.getItem(idx + "a"))) {
+      localStorage.removeItem(idx + "a", e.key);
+    } else {
+      localStorage.setItem(idx + "a", e.key);
+    }
+
+    let answerData = JSON.parse(
+      data.list_questions[parseInt(router.query.id) - 1].answer
+    ).map((item) => {
+      if (
+        JSON.parse(sessionStorage.getItem(router.query.id)).includes(item.key)
+      ) {
+        return { ...item, color: true };
+      } else {
+        return { ...item, color: false };
+      }
+    });
+
+    let dataTemp = data.list_questions.map((item) => {
+      return { ...item, answer: JSON.stringify(answerData) };
+    });
+
+    data.list_questions = dataTemp;
+
+    // let initial = [...data];
+    setData(data);
+  };
+
+  const handlePageNext = () => {
+    const page = parseInt(router.query.id) + 1;
+    router.push(
+      `${router.pathname.slice(0, 23)}/${page}?theme_id=${
+        router.query.theme_id
+      }&training_id=${router.query.training_id}`
+    );
+    setModalNext(false);
+    if (
+      data &&
+      data.list_questions &&
+      data.list_questions[parseInt(router.query.id) - 1].type === "checkbox"
+    ) {
+      sessionStorage.setItem(router.query.id, multi);
+    } else if (
+      data &&
+      data.list_questions &&
+      data.list_questions[parseInt(router.query.id) - 1].type === "polling"
+    ) {
+      sessionStorage.setItem(router.query.id, answer);
+    } else if (
+      data &&
+      data.list_questions &&
+      data.list_questions[parseInt(router.query.id) - 1].type ===
+        "fill_in_the_blank"
+    ) {
+      sessionStorage.setItem(router.query.id, answer);
+    }
+  };
+  let listCheckbox = [];
+
+  const millisToMinutesAndSeconds = (millis) => {
+    let minutes = Math.floor(millis / 60000);
+
+    let seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   };
 
   return (
@@ -240,21 +331,21 @@ const SubtansiUser = ({ token }) => {
             <Col xs={12} sm={6} style={{ marginTop: "8px" }}>
               <div className={styles.titleResponsive}>
                 <p className={styles.academy2}>
-                  {(data && data.academy) || "FGA"}
+                  {(data && data.academy) || "-"}
                 </p>
                 <p className={styles.training2}>
-                  {(data && data.theme) || "Golang Programmer"}
+                  {(data && data.theme) || "-"}
                 </p>
               </div>
               <table>
                 <tr>
                   <td className={styles.academy}>
-                    {(data && data.academy) || "FGA"}
+                    {(data && data.academy) || "-"}
                   </td>
 
                   <td>&nbsp;</td>
                   <td className={styles.training}>
-                    {(data && data.theme) || "Golang Programmer"}
+                    {(data && data.theme) || "-"}
                   </td>
                 </tr>
               </table>
@@ -296,16 +387,19 @@ const SubtansiUser = ({ token }) => {
                 </Col>
                 <Col className={styles.align}>
                   {(data &&
+                    data.list_questions &&
                     data.list_questions[parseInt(router.query.id) - 1].type ===
                       "checkbox") ||
                   (data &&
+                    data.list_questions &&
                     data.list_questions[parseInt(router.query.id) - 1].type ===
                       "fill_in_the_blank") ? (
-                    <p className={styles.totalSoal2}>
-                      00:00:0
-                      {data &&
-                        data.list_questions[parseInt(router.query.id) - 1]
-                          .duration}
+                    <p className={styles.totalSoal2} id="time2">
+                      {millisToMinutesAndSeconds(
+                        data &&
+                          data.list_questions[parseInt(router.query.id) - 1]
+                            .duration
+                      )}
                     </p>
                   ) : (
                     ""
@@ -364,6 +458,10 @@ const SubtansiUser = ({ token }) => {
               <hr />
               {data &&
                 data.list_questions &&
+                data.list_questions[parseInt(router.query.id) - 1].type ===
+                  "polling" &&
+                data &&
+                data.list_questions &&
                 data.list_questions[parseInt(router.query.id) - 1].answer &&
                 JSON.parse(
                   data.list_questions[parseInt(router.query.id) - 1].answer
@@ -389,7 +487,7 @@ const SubtansiUser = ({ token }) => {
                           >
                             <Card
                               className={
-                                localStorage.getItem(router.query.id) ===
+                                sessionStorage.getItem(router.query.id) ===
                                 item.key
                                   ? styles.answer
                                   : styles.boxAnswer
@@ -410,7 +508,7 @@ const SubtansiUser = ({ token }) => {
                       ) : (
                         <Card
                           className={
-                            localStorage.getItem(router.query.id) === item.key
+                            sessionStorage.getItem(router.query.id) === item.key
                               ? styles.answer
                               : styles.boxAnswer
                           }
@@ -440,11 +538,86 @@ const SubtansiUser = ({ token }) => {
                       rows={5}
                       placeholder="Jelaskan jawaban Anda di sini..."
                       className={styles.textArea}
-                      onChange={() => handleAnswerText(event)}
+                      onChange={(event) => handleAnswerText(event)}
                       value={localStorage.getItem(`${router.query.id}`)}
                     />
                   </Form>
                 )}
+
+              {data &&
+                data.list_questions &&
+                data.list_questions[parseInt(router.query.id) - 1].type ===
+                  "checkbox" &&
+                data &&
+                data.list_questions &&
+                data.list_questions[parseInt(router.query.id) - 1].answer &&
+                JSON.parse(
+                  data.list_questions[parseInt(router.query.id) - 1].answer
+                ).map((item, index) => {
+                  for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(index);
+                    listCheckbox.push(key);
+                  }
+                  return (
+                    <>
+                      {item.image !== null && item.image !== "" ? (
+                        <div className="d-flex flex-row">
+                          <div className="p-2">
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  item.image || defaultImage
+                              }
+                              alt=""
+                              width={70}
+                              height={70}
+                            />
+                          </div>
+                          <div
+                            className="p-4"
+                            style={{ width: "100%", height: "100%" }}
+                          >
+                            <Card
+                              className={
+                                listCheckbox.includes(index + "a")
+                                  ? styles.answer
+                                  : styles.boxAnswer
+                              }
+                              key={index}
+                              onClick={() => handleAnswerCheckbox(item, index)}
+                            >
+                              <table>
+                                <tr>
+                                  <td style={{ width: "5px" }}>{item.key}</td>
+                                  <td style={{ width: "15px" }}>.</td>
+                                  <td>{item.option}</td>
+                                </tr>
+                              </table>
+                            </Card>
+                          </div>
+                        </div>
+                      ) : (
+                        <Card
+                          className={
+                            listCheckbox.includes(index + "a")
+                              ? styles.answer
+                              : styles.boxAnswer
+                          }
+                          key={index}
+                          onClick={() => handleAnswerCheckbox(item, index)}
+                        >
+                          <table>
+                            <tr>
+                              <td style={{ width: "5px" }}>{item.key}</td>
+                              <td style={{ width: "15px" }}>.</td>
+                              <td>{item.option}</td>
+                            </tr>
+                          </table>
+                        </Card>
+                      )}
+                    </>
+                  );
+                })}
 
               <Row style={{ marginTop: "20px" }}>
                 <Col className={styles.btnBackResponsive}></Col>
@@ -518,8 +691,8 @@ const SubtansiUser = ({ token }) => {
               <Row>
                 {number.map((item, index) => {
                   let list = [];
-                  for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
+                  for (let i = 0; i < sessionStorage.length; i++) {
+                    const key = sessionStorage.key(i);
                     list.push(key);
                   }
 
@@ -529,7 +702,7 @@ const SubtansiUser = ({ token }) => {
                         <Col key={index} style={{ width: "20%" }}>
                           <Card
                             className={styles.numberAnswer}
-                            onClick={(event) => handleNumber(event)}
+                            // onClick={(event) => handleNumber(event)}
                           >
                             {item + 1}
                           </Card>
@@ -542,7 +715,7 @@ const SubtansiUser = ({ token }) => {
                                 ? styles.cardChoosed
                                 : styles.cardChoose
                             }
-                            onClick={(event) => handleNumber(event)}
+                            // onClick={(event) => handleNumber(event)}
                           >
                             {item + 1}
                           </Card>
@@ -748,7 +921,7 @@ const SubtansiUser = ({ token }) => {
       {/* Modal Konfirmasi */}
       <Modal show={modalDone} onHide={handleCloseModalDone} size="lg">
         <ModalHeader className={styles.headerKonfirmasi}>
-          Selesai Test Substansi
+          Selesai TRIVIA
           <button
             type="button"
             className="close"
@@ -758,14 +931,14 @@ const SubtansiUser = ({ token }) => {
           </button>
         </ModalHeader>
         <ModalBody className={styles.bodyKonfirmasi}>
-          Apakah anda ingin menyelesaikan Test Substansi dan mengirim semua
-          hasil jawaban anda?Jika “Ya” maka anda sudah dinyatakan selesai
-          mengikuti Test Substansi, dan anda tidak dapat memperbaiki jawaban
-          anda. <br />
+          Apakah anda ingin menyelesaikan TRIVIA dan mengirim semua hasil
+          jawaban anda?Jika “Selesai” maka anda sudah dinyatakan selesai
+          mengikuti TRIVIA, dan anda tidak dapat memperbaiki jawaban anda.{" "}
           <br />
-          Dengan ini saya menyatakan sudah menyelesaikan Test Substansi dengan
-          tidak melakukan kecurangan dalam bentuk apapun. Saya bersedia menerima
-          segala keputusan penyelengara terkait hasil Test Substansi.
+          <br />
+          Dengan ini saya menyatakan sudah menyelesaikan TRIVIA dengan tidak
+          melakukan kecurangan dalam bentuk apapun. Saya bersedia menerima
+          segala keputusan penyelengara terkait hasil TRIVIA.
           <br />
           <br />
           <div style={{ textAlign: "right" }}>
@@ -836,6 +1009,7 @@ const SubtansiUser = ({ token }) => {
         </ModalBody>
       </Modal>
 
+      {/* Modal Lanjut */}
       <Modal show={modalNext} onHide={() => setModalNext(false)}>
         <ModalHeader className={styles.headerModal}>
           Konfirmasi Jawaban{" "}
