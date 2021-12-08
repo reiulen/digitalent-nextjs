@@ -311,11 +311,11 @@ const SubtansiUser = ({ token }) => {
   }, [data, random_survey]);
 
   const secondsToTime = (secs) => {
-    var hours = Math.floor(secs / (60 * 60));
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
+    let hours = Math.floor(secs / (60 * 60));
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
     return {
       h: hours,
       m: minutes,
@@ -396,20 +396,6 @@ const SubtansiUser = ({ token }) => {
   const handleCloseModalDone = () => {
     setModalDone(false);
   };
-
-  // const handleTest = (e, i, it) => {
-  //   if (e.target.checked === true) {
-  //     localStorage.setItem(router.query.id + "/" + i, it.key);
-  //   } else {
-  //     localStorage.removeItem(router.query.id + "/" + i);
-  //   }
-
-  //   let list22 = [];
-  //   for (let i = 0; i < localStorage.length; i++) {
-  //     const key = localStorage.key(i);
-  //     list22.push(localStorage.getItem(key));
-  //   }
-  // };
 
   return (
     <>
@@ -610,9 +596,7 @@ const SubtansiUser = ({ token }) => {
                                           {item.key}
                                         </td>
                                         <td style={{ width: "15px" }}>.</td>
-                                        dispatch(postResult(setData, token)); //
-                                        localStorage.clear(); //
-                                        router.push(`/peserta/done-survey`);
+
                                         <td>{item.option} </td>
                                       </tr>
                                     </table>
@@ -985,9 +969,6 @@ const SubtansiUser = ({ token }) => {
                           {data &&
                             data.list_questions[parseInt(router.query.id) - 1]
                               ?.question}
-                          dispatch(postResult(setData, token)); //
-                          localStorage.clear(); //
-                          router.push(`/peserta/done-survey`);
                         </div>
                       )}
                     </h1>
