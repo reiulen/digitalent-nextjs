@@ -290,7 +290,7 @@ const Dashboard = ({ session, success }) => {
                       <Image
                         className={`${style.image_dashboard}`}
                         src={
-                          !pelatihan?.pelatihan_berjalan?.gambar
+                          !dataDashboard?.pelatihan?.pelatihan_berjalan?.gambar
                             ? `/assets/media/default-card.png`
                             : dataDashboard?.pelatihan.pelatihan_berjalan
                                 .gambar &&
@@ -369,7 +369,7 @@ const Dashboard = ({ session, success }) => {
                             <span
                               className={`${style.text_date_register} pl-2`}
                             >
-                              Registrasi :{" "}
+                              Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
                                   .pendaftaran_mulai
@@ -387,7 +387,11 @@ const Dashboard = ({ session, success }) => {
                             <span
                               className={`${style.text_date_register} pl-2`}
                             >
-                              Status : {pelatihan?.pelatihan_berjalan.status}
+                              Status :{" "}
+                              {
+                                dataDashboard?.pelatihan?.pelatihan_berjalan
+                                  .status
+                              }
                             </span>
                           </div>
                         </div>
@@ -534,7 +538,7 @@ const Dashboard = ({ session, success }) => {
                             <span
                               className={`${style.text_date_register} pl-2`}
                             >
-                              Registrasi :{" "}
+                              Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
                                   .pendaftaran_mulai
