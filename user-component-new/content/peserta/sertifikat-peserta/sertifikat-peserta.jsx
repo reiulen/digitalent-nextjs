@@ -11,9 +11,7 @@ import { toPng } from "html-to-image";
 export default function RiwayatPelatihanDetail(props) {
   const {
     data: { data },
-  } = useSelector((state) => state.sertifikatPeserta);
-
-  console.log(data, "ini data");
+  } = useSelector(state => state.sertifikatPeserta);
 
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
@@ -21,7 +19,7 @@ export default function RiwayatPelatihanDetail(props) {
     data?.data_sertifikat?.certificate?.certificate_type
   );
 
-  const convertDivToPng = async (div) => {
+  const convertDivToPng = async div => {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -165,7 +163,7 @@ export default function RiwayatPelatihanDetail(props) {
               </div>
               <div className="row mt-10 col-12 p-0 m-0">
                 <div
-                  onClick={(e) => {
+                  onClick={e => {
                     handleDownload();
                   }}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
