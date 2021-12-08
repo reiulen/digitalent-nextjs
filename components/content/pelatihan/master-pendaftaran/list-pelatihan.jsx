@@ -401,7 +401,7 @@ export default function MasterPelatihan({ token }) {
                                   </select>
                                 </div>
                               </td>
-                              <td className="align-middle d-flex">
+                              <td className="align-middle d-flex p-6">
                                 {listPermission.includes(
                                   "pelatihan.master_pendaftaran.manage"
                                 ) && (
