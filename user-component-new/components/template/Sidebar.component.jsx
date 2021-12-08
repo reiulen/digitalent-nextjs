@@ -10,10 +10,13 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { signOut } from "next-auth/client";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
   const router = useRouter();
-
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
   const [drop, setDrop] = useState(true);
   const [click, setClick] = useState(1);
 
@@ -22,6 +25,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
 
   const [dropBeasiswa, setDropBeasiswa] = useState(false);
   const [clickBeasiswa, setClickBeasiswa] = useState(1);
+
+  console.log(dataPribadi?.lulus, "ini datar pribadi");
 
   const fetchSimonas = (e) => {
     e.preventDefault();
@@ -309,32 +314,34 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                 </div>
               </Link>
             </div>
-            <div>
-              <Link href="/peserta/artikel" passHref>
-                <div
-                  className={`${
-                    router.pathname.includes("/peserta/artikel/edit") ||
-                    router.pathname === "/peserta/artikel" ||
-                    router.pathname === "/peserta/artikel/tambah"
-                      ? styles.activeMenuItem
-                      : styles.menuItem
-                  } d-flex flex-row`}
-                >
-                  <div className="p-2">
-                    <div
-                      className={`${
-                        router.pathname === "/peserta/artikel"
-                          ? styles.activeIconMenu
-                          : styles.iconMenu
-                      } ri-bar-chart-horizontal-line`}
-                    ></div>
+            {dataPribadi?.lulus && (
+              <div>
+                <Link href="/peserta/artikel" passHref>
+                  <div
+                    className={`${
+                      router.pathname.includes("/peserta/artikel/edit") ||
+                      router.pathname === "/peserta/artikel" ||
+                      router.pathname === "/peserta/artikel/tambah"
+                        ? styles.activeMenuItem
+                        : styles.menuItem
+                    } d-flex flex-row`}
+                  >
+                    <div className="p-2">
+                      <div
+                        className={`${
+                          router.pathname === "/peserta/artikel"
+                            ? styles.activeIconMenu
+                            : styles.iconMenu
+                        } ri-bar-chart-horizontal-line`}
+                      ></div>
+                    </div>
+                    <div className="p-2">
+                      <div>Artikel</div>
+                    </div>
                   </div>
-                  <div className="p-2">
-                    <div>Artikel</div>
-                  </div>
-                </div>
-              </Link>
-            </div>
+                </Link>
+              </div>
+            )}
           </Fragment>
         )}
 
