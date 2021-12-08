@@ -435,8 +435,8 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 options={optionsProvinsi}
                 onChange={(e) => {
                   setKotaDomisili(null);
-
-                  // selectRefKabupatenDomisili.select.clearValue();
+                  setKecamatanDomisili(null);
+                  setKelurahanDomisili(null);
                   setProvinsiDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKabupatenDomisili(token, e.value));
                 }}
@@ -463,9 +463,12 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                   alamat && alamat.kota ? alamat.kota : "Silahkan Pilih Kota"
                 }
                 options={optionsKabupatenDomisili}
-                onChange={(e) =>
-                  setKotaDomisili({ label: e?.label, value: e?.value })
-                }
+                onChange={(e) => {
+                  setKecamatanDomisili(null);
+                  setKelurahanDomisili(null);
+                  setKotaDomisili({ label: e?.label, value: e?.value });
+                  dispatch(dropdownProvinsiToDesa(token, e.value));
+                }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota domisili")
                 }
@@ -494,6 +497,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 defaultValue={kecamatanDomisili}
                 options={optionsKecamatan}
                 onChange={(e) => {
+                  setKelurahanDomisili(null);
                   setKecamatanDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
