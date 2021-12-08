@@ -226,9 +226,6 @@ const Galeri = () => {
                 <SubHeaderComponent
                     data={[{ link: router.asPath, name: "Galeri" }]}
                 />
-                {
-                    console.log (galeri)
-                }
                 <div className="row flex-column">
                     {/* Header */}
                     <div className="col-12 mt-5">
@@ -259,7 +256,7 @@ const Galeri = () => {
                                                         gap: "1rem",
                                                         drag: "free",
                                                         perPage: 5,
-                                                        // autoWidth: true,
+                                                        autoWidth: true,
                                                         breakpoints: {
                                                             830: {
                                                                 perPage: 2,
@@ -273,7 +270,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                    style={{ cursor: "pointer", height: "40px" }}
+                                                                    style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                     onClick={() => handleFilterKategori("")}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -285,7 +282,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                    style={{ cursor: "pointer", height: "40px" }}
+                                                                    style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                     onClick={() => handleFilterKategori("")}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -303,7 +300,7 @@ const Galeri = () => {
                                                                         <SplideSlide>
                                                                             <div
                                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                                style={{ cursor: "pointer", height: "40px" }}
+                                                                                style={{ cursor: "pointer", height: "40px" , minWidth:"236px"}}
                                                                                 onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
@@ -316,7 +313,7 @@ const Galeri = () => {
                                                                         <SplideSlide>
                                                                             <div
                                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                                style={{ cursor: "pointer", height: "40px" }}
+                                                                                style={{ cursor: "pointer", height: "40px" , minWidth:"236px"}}
                                                                                 onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
@@ -341,7 +338,7 @@ const Galeri = () => {
                                                     gap: "1rem",
                                                     drag: "free",
                                                     perPage: 5,
-                                                    // autoWidth: true,
+                                                    autoWidth: true,
                                                     breakpoints: {
                                                         830: {
                                                             perPage: 2,
@@ -355,7 +352,7 @@ const Galeri = () => {
                                                         <SplideSlide>
                                                             <div
                                                                 className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                style={{ cursor: "pointer", height: "40px" }}
+                                                                style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                 onClick={() => handleFilterKategori("")}
                                                             >
                                                                 <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -367,7 +364,7 @@ const Galeri = () => {
                                                         <SplideSlide>
                                                             <div
                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                style={{ cursor: "pointer", height: "40px" }}
+                                                                style={{ cursor: "pointer", height: "40px" , minWidth:"236px"}}
                                                                 onClick={() => handleFilterKategori("")}
                                                             >
                                                                 <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -385,7 +382,7 @@ const Galeri = () => {
                                                                     <SplideSlide>
                                                                         <div
                                                                             className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                            style={{ cursor: "pointer", height: "40px" }}
+                                                                            style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                             onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
@@ -398,7 +395,7 @@ const Galeri = () => {
                                                                     <SplideSlide>
                                                                         <div
                                                                             className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                            style={{ cursor: "pointer", height: "40px" }}
+                                                                            style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                             onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
