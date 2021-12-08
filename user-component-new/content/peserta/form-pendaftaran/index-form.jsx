@@ -23,20 +23,20 @@ const IndexForm = ({ token, session }) => {
   const router = useRouter();
 
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
-    state => state.getFormBuilder
+    (state) => state.getFormBuilder
   );
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
-    state => state.getPelatihan
+    (state) => state.getPelatihan
   );
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
   const {
     error: errorNewPendaftaran,
     pendaftaran,
     loading,
     success,
-  } = useSelector(state => state.newPendaftaranPelatihan);
+  } = useSelector((state) => state.newPendaftaranPelatihan);
 
   let error;
   if (errorFormBuilder) error = errorFormBuilder;
@@ -78,6 +78,8 @@ const IndexForm = ({ token, session }) => {
         return breadcrumb;
     }
   }, [view]);
+
+  console.log(dataPelatihan, "ini data pelatihan");
   const showViewForm = () => {
     switch (view) {
       case 1:
@@ -103,10 +105,10 @@ const IndexForm = ({ token, session }) => {
                     <div className="d-flex flex-row flex-wrap">
                       <img
                         src={`${
-                          !dataPelatihan?.logo || !dataPelatihan?.gambar_mitra
+                          !dataPelatihan?.logo && !dataPelatihan?.gambar_mitra
                             ? "/assets/media/default-card.png"
                             : dataPelatihan?.file_path + dataPelatihan.logo ||
-                              dataPelatihan?.file_path +
+                              process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                                 dataPelatihan?.gambar_mitra
                         }`}
                         width={58}
@@ -169,7 +171,7 @@ const IndexForm = ({ token, session }) => {
               <FormPendaftaran
                 token={token}
                 propsTitle={title}
-                funcView={val => setView(val)}
+                funcView={(val) => setView(val)}
               />
             </Card>
           </>
@@ -183,7 +185,7 @@ const IndexForm = ({ token, session }) => {
               propsDataPribadi={dataPeserta}
               propsDataPelatihan={dataPelatihan}
               token={token}
-              funcView={val => setView(val)}
+              funcView={(val) => setView(val)}
             />
           </Card>
         );
@@ -272,7 +274,7 @@ const IndexForm = ({ token, session }) => {
             <Card className="card-custom gutter-b">
               <FormPendaftaran
                 propsTitle={title}
-                funcView={val => setView(val)}
+                funcView={(val) => setView(val)}
               />
             </Card>
           </>
