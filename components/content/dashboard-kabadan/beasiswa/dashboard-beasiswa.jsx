@@ -347,7 +347,7 @@ const DashboardBeasiswa = ({ token }) => {
                     >
                       {beasiswaYear &&
                         beasiswaYear.map((row, i) => (
-                          <option value={row}>{row}</option>
+                          <option key={i} value={row}>{row}</option>
                         ))}
                     </select>
                   </div>
