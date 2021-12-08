@@ -22,6 +22,7 @@ import {
 import { UPDATE_ALAMAT_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
 import {
+  helperRegexAlphabet,
   helperRegexNumber,
   SweatAlert,
 } from "../../../../../utils/middleware/helper";
@@ -214,6 +215,14 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
       setKotaDomisili(kotaKtp);
       setKelurahanDomisili(kelurahanKtp);
     }
+    if (!sesuai) {
+      setAlamatDomisili("");
+      setProvinsiDomisili("");
+      setKecamatanDomisili("");
+      setKodePosDomisili("");
+      setKotaDomisili("");
+      setKelurahanDomisili("");
+    }
   }, [
     sesuai,
     alamatKtp,
@@ -261,7 +270,6 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 defaultValue={provinsiDomisili}
                 onChange={(e) => {
                   setKotaDomisili(null);
-                  // selectRefKabupatenDomisili.select.clearValue();
                   setProvinsiDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKabupatenDomisili(token, e.value));
                 }}
@@ -567,6 +575,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kode pos domisili")
                 }
+                key={10}
                 maxLength={5}
               />
               {simpleValidator.current.message(
@@ -604,6 +613,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         kelurahan: kelurahanDomisili.label || kelurahanDomisili,
         kode_pos: kodePosDomisili,
       };
+
       dispatch(updateProfileAlamat(data, token));
       window.scrollTo(0, 0);
     } else {
@@ -807,7 +817,9 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               checked={sesuai}
               value={sesuai}
               label="Alamat sama dengan KTP"
-              onClick={() => handleSesuaiKtp(!sesuai)}
+              onClick={() => {
+                handleSesuaiKtp(!sesuai);
+              }}
             />
           </Form.Group>
           {handleViewDomisili()}
