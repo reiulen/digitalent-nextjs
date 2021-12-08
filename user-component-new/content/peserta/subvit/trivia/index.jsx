@@ -27,7 +27,7 @@ import { useDispatch } from "react-redux";
 
 const SubtansiUser = ({ token }) => {
   const dispatch = useDispatch();
-  const { random_trivia } = useSelector((state) => state.randomTrivia);
+  const { error, random_trivia } = useSelector((state) => state.randomTrivia);
 
   const router = useRouter();
 
@@ -51,6 +51,12 @@ const SubtansiUser = ({ token }) => {
   );
 
   useEffect(() => {
+    // Handle Error akan langsung ke done
+    if (error) {
+      router.push(`/peserta/done-trivia`);
+    }
+
+    // Hitung Waktu Mundur
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
@@ -62,14 +68,11 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      // MASIH DIPAKE AKAN DIBUKA SETELAH NO BUGS
       // router.push(`/peserta/done-trivia`);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count]);
+  }, [count, router]);
 
   useEffect(() => {
-    // setData(initialData);
     setData(random_trivia);
   }, [data, random_trivia]);
 

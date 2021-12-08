@@ -214,9 +214,7 @@ const SubtansiUser = ({ token }) => {
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(
-    sessionStorage.getItem("targetDate")
-  );
+
   let keyMap = [];
   const handleMultiple = (item, index) => {
     setD(index);
@@ -285,6 +283,9 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
+    if (error) {
+      router.push(`/peserta/done-survey`);
+    }
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
@@ -296,17 +297,12 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      // MASIH DIPAKE UNTUK SETELAH TESTING
-      // router.push(`/peserta/done-survey`);
+
+      router.push(`/peserta/done-survey`);
     }
   }, [count, data, error, dispatch, router]);
 
-  // MASIH DIPAKE UNTUK SETELAH TESTING
   useEffect(() => {
-    // axios
-    //   .get("https://run.mocky.io/v3/8f420e68-c974-456f-97ff-9862330d6190")
-    //   .then((res) => setData(res.data.data));
-
     setData(random_survey);
   }, [data, random_survey]);
 
