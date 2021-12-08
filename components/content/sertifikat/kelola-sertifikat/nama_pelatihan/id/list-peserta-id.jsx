@@ -21,7 +21,6 @@ export default function ListPesertaID({ token }) {
   );
   const { participant } = useSelector((state) => state.detailParticipant);
 
-  console.log(participant, "ini participant");
   const [type, setType] = useState(
     certificate?.data?.certificate?.certificate_type
   );
