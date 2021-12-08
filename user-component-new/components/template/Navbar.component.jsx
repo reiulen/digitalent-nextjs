@@ -54,7 +54,8 @@ const Navigationbar = ({ session }) => {
       !dataPribadi || // 👈 null and undefined check
       (dataPribadi && Object.keys(dataPribadi).length === 0)
     ) {
-      signOut();
+      // signOut();
+      console.log("masuk sini");
     }
     if (session) {
       if (
