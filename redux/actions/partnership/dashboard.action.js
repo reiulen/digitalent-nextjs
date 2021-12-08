@@ -7,7 +7,7 @@ import {
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export const fetchDashboard = (token) => {
+export const fetchDashboard = (token, permission) => {
   return async (dispatch) => {
     dispatch({ type: DASHBOARD_REQUEST });
     try {
@@ -17,11 +17,13 @@ export const fetchDashboard = (token) => {
           headers: {
             authorization: `Bearer ${token}`,
             // permissionToken: localStorage.getItem("token-permission")
-            // permissionToken : "U2FsdGVkX1/8bJA1yPuTitjBQIWEy1GEsyNFohOq7F2PIsPVfNgnmPPOWcJXAKFEgbMppK8Fyw0xReLhnj+Pmf6udk18GMKI1929EvT0DZafMFtuR/iRg3fz1L1ntUCC8J9DXy/FmNThOaTiYI7q8Q355IC5RgKGtHfkQxDRDLfS/XwQ8y1hnRRurzZgJAV9cTJs/7ZPQbI5r0E1ymvHbg6hzwCXeONeRcX3U7rsXaO6ouwfN6/ymcJUEGMxVNv/64NkXTk0ISzV06+jyuhoT/on/emeQ6prfLCjaPxzDDCdSlUKAD3kA/FYLAtJKdyUZVkQMx1T9d5UIuI1eO8WZfP0jV+R12qrzM12QCsr5jiTJTe2UiCGWhm3fLdJJKMKPxWJJyHyhGLE47qFGjK84iEVvqAvuSGyGOPCjN7g49ARR0H9vBC0qCtekN/58zGfyqGORFjcZFLSlKnsTQip1U2qgPvDTf6b6rot3gSsEYJRyhhG3ksp1uyFDxGmNR+qfo4C/iQ4qodADfQg+mFGOx2mVhMuj+8wcbRD6XW9v0vmAHiW/Zx+bN4/dOYsaLrGdnWssuoNi9yIRCVPkqYImGRgMI2A2BM7/ZpRrD8/HvI="
-            // permissionToken: Cookies.get("token-permission").toString()
+            // permissionToken : "U2FsdGVkX19WFVH8/7lAizossZdhbD0T+WW1N1WKQ5XtrVRskbZYDZP0Mhifibsh7PiJPol4AAX0s7uhIbpE/lx1esLAP/PoArlH+z9idpsRjZgnBf6D4HFhTVZJQEdXzQJ5LHiwFiJ5gwenqv9bRkH6prVvpbdcJUIFIownkW6cDjSYWFGRSRO5+oniYSmqQ1ZVnx1UtZRAutKRvdB9Ut8ULIEoJTfr6baC9YmOQwHOCoOh0R91Z+eqgZiCAZUZwbuktGkXsM4B49hz/cEzAz4P8aTVy8Q2UI2I0nVS0whwyH1gtWj1nSok9UpVq5QUSj6Af3+XrMm8UYXrpRbrJz3NITE79c2p0U5SO0xXO4OxdxYmCSvkkpeeQxHrYzODa56X68RAQn2CVdfiw88lgA3jRH5ahq3WvZc7jqeGSFdvglJ3aBRB5y3+4kOAnvY/y7eVvatfYhGqgHp+Sum9AqTNVTNNYc9uSoiJYsKBgtXiqW3oGRG1odvbHcPA+eOGb6K/ADlDDNGzHRUkmp7CjbbkdSx4GVCvheTCBTdg6jeEw1SAC1G6+iyZ/sqJX7wRBUnt4gnNPnkcUqztm0n/cFoZ2F5w+Gu/uiz0odhg8Lc="
+            permissionToken: permission
           },
         }
       );
+
+     
       dispatch(successFetchDashboard(data));
     } catch (error) {
       dispatch({ type: DASHBOARD_FAIL });
