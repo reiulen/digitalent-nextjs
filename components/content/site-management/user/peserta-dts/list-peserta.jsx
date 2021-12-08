@@ -89,7 +89,7 @@ const Table = ({ token }) => {
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
-                      <div className="col-12 col-sm-6">
+                      <div className="col-12 col-sm-4">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
@@ -138,7 +138,7 @@ const Table = ({ token }) => {
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>{listPeserta}</tbody>
+                  <tbody>{allListPeserta?.data?.data?.list.length > 0 ? listPeserta : <tr><td colSpan="8" className="align-middle text-center">Data Kosong</td></tr>}</tbody>
                 </table>
               </div>
 
