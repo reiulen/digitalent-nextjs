@@ -46,6 +46,11 @@ const Navigationbar = ({ session }) => {
   );
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
+  const [menu, setMenu] = useState(
+    localStorage.getItem("menu")
+      ? JSON.parse(localStorage.getItem("menu"))
+      : null
+  );
 
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
@@ -111,13 +116,17 @@ const Navigationbar = ({ session }) => {
           },
         }
       );
+
+      localStorage.setItem("menu", JSON.stringify(data.data));
     } catch (error) {}
   };
 
   useEffect(() => {
-    getMenu();
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
+    }
+    if (!localStorage.getItem("menu")) {
+      getMenu();
     }
     if (localStorage.getItem("navbar") === "1") {
       setWarna("primary");
@@ -370,18 +379,19 @@ const Navigationbar = ({ session }) => {
                     Lainnya
                   </a>
                   <div className="dropdown-menu ml-3">
-                    <Link href="/berita">
-                      <a className="dropdown-item navdropdown-child">Berita</a>
-                    </Link>
-                    <Link href="/artikel">
-                      <a className="dropdown-item navdropdown-child">Artikel</a>
-                    </Link>
-                    <Link href="/galeri">
-                      <a className="dropdown-item navdropdown-child">Galeri</a>
-                    </Link>
-                    <Link href="/video">
-                      <a className="dropdown-item navdropdown-child">Video</a>
-                    </Link>
+                    {menu
+                      ? menu.map((item, index) => {
+                          return (
+                            <Link href={"/lainnya/" + item.url} key={index}>
+                              <a className="dropdown-item navdropdown-child">
+                                {item.name}
+                              </a>
+                            </Link>
+                          );
+                        })
+                      : null}
+
+                   
                   </div>
                 </div>
               </NavDropdown>
@@ -745,47 +755,21 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
-                    <Fragment>
+
+                    {menu ? menu.map((item, index) => {
+                      return  <Fragment key={index}>
                       <div
                         onClick={() => {
-                          router.push("/berita");
+                          router.push("/lainnya/" + item.url);
                         }}
                         className="p-4 fz-12"
                       >
-                        Berita
+                        {item.name}
                       </div>
                       <hr className="w-100 p-0 m-0" />
                     </Fragment>
-                    <Fragment>
-                      <div
-                        onClick={() => {
-                          router.push("/artikel");
-                        }}
-                        className="p-4 fz-12"
-                      >
-                        Artikel
-                      </div>
-                      <hr className="w-100 p-0 m-0" />
-                    </Fragment>
-                    <Fragment>
-                      <div
-                        onClick={() => {
-                          router.push("/galeri");
-                        }}
-                        className="p-4 fz-12"
-                      >
-                        Galeri
-                      </div>
-                      <hr className="w-100 p-0 m-0" />
-                    </Fragment>
-                    <div
-                      className="p-4 fz-12"
-                      onClick={() => {
-                        router.push("/video");
-                      }}
-                    >
-                      Video
-                    </div>
+                    }) : null}
+                   
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
