@@ -225,7 +225,7 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
   return (dispatch) => {
     axios
       .post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/import-subm`,
         subm,
         {
           headers: {
