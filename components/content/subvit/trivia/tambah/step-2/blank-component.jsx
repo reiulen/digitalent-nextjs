@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import styles from "../step-2/step2-trivia.module.css";
 
 import Image from "next/image";
+import {
+  helperRegexNumber,
+  helperTextLimitMax,
+} from "../../../../../../utils/middleware/helper";
 
 const BlankComponent = ({ props_answer, props_duration }) => {
   const [answer, setSoalList] = useState([
@@ -196,16 +200,31 @@ const BlankComponent = ({ props_answer, props_duration }) => {
           </label>
           <div className="input-group">
             <input
-              type="number"
+              type="text"
               className="form-control"
               aria-describedby="basic-addon2"
               value={duration}
-              placeholder="120"
               onChange={(e) => {
-                setDuration(e.target.value);
-                props_duration(e.target.value);
+                if (
+                  e.target.value === "" ||
+                  helperRegexNumber.test(e.target.value)
+                ) {
+                  setDuration(e.target.value);
+                  props_duration(e.target.value);
+                }
               }}
               min={1}
+              maxLength={3}
+              placeholder="300"
+              onKeyUp={(e) =>
+                helperTextLimitMax(
+                  e.target.value,
+                  0,
+                  300,
+
+                  setDuration
+                )
+              }
             />
             <div className="input-group-append">
               <span
