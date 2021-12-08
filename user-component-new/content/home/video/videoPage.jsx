@@ -174,44 +174,6 @@ const VideoPage = () => {
     window.scrollTo(0,0)
   };
 
-  const handleDescToTrim = (str, size) => {
-    let result = null;
-
-    let trimLg = 350
-    let trimMd = 150
-    let trimSm = 50
-
-    if (size === "lg"){
-
-      if (str.length > trimLg) {
-          result = str.slice(0, trimLg) + "...";
-        } else {
-          result = str;
-        }
-    
-        return result;
-    } else if (size === "md"){
-
-      if (str.length > trimMd) {
-        result = str.slice(0, trimMd) + "...";
-      } else {
-        result = str;
-      }
-  
-      return result;
-    } else if (size === "sm"){
-
-      if (str.length > trimMd) {
-        result = str.slice(0, trimSm) + "...";
-      } else {
-        result = str;
-      }
-  
-      return result;
-    }
-    
-  };
-
   const handleFilterTag = (str) => {
     if (str === "") {
       setActiveTitle("Video Terupdate dan Terkini")
@@ -341,7 +303,7 @@ const VideoPage = () => {
           >
             {activeTitle}
           </h1>
-          <span style={{fontSize: "18px", fontFamily:"Poppins", color:"#6C6C6C"}}>
+          <span style={{fontSize: "20px", fontFamily:"Poppins", color:"#6C6C6C"}}>
             Temukan konten terupdate dan terkini mengenai Digital Talent
             Scholarship
           </span>
@@ -870,7 +832,7 @@ const VideoPage = () => {
                 }
 
             {/* Search Field */}
-            <form className="mb-10 pr-0 pr-xl-13 ml-4">
+            <form className="mb-10 pr-0 pr-xl-7 ml-4">
               <div className="input-group">
                 <div className="input-group-prepend">
                   <div
@@ -911,7 +873,7 @@ const VideoPage = () => {
                   </div>
                 </div>
                 :
-                <div className="mt-5 ml-4 mb-20">
+                <div className="mt-5 ml-4 mb-5">
                   <div
                     className="row d-flex justify-content-between flex-wrap"
                   >
@@ -940,7 +902,7 @@ const VideoPage = () => {
                       video.video.map((row, i) => {
                         return (
                           <div
-                            className="col-12 col-md-5 col-lg-6 my-5 py-0 pr-lg-20 pr-3 pr-md-0"
+                            className="col-12 col-md-6 mt-5 mb-sm-n3 mb-0 py-0 pr-lg-11 pr-3 pr-sm-5"
                             key={i}
                           >
                             <div
@@ -961,9 +923,9 @@ const VideoPage = () => {
                                   row.gambar
                                 }
                                 width={394}
-                                height={260}
+                                height={290}
                                 objectFit="cover"
-                                className="rounded"
+                                className="rounded img-fluid"
                                 data-target="#videoPlayerModal"
                                 data-toggle="modal"
                                 onClick={() =>
@@ -1034,7 +996,7 @@ const VideoPage = () => {
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
                       "mx-auto table-pagination"
                       :
-                      "mb-10 mx-auto table-pagination"
+                      "mb-15 mx-auto table-pagination"
                   }
                 >
                   <Pagination
@@ -1297,32 +1259,24 @@ const VideoPage = () => {
                     {/*Isi Video */}
                     {
                       showDesc === false && detail.isi_video ?
-                        <div className="mx-0 px-0 text-justify" style={{fontSize:'14px'}}>
-                          {/* {handleDescToTrim(detail.isi_video, "lg")} */}
-                         
-                          {
-                            windowDimensions && windowDimensions.width && windowDimensions.width > 768 ?
-                              handleDescToTrim(detail.isi_video, "lg")
-                            :
-                              null
-                          }
-
-                          {
-                            windowDimensions && windowDimensions.width && windowDimensions.width <= 768 && windowDimensions.width > 576?
-                              handleDescToTrim(detail.isi_video, "md")
-                            :
-                              null
-                          }
-
-                          {
-                            windowDimensions && windowDimensions.width && windowDimensions.width <= 576 ?
-                              handleDescToTrim(detail.isi_video, "sm")
-                            :
-                              null
-                          }
+                        <div 
+                          className="mx-0 px-0 text-justify" 
+                        >
+                          <div
+                            style={{
+                              fontSize:'14px',
+                              display:"-webkit-box", 
+                              overflow: 'hidden', 
+                              textOverflow: 'ellipsis', 
+                              WebkitLineClamp: "1",
+                              WebkitBoxOrient:"vertical"
+                            }}
+                          >
+                            {detail.isi_video}
+                          </div>
 
                           <div
-                            className="mt-1 mb-3 text-primary"
+                            className="mt-1 text-primary"
                             style={{ cursor: "pointer" }}
                             onClick={() => setShowDesc(true)}
                           >
@@ -1330,7 +1284,10 @@ const VideoPage = () => {
                           </div>
                         </div>
                         :
-                        <div className="overflow-auto text-justify" style={{fontSize:'14px'}}>
+                        <div 
+                          className="overflow-auto text-justify" 
+                          style={{fontSize:'14px'}}
+                        >
                           {detail.isi_video}
 
                           {/* Insert Tag Here */}
