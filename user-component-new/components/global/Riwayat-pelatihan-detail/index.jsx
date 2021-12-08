@@ -26,7 +26,7 @@ export default function RiwayatPelatihanDetail({ session }) {
   const [finalDescription, setFinalDescription] = useState();
   const dateFrom = moment(data?.pendaftaran_mulai).format("LL") || "-";
   const dateTo = moment(data?.pendaftaran_selesai).format("LL") || "-";
-
+  console.log(data);
   useEffect(() => {
     let newText = description.split(" ");
     let test = [];
