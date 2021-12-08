@@ -8,23 +8,151 @@ import CardTotal from "../component/card-total.component";
 import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
 
-import Pagination from "react-js-pagination";
-
 import PaginationDashboard from "../component/pagination-dashbaord.component";
 
-const DashboardSimonas = () => {
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  getSimonasCompanyAmount,
+  getSimonasProjectAmount,
+  getSimonasApplierAmountJob,
+  getSimonasApplierAmountProject,
+} from "../../../../redux/actions/dashboard-kabadan/dashboard/simonas.actions";
+
+const DashboardSimonas = ({ token }) => {
+  const dispatch = useDispatch();
   const MapDigitalent = dynamic(
     () => import("../component/map-digitalent.component"),
     { ssr: false }
   );
 
-  const dataPekerjaan = [
-    { id: 1, title: "Telkom", percent: 50, total: "3.000" },
-    { id: 2, title: "Tokopedia", percent: 30, total: "2.000" },
-    { id: 3, title: "Majapahit Teknologi", percent: 40, total: "1.000" },
-    { id: 4, title: "Bukalapak", percent: 10, total: "50" },
-    { id: 5, title: "Gojek", percent: 10, total: "50" },
-  ];
+  const {
+    loading: loadingCompanyTotal,
+    error: errorCompanyTotal,
+    companyTotal,
+  } = useSelector((state) => state.simonasCompanyTotal);
+  const {
+    loading: loadingProjectTotal,
+    error: errorProjectTotal,
+    projectTotal,
+  } = useSelector((state) => state.simonasProjectTotal);
+  const {
+    loading: loadingCompanyAmount,
+    error: errorCompanyAmount,
+    companyAmount,
+  } = useSelector((state) => state.simonasCompanyAmount);
+  const {
+    loading: loadingProjectAmount,
+    error: errorProjectAmount,
+    projectAmount,
+  } = useSelector((state) => state.simonasProjectAmount);
+  const {
+    loading: loadingApplierTotal,
+    error: errorApplierTotal,
+    applierTotal,
+  } = useSelector((state) => state.simonasApplierTotal);
+  const {
+    loading: loadingApplierTotalActive,
+    error: errorApplierTotalActive,
+    applierTotalActive,
+  } = useSelector((state) => state.simonasApplierTotalActive);
+  const {
+    loading: loadingApplierAmountJob,
+    error: errorApplierAmountJob,
+    applierAmountJob,
+  } = useSelector((state) => state.simonasApplierAmountJob);
+  const {
+    loading: loadingApplierAmountProject,
+    error: errorApplierAmountProject,
+    applierAmountProject,
+  } = useSelector((state) => state.simonasApplierAmountProject);
+  const {
+    loading: loadingApplierAge,
+    error: errorApplierAge,
+    applierAge,
+  } = useSelector((state) => state.simonasApplierAge);
+  const {
+    loading: loadingApplierGender,
+    error: errorApplierGender,
+    applierGender,
+  } = useSelector((state) => state.simonasApplierGender);
+  const {
+    loading: loadingApplierEducationJob,
+    error: errorApplierEducationJob,
+    applierEducationJob,
+  } = useSelector((state) => state.simonasApplierEducationJob);
+  const {
+    loading: loadingApplierEducationProject,
+    error: errorApplierEducationProject,
+    applierEducationProject,
+  } = useSelector((state) => state.simonasApplierEducationProject);
+
+  const dataCompanyAmount = [];
+  if (
+    companyAmount &&
+    companyAmount.data &&
+    companyAmount.data.list.length > 0
+  ) {
+    companyAmount.data.list.map((row, i) => {
+      let data = {
+        id: i + 1,
+        title: row.company,
+        percent: row.percentage,
+        total: row.total,
+      };
+      dataCompanyAmount.push(data);
+    });
+  }
+
+  const dataProjectAmount = [];
+  if (
+    projectAmount &&
+    projectAmount.data &&
+    projectAmount.data.list.length > 0
+  ) {
+    projectAmount.data.list.map((row, i) => {
+      let data = {
+        id: i + 1,
+        title: row.company,
+        percent: row.percentage,
+        total: row.total,
+      };
+      dataProjectAmount.push(data);
+    });
+  }
+
+  const dataApplierAmountJob = [];
+  if (
+    applierAmountJob &&
+    applierAmountJob.data &&
+    applierAmountJob.data.list.length > 0
+  ) {
+    applierAmountJob.data.list.map((row, i) => {
+      let data = {
+        id: i + 1,
+        title: row.company,
+        percent: row.percentage,
+        total: row.total,
+      };
+      dataApplierAmountJob.push(data);
+    });
+  }
+  const dataApplierAmountProject = [];
+  if (
+    applierAmountProject &&
+    applierAmountProject.data &&
+    applierAmountProject.data.list.length > 0
+  ) {
+    applierAmountProject.data.list.map((row, i) => {
+      let data = {
+        id: i + 1,
+        title: row.company,
+        percent: row.percentage,
+        total: row.total,
+      };
+      dataApplierAmountProject.push(data);
+    });
+  }
 
   const dataProvinsi = [
     { id: 1, title: "DKI Jakarta", percent: 50, total: "3.000" },
@@ -33,16 +161,67 @@ const DashboardSimonas = () => {
     { id: 4, title: "Sumatra Utara", percent: 10, total: "50" },
     { id: 5, title: "Nusa Tenggara Timur", percent: 10, total: "50" },
   ];
-  const dataUmur = [
-    { id: 1, title: "<20", percent: 50, total: "3.000" },
-    { id: 2, title: "20-35", percent: 30, total: "2.000" },
-    { id: 3, title: "36-50", percent: 40, total: "1.000" },
-    { id: 4, title: ">50", percent: 10, total: "50" },
-  ];
-  const dataJenisKelamin = [
-    { id: 1, title: "Pria", percent: 80, total: "3.000" },
-    { id: 2, title: "Wanita", percent: 30, total: "2.000" },
-  ];
+
+  const dataApplierAge = [];
+  if (applierAge && applierAge.data && applierAge.data.length > 0) {
+    applierAge.data.map((row, i) => {
+      let data = {
+        id: i + 1,
+        title: row.age,
+        percent: row.percentage,
+        total: row.total,
+      };
+      dataApplierAge.push(data);
+    });
+  }
+
+  const dataApplierGender = [];
+  if (applierGender && applierGender.data && applierGender.data.length > 0) {
+    applierGender.data.map((row, i) => {
+      let data = {
+        id: i + 1,
+        title: row.gender,
+        percent: row.percentage,
+        total: row.total,
+      };
+      dataApplierGender.push(data);
+    });
+  }
+
+  const dataApplierEducationJob = [];
+  if (
+    applierEducationJob &&
+    applierEducationJob.data &&
+    applierEducationJob.data.length > 0
+  ) {
+    applierEducationJob.data.map((row, i) => {
+      let data = {
+        id: i + 1,
+        title: row.education,
+        percent: row.percentage,
+        total: row.total,
+      };
+      dataApplierEducationJob.push(data);
+    });
+  }
+
+  const dataApplierEducationProject = [];
+  if (
+    applierEducationProject &&
+    applierEducationProject.data &&
+    applierEducationProject.data.length > 0
+  ) {
+    applierEducationProject.data.map((row, i) => {
+      let data = {
+        id: i + 1,
+        title: row.education,
+        percent: row.percentage,
+        total: row.total,
+      };
+      dataApplierEducationProject.push(data);
+    });
+  }
+
   const dataPendidikan = [
     { id: 1, title: "D3", percent: 50, total: "3.000" },
     { id: 2, title: "S1", percent: 40, total: "2.000" },
@@ -68,17 +247,17 @@ const DashboardSimonas = () => {
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Lowongan Pekerjaan"}
-              value={252.329}
-              dailyAdd={"23.21"}
-              statisticDay={"+20.220"}
+              value={companyTotal.all}
+              dailyAdd={companyTotal.percetage}
+              statisticDay={companyTotal.latest}
             />
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Proyek"}
-              value={252.329}
-              dailyAdd={"23.21"}
-              statisticDay={"+20.220"}
+              value={projectTotal.all}
+              dailyAdd={projectTotal.percetage}
+              statisticDay={projectTotal.latest}
             />
           </div>
         </div>
@@ -90,11 +269,11 @@ const DashboardSimonas = () => {
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Lowongan Pekerjaan
                 </p>
-                <ListCardInfo data={dataPekerjaan} />
+                <ListCardInfo data={dataCompanyAmount} />
 
                 <PaginationDashboard
-                  total={10}
-                  perPage={5}
+                  total={companyAmount?.data?.total}
+                  perPage={companyAmount?.data?.perPage}
                   title="Pekerjaan"
                   activePage={1}
                   funcPagination={(value) => {}}
@@ -108,10 +287,10 @@ const DashboardSimonas = () => {
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Proyek
                 </p>
-                <ListCardInfo data={dataPekerjaan} />
+                <ListCardInfo data={dataProjectAmount} />
                 <PaginationDashboard
-                  total={10}
-                  perPage={5}
+                  total={projectAmount?.data?.total}
+                  perPage={projectAmount?.data?.perPage}
                   title="Proyek"
                   activePage={1}
                   funcPagination={(value) => {}}
@@ -128,17 +307,17 @@ const DashboardSimonas = () => {
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Seluruh Lamaran"}
-              value={252.329}
-              dailyAdd={"23.21"}
-              statisticDay={"+20.220"}
+              value={applierTotal?.all}
+              dailyAdd={applierTotal?.percetage}
+              statisticDay={applierTotal?.latest}
             />
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
             <CardTotal
               title={"Total Lamaran Aktif"}
-              value={252.329}
-              dailyAdd={"23.21"}
-              statisticDay={"+20.220"}
+              value={applierTotalActive?.all}
+              dailyAdd={applierTotalActive?.percetage}
+              statisticDay={applierTotalActive?.latest}
             />
           </div>
         </div>
@@ -150,11 +329,11 @@ const DashboardSimonas = () => {
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Pelamar Kerja
                 </p>
-                <ListCardInfo data={dataPekerjaan} />
+                <ListCardInfo data={dataApplierAmountJob} />
 
                 <PaginationDashboard
-                  total={10}
-                  perPage={5}
+                  total={applierAmountJob?.data?.total}
+                  perPage={applierAmountJob?.data?.perPage}
                   title="Pekerjaan"
                   activePage={1}
                   funcPagination={(value) => {}}
@@ -168,10 +347,10 @@ const DashboardSimonas = () => {
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Pelamar Proyek
                 </p>
-                <ListCardInfo data={dataPekerjaan} />
+                <ListCardInfo data={dataApplierAmountProject} />
                 <PaginationDashboard
-                  total={10}
-                  perPage={5}
+                  total={applierAmountProject?.data?.total}
+                  perPage={applierAmountProject?.data?.perPage}
                   title="Proyek"
                   activePage={1}
                   funcPagination={(value) => {}}
@@ -263,13 +442,13 @@ const DashboardSimonas = () => {
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Umur Pelamar Lamaran Kerja"}
-                  data={dataUmur}
+                  data={dataApplierAge}
                 />
               </div>
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Pelamar Kerja berdasarkan Jenis Kelamin"}
-                  data={dataJenisKelamin}
+                  data={dataApplierGender}
                 />
               </div>
             </div>
@@ -277,13 +456,13 @@ const DashboardSimonas = () => {
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Pendidikan Pelamar Kerja"}
-                  data={dataPendidikan}
+                  data={dataApplierEducationJob}
                 />
               </div>
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Pendidikan Pelamar Proyek"}
-                  data={dataPendidikan}
+                  data={dataApplierEducationProject}
                 />
               </div>
             </div>

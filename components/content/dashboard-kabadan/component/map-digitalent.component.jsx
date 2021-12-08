@@ -22,45 +22,25 @@ const MapDigitalent = ({ data = [] }) => {
           url={`https://api.mapbox.com/styles/v1/dendylords/cku54tvb11wve17mqhnl3yiuz/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.TOKEN_MAP}`}
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
         />
-        {dataMap.map((row, i) => (
+        {data.map((row, i) => (
           <Marker key={i} position={row.position} animate={true}>
             <Popup>
               <div className="row">
                 <div className="col-md-12 text-left">
                   <p className="fw-600 fz-12 m-0 p-0">{row.provinsi}</p>
                 </div>
-                {row.type === "beasiswa" && (
-                  <>
-                    <div className="col-md-9 text-left">
-                      <p className="text-dashboard-neutral">
-                        Beasiswa Dalam Negeri
-                      </p>
-                      <p className="text-dashboard-neutral">
-                        Beasiswa Luar Negeri
-                      </p>
-                    </div>
-                    <div className="col-md-3 text-right">
-                      <p className="text-dashboard-primary">{row.totalDn}</p>
-                      <p className="text-dashboard-primary">{row.totalLn}</p>
-                    </div>
-                  </>
-                )}
-                {row.type === "digitalent" && (
-                  <>
-                    <div className="col-md-6 text-left">
-                      <p className="text-dashboard-neutral">Pendaftar</p>
-                      <p className="text-dashboard-neutral">Peserta</p>
-                      <p className="text-dashboard-neutral">Lulus</p>
-                      <p className="text-dashboard-neutral">Sertifikasi</p>
-                    </div>
-                    <div className="col-md-6 text-right">
-                      <p className="text-dashboard-primary">2004</p>
-                      <p className="text-dashboard-primary">123.456</p>
-                      <p className="text-dashboard-primary">178.666</p>
-                      <p className="text-dashboard-primary">12.988</p>
-                    </div>
-                  </>
-                )}
+                <div className="col-md-6 text-left">
+                  <p className="text-dashboard-neutral">Pendaftar</p>
+                  <p className="text-dashboard-neutral">Peserta</p>
+                  <p className="text-dashboard-neutral">Lulus</p>
+                  <p className="text-dashboard-neutral">Sertifikasi</p>
+                </div>
+                <div className="col-md-6 text-right">
+                  <p className="text-dashboard-primary">{row.pendaftar}</p>
+                  <p className="text-dashboard-primary">{row.peserta}</p>
+                  <p className="text-dashboard-primary">{row.lulus}</p>
+                  <p className="text-dashboard-primary">{row.sertifikasi}</p>
+                </div>
               </div>
             </Popup>
           </Marker>
