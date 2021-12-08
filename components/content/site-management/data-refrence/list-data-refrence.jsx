@@ -43,45 +43,54 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1 mb-0"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1 mb-0">
               List Data Reference
             </h3>
             <div className="d-flex flex-wrap align-items-center">
-              <div className="card-toolbar mr-4 mt-2">
-                <Link href="/site-management/reference/tambah-reference-tanpa-relasi">
-                  <a
-                    className="btn btn-rounded-full bg-white"
-                    style={{ color: "#1A4367" }}
-                  >
-                    <IconAdd
-                      className="mr-3"
-                      width="14"
-                      height="14"
-                      fill="#1A4367"
-                    />
-                    Tambah Tanpa Relasi
-                  </a>
-                </Link>
-              </div>
-              <div className="card-toolbar mt-2">
-                <Link href="/site-management/reference/tambah-reference-dengan-relasi">
-                  <a className="btn btn-rounded-full bg-blue-primary text-white">
-                    <IconAdd className="mr-3" width="14" height="14" />
-                    Tambah Dengan Relasi
-                  </a>
-                </Link>
-              </div>
+              {localStorage
+                .getItem("permissions")
+                .includes(
+                  "site_management.master-data.master_zonasi.manage"
+                ) && (
+                <div className="card-toolbar mr-4 mt-2">
+                  <Link href="/site-management/reference/tambah-reference-tanpa-relasi">
+                    <a
+                      className="btn btn-rounded-full bg-white"
+                      style={{ color: "#1A4367" }}
+                    >
+                      <IconAdd
+                        className="mr-3"
+                        width="14"
+                        height="14"
+                        fill="#1A4367"
+                      />
+                      Tambah Tanpa Relasi
+                    </a>
+                  </Link>
+                </div>
+              )}
+
+              {localStorage
+                .getItem("permissions")
+                .includes(
+                  "site_management.master-data.master_zonasi.manage"
+                ) && (
+                <div className="card-toolbar mt-2">
+                  <Link href="/site-management/reference/tambah-reference-dengan-relasi">
+                    <a className="btn btn-rounded-full bg-blue-primary text-white">
+                      <IconAdd className="mr-3" width="14" height="14" />
+                      Tambah Dengan Relasi
+                    </a>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
           <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <div
-                    className="d-flex align-items-center w-100"
-                  >
+                  <div className="d-flex align-items-center w-100">
                     <div className="row w-100">
                       <div className="col-12 col-xl-4">
                         <div className="position-relative overflow-hidden w-100">
@@ -100,7 +109,7 @@ const Table = ({ token }) => {
                           />
                           <button
                             type="button"
-                            onClick={(e)=>handleSubmit(e)}
+                            onClick={(e) => handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -134,11 +143,9 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allDataReference.data.list_reference.length === 0 ? (
-                       
-
-                        <td className="align-middle text-center" colSpan="4">Data kosong</td>
-
-
+                        <td className="align-middle text-center" colSpan="4">
+                          Data kosong
+                        </td>
                       ) : (
                         allDataReference.data.list_reference.map(
                           (items, index) => {
@@ -176,9 +183,20 @@ const Table = ({ token }) => {
                                   <div className="d-flex align-items-center">
                                     {items.data_references_relasi_id ? (
                                       <Link
-                                        href={`/site-management/reference/ubah-reference-dengan-relasi?id=${items.id}`} passHref
+                                        href={`/site-management/reference/ubah-reference-dengan-relasi?id=${items.id}`}
+                                        passHref
                                       >
-                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                        <a
+                                          className={`btn btn-link-action bg-blue-secondary position-relative btn-delete ${
+                                            localStorage
+                                              .getItem("permissions")
+                                              .includes(
+                                                "site_management.master-data.master_zonasi.manage"
+                                              )
+                                              ? ""
+                                              : "d-none"
+                                          }`}
+                                        >
                                           <IconPencil width="16" height="16" />
                                           <div className="text-hover-show-hapus">
                                             Ubah
@@ -187,9 +205,20 @@ const Table = ({ token }) => {
                                       </Link>
                                     ) : (
                                       <Link
-                                        href={`/site-management/reference/ubah-reference-tanpa-relasi?id=${items.id}`} passHref
+                                        href={`/site-management/reference/ubah-reference-tanpa-relasi?id=${items.id}`}
+                                        passHref
                                       >
-                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                        <a
+                                          className={`btn btn-link-action bg-blue-secondary position-relative btn-delete ${
+                                            localStorage
+                                              .getItem("permissions")
+                                              .includes(
+                                                "site_management.master-data.master_zonasi.manage"
+                                              )
+                                              ? ""
+                                              : "d-none"
+                                          }`}
+                                        >
                                           <IconPencil width="16" height="16" />
                                           <div className="text-hover-show-hapus">
                                             Ubah
@@ -197,17 +226,23 @@ const Table = ({ token }) => {
                                         </a>
                                       </Link>
                                     )}
-
-                                    <Link
-                                      href={`/site-management/reference/detail-reference?id=${items.id}`} passHref
-                                    >
-                                      <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
-                                        <IconEye width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Detail
-                                        </div>
-                                      </a>
-                                    </Link>
+                                    {localStorage
+                                      .getItem("permissions")
+                                      .includes(
+                                        "site_management.master-data.master_zonasi.view"
+                                      ) && (
+                                      <Link
+                                        href={`/site-management/reference/detail-reference?id=${items.id}`}
+                                        passHref
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
+                                          <IconEye width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Detail
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    )}
                                   </div>
                                 </td>
                               </tr>

@@ -40,7 +40,7 @@ const Table = ({ token }) => {
                 <Link
                   href={`/site-management/user/peserta-dts/ubah-peserta-dts/${item.user_id}`}
                 >
-                  <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                  <a className={`btn btn-link-action bg-blue-secondary position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.manage")}`}>
                     <IconPencil width="16" height="16" />
                     <div className="text-hover-show-hapus">Ubah</div>
                   </a>
@@ -48,7 +48,7 @@ const Table = ({ token }) => {
                 <Link
                   href={`/site-management/user/peserta-dts/detail-peserta-dts/${item.user_id}`}
                 >
-                  <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
+                  <a className={`btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.view")}`}>
                     <IconEye width="16" height="16" />
                     <div className="text-hover-show-hapus">Detail</div>
                   </a>

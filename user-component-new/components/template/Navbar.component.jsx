@@ -89,7 +89,22 @@ const Navigationbar = ({ session }) => {
     } catch (error) {}
   };
 
+  const getMenu = async (token) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+    } catch (error) {}
+  };
+
   useEffect(() => {
+    getMenu()
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
     }
@@ -333,6 +348,31 @@ const Navigationbar = ({ session }) => {
                     Kontak
                   </NavDropdown.Item>
                 </Link>
+                <div className="btn-group dropright w-100">
+                  <a
+                    type="button"
+                    className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Lainnya
+                  </a>
+                  <div className="dropdown-menu ml-3">
+                    <Link href="/berita">
+                      <a className="dropdown-item navdropdown-child">Berita</a>
+                    </Link>
+                    <Link href="/artikel">
+                      <a className="dropdown-item navdropdown-child">Artikel</a>
+                    </Link>
+                    <Link href="/galeri">
+                      <a className="dropdown-item navdropdown-child">Galeri</a>
+                    </Link>
+                    <Link href="/video">
+                      <a className="dropdown-item navdropdown-child">Video</a>
+                    </Link>
+                  </div>
+                </div>
               </NavDropdown>
             </div>
             {/* END MENU */}
@@ -675,6 +715,68 @@ const Navigationbar = ({ session }) => {
               </Col>
               <Col className="mb-8" sm={12}>
                 <Link href="/kontak">Kontak</Link>
+              </Col>
+              <Col sm={12}>
+                <Dropdown color="white">
+                  <Dropdown.Toggle
+                    id="dropdown-basic"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "transparent",
+                      color: "#6C6C6C",
+                      fontSize: "14px",
+                    }}
+                    className="p-0"
+                  >
+                    <div className="d-flex align-items-center justify-content-between p-0 m-0">
+                      Lainnya
+                      <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
+                    </div>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
+                    <Fragment>
+                      <div
+                        onClick={() => {
+                          router.push("/berita");
+                        }}
+                        className="p-4 fz-12"
+                      >
+                        Berita
+                      </div>
+                      <hr className="w-100 p-0 m-0" />
+                    </Fragment>
+                    <Fragment>
+                      <div
+                        onClick={() => {
+                          router.push("/artikel");
+                        }}
+                        className="p-4 fz-12"
+                      >
+                        Artikel
+                      </div>
+                      <hr className="w-100 p-0 m-0" />
+                    </Fragment>
+                    <Fragment>
+                      <div
+                        onClick={() => {
+                          router.push("/galeri");
+                        }}
+                        className="p-4 fz-12"
+                      >
+                        Galeri
+                      </div>
+                      <hr className="w-100 p-0 m-0" />
+                    </Fragment>
+                    <div
+                      className="p-4 fz-12"
+                      onClick={() => {
+                        router.push("/video");
+                      }}
+                    >
+                      Video
+                    </div>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Col>
             </Row>
             <hr />
