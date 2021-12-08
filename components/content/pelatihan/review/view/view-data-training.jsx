@@ -310,7 +310,7 @@ const ViewReviewTraining = ({ token }) => {
                 <p className="text-neutral-body mb-2 fz-14">Silabus</p>
                 <p
                   className="fz-16 text-primary"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", textDecoration:'underline' }}
                   onClick={() =>
                     window.open(review.file_path + review.silabus, "_blank")
                   }
