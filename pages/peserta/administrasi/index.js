@@ -65,7 +65,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const session = await getSession({ req });
 
       const middleware = middlewareAuthPesertaSession(session);
-
       if (!middleware.status) {
         return {
           redirect: {
@@ -167,45 +166,47 @@ export const getServerSideProps = wrapper.getServerSideProps(
         const dataDashboard = await store.dispatch(
           getDashboardPeserta(session?.user.user.data.user.token)
         );
-        const status =
-          dataDashboard.data.pelatihan.pelatihan_berjalan.status || "";
+        if (dataDashboard) {
+          const status =
+            dataDashboard.data.pelatihan.pelatihan_berjalan.status || "";
 
-        if (!status || status == "") {
-          success = false;
-        } else if (
-          status.includes("administrasi") &&
-          !status.includes("administrasi akhir")
-        ) {
-          await store.dispatch(
-            getDetailRiwayatPelatihan(
-              dataDashboard.data.pelatihan.pelatihan_berjalan.id,
-              session.user.user.data.user.token
-            )
-          );
-          success = true;
-        } else {
-          //jika gak ada gw cek di riwayat pelatihan ada gak datanya
-          const { data } = await store.dispatch(
-            getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-          );
-          success = false;
-          const list = data.list.filter((item) => {
-            return (
-              item.status.includes("administrasi") &&
-              !item.status.includes("administrasi akhir")
-            );
-          });
-
-          if (list.length == 0 || !list) {
+          if (!status || status == "") {
             success = false;
-          } else {
+          } else if (
+            status.includes("administrasi") &&
+            !status.includes("administrasi akhir")
+          ) {
             await store.dispatch(
               getDetailRiwayatPelatihan(
-                list[0].id,
+                dataDashboard.data.pelatihan.pelatihan_berjalan.id,
                 session.user.user.data.user.token
               )
             );
             success = true;
+          } else {
+            //jika gak ada gw cek di riwayat pelatihan ada gak datanya
+            const { data } = await store.dispatch(
+              getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+            );
+            success = false;
+            const list = data.list.filter((item) => {
+              return (
+                item.status.includes("administrasi") &&
+                !item.status.includes("administrasi akhir")
+              );
+            });
+
+            if (list.length == 0 || !list) {
+              success = false;
+            } else {
+              await store.dispatch(
+                getDetailRiwayatPelatihan(
+                  list[0].id,
+                  session.user.user.data.user.token
+                )
+              );
+              success = true;
+            }
           }
         }
       }
