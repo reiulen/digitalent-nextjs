@@ -134,11 +134,11 @@ const SubtansiUser = ({ token }) => {
   }, [data, random_subtance_question_detail]);
 
   const secondsToTime = (secs) => {
-    var hours = Math.floor(secs / (60 * 60));
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
+    let hours = Math.floor(secs / (60 * 60));
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
     return {
       h: hours,
       m: minutes,
@@ -688,7 +688,7 @@ const SubtansiUser = ({ token }) => {
         </ModalHeader>
         <ModalBody className={styles.bodyKonfirmasi}>
           Apakah anda ingin menyelesaikan Test Substansi dan mengirim semua
-          hasil jawaban anda?Jika “Ya” maka anda sudah dinyatakan selesai
+          hasil jawaban anda?Jika “Selesai” maka anda sudah dinyatakan selesai
           mengikuti Test Substansi, dan anda tidak dapat memperbaiki jawaban
           anda. <br />
           <br />

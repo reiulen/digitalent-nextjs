@@ -10,7 +10,7 @@ export default function ChatBot() {
   return (
     <div className={`${style.Chatbot_container} shadow`}>
       <div
-        className={`${style.chatbot_box} ${style.one} d-flex justify-content-end `}
+        className={`${style.chatbot_box} ${style.one} d-flex  justify-content-end `}
         style={clicked ? { width: "280px" } : {}}
       >
         <button
@@ -36,10 +36,12 @@ export default function ChatBot() {
           >
             {clicked && (
               <div className="d-flex flex-column text-left">
-                <a href="/helpdesk/live-chat" className={`py-2 rounded-full `}>
-                  <i className="ri-question-answer-fill text-primary text-left" />{" "}
-                  Live Chat
-                </a>
+                <Link href="/helpdesk/live-chat">
+                  <a className={`py-2 rounded-full `}>
+                    <i className="ri-question-answer-fill text-primary text-left" />{" "}
+                    Live Chat
+                  </a>
+                </Link>
                 <Link href="/helpdesk/formulir-pengaduan" passHref>
                   <a className={` rounded-full py-2`}>
                     <i className="ri-draft-fill text-primary" />
@@ -56,6 +58,7 @@ export default function ChatBot() {
             height={120}
             src={"/assets/media/ChatBot.png"}
             objectFit="cover"
+            alt="chatbot image"
           />
         </div>
       </div>

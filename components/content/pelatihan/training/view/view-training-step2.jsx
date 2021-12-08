@@ -59,7 +59,6 @@ const ViewTrainingStep2 = () => {
               type={row.element}
               className="form-control"
               required={row.required}
-              disabled
             />
           </div>
         );
@@ -70,12 +69,7 @@ const ViewTrainingStep2 = () => {
             <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
-            <select
-              name=""
-              className="form-control"
-              required={row.required}
-              disabled
-            >
+            <select name="" className="form-control" required={row.required}>
               {row.option === "manual"
                 ? row.dataOption.split(";").map((dat, i) => (
                     <option value={dat} key={i}>
@@ -103,7 +97,6 @@ const ViewTrainingStep2 = () => {
                         className="form-check-input"
                         required={row.required}
                         value={dat}
-                        disabled
                       />
                       <label className="form-check-label">{dat}</label>
                     </div>
@@ -125,7 +118,6 @@ const ViewTrainingStep2 = () => {
               rows="5"
               className="form-control"
               required={row.required}
-              disabled
             />
           </div>
         );
@@ -146,7 +138,6 @@ const ViewTrainingStep2 = () => {
                         className="form-check-input"
                         value={dat}
                         required={row.required}
-                        disabled
                       />
                       <label className="form-check-label">{dat}</label>
                     </div>
@@ -168,7 +159,6 @@ const ViewTrainingStep2 = () => {
                 className="custom-file-input"
                 accept="image/png, image/jpeg , image/jpg"
                 required={row.required}
-                disabled
               />
               <label className="custom-file-label" htmlFor="customFile">
                 Belum ada File
@@ -189,7 +179,6 @@ const ViewTrainingStep2 = () => {
                 className="custom-file-input"
                 accept="application/pdf"
                 required={row.required}
-                disabled
               />
               <label className="custom-file-label" htmlFor="customFile">
                 Belum ada File
@@ -209,7 +198,6 @@ const ViewTrainingStep2 = () => {
               name=""
               className="form-control"
               required={row.required}
-              disabled
             />
           </div>
         );

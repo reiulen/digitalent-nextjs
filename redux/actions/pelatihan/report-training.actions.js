@@ -71,12 +71,14 @@ export const getDetailReportTraining =
 
       const config = {
         params: {
+          search,
           pelatian_id,
           administrasi,
-          peserta: search,
+          peserta,
           sertifikat,
           page,
           limit,
+          substansi,
         },
         headers: {
           Authorization: "Bearer " + token,

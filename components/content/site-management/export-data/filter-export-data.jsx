@@ -36,6 +36,8 @@ const UbahRole = ({ token }) => {
   const [pelatihan, setPelatihan] = useState(null);
   const [provinsi, setProvinsi] = useState(null);
   const [kota, setKota] = useState(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
 
   const drowpdownYear = useSelector((state) => state.drowpdownYear);
   const drowpdownAkademi = useSelector((state) => state.drowpdownAkademi);
@@ -92,7 +94,7 @@ const UbahRole = ({ token }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const data = {
       button_type: 1,
       tahun: tahun ? tahun.label : "",
@@ -119,11 +121,11 @@ const UbahRole = ({ token }) => {
   };
 
   const listFilter =
-    filterExportData?.data?.data?.length > 0 ? (
-      filterExportData.data.data.map((item, index) => {
+    filterExportData?.data?.data?.rows.length > 0 ? (
+      filterExportData.data.data.rows.map((item, index) => {
         return (
           <tr key={index}>
-            <td className="align-middle text-left">{index + 1}</td>
+            <td className="align-middle text-left">{index + limit * (page - 1) + 1}</td>
             <td className="align-middle text-left">
               <h6 className="font-weight-bolder mb-0">{item.nama_peserta}</h6>
               <p className="mb-0">{item.email}</p>
@@ -298,7 +300,7 @@ const UbahRole = ({ token }) => {
                   Pencarian Sukses
                 </h3>
                 <p className="mb-0" style={{ color: "#6C6C6C" }}>
-                  {filterExportData?.data?.data?.length} Total Data
+                  {filterExportData?.data?.data?.total_rows} Total Data
                 </p>
                 <div className="table-responsive mt-10">
                   <table className="table table-separate table-head-custom table-checkable">
@@ -315,52 +317,92 @@ const UbahRole = ({ token }) => {
                     <tbody>{listFilter}</tbody>
                   </table>
                 </div>
+                <div className="row px-4">
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={filterExportData?.data?.data?.limit}
+                      totalItemsCount={filterExportData?.data?.data?.total_rows}
+                      pageRangeDisplayed={2}
+                      onChange={(e) => {
+                        setPage(e);
+                        const data = {
+                          button_type: 0,
+                          tahun: tahun ? tahun.label : "",
+                          akademi: akademi ? akademi.label : "",
+                          tema: tema ? tema.label : "",
+                          penyelenggara: penyelenggara ? penyelenggara.label : "",
+                          pelatihan: pelatihan ? pelatihan.label : "",
+                          provinsi: provinsi ? provinsi.label : "",
+                          kota: kota ? kota.label : "",
+                        };
+                    
+                        dispatch(postFilterExportData(token, data, e, limit));
+                      }}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
 
-                {/* <div className="row px-4">
-                <div className="table-pagination">
-                  pagination
-                
-                </div>
-
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control cursor-pointer pr-2"
-                        id="exampleFormControlSelect2"
-                        defaultValue=""
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data 9 List Data
-                      </p>
+                  <div className="table-total ml-auto mr-4">
+                    <div className="row mt-4">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control cursor-pointer pr-2"
+                          id="exampleFormControlSelect2"
+                          defaultValue=""
+                          style={{
+                            width: "63px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) => {
+                            setLimit(e.target.value);
+                            const data = {
+                              button_type: 0,
+                              tahun: tahun ? tahun.label : "",
+                              akademi: akademi ? akademi.label : "",
+                              tema: tema ? tema.label : "",
+                              penyelenggara: penyelenggara ? penyelenggara.label : "",
+                              pelatihan: pelatihan ? pelatihan.label : "",
+                              provinsi: provinsi ? provinsi.label : "",
+                              kota: kota ? kota.label : "",
+                            };
+                        
+                            dispatch(postFilterExportData(token, data, page, e.target.value));
+                          }}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data {filterExportData?.data?.data?.total_rows} List Data
+                           
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div> */}
                 <div className="form-group row mt-10">
                   <div className="col-sm-12 d-flex justify-content-end">
                     <button
                       type="button"
                       className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                       onClick={(e) => {
-                        handleSubmit(e)
+                        handleSubmit(e);
                       }}
                     >
                       Simpan

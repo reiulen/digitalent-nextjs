@@ -38,7 +38,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const { error: errorPendidikanData, pendidikan } = useSelector(
     (state) => state.dataPendidikan
   );
-
   const {
     error: errorUpdateData,
     loading,
@@ -51,7 +50,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       label: pendidikan.jenjang,
     }) || {
       value: "",
-      label: "",
+      label: "Silahkan Pilih Jenjang Pendidikan",
     }
   );
 
@@ -59,7 +58,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     (pendidikan && pendidikan.asal_pendidikan) || ""
   );
   const [lainya, setLainya] = useState((pendidikan && pendidikan.lainya) || "");
-  const [asalInstitusi, setAsalInstitusi] = useState ((pendidikan && pendidikan.asal_pendidikan) || "" )
+  const [asalInstitusi, setAsalInstitusi] = useState(
+    (pendidikan && pendidikan.asal_pendidikan) || ""
+  );
   const [programStudi, setProgramStudi] = useState(
     (pendidikan && pendidikan.program_studi) || ""
   );
@@ -86,17 +87,18 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   }
 
-  const [showInputCollegeName, setShowInputCollegeName] = useState(false)
+  const [showInputCollegeName, setShowInputCollegeName] = useState(false);
 
   const NoOptionsMessage = (props) => {
     return (
       <components.NoOptionsMessage {...props}>
         <p className="text-left">
-          Silahkan pilih Nama Institusi Pendidikan Lainnya bila Nama Institusi Pendidikan Anda tidak muncul..
+          Silahkan pilih Nama Institusi Pendidikan Lainnya bila Nama Institusi
+          Pendidikan Anda tidak muncul..
         </p>
       </components.NoOptionsMessage>
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     dispatch(getDataAsalSekolah(token));
@@ -136,10 +138,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       });
     });
 
-    optionsAsalSekolah.push({
-      value: "",
-      label: "Nama Institusi Lainnya..",
-    });
+  optionsAsalSekolah.push({
+    value: "",
+    label: "Nama Institusi Lainnya..",
+  });
 
   const searchAsal = (word) => {
     let array = [];
@@ -153,16 +155,14 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   };
 
   const onChangeAsalSekolah = (text) => {
-    if (text === "Nama Institusi Lainnya.."){
-      setShowInputCollegeName(true)
-      setAsalSekolah ("Nama Institusi Lainnya..")
-
+    if (text === "Nama Institusi Lainnya..") {
+      setShowInputCollegeName(true);
+      setAsalSekolah("Nama Institusi Lainnya..");
     } else {
-      setShowInputCollegeName(false)
-      setAsalSekolah(text)
+      setShowInputCollegeName(false);
+      setAsalSekolah(text);
     }
-    
-  }
+  };
 
   const onChangeIjazah = (e) => {
     const type = ["image/jpeg", "image/jpg", "application/pdf"];
@@ -238,7 +238,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         jengjangPendidikan.label === "S2" ||
         jengjangPendidikan.label === "S3"
       ) {
-        if (asal_pendidikan !== "Nama Institusi Lainnya.."){
+        if (asalSekolah !== "Nama Institusi Lainnya..") {
           data = {
             jenjang: jengjangPendidikan.label,
             asal_pendidikan: asalSekolah,
@@ -259,7 +259,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
             ijasah: ijazah,
           };
         }
-        
       }
       dispatch(updateProfilePendidikan(data, token));
       window.scrollTo(0, 0);
@@ -384,7 +383,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -424,7 +423,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 )}
               </Form.Group>
             </Row>
-  
           )}
 
           {/* Jika Asal Sekolah Tidak Ada */}
@@ -443,7 +441,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -483,7 +481,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 )}
               </Form.Group>
             </Row>
-  
           )}
 
           {jengjangPendidikan.label === "D4" && showInputCollegeName === false && (
@@ -501,7 +498,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -542,7 +539,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
             </Row>
           )}
 
-
           {/* Jika Asal Sekolah Tidak Ada */}
           {jengjangPendidikan.label === "D4" && showInputCollegeName === true && (
             <Row>
@@ -559,7 +555,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -616,7 +612,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -673,7 +669,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -730,7 +726,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -787,7 +783,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -827,7 +823,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 )}
               </Form.Group>
             </Row>
-  
           )}
 
           {jengjangPendidikan.label === "S3" && showInputCollegeName === false && (
@@ -845,7 +840,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -902,7 +897,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     options={optionsAsalSekolah}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
-                      onChangeAsalSekolah(e.label)
+                      onChangeAsalSekolah(e.label);
                     }}
                     components={{ NoOptionsMessage }}
                   />
@@ -942,8 +937,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 )}
               </Form.Group>
             </Row>
-  
-          )}     
+          )}
 
           {jengjangPendidikan.label === "TK" && (
             <Form.Group className="mb-3" controlId="formGridAddress1">
@@ -1518,7 +1512,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
             </Row>
           )}
 
-          {jengjangPendidikan.label === "S1"  && showInputCollegeName === false && (
+          {jengjangPendidikan.label === "S1" && showInputCollegeName === false && (
             <Row className="mb-3">
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
@@ -1644,7 +1638,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </Form.Group>
             </Row>
           )}
-
 
           {jengjangPendidikan.label === "S2" && showInputCollegeName === false && (
             <Row className="mb-3">
@@ -1974,7 +1967,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 
               <Form.Group as={Col} md={6} controlId="formGridIjazah">
                 <Form.Label>Unggah Ijazah</Form.Label>
-                <Form.Control 
+                <Form.Control
                   type="file"
                   className="custom-file-input"
                   name="question_image"
@@ -1984,7 +1977,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("ijazah")
                   }
                 />
-                <label className="custom-file-label mt-8 mx-3" htmlFor="customFile">
+                <label
+                  className="custom-file-label mt-8 mx-3"
+                  htmlFor="customFile"
+                >
                   {ijazahName}
                 </label>
                 <label>
@@ -2003,7 +1999,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </Form.Group>
             </Row>
           )}
-
 
           {jengjangPendidikan.label === "D4" && showInputCollegeName === false && (
             <div className="form-group">
@@ -2079,7 +2074,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 
               <Form.Group as={Col} md={6} controlId="formGridIjazah">
                 <Form.Label>Unggah Ijazah</Form.Label>
-                <Form.Control 
+                <Form.Control
                   type="file"
                   className="custom-file-input"
                   name="question_image"
@@ -2089,7 +2084,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("ijazah")
                   }
                 />
-                <label className="custom-file-label mt-8 mx-3" htmlFor="customFile">
+                <label
+                  className="custom-file-label mt-8 mx-3"
+                  htmlFor="customFile"
+                >
                   {ijazahName}
                 </label>
                 <label>
@@ -2183,7 +2181,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 
               <Form.Group as={Col} md={6} controlId="formGridIjazah">
                 <Form.Label>Unggah Ijazah</Form.Label>
-                <Form.Control 
+                <Form.Control
                   type="file"
                   className="custom-file-input"
                   name="question_image"
@@ -2193,7 +2191,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("ijazah")
                   }
                 />
-                <label className="custom-file-label mt-8 mx-3" htmlFor="customFile">
+                <label
+                  className="custom-file-label mt-8 mx-3"
+                  htmlFor="customFile"
+                >
                   {ijazahName}
                 </label>
                 <label>
@@ -2287,7 +2288,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 
               <Form.Group as={Col} md={6} controlId="formGridIjazah">
                 <Form.Label>Unggah Ijazah</Form.Label>
-                <Form.Control 
+                <Form.Control
                   type="file"
                   className="custom-file-input"
                   name="question_image"
@@ -2297,7 +2298,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("ijazah")
                   }
                 />
-                <label className="custom-file-label mt-8 mx-3" htmlFor="customFile">
+                <label
+                  className="custom-file-label mt-8 mx-3"
+                  htmlFor="customFile"
+                >
                   {ijazahName}
                 </label>
                 <label>
@@ -2391,7 +2395,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 
               <Form.Group as={Col} md={6} controlId="formGridIjazah">
                 <Form.Label>Unggah Ijazah</Form.Label>
-                <Form.Control 
+                <Form.Control
                   type="file"
                   className="custom-file-input"
                   name="question_image"
@@ -2401,7 +2405,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     simpleValidator.current.showMessageFor("ijazah")
                   }
                 />
-                <label className="custom-file-label mt-8 mx-3" htmlFor="customFile">
+                <label
+                  className="custom-file-label mt-8 mx-3"
+                  htmlFor="customFile"
+                >
                   {ijazahName}
                 </label>
                 <label>
@@ -2420,7 +2427,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </Form.Group>
             </Row>
           )}
-
         </div>
         {!wizzard ? (
           <div className="button-aksi mt-5 float-right">

@@ -82,6 +82,7 @@ export const getRandomTriviaQuestionDetail =
           Authorization: "Bearer " + token,
         },
       };
+
       const { data } = await axios.get(link, config);
 
       dispatch({
@@ -91,7 +92,7 @@ export const getRandomTriviaQuestionDetail =
     } catch (error) {
       dispatch({
         type: TRIVIA_QUESTION_RANDOM_DETAIL_FAIL,
-        payload: error.response.data.message,
+        payload: error.response.data.message || error.message,
       });
     }
   };

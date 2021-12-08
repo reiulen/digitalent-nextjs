@@ -52,11 +52,7 @@ const LoginAdmin = () => {
         setLoading(false);
       } else {
         setLoading(false);
-        if (data.role === "admin") {
-          router.push("/dashboard");
-        } else {
-          router.push("/partnership/user/kerjasama");
-        }
+
         // GET ROLES
         const setData = {
           email: email,
@@ -76,6 +72,12 @@ const LoginAdmin = () => {
               router.push(
                 "/subvit?page_substansi=1&page_trivia=1&page_survey=1"
               );
+            } else {
+              if (data.role === "admin") {
+                router.push("/dashboard");
+              } else {
+                router.push("/partnership/user/kerjasama");
+              }
             }
           });
       }

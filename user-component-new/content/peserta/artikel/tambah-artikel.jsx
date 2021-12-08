@@ -330,7 +330,7 @@ const TambahArtikelPeserta = ({ session }) => {
                       <option value="" selected disabled>
                         Pilih Kategori
                       </option>
-                      {allKategori.kategori.kategori.map((item) => {
+                      {allKategori.kategori?.kategori.map((item) => {
                         if (item.jenis_kategori === "Artikel")
                           return (
                             <option value={item.id} key={item.id}>

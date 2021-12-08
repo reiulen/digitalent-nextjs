@@ -61,27 +61,27 @@ const Alamat = ({ token }) => {
             <p className="text-neutral-body my-1">
               Alamat Domisili (Sesuai KTP)
             </p>
-            <p>{(alamat && alamat.address_ktp) || "-"}</p>
+            <p>{(alamat && alamat.address) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Provinsi</p>
-            <p>{(alamat && alamat.provinsi_ktp) || "-"}</p>
+            <p>{(alamat && alamat.provinsi) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Kota</p>
-            <p>{(alamat && alamat.kota_ktp) || "-"}</p>
+            <p>{(alamat && alamat.kota) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Kecamatan</p>
-            <p>{(alamat && alamat.kecamatan_ktp) || "-"}</p>
+            <p>{(alamat && alamat.kecamatan) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Desa / Kelurahan</p>
-            <p>{(alamat && alamat.kelurahan_ktp) || "-"}</p>
+            <p>{(alamat && alamat.kelurahan) || "-"}</p>
           </Col>
         </Row>
         <Row>

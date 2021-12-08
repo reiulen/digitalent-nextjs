@@ -54,7 +54,6 @@ export default function ListPesertaID({ token }) {
         formData.append("certificate", data);
         const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/${certificate?.data?.pelatihan?.id}`;
         const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
-        console.log(result, "ini result");
         const a = document.createElement("a");
         a.download = `Sertifikat - p12 ${query.name}.png`;
         a.target = "_blank";
