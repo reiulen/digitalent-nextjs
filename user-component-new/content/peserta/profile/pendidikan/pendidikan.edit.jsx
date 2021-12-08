@@ -51,7 +51,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       label: pendidikan.jenjang,
     }) || {
       value: "",
-      label: "",
+      label: "Silahkan Pilih Jenjang Pendidikan",
     }
   );
 

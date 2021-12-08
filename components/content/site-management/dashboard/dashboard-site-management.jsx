@@ -119,7 +119,7 @@ const DashboardSiteManagement = ({ token, user }) => {
                 icon="User.svg"
                 color="#ffffff"
                 titleValue={participant}
-                title="Total Peserta DTS"
+                title="Total User DTS"
                 publishedVal="1"
               />
 

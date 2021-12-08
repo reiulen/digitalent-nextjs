@@ -79,7 +79,6 @@ const IndexForm = ({ token, session }) => {
     }
   }, [view]);
 
-  console.log(dataPelatihan, "ini data pelatihan");
   const showViewForm = () => {
     switch (view) {
       case 1:
