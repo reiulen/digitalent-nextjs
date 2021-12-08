@@ -368,6 +368,7 @@ const VideoPage = () => {
                     gap: "1rem",
                     drag: "free",
                     perPage: 4,
+                    autoWidth: true,
                     breakpoints: {
                       830: {
                         perPage: 2,
@@ -450,6 +451,7 @@ const VideoPage = () => {
                     gap: "1rem",
                     drag: "free",
                     perPage: 4,
+                    autoWidth: true,
                     breakpoints: {
                       830: {
                         perPage: 2,
@@ -537,6 +539,7 @@ const VideoPage = () => {
               gap: "1rem",
               drag: "free",
               perPage: 4,
+              autoWidth: true,
               breakpoints: {
                 830: {
                   perPage: 2,
@@ -622,6 +625,7 @@ const VideoPage = () => {
               gap: "1rem",
               drag: "free",
               perPage: 4,
+              autoWidth: true,
               breakpoints: {
                 830: {
                   perPage: 2,
