@@ -452,13 +452,6 @@ const TambahApi = ({ token }) => {
                   >
                     Akademi
                   </a>
-                  <input
-                    type="radio"
-                    className="left-center-absolute"
-                    checked={typeAccess === "akademi" ? true : false}
-                    name="action"
-                    onChange={() => setTypeAccess("akademi")}
-                  />
                 </li>
                 <li
                   className="nav-item position-relative"
@@ -476,13 +469,6 @@ const TambahApi = ({ token }) => {
                   >
                     Pelatihan
                   </a>
-                  <input
-                    type="radio"
-                    className="left-center-absolute"
-                    checked={typeAccess === "pelatihan" ? true : false}
-                    name="action"
-                    onChange={() => setTypeAccess("pelatihan")}
-                  />
                 </li>
               </ul>
               <div className="tab-content" id="myTabContent">

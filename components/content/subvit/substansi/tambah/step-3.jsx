@@ -308,7 +308,7 @@ const StepThree = ({ token }) => {
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
-                      placeholder="123 "
+                      placeholder="360"
                       onChange={(e) => handleDuration(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")

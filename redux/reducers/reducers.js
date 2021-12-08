@@ -33,7 +33,11 @@ import {
   allBeasiswaKandidatReducer,
   allBeasiswaFilterReducer,
 } from "./dashboard-kabadan/data-peserta/beasiswa.reducers";
-import { allSimonasKandidatReducer } from "./dashboard-kabadan/data-peserta/simonas.reducers";
+import {
+  allSimonasKandidatReducer,
+  allSimonasFilterCompanyReducer,
+  allSimonasFilterStatusReducer,
+} from "./dashboard-kabadan/data-peserta/simonas.reducers";
 // END DASHBOARD KABADAN
 
 // PUBLIKASI
@@ -560,6 +564,7 @@ import { allPencarianReducer } from "./pelatihan/peserta/pencarian.reducer";
 import {
   allDetailPesertaReducer,
   allListPelatihanByPesertaReducer,
+  allListPelatihanPaginationReducer,
   allListPesertaReducer,
 } from "./site-management/user/peserta-dts.reducers";
 import { TTEP12DataReducer } from "./sertifikat/TTE-P12.reducer";
@@ -593,6 +598,8 @@ const reducer = combineReducers({
   beasiswaYear: beasiswaYearReducer,
   // ============= SIMONAS ============
   allSimonasKandidat: allSimonasKandidatReducer,
+  allSimonasFilterCompany: allSimonasFilterCompanyReducer,
+  allSimonasFilterStatus: allSimonasFilterStatusReducer,
   // END DASHBOARD KABADAN
 
   // PUBLIKASI
@@ -806,6 +813,7 @@ const reducer = combineReducers({
   allAcademyList: allAcademyListReducer,
   allListPelatihan: allListPelatihanReducer,
   allListPelatihanByPeserta: allListPelatihanByPesertaReducer,
+  allListPelatihanPagination: allListPelatihanPaginationReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,

@@ -13,6 +13,8 @@ export default function RiwayatPelatihanDetail(props) {
     data: { data },
   } = useSelector((state) => state.sertifikatPeserta);
 
+  console.log(data, "ini data");
+
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
   const [type, setType] = useState(
@@ -99,41 +101,16 @@ export default function RiwayatPelatihanDetail(props) {
                     {data?.data_user?.nomor_registrasi}
                   </div>
                   <div
-                    className={`position-absolute ${
-                      data?.data_sertifikat?.certificate?.background
-                        ? `${style.responsive_date_from}`
-                        : `${style.responsive_date_from_without_background}`
-                    }
-                    } font-weight-boldest zindex-1 responsive-date-text`}
-                  >
-                    {moment(
-                      data?.data_sertifikat?.pelatihan?.pelatihan_mulai
-                    ).format("DD/MM/YY")}{" "}
-                    -{" "}
-                    {moment(
-                      data?.data_sertifikat?.pelatihan?.pelatihan_selesai
-                    ).format("DD/MM/YY")}
-                  </div>
-                  <div
-                    className={`position-absolute ${
-                      data?.data_sertifikat?.certificate?.background
-                        ? `${style.responsive_year}`
-                        : `${style.responsive_year_without_background}`
-                    } font-weight-boldest zindex-1 responsive-date-text`}
-                  >
-                    {data?.data_user?.tahun}
-                  </div>
-                  <div
                     className={`position-absolute w-100 text-center ${
                       data?.data_sertifikat?.certificate?.background
-                        ? `${style.responsive_margin_peserta_1}`
-                        : `${style.responsive_margin_without_background}`
+                        ? ` responsive-margin-peserta-1`
+                        : ` responsive-margin-without-background`
                     } zindex-1`}
                   >
                     <span
                       className={`${style.responsive_font_size_peserta} font-weight-bolder`}
                     >
-                      {data?.data_user?.name}
+                      {data?.data_user?.nama_peserta}
                     </span>
                   </div>
                   <Image

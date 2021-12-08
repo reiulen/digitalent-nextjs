@@ -150,7 +150,7 @@ const SubHeader = () => {
               id="kt_dashboard_daterangepicker_title"
             >
               <div className="p-1">
-                {thisDay} , <span id="jam">{jam}</span>
+                {thisDay}, <span id="jam">{jam}</span>
               </div>
             </span>
           </div>

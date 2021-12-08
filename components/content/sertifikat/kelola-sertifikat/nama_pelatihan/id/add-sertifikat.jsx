@@ -54,6 +54,16 @@ export default function TambahMasterSertifikat({ token }) {
     }
   }, [newCertificate, query.theme_name, query.theme_id, router]);
 
+  console.log(certificate);
+  const [pelatihan, setPelatihan] = useState();
+
+  useEffect(() => {
+    const filter = certificate.data.pelatihan.list.filter(
+      (item) => item.training == query.theme_name
+    );
+    setPelatihan(filter[0]);
+  }, []);
+
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -414,9 +424,8 @@ export default function TambahMasterSertifikat({ token }) {
   const [akademi, setAkademi] = useState();
 
   useEffect(() => {
-    const str = certificate?.data?.tema?.akademi || "- -";
-    const data = acronym(str);
-    setAkademi(data);
+    const str = certificate?.data?.tema?.slug;
+    setAkademi(str);
   }, []);
 
   return (
@@ -508,7 +517,7 @@ export default function TambahMasterSertifikat({ token }) {
                     <div
                       className={`col-12 text-center font-weight-normal p-0 justify-content-center `}
                     >
-                      <label className="font-weight-boldest w-100 responsive-font-size-sertifikat">
+                      <label className="mt-10 font-weight-boldest w-100 responsive-font-size-sertifikat">
                         SERTIFIKAT
                       </label>
                       <div className="w-100">Diberikan kepada</div>
@@ -534,7 +543,7 @@ export default function TambahMasterSertifikat({ token }) {
                         className="text-center font-weight-bolder w-100 "
                         style={{ fontSize: "125%" }}
                       >
-                        {certificate?.data.tema.name || "Tema Sertifikat"}
+                        {query.theme_name || "Nama Pelatihan"}
                       </div>
                       <div className="mt-2 w-100">
                         <span className="w-100">
@@ -545,19 +554,25 @@ export default function TambahMasterSertifikat({ token }) {
                           Selama
                         </span>
                         <span
-                          className="mx-2 px-2 border-2 w-100"
+                          className="px-2 border-2 w-100 font-weight-boldest"
                           style={{ width: "19px" }}
                         >
-                          {tanggal}
+                          {moment(pelatihan?.pelatihan_mulai).format(
+                            "DD/MM/YYYY"
+                          )}{" "}
+                          -{" "}
+                          {moment(pelatihan?.pelatihan_selesai).format(
+                            "DD/MM/YYYY"
+                          )}
                         </span>
                       </div>
                       <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
                         <span
-                          className="mx-2 px-2 border-2"
+                          className="px-2 border-2 font-weight-boldest"
                           style={{ width: "19px" }}
                         >
-                          {tahun}
+                          {moment(pelatihan?.pendaftaran_mulai).format("YYYY")}
                         </span>
                       </div>
                       <div className="my-4 w-100 text-center">

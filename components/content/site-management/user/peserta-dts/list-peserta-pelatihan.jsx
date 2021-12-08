@@ -13,6 +13,7 @@ import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
 import Image from "next/image";
 import IconArrow from "../../../../assets/icon/Arrow";
+import {getPelatihanWithPagination} from '../../../../../redux/actions/site-management/user/peserta-dts'
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -39,13 +40,17 @@ const Table = ({ token }) => {
     (state) => state.allListPelatihanByPeserta
   );
 
+  const allListPelatihanPagination = useSelector(
+    (state) => state.allListPelatihanPagination
+  );
+
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState(null);
 
   const listPelatihan =
-    allListPelatihanByPeserta.data.data !== null ? (
-      allListPelatihanByPeserta.data.data.map((item, index) => {
+    allListPelatihanPagination.data.data.list.length > 0 ? (
+      allListPelatihanPagination.data.data.list.map((item, index) => {
         return (
           <tr key={index}>
             <td className="align-middle text-left">
@@ -55,14 +60,20 @@ const Table = ({ token }) => {
             <td className="align-middle text-left">{item.id}</td>
             <td className="align-middle text-left">
               <div className="position-relative w-max-content">
-                <p className="badge badge-success text-capitalize">{item.status}</p>
+                <p className="badge badge-success text-capitalize">
+                  {item.status}
+                </p>
               </div>
             </td>
             <td className="align-middle text-left">
               <div className="d-flex align-items-center">
                 <button
                   className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                  onClick={() => router.push(`/site-management/role/ubah-role`)}
+                  onClick={() =>
+                    router.push(
+                      `${router.asPath}?ubah_pelatihan_id=${item.id}&id_pendaftaran=${item.id_pendaftaran}`
+                    )
+                  }
                 >
                   <IconPencil width="16" height="16" />
                   <div className="text-hover-show-hapus">Ubah</div>
@@ -70,7 +81,7 @@ const Table = ({ token }) => {
                 <button
                   className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
                   onClick={() =>
-                    router.push(`/site-management/role/detail-role`)
+                    router.push(`${router.asPath}?pelatihan_id=${item.id}`)
                   }
                 >
                   <IconEye width="16" height="16" />
@@ -120,14 +131,18 @@ const Table = ({ token }) => {
                           <input
                             id="kt_datatable_search_query"
                             type="text"
+                            value={search}
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            onChange={(e) =>
+                              setSearch(e.target.value)
+                            }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={e => {
+                              dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, page))  
+                            }}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -155,22 +170,23 @@ const Table = ({ token }) => {
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>{listPelatihan}</tbody>
+                  <tbody>{allListPelatihanPagination.loading ? <td colSpan="8"><LoadingTable /></td> : listPelatihan}</tbody>
                 </table>
               </div>
 
               <div className="row">
                 <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                   <Pagination
-                    activePage={1}
+                    activePage={page}
                     itemsCountPerPage={
-                      5
+                      allListPelatihanPagination.data.data.perPage
                     }
-                    totalItemsCount={
-                     10
-                    }
+                    totalItemsCount={allListPelatihanPagination.data.data.total}
                     pageRangeDisplayed={3}
-                    // onChange={(page) => dispatch(setPage(page))}
+                    onChange={(e) => {
+                      setPage(e);
+                      dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, e))  
+                    }}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
@@ -193,6 +209,10 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={e => {
+                          setLimit(e.target.value)
+                          dispatch(getPelatihanWithPagination(token, router.query.id, search, e.target.value, page))
+                        }}
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -206,7 +226,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {allListPelatihanPagination.data.data.total}{" "}
+                        List Data
                       </p>
                     </div>
                   </div>

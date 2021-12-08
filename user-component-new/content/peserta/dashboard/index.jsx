@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import Cookies from "js-cookie";
 import axios from "axios";
+import LoadingTable from "../../../../components/LoadingTable";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
@@ -26,6 +27,8 @@ const Dashboard = ({ session, success }) => {
   //     router.push("/peserta/wizzard");
   //   }
   // }, [success]);
+
+  const [loadingBeasiswa, setLoadingBeasiswa] = useState(true);
 
   const [cardPelatihan, setCardPelatihan] = useState([
     {
@@ -68,7 +71,7 @@ const Dashboard = ({ session, success }) => {
 
   const [simonasData, setSimonasData] = useState([]);
   const [beasiswa, setBeasiswa] = useState([]);
-
+  const [loadingSimonas, setLoadingSimonas] = useState(true);
   const getSimonasData = async () => {
     try {
       const config = {
@@ -81,6 +84,7 @@ const Dashboard = ({ session, success }) => {
         config
       );
       if (data) {
+        setLoadingSimonas(false);
         return setSimonasData(data.data);
       } else {
         return;
@@ -102,6 +106,7 @@ const Dashboard = ({ session, success }) => {
     try {
       const { data } = await axios.get(link, config);
       if (data) {
+        setLoadingBeasiswa(false);
         setBeasiswa(data.data);
       }
     } catch (error) {
@@ -554,60 +559,66 @@ const Dashboard = ({ session, success }) => {
                     </Link>
                   </div>
                 </Card.Title>
-                {simonasData?.map((row, i, arr) => (
-                  <div
-                    key={i}
-                    className={`pekerjaan ${
-                      arr.length - 1 !== i ? "mb-8" : ""
-                    } `}
-                    onClick={() => {
-                      router.push(row?.url);
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="d-flex flex-row">
-                      <Image
-                        src={
-                          !row?.logo
-                            ? "/assets/media/mitra-icon/telkom-1.svg"
-                            : row?.logo
-                        }
-                        objectFit="contain"
-                        width={55}
-                        height={52}
-                        alt={row?.logo}
-                      />
-                      <div className="pekerjaan-pt ml-7">
-                        <p
-                          className={`my-0 text-truncate ${style.dashboar_nameBox}`}
-                          style={{
-                            fontWeight: "600",
-                            fontSize: "16px",
-                            color: "#6C6C6C",
-                          }}
-                        >
-                          {/* Data Sciense */}
-                          {row?.name}
-                        </p>
-                        <p
-                          style={{ fontSize: "14px", color: "#6C6C6C" }}
-                          className={`${style.dashboar_nameBox}`}
-                        >
-                          {row.corporate_name}
-                        </p>
-                      </div>
+                {simonasData && simonasData.length > 0 ? (
+                  simonasData?.map((row, i, arr) => (
+                    <div
+                      key={i}
+                      className={`pekerjaan ${
+                        arr.length - 1 !== i ? "mb-8" : ""
+                      } `}
+                      onClick={() => {
+                        router.push(row?.url);
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="d-flex flex-row">
+                        <Image
+                          src={
+                            !row?.logo
+                              ? "/assets/icon/logo-dts-if-empty.png"
+                              : row?.logo
+                          }
+                          objectFit="cover"
+                          width={55}
+                          height={52}
+                          alt={row?.logo}
+                        />
+                        <div className="pekerjaan-pt ml-7">
+                          <p
+                            className={`my-0 text-truncate ${style.dashboar_nameBox}`}
+                            style={{
+                              fontWeight: "600",
+                              fontSize: "16px",
+                              color: "#6C6C6C",
+                            }}
+                          >
+                            {/* Data Sciense */}
+                            {row?.name}
+                          </p>
+                          <p
+                            style={{ fontSize: "14px", color: "#6C6C6C" }}
+                            className={`${style.dashboar_nameBox}`}
+                          >
+                            {row.corporate_name}
+                          </p>
+                        </div>
 
-                      <div className="pekerjaan-next align-items-center ml-auto">
-                        <Link href="/peserta" passHref>
-                          <i
-                            className="ri-arrow-right-s-line"
-                            style={{ fontSize: "24px", color: "#09121F" }}
-                          ></i>
-                        </Link>
+                        <div className="pekerjaan-next align-items-center ml-auto">
+                          <Link href="/peserta" passHref>
+                            <i
+                              className="ri-arrow-right-s-line"
+                              style={{ fontSize: "24px", color: "#09121F" }}
+                            ></i>
+                          </Link>
+                        </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div>
+                    <LoadingTable loading={loadingSimonas} />
                   </div>
-                ))}
+                )}
               </Card.Body>
             </Card>
           </Col>
@@ -630,66 +641,73 @@ const Dashboard = ({ session, success }) => {
                     </Link>
                   </div>
                 </Card.Title>
-                {beasiswa?.map((row, i, arr) => (
-                  <div
-                    key={i}
-                    className={`pekerjaan ${
-                      arr.length - 1 !== i ? "mb-8" : ""
-                    } `}
-                    onClick={() => {
-                      if (row.type == "luar-negeri") {
-                        router.push(
-                          "https://beasiswa-dev.majapahit.id/beasiswa/luar-negeri"
-                        );
-                      } else {
-                        router.push(
-                          "https://beasiswa-dev.majapahit.id/beasiswa/dalam-negeri"
-                        );
-                      }
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="d-flex align-items-center justify-content-center">
-                      <Image
-                        // src="/assets/media/mitra-icon/logo-itb-1.svg"
-                        src={
-                          !row.logo
-                            ? "/assets/media/mitra-icon/logo-itb-1.svg"
-                            : `${process.env.END_POINT_API_IMAGE_BEASISWA}/${row.logo}`
+                {beasiswa && beasiswa?.length > 0 ? (
+                  beasiswa?.map((row, i, arr) => (
+                    <div
+                      key={i}
+                      className={`pekerjaan ${
+                        arr.length - 1 !== i ? "mb-8" : ""
+                      } `}
+                      onClick={() => {
+                        if (row.type == "luar-negeri") {
+                          router.push(
+                            "https://beasiswa-dev.majapahit.id/beasiswa/luar-negeri"
+                          );
+                        } else {
+                          router.push(
+                            "https://beasiswa-dev.majapahit.id/beasiswa/dalam-negeri"
+                          );
                         }
-                        width={55}
-                        height={55}
-                        objectFit="cover"
-                        alt={row?.name}
-                      />
-                      <div className="pekerjaan-pt ml-7">
-                        <p
-                          className={`my-0 text-truncate ${style.dashboar_nameBox}`}
-                          style={{
-                            fontWeight: "600",
-                            fontSize: "16px",
-                            color: "#6C6C6C",
-                            maxWidth: "14rem",
-                          }}
-                        >
-                          {row.name}
-                        </p>
-                        <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                          S1 psikologi
-                        </p>
-                      </div>
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="d-flex align-items-center justify-content-center">
+                        <Image
+                          // src="/assets/media/mitra-icon/logo-itb-1.svg"
+                          src={
+                            !row.logo
+                              ? "/assets/icon/logo-dts-if-empty.png"
+                              : `${process.env.END_POINT_API_IMAGE_BEASISWA}/${row.logo}`
+                          }
+                          width={55}
+                          height={55}
+                          objectFit="cover"
+                          alt={row?.name}
+                          className="rounded-full"
+                        />
+                        <div className="pekerjaan-pt ml-7">
+                          <p
+                            className={`my-0 text-truncate ${style.dashboar_nameBox}`}
+                            style={{
+                              fontWeight: "600",
+                              fontSize: "16px",
+                              color: "#6C6C6C",
+                              maxWidth: "14rem",
+                            }}
+                          >
+                            {row.name}
+                          </p>
+                          <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
+                            S1 psikologi
+                          </p>
+                        </div>
 
-                      <div className="pekerjaan-next align-items-center ml-auto">
-                        <Link href="" passHref>
-                          <i
-                            className="ri-arrow-right-s-line"
-                            style={{ fontSize: "24px", color: "#09121F" }}
-                          ></i>
-                        </Link>
+                        <div className="pekerjaan-next align-items-center ml-auto">
+                          <Link href="" passHref>
+                            <i
+                              className="ri-arrow-right-s-line"
+                              style={{ fontSize: "24px", color: "#09121F" }}
+                            ></i>
+                          </Link>
+                        </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div>
+                    <LoadingTable loading={loadingBeasiswa} />
                   </div>
-                ))}
+                )}
               </Card.Body>
             </Card>
           </Col>

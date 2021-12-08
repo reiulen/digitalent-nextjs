@@ -43,7 +43,7 @@ export default function Ketentuan(props) {
       setStatusAdmin(parseInt(items.data.data.training_rules.completeFinalAdministrativeStatus))
       setStatusTidakLulus(parseInt(items.data.data.training_rules.statusNotPassedTraining))
       setStatusPelatihan(parseInt(items.data.data.training_rules.noTrainingAccepted))
-      setTotalPelatihan(items.data.data.training_rules.numberOfTraining)
+      setTotalPelatihan({value: items.data.data.training_rules.numberOfTraining, label: `${items.data.data.training_rules.numberOfTraining} pelatihan`})
     })
   }, [props.token])
 
@@ -65,7 +65,7 @@ export default function Ketentuan(props) {
               <Select
                 placeholder="Pilih Pelatihan"
                 options={optionsPelatihan}
-                defaultValue={totalPelatihan}
+                value={totalPelatihan}
                 onChange={(e) => {
                   setTotalPelatihan({ value: e.value, label: e.label });
                 }}
