@@ -129,8 +129,8 @@ const DetailPelatihan = ({ session }) => {
                   <p className="badgess-green">{pelatihan?.Status}</p>
                 </div>
 
-                <Row className="mt-8">
-                  <div className="col-6 col-sm-6 col-md-3">
+                <Row className="mt-5">
+                  <div className="col-6 col-sm-6 col-md-4">
                     <div>
                       <p className="mb-1 fz-14" style={{ color: "#6C6C6C" }}>
                         Registrasi
@@ -169,7 +169,7 @@ const DetailPelatihan = ({ session }) => {
                     </div>
                   </div>
 
-                  <div className="col-6 col-sm-6 col-md-3">
+                  <div className="col-6 col-sm-6 col-md-2">
                     <div className="d-flex align-items-center justify-content-md-end">
                       <ShareOverlay
                         url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
