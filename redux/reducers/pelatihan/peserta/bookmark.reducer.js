@@ -32,8 +32,7 @@ export const getAllBookmarkPesertaReducer = (state = initialStates, action) => {
     case SET_PAGE_VALUE: {
       return {
         ...state,
-        keyword: action.text,
-        page: 1,
+        page: action.text,
       };
     }
 

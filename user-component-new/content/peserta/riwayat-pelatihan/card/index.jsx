@@ -19,7 +19,7 @@ export default function CardTemplateOriginal({ data, session }) {
   const [label, setLabel] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
 
   useEffect(() => {
@@ -65,7 +65,6 @@ export default function CardTemplateOriginal({ data, session }) {
               if (data.status.includes("tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
-                console.log("klik ini");
                 return router.push(`/peserta/test-substansi?id=${data.id}`);
               } else {
                 Cookies.set("id_pelatihan", data.id);

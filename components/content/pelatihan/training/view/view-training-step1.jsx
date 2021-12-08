@@ -365,7 +365,11 @@ const ViewTrainingStep1 = () => {
               <div className="col-md-12">
                 <p className="text-neutral-body mb-2 fz-14">Status Publish</p>
                 <p className="fz-16" style={{ color: "#1f1f1f" }}>
-                  Unlisted
+                  {review.status_publish === "0"
+                    ? "Unpublish"
+                    : review.status_publish === "1"
+                    ? "Publish"
+                    : "Unlisted"}
                 </p>
               </div>
               <div className="col-md-12">
