@@ -119,7 +119,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   }, [errorUpdateData, success, dispatch, funcViewEdit]);
 
   const onChangeKtp = (e) => {
-    const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
+    const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
         if (e.target.files[0].size > 2000000) {
@@ -488,11 +488,12 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Form.Label className={style.label}>Jenis Kelamin</Form.Label>
               <Select
                 className={style.formControl}
-                placeholder={`${
-                  kelamin === "" ? "Silahkan Pilih Jenis Kelamin" : kelamin
-                }`}
                 options={optionsKelamin}
-                defaultValue={{ value: kelamin, label: kelamin }}
+                defaultValue={
+                  !kelamin
+                    ? { label: "Silahkan Pilih Jenis Kelamin", value: "" }
+                    : { value: kelamin, label: kelamin }
+                }
                 onChange={(e) => setKelamin({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
@@ -535,11 +536,12 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Form.Label className={style.label}>Agama</Form.Label>
               <Select
                 className={style.formControl}
-                placeholder={`${
-                  agama === "" ? "Silahkan Pilih Agama" : dataPribadi?.agama
-                }`}
                 options={optionsAgama}
-                defaultValue={{ value: agama, label: agama }}
+                defaultValue={
+                  !agama
+                    ? { label: "Silahkan Pilih Agama", value: "" }
+                    : { value: agama, label: agama }
+                }
                 onChange={(e) => setAgama({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
@@ -708,7 +710,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/png, image/jpeg , image/jpg ,application/pdf"
+                  accept="image/png, image/jpeg , image/jpg"
                   onChange={onChangeKtp}
                   onBlur={() => simpleValidator.current.showMessageFor("ktp")}
                 />
@@ -728,7 +730,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               </div>
             </div>
             <small className="text-muted">
-              * JPG/PNG/PDF (Maksimal ukuran file 2 MB)
+              * JPG/PNG (Maksimal ukuran file 2 MB)
             </small>
           </div>
           {/* <div className="form-group mb-5">
