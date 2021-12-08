@@ -16,6 +16,12 @@ const ListKandidatBeasiswa = ({ token }) => {
   const { loading, error, kandidat } = useSelector(
     (state) => state.allBeasiswaKandidat
   );
+  const {
+    loading: loadingFilter,
+    error: errorFilter,
+    filterData,
+  } = useSelector((state) => state.allBeasiswaFilter);
+  const { all: dataFilter } = filterData;
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -27,6 +33,51 @@ const ListKandidatBeasiswa = ({ token }) => {
   const [stage, setStage] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
+
+  const optionsType = [];
+  if (dataFilter && dataFilter.type && dataFilter.type.length > 0) {
+    dataFilter.type.map((row, i) => {
+      let val = {
+        label: row.value,
+        value: row.value,
+      };
+      optionsType.push(val);
+    });
+  }
+  const optionsCategory = [];
+  if (dataFilter && dataFilter.category && dataFilter.category.length > 0) {
+    dataFilter.category.map((row, i) => {
+      let val = {
+        label: row.value,
+        value: row.value,
+      };
+      optionsCategory.push(val);
+    });
+  }
+  const optionsDestination = [];
+  if (
+    dataFilter &&
+    dataFilter.destination &&
+    dataFilter.destination.length > 0
+  ) {
+    dataFilter.destination.map((row, i) => {
+      let val = {
+        label: row.value,
+        value: row.value,
+      };
+      optionsDestination.push(val);
+    });
+  }
+  const optionsStage = [];
+  if (dataFilter && dataFilter.stage && dataFilter.stage.length > 0) {
+    dataFilter.stage.map((row, i) => {
+      let val = {
+        label: row.value,
+        value: row.value,
+      };
+      optionsStage.push(val);
+    });
+  }
 
   const handleSearch = () => {
     setPage(1);
@@ -62,13 +113,35 @@ const ListKandidatBeasiswa = ({ token }) => {
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
-    dispatch(getAllBeasiswaKandidat(token, pageNumber));
+    dispatch(
+      getAllBeasiswaKandidat(
+        token,
+        pageNumber,
+        search,
+        limit,
+        type !== null ? type.value : null,
+        category !== null ? category.value : null,
+        destination !== null ? destination.value : null,
+        stage !== null ? stage.value : null
+      )
+    );
   };
 
   const handleLimit = (val) => {
     setLimit(val);
     setPage(1);
-    dispatch(getAllBeasiswaKandidat(token, 1, search, val));
+    dispatch(
+      getAllBeasiswaKandidat(
+        token,
+        1,
+        search,
+        val,
+        type !== null ? type.value : null,
+        category !== null ? category.value : null,
+        destination !== null ? destination.value : null,
+        stage !== null ? stage.value : null
+      )
+    );
   };
 
   const handleResetError = () => {
@@ -77,7 +150,6 @@ const ListKandidatBeasiswa = ({ token }) => {
     }
   };
 
-  const options = [{ label: "Buahh", value: "Buah" }];
   return (
     <PageWrapper>
       {error && (
@@ -176,6 +248,7 @@ const ListKandidatBeasiswa = ({ token }) => {
                         <th>Kategori Beasiswa</th>
                         <th>Beasiswa Tujuan</th>
                         <th>Tahap Seleksi</th>
+                        <th>Tipe Beasiswa</th>
                         <th>Status</th>
                       </tr>
                     </thead>
@@ -209,6 +282,9 @@ const ListKandidatBeasiswa = ({ token }) => {
                               <p className="fz-15 mb-0">{row.stage}</p>
                             </td>
                             <td className="align-middle">
+                              <p className="fz-15 mb-0">{row.type || "-"}</p>
+                            </td>
+                            <td className="align-middle">
                               <span className="label label-inline label-light-success font-weight-bold py-5">
                                 {row.status}
                               </span>
@@ -223,23 +299,26 @@ const ListKandidatBeasiswa = ({ token }) => {
             </div>
 
             <div className="row">
-              {kandidat && kandidat.perPage < kandidat.total && (
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={page}
-                    itemsCountPerPage={kandidat.perPage}
-                    totalItemsCount={kandidat.total}
-                    pageRangeDisplayed={3}
-                    onChange={handlePagination}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-              )}
+              {kandidat &&
+                kandidat.list_participant &&
+                kandidat.list_participant.length > 0 &&
+                kandidat.perPage < kandidat.total && (
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={kandidat.perPage}
+                      totalItemsCount={kandidat.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
               {kandidat && kandidat.total > 5 && (
                 <div className="table-total ml-auto">
                   <div className="row">
@@ -299,19 +378,41 @@ const ListKandidatBeasiswa = ({ token }) => {
         <Modal.Body>
           <div className="form-group mb-5">
             <label className="p-0">Tipe Beasiswa</label>
-            <Select options={options} placeholder="Pilih Tipe Beasiswa" />
+            <Select
+              options={optionsType}
+              placeholder="Pilih Tipe Beasiswa"
+              defaultValue={type}
+              onChange={(e) => setType({ label: e.label, value: e.value })}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Kategori Beasiswa</label>
-            <Select options={options} placeholder="Pilih Kategori Beasiswa" />
+            <Select
+              options={optionsCategory}
+              placeholder="Pilih Kategori Beasiswa"
+              defaultValue={category}
+              onChange={(e) => setCategory({ label: e.label, value: e.value })}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Beasiswa Tujuan</label>
-            <Select options={options} placeholder="Pilih Beasiswa Tujuan" />
+            <Select
+              options={optionsDestination}
+              placeholder="Pilih Beasiswa Tujuan"
+              defaultValue={destination}
+              onChange={(e) =>
+                setDestination({ label: e.label, value: e.value })
+              }
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Tahap Seleksi</label>
-            <Select options={options} placeholder="Pilih Tahap Seleksi" />
+            <Select
+              options={optionsStage}
+              placeholder="Pilih Tahap Seleksi"
+              defaultValue={stage}
+              onChange={(e) => setStage({ label: e.label, value: e.value })}
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>

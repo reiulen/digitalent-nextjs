@@ -12,13 +12,6 @@ import moment from "moment";
 
 import {
   getPencarian,
-  setValuePage,
-  searchKeyword,
-  setValueKategoriPeserta,
-  setValueLimit,
-  setValuePelatihanAkhir,
-  setValuePelatihanMulai,
-  setValuePenyelenggara,
   resetFilter,
 } from "../../../../redux/actions/pelatihan/pencarian.action";
 import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
@@ -29,10 +22,10 @@ const Pencarian = ({ session }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { query } = router;
-  const allPencarian = useSelector((state) => state.allPencarian);
+  const allPencarian = useSelector(state => state.allPencarian);
 
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
-    useSelector((state) => state.allPenyelenggaraPeserta);
+    useSelector(state => state.allPenyelenggaraPeserta);
 
   const [filterPenyelenggara, setFilterPenyelenggara] = useState("");
   const [filterKategori, setFilterKategori] = useState("");
@@ -61,7 +54,7 @@ const Pencarian = ({ session }) => {
   }
 
   const customStylesSide = {
-    control: (styles) => ({
+    control: styles => ({
       ...styles,
       borderRadius: "30px",
       paddingLeft: "10px",
@@ -98,7 +91,7 @@ const Pencarian = ({ session }) => {
     router.push(`/pencarian?cari=${router.query.cari || ""}`);
   };
 
-  const handlePagination = (page) => {
+  const handlePagination = page => {
     let data = {
       penyelenggara:
         filterPenyelenggara !== null ? filterPenyelenggara.label : null,
@@ -117,7 +110,7 @@ const Pencarian = ({ session }) => {
     );
   };
 
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -138,7 +131,7 @@ const Pencarian = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(
@@ -166,7 +159,7 @@ const Pencarian = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
           dispatch(
@@ -187,7 +180,6 @@ const Pencarian = ({ session }) => {
       }
     }
   };
-
   return (
     <>
       <HomeWrapper>
@@ -197,7 +189,7 @@ const Pencarian = ({ session }) => {
         <Row>
           <Col md={12}>
             <div className="ml-2 mb-3 title-pelatihan">
-              <h1 className="fw-700 fz-36">Pencarian {router.query.cari}</h1>
+              <h1 className="fw-700 fz-36">Pencarian "{router.query.cari}"</h1>
 
               <div className="mt-5 mt-md-1">
                 <p className="mr-6 fz-18 text-muted fw-400">
@@ -228,23 +220,23 @@ const Pencarian = ({ session }) => {
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Penyelenggara</Form.Label>
                     <Select
-                      ref={(ref) => (selectRefPenyelenggara = ref)}
+                      ref={ref => (selectRefPenyelenggara = ref)}
                       options={optionsPenyelenggara}
                       styles={customStylesSide}
                       placeholder="Pilih Penyelenggara"
                       isClearable
-                      onChange={(e) => setFilterPenyelenggara(e)}
+                      onChange={e => setFilterPenyelenggara(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Kategori Peserta</Form.Label>
                     <Select
-                      ref={(ref) => (selectRefKategoriPeserta = ref)}
+                      ref={ref => (selectRefKategoriPeserta = ref)}
                       options={optionsKategoriPeserta}
                       styles={customStylesSide}
                       placeholder="Pilih Kategori Peserta"
                       isClearable
-                      onChange={(e) => setFilterKategori(e)}
+                      onChange={e => setFilterKategori(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -256,7 +248,7 @@ const Pencarian = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={startDate}
-                      onChange={(e) => {
+                      onChange={e => {
                         setStartDate(e.target.value);
                         setEndDate("");
                         setDisabledDate(false);
@@ -272,7 +264,7 @@ const Pencarian = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
+                      onChange={e => setEndDate(e.target.value)}
                       min={startDate}
                       disabled={disabledDate}
                     />
@@ -327,18 +319,56 @@ const Pencarian = ({ session }) => {
                 ) : (
                   allPencarian?.pelatihan?.list?.map((row, i) => (
                     <Col md={6} className={`col-sm-12 col-md-4 mb-5`} key={i}>
-                      <Card
-                        className="h-100 shadow-sm"
-                        key={i}
-                        onClick={() => {
-                          router.push(`/detail/pelatihan/${row?.id}`);
-                        }}
-                        style={{ cursor: "pointer" }}
-                      >
+                      <Card className="p-0 m-0">
+                        {row.status === "Dibuka" && (
+                          <div className="whishlist position-absolute shadow-none m-5 zindex-5 align-self-end float-right">
+                            <Button
+                              variant="light"
+                              className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
+                            >
+                              <i
+                                className={
+                                  !row.bookmart
+                                    ? `ri-heart-line p-0 zIndex-5`
+                                    : `ri-heart-fill p-0 text-danger zIndex-5`
+                                }
+                                style={{
+                                  color: "#6C6C6C",
+                                }}
+                                onClick={() => {
+                                  if (!session) {
+                                    router.push("/login");
+                                  } else {
+                                    handleBookmark(row);
+                                  }
+                                }}
+                              ></i>
+                            </Button>
+                            <Button
+                              variant="light"
+                              className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                            >
+                              <i
+                                className="ri-share-line p-0"
+                                style={{
+                                  color: "#6C6C6C",
+                                }}
+                              ></i>
+                            </Button>
+                          </div>
+                        )}
+
                         {row.status !== "Dibuka" ? (
                           <CardPelatihanClose row={row} />
                         ) : (
-                          <div>
+                          <Card
+                            className="h-100 shadow-sm"
+                            key={i}
+                            onClick={() => {
+                              router.push(`/detail/pelatihan/${row?.id}`);
+                            }}
+                            style={{ cursor: "pointer" }}
+                          >
                             <div className={`parent-image-pelatihan-new`}>
                               <Image
                                 className={`image-list-pelatihan-new`}
@@ -361,38 +391,6 @@ const Pencarian = ({ session }) => {
                                   >
                                     {row.metode_pelatihan}
                                   </Badge>
-                                </div>
-
-                                <div className="whishlist align-self-end float-right">
-                                  <Button
-                                    variant="light"
-                                    className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
-                                  >
-                                    <i
-                                      className={
-                                        !row.bookmart
-                                          ? `ri-heart-line p-0 zIndex-5`
-                                          : `ri-heart-fill p-0 text-danger zIndex-5`
-                                      }
-                                      style={{
-                                        color: "#6C6C6C",
-                                      }}
-                                      onClick={() => {
-                                        handleBookmark(row);
-                                      }}
-                                    ></i>
-                                  </Button>
-                                  <Button
-                                    variant="light"
-                                    className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
-                                  >
-                                    <i
-                                      className="ri-share-line p-0"
-                                      style={{
-                                        color: "#6C6C6C",
-                                      }}
-                                    ></i>
-                                  </Button>
                                 </div>
                               </div>
                             </Card.ImgOverlay>
@@ -473,7 +471,7 @@ const Pencarian = ({ session }) => {
                                 </div>
                               </div>
                             </Card.Body>
-                          </div>
+                          </Card>
                         )}
                       </Card>
                     </Col>
@@ -488,7 +486,7 @@ const Pencarian = ({ session }) => {
                       itemsCountPerPage={allPencarian?.pelatihan?.perPage}
                       totalItemsCount={allPencarian?.pelatihan?.total}
                       pageRangeDisplayed={3}
-                      onChange={(page) => handlePagination(page)}
+                      onChange={page => handlePagination(page)}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}

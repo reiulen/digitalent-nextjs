@@ -224,10 +224,14 @@ export const getSidebar = (token) => async (dispatch) => {
       payload: data,
     });
 
-    localStorage.setItem("sidebar", JSON.stringify(data.data.menu));
-    localStorage.setItem("token-permission", data.data.tokenPermission);
-    localStorage.setItem("permissions", data.data.permissions);
-  } catch (error) {}
+    localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
+    localStorage.setItem("token-permission", data.data.tokenPermission)
+    localStorage.setItem("permissions", data.data.permissions)
+    Cookies.set("token-permission", data.data.tokenPermission)
+    
+  } catch (error) {
+    
+  }
 };
 
 export const setPage = (page) => {
