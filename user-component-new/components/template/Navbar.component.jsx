@@ -53,13 +53,12 @@ const Navigationbar = ({ session }) => {
     if (!session) {
       return;
     }
-    if (session) {
+    if (session && session.roles[0] == "user") {
       if (
         !dataPribadi || // 👈 null and undefined check
         (dataPribadi && Object.keys(dataPribadi).length === 0)
       ) {
         signOut();
-        // console.log("masuk sini");
       }
     }
 
@@ -112,12 +111,11 @@ const Navigationbar = ({ session }) => {
           },
         }
       );
-
     } catch (error) {}
   };
 
   useEffect(() => {
-    getMenu()
+    getMenu();
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
     }

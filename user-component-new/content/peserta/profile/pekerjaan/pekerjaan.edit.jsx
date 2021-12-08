@@ -112,11 +112,21 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      statusPekerjaan.label === "Tidak Bekerja" ||
-      statusPekerjaan.label === "Bekerja"
-    ) {
-      simpleValidator.current.fields["tahun masuk"] = true;
+    if (statusPekerjaan.label === "Tidak Bekerja") {
+      simpleValidator.current.fields["tahun masuk"] = true; //pelajar
+      simpleValidator.current.fields["sekolah"] = true; //pelajar
+      simpleValidator.current.fields["pekerjaan"] = true; //pekerjaan
+      simpleValidator.current.fields["penghasilan"] = true; //pekerjaan
+      simpleValidator.current.fields["perusahaan"] = true; //pekerjaan
+    }
+    if (statusPekerjaan.label == "Pelajar/Mahasiswa") {
+      simpleValidator.current.fields["pekerjaan"] = true; //pekerjaan
+      simpleValidator.current.fields["penghasilan"] = true; //pekerjaan
+      simpleValidator.current.fields["perusahaan"] = true; //pekerjaan
+    }
+    if (statusPekerjaan.label == "Bekerja") {
+      simpleValidator.current.fields["tahun masuk"] = true; //pelajar
+      simpleValidator.current.fields["sekolah"] = true; //pelajar
     }
     if (simpleValidator.current.allValid()) {
       let data = {};
