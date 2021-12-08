@@ -38,7 +38,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const { error: errorPendidikanData, pendidikan } = useSelector(
     (state) => state.dataPendidikan
   );
-
   const {
     error: errorUpdateData,
     loading,
