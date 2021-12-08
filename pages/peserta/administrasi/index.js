@@ -141,7 +141,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   success = true;
       // }
 
-      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 
       if (query.id) {
