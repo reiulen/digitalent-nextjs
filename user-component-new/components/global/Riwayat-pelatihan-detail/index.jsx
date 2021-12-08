@@ -50,7 +50,7 @@ export default function RiwayatPelatihanDetail({ session }) {
   }, []);
 
   const [truncate, setTruncate] = useState(true);
-
+  console.log(data, "ini data");
   return (
     <PesertaWrapper>
       <Col lg={12} className="px-0">
