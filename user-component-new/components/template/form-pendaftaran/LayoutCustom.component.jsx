@@ -86,7 +86,7 @@ const Layout = ({
           {children}
         </Row>
       </div>
-      {!router.pathname.includes(routerPath) && <Footer />}
+      <Footer />
     </>
   );
 };

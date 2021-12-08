@@ -118,22 +118,17 @@ const DashboardBeasiswa = ({ token }) => {
       dataBeasiwaDalamNegeri.push(val);
     });
   }
+  const dataBeasiwaLuarNegeri = [];
   if (statistikLuar) {
-    statistikLuar.map((row, i) => {});
+    statistikLuar.map((row, i) => {
+      let val = {
+        name: row.category,
+        awardee: row.type.awardee,
+        pendaftar: row.type.pendaftar,
+      };
+      dataBeasiwaLuarNegeri.push(val);
+    });
   }
-
-  const dataBeasiwaLuarNegeri = [
-    {
-      name: "Skema Reguler",
-      awardee: 2400,
-      pendaftar: 2000,
-    },
-    {
-      name: "Skema StuNed",
-      awardee: 2210,
-      pendaftar: 2100,
-    },
-  ];
 
   const dataProvinsiPendaftar = [];
   if (provinsiPendaftar) {
@@ -342,6 +337,7 @@ const DashboardBeasiswa = ({ token }) => {
                     </p>
                     <select
                       className="border-0 p-0"
+                      value={filterPeta}
                       onChange={(e) => {
                         setFilterPeta(e.target.value);
                         dispatch(
@@ -349,8 +345,10 @@ const DashboardBeasiswa = ({ token }) => {
                         );
                       }}
                     >
-                      <option value="2021">2021</option>
-                      <option value="2020">2020</option>
+                      {beasiswaYear &&
+                        beasiswaYear.map((row, i) => (
+                          <option value={row}>{row}</option>
+                        ))}
                     </select>
                   </div>
                 </div>
@@ -426,7 +424,7 @@ const DashboardBeasiswa = ({ token }) => {
                 <div className="card h-100">
                   <div className="card-body pb-3">
                     <StatistikWrapper
-                      title={"Perguruan Tinggi Dalam Negeri Tujuan Beasiswa"}
+                      title={"Tujuan Beasiswa Dalam Negeri"}
                       funcFilterYear={(value) => {
                         setFilterUniversitasDalam(value);
                         dispatch(
@@ -468,7 +466,7 @@ const DashboardBeasiswa = ({ token }) => {
                 <div className="card h-100">
                   <div className="card-body pb-3">
                     <StatistikWrapper
-                      title={"Universitas Luar Negeri Tujuan Beasiswa"}
+                      title={"Tujuan Beasiswa Luar Negeri"}
                       funcFilterYear={(value) => {
                         setFilterUniversitasLuar(value);
                         dispatch(

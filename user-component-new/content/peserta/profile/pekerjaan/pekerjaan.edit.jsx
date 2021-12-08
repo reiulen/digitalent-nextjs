@@ -30,9 +30,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     (state) => state.getAsalSekolah
   );
 
-  const { dataRefPekerjaan } = useSelector(
-    (state) => state.getRefPekerjaan
-  );
+  const { dataRefPekerjaan } = useSelector((state) => state.getRefPekerjaan);
 
   const { error: errorStatusPekerjaan, data: dataStatusPekerjaan } =
     useSelector((state) => state.drowpdownStatusPekerjaan);
@@ -83,13 +81,13 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   }
 
   const optionsDataRefPekerjaan = [];
-  if (dataRefPekerjaan){
-    for (let i = 0; i < dataRefPekerjaan.length; i++){
+  if (dataRefPekerjaan) {
+    for (let i = 0; i < dataRefPekerjaan.length; i++) {
       let obj = {
         value: dataRefPekerjaan[i].id,
         label: dataRefPekerjaan[i].label,
-      }
-      optionsDataRefPekerjaan.push (obj)
+      };
+      optionsDataRefPekerjaan.push(obj);
     }
   }
 
@@ -114,6 +112,12 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (
+      statusPekerjaan.label === "Tidak Bekerja" ||
+      statusPekerjaan.label === "Bekerja"
+    ) {
+      simpleValidator.current.fields["tahun masuk"] = true;
+    }
     if (simpleValidator.current.allValid()) {
       let data = {};
       if (
@@ -188,7 +192,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   useEffect(() => {
     const today = new Date();
     setYear(today.getFullYear());
-    dispatch (getDataRefPekerjaan(token))
+    dispatch(getDataRefPekerjaan(token));
   }, []);
 
   useEffect(() => {
@@ -243,7 +247,9 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Form.Label>Pekerjaan</Form.Label>
                   <div className="position-relative">
                     <Select
-                      placeholder={pekerjaanNama || "Silahkan Masukkan Pekerjaan"}
+                      placeholder={
+                        pekerjaanNama || "Silahkan Masukkan Pekerjaan"
+                      }
                       options={optionsDataRefPekerjaan}
                       selectedValue={pekerjaanNama}
                       onChange={(e) => setPekerjaan(e.label)}

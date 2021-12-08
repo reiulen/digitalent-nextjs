@@ -29,13 +29,16 @@ const Table = ({ token }) => {
   const detailExportData = useSelector((state) => state.detailExportData);
 
   const [valueSearch, setValueSearch] = useState("");
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(5)
+  
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(getDetailsExportData(router.query.id, token, 1, valueSearch, 5));
+    dispatch(getDetailsExportData(router.query.id, token, page, valueSearch, limit));
   };
 
   return (
@@ -43,9 +46,7 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Export Data
             </h3>
           </div>
@@ -101,39 +102,108 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {detailExportData.data?.length === 0 || detailExportData.data === undefined ? (
+                      {detailExportData.data?.rows === null ||
+                      detailExportData.data === undefined ? (
                         <tr>
                           <td colSpan="4" className="text-center">
-                            <h4>Data kosong</h4>
+                            Data kosong
                           </td>
                         </tr>
                       ) : (
-                        detailExportData.data?.map((item, index) => {
+                        detailExportData.data?.rows.map((item, index) => {
                           return (
                             <tr key={index}>
-                            <td className="align-middle text-left">{index + 1}</td>
-                            <td className="align-middle text-left">
-                              <h6 className="font-weight-bolder mb-0">{item.nama_peserta}</h6>
-                              <p className="mb-0">{item.email}</p>
-                              <p>{item.nik}</p>
-                            </td>
-                            <td className="align-middle text-left">
-                              <h6 className="font-weight-bolder mb-0">{item.nama_akademi}</h6>
-                              <p>{item.nama_pelatihan}</p>
-                            </td>
-                            <td className="align-middle text-left">
-                              <h6 className="font-weight-bolder mb-0">
-                                {moment(item.pelatihan_mulai).format("D MMMM YYYY")}
-                              </h6>
-                              <p className="text-capitalize">{item.status_pelatihan}</p>
-                            </td>
-                          </tr>
+                              <td className="align-middle text-left">
+                                {index + limit * (page - 1) + 1}
+                              </td>
+                              <td className="align-middle text-left">
+                                <h6 className="font-weight-bolder mb-0">
+                                  {item.nama_peserta}
+                                </h6>
+                                <p className="mb-0">{item.email}</p>
+                                <p>{item.nik}</p>
+                              </td>
+                              <td className="align-middle text-left">
+                                <h6 className="font-weight-bolder mb-0">
+                                  {item.nama_akademi}
+                                </h6>
+                                <p>{item.nama_pelatihan}</p>
+                              </td>
+                              <td className="align-middle text-left">
+                                <h6 className="font-weight-bolder mb-0">
+                                  {moment(item.pelatihan_mulai).format(
+                                    "D MMMM YYYY"
+                                  )}
+                                </h6>
+                                <p className="text-capitalize">
+                                  {item.status_pelatihan}
+                                </p>
+                              </td>
+                            </tr>
                           );
                         })
                       )}
                     </tbody>
                   </table>
                 )}
+              </div>
+
+              <div className="row px-4">
+                <div className="table-pagination">
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={detailExportData.data.limit}
+                    totalItemsCount={detailExportData.data.total_rows}
+                    pageRangeDisplayed={2}
+                    onChange={(e) => {
+                      setPage(e)
+                      dispatch(getDetailsExportData(router.query.id, token, e, valueSearch, limit));
+                    }}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+
+                <div className="table-total ml-auto mr-4">
+                  <div className="row mt-4">
+                    <div className="col-4 mr-0 p-0">
+                      <select
+                        className="form-control cursor-pointer pr-2"
+                        id="exampleFormControlSelect2"
+                        defaultValue=""
+                        style={{
+                          width: "63px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        onChange={(e) => {
+                          setLimit(e.target.value)
+                          dispatch(getDetailsExportData(router.query.id, token, page, valueSearch, e.target.value));
+
+                        }}
+                      >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto">
+                      <p
+                        className="align-middle mt-3"
+                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                      >
+                        Total Data {detailExportData.data.total_rows} List Data
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* start footer btn */}

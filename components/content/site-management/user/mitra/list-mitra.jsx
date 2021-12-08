@@ -15,8 +15,8 @@ import {
   limitCooporation,
 } from "../../../../../redux/actions/site-management/user/mitra-site.actions";
 
-import styles from "../../../../../styles/previewGaleri.module.css"
-import stylesPag from "../../../../../styles/pagination.module.css"
+import styles from "../../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../../styles/pagination.module.css";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -65,17 +65,25 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header row border-0">
-            <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>
+            <h3
+              className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}
+            >
               List User Mitra
             </h3>
-            <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-              <Link href="/site-management/user/mitra/tambah-mitra" passHref>
-                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Mitra
-                </a>
-              </Link>
-            </div>
+            {localStorage
+              .getItem("permissions")
+              .includes("site_management.user.mitra.manage") && (
+              <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                <Link href="/site-management/user/mitra/tambah-mitra" passHref>
+                  <a
+                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
+                  >
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah Mitra
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="card-body pt-0">
             <div className="table-filter">
@@ -145,8 +153,8 @@ const Table = ({ token }) => {
                                 {allMitraSite.page === 1
                                   ? index + 1
                                   : (allMitraSite.page - 1) *
-                                  allMitraSite.limit +
-                                  (index + 1)}
+                                      allMitraSite.limit +
+                                    (index + 1)}
                               </td>
                               <td className="align-middle text-left">
                                 {!items.agency_logo ? (
@@ -177,16 +185,22 @@ const Table = ({ token }) => {
                                 {items.cooperations_count}
                               </td>
                               <td className="align-middle text-left">
-                                <Link
-                                  href={`/site-management/user/mitra/edit-mitra/${items.id}`}
-                                >
-                                  <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                    <IconPencil width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </a>
-                                </Link>
+                                {localStorage
+                                  .getItem("permissions")
+                                  .includes(
+                                    "site_management.user.mitra.manage"
+                                  ) && (
+                                  <Link
+                                    href={`/site-management/user/mitra/edit-mitra/${items.id}`}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
+                                  </Link>
+                                )}
                               </td>
                             </tr>
                           );

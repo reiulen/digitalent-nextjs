@@ -162,7 +162,7 @@ export const fetchAllMK = token => {
           params,
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -171,7 +171,7 @@ export const fetchAllMK = token => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -218,7 +218,7 @@ export const fetchListSelectMitra = token => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -254,7 +254,7 @@ export const fetchListSelectCooperation = token => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -292,7 +292,7 @@ export const fetchListCooperationSelect = token => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -324,7 +324,7 @@ export const fetchListCooperationSelectById = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -470,7 +470,7 @@ export const fetchDataEmail = token => {
           params,
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -510,7 +510,7 @@ export const deleteCooperation = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -535,7 +535,7 @@ export const getSingleCooperation = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -561,7 +561,7 @@ export const changeStatusList = (token, formData, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -611,7 +611,7 @@ export const exportFileCSV = token => {
           paramssz,
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );
@@ -624,7 +624,7 @@ export const exportFileCSV = token => {
         paramssz,
         headers: {
           authorization: `Bearer ${token}`,
-          permissionToken: localStorage.getItem("token-permission")
+          // permissionToken: localStorage.getItem("token-permission")
         },
       })
         .then(response => response.blob())
@@ -650,7 +650,7 @@ export const rejectCooperation = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            // permissionToken: localStorage.getItem("token-permission")
           },
         }
       );

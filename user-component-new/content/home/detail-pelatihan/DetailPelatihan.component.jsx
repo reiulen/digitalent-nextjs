@@ -29,7 +29,7 @@ const DetailPelatihan = ({ session }) => {
   const { akademiId } = router.query;
 
   const dispatch = useDispatch();
-  const { pelatihan } = useSelector((state) => state.detailPelatihan);
+  const { pelatihan } = useSelector(state => state.detailPelatihan);
 
   useEffect(() => {
     if (pelatihan.Status === "Close") {
@@ -58,7 +58,7 @@ const DetailPelatihan = ({ session }) => {
   };
 
   //disini kurang
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -80,7 +80,7 @@ const DetailPelatihan = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(getDetailPelatihan(router.query.id, session?.token));
@@ -97,7 +97,7 @@ const DetailPelatihan = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
 
@@ -129,8 +129,8 @@ const DetailPelatihan = ({ session }) => {
                   <p className="badgess-green">{pelatihan?.Status}</p>
                 </div>
 
-                <Row className="mt-8">
-                  <div className="col-6 col-sm-6 col-md-3">
+                <Row className="mt-5">
+                  <div className="col-6 col-sm-6 col-md-4">
                     <div>
                       <p className="mb-1 fz-14" style={{ color: "#6C6C6C" }}>
                         Registrasi
@@ -169,7 +169,7 @@ const DetailPelatihan = ({ session }) => {
                     </div>
                   </div>
 
-                  <div className="col-6 col-sm-6 col-md-3">
+                  <div className="col-6 col-sm-6 col-md-2">
                     <div className="d-flex align-items-center justify-content-md-end">
                       <ShareOverlay
                         url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
