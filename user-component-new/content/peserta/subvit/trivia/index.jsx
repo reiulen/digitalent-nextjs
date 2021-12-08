@@ -31,7 +31,48 @@ const SubtansiUser = ({ token }) => {
 
   const router = useRouter();
 
-  const [data, setData] = useState();
+  const initialData = {
+    training: "Leader Tim IT",
+    academy: "Digital Leadersip Academy",
+    theme: "Pelatihan Leader Tim",
+    total_questions: 2,
+    time_left: 37336,
+    list_questions: [
+      {
+        id: 172,
+        trivia_question_bank_id: 66,
+        question: "Polling dulu ga sih",
+        type: "polling",
+        question_image: "",
+        answer:
+          '[{"key":"A","type":"","value":"","option":"Close the door!","image":"trivia\\/images\\/79a97af8-6bc7-4290-ad0b-88f2c7890951.jpeg"},{"key":"B","type":"","value":"","option":"SUUUU","image":"trivia\\/images\\/3a045a49-56a6-423d-8236-f899c8d97895.jpeg"},{"key":"C","type":"","value":"","option":"WWE","image":"trivia\\/images\\/e7a8db31-ea64-437f-acf4-409c3a04e74e.jpeg"},{"key":"D","type":"","value":"","option":"Pelaut","image":"trivia\\/images\\/85d92034-f1e0-43d9-9c7f-3d8e03bca473.jpeg"}]',
+        duration: 1,
+      },
+      {
+        id: 174,
+        trivia_question_bank_id: 66,
+        question: "1 + 1",
+        type: "checkbox",
+        question_image: "",
+        answer:
+          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
+        duration: 1,
+      },
+      {
+        id: 173,
+        trivia_question_bank_id: 66,
+        question: "Polling lg",
+        type: "polling",
+        question_image:
+          "trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg",
+        answer:
+          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
+        duration: 1,
+      },
+    ],
+  };
+
+  const [data, setData] = useState(initialData);
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -53,7 +94,7 @@ const SubtansiUser = ({ token }) => {
   useEffect(() => {
     // Handle Error akan langsung ke done
     if (error) {
-      router.push(`/peserta/done-trivia`);
+      // router.push(`/peserta/done-trivia`);
     }
 
     // Hitung Waktu Mundur
@@ -73,7 +114,8 @@ const SubtansiUser = ({ token }) => {
   }, [count, router]);
 
   useEffect(() => {
-    setData(random_trivia);
+    // setData(random_trivia);
+    setData(initialData);
   }, [data, random_trivia]);
 
   const handleModalSoal = () => {
@@ -445,8 +487,9 @@ const SubtansiUser = ({ token }) => {
                           >
                             <Card
                               className={
-                                localStorage.getItem(router.query.id) ===
-                                item.key
+                                localStorage.getItem(
+                                  router.query.id + "box" + index
+                                ) === item.key
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
