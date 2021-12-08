@@ -24,7 +24,6 @@ import {
 
 import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 
 const SubtansiUser = ({ token }) => {
   const dispatch = useDispatch();
@@ -32,49 +31,48 @@ const SubtansiUser = ({ token }) => {
 
   const router = useRouter();
 
-  // const initialData = [
-  //   {
-  //     id: 3,
-  //     trivia_question_bank_id: 2,
-  //     question: "Tivia Polling Transportasi darat",
-  //     question_image: null,
-  //     type: "poliing",
-  //     answer:
-  //       '[{"key":"A","option":"Kapal","image":null},{"key":"B","option":"Pesawat","image":null},{"key":"C","option":"Mobil","image":null},{"key":"D","option":"Sampan","image":null},{"key":"E","option":"Rakit","image":null}]',
-  //     participant_answer: "A",
-  //   },
-  //   {
-  //     id: 8,
-  //     trivia_question_bank_id: 2,
-  //     question: "Trivia Fill In The Blank Makanan bika ambon berasal dari?",
-  //     question_image: null,
-  //     type: "pertanyaan_terbuka",
-  //     answer: null,
-  //     participant_answer: "medan",
-  //   },
-  //   {
-  //     id: 4,
-  //     trivia_question_bank_id: 2,
-  //     question: "Tivia Polling Makanan bika ambon berasal dari?",
-  //     question_image: null,
-  //     type: "poliing",
-  //     answer:
-  //       '[{"key":"A","option":"Ambon","image":null},{"key":"B","option":"Maluku","image":null},{"key":"C","option":"Jakarta","image":null},{"key":"D","option":"Medan","image":null}]',
-  //     participant_answer: "A",
-  //   },
-  //   {
-  //     id: 6,
-  //     trivia_question_bank_id: 2,
-  //     question: "Trivia Checkbox Makanan bika ambon berasal dari?",
-  //     question_image: null,
-  //     type: "checkbox",
-  //     answer:
-  //       '[{"key":"A","option":"Ambon","image":null,"value":3},{"key":"B","option":"Maluku","image":null,"value":3},{"key":"C","option":"Jakarta","image":null,"value":3},{"key":"D","option":"Medan","image":null,"value":1}]',
-  //     participant_answer: ["A", "B"],
-  //   },
-  // ];
+  const initialData = {
+    training: "Leader Tim IT",
+    academy: "Digital Leadersip Academy",
+    theme: "Pelatihan Leader Tim",
+    total_questions: 2,
+    time_left: 37336,
+    list_questions: [
+      {
+        id: 172,
+        trivia_question_bank_id: 66,
+        question: "Polling dulu ga sih",
+        type: "polling",
+        question_image: "",
+        answer:
+          '[{"key":"A","type":"","value":"","option":"Close the door!","image":"trivia\\/images\\/79a97af8-6bc7-4290-ad0b-88f2c7890951.jpeg"},{"key":"B","type":"","value":"","option":"SUUUU","image":"trivia\\/images\\/3a045a49-56a6-423d-8236-f899c8d97895.jpeg"},{"key":"C","type":"","value":"","option":"WWE","image":"trivia\\/images\\/e7a8db31-ea64-437f-acf4-409c3a04e74e.jpeg"},{"key":"D","type":"","value":"","option":"Pelaut","image":"trivia\\/images\\/85d92034-f1e0-43d9-9c7f-3d8e03bca473.jpeg"}]',
+        duration: 1,
+      },
+      {
+        id: 174,
+        trivia_question_bank_id: 66,
+        question: "1 + 1",
+        type: "checkbox",
+        question_image: "",
+        answer:
+          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
+        duration: 1,
+      },
+      {
+        id: 173,
+        trivia_question_bank_id: 66,
+        question: "Polling lg",
+        type: "polling",
+        question_image:
+          "trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg",
+        answer:
+          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
+        duration: 1,
+      },
+    ],
+  };
 
-  const [data, setData] = useState();
+  const [data, setData] = useState(initialData);
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -84,6 +82,7 @@ const SubtansiUser = ({ token }) => {
   const [modalResponsive, setModalResponsive] = useState(false);
   const [count, setCount] = useState(random_trivia && random_trivia.time_left);
   const [modalDone, setModalDone] = useState(false);
+  const [color, setColor] = useState(false);
 
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
@@ -111,16 +110,9 @@ const SubtansiUser = ({ token }) => {
   }, [count]);
 
   useEffect(() => {
-    // MASIH DIPAKE AKAN DIBUKA SETELAH NO BUGS
     // setData(initialData);
-    setData(random_trivia);
-
-    // axios
-    //   .get("https://run.mocky.io/v3/8d2f8ee5-8871-4b37-979a-0a83762c4e4e")
-    //   .then((res) => {
-    //     setData(res.data.data);
-    //   });
-  }, [data, random_trivia]);
+    // setData(random_trivia);
+  }, [data, initialData, random_trivia]);
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -232,6 +224,14 @@ const SubtansiUser = ({ token }) => {
     setModalDone(false);
   };
 
+  const handleAnswerCheckbox = (e, idx) => {
+    if (e.key.includes(localStorage.getItem(router.query.id + "box" + idx))) {
+      localStorage.removeItem(router.query.id + "box" + idx);
+    } else {
+      localStorage.setItem(router.query.id + "box" + idx, e.key);
+    }
+  };
+
   return (
     <>
       <Container className={styles.baseAll} fluid>
@@ -240,21 +240,21 @@ const SubtansiUser = ({ token }) => {
             <Col xs={12} sm={6} style={{ marginTop: "8px" }}>
               <div className={styles.titleResponsive}>
                 <p className={styles.academy2}>
-                  {(data && data.academy) || "FGA"}
+                  {(data && data.academy) || "-"}
                 </p>
                 <p className={styles.training2}>
-                  {(data && data.theme) || "Golang Programmer"}
+                  {(data && data.theme) || "-"}
                 </p>
               </div>
               <table>
                 <tr>
                   <td className={styles.academy}>
-                    {(data && data.academy) || "FGA"}
+                    {(data && data.academy) || "-"}
                   </td>
 
                   <td>&nbsp;</td>
                   <td className={styles.training}>
-                    {(data && data.theme) || "Golang Programmer"}
+                    {(data && data.theme) || "-"}
                   </td>
                 </tr>
               </table>
@@ -296,9 +296,11 @@ const SubtansiUser = ({ token }) => {
                 </Col>
                 <Col className={styles.align}>
                   {(data &&
+                    data.list_questions &&
                     data.list_questions[parseInt(router.query.id) - 1].type ===
                       "checkbox") ||
                   (data &&
+                    data.list_questions &&
                     data.list_questions[parseInt(router.query.id) - 1].type ===
                       "fill_in_the_blank") ? (
                     <p className={styles.totalSoal2}>
@@ -363,6 +365,10 @@ const SubtansiUser = ({ token }) => {
               </h1>
               <hr />
               {data &&
+                data.list_questions &&
+                data.list_questions[parseInt(router.query.id) - 1].type ===
+                  "polling" &&
+                data &&
                 data.list_questions &&
                 data.list_questions[parseInt(router.query.id) - 1].answer &&
                 JSON.parse(
@@ -440,11 +446,83 @@ const SubtansiUser = ({ token }) => {
                       rows={5}
                       placeholder="Jelaskan jawaban Anda di sini..."
                       className={styles.textArea}
-                      onChange={() => handleAnswerText(event)}
+                      onChange={(event) => handleAnswerText(event)}
                       value={localStorage.getItem(`${router.query.id}`)}
                     />
                   </Form>
                 )}
+
+              {data &&
+                data.list_questions &&
+                data.list_questions[parseInt(router.query.id) - 1].type ===
+                  "checkbox" &&
+                data &&
+                data.list_questions &&
+                data.list_questions[parseInt(router.query.id) - 1].answer &&
+                JSON.parse(
+                  data.list_questions[parseInt(router.query.id) - 1].answer
+                ).map((item, index) => {
+                  return (
+                    <>
+                      {item.image !== null && item.image !== "" ? (
+                        <div className="d-flex flex-row">
+                          <div className="p-2">
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  item.image || defaultImage
+                              }
+                              alt=""
+                              width={70}
+                              height={70}
+                            />
+                          </div>
+                          <div
+                            className="p-4"
+                            style={{ width: "100%", height: "100%" }}
+                          >
+                            <Card
+                              className={
+                                localStorage.getItem(router.query.id) ===
+                                item.key
+                                  ? styles.answer
+                                  : styles.boxAnswer
+                              }
+                              key={index}
+                              onClick={() => handleAnswerCheckbox(item, index)}
+                            >
+                              <table>
+                                <tr>
+                                  <td style={{ width: "5px" }}>{item.key}</td>
+                                  <td style={{ width: "15px" }}>.</td>
+                                  <td>{item.option}</td>
+                                </tr>
+                              </table>
+                            </Card>
+                          </div>
+                        </div>
+                      ) : (
+                        <Card
+                          className={
+                            localStorage.getItem(router.query.id) === item.key
+                              ? styles.answer
+                              : styles.boxAnswer
+                          }
+                          key={index}
+                          onClick={() => handleAnswerCheckbox(item, index)}
+                        >
+                          <table>
+                            <tr>
+                              <td style={{ width: "5px" }}>{item.key}</td>
+                              <td style={{ width: "15px" }}>.</td>
+                              <td>{item.option}</td>
+                            </tr>
+                          </table>
+                        </Card>
+                      )}
+                    </>
+                  );
+                })}
 
               <Row style={{ marginTop: "20px" }}>
                 <Col className={styles.btnBackResponsive}></Col>
@@ -748,7 +826,7 @@ const SubtansiUser = ({ token }) => {
       {/* Modal Konfirmasi */}
       <Modal show={modalDone} onHide={handleCloseModalDone} size="lg">
         <ModalHeader className={styles.headerKonfirmasi}>
-          Selesai Test Substansi
+          Selesai TRIVIA
           <button
             type="button"
             className="close"
@@ -758,14 +836,14 @@ const SubtansiUser = ({ token }) => {
           </button>
         </ModalHeader>
         <ModalBody className={styles.bodyKonfirmasi}>
-          Apakah anda ingin menyelesaikan Test Substansi dan mengirim semua
-          hasil jawaban anda?Jika “Ya” maka anda sudah dinyatakan selesai
-          mengikuti Test Substansi, dan anda tidak dapat memperbaiki jawaban
-          anda. <br />
+          Apakah anda ingin menyelesaikan TRIVIA dan mengirim semua hasil
+          jawaban anda?Jika “Selesai” maka anda sudah dinyatakan selesai
+          mengikuti TRIVIA, dan anda tidak dapat memperbaiki jawaban anda.{" "}
           <br />
-          Dengan ini saya menyatakan sudah menyelesaikan Test Substansi dengan
-          tidak melakukan kecurangan dalam bentuk apapun. Saya bersedia menerima
-          segala keputusan penyelengara terkait hasil Test Substansi.
+          <br />
+          Dengan ini saya menyatakan sudah menyelesaikan TRIVIA dengan tidak
+          melakukan kecurangan dalam bentuk apapun. Saya bersedia menerima
+          segala keputusan penyelengara terkait hasil TRIVIA.
           <br />
           <br />
           <div style={{ textAlign: "right" }}>
@@ -836,6 +914,7 @@ const SubtansiUser = ({ token }) => {
         </ModalBody>
       </Modal>
 
+      {/* Modal Lanjut */}
       <Modal show={modalNext} onHide={() => setModalNext(false)}>
         <ModalHeader className={styles.headerModal}>
           Konfirmasi Jawaban{" "}
