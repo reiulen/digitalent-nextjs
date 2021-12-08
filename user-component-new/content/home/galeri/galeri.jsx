@@ -244,18 +244,20 @@ const Galeri = () => {
 
                     {/* Filter Button */}
                     {
-                        kategori ?
+                        kategoriToShow ?
                             <div
                                 className="col-12 pl-0 ml-4 mt-10 mb-5"
                             >
                                 {
                                     showArrow === null ? <div className="col-12"><PulseLoaderRender /></div> :
                                         showArrow === true ?
-                                            <div style={{ marginLeft: '-17px' }}>
+                                            <div 
+                                                // style={{ marginLeft: '-17px' }} 
+                                            >
                                                 <Splide
                                                     options={{
                                                         arrows: true,
-                                                        pagination: true,
+                                                        pagination: false,
                                                         gap: "1rem",
                                                         drag: "free",
                                                         perPage: 5,
@@ -346,6 +348,7 @@ const Galeri = () => {
                                                         },
                                                     }
                                                 }}
+                                                className="ml-0"
                                             >
                                                 {
                                                     kategoriGaleri === "" ?
