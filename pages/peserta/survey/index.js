@@ -46,8 +46,8 @@ export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Survey " session={session}>
-        {!props.success ? <SurveyPage session={session} /> : <BelumTersedia />}
+      <Layout title="Survey" session={session}>
+        {props.success ? <SurveyPage session={session} /> : <BelumTersedia />}
       </Layout>
     </>
   );
@@ -110,7 +110,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           const list = data.list.filter((item) => {
             return item.status.includes("administrasi akhir");
           });
-
           if (list.length == 0 || !list) {
             success = false;
           } else {
