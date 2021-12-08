@@ -368,7 +368,7 @@ const EditArtikelPeserta = ({ session }) => {
                       simpleValidator.current.showMessageFor("kategori");
                     }}
                   >
-                    {allKategori.kategori.kategori.map((item) => {
+                    {allKategori.kategori?.kategori.map((item) => {
                       if (item.jenis_kategori === "Artikel")
                         return (
                           <option value={item.id} key={item.id}>
