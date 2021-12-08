@@ -102,11 +102,11 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {detailExportData.data?.rows.length === 0 ||
+                      {detailExportData.data?.rows === null ||
                       detailExportData.data === undefined ? (
                         <tr>
                           <td colSpan="4" className="text-center">
-                            <h4>Data kosong</h4>
+                            Data kosong
                           </td>
                         </tr>
                       ) : (
