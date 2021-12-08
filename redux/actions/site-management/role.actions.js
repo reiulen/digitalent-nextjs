@@ -109,10 +109,19 @@ export const postRoles = (sendData, token) => {
         type: POST_ROLES_SUCCESS,
         payload: data,
       });
-      Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
-        window.location = "/site-management/role";
-      });
+
+      if (data.status) {
+        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+          window.location = "/site-management/role";
+        });
+      }else{
+        Swal.fire("Oopss", data.message, "error").then(() => {
+        });
+      }
+
     } catch (error) {
+      Swal.fire("Oopss", "Jika Sub Menu di Pilih, Menu juga harus dipilih !", "error").then(() => {
+      });
       dispatch({
         type: POST_ROLES_FAIL,
       });

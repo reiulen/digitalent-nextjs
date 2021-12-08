@@ -304,7 +304,7 @@ const Galeri = () => {
                                                                             <div
                                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
                                                                                 style={{ cursor: "pointer", height: "40px" }}
-                                                                                onClick={() => handleFilterKategori(el)}
+                                                                                onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
                                                                                 <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -317,7 +317,7 @@ const Galeri = () => {
                                                                             <div
                                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
                                                                                 style={{ cursor: "pointer", height: "40px" }}
-                                                                                onClick={() => handleFilterKategori(el)}
+                                                                                onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
                                                                                 <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -386,7 +386,7 @@ const Galeri = () => {
                                                                         <div
                                                                             className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
                                                                             style={{ cursor: "pointer", height: "40px" }}
-                                                                            onClick={() => handleFilterKategori(el)}
+                                                                            onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
                                                                             <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -399,7 +399,7 @@ const Galeri = () => {
                                                                         <div
                                                                             className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
                                                                             style={{ cursor: "pointer", height: "40px" }}
-                                                                            onClick={() => handleFilterKategori(el)}
+                                                                            onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
                                                                             <div className="my-1 mx-3 py-1 px-3 text-muted">

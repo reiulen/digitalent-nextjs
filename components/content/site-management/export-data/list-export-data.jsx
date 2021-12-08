@@ -72,7 +72,7 @@ const Table = ({ token }) => {
     allExportData.page,
     allExportData.limit,
     token,
-    deleteExportData.isDeleted
+    deleteExportData.isDeleted,
   ]);
 
   return (
@@ -117,16 +117,20 @@ const Table = ({ token }) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="d-flex justify-content-end mt-4">
-                    <Link
-                      href="/site-management/export-data/filter-export-data"
-                      passHref
-                    >
-                      <a className="btn btn-rounded-full bg-blue-secondary text-white">
-                        Filter Data
-                      </a>
-                    </Link>
-                  </div>
+                  {localStorage
+                    .getItem("permissions")
+                    .includes("site_management.export_data.manage") && (
+                    <div className="d-flex justify-content-end mt-4">
+                      <Link
+                        href="/site-management/export-data/filter-export-data"
+                        passHref
+                      >
+                        <a className="btn btn-rounded-full bg-blue-secondary text-white">
+                          Filter Data
+                        </a>
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -176,22 +180,28 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      dispatch(exportFileCSV(items.id, token))
-                                    }
-                                  >
-                                    <Image
-                                      src="/assets/icon/download.svg"
-                                      width={16}
-                                      height={16}
-                                      alt="download"
-                                    />
-                                    <div className="text-hover-show-hapus">
-                                      Unduh
-                                    </div>
-                                  </button>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.export_data.manage"
+                                    ) && (
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                      onClick={() =>
+                                        dispatch(exportFileCSV(items.id, token))
+                                      }
+                                    >
+                                      <Image
+                                        src="/assets/icon/download.svg"
+                                        width={16}
+                                        height={16}
+                                        alt="download"
+                                      />
+                                      <div className="text-hover-show-hapus">
+                                        Unduh
+                                      </div>
+                                    </button>
+                                  )}
 
                                   {/* <button
                             className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
@@ -204,27 +214,38 @@ const Table = ({ token }) => {
                             <IconEye width="16" height="16" />
                             <div className="text-hover-show-hapus">Detail</div>
                           </button> */}
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.export_data.view"
+                                    ) && (
+                                    <Link
+                                      href={`/site-management/export-data/detail-data/${items.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mx-3">
+                                        <IconEye width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
 
-                                  <Link
-                                    href={`/site-management/export-data/detail-data/${items.id}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mx-3">
-                                      <IconEye width="16" height="16" />
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.export_data.manage"
+                                    ) && (
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                      onClick={(e) => handleDelete(e, items.id)}
+                                    >
+                                      <IconDelete width="16" height="16" />
                                       <div className="text-hover-show-hapus">
-                                        Detail
+                                        Hapus
                                       </div>
-                                    </a>
-                                  </Link>
-
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={(e) => handleDelete(e, items.id)}
-                                  >
-                                    <IconDelete width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Hapus
-                                    </div>
-                                  </button>
+                                    </button>
+                                  )}
                                 </div>
                               </td>
                             </tr>
