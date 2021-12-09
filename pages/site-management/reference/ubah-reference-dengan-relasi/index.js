@@ -45,7 +45,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailDataReference(query.id, session.user.user.data.token)
+        getDetailDataReference(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
       await store.dispatch(getAllOptionProvinces(session.user.user.data.token));
       await store.dispatch(getAllOptionReference(session.user.user.data.token));

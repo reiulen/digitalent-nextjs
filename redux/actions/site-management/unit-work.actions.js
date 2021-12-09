@@ -26,7 +26,7 @@ import {
 
 import axios from "axios";
 
-export const getAllUnitWork = (token) => async (dispatch, getState) => {
+export const getAllUnitWork = (token, tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: UNIT_WORK_REQUEST });
 
@@ -46,6 +46,7 @@ export const getAllUnitWork = (token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission,
         },
       }
     );
@@ -118,7 +119,7 @@ export const postUnitWork = (sendData, token) => {
   };
 };
 
-export const getDetailUnitWork = (id, token) => async (dispatch) => {
+export const getDetailUnitWork = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: DETAIL_UNIT_WORK_REQUEST,
@@ -126,6 +127,7 @@ export const getDetailUnitWork = (id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission
       },
     };
 

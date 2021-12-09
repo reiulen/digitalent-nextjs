@@ -16,6 +16,7 @@ import {
   searchCooporation,
   limitCooporation,
 } from "../../../../../redux/actions/site-management/unit-work.actions";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../../styles/pagination.module.css";
@@ -50,7 +51,7 @@ const Table = ({ token }) => {
   );
 
   useEffect(() => {
-    dispatch(getAllUnitWork(token));
+    dispatch(getAllUnitWork(token, Cookies.get("token_permission")));
 
     function handleResize() {
       setWindowDimensions(getWindowDimensions());

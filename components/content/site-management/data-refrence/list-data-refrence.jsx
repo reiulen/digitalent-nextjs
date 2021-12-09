@@ -8,6 +8,7 @@ import IconEye from "../../../assets/icon/Eye";
 import IconPencil from "../../../assets/icon/Pencil";
 import IconAdd from "../../../assets/icon/Add";
 import IconSearch from "../../../assets/icon/Search";
+import Cookies from 'js-cookie'
 
 import {
   getAllDataReference,
@@ -30,7 +31,7 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(getAllDataReference(token));
+    dispatch(getAllDataReference(token, Cookies.get("token_permission")));
   }, [
     dispatch,
     allDataReference.cari,

@@ -9,6 +9,7 @@ import IconAdd from "../../../assets/icon/Add";
 import IconDelete from "../../../assets/icon/Delete";
 import Select from "react-select";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from 'js-cookie'
 
 const Tambah = ({ token }) => {
   const router = useRouter();
@@ -138,6 +139,7 @@ const Tambah = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
           },
         }
       );

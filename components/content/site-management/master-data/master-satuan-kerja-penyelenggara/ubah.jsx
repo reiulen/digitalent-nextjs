@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Select from "react-select";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Cookies from 'js-cookie'
 
 import SimpleReactValidator from "simple-react-validator";
 
@@ -123,6 +124,7 @@ const TambahApi = ({ token }) => {
                 {
                   headers: {
                     authorization: `Bearer ${token}`,
+                    Permission: Cookies.get("token_permission")
                   },
                 }
               );

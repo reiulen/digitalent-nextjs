@@ -26,7 +26,7 @@ import {
 
 import axios from "axios";
 
-export const getAllDataReference = (token) => async (dispatch, getState) => {
+export const getAllDataReference = (token,tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: DATA_REFERENCE_REQUEST });
 
@@ -46,6 +46,7 @@ export const getAllDataReference = (token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission,
         },
       }
     );
@@ -118,7 +119,7 @@ export const postDataReference = (sendData, token) => {
   };
 };
 
-export const getDetailDataReference = (id, token) => async (dispatch) => {
+export const getDetailDataReference = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: DETAIL_DATA_REFERENCE_REQUEST,
@@ -126,6 +127,7 @@ export const getDetailDataReference = (id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission
       },
     };
 

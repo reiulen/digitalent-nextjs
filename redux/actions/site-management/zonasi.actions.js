@@ -119,7 +119,7 @@ export const postZonasi = (sendData, token) => {
   };
 };
 
-export const getDetailZonasi = (id, token) => {
+export const getDetailZonasi = (id, token, tokenPermission) => {
   return async (dispatch) => {
     dispatch({
       type: DETAIL_ZONASI_REQUEST,
@@ -130,6 +130,7 @@ export const getDetailZonasi = (id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );

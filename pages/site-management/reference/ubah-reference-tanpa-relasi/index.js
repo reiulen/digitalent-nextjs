@@ -42,7 +42,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailDataReference(query.id, session.user.user.data.token)
+        getDetailDataReference(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
       return {
         props: {
