@@ -523,7 +523,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                   Tanggal Penandatanganan
                 </label>
 
-                <div className="d-flex align-items-center position-relative datepicker-w">
+                <div className="d-flex align-items-center position-relative datepicker-w" style={{zIndex:"10"}}>
                   <DatePicker
                     className="form-search-date form-control-sm form-control cursor-pointer"
                     onChange={date =>
