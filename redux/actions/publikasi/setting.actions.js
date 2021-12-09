@@ -22,7 +22,7 @@ import {
 
 import axios from "axios";
 
-export const getSettingPublikasi = (token) => async (dispatch) => {
+export const getSettingPublikasi = (token, permission) => async (dispatch) => {
     try {
         dispatch({ type: SETTING_REQUEST });
 
@@ -31,6 +31,7 @@ export const getSettingPublikasi = (token) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
+                permissionToken: permission
             },
         };
 
@@ -49,14 +50,11 @@ export const getSettingPublikasi = (token) => async (dispatch) => {
     }
 }
 
-export const updateSettingImagePublikasi = (settingData, token) => async (dispatch) => {
+export const updateSettingImagePublikasi = (settingData, token, permission) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_SETTING_REQUEST });
 
         let linkImage = process.env.END_POINT_API_PUBLIKASI + `api/settings/size-upload-image`
-        // let linkImagetron = process.env.END_POINT_API_PUBLIKASI + `api/settings/size-upload-imagetron`
-        // let linkSlider = process.env.END_POINT_API_PUBLIKASI + `api/settings/size-slider`
-        // let linkFaq = process.env.END_POINT_API_PUBLIKASI + `api/settings/size-pin-faq`
 
         let params = new URLSearchParams()
         params.append("max_size", settingData)
@@ -64,7 +62,8 @@ export const updateSettingImagePublikasi = (settingData, token) => async (dispat
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                permissionToken: permission
             }
         }
 
@@ -83,7 +82,7 @@ export const updateSettingImagePublikasi = (settingData, token) => async (dispat
     }
 }
 
-export const updateSettingImagetronPublikasi = (settingData, token) => async (dispatch) => {
+export const updateSettingImagetronPublikasi = (settingData, token, permission) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_SETTING_REQUEST });
 
@@ -95,7 +94,8 @@ export const updateSettingImagetronPublikasi = (settingData, token) => async (di
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                permissionToken: permission
             }
         }
 
@@ -114,7 +114,7 @@ export const updateSettingImagetronPublikasi = (settingData, token) => async (di
     }
 }
 
-export const updateSettingSliderPublikasi = (settingData, token) => async (dispatch) => {
+export const updateSettingSliderPublikasi = (settingData, token, permission) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_SETTING_REQUEST });
 
@@ -126,7 +126,8 @@ export const updateSettingSliderPublikasi = (settingData, token) => async (dispa
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                permissionToken: permission
             }
         }
 
@@ -146,7 +147,7 @@ export const updateSettingSliderPublikasi = (settingData, token) => async (dispa
     }
 }
 
-export const updateSettingFaqPublikasi = (settingData, token) => async (dispatch) => {
+export const updateSettingFaqPublikasi = (settingData, token, permission) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_SETTING_REQUEST });
 
@@ -158,7 +159,8 @@ export const updateSettingFaqPublikasi = (settingData, token) => async (dispatch
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                permissionToken: permission
             }
         }
 

@@ -12,7 +12,7 @@ import {
 
 import axios from "axios";
 
-export const getAllDashboardPublikasi = (token) =>
+export const getAllDashboardPublikasi = (token,permission) =>
   async (dispatch) => {
     try {
       dispatch({ type: DASHBOARD_PUBLIKASI_REQUEST });
@@ -20,6 +20,7 @@ export const getAllDashboardPublikasi = (token) =>
       const config = {
         headers: {
           Authorization: 'Bearer ' + token,
+          permissionToken: permission
         },
       };
 
@@ -40,7 +41,7 @@ export const getAllDashboardPublikasi = (token) =>
     }
   };
 
-export const getRoleAdmin = (token) =>
+export const getRoleAdmin = (token,permission) =>
   async (dispatch) => {
     try {
       dispatch({ type: ROLE_ADMIN_REQUEST });
@@ -48,6 +49,7 @@ export const getRoleAdmin = (token) =>
       const config = {
         headers: {
           Authorization: 'Bearer ' + token,
+          permissionToken: permission
         }
       };
 

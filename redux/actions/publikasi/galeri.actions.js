@@ -33,7 +33,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
+export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, startdate = null, enddate = null, token, permission) => async (dispatch) => {
     try {
 
         dispatch({ type: GALERI_REQUEST })
@@ -48,10 +48,11 @@ export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
+                permissionToken: permission
             },
         };
         const { data } = await axios.get(link, config)
-        
+
         dispatch({
             type: GALERI_SUCCESS,
             payload: data
@@ -65,12 +66,13 @@ export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, 
     }
 }
 
-export const getDetailGaleri = (id, token) => async (dispatch) => {
+export const getDetailGaleri = (id, token, permission) => async (dispatch) => {
     try {
 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
+                permissionToken: permission
             },
         };
 
@@ -90,7 +92,7 @@ export const getDetailGaleri = (id, token) => async (dispatch) => {
     }
 }
 
-export const newGaleri = (galeriData, token) => async (dispatch) => {
+export const newGaleri = (galeriData, token, permission) => async (dispatch) => {
     try {
 
         dispatch({
@@ -100,6 +102,7 @@ export const newGaleri = (galeriData, token) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
+                permissionToken: permission
             },
         };
 
@@ -116,18 +119,19 @@ export const newGaleri = (galeriData, token) => async (dispatch) => {
     }
 }
 
-export const updateGaleri = (galeriData, token) => async (dispatch) => {
+export const updateGaleri = (galeriData, token, permission) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_GALERI_REQUEST })
 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
+                permissionToken: permission
             },
         };
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id}`
-        
+
         const { data } = await axios.post(link, galeriData, config)
 
         dispatch({
@@ -143,7 +147,7 @@ export const updateGaleri = (galeriData, token) => async (dispatch) => {
     }
 }
 
-export const deleteGaleri = (id, token) => async (dispatch) => {
+export const deleteGaleri = (id, token, permission) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_GALERI_REQUEST })
@@ -151,6 +155,7 @@ export const deleteGaleri = (id, token) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
+                permissionToken: permission
             },
         };
 
@@ -169,16 +174,17 @@ export const deleteGaleri = (id, token) => async (dispatch) => {
     }
 }
 
-export const viewGaleri = (galeriData, token) => async (dispatch) => {
+export const viewGaleri = (galeriData, token, permission) => async (dispatch) => {
     try {
         dispatch({ type: VIEW_GALERI_REQUEST })
 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
+                permissionToken: permission
             },
         };
-        
+
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/show/${galeriData.id}`
         const { data } = await axios.get(link, config)
 
