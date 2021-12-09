@@ -176,7 +176,7 @@ export default function RiwayatPelatihanDetail({ session }) {
                   <div className="d-flex">
                     <img
                       src={
-                        !data?.gambar_mitra && data?.logo
+                        !data?.gambar_mitra && !data?.logo
                           ? "/assets/media/default-card.png"
                           : data?.logo
                           ? data?.file_path + data?.logo
