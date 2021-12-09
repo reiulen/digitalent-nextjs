@@ -9,7 +9,7 @@ const PaginationDashboard = ({
   funcPagination,
 }) => {
   return (
-    <div className="pagination-global d-flex justify-content-between mt-5 align-items-center flex-wrap">
+    <div className="pagination-global d-flex justify-content-between mt-auto align-items-center flex-wrap">
       <div className="count">
         <p className="text-dashboard-neutral">
           Total:{" "}
@@ -24,7 +24,7 @@ const PaginationDashboard = ({
           activePage={activePage}
           itemsCountPerPage={perPage}
           totalItemsCount={total}
-          pageRangeDisplayed={3}
+          pageRangeDisplayed={2}
           onChange={funcPagination}
           nextPageText={">"}
           prevPageText={"<"}
