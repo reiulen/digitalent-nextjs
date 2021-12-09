@@ -38,7 +38,7 @@ const Table = ({ token }) => {
             <td className="align-middle text-left">
               <div className="d-flex align-items-center">
                 <Link
-                  href={`/site-management/user/peserta-dts/ubah-peserta-dts/${item.user_id}`}
+                  href={`/site-management/user/user-dts/ubah-peserta-dts/${item.user_id}`}
                 >
                   <a className={`btn btn-link-action bg-blue-secondary position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.manage")}`}>
                     <IconPencil width="16" height="16" />
@@ -46,7 +46,7 @@ const Table = ({ token }) => {
                   </a>
                 </Link>
                 <Link
-                  href={`/site-management/user/peserta-dts/detail-peserta-dts/${item.user_id}`}
+                  href={`/site-management/user/user-dts/detail-peserta-dts/${item.user_id}`}
                 >
                   <a className={`btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.view")}`}>
                     <IconEye width="16" height="16" />

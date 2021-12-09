@@ -80,7 +80,7 @@ const Table = ({ token }) => {
                   </div>
                   <div className="mt-4 w-100">
                     <Link
-                      href={`/site-management/user/peserta-dts/ubah-peserta-dts/${router.query.id}`}
+                      href={`/site-management/user/user-dts/ubah-peserta-dts/${router.query.id}`}
                     >
                       <a className="btn btn-outline-primary rounded-full w-100">
                         Ubah Data
