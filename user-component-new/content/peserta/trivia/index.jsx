@@ -72,7 +72,7 @@ const TestSubstansi = () => {
                 <td>
                   {" "}
                   Peserta wajib menjawab seluruh trivia yang berjumlah{" "}
-                  {question}
+                  {question || 50}
                   pertanyaan.
                 </td>
               </tr>
@@ -91,7 +91,8 @@ const TestSubstansi = () => {
                 <td>&nbsp;</td>
                 <td>
                   {" "}
-                  Waktu yang tersedia untuk mengisi trivia ini {time} Menit.
+                  Waktu yang tersedia untuk mengisi trivia ini {time || 5}{" "}
+                  Menit.
                 </td>
               </tr>
             </table>
