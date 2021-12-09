@@ -672,7 +672,7 @@ const Galeri = ({ token }) => {
                         background="bg-light-success"
                         icon="user-white.svg"
                         color="#ffffff"
-                        value="0"
+                        value={galeri && galeri.total_pembaca != "" ? galeri.total_pembaca : 0}
                         titleValue="Orang"
                         title="Total Dilihat"
                         publishedVal=""

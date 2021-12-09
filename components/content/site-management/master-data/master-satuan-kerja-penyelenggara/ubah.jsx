@@ -40,20 +40,22 @@ const TambahApi = ({ token }) => {
   //   }
   // }
 
+
+  // let province = optionTempProvList.filter((items, i) => {
+  //   // for (let j = 0; j < optionTempProv.length; j++) {
+  //   //   if (items.label !== optionTempProv[j].label) {
+  //   //     return { ...items }
+  //   //   }
+  //   // }
+  //   if (items.label !== optionTempProv[0].label) {
+  //     return { ...items }
+  //   }
+  // })
+
   let optionTempProvList = sortirOptionTempProvList.map((items) => {
     return { ...items, value: items.label }
   })
 
-  let province = optionTempProvList.filter((items, i) => {
-    // for (let j = 0; j < optionTempProv.length; j++) {
-    //   if (items.label !== optionTempProv[j].label) {
-    //     return { ...items }
-    //   }
-    // }
-    if (items.label !== optionTempProv[0].label) {
-      return { ...items }
-    }
-  })
 
 
   const [valueProvinsi, setValueProvinsi] = useState([]);

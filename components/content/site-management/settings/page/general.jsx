@@ -97,12 +97,12 @@ const GeneralPage = ({ token }) => {
       return row.link
     })
 
-    if (dataExternal.includes("") || dataExternalLink.includes("")) {
-      Swal.fire("Oops !", "Isi data dengan benar !", "error");
-    } else if (dataSosmedImage.includes("") || dataSosmedName.includes("") || dataSosmedLink.includes("")) {
-      Swal.fire("Oops !", "Isi data dengan benar !", "error");
-    } else {
-      if (simpleValidator.current.allValid()) {
+    if (simpleValidator.current.allValid()) {
+      if (dataExternal.includes("") || dataExternalLink.includes("")) {
+        Swal.fire("Oops !", "Isi data dengan benar !", "error");
+      } else if (dataSosmedImage.includes("") || dataSosmedName.includes("") || dataSosmedLink.includes("")) {
+        Swal.fire("Oops !", "Isi data dengan benar !", "error");
+      } else {
 
         if (description === "") {
           Swal.fire("Oops !", "Isi data dengan benar !", "error");
@@ -168,15 +168,15 @@ const GeneralPage = ({ token }) => {
       }
     }
 
-    // else {
-    //   simpleValidator.current.showMessages();
-    //   forceUpdate(1);
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Oops...",
-    //     text: "Isi data dengan benar !",
-    //   });
-    // }
+    else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
   };
 
   const addExternalLink = () => {

@@ -189,7 +189,7 @@ export const dropdownAkademi = (token, tokenPermission) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: tokenPermission,
+        // permissionToken: tokenPermission,
       },
     };
     const { data } = await axios.get(
@@ -236,7 +236,7 @@ export const dropdownTema = (token, tokenPermission) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: tokenPermission,
+        // permissionToken: tokenPermission,
       },
     };
     const { data } = await axios.get(
