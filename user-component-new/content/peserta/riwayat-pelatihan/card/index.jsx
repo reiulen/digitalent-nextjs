@@ -63,7 +63,7 @@ export default function CardTemplateOriginal({ data, session }) {
                   `/peserta/riwayat-pelatihan/${data.name
                     .split(" ")
                     .join("-")
-                    .toLowerCase()}`
+                    .toLowerCase()}?no=${data.id}`
                 );
               }
               if (data.status.includes("tes substansi")) {

@@ -6,7 +6,10 @@ import { wrapper } from "../../../../redux/store";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
-import { getDetailRiwayatPelatihan } from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import {
+  getAllRiwayatPelatihanPeserta,
+  getDetailRiwayatPelatihan,
+} from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
 import { getDashboardPeserta } from "../../../../redux/actions/pelatihan/dashboard-peserta.actions";
 
@@ -79,16 +82,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 
-      if (query.id) {
+      if (query.no) {
         //jika ada query id
         const data = await store.dispatch(
-          getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
+          getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
         );
         if (data) {
+          const status = data.data.status;
           if (
-            data?.data?.status?.includes(
-              "pelatihan" || "seleksi akhir" || "lpj"
-            )
+            status.includes("seleksi akhir") ||
+            status.includes("pelatihan") ||
+            status.includes("lpj")
           ) {
             success = true;
           } else {
@@ -105,13 +109,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
         if (dataDashboard) {
           const status =
             dataDashboard?.data.pelatihan.pelatihan_berjalan.status || "";
-
           if (!status || status == "") {
             success = false;
           } else if (
-            status?.includes("pelatihan" || "seleksi akhir" || "lpj")
+            status.includes("seleksi akhir") ||
+            status.includes("pelatihan") ||
+            status.includes("lpj")
           ) {
-            await store.dispatch(
+            const data = await store.dispatch(
               getDetailRiwayatPelatihan(
                 dataDashboard?.data.pelatihan.pelatihan_berjalan.id,
                 session.user.user.data.user.token
@@ -125,8 +130,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
             );
             success = false;
             const list = data.list.filter((item) => {
-              return item.status.includes(
-                "pelatihan" || "seleksi akhir" || "lpj"
+              return (
+                item.status.includes("seleksi akhir") ||
+                item.status.includes("pelatihan") ||
+                item.status.includes("lpj")
               );
             });
 
