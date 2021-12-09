@@ -13,6 +13,7 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import Cookies from "js-cookie";
 import axios from "axios";
 import LoadingTable from "../../../../components/LoadingTable";
+import moment from "moment";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
@@ -285,9 +286,7 @@ const Dashboard = ({ session, success }) => {
                     <Card
                       className="shadow rounded-md mt-4"
                       onClick={() => {
-                        router.push(
-                          `/detail/pelatihan/${dataDashboard?.pelatihan.pelatihan_berjalan.id}?akademiId=${dataDashboard.pelatihan.pelatihan_berjalan.akademi_id}`
-                        );
+                        router.push(`/peserta/riwayat-pelatihan`);
                       }}
                       style={{ cursor: "pointer" }}
                     >
