@@ -88,8 +88,8 @@ export default function RiwayatPelatihan({ session }) {
   return (
     <>
       <PesertaWrapper>
-        <Col lg={12} className="px-0">
-          <Card className="card-custom gutter-b">
+        <Col lg={12} className="px-0 ">
+          <Card className="card-custom gutter-b rounded-lg">
             <Card.Body>
               <Row>
                 <Col lg={8}>
@@ -185,7 +185,7 @@ export default function RiwayatPelatihan({ session }) {
           </div>
         )}
         <div className="d-flex justify-content-center mt-8 mb-40">
-          {dataRiwayatPelatihan?.listPelatihan?.total >= 5 && (
+          {dataRiwayatPelatihan?.listPelatihan?.total > 5 && (
             <div className="table-pagination my-auto">
               <Pagination
                 activePage={dataRiwayatPelatihan?.page}

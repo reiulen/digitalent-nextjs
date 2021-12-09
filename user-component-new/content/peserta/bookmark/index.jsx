@@ -14,13 +14,14 @@ import { SweatAlert } from "../../../../utils/middleware/helper/index";
 import Pagination from "react-js-pagination";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import moment from "moment";
 
 export default function Bookmark({ session }) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const allBookmark = useSelector(state => state.allBookmark);
+  const allBookmark = useSelector((state) => state.allBookmark);
 
-  const handleBookmark = async pelatihan => {
+  const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -50,7 +51,7 @@ export default function Bookmark({ session }) {
   useEffect(() => {
     dispatch(getAllBookmark(session?.token));
   }, [dispatch, allBookmark.page]);
-
+  console.log(allBookmark, "ini bookmark");
   return (
     <PesertaWrapper>
       <Row className="my-n10 my-md-0">
@@ -169,10 +170,9 @@ export default function Bookmark({ session }) {
                     <div className={style.bungkus_mitra_pelatihan}>
                       <Image
                         src={
-                          (el.gambar_mitra &&
-                            process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                              el.gambar_mitra) ||
-                          "/assets/media/mitra-default.png"
+                          !el.gambar_mitra
+                            ? "/assets/media/mitra-default.png"
+                            : el.file_path + el.gambar_mitra
                         }
                         width={60}
                         height={60}
@@ -205,20 +205,22 @@ export default function Bookmark({ session }) {
                         )}
                       </div>
                     </div>
-                    <div className="d-flex flex-wrap flex-column">
-                      <p className={`my-0 ${style.title_card}`}>{el.name}</p>
+                    <div className="d-flex flex-wrap ">
+                      <p className={`my-0 ${style.title_card} text-truncate`}>
+                        {el.name}
+                      </p>
                       <p
                         style={{
                           fontSize: "14px",
                           color: "#6C6C6C",
                         }}
-                        className=" text-left"
+                        className=" text-left text-truncate"
                       >
                         {el.akademi}
                       </p>
                     </div>
                     <hr />
-                    <div className="d-flex flex-column">
+                    <div className="d-flex ">
                       <div className="date d-flex align-items-center align-middle">
                         <i className="ri-time-line"></i>
                         <span className={`${style.text_date_register} pl-2`}>
@@ -252,7 +254,7 @@ export default function Bookmark({ session }) {
               itemsCountPerPage={allBookmark?.bookmark?.perPage}
               totalItemsCount={allBookmark?.bookmark?.total}
               pageRangeDisplayed={3}
-              onChange={page => dispatch(setValuePage(page))}
+              onChange={(page) => dispatch(setValuePage(page))}
               nextPageText={">"}
               prevPageText={"<"}
               firstPageText={"<<"}

@@ -25,10 +25,9 @@ export default function CardTemplateOriginal({ data, session }) {
   useEffect(() => {
     helperUserStatusColor(data.status, setLabel);
   }, [data.status]);
-
   return (
     <Fragment>
-      <Card className="position-relative">
+      <Card className="position-relative mb-8 rounded-lg">
         <Button
           variant="white"
           disabled={
@@ -38,11 +37,15 @@ export default function CardTemplateOriginal({ data, session }) {
               ? true
               : false
           }
-          className="p-0"
+          className="p-0  rounded-lg"
         >
           <Card.Body
             onClick={() => {
-              if (data.status.includes("tidak")) return false;
+              if (
+                data.status.includes("tidak") ||
+                data.status.includes("tolak")
+              )
+                return false;
               if (data.status.includes("menunggu jadwal tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
