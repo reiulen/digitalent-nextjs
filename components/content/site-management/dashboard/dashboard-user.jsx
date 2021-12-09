@@ -20,7 +20,7 @@ const DashboardUser = () => {
               icon="/assets/icon/user-light.svg"
               color="text-white"
               title="Peserta"
-              link="/site-management/user/peserta-dts"
+              link="/site-management/user/user-dts"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md">

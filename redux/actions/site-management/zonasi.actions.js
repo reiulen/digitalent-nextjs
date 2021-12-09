@@ -26,7 +26,7 @@ import {
 
 import axios from "axios";
 
-export const getAllZonasi = (token) => async (dispatch, getState) => {
+export const getAllZonasi = (token, tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: ZONASI_REQUEST });
 
@@ -46,6 +46,7 @@ export const getAllZonasi = (token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission,
         },
       }
     );

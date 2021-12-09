@@ -18,7 +18,7 @@ import {
   limitCooporation,
 } from "../../../../../redux/actions/site-management/zonasi.actions";
 import { DELETE_ZONASI_RESET } from "../../../../../redux/types/site-management/zonasi.type";
-
+import Cookies from 'js-cookie'
 import styles from "../../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../../styles/pagination.module.css";
 
@@ -38,7 +38,7 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(getAllZonasi(token));
+    dispatch(getAllZonasi(token, Cookies.get("token_permission")));
   }, [dispatch, allZonasi.cari, allZonasi.page, allZonasi.limit, token]);
 
   return (

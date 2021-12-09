@@ -42,7 +42,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailMitraSite(params.id, session.user.user.data.token)
+        getDetailMitraSite(params.id, session.user.user.data.token, req.cookies.token_permission)
       );
 
       return {

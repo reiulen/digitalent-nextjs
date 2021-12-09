@@ -41,7 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(getAllMitraSite(session.user.user.data.token));
+      await store.dispatch(getAllMitraSite(session.user.user.data.token, req.cookies.token_permission));
 
       return {
         props: { session, title: "List User Mitra - Site Management" },

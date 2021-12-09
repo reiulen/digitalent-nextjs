@@ -21,6 +21,7 @@ import {
   exportFileCSV,
 } from "../../../../redux/actions/site-management/export-data.actions";
 import moment from "moment";
+import Cookies from 'js-cookie'
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -38,7 +39,7 @@ const Table = ({ token }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(getDetailsExportData(router.query.id, token, page, valueSearch, limit));
+    dispatch(getDetailsExportData(router.query.id, token, page, valueSearch, limit, Cookies.get("token_permission")));
   };
 
   return (
@@ -157,7 +158,7 @@ const Table = ({ token }) => {
                     pageRangeDisplayed={2}
                     onChange={(e) => {
                       setPage(e)
-                      dispatch(getDetailsExportData(router.query.id, token, e, valueSearch, limit));
+                      dispatch(getDetailsExportData(router.query.id, token, e, valueSearch, limit, Cookies.get("token_permission")));
                     }}
                     nextPageText={">"}
                     prevPageText={"<"}
@@ -183,7 +184,7 @@ const Table = ({ token }) => {
                         }}
                         onChange={(e) => {
                           setLimit(e.target.value)
-                          dispatch(getDetailsExportData(router.query.id, token, page, valueSearch, e.target.value));
+                          dispatch(getDetailsExportData(router.query.id, token, page, valueSearch, e.target.value, Cookies.get("token_permission")));
 
                         }}
                       >
@@ -218,7 +219,7 @@ const Table = ({ token }) => {
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                     onClick={() =>
-                      dispatch(exportFileCSV(router.query.id, token))
+                      dispatch(exportFileCSV(router.query.id, token, Cookies.get("token_permission")))
                     }
                   >
                     Export Data

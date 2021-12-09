@@ -38,7 +38,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(getDetailRoles(query.id, session.user.user.data.token));
+      await store.dispatch(getDetailRoles(query.id, session.user.user.data.token, req.cookies.token_permission));
       return {
         props: { session, title: "Ubah Role - Site Management" },
       };

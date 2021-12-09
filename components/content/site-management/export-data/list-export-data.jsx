@@ -14,6 +14,7 @@ import AlertBar from "../../partnership/components/BarAlert";
 import Image from "next/image";
 import moment from "moment";
 import Swal from "sweetalert2";
+import Cookies from 'js-cookie'
 
 import {
   getAllExportData,
@@ -44,7 +45,7 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteExportDataAction(id, token));
+        dispatch(deleteExportDataAction(id, token, Cookies.get("token_permission")));
       }
     });
   };
@@ -60,7 +61,7 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(getAllExportData(token));
+    dispatch(getAllExportData(token , Cookies.get("token_permission")));
     if (deleteExportData?.isDeleted) {
       Swal.fire("Berhasil", "Data berhasil dihapus", "success").then(() => {
         dispatch(getAllExportData(token));
@@ -188,7 +189,7 @@ const Table = ({ token }) => {
                                     <button
                                       className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                       onClick={() =>
-                                        dispatch(exportFileCSV(items.id, token))
+                                        dispatch(exportFileCSV(items.id, token, Cookies.get("token_permission")))
                                       }
                                     >
                                       <Image

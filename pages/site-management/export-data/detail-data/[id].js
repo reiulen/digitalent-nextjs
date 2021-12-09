@@ -43,8 +43,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailsExportData(query.id, session.user.user.data.token)
-      );  
+        getDetailsExportData(
+          query.id,
+          session.user.user.data.token,
+          null,
+          null,
+          null,
+          req.cookies.token_permission
+        )
+      );
       return {
         props: {
           session,

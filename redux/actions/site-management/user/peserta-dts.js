@@ -31,7 +31,7 @@ export const getAllListsPeserta =
           params,
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: tokenPermission
+            "Permission": tokenPermission
           },
         }
       );
@@ -57,7 +57,7 @@ export const getAllListsPeserta =
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: tokenPermission
+            "Permission": tokenPermission
           },
         }
       );
@@ -91,7 +91,7 @@ export const getAllListsPeserta =
           },
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: tokenPermission
+            "Permission": tokenPermission
           },
         }
       );
@@ -121,7 +121,7 @@ export const getAllListsPeserta =
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: tokenPermission
+            "Permission": tokenPermission
           },
         }
       );
@@ -139,7 +139,7 @@ export const getAllListsPeserta =
   };
 
   export const updatePesertaDts =
-  (token, datas) =>
+  (token, datas, tokenPermission) =>
   async (dispatch) => {
     try {
       const { data } = await axios.post(
@@ -147,12 +147,13 @@ export const getAllListsPeserta =
         {
           headers: {
             authorization: `Bearer ${token}`,
+            "Permission": tokenPermission
           },
         }
       );
       if(data.status){
         Swal.fire("Berhasil", data.message, "success").then(() => {
-          window.location = "/site-management/user/peserta-dts";
+          window.location = "/site-management/user/user-dts";
         });
 
       }else{
@@ -176,7 +177,7 @@ export const getAllListsPeserta =
         {
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: tokenPermission
+            "Permission": tokenPermission
           },
         }
       );

@@ -9,6 +9,7 @@ import SimpleReactValidator from "simple-react-validator";
 
 import styles from "../../../../../styles/sitemanagement/userMitra.module.css"
 import styles2 from "../../../../../styles/previewGaleri.module.css"
+import Cookies from 'js-cookie'
 
 const TambahApi = ({ token, id }) => {
   const router = useRouter();
@@ -93,6 +94,7 @@ const TambahApi = ({ token, id }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                "Permission" : Cookies.get("token_permission")
               },
             }
           );

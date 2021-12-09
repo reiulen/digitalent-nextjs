@@ -10,6 +10,7 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconDelete from "../../../../assets/icon/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../../styles/sitemanagement/userMitra.module.css"
 import styles2 from "../../../../../styles/previewGaleri.module.css"
@@ -194,6 +195,7 @@ const Tambah = ({ token }) => {
                 {
                   headers: {
                     authorization: `Bearer ${token}`,
+                    Permission: Cookies.get("token_permission")
                   },
                 }
               );

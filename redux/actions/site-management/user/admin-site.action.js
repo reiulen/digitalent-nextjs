@@ -45,7 +45,7 @@ import {
 
 import axios from "axios";
 
-export const getAllAdminSite = (token) => async (dispatch, getState) => {
+export const getAllAdminSite = (token, tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: ADMIN_SITE_REQUEST });
 
@@ -65,6 +65,7 @@ export const getAllAdminSite = (token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          "Permission": tokenPermission
         },
       }
     );
@@ -137,6 +138,7 @@ export const getListRoles =
       });
     }
   };
+
 export const getListUnitWorks = (token) => async (dispatch) => {
   try {
     dispatch({ type: UNIT_WORK_LIST_REQUEST });
@@ -163,6 +165,7 @@ export const getListUnitWorks = (token) => async (dispatch) => {
     });
   }
 };
+
 export const getListAcademy = (token) => async (dispatch) => {
   try {
     dispatch({ type: GET_ACADEMY_REQUEST });
@@ -187,12 +190,13 @@ export const getListAcademy = (token) => async (dispatch) => {
   }
 };
 
-export const deleteAdminSite = (id, token) => async (dispatch) => {
+export const deleteAdminSite = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ADMIN_SITE_REQUEST });
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Permission": tokenPermission
       },
     };
 
@@ -213,12 +217,13 @@ export const deleteAdminSite = (id, token) => async (dispatch) => {
 };
 
 export const updateStatusAdminSite =
-  (id, token, status) => async (dispatch) => {
+  (id, token, status, tokenPermission) => async (dispatch) => {
     try {
       dispatch({ type: UPDATE_STATUS_ADMIN_SITE_REQUEST });
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          "Permission": tokenPermission
         },
       };
 
@@ -268,7 +273,7 @@ export const postAdminSite = (sendData, token) => {
   };
 };
 
-export const getDetailAdminSite = (id, token) => async (dispatch) => {
+export const getDetailAdminSite = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: DETAIL_ADMIN_SITE_REQUEST,
@@ -276,6 +281,7 @@ export const getDetailAdminSite = (id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Permission": tokenPermission
       },
     };
 

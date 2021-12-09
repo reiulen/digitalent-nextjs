@@ -39,7 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(getAllRoles(session.user.user.data.token));
+      await store.dispatch(getAllRoles(session.user.user.data.token, req.cookies.token_permission));
 
       return {
         props: { session, title: "List Role - Site Management" },

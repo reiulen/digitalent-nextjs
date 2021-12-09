@@ -39,21 +39,27 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
           getDetailPesertaManage(
             session.user.user.data.token,
-            query.id
+            query.id,
+            req.cookies.token_permission
           )
         );
 
         await store.dispatch(
           getPelatihanByPeserta(
             session.user.user.data.token,
-            query.id
+            query.id,
+            req.cookies.token_permission
           )
         );
 
         await store.dispatch(
           getPelatihanWithPagination(
             session.user.user.data.token,
-            query.id
+            query.id,
+            null,
+            null,
+            null,
+            req.cookies.token_permission
           )
         );
 

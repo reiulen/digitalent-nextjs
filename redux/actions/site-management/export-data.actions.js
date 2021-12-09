@@ -26,40 +26,42 @@ import {
 
 import axios from "axios";
 
-export const getAllExportData = (token) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: EXPORT_DATA_REQUEST });
+export const getAllExportData =
+  (token, tokenPermission) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: EXPORT_DATA_REQUEST });
 
-    let pageState = getState().allExportData.page || 1;
-    let cariState = getState().allExportData.cari || "";
-    let limitState = getState().allExportData.limit || 5;
+      let pageState = getState().allExportData.page || 1;
+      let cariState = getState().allExportData.cari || "";
+      let limitState = getState().allExportData.limit || 5;
 
-    const params = {
-      page: pageState,
-      cari: cariState,
-      limit: limitState,
-    };
+      const params = {
+        page: pageState,
+        cari: cariState,
+        limit: limitState,
+      };
 
-    const { data } = await axios.get(
-      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/export/all`,
-      {
-        params,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
+      const { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/export/all`,
+        {
+          params,
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
+          },
+        }
+      );
 
-    dispatch({
-      type: EXPORT_DATA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: EXPORT_DATA_FAIL,
-    });
-  }
-};
+      dispatch({
+        type: EXPORT_DATA_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: EXPORT_DATA_FAIL,
+      });
+    }
+  };
 
 export const deleteExportDataAction = (id, token) => async (dispatch) => {
   try {
@@ -88,7 +90,7 @@ export const deleteExportDataAction = (id, token) => async (dispatch) => {
 };
 
 export const getDetailsExportData =
-  (id, token, page = 1, cari = "", limit = 5) =>
+  (id, token, page = 1, cari = "", limit = 5,tokenPermission ) =>
   async (dispatch) => {
     const params = {
       page: page,
@@ -104,6 +106,7 @@ export const getDetailsExportData =
         params,
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -124,7 +127,7 @@ export const getDetailsExportData =
   };
 
 export const postFilterExportData =
-  (token, datas, page = 1, limit = 5) =>
+  (token, datas, page = 1, limit = 5, tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -141,10 +144,11 @@ export const postFilterExportData =
           },
           headers: {
             Authorization: "Bearer " + token,
+            Permission: tokenPermission,
           },
           responseType: "arraybuffer",
         };
-      }else{
+      } else {
         config = {
           params: {
             page,
@@ -152,6 +156,7 @@ export const postFilterExportData =
           },
           headers: {
             Authorization: "Bearer " + token,
+            Permission: tokenPermission,
           },
         };
       }
@@ -204,7 +209,7 @@ export const limitCooporation = (value) => {
   };
 };
 
-export const exportFileCSV = (id, token) => {
+export const exportFileCSV = (id, token, tokenPermission) => {
   return async () => {
     try {
       let { data } = await axios.get(
@@ -212,6 +217,7 @@ export const exportFileCSV = (id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );

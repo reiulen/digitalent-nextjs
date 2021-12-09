@@ -15,6 +15,7 @@ import IconMinus from "../../../../public/assets/icon/Minus.svg";
 import Image from "next/image";
 import SimpleReactValidator from "simple-react-validator";
 import { updateRoles } from "../../../../redux/actions/site-management/role.actions";
+import Cookies from 'js-cookie'
 
 const UbahRole = ({ token }) => {
   let dispatch = useDispatch();
@@ -443,7 +444,7 @@ const UbahRole = ({ token }) => {
       }),
     };
     if (simpleValidator.current.allValid()) {
-      dispatch(updateRoles(data, token));
+      dispatch(updateRoles(data, token, Cookies.get("token_permission")));
     } else {
       simpleValidator.current.showMessages();
       Swal.fire({

@@ -38,7 +38,7 @@ const DashboardSiteManagement = ({ token, user }) => {
       .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/card`, {
         headers: {
           authorization: `Bearer ${token}`,
-          permissionToken: Cookies.get("token_permission")
+          "Permission": Cookies.get("token_permission")
         },
       })
       .then((items) => {

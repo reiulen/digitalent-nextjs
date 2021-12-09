@@ -11,6 +11,7 @@ import { postMitraSite } from "../../../../../redux/actions/site-management/user
 
 import styles from "../../../../../styles/sitemanagement/userMitra.module.css"
 import styles2 from "../../../../../styles/previewGaleri.module.css"
+import Cookies from 'js-cookie'
 
 const TambahApi = ({ token }) => {
   const router = useRouter();
@@ -82,6 +83,7 @@ const TambahApi = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                "Permission" : Cookies.get("token_permission")
               },
             }
           );
