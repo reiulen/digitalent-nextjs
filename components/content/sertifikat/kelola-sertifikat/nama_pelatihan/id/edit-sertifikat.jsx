@@ -1284,7 +1284,7 @@ export default function EditSertifikat({ token }) {
                           src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${background_syllabus}`}
                           alt={`Background Image ${background_syllabus}`}
                           layout="fill"
-                          style={{ objectFit: "contain" }}
+                          style={{ objectFit: "fill" }}
                           objectFit="fill"
                         />
                       ) : (

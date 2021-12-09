@@ -44,7 +44,8 @@ export default function ListPesertaID({ token }) {
   };
 
   const handleDownload = async () => {
-    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${certificate?.data?.certificate?.training_id}`;
+    // "api/tte-p12/sign-pdf?training_id=251&nomor_registrasi=63251100-3";
+    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${nomer_registrasi}`;
     const check = await axios.get(linkChecker);
     // check udh pernah di sign apa belum?
     if (!check.data.status) {
