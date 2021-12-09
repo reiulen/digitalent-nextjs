@@ -89,25 +89,28 @@ const Header = () => {
               sm={3}
               hidden={router.pathname.includes(routerPath)}
             >
-              <center>
-                <Image
-                  src={`${
-                    dataPribadi && dataPribadi.foto
-                      ? dataPribadi.file_path + dataPribadi.foto
-                      : "/assets/media/logos/default.png"
-                  }`}
-                  alt=""
-                  className={styles.imageProfile}
-                  width="120px"
-                  height="120px"
-                />
-                <h1 className={styles.name}>
-                  {dataPribadi ? dataPribadi.name || "-" : "-"}
-                </h1>
-                <p className={styles.nik}>
-                  {dataPribadi ? dataPribadi.nik || "-" : "-"}
-                </p>
-              </center>
+              {!router.pathname.includes(routerPath) && (
+                <center>
+                  <Image
+                    src={`${
+                      dataPribadi && dataPribadi.foto
+                        ? dataPribadi.file_path + dataPribadi.foto
+                        : "/assets/media/logos/default.png"
+                    }`}
+                    alt=""
+                    className={styles.imageProfile}
+                    width="120px"
+                    height="120px"
+                    hidden={router.pathname.includes(routerPath)}
+                  />
+                  <h1 className={styles.name}>
+                    {dataPribadi ? dataPribadi.name || "-" : "-"}
+                  </h1>
+                  <p className={styles.nik}>
+                    {dataPribadi ? dataPribadi.nik || "-" : "-"}
+                  </p>
+                </center>
+              )}
             </Col>
             <Col
               className="mx-lg-0 px-11 px-lg-8"
