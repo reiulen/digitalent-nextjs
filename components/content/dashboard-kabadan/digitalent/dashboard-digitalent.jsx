@@ -20,6 +20,7 @@ import {
   getDigitalentProvinsiPendaftar,
   getDigitalentProvinsiPeserta,
 } from "../../../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
+import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 import {
   BarChart,
@@ -110,6 +111,12 @@ const DashboardDigitalent = ({ token }) => {
     error: errorDataPribadi,
     dataPribadi,
   } = useSelector((state) => state.digitalentDataPribadi);
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
+  );
 
   const year = ["2021", "2020", "2019", "2018", "2017", "2016"];
   const dataStatistikAkademiPendaftar = [];
@@ -596,26 +603,88 @@ const DashboardDigitalent = ({ token }) => {
                     <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Akademi:
                     </p>
-                    <select className="border-0 p-0">
-                      <option value="Semua">Semua</option>
+                    <select
+                      className="border-0 p-0"
+                      value={academyPesertaWilayah}
+                      onChange={(e) => {
+                        setAcademyPesertaWilayah(e.target.value);
+                        dispatch(dropdownTemabyAkademi(e.target.value, token));
+                        dispatch(
+                          getDigitalentPesertaWilayah(
+                            token,
+                            e.target.value,
+                            themePesertaWilayah,
+                            yearPesertaWilayah
+                          )
+                        );
+                      }}
+                    >
+                      <option value="">Semua</option>
+                      {dataAkademi &&
+                        dataAkademi.data &&
+                        dataAkademi.data.length > 0 &&
+                        dataAkademi.data.map((row, i) => (
+                          <option value={row.value} key={i}>
+                            {row.slug}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center mr-3">
                     <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Tema:
                     </p>
-                    <select className="border-0 p-0">
-                      <option value="Semua">Semua</option>
+                    <select
+                      className="border-0 p-0"
+                      value={themePesertaWilayah}
+                      onChange={(e) => {
+                        setThemePesertaWilayah(e.target.value);
+                        dispatch(
+                          getDigitalentPesertaWilayah(
+                            token,
+                            academyPesertaWilayah,
+                            e.target.value,
+                            yearPesertaWilayah
+                          )
+                        );
+                      }}
+                    >
+                      <option value="">Semua</option>
+                      {drowpdownTemabyAkademi &&
+                        drowpdownTemabyAkademi.data &&
+                        drowpdownTemabyAkademi.data.data.length > 0 &&
+                        drowpdownTemabyAkademi.data.data.map((row, i) => (
+                          <option key={i} value={row.value}>
+                            {row.label}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
                     <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Tahun:
                     </p>
-                    <select className="border-0 p-0">
-                      <option value="Semua">Semua</option>
-                      <option value="2021">2021</option>
-                      <option value="2022">2022</option>
+                    <select
+                      className="border-0 p-0"
+                      value={yearPesertaWilayah}
+                      onChange={(e) => {
+                        setYearPesertaWilayah(e.target.value);
+                        dispatch(
+                          getDigitalentPesertaWilayah(
+                            token,
+                            academyPesertaWilayah,
+                            themePesertaWilayah,
+                            e.target.value
+                          )
+                        );
+                      }}
+                    >
+                      {year &&
+                        year.map((row, i) => (
+                          <option key={i} value={row}>
+                            {row}
+                          </option>
+                        ))}
                     </select>
                   </div>
                 </div>

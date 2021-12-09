@@ -15,6 +15,7 @@ import {
   getDigitalentProvinsiPendaftar,
   getDigitalentDataPribadi,
 } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
+import { dropdownAkademi } from "../../redux/actions/pelatihan/function.actions";
 
 export default function DashboardPage(props) {
   const DashboardDigitalent = dynamic(
@@ -98,6 +99,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDigitalentDataPribadi(session.user.user.data.token)
       );
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
 
       return {
         props: { session, title: "Dashboard - Digitalent" },
