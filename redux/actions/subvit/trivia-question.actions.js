@@ -48,7 +48,7 @@ export const getAllTriviaQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -108,7 +108,7 @@ export const getDetailTriviaQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -136,7 +136,7 @@ export const getOneTriviaQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.get(link, config);
@@ -263,7 +263,7 @@ export const allReportTriviaQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
       let link =

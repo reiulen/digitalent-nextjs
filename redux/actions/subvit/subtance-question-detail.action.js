@@ -63,7 +63,7 @@ export const getAllSubtanceQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -135,7 +135,7 @@ export const getDashboardSubvit =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -222,7 +222,7 @@ export const detailSubtanceQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 

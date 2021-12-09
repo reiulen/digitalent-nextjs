@@ -48,7 +48,7 @@ export const getAllSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -110,7 +110,7 @@ export const getDetailSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
       let link =
@@ -138,7 +138,7 @@ export const getOneSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
       let link =
@@ -278,7 +278,7 @@ export const allReportSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 

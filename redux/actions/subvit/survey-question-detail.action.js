@@ -39,7 +39,7 @@ export const getAllSurveyQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
       let link =
@@ -186,7 +186,7 @@ export const detailSurveyQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.get(

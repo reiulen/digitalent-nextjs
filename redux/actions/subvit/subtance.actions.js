@@ -54,7 +54,7 @@ export const getPermissionSubvit =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -88,7 +88,7 @@ export const getAllSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -149,7 +149,7 @@ export const getDetailSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -178,7 +178,7 @@ export const getOneSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -346,7 +346,7 @@ export const allReportSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 

@@ -37,7 +37,7 @@ export const getAllSubtanceQuestionBanksType =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
@@ -64,7 +64,7 @@ export const getDetailSubtanceQuestionBanksType =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          permissionToken: tokenPermission,
+          Permission: tokenPermission,
         },
       };
 
