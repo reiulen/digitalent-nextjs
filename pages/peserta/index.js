@@ -53,6 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       let success = false;
       if (session) {
         const dataPribadi = await store.dispatch(
