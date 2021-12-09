@@ -72,7 +72,7 @@ const Berita = () => {
                   pages.property_template.image
                 }
                 width="1500vw"
-                height="413"
+                height="413vh"
                 objectFit="fill"
                 alt="Detail Image"
                 className="rounded-lg"
