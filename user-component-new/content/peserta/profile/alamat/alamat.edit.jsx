@@ -215,14 +215,12 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
       setKotaDomisili(kotaKtp);
       setKelurahanDomisili(kelurahanKtp);
     }
-    if (!sesuai) {
-      setAlamatDomisili("");
-      setProvinsiDomisili("");
-      setKecamatanDomisili("");
-      setKodePosDomisili("");
-      setKotaDomisili("");
-      setKelurahanDomisili("");
-    }
+    // if (!sesuai) {
+    //   setProvinsiDomisili("");
+    //   setKecamatanDomisili("");
+    //   setKotaDomisili("");
+    //   setKelurahanDomisili("");
+    // }
   }, [sesuai]);
 
   const handleViewDomisili = () => {

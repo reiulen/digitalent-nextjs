@@ -11,12 +11,20 @@ export default NextAuth({
   providers: [
     Providers.Credentials({
       async authorize(credentials) {
-        const { email, password, role, capcha } = credentials;
-        if (!email || !password) {
-          throw new Error("Isi Email atau Password dengan benar");
-        }
+        const { email, password, role, capcha, token_nik, token_id } =
+          credentials;
+        if (role !== "peserta_sso")
+          if (!email || !password) {
+            throw new Error("Isi Email atau Password dengan benar");
+          }
         try {
           let link = "http://api-dts-dev.majapahit.id/sso/api/auth/login";
+
+          let credential = {
+            email,
+            password,
+            capcha,
+          };
 
           if (role === "mitra") {
             link =
@@ -27,7 +35,16 @@ export default NextAuth({
             link = process.env.END_POINT_API_PELATIHAN + `api/v1/auth/login`;
           }
 
-          const { data } = await axios.post(link, { email, password, capcha });
+          if (role === "peserta_sso") {
+            link =
+              process.env.END_POINT_API_PELATIHAN + `api/v1/auth/login-token`;
+            credential = {
+              token_nik,
+              token_id,
+            };
+          }
+
+          const { data } = await axios.post(link, credential);
 
           return Promise.resolve(data);
         } catch (e) {

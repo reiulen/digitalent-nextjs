@@ -591,7 +591,7 @@ const StepTwo = ({ token }) => {
                       Pertanyaan Terbuka
                     </label>
                   </div>
-                  {/* <div className="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <input
                       className="form-check-input"
                       type="radio"
@@ -604,7 +604,7 @@ const StepTwo = ({ token }) => {
                     <label className="form-check-label" htmlFor="inlineRadio4">
                       Triggered Question
                     </label>
-                  </div> */}
+                  </div>
                 </div>
               </div>
 
