@@ -133,10 +133,15 @@ const DetailSummary = ({ token }) => {
       },
     };
 
-    await axios.get(link, config).then((res) => {
-      setLoadingExport(false);
-      window.location.href = res.data.data;
-    });
+    await axios
+      .get(link, config)
+      .then((res) => {
+        setLoadingExport(false);
+        window.location.href = res.data.data;
+      })
+      .catch((err) => {
+        setLoadingExport(false);
+      });
   };
 
   const handleSecondsToTime = (secs) => {
@@ -417,7 +422,7 @@ const DetailSummary = ({ token }) => {
                       >
                         <a
                           className="dropdown-item"
-                          onClick={() => handleExportReport("xlsx")}
+                          onClick={() => handleExportReport("lms")}
                         >
                           LMS
                         </a>
@@ -508,14 +513,14 @@ const DetailSummary = ({ token }) => {
                               </p>
                               <p className="my-0">
                                 {row.update_time !== null
-                                  ? moment(row.update_time).format(
-                                      "DD MMMM YYYY"
-                                    )
+                                  ? moment(row.update_time)
+                                      .utc()
+                                      .format("DD MMMM YYYY")
                                   : "-"}
                               </p>
                               <p className="my-0">
                                 {row.update_time !== null
-                                  ? moment(row.update_time).format("hh:mm:ss")
+                                  ? moment(row.update_time).format("LTS")
                                   : "-"}
                               </p>
                             </td>

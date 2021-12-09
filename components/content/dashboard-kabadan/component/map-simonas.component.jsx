@@ -9,15 +9,15 @@ const MapSimonas = () => {
   const {
     loading: loadingRegionApplier,
     error: errorRegionApplier,
-    regionapplier,
+    regionApplier,
   } = useSelector((state) => state.simonasRegionApplier);
 
   const dataSimonasMapPendaftar = [];
-  if (regionapplier) {
-    regionapplier.map((row, i) => {
+  if (regionApplier?.data?.list) {
+    regionApplier.data.list.map((row, i) => {
       let val = {
         position: [row.lat, row.long],
-        provinsi: row.province,
+        provinsi: row.name,
         job: row.job,
         project: row.project,
       };
