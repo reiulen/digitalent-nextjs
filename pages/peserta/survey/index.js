@@ -76,7 +76,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         );
         if (data) {
           if (data?.data?.survei) {
-            console.log("masuk sini,");
             success = true;
           } else {
             success = false;
