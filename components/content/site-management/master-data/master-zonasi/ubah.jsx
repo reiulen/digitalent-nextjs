@@ -57,6 +57,12 @@ const Tambah = ({ token }) => {
     })
   );
 
+  let province = provincesOption.filter(item => {
+    return !detailZonasi.data.data.data.some(filter => {
+      return item.label === filter.provinsi
+    })
+  })
+
   const handleAddInput = () => {
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
@@ -306,7 +312,7 @@ const Tambah = ({ token }) => {
                             isSearchable={true}
                             name="color"
                             onChange={(e) => changeListProvinces(e, index)}
-                            options={provincesOption}
+                            options={province}
                             onBlur={() => simpleValidator.current.showMessageFor("province")}
                           />
 

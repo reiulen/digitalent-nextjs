@@ -50,7 +50,7 @@ const CardPage = ({
             {/* {titleValue} */}
           </p>
           <p
-            className={`${styles.hideTitle} font-weight-bold font-size-h2 ml-2 my-auto`}
+            className={`font-weight-bold font-size-h2 ml-2 my-auto`}
             style={{ color: color }}
           >
             {/* {value}  */}
