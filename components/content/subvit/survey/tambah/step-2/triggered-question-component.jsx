@@ -25,9 +25,27 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
           imageName: "Choose File",
           is_next: false,
           answer: [
-            { key: "A", option: "", image: "",imageName: "Choose File", type: "choose" },
-            { key: "B", option: "", image: "",imageName: "Choose File", type: "choose" },
-            { key: "C", option: "", image: "",imageName: "Choose File", type: "choose" },
+            {
+              key: "A",
+              option: "",
+              image: "",
+              imageName: "Choose File",
+              type: "choose",
+            },
+            {
+              key: "B",
+              option: "",
+              image: "",
+              imageName: "Choose File",
+              type: "choose",
+            },
+            {
+              key: "C",
+              option: "",
+              image: "",
+              imageName: "Choose File",
+              type: "choose",
+            },
           ],
         },
       ],
@@ -76,7 +94,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
 
     if (index == null && parent != null && children != null) {
       const listAnswer = list[parent].sub[children];
-      
+
       if (name === "image") {
         const reader = new FileReader();
         reader.onload = () => {
@@ -346,239 +364,239 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                 </div>
                 {x.sub.length != 0
                   ? x.sub.map((sub_question, j) => {
-                    return (
-                      <>
-                        <div
-                          className="col-sm-12 col-md-3"
-                          key={j}
-                          style={{ marginLeft: "20px" }}
-                        >
-                          <label
-                            htmlFor="staticEmail"
-                            className=" col-form-label font-weight-bold"
+                      return (
+                        <>
+                          <div
+                            className="col-sm-12 col-md-3"
+                            key={j}
+                            style={{ marginLeft: "20px" }}
                           >
-                            Isi Pertanyaan
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="option"
-                            value={sub_question.question}
-                            placeholder="Isi Pertanyaan"
-                            onChange={(e) => handleInputChange(e, null, i, j)}
-                            autoComplete="off"
-                          />
-                        </div>
-                        <div className="col-sm-12 col-md-3">
-                          <label
-                            htmlFor="staticEmail"
-                            className=" col-form-label font-weight-bold"
-                          >
-                            Input Gambar (Optional)
-                          </label>
-                          <div className="custom-file">
-                            <input
-                              type="file"
-                              className="custom-file-input"
-                              name="image"
-                              onChange={(e) =>
-                                handleInputChange(e, null, i, j)
-                              }
-                              accept="image/png, image/gif, image/jpeg , image/jpg"
-                            />
                             <label
-                              className="custom-file-label"
-                              htmlFor="customFile"
+                              htmlFor="staticEmail"
+                              className=" col-form-label font-weight-bold"
                             >
-                              {sub_question.imageName}
+                              Isi Pertanyaan
                             </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="option"
+                              value={sub_question.question}
+                              placeholder="Isi Pertanyaan"
+                              onChange={(e) => handleInputChange(e, null, i, j)}
+                              autoComplete="off"
+                            />
                           </div>
-                        </div>
-                        <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
-                          {j !== 0 ? (
-                            <button
-                              className="btn btn-link-action bg-danger text-white"
-                              type="button"
-                              onClick={() => handleRemoveClick(null, i, j)}
+                          <div className="col-sm-12 col-md-3">
+                            <label
+                              htmlFor="staticEmail"
+                              className=" col-form-label font-weight-bold"
                             >
-                              <i className="ri-delete-bin-fill p-0 text-white"></i>
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                        <div className="col-sm-12 col-md-4 d-flex align-items-end mt-2">
-                          {j < 4 ? (
-                            <>
-                              <SwitchButton
-                                checked={sub_question.is_next}
-                                onlabel=" "
-                                onstyle="primary"
-                                offlabel=" "
-                                offstyle="secondary"
-                                size="sm"
-                                width={20}
-                                height={10}
-                                onChange={(checked) =>
-                                  handleNext(checked, i, j)
+                              Input Gambar (Optional)
+                            </label>
+                            <div className="custom-file">
+                              <input
+                                type="file"
+                                className="custom-file-input"
+                                name="image"
+                                onChange={(e) =>
+                                  handleInputChange(e, null, i, j)
                                 }
+                                accept="image/png, image/gif, image/jpeg , image/jpg"
                               />
-                              {sub_question.is_next ? (
-                                <span className="font-weight-bold ml-2">
-                                  Ada Pertanyaan Selanjutnya ?
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                        <div className="col-12">
-                          <div className="row">
-                            {sub_question.answer.length != 0
-                              ? sub_question.answer.map((sub_answer, k) => {
-                                return (
-                                  <>
-                                    {sub_answer.type === "choose" ? (
-                                      <>
-                                        <div
-                                          className="col-sm-12 col-md-3"
-                                          style={{ marginLeft: "40px" }}
-                                        >
-                                          <label
-                                            htmlFor="staticEmail"
-                                            className=" col-form-label font-weight-bold"
-                                          >
-                                            Jawaban {sub_answer.key}
-                                          </label>
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder={`Isi Pilihan ${sub_answer.key}`}
-                                            name="option"
-                                            value={sub_answer.option}
-                                            onChange={(e) =>
-                                              handleInputChange(e, i, j, k)
-                                            }
-                                            autoComplete="off"
-                                          />
-                                        </div>
-                                        <div className="col-sm-12 col-md-3">
-                                          <label
-                                            htmlFor="staticEmail"
-                                            className=" col-form-label font-weight-bold"
-                                          >
-                                            Input Gambar (Optional)
-                                          </label>
-                                          <div className="custom-file">
-                                            <input
-                                              type="file"
-                                              className="custom-file-input"
-                                              name="image"
-                                              onChange={(e) =>
-                                                handleInputChange(
-                                                  e,
-                                                  i,
-                                                  j,
-                                                  k
-                                                )
-                                              }
-                                              accept="image/png, image/gif, image/jpeg , image/jpg"
-                                            />
-                                            <label
-                                              className="custom-file-label"
-                                              htmlFor="customFile"
-                                            >
-                                              {sub_answer.imageName}
-                                            </label>
-                                          </div>
-                                        </div>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <div
-                                          className="col-sm-12 col-md-6"
-                                          style={{ marginLeft: "40px" }}
-                                        >
-                                          <label
-                                            htmlFor="staticEmail"
-                                            className=" col-form-label font-weight-bold"
-                                          >
-                                            Jawaban Lain {sub_answer.key}
-                                          </label>
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            name="option"
-                                            value={sub_answer.option}
-                                            autoComplete="off"
-                                            placeholder={`Jawaban Lain ${sub_answer.key}`}
-                                            disabled
-                                          />
-                                        </div>
-                                      </>
-                                    )}
-
-                                    <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
-                                      <button
-                                        className="btn btn-link-action bg-danger text-white"
-                                        type="button"
-                                        onClick={() =>
-                                          handleRemoveClick(i, j, k)
-                                        }
-                                      >
-                                        <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                      </button>
-                                    </div>
-                                    <div className="col-sm-12 col-md-4"></div>
-                                  </>
-                                );
-                              })
-                              : ""}
-                            <div
-                              className="form-group row"
-                              style={{ marginLeft: "40px" }}
-                            >
-                              <div className="col-sm-12 col-md-12 d-flex mt-2">
-                                {sub_question.answer.length < 6 ? (
-                                  <>
-                                    <button
-                                      type="button"
-                                      className="btn btn-primary btn-sm mr-2"
-                                      onClick={() =>
-                                        handleAddClick("choose", i, j)
-                                      }
-                                    >
-                                      Tambah Jawaban
-                                    </button>
-                                    {sub_question.answer.length > 2 ? (
-                                      <>
-                                        <button
-                                          type="button"
-                                          className="btn btn-primary btn-sm"
-                                          onClick={() =>
-                                            handleAddClick("empty", i, j)
-                                          }
-                                        >
-                                          Tambah Jawaban Lain
-                                        </button>
-                                      </>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </>
+                              <label
+                                className="custom-file-label"
+                                htmlFor="customFile"
+                              >
+                                {sub_question.imageName}
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
+                            {j !== 0 ? (
+                              <button
+                                className="btn btn-link-action bg-danger text-white"
+                                type="button"
+                                onClick={() => handleRemoveClick(null, i, j)}
+                              >
+                                <i className="ri-delete-bin-fill p-0 text-white"></i>
+                              </button>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          <div className="col-sm-12 col-md-4 d-flex align-items-end mt-2">
+                            {j < 4 ? (
+                              <>
+                                <SwitchButton
+                                  checked={sub_question.is_next}
+                                  onlabel=" "
+                                  onstyle="primary"
+                                  offlabel=" "
+                                  offstyle="secondary"
+                                  size="sm"
+                                  width={20}
+                                  height={10}
+                                  onChange={(checked) =>
+                                    handleNext(checked, i, j)
+                                  }
+                                />
+                                {sub_question.is_next ? (
+                                  <span className="font-weight-bold ml-2">
+                                    Ada Pertanyaan Selanjutnya ?
+                                  </span>
                                 ) : (
                                   ""
                                 )}
+                              </>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          <div className="col-12">
+                            <div className="row">
+                              {sub_question.answer.length != 0
+                                ? sub_question.answer.map((sub_answer, k) => {
+                                    return (
+                                      <>
+                                        {sub_answer.type === "choose" ? (
+                                          <>
+                                            <div
+                                              className="col-sm-12 col-md-3"
+                                              style={{ marginLeft: "40px" }}
+                                            >
+                                              <label
+                                                htmlFor="staticEmail"
+                                                className=" col-form-label font-weight-bold"
+                                              >
+                                                Jawaban {sub_answer.key}
+                                              </label>
+                                              <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder={`Isi Pilihan ${sub_answer.key}`}
+                                                name="option"
+                                                value={sub_answer.option}
+                                                onChange={(e) =>
+                                                  handleInputChange(e, i, j, k)
+                                                }
+                                                autoComplete="off"
+                                              />
+                                            </div>
+                                            <div className="col-sm-12 col-md-3">
+                                              <label
+                                                htmlFor="staticEmail"
+                                                className=" col-form-label font-weight-bold"
+                                              >
+                                                Input Gambar (Optional)
+                                              </label>
+                                              <div className="custom-file">
+                                                <input
+                                                  type="file"
+                                                  className="custom-file-input"
+                                                  name="image"
+                                                  onChange={(e) =>
+                                                    handleInputChange(
+                                                      e,
+                                                      i,
+                                                      j,
+                                                      k
+                                                    )
+                                                  }
+                                                  accept="image/png, image/gif, image/jpeg , image/jpg"
+                                                />
+                                                <label
+                                                  className="custom-file-label"
+                                                  htmlFor="customFile"
+                                                >
+                                                  {sub_answer.imageName}
+                                                </label>
+                                              </div>
+                                            </div>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <div
+                                              className="col-sm-12 col-md-6"
+                                              style={{ marginLeft: "40px" }}
+                                            >
+                                              <label
+                                                htmlFor="staticEmail"
+                                                className=" col-form-label font-weight-bold"
+                                              >
+                                                Jawaban Lain {sub_answer.key}
+                                              </label>
+                                              <input
+                                                type="text"
+                                                className="form-control"
+                                                name="option"
+                                                value={sub_answer.option}
+                                                autoComplete="off"
+                                                placeholder={`Jawaban Lain ${sub_answer.key}`}
+                                                disabled
+                                              />
+                                            </div>
+                                          </>
+                                        )}
+
+                                        <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
+                                          <button
+                                            className="btn btn-link-action bg-danger text-white"
+                                            type="button"
+                                            onClick={() =>
+                                              handleRemoveClick(i, j, k)
+                                            }
+                                          >
+                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                          </button>
+                                        </div>
+                                        <div className="col-sm-12 col-md-4"></div>
+                                      </>
+                                    );
+                                  })
+                                : ""}
+                              <div
+                                className="form-group row"
+                                style={{ marginLeft: "40px" }}
+                              >
+                                <div className="col-sm-12 col-md-12 d-flex mt-2">
+                                  {sub_question.answer.length < 6 ? (
+                                    <>
+                                      <button
+                                        type="button"
+                                        className="btn btn-primary btn-sm mr-2"
+                                        onClick={() =>
+                                          handleAddClick("choose", i, j)
+                                        }
+                                      >
+                                        Tambah Jawaban
+                                      </button>
+                                      {sub_question.answer.length > 2 ? (
+                                        <>
+                                          <button
+                                            type="button"
+                                            className="btn btn-primary btn-sm"
+                                            onClick={() =>
+                                              handleAddClick("empty", i, j)
+                                            }
+                                          >
+                                            Tambah Jawaban Lain
+                                          </button>
+                                        </>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </>
-                    );
-                  })
+                        </>
+                      );
+                    })
                   : ""}
               </div>
             </div>
