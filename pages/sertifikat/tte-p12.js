@@ -3,9 +3,9 @@ import LoadingSkeleton from "../../components/LoadingSkeleton";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/client";
 import Pagination from "react-js-pagination";
-
 import { wrapper } from "../../redux/store";
 import { getTTEP12 } from "../../redux/actions/sertifikat/tte-p12.action";
+import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
 
 const TTEP12 = dynamic(
   () => import("../../components/content/sertifikat/tte-p12/index"),
@@ -37,6 +37,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return {
           redirect: {
             destination: "http://dts-dev.majapahit.id/login/admin",
+            permanent: false,
+          },
+        };
+      }
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
             permanent: false,
           },
         };

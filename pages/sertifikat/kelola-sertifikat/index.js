@@ -11,6 +11,7 @@ import {
   getOptionsTheme,
 } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { wrapper } from "../../../redux/store";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 const KelolaSertifikat = dynamic(
   () =>
@@ -45,6 +46,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return {
           redirect: {
             destination: "http://dts-dev.majapahit.id/login/admin",
+            permanent: false,
+          },
+        };
+      }
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
             permanent: false,
           },
         };
