@@ -3,15 +3,17 @@ import { combineReducers } from "redux";
 // DASHBOARD KABADAN
 // DASHBOARD
 import {
+  digitalentTotalDataPendaftarReducer,
   digitalentTotalPenggunaReducer,
-  digitalentStatistikAkademiReducer,
-  digitalentStatistikMitraReducer,
+  digitalentStatistikAkademiPendaftarReducer,
+  digitalentStatistikAkademiPesertaReducer,
+  digitalentStatistikMitraPendaftarReducer,
+  digitalentStatistikMitraPesertaReducer,
   digitalentTablePendaftaranReducer,
   digitalentPesertaWilayahReducer,
-  digitalentProvinsiReducer,
-  digitalentUmurReducer,
-  digitalentJenisKelaminReducer,
-  digitalentPendidikanReducer,
+  digitalentProvinsiPesertaReducer,
+  digitalentProvinsiPendaftarReducer,
+  digitalentDataPribadiReducer,
 } from "./dashboard-kabadan/dashboard/digitalent.reducers";
 // DASHBOARD BEASISWA
 import {
@@ -28,6 +30,24 @@ import {
   beasiswaAlumniAwardeeReducer,
   beasiswaYearReducer,
 } from "./dashboard-kabadan/dashboard/beasiswa.reducers";
+// DASHBOARD SIMONAS
+import {
+  simonasCompanyTotalReducer,
+  simonasProjectTotalReducer,
+  simonasCompanyAmountReducer,
+  simonasProjectAmountReducer,
+  simonasApplierTotalReducer,
+  simonasApplierTotalActiveReducer,
+  simonasApplierAmountJobReducer,
+  simonasApplierAmountProjectReducer,
+  simonasApplierAgeReducer,
+  simonasApplierGenderReducer,
+  simonasApplierEducationJobReducer,
+  simonasApplierEducationProjectReducer,
+  simonasRegionApplierReducer,
+  simonasFilterYearReducer,
+  simonasFilterStatusReducer,
+} from "./dashboard-kabadan/dashboard/simonas.reducers";
 // DATA PESERTA
 import {
   allBeasiswaKandidatReducer,
@@ -573,14 +593,17 @@ const reducer = combineReducers({
   // DASHBOARD KABADAN
   // ============= DTS ============
   digitalentTotalPengguna: digitalentTotalPenggunaReducer,
-  digitalentStatistikAkademi: digitalentStatistikAkademiReducer,
-  digitalentStatistikMitra: digitalentStatistikMitraReducer,
+  digitalentTotalDataPendaftar: digitalentTotalDataPendaftarReducer,
+  digitalentStatistikAkademiPendaftar:
+    digitalentStatistikAkademiPendaftarReducer,
   digitalentTablePendaftaran: digitalentTablePendaftaranReducer,
   digitalentPesertaWilayah: digitalentPesertaWilayahReducer,
-  digitalentProvinsi: digitalentProvinsiReducer,
-  digitalentUmur: digitalentUmurReducer,
-  digitalentJenisKelamin: digitalentJenisKelaminReducer,
-  digitalentPendidikan: digitalentPendidikanReducer,
+  digitalentStatistikAkademiPeserta: digitalentStatistikAkademiPesertaReducer,
+  digitalentStatistikMitraPendaftar: digitalentStatistikMitraPendaftarReducer,
+  digitalentStatistikMitraPeserta: digitalentStatistikMitraPesertaReducer,
+  digitalentProvinsiPeserta: digitalentProvinsiPesertaReducer,
+  digitalentProvinsiPendaftar: digitalentProvinsiPendaftarReducer,
+  digitalentDataPribadi: digitalentDataPribadiReducer,
   // ============= BEASISWA ============
   beasiswaTotalPengguna: beasiswaTotalPenggunaReducer,
   beasiswaTotalPendaftar: beasiswaTotalPendaftarReducer,
@@ -600,6 +623,21 @@ const reducer = combineReducers({
   allSimonasKandidat: allSimonasKandidatReducer,
   allSimonasFilterCompany: allSimonasFilterCompanyReducer,
   allSimonasFilterStatus: allSimonasFilterStatusReducer,
+  simonasCompanyTotal: simonasCompanyTotalReducer,
+  simonasProjectTotal: simonasProjectTotalReducer,
+  simonasCompanyAmount: simonasCompanyAmountReducer,
+  simonasProjectAmount: simonasProjectAmountReducer,
+  simonasApplierTotal: simonasApplierTotalReducer,
+  simonasApplierTotalActive: simonasApplierTotalActiveReducer,
+  simonasApplierAmountJob: simonasApplierAmountJobReducer,
+  simonasApplierAmountProject: simonasApplierAmountProjectReducer,
+  simonasApplierAge: simonasApplierAgeReducer,
+  simonasApplierGender: simonasApplierGenderReducer,
+  simonasApplierEducationJob: simonasApplierEducationJobReducer,
+  simonasApplierEducationProject: simonasApplierEducationProjectReducer,
+  simonasRegionApplier: simonasRegionApplierReducer,
+  simonasFilterYear: simonasFilterYearReducer,
+  simonasFilterStatus: simonasFilterStatusReducer,
   // END DASHBOARD KABADAN
 
   // PUBLIKASI
