@@ -219,15 +219,15 @@ export const getSidebar = (token) => async (dispatch) => {
       process.env.END_POINT_API_SITE_MANAGEMENT + " ",
       config
     );
+    localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
+    localStorage.setItem("token-permission", data.data.tokenPermission)
+    localStorage.setItem("permissions", data.data.permissions)
+    Cookies.set("token_permission", data.data.tokenPermission)
     dispatch({
       type: GET_SIDEBAR,
       payload: data,
     });
 
-    localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
-    localStorage.setItem("token-permission", data.data.tokenPermission)
-    localStorage.setItem("permissions", data.data.permissions)
-    Cookies.set("token_permission", data.data.tokenPermission)
     
   } catch (error) {
     
