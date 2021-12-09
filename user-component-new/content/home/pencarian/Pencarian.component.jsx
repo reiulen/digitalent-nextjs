@@ -12,15 +12,9 @@ import moment from "moment";
 
 import {
   getPencarian,
-  setValuePage,
-  searchKeyword,
-  setValueKategoriPeserta,
-  setValueLimit,
-  setValuePelatihanAkhir,
-  setValuePelatihanMulai,
-  setValuePenyelenggara,
   resetFilter,
 } from "../../../../redux/actions/pelatihan/pencarian.action";
+import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
 
 import axios from "axios";
 
@@ -28,14 +22,17 @@ const Pencarian = ({ session }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { query } = router;
-  const allPencarian = useSelector((state) => state.allPencarian);
+  const allPencarian = useSelector(state => state.allPencarian);
+
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
-    useSelector((state) => state.allPenyelenggaraPeserta);
+    useSelector(state => state.allPenyelenggaraPeserta);
 
   const [filterPenyelenggara, setFilterPenyelenggara] = useState("");
   const [filterKategori, setFilterKategori] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  const [disabledDate, setDisabledDate] = useState(true);
 
   let selectRefKategoriPeserta = null;
   const optionsKategoriPeserta = [
@@ -57,7 +54,7 @@ const Pencarian = ({ session }) => {
   }
 
   const customStylesSide = {
-    control: (styles) => ({
+    control: styles => ({
       ...styles,
       borderRadius: "30px",
       paddingLeft: "10px",
@@ -91,22 +88,29 @@ const Pencarian = ({ session }) => {
     setStartDate("");
     setEndDate("");
     dispatch(resetFilter());
+    router.push(`/pencarian?cari=${router.query.cari || ""}`);
   };
 
-  const handlePagination = (page) => {
+  const handlePagination = page => {
+    let data = {
+      penyelenggara:
+        filterPenyelenggara !== null ? filterPenyelenggara.label : null,
+      kategori_peserta: filterKategori !== null ? filterKategori.value : null,
+      tanggal_mulai: startDate,
+      tanggal_akhir: endDate,
+    };
     router.push(
       `/pencarian?cari=${
         router.query.cari || ""
       }&page=${page}&limit=${6}&penyelenggara=${
-        penyelenggara || ""
-      }&pelatihan_mulai=${tanggal_mulai || ""}&pelatihan_akhir=${
-        tanggal_akhir || ""
-      }&kategori_peserta=${kategori_peserta || ""}`
+        data.penyelenggara || ""
+      }&pelatihan_mulai=${data.tanggal_mulai || ""}&pelatihan_akhir=${
+        data.tanggal_akhir || ""
+      }&kategori_peserta=${data.kategori_peserta || ""}`
     );
-    // dispatch(setValuePage(page));
   };
 
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -127,7 +131,7 @@ const Pencarian = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(
@@ -144,7 +148,7 @@ const Pencarian = ({ session }) => {
           );
         }
       } catch (e) {
-        router.push("/login");
+        SweatAlert("Gagal", e.message, "error");
       }
     } else {
       try {
@@ -155,7 +159,7 @@ const Pencarian = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
           dispatch(
@@ -176,7 +180,6 @@ const Pencarian = ({ session }) => {
       }
     }
   };
-
   return (
     <>
       <HomeWrapper>
@@ -217,23 +220,23 @@ const Pencarian = ({ session }) => {
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Penyelenggara</Form.Label>
                     <Select
-                      ref={(ref) => (selectRefPenyelenggara = ref)}
+                      ref={ref => (selectRefPenyelenggara = ref)}
                       options={optionsPenyelenggara}
                       styles={customStylesSide}
                       placeholder="Pilih Penyelenggara"
                       isClearable
-                      onChange={(e) => setFilterPenyelenggara(e)}
+                      onChange={e => setFilterPenyelenggara(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Kategori Peserta</Form.Label>
                     <Select
-                      ref={(ref) => (selectRefKategoriPeserta = ref)}
+                      ref={ref => (selectRefKategoriPeserta = ref)}
                       options={optionsKategoriPeserta}
                       styles={customStylesSide}
                       placeholder="Pilih Kategori Peserta"
                       isClearable
-                      onChange={(e) => setFilterKategori(e)}
+                      onChange={e => setFilterKategori(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -245,7 +248,11 @@ const Pencarian = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      onChange={e => {
+                        setStartDate(e.target.value);
+                        setEndDate("");
+                        setDisabledDate(false);
+                      }}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -257,7 +264,9 @@ const Pencarian = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
+                      onChange={e => setEndDate(e.target.value)}
+                      min={startDate}
+                      disabled={disabledDate}
                     />
                   </Form.Group>
                 </div>
@@ -310,138 +319,160 @@ const Pencarian = ({ session }) => {
                 ) : (
                   allPencarian?.pelatihan?.list?.map((row, i) => (
                     <Col md={6} className={`col-sm-12 col-md-4 mb-5`} key={i}>
-                      <Card
-                        className="h-100 shadow-sm"
-                        key={i}
-                        onClick={() => {
-                          router.push(`/detail/pelatihan/${row?.id}`);
-                        }}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div>
-                          <div className={`parent-image-pelatihan-new`}>
-                            <Image
-                              className={`image-list-pelatihan-new`}
-                              src={
-                                !row.gambar
-                                  ? "/assets/media/default-card.png"
-                                  : `${process.env.END_POINT_API_IMAGE_BEASISWA}${row?.gambar}`
-                              }
-                              layout="fill"
-                              objectFit="cover"
-                              alt="Image Thumbnail"
-                            />
-                          </div>
-                          <Card.ImgOverlay>
-                            <div className="d-flex justify-content-between">
-                              <div className="align-self-start">
-                                <Badge
-                                  bg={`py-3 px-4 badge-card-pelatihan-new`}
-                                  classNam="d-flex "
-                                >
-                                  {row.metode_pelatihan}
-                                </Badge>
-                              </div>
-
-                              <div className="whishlist align-self-end float-right">
-                                <Button
-                                  variant="light"
-                                  className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
-                                >
-                                  <i
-                                    className={
-                                      !row.bookmart
-                                        ? `ri-heart-line p-0 zIndex-5`
-                                        : `ri-heart-fill p-0 text-danger zIndex-5`
-                                    }
-                                    style={{
-                                      color: "#6C6C6C",
-                                    }}
-                                    onClick={() => {
-                                      handleBookmark(row);
-                                    }}
-                                  ></i>
-                                </Button>
-                                <Button
-                                  variant="light"
-                                  className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
-                                >
-                                  <i
-                                    className="ri-share-line p-0"
-                                    style={{
-                                      color: "#6C6C6C",
-                                    }}
-                                  ></i>
-                                </Button>
-                              </div>
-                            </div>
-                          </Card.ImgOverlay>
-                          <Card.Body className="position-relative">
-                            <div className="mitra-pelatihan-new">
-                              <Image
-                                // src={"/assets/media/mitra-default.png"}
-                                src={
-                                  !row?.gambar_mitra
-                                    ? "/assets/media/default-card.png"
-                                    : `${row?.file_path}${row?.gambar_mitra}`
+                      <Card className="p-0 m-0">
+                        {row.status === "Dibuka" && (
+                          <div className="whishlist position-absolute shadow-none m-5 zindex-5 align-self-end float-right">
+                            <Button
+                              variant="light"
+                              className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
+                            >
+                              <i
+                                className={
+                                  !row.bookmart
+                                    ? `ri-heart-line p-0 zIndex-5`
+                                    : `ri-heart-fill p-0 text-danger zIndex-5`
                                 }
-                                width={60}
-                                height={60}
+                                style={{
+                                  color: "#6C6C6C",
+                                }}
+                                onClick={() => {
+                                  if (!session) {
+                                    router.push("/login");
+                                  } else {
+                                    handleBookmark(row);
+                                  }
+                                }}
+                              ></i>
+                            </Button>
+                            <Button
+                              variant="light"
+                              className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                            >
+                              <i
+                                className="ri-share-line p-0"
+                                style={{
+                                  color: "#6C6C6C",
+                                }}
+                              ></i>
+                            </Button>
+                          </div>
+                        )}
+
+                        {row.status !== "Dibuka" ? (
+                          <CardPelatihanClose row={row} />
+                        ) : (
+                          <Card
+                            className="h-100 shadow-sm"
+                            key={i}
+                            onClick={() => {
+                              router.push(`/detail/pelatihan/${row?.id}`);
+                            }}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <div className={`parent-image-pelatihan-new`}>
+                              <Image
+                                className={`image-list-pelatihan-new`}
+                                src={
+                                  !row.gambar
+                                    ? "/assets/media/default-card.png"
+                                    : `${process.env.END_POINT_API_IMAGE_BEASISWA}${row?.gambar}`
+                                }
+                                layout="fill"
                                 objectFit="cover"
-                                thumbnail
-                                roundedCircle
-                                className={`mitra-pelatihan-image-new`}
-                                alt="Image Mitra"
+                                alt="Image Thumbnail"
                               />
                             </div>
-                            <div
-                              className="d-flex justify-content-between position-relative pb-0 mb-0"
-                              style={{ top: "-15px" }}
-                            >
-                              <p className={`pl-18 my-0 text-mitra-new`}>
-                                {row?.mitra}
-                              </p>
-                              <div className="status align-self-center">
-                                <p
-                                  className={`${"status-mitra-open-new"} text-uppercase my-0`}
-                                >
-                                  {row?.status}
+                            <Card.ImgOverlay>
+                              <div className="d-flex justify-content-between">
+                                <div className="align-self-start">
+                                  <Badge
+                                    bg={`py-3 px-4 badge-card-pelatihan-new`}
+                                    classNam="d-flex "
+                                  >
+                                    {row.metode_pelatihan}
+                                  </Badge>
+                                </div>
+                              </div>
+                            </Card.ImgOverlay>
+                            <Card.Body className="position-relative">
+                              <div className="mitra-pelatihan-new">
+                                <Image
+                                  // src={"/assets/media/mitra-default.png"}
+                                  src={
+                                    !row?.gambar_mitra
+                                      ? "/assets/media/default-card.png"
+                                      : `${row?.file_path}${row?.gambar_mitra}`
+                                  }
+                                  width={60}
+                                  height={60}
+                                  objectFit="cover"
+                                  thumbnail
+                                  roundedCircle
+                                  className={`mitra-pelatihan-image-new`}
+                                  alt="Image Mitra"
+                                />
+                              </div>
+                              <div
+                                className="d-flex justify-content-between position-relative pb-0 mb-0"
+                                style={{ top: "-15px" }}
+                              >
+                                <div className="module-pelatihan-mitra">
+                                  <p className={`pl-18 my-0 text-mitra-new`}>
+                                    {row?.mitra}
+                                  </p>
+                                </div>
+                                <div className="status align-self-center">
+                                  <p
+                                    className={`${"status-mitra-open-new"} text-uppercase my-0`}
+                                  >
+                                    {row?.status}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="module-pelatihan-name">
+                                <p className={`my-0 title-card-new`}>
+                                  {row?.name}
                                 </p>
                               </div>
-                            </div>
-                            <p className={`my-0 title-card-new`}>{row?.name}</p>
-                            <p
-                              style={{
-                                fontSize: "14px",
-                                color: "#6C6C6C",
-                              }}
-                            >
-                              {row?.akademi}
-                            </p>
-                            <hr />
-                            <div className="d-flex flex-column">
-                              <div className="date d-flex align-items-center align-middle">
-                                <i className="ri-time-line"></i>
-                                <span className={`text-date-register-new pl-2`}>
-                                  Registrasi:{" "}
-                                  {moment(row?.pendaftaran_mulai).format(
-                                    "DD MMM YYYY"
-                                  )}{" "}
-                                  -{" "}
-                                  {moment(row?.pendaftaran_selesai).format(
-                                    "DD MMM YYYY"
-                                  )}
-                                </span>
+                              <div className="module-pelatihan-name">
+                                <p
+                                  style={{
+                                    fontSize: "14px",
+                                    color: "#6C6C6C",
+                                  }}
+                                >
+                                  {row?.akademi}
+                                </p>
                               </div>
-                              <div className="date d-flex align-items-center align-middle">
-                                <i className="ri-group-line"></i>
-                                <span className={`text-date-register-new pl-2`}>
-                                  Kuota: {row?.kuota_peserta} Peserta
-                                </span>
+                              <hr />
+                              <div className="d-flex flex-column">
+                                <div className="date d-flex align-items-center align-middle">
+                                  <i className="ri-time-line"></i>
+                                  <span
+                                    className={`text-date-register-new pl-2`}
+                                  >
+                                    Registrasi:{" "}
+                                    {moment(row?.pendaftaran_mulai).format(
+                                      "DD MMM YYYY"
+                                    )}{" "}
+                                    -{" "}
+                                    {moment(row?.pendaftaran_selesai).format(
+                                      "DD MMM YYYY"
+                                    )}
+                                  </span>
+                                </div>
+                                <div className="date d-flex align-items-center align-middle">
+                                  <i className="ri-group-line"></i>
+                                  <span
+                                    className={`text-date-register-new pl-2`}
+                                  >
+                                    Kuota: {row?.kuota_peserta} Peserta
+                                  </span>
+                                </div>
                               </div>
-                            </div>
-                          </Card.Body>
-                        </div>
+                            </Card.Body>
+                          </Card>
+                        )}
                       </Card>
                     </Col>
                   ))
@@ -451,11 +482,11 @@ const Pencarian = ({ session }) => {
                 <Row className="my-5 d-flex justify-content-center">
                   <div className="table-pagination">
                     <Pagination
-                      activePage={allPencarian?.page}
+                      activePage={parseInt(router.query.page)}
                       itemsCountPerPage={allPencarian?.pelatihan?.perPage}
                       totalItemsCount={allPencarian?.pelatihan?.total}
                       pageRangeDisplayed={3}
-                      onChange={(page) => handlePagination(page)}
+                      onChange={page => handlePagination(page)}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -464,8 +495,6 @@ const Pencarian = ({ session }) => {
                       linkClass="page-link"
                     />
                   </div>
-                  {/* {pelatihan && pelatihan.perPage < pelatihan.total && (
-                )} */}
                 </Row>
               )}
             </Col>

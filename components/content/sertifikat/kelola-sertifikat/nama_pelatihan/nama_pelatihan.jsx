@@ -1,5 +1,5 @@
 // #Next & React
-import React, { useState } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -24,10 +24,20 @@ export default function NamaPelatihanID({ token }) {
     error,
     certificate: certificates,
   } = useSelector((state) => state.detailCertificates);
+
   // #Pagination
   const [limit, setLimit] = useState(null);
   const [search, setSearch] = useState("");
   // #Pagination
+
+  const [listPermission, setListPermission] = useState([]);
+  const { permission } = useSelector((state) => state.adminPermission);
+  useEffect(() => {
+    const filterPermission = permission.permissions.filter((item) =>
+      item.includes("sertifi")
+    );
+    setListPermission(filterPermission);
+  }, []);
 
   const [status, setStatus] = useState(null);
 
@@ -407,76 +417,96 @@ export default function NamaPelatihanID({ token }) {
                                 <td className="align-middle d-flex">
                                   {certificate.status_migrate_id == "2" ? (
                                     <>
-                                      <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme_id}&status=view`}
-                                        passHref
-                                      >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Detail"
+                                      {listPermission.includes(
+                                        "sertifikat.view"
+                                      ) && (
+                                        <Link
+                                          href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme_id}&status=view`}
+                                          passHref
                                         >
-                                          <i className="ri-eye-fill p-0 text-white"></i>
-                                        </a>
-                                      </Link>
-                                      <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme_id}&status=edit`}
-                                        passHref
-                                      >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Edit"
+                                          <a
+                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                            data-toggle="tooltip"
+                                            data-placement="bottom"
+                                            title="Detail"
+                                          >
+                                            <i className="ri-eye-fill p-0 text-white"></i>
+                                          </a>
+                                        </Link>
+                                      )}
+                                      {listPermission.includes(
+                                        "sertifikat.manage"
+                                      ) && (
+                                        <Link
+                                          href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme_id}&status=edit`}
+                                          passHref
                                         >
-                                          <i className="ri-pencil-fill p-0 text-white"></i>
-                                        </a>
-                                      </Link>
+                                          <a
+                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                            data-toggle="tooltip"
+                                            data-placement="bottom"
+                                            title="Edit"
+                                          >
+                                            <i className="ri-pencil-fill p-0 text-white"></i>
+                                          </a>
+                                        </Link>
+                                      )}
                                     </>
                                   ) : certificate.status_migrate_id == "1" ? (
                                     <>
-                                      <Link
-                                        passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status_migrate_id}&id=${certificate.id}&theme_id=${certificate.theme_id}`}
-                                      >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Detail"
-                                        >
-                                          <i className="ri-eye-fill p-0 text-white"></i>
-                                        </a>
-                                      </Link>
-                                      <Link
-                                        passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${certificate.id}`}
-                                      >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Detail"
-                                        >
-                                          <i className="ri-file-user-fill p-0 text-white"></i>
-                                        </a>
-                                      </Link>
+                                      {listPermission.includes(
+                                        "sertifikat.view"
+                                      ) && (
+                                        <Fragment>
+                                          <Link
+                                            passHref
+                                            href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status_migrate_id}&id=${certificate.id}&theme_id=${certificate.theme_id}`}
+                                          >
+                                            <a
+                                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                              data-toggle="tooltip"
+                                              data-placement="bottom"
+                                              title="Detail"
+                                            >
+                                              <i className="ri-eye-fill p-0 text-white"></i>
+                                            </a>
+                                          </Link>
+                                          <Link
+                                            passHref
+                                            href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${certificate.id}`}
+                                          >
+                                            <a
+                                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                              data-toggle="tooltip"
+                                              data-placement="bottom"
+                                              title="Detail"
+                                            >
+                                              <i className="ri-file-user-fill p-0 text-white"></i>
+                                            </a>
+                                          </Link>
+                                        </Fragment>
+                                      )}
                                     </>
                                   ) : (
-                                    <Link
-                                      href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificates.data.tema.id}&theme_name=${certificates.data.tema.name}`}
-                                      passHref
-                                    >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Tambah"
-                                      >
-                                        <i className="ri-add-circle-fill p-0 text-white"></i>
-                                      </a>
-                                    </Link>
+                                    <Fragment>
+                                      {listPermission.includes(
+                                        "sertifikat.manage"
+                                      ) && (
+                                        <Link
+                                          href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificates.data.tema.id}&theme_name=${certificate.training}`}
+                                          passHref
+                                        >
+                                          <a
+                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                            data-toggle="tooltip"
+                                            data-placement="bottom"
+                                            title="Tambah"
+                                          >
+                                            <i className="ri-add-circle-fill p-0 text-white"></i>
+                                          </a>
+                                        </Link>
+                                      )}
+                                    </Fragment>
                                   )}
                                 </td>
                                 {/* END TABLE DATA */}
@@ -493,8 +523,8 @@ export default function NamaPelatihanID({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificates && (
-                  <div className="table-pagination">
+                {certificates && certificates?.data?.pelatihan?.total > 5 && (
+                  <div className="table-pagination col">
                     <Pagination
                       activePage={+page}
                       itemsCountPerPage={certificates.data.perPage}
@@ -510,7 +540,7 @@ export default function NamaPelatihanID({ token }) {
                     />
                   </div>
                 )}
-                {certificates && certificates.data.total ? (
+                {certificates && certificates.data.pelatihan.total > 5 ? (
                   <div className="table-total ml-au qto">
                     <div className="row mt-3">
                       <div className="col-4 mr-0 p-0 my-auto">
@@ -532,7 +562,7 @@ export default function NamaPelatihanID({ token }) {
                           <option value="20">20</option>
                         </select>
                       </div>
-                      <div className="col-8 my-auto">
+                      <div className="col my-auto">
                         <p
                           className="align-middle my-auto"
                           style={{ color: "#B5B5C3" }}

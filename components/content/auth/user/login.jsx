@@ -54,12 +54,26 @@ const LoginUser = () => {
         if (data.role === "admin") {
         } else if (data.role === "mitra") {
           router.push("/partnership/user/kerjasama");
-        } else {  
-          const session = await getSession()
-          if(!session.user.user.data.user.status){
-            router.push('/peserta/wizzard')
-          }else{
-            router.push('/peserta')
+        } else {
+          const session = await getSession();
+          if (!session.user.user.data.user.status) {
+            if (session.user.user.data.user.wizard == 1) {
+              return router.push("/peserta/wizzard");
+            }
+            if (session.user.user.data.user.wizard == 2) {
+              return router.push("/peserta/wizzard/alamat");
+            }
+            if (session.user.user.data.user.wizard == 3) {
+              return router.push("/peserta/wizzard/pendidikan");
+            }
+            if (session.user.user.data.user.wizard == 4) {
+              return router.push("/peserta/wizzard/pekerjaan");
+            }
+            if (session.user.user.data.user.wizard == 5) {
+              return router.push("/peserta");
+            }
+          } else {
+            return router.push("/peserta");
           }
         }
       }

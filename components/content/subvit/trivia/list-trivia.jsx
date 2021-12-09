@@ -447,21 +447,43 @@ const ListTrivia = ({ token }) => {
 
               <div className="row">
                 {trivia && trivia.perPage < trivia.total && (
-                  <div className={`${stylesPag.pagination} table-pagination`}>
-                    <Pagination
-                      activePage={page}
-                      itemsCountPerPage={trivia.perPage}
-                      totalItemsCount={trivia.total}
-                      pageRangeDisplayed={3}
-                      onChange={handlePagination}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
+                  <>
+                    {/* KONDISI KETIKA FOLD */}
+                    <div
+                      className={`${stylesPag.paginationFold} table-pagination pagination-custom col-12 col-md-6`}
+                    >
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={trivia?.perPage}
+                        totalItemsCount={trivia?.total}
+                        pageRangeDisplayed={2}
+                        onChange={handlePagination}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
+                    <div
+                      className={`${stylesPag.pagination} table-pagination pagination-custom col-12 col-md-6`}
+                    >
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={trivia?.perPage}
+                        totalItemsCount={trivia?.total}
+                        pageRangeDisplayed={3}
+                        onChange={handlePagination}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
+                  </>
                 )}
                 {trivia && trivia.total > 5 ? (
                   <div className={`${stylesPag.rightPag} table-total ml-auto`}>

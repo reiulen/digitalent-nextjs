@@ -58,7 +58,7 @@ const StepTwo = ({ token }) => {
   const [duration, setDuration] = useState(subtance.duration);
   const [jumlah_soal, setJumlahSoal] = useState(subtance.questions_to_share);
   const [passing_grade, setPassingGrade] = useState(subtance.passing_grade);
-  const [status, setStatus] = useState(subtance.status);
+  const [status, setStatus] = useState(subtance.status || false);
   const [, forceUpdate] = useState();
 
   const saveDraft = () => {
@@ -101,7 +101,7 @@ const StepTwo = ({ token }) => {
         end_at,
         duration,
         passing_grade,
-        status: status,
+        status: false,
         questions_to_share: jumlah_soal,
       };
 
@@ -258,6 +258,7 @@ const StepTwo = ({ token }) => {
                       type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
+                      placeholder="20"
                       value={jumlah_soal}
                       onChange={(e) => handleTotalSoal(e.target.value)}
                       onBlur={() =>
@@ -293,6 +294,7 @@ const StepTwo = ({ token }) => {
                     <input
                       type="text"
                       className="form-control"
+                      placeholder="360"
                       aria-describedby="basic-addon2"
                       value={duration}
                       onChange={(e) => handleDuration(e.target.value)}
@@ -333,6 +335,7 @@ const StepTwo = ({ token }) => {
                       type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
+                      placeholder="80.00"
                       value={passing_grade}
                       onChange={(e) => handlePassingGrade(e.target.value)}
                       onBlur={() =>
@@ -371,16 +374,13 @@ const StepTwo = ({ token }) => {
                     id=""
                     className="form-control"
                     value={status}
+                    disabled
                     onChange={(e) => setStatus(e.target.value)}
                     onBlur={(e) => {
                       setStatus(e.target.value);
                       simpleValidator.current.showMessageFor("status");
                     }}
                   >
-                    <option value="" selected disabled>
-                      -- PILIH STATUS --
-                    </option>
-                    <option value={true}> Publish </option>
                     <option value={false}> Draft </option>
                   </select>
                   {simpleValidator.current.message(
@@ -397,13 +397,6 @@ const StepTwo = ({ token }) => {
                   <div className="float-right ">
                     <div className={styles.foldResponsive}>
                       <button
-                        className={`${styles.btnNextFold} btn btn-light-ghost-rounded-full mr-2`}
-                        type="button"
-                        onClick={onSubmit}
-                      >
-                        Simpan & Lanjut
-                      </button>
-                      <button
                         className={`${styles.btnDraftFold} btn btn-primary-rounded-full`}
                         onClick={saveDraft}
                         type="button"
@@ -412,15 +405,7 @@ const StepTwo = ({ token }) => {
                       </button>
                     </div>
                     <div className={`${styles.normalBtn} row`}>
-                      <div className="col-xs-6">
-                        <button
-                          className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                          type="button"
-                          onClick={onSubmit}
-                        >
-                          Simpan & Lanjut
-                        </button>
-                      </div>
+                      <div className="col-xs-6"></div>
                       <div className="col-xs-6">
                         <button
                           className={` btn btn-primary-rounded-full`}

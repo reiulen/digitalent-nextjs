@@ -4,9 +4,9 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../detail-berita/detail-berita.module.css";
 import { useRouter } from "next/router";
-import { Container } from "react-bootstrap";
 import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
+import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
 const DetailBerita = () => {
   const dispatch = useDispatch();
@@ -131,7 +131,7 @@ const DetailBerita = () => {
   };
 
   return (
-    <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
+    <HomeWrapper>
       {/* BreadCrumb */}
       <BreadcrumbComponent
         data={[
@@ -228,7 +228,7 @@ const DetailBerita = () => {
               windowDimensions &&
               windowDimensions.width &&
               windowDimensions.width > 770
-                ? "col-12 col-lg-8 pr-20"
+                ? "col-12 col-lg-8 pr-11"
                 : "col-12 col-lg-8"
             }
           >
@@ -240,16 +240,45 @@ const DetailBerita = () => {
                 "publikasi/images/" +
                 detail.gambar
               }
-              width="1500vw"
-              height="1000vh"
-              // layout="fill"
+              width={
+                windowDimensions &&
+                windowDimensions.width &&
+                windowDimensions.width > 768 ?
+                  837
+                :
+                  windowDimensions &&
+                  windowDimensions.width &&
+                  windowDimensions.width <= 768 &&
+                  windowDimensions.width > 540 ?
+                    704
+                  :
+                    361
+              }
+              height={
+                windowDimensions &&
+                windowDimensions.width &&
+                windowDimensions.width > 768 ?
+                  640
+                :
+                  361
+                }
               objectFit="cover"
               alt="Detail Image"
-              className="rounded-lg"
+              className="rounded-lg img-fluid"
+              objectFit="cover"
             />
 
             {/* Berita */}
-            <div className="border rounded-lg mb-5 mt-15">
+            <div 
+              className={
+                windowDimensions &&
+                windowDimensions.width &&
+                windowDimensions.width > 1242 ?
+                  "border rounded-lg mb-5 mt-15 mr-20"
+                :
+                  "border rounded-lg mb-5 mt-15"
+              }
+            >
               <div
                 className="row my-5 mx-5 text-justify "
                 style={{ width: "95%", wordBreak: "break-word" }}
@@ -413,7 +442,7 @@ const DetailBerita = () => {
       )}
 
       {/* End of Content */}
-    </Container>
+    </HomeWrapper>
   );
 };
 

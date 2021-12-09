@@ -40,8 +40,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
-        detailSurveyQuestionDetail(query.id, session.user.user.data.token)
+        detailSurveyQuestionDetail(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
       );
       return {
         props: { session, title: "Edit Soal Survey - Subvit" },

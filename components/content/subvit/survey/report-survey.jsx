@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 import axios from "axios";
 import styles from "../trivia/edit/step.module.css";
+import { allReportSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
 
 const ReportSurvey = ({ token }) => {
   const dispatch = useDispatch();
@@ -21,8 +22,6 @@ const ReportSurvey = ({ token }) => {
   const { loading, error, survey } = useSelector(
     (state) => state.allReportSurveyQuestionBanks
   );
-
-  const { theme, academy } = survey.dataTitle;
 
   let { page = 1, id } = router.query;
   page = Number(page);
@@ -33,11 +32,11 @@ const ReportSurvey = ({ token }) => {
   const [publishValue, setPublishValue] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    if (limit) {
-      router.push(`${router.pathname}?id=${id}&page=1&limit=${limit}`);
-    }
-  }, [dispatch, limit, router, id]);
+  // useEffect(() => {
+  //   if (limit) {
+  //     router.push(`${router.pathname}?id=${id}&page=1&limit=${limit}`);
+  //   }
+  // }, [dispatch, limit, router, id]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
@@ -60,6 +59,9 @@ const ReportSurvey = ({ token }) => {
 
   const handleLimit = (val) => {
     setLimit(val);
+
+    let link = `${router.pathname}?id=${id}&page=1&limit=${val}`;
+    router.push(link);
   };
 
   const handleExportReport = async () => {
@@ -76,14 +78,6 @@ const ReportSurvey = ({ token }) => {
     await axios.get(link, config).then((res) => {
       window.location.href = res.data.data;
     });
-  };
-
-  const handleFilter = () => {
-    let link = `${router.pathname}?id=${id}&page=${1}`;
-    if (status) link = link.concat(`&status=${status}`);
-
-    router.push(link);
-    setShowModal(false);
   };
 
   const handlePublish = (val) => {
@@ -129,17 +123,17 @@ const ReportSurvey = ({ token }) => {
             background="bg-primary"
             icon="new/add-user.svg"
             color="#FFFFFF"
-            value={survey.data.total_peserta}
+            value={survey && survey.data.total_peserta}
             titleValue=""
             title="Total Peserta"
             publishedVal=""
-            routePublish={() => handlePublish("")}
+            routePublish={() => handlePublish(null)}
           />
           <CardPage
             background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={survey.data.sudah_mengerjakan}
+            value={survey && survey.data.sudah_mengerjakan}
             titleValue=""
             title="Sudah Mengerjakan"
             publishedVal="sudah-mengerjakan"
@@ -149,7 +143,7 @@ const ReportSurvey = ({ token }) => {
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={survey.data.sedang_mengerjakan}
+            value={survey && survey.data.sedang_mengerjakan}
             titleValue=""
             title="Sedang Mengerjakan"
             publishedVal="sedang-mengerjakan"
@@ -159,7 +153,7 @@ const ReportSurvey = ({ token }) => {
             background="bg-warning"
             icon="new/mail-white.svg"
             color="#FFFFFF"
-            value={survey.data.belum_mengerjakan}
+            value={survey && survey.data.belum_mengerjakan}
             titleValue=""
             title="Belum Mengerjakan"
             publishedVal="belum-mengerjakan"
@@ -182,7 +176,8 @@ const ReportSurvey = ({ token }) => {
                     }`}
               </h3>
               <p className="text-muted">
-                {academy} - {theme}
+                {(survey && survey.dataTitle.academy) || "-"} -{" "}
+                {(survey && survey.dataTitle.theme) || "-"}
               </p>
             </div>
             <div className="card-toolbar"></div>
@@ -191,7 +186,7 @@ const ReportSurvey = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-md-5">
+                <div className="col-md-9">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -216,24 +211,8 @@ const ReportSurvey = ({ token }) => {
                   </div>
                 </div>
                 <div className="col-md-1"></div>
-                <div className="col-md-3">
-                  <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
-                    style={{
-                      minWidth: "280px",
-                      color: "#bdbdbd",
-                      float: "right",
-                    }}
-                    onClick={() => setShowModal(true)}
-                  >
-                    <div className="d-flex align-items-center">
-                      <i className="ri-filter-fill mr-3"></i>
-                      Pilih Filter
-                    </div>
-                    <i className="ri-arrow-down-s-line"></i>
-                  </button>
-                </div>
-                <div className="col-md-3 ">
+
+                <div className="col-md-2  ">
                   {/* <button
                     className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
                     type="button"
@@ -279,12 +258,12 @@ const ReportSurvey = ({ token }) => {
                       ) : (
                         survey &&
                         survey.data.reports.map((row, i) => {
+                          const paginate = i + 1 * (page * limit);
+                          const dividers = limit - 1;
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <p className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
-                                </p>
+                                <p className="">{paginate - dividers}</p>
                               </td>
                               <td className="align-middle">
                                 <div>
@@ -309,7 +288,7 @@ const ReportSurvey = ({ token }) => {
                                     {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">
-                                    {row.total_workmanship_time}
+                                    {row.total_workmanship_time} Menit
                                   </p>
                                 </div>
                               </td>
@@ -346,7 +325,7 @@ const ReportSurvey = ({ token }) => {
               </div>
 
               <div className="row">
-                {survey && survey.total > 5 && (
+                {survey && survey.perPage < survey.total && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
@@ -378,6 +357,7 @@ const ReportSurvey = ({ token }) => {
                           }}
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
+                          value={limit}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>
@@ -403,61 +383,6 @@ const ReportSurvey = ({ token }) => {
           </div>
         </div>
       </div>
-      <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header>
-          <Modal.Title>Filter</Modal.Title>
-          <button
-            type="button"
-            className="close"
-            onClick={() => setShowModal(false)}
-          >
-            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
-          </button>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="form-group mb-5">
-            <label className="p-0">Status</label>
-            <select
-              className="form-control mb-1"
-              onChange={(e) => setStatus(e.target.value)}
-              onBlur={(e) => setStatus(e.target.value)}
-              value={status}
-            >
-              <option value="" selected>
-                Semua
-              </option>
-              <option value={0}>Diterima</option>
-              <option value={1}>Ditolak</option>
-            </select>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button
-            className="btn btn-light-ghost-rounded-full mr-2"
-            type="reset"
-            onClick={() => {
-              setShowModal(false);
-              setStatus("");
-              let link = `${router.pathname}?id=${id}&page=${1}`;
-              router.push(link);
-            }}
-          >
-            Reset
-          </button>
-          <button
-            className="btn btn-primary-rounded-full"
-            type="button"
-            onClick={handleFilter}
-          >
-            Terapkan
-          </button>
-        </Modal.Footer>
-      </Modal>
     </PageWrapper>
   );
 };

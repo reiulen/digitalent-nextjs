@@ -13,25 +13,58 @@ import styles from "../../../../../styles/previewGaleri.module.css"
 
 const TambahApi = ({ token }) => {
   const router = useRouter();
-  let selectRefProvinsi = null;
+
+  const { id, province_id } = router.query
+  let selectRefProvinsi;
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
   const detailUnitWork = useSelector((state) => state.detailUnitWork);
   let sortirOptionTempProv = detailUnitWork?.unitWork?.provinsi
+
   let optionTempProv = sortirOptionTempProv.map((items) => {
     return { ...items, label: items.provinsi, region: items.provinsi }
   })
-  const allProvincesSite = useSelector((state) => state.
-    allProvincesSite);
+
+  const allProvincesSite = useSelector((state) => state.allProvincesSite);
   let sortirOptionTempProvList = allProvincesSite?.data
+
   let optionTempProvList = sortirOptionTempProvList.map((items) => {
     return { ...items, value: items.label }
   })
-  const [valueProvinsi, setValueProvinsi] = useState([]);
+  // const optionTempProvList = [];
+  // if (sortirOptionTempProvList) {
+  //   for (let index = 0; index < sortirOptionTempProvList.length; index++) {
+  //     let val = {
+  //       id: sortirOptionTempProvList[index].id,
+  //       label: sortirOptionTempProvList[index].label,
+  //     };
+  //     optionTempProvList.push(val);
+  //   }
+  // }
+
+  // let optionTempProvList = sortirOptionTempProvList.map((items) => {
+  //   return { ...items, value: items.label }
+  // })
+
+  // let province = optionTempProvList.filter((items, i) => {
+  //   // for (let j = 0; j < optionTempProv.length; j++) {
+  //   //   if (items.label !== optionTempProv[j].label) {
+  //   //     return { ...items }
+  //   //   }
+  //   // }
+  //   if (items.label !== optionTempProv[0].label) {
+  //     return { ...items }
+  //   }
+  // })
+
+
+  const [valueProvinsi, setValueProvinsi] = useState(null);
+  // const [valueProvinsi, setValueProvinsi] = useState([]);
   const [nameUnitWork, setNameUnitWork] = useState(detailUnitWork.unitWork.name);
   const [status, setStatus] = useState(detailUnitWork.unitWork.status);
+  const [changeProvince, setChangeProvince] = useState(false)
 
 
 
@@ -43,6 +76,7 @@ const TambahApi = ({ token }) => {
     });
     const datas = data.map((items) => {
       return {
+        ...items,
         region: items.region,
       };
     });
@@ -55,13 +89,13 @@ const TambahApi = ({ token }) => {
 
       if (nameUnitWork === "") {
         Swal.fire(
-          "Gagal simpan",
+          "Oops...",
           "Form nama satuan kerja tidak boleh kosong",
           "error"
         );
       }
       else if (status === "") {
-        Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
+        Swal.fire("Oops...", "Form status tidak boleh kosong", "error");
       }
       else {
         Swal.fire({
@@ -99,7 +133,7 @@ const TambahApi = ({ token }) => {
                 );
               });
             } catch (error) {
-              Swal.fire("Gagal ubah", `${error.response.data.message}`, "error");
+              Swal.fire("Oops...", `${error.response.data.message}`, "error");
             }
           }
         });
@@ -189,11 +223,23 @@ const TambahApi = ({ token }) => {
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Provinsi</label>
                 <Select
-                  ref={(ref) => (selectRefProvinsi = ref)}
+                  ref={(ref) => { selectRefProvinsi = ref }}
                   className={`${styles.cari} basic-single`}
                   classNamePrefix="select"
                   placeholder="Pilih provinsi"
                   defaultValue={optionTempProv}
+                  // defaultValue={
+                  //   changeProvince !== true
+                  //     ? optionTempProvList.filter(
+                  //       (value) => {
+                  //         optionTempProv.filter((row, i) => {
+                  //           value.label === row.label
+                  //         })
+                  //       }
+                  //       // (value) => value.label === optionTempProv
+                  //     )
+                  //     : null
+                  // }
                   isMulti
                   isDisabled={false}
                   isLoading={false}

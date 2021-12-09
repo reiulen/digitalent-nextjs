@@ -92,7 +92,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { data: "auth", session, title: "TRIVIA - Subvit", success },
+        props: { data: "auth", session, title: "TRIVIA", success },
       };
     }
 );

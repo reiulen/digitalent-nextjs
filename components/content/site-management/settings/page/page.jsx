@@ -102,7 +102,7 @@ const Table = ({ token }) => {
                 <div className="col-lg-12 col-xl-12">
                   <div>
                     <div className="row w-100">
-                      <div className="col-12 col-sm-6">
+                      <div className="col-12 col-sm-5">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
@@ -151,14 +151,14 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allPage.data.setting_page.length === 0 ? (
+                      {allPage?.data?.setting_page?.length === 0 ? (
                         <tr>
-                          <td colSpan="5" className="text-center">
-                            <h4>Data Kosong</h4>
+                          <td colSpan="8" className="text-center">
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (
-                        allPage.data.setting_page.reverse().map((items, index) => {
+                        allPage.data?.setting_page?.reverse().map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
@@ -167,7 +167,12 @@ const Table = ({ token }) => {
                                   : (allPage.page - 1) * allPage.limit +
                                     (index + 1)}
                               </td>
-                              <td className="align-middle text-left">
+                              <td className="align-middle text-left" style={{
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                  maxWidth: "11rem",
+                                }}>
                                 {items.name}
                               </td>
                               <td className="align-middle text-left">
@@ -179,14 +184,14 @@ const Table = ({ token }) => {
                                       className="status-div-green mb-0"
                                       style={{ width: "max-content" }}
                                     >
-                                      Aktif
+                                      Listed
                                     </p>
                                   ) : (
                                     <p
                                       className="status-div-red mb-0"
                                       style={{ width: "max-content" }}
                                     >
-                                      Tidak Aktif
+                                     Unlisted
                                     </p>
                                   )}
                               </td>

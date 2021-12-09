@@ -7,6 +7,7 @@ import { getAllFaq } from "../../../../redux/actions/beranda/faq-content.actions
 import PulseLoaderRender from "../../../../user-component-new/components/loader/PulseLoader";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 import styles from "../faq/faq.module.css";
+import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
 const FaqPage = () => {
   const dispatch = useDispatch();
@@ -104,7 +105,7 @@ const FaqPage = () => {
   };
 
   return (
-    <Container fluid className="px-md-30 px-10 py-10 bg-white">
+    <HomeWrapper>
       <SubHeaderComponent
         data={[{ link: router.asPath, name: "Frequently Asked Questions" }]}
       />
@@ -209,7 +210,7 @@ const FaqPage = () => {
               </div>
             </div>
               {
-                kategoriToShow && kategori.length !== 0 ?
+                kategoriToShow && kategoriToShow.length !== 0 ?
                   kategoriToShow.map ((el, i) => {
                     return (
                       <div key={i}>
@@ -476,7 +477,7 @@ const FaqPage = () => {
         </div>
         {/* End of Content */}
       </div>
-    </Container>
+    </HomeWrapper>
   );
 };
 

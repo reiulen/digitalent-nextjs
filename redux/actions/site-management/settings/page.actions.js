@@ -109,7 +109,6 @@ export const postPage = (sendData, token) => {
         payload: data,
       });
     } catch (error) {
-      
       dispatch({
         type: POST_PAGE_FAIL,
         payload: error.response.data.message,
@@ -118,34 +117,36 @@ export const postPage = (sendData, token) => {
   };
 };
 
-export const getDetailPages = (id, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: DETAIL_PAGE_REQUEST,
-    });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+export const getDetailPages =
+  (id, token = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: DETAIL_PAGE_REQUEST,
+      });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-    let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT +
-      `api/setting-page/detail/${id}`;
+      let link =
+        process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/setting-page/detail/${id}`;
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_PAGE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_PAGE_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_PAGE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_PAGE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updatePage = (sendData, id, token) => async (dispatch) => {
   try {

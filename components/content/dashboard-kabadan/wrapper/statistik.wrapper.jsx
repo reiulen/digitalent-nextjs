@@ -1,6 +1,12 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const StatistikWrapper = ({ title, funcFilterYear }) => {
+  const {
+    loading: loadingBeasiswaYear,
+    error: errorBeasiswaYear,
+    year: beasiswaYear,
+  } = useSelector((state) => state.beasiswaYear);
   return (
     <>
       <div className="d-flex justify-content-between align-items-center flex-wrap">
@@ -11,8 +17,8 @@ const StatistikWrapper = ({ title, funcFilterYear }) => {
             onChange={(e) => funcFilterYear(e.target.value)}
             className="border-0 p-0"
           >
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
+            {beasiswaYear &&
+              beasiswaYear.map((row, i) => <option key={i} value={row}>{row}</option>)}
           </select>
         </div>
       </div>

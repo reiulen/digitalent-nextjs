@@ -173,6 +173,7 @@
   font-weight: 600;
   font-size: 14px;
   color: #1F1F1F;
+  margin: 0 15px;
 }
 
 .data-daerah-provinsi {
@@ -183,8 +184,9 @@
   color: #1F1F1F;
   position: sticky;
   left: 50px;
-  width: 150px;
+  width: 220px;
   flex-wrap: wrap;
+  margin-right: 100px;
 }
 
 .total-peserta {
@@ -245,16 +247,7 @@
   color: #fff;
 }
 
-.data-head{
-  position: absolute;
-  top: 24px;
-  right: 0;
-}
-
 .data-head-2{
-  position: absolute;
-  top: 15px;
-  right: 0;
   background-color: #203E80;
 }
 
@@ -319,12 +312,8 @@
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 
-.provinsi-styling{
-  margin-right: -30px;
-}
-
 .provinsi-styling-2{
-  margin-right: -30px;
+  /* margin-right: 20px; */
   background-color: #203E80;
 }
 
@@ -361,50 +350,6 @@
   } 
 }
 
-@media only screen and (max-width: 1222px) {
-  
-  .data-daerah {
-    font-size: 14px;
-  }
-  .data-peserta{
-    font-size: 13px;
-  }
-  .berdasarkan{
-    font-size: 9px;
-  }
-  .data-head-2{
-    font-size: 10px;
-    padding: 8px;
-    right: 25px;
-  }
-  .data-head{
-    font-size: 10px;
-    padding: 8px;
-    right: 20px;
-    top: 15px;
-  }
-  .provinsi-styling{
-    font-size: 10px;
-    padding: 8px;
-    position: absolute;
-    top: 15px;
-    right: 22px;
-  }
-  .provinsi-styling-2{
-    font-size: 10px;
-    padding: 8px;
-    position: absolute;
-    top: 15px;
-    right: 22px;
-  }
-  .data-daerah-provinsi{
-    font-size: 11px;
-  }
-  .total-peserta{
-    font-size: 11px;
-  }
-}
-
 @media only screen and (max-width: 1024px) {
   .styling-content-pelatihan {
     margin-left: 12px;
@@ -432,46 +377,18 @@
   .cardDataPeserta{
     width: 77%;
   }
-  
-  .data-daerah {
-    font-size: 14px;
-  }
-  .data-peserta{
-    font-size: 13px;
-  }
-  .berdasarkan{
-    font-size: 9px;
-  }
   .data-head-2{
-    font-size: 10px;
     padding: 8px;
     right: 25px;
   }
   .data-head{
-    font-size: 10px;
     padding: 8px;
     right: 20px;
     top: 15px;
   }
-  .provinsi-styling{
-    font-size: 10px;
-    padding: 8px;
-    position: absolute;
-    top: 15px;
-    right: 22px;
-  }
-  .provinsi-styling-2{
-    font-size: 10px;
-    padding: 8px;
-    position: absolute;
-    top: 15px;
-    right: 22px;
-  }
-  .data-daerah-provinsi{
-    font-size: 11px;
-  }
-  .total-peserta{
-    font-size: 11px;
+  .data-daerah-provinsi {
+    width: 120px;
+    margin-right: 40px;
   }
 }
 
@@ -509,39 +426,25 @@
 
   /* DASHBOARD Site Management */
   .data-daerah-provinsi{
-    width: 100%;
-  }
-  .data-head-2{
-    padding: 8px;
-    right: 40px;
-  }
-  .data-head{
-    font-size: 10px;
-    padding: 8px;
-    right: 20px;
-    top: 15px;
-  }
-  .provinsi-styling{
-    padding: 8px;
-    position: absolute;
-    top: 15px;
-    right: 60px;
-  }
-  .provinsi-styling-2{
-    font-size: 10px;
-    padding: 8px;
-    position: absolute;
-    top: 15px;
-    right: 60px;
+    width: 200px;
+    margin-right: 280px;
   }
   .cardDataPeserta{
     width: 100%;
   }
+  .content-data{
+    margin-bottom: 25px;
+  }
 }
 
 @media only screen and (max-width: 576px) {
-  .styling-content-pelatihan {
-    margin-left: 14px;
+  .data-daerah-provinsi {
+    width: 100px;
+    font-size: 12px;
+    margin-right: 8px;
+  }
+  .total-peserta{
+    font-size: 12px;
   }
 }
 
@@ -558,11 +461,53 @@
   .isAktif {
     font-size: 14px;
   }
+  .styling-unduh span{
+    padding: 10px 32px 10px 56px;
+    font-size: 10px;
+  }
+  .styling-upload input[type="file"]::before {
+    font-size: 10px;
+    padding: 10px 32px 10px 56px;
+  }
+  .status-peserta > label > input[type="checkbox"] ::before{
+    /* width: 10px; */
+    font-size: 48px;
+  }
+  .switch.switch-primary:not(.switch-outline) input:empty~span:before {
+    width: 52px;
+    height: 30px;
+  }
 }
 
 @media only screen and (max-width: 280px) {
   .styling-content-pelatihan {
     margin-left: 14px;
     width: 94%;
+  }
+  .styling-unduh span{
+    padding: 10px 20px 10px 45px;
+  }
+  .styling-upload input[type="file"]::before {
+    padding: 10px 20px 10px 45px;
+  }
+  .data-head-2{
+    font-size: 10px;
+  }
+  .provinsi-styling-2{
+    font-size: 10px;
+  }
+  .data-daerah-provinsi {
+    width: 80px;
+    font-size: 10px;
+    margin-right: 8px;
+  }
+  .nomor{
+    font-size: 10px;
+  }
+  .total-peserta{
+    font-size: 10px;
+  }
+  .pagination-button{
+    font-size: 10px;
   }
 }

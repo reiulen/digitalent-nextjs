@@ -49,17 +49,24 @@ export default function SUBM(props) {
   const [disablePelatihan, setDisablePelatihan] = useState(true)
   const [disableStatusProfile, setDisableStatusProfile] = useState(true)
   const [disableStatusSelection, setDisableStatusSelection] = useState(true)
+  const [namaakademi, setnamakademi] = useState(null)
+  const [namatema, setnamatema] = useState(null)
+  const [namapenyelenggara, setnamapenyelenggara] = useState(null)
+  const [namapelatihan, setnamapelatihan] = useState(null)
+  const [namastatusseleksi, setnamastatusseleksi] = useState(null)
+
 
   const optionsStatus = [
-    { value: "Menunggu", label: "Menunggu" },
-    { value: "Tidak Lulus Administrasi", label: "Tidak Lulus Administrasi" },
-    { value: "Tidak Lulus Tes Substansi", label: "Tidak Lulus Tes Substansi" },
-    { value: "Lulus Tes Substansi", label: "Lulus Tes Substansi" },
-    { value: "Ditolak", label: "Ditolak" },
-    { value: "Diterima", label: "Diterima" },
-    { value: "Pelatihan", label: "Pelatihan" },
-    { value: "Lulus Pelatihan", label: "Lulus Pelatihan" },
-    { value: "Tidak Lulus Pelatihan", label: "Tidak Lulus Pelatihan" },
+    { value: "menunggu", label: "Menunggu" },
+    { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
+    { value: "tes substansi", label: "Tes Substansi" },
+    { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
+    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "ditolak", label: "Ditolak" },
+    { value: "diterima", label: "Diterima" },
+    { value: "pelatihan", label: "Pelatihan" },
+    { value: "lulus pelatihan", label: "Lulus Pelatihan" },
+    { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
 
   const handleSubmit = async (e) => {
@@ -70,20 +77,20 @@ export default function SUBM(props) {
           props.token,
           title,
           year,
-          academy,
-          theme,
-          organizer,
-          training,
-          profileStatus,
-          selectionStatus,
+          namaakademi ? namaakademi : "",
+          namatema ? namatema : "",
+          namapenyelenggara ? namapenyelenggara : "",
+          namapelatihan ? namapelatihan : "",
+          profileStatus ? profileStatus : "",
+          selectionStatus ? selectionStatus : "",
           participantSelectionStatusUpdate ||
             participantSelectionStatusUpdate === 1
-            ? "1"
-            : "0",
-          status.value,
+            ? true
+            : false,
+          status.value ? status.value : "",
           broadcastEmailSendNotification || broadcastEmailSendNotification === 1
-            ? "1"
-            : "0",
+            ? true
+            : false,
           emailSubject,
           emailContent,
           `via ${via}`
@@ -92,12 +99,12 @@ export default function SUBM(props) {
     } else {
       dispatch(postViaTemplate(props.token, title, file, participantSelectionStatusUpdate ||
         participantSelectionStatusUpdate === 1
-        ? "1"
-        : "0",
+        ? true
+        : false,
         status.value,
         broadcastEmailSendNotification || broadcastEmailSendNotification === 1
-          ? "1"
-          : "0",
+          ? true
+          : false,
         emailSubject,
         emailContent, `via ${via}`));
     }
@@ -132,7 +139,8 @@ export default function SUBM(props) {
 
     axios
       .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/theme`,
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
@@ -171,7 +179,8 @@ export default function SUBM(props) {
 
     axios
       .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/training`,
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
@@ -195,7 +204,7 @@ export default function SUBM(props) {
         setListProfileStatus(data.data.data)
       });
 
-  }, [props.token]);
+  }, [props.token, academy, theme]);
 
   const listYears = listYear.map((item, index) => {
     return (
@@ -205,7 +214,7 @@ export default function SUBM(props) {
 
   const optAcademy = listAcademy.map((item, index) => {
     return (
-      <option value={item.value} key={index} >{item.label}</option>
+      <option value={item.value} key={index} akademi={item.label} >{item.label}</option>
     )
   })
 
@@ -381,6 +390,7 @@ export default function SUBM(props) {
                   <select
                     className="form-control"
                     onChange={(e) => {
+                      setnamakademi(e.target.selectedOptions[0].innerText)
                       setAcademy(e.target.value);
                       setDisableAkademi(false)
                     }}
@@ -405,6 +415,7 @@ export default function SUBM(props) {
                   <select
                     className="form-control"
                     onChange={(e) => {
+                      setnamatema(e.target.selectedOptions[0].innerText)
                       setTheme(e.target.value);
                       setDisableTema(false)
                     }}
@@ -429,6 +440,7 @@ export default function SUBM(props) {
                   <select
                     className="form-control"
                     onChange={(e) => {
+                      setnamapenyelenggara(e.target.selectedOptions[0].innerText)
                       setOrganizer(e.target.value);
                       setDisablePenyelenggara(false)
                     }}
@@ -453,6 +465,7 @@ export default function SUBM(props) {
                   <select
                     className="form-control"
                     onChange={(e) => {
+                      setnamapelatihan(e.target.selectedOptions[0].innerText)
                       setTraining(e.target.value);
                       setDisablePelatihan(false)
                     }}
@@ -510,7 +523,7 @@ export default function SUBM(props) {
                     <option disabled selected>
                       PILIH STATUS SELEKSI
                     </option>
-                    <option value="06">Lulus</option>
+                    <option value="Lulus">Lulus</option>
                   </select>
                   {
                     disableStatusProfile === true || disableStatusProfile === "" ?
@@ -532,8 +545,9 @@ export default function SUBM(props) {
           <div className="update-status mt-4">
             <h3 className="judul mb-4">Update Status Seleksi Peserta</h3>
             <span className="d-flex switch switch-primary status-peserta">
-              <label>
+              <label className="checkbox-button">
                 <input
+                  
                   type="checkbox"
                   name="select"
                   checked={participantSelectionStatusUpdate}
@@ -606,7 +620,7 @@ export default function SUBM(props) {
                 />
                 <span></span>
               </label>
-              <h3 className="mt-2 isAktif">
+              <h3 className="mt-2 judul">
                 {broadcastEmailSendNotification ? "Aktif" : "Tidak Aktif"}
               </h3>
             </span>

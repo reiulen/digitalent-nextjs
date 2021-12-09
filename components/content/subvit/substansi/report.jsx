@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 
 import { clearErrors } from "/redux/actions/subvit/subtance.actions";
+import { allReportSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 
 const ListSubstansi = ({ token }) => {
   const dispatch = useDispatch();
@@ -23,8 +24,6 @@ const ListSubstansi = ({ token }) => {
   const { loading, error, subtance } = useSelector(
     (state) => state.allReportSubtanceQuestionBanks
   );
-
-  const { theme, academy } = subtance.dataTitle;
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -60,6 +59,8 @@ const ListSubstansi = ({ token }) => {
   };
 
   const handleLimit = (val) => {
+    let link = `${router.pathname}?id=${id}&page=1&limit=${val}`;
+    router.push(link);
     setLimit(val);
   };
 
@@ -194,7 +195,7 @@ const ListSubstansi = ({ token }) => {
             value={subtance ? subtance.data.total_peserta : 0}
             titleValue=""
             title="Total Peserta"
-            publishedVal=""
+            publishedVal={null}
             routePublish={() => handlePublish("")}
           />
           <CardPage
@@ -254,7 +255,8 @@ const ListSubstansi = ({ token }) => {
                     }`}
               </h3>
               <p className="text-muted">
-                {academy} - {theme}
+                {(subtance && subtance.dataTitle.academy) || "-"}-
+                {(subtance && subtance.dataTitle.theme) || "-"}
               </p>
             </div>
             <div className="col-lg-2 col-xl-2"></div>
@@ -450,6 +452,7 @@ const ListSubstansi = ({ token }) => {
                           }}
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
+                          value={limit}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>

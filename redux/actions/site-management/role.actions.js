@@ -27,6 +27,7 @@ import {
 
 import axios from "axios";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 export const getAllRoles = (token) => async (dispatch, getState) => {
   try {
@@ -108,10 +109,19 @@ export const postRoles = (sendData, token) => {
         type: POST_ROLES_SUCCESS,
         payload: data,
       });
-      Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
-        window.location = "/site-management/role";
-      });
+
+      if (data.status) {
+        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+          window.location = "/site-management/role";
+        });
+      }else{
+        Swal.fire("Oopss", data.message, "error").then(() => {
+        });
+      }
+
     } catch (error) {
+      Swal.fire("Oopss", "Jika Sub Menu di Pilih, Menu juga harus dipilih !", "error").then(() => {
+      });
       dispatch({
         type: POST_ROLES_FAIL,
       });
@@ -206,17 +216,22 @@ export const getSidebar = (token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
+      process.env.END_POINT_API_SITE_MANAGEMENT + " ",
       config
     );
+    localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
+    localStorage.setItem("token-permission", data.data.tokenPermission)
+    localStorage.setItem("permissions", data.data.permissions)
+    Cookies.set("token_permission", data.data.tokenPermission)
     dispatch({
       type: GET_SIDEBAR,
       payload: data,
     });
-    localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
-    localStorage.setItem("token-permission", data.data.tokenPermission)
+
     
-  } catch (error) {}
+  } catch (error) {
+    
+  }
 };
 
 export const setPage = (page) => {

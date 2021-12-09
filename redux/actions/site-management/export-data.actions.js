@@ -123,39 +123,65 @@ export const getDetailsExportData =
     }
   };
 
-export const postFilterExportData = (token, datas) => async (dispatch) => {
-  try {
-    dispatch({
-      type: POST_EXPORT_DATA_REQUEST,
-    });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+export const postFilterExportData =
+  (token, datas, page = 1, limit = 5) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: POST_EXPORT_DATA_REQUEST,
+      });
 
-    let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/store`;
+      let config = null;
 
-    const { data } = await axios.post(link, datas, config);
+      if (datas.button_type === 1) {
+        config = {
+          params: {
+            page,
+            limit,
+          },
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          responseType: "arraybuffer",
+        };
+      }else{
+        config = {
+          params: {
+            page,
+            limit,
+          },
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        };
+      }
 
-    if(datas.button_type === 1){
-      Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-        router.push("/site-management/export-data");
+      let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/store`;
+
+      const data = await axios.post(link, datas, config);
+
+      if (datas.button_type === 1) {
+        const url = window.URL.createObjectURL(new Blob([data.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `export${Date.now()}.zip`);
+        document.body.appendChild(link);
+        link.click();
+      }
+
+      dispatch({
+        type: POST_EXPORT_DATA_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      Swal.fire("Ooppss", JSON.stringify(error.message), "error").then(
+        () => {}
+      );
+      dispatch({
+        type: POST_EXPORT_DATA_FAIL,
       });
     }
-
-    dispatch({
-      type: POST_EXPORT_DATA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    Swal.fire("Ooppss", JSON.stringify(error.message), "error").then(() => {
-    });
-    dispatch({
-      type: POST_EXPORT_DATA_FAIL,
-    });
-  }
-};
+  };
 
 export const setPage = (page) => {
   return {

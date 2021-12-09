@@ -82,6 +82,7 @@ export const getRandomTriviaQuestionDetail =
           Authorization: "Bearer " + token,
         },
       };
+
       const { data } = await axios.get(link, config);
 
       dispatch({
@@ -91,7 +92,7 @@ export const getRandomTriviaQuestionDetail =
     } catch (error) {
       dispatch({
         type: TRIVIA_QUESTION_RANDOM_DETAIL_FAIL,
-        payload: error.response.data.message,
+        payload: error.response.data.message || error.message,
       });
     }
   };
@@ -183,31 +184,34 @@ export const deleteTriviaQuestionDetail = (id, token) => async (dispatch) => {
   }
 };
 
-export const detailTriviaQuestionDetail = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_TRIVIA_QUESTION_DETAIL_REQUEST });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+export const detailTriviaQuestionDetail =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_TRIVIA_QUESTION_DETAIL_REQUEST });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    const { data } = await axios.get(
-      process.env.END_POINT_API_SUBVIT +
-        `api/trivia-question-bank-details/${id}`
-    );
+      const { data } = await axios.get(
+        process.env.END_POINT_API_SUBVIT +
+          `api/trivia-question-bank-details/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DETAIL_TRIVIA_QUESTION_DETAIL_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_TRIVIA_QUESTION_DETAIL_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_TRIVIA_QUESTION_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_TRIVIA_QUESTION_DETAIL_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updateTriviaQuestionDetail =
   (id, dataBankSoal, token) => async (dispatch) => {

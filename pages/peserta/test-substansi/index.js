@@ -13,10 +13,10 @@ import {
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
 
-const TesSubstansiDetail = dynamic(
+const DetailPelatihan = dynamic(
   () =>
     import(
-      "../../../user-component-new/content/peserta/test-substansi/test-substansi-detail"
+      "../../../user-component-new/components/global/Riwayat-pelatihan-detail/index"
     ),
   {
     loading: function loadingNow() {
@@ -27,10 +27,7 @@ const TesSubstansiDetail = dynamic(
 );
 
 const BelumTersedia = dynamic(
-  () =>
-    import(
-      "../../../user-component-new/content/peserta/test-substansi/belum-tersedia.jsx"
-    ),
+  () => import("../../../user-component-new/content/peserta/empty-state/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -51,7 +48,7 @@ export default function TestSubstansiPage(props) {
     <>
       <Layout title="Test Substansi" session={session}>
         {props.success ? (
-          <TesSubstansiDetail session={session} />
+          <DetailPelatihan session={session} />
         ) : (
           <BelumTersedia />
         )}
@@ -76,59 +73,76 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      // if (!req.cookies.id_pelatihan) {
-      //   const { data } = await store.dispatch(
-      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-      //   );
-      //   if (!data) {
-      //     return (success = false);
-      //   } else {
-      //     const test_substansi = data.list.filter(
-      //       (item) => item.status === "tes substansi"
-      //     );
-      //     if (test_substansi.length > 0) {
-      //       await store.dispatch(
-      //         getDetailRiwayatPelatihan(
-      //           test_substansi[0].id,
-      //           session.user.user.data.user.token
-      //         )
-      //       );
-      //       success = true;
-      //     } else {
-      //       success = false;
-      //     }
-      //   }
-      // } else {
-      //   await store.dispatch(
-      //     getDetailRiwayatPelatihan(
-      //       req.cookies.id_pelatihan,
-      //       session.user.user.data.user.token
-      //     )
-      //   );
-      //   success = true;
-      // }
-      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+
+      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 
-      const { data } = await store.dispatch(
-        getDashboardPeserta(session?.user.user.data.user.token)
-      );
-      
-      const status = data.pelatihan.pelatihan_berjalan.status || "";
-      if (!status || status == "") {
-        success = false;
-      } else if (
-        status.includes("substansi" || "belum tersedia" || "belum mengerjakan")
-      ) {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            data.pelatihan.pelatihan_berjalan.id,
-            session.user.user.data.user.token
-          )
+      if (query.id) {
+        //jika ada query id
+        const data = await store.dispatch(
+          getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
         );
-        success = true;
+        if (data) {
+          if (
+            data?.data?.status?.includes(
+              "substansi" || "belum tersedia" || "belum mengerjakan"
+            )
+          ) {
+            success = true;
+          } else {
+            success = false;
+          }
+        } else {
+          success = false;
+        }
       } else {
-        success = false;
+        // jika gak ada gw cek di dashboard ada gak status tes substansi?
+        const dataDashboard = await store.dispatch(
+          getDashboardPeserta(session?.user.user.data.user.token)
+        );
+        if (dataDashboard) {
+          const status =
+            dataDashboard?.data.pelatihan.pelatihan_berjalan.status || "";
+
+          if (!status || status == "") {
+            success = false;
+          } else if (
+            status?.includes(
+              "substansi" || "belum tersedia" || "belum mengerjakan"
+            )
+          ) {
+            await store.dispatch(
+              getDetailRiwayatPelatihan(
+                dataDashboard?.data.pelatihan.pelatihan_berjalan.id,
+                session.user.user.data.user.token
+              )
+            );
+            success = true;
+          } else {
+            //jika gak ada gw cek di riwayat pelatihan ada gak datanya
+            const { data } = await store.dispatch(
+              getAllRiwayatPelatihanPeserta(session?.user.user.data.user.token)
+            );
+            success = false;
+            const list = data.list.filter((item) => {
+              return item.status.includes(
+                "substansi" || "belum tersedia" || "belum mengerjakan"
+              );
+            });
+
+            if (list.length == 0 || !list) {
+              success = false;
+            } else {
+              await store.dispatch(
+                getDetailRiwayatPelatihan(
+                  list[0].id,
+                  session.user.user.data.user.token
+                )
+              );
+              success = true;
+            }
+          }
+        }
       }
 
       return {

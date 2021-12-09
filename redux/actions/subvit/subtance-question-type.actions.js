@@ -23,7 +23,7 @@ import {
 import axios from "axios";
 
 export const getAllSubtanceQuestionBanksType =
-  (page = 0, keyword = "", limit = 0, token) =>
+  (page = 0, keyword = "", limit = 0, token, tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({ type: SUBTANCE_QUESTION_TYPE_REQUEST });
@@ -37,6 +37,7 @@ export const getAllSubtanceQuestionBanksType =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -55,7 +56,7 @@ export const getAllSubtanceQuestionBanksType =
   };
 
 export const getDetailSubtanceQuestionBanksType =
-  (id, token) => async (dispatch) => {
+  (id, token, tokenPermission) => async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_SUBVIT + `api/subtance-question-types/${id}`;
@@ -63,6 +64,7 @@ export const getDetailSubtanceQuestionBanksType =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 

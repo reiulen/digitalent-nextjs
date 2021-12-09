@@ -24,12 +24,6 @@ export default function ListPesertaID({ token }) {
   const [type, setType] = useState(
     certificate?.data?.certificate?.certificate_type
   );
-  const [currentUser, setCurrentUser] = useState([]);
-
-  useEffect(() => {
-    const data = participant?.data?.list?.filter((el) => el.user == query.name);
-    setCurrentUser(data);
-  }, [participant, query.name]);
 
   const handleResetError = () => {
     if (error) {
@@ -58,17 +52,18 @@ export default function ListPesertaID({ token }) {
       if (data) {
         const formData = new FormData();
         formData.append("certificate", data);
-        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/${certificate?.data?.certificate?.training_id}`;
-
+        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/${certificate?.data?.pelatihan?.id}`;
         const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
         const a = document.createElement("a");
         a.download = `Sertifikat - p12 ${query.name}.png`;
+        a.target = "_blank";
         a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
         a.click();
       }
     } else {
       const a = document.createElement("a");
       a.download = `Sertifikat - p12 ${query.name}.png`;
+      a.target = "_blank";
       a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${certificate?.data?.certificate?.certificate_pdf}`;
       a.click();
     }
@@ -119,7 +114,7 @@ export default function ListPesertaID({ token }) {
             <div className="card-toolbar">
               <Link
                 passHref
-                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${query.id}`}
+                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${query.id_pelatihan}`}
               >
                 <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3">
                   Kembali
@@ -137,54 +132,28 @@ export default function ListPesertaID({ token }) {
                 id="sertifikat1"
                 ref={divReference}
               >
-                <div className="position-relative">
-                  <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
-                    {participant?.data?.nomor_registrasi}
-                  </div>
-                  <div
-                    className={`position-absolute ${
-                      certificate?.data?.certificate.background
-                        ? "responsive-date-from"
-                        : "responsive-date-from-without-background"
-                    } font-weight-boldest zindex-1 responsive-date-text`}
-                  >
-                    {moment(participant?.data?.pelatihan_mulai).format(
-                      "DD MMMM"
-                    )}{" "}
-                    -{" "}
-                    {moment(participant?.data?.pelatihan_selesai).format(
-                      "DD MMMM YYYY"
-                    )}
-                  </div>
-                  <div
-                    className={`position-absolute ${
-                      certificate?.data?.certificate?.background
-                        ? "responsive-year"
-                        : "responsive-year-without-background"
-                    } font-weight-boldest zindex-1 responsive-date-text`}
-                  >
-                    {participant.data.tahun}
-                  </div>
-                  <div
-                    className={`position-absolute w-100 text-center ${
-                      certificate?.data?.certificate?.background
-                        ? "responsive-margin-peserta-1"
-                        : "responsive-margin-without-background"
-                    } zindex-1`}
-                  >
-                    <span className="responsive-font-size-peserta font-weight-bolder">
-                      {query.name}
-                    </span>
-                  </div>
-                  <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
-                    alt={`image ${certificate.data.certificate.certificate_result}`}
-                    objectFit="fill"
-                    width={842}
-                    height={595}
-                    key={certificate?.data?.certificate?.certificate_result}
-                  />
+                <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
+                  {participant?.data?.nomor_registrasi}
                 </div>
+                <div
+                  className={`position-absolute w-100 text-center ${
+                    certificate?.data?.certificate?.background
+                      ? "responsive-margin-peserta-1"
+                      : "responsive-margin-without-background"
+                  } zindex-1`}
+                >
+                  <span className="responsive-font-size-peserta font-weight-bolder">
+                    {participant?.data?.nama_peserta}
+                  </span>
+                </div>
+                <Image
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
+                  alt={`image ${certificate.data.certificate.certificate_result}`}
+                  objectFit="fill"
+                  width={842}
+                  height={595}
+                  key={certificate?.data?.certificate?.certificate_result}
+                />
               </div>
               {/* END COL */}
             </div>

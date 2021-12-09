@@ -29,7 +29,7 @@ const DetailPelatihan = ({ session }) => {
   const { akademiId } = router.query;
 
   const dispatch = useDispatch();
-  const { pelatihan } = useSelector((state) => state.detailPelatihan);
+  const { pelatihan } = useSelector(state => state.detailPelatihan);
 
   useEffect(() => {
     if (pelatihan.Status === "Close") {
@@ -58,7 +58,7 @@ const DetailPelatihan = ({ session }) => {
   };
 
   //disini kurang
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -80,7 +80,7 @@ const DetailPelatihan = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(getDetailPelatihan(router.query.id, session?.token));
@@ -97,7 +97,7 @@ const DetailPelatihan = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
 
@@ -129,8 +129,8 @@ const DetailPelatihan = ({ session }) => {
                   <p className="badgess-green">{pelatihan?.Status}</p>
                 </div>
 
-                <Row className="mt-8">
-                  <div className="col-6 col-sm-6 col-md-3">
+                <Row className="mt-5">
+                  <div className="col-6 col-sm-6 col-md-4">
                     <div>
                       <p className="mb-1 fz-14" style={{ color: "#6C6C6C" }}>
                         Registrasi
@@ -169,7 +169,7 @@ const DetailPelatihan = ({ session }) => {
                     </div>
                   </div>
 
-                  <div className="col-6 col-sm-6 col-md-3">
+                  <div className="col-6 col-sm-6 col-md-2">
                     <div className="d-flex align-items-center justify-content-md-end">
                       <ShareOverlay
                         url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
@@ -203,9 +203,7 @@ const DetailPelatihan = ({ session }) => {
                   </div>
                 </Row>
               </div>
-              <div
-                style={{ position: "relative", width: "100%", height: "380px" }}
-              >
+              <div className="image-thumbnail-detail">
                 <Image
                   src={
                     (pelatihan?.thumbnail &&
@@ -214,7 +212,7 @@ const DetailPelatihan = ({ session }) => {
                         pelatihan?.thumbnail) ||
                     "/assets/media/default-card.png"
                   }
-                  objectFit="cover"
+                  objectFit="fill"
                   layout="fill"
                   className="rounded-lg"
                 />
@@ -298,33 +296,30 @@ const DetailPelatihan = ({ session }) => {
             {/* PEMBATAS */}
             <div className="bg-white border rounded-xl mb-5 p-6">
               <h4 className="fz-20 fw-600 mb-4">Mitra Pelatihan</h4>
-              <Row>
-                <Col md={12} sm={12} xl={2} lg={2}>
-                  <div className="dot-bullet-detail">
-                    <Image
-                      src={
-                        (pelatihan?.gambar_mitra &&
-                          pelatihan.gambar_mitra !== "Belum ada file" &&
-                          pelatihan.file_path + pelatihan?.gambar_mitra) ||
-                        "/assets/media/mitra-default.png"
-                      }
-                      width={60}
-                      height={60}
-                      objectFit="cover"
-                      thumbnail
-                      roundedCircle
-                      className={`${style.image_card_pelatihan} img-fluild`}
-                      alt="Image Mitra"
-                    />
-                  </div>
-                </Col>
-                <Col md={12} sm={12} xl={10} lg={10}>
-                  <div className="ml-md-3">
-                    <p className="fw-600 fz-16 mb-2">{pelatihan?.mitra_nama}</p>
-                    <p style={{ color: "#6C6C6C" }}>{pelatihan?.provinsi}</p>
-                  </div>
-                </Col>
-              </Row>
+              <div className="d-flex">
+                <div className="dot-bullet-detail">
+                  <Image
+                    src={
+                      (pelatihan?.logo &&
+                        pelatihan.logo !== "Belum ada file" &&
+                        pelatihan.file_path + pelatihan?.logo) ||
+                      "/assets/media/mitra-default.png"
+                    }
+                    width={60}
+                    height={60}
+                    objectFit="cover"
+                    thumbnail
+                    roundedCircle
+                    className={`${style.image_card_pelatihan} img-fluild`}
+                    alt="Image Mitra"
+                  />
+                </div>
+
+                <div className="ml-5">
+                  <p className="fw-600 fz-16 mb-2">{pelatihan?.mitra_nama}</p>
+                  <p style={{ color: "#6C6C6C" }}>{pelatihan?.provinsi}</p>
+                </div>
+              </div>
             </div>
             <TrainingReminder session={session} />
           </Col>

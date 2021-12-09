@@ -11,7 +11,7 @@ import { toPng } from "html-to-image";
 export default function RiwayatPelatihanDetail(props) {
   const {
     data: { data },
-  } = useSelector((state) => state.sertifikatPeserta);
+  } = useSelector(state => state.sertifikatPeserta);
 
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
@@ -19,7 +19,7 @@ export default function RiwayatPelatihanDetail(props) {
     data?.data_sertifikat?.certificate?.certificate_type
   );
 
-  const convertDivToPng = async (div) => {
+  const convertDivToPng = async div => {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -99,41 +99,16 @@ export default function RiwayatPelatihanDetail(props) {
                     {data?.data_user?.nomor_registrasi}
                   </div>
                   <div
-                    className={`position-absolute ${
-                      data?.data_sertifikat?.certificate?.background
-                        ? `${style.responsive_date_from}`
-                        : `${style.responsive_date_from_without_background}`
-                    }
-                    } font-weight-boldest zindex-1 responsive-date-text`}
-                  >
-                    {moment(
-                      data?.data_sertifikat?.pelatihan?.pelatihan_mulai
-                    ).format("DD/MM/YY")}{" "}
-                    -{" "}
-                    {moment(
-                      data?.data_sertifikat?.pelatihan?.pelatihan_selesai
-                    ).format("DD/MM/YY")}
-                  </div>
-                  <div
-                    className={`position-absolute ${
-                      data?.data_sertifikat?.certificate?.background
-                        ? `${style.responsive_year}`
-                        : `${style.responsive_year_without_background}`
-                    } font-weight-boldest zindex-1 responsive-date-text`}
-                  >
-                    {data?.data_user?.tahun}
-                  </div>
-                  <div
                     className={`position-absolute w-100 text-center ${
                       data?.data_sertifikat?.certificate?.background
-                        ? `${style.responsive_margin_peserta_1}`
-                        : `${style.responsive_margin_without_background}`
+                        ? ` responsive-margin-peserta-1`
+                        : ` responsive-margin-without-background`
                     } zindex-1`}
                   >
                     <span
                       className={`${style.responsive_font_size_peserta} font-weight-bolder`}
                     >
-                      {data?.data_user?.name}
+                      {data?.data_user?.nama_peserta}
                     </span>
                   </div>
                   <Image
@@ -188,7 +163,7 @@ export default function RiwayatPelatihanDetail(props) {
               </div>
               <div className="row mt-10 col-12 p-0 m-0">
                 <div
-                  onClick={(e) => {
+                  onClick={e => {
                     handleDownload();
                   }}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"

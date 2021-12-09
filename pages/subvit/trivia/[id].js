@@ -50,11 +50,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
-        getDetailTriviaQuestionBanks(params.id, session.user.user.data.token)
+        getDetailTriviaQuestionBanks(
+          params.id,
+          session.user.user.data.token,
+          permission
+        )
       );
 
-      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
+      await store.dispatch(
+        getPermissionSubvit(session.user.user.data.token, permission)
+      );
       return {
         props: { session, title: "Detail Trivia - Subvit" },
       };

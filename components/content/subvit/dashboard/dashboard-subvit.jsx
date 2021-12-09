@@ -133,9 +133,9 @@ const DashbardSubvit = ({ token }) => {
                           className={`${styles.imageDashboard} ml-auto float-right ilustrator-dashboard`}
                           style={{
                             position: "absolute",
-                            right: "-50px",
-                            top: "-10px",
-                            width: "40%",
+                            right: "-40px",
+                            top: "0px",
+                            width: "37%",
                           }}
                         >
                           <Image
@@ -627,10 +627,10 @@ const DashbardSubvit = ({ token }) => {
                             <div
                               className={`${styles.theme} col-sm-5 col-xs-8 col-md-7 col-lg-7 col-xl-5 col-xxl-7`}
                             >
-                              {item.theme ? item.theme.name : "-"}
+                              {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
-                                {item.training ? item.training.name : "-"}
+                                {item.theme ? item.theme.name : "-"}
                               </span>
                             </div>
                             <div
@@ -738,10 +738,10 @@ const DashbardSubvit = ({ token }) => {
                               </div>
                             </div>
                             <div className={`${styles.theme} col-sm-5`}>
-                              {item.theme ? item.theme.name : "-"}
+                              {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
-                                {item.training ? item.training.name : "-"}
+                                {item.theme ? item.theme.name : "-"}
                               </span>
                             </div>
                             <div className={`${styles.total} col-sm-6`}>
@@ -845,10 +845,10 @@ const DashbardSubvit = ({ token }) => {
                               </div>
                             </div>
                             <div className={`${styles.theme} col-sm-5`}>
-                              {item.theme ? item.theme.name : "-"}
+                              {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
-                                {item.training ? item.training.name : "-"}
+                                {item.theme ? item.theme.name : "-"}
                               </span>
                             </div>
                             <div className={`${styles.total} col-sm-6`}>

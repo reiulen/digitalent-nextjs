@@ -2,14 +2,23 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import IconSearch from "../../../../assets/icon/Search";
 import Select from "react-select";
 import axios from "axios";
 import SimpleReactValidator from "simple-react-validator";
+import {
+  getDetailAdminSite,
+  getListRoles,
+  getListUnitWorks,
+  getListAcademy,
+  getAllListPelatihan,
+} from "../../../../../redux/actions/site-management/user/admin-site.action";
 
 const TambahApi = ({ token }) => {
   const router = useRouter();
+  let dispatch = useDispatch();
+  
   const [name, setName] = useState(null);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
@@ -21,6 +30,7 @@ const TambahApi = ({ token }) => {
   const [unitWorkOption, setUnitWorkOption] = useState([]);
   const [statusAcademy, setStatusAcademy] = useState([]);
   const [typeAccess, setTypeAccess] = useState("akademi");
+  const [search, setSearch] = useState(null)
 
   const [pelatihan, setPelatihan] = useState([]);
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
@@ -335,7 +345,15 @@ const TambahApi = ({ token }) => {
                 {simpleValidator.current.message("password", password, "required", {
                   className: "text-danger",
                 })}
+                <p style={{ color: "#b7b5cf" }}>
+                Min 8 Karakter,
+                <br />
+                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
+                <br />
+                Min 1 Symbol/angka
+              </p>
               </div>
+              
               <div className="form-group mb-2">
                 <label>Konfirmasi Password</label>
                 <div className="position-relative">
@@ -368,13 +386,7 @@ const TambahApi = ({ token }) => {
                   className: "text-danger",
                 })}
               </div>
-              <p style={{ color: "#b7b5cf" }}>
-                Min 8 Karakter,
-                <br />
-                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
-                <br />
-                Min 1 Symbol/angka
-              </p>
+              
               <div className="form-group">
                 <label>Role</label>
                 <Select
@@ -452,13 +464,6 @@ const TambahApi = ({ token }) => {
                   >
                     Akademi
                   </a>
-                  <input
-                    type="radio"
-                    className="left-center-absolute"
-                    checked={typeAccess === "akademi" ? true : false}
-                    name="action"
-                    onChange={() => setTypeAccess("akademi")}
-                  />
                 </li>
                 <li
                   className="nav-item position-relative"
@@ -476,13 +481,6 @@ const TambahApi = ({ token }) => {
                   >
                     Pelatihan
                   </a>
-                  <input
-                    type="radio"
-                    className="left-center-absolute"
-                    checked={typeAccess === "pelatihan" ? true : false}
-                    name="action"
-                    onChange={() => setTypeAccess("pelatihan")}
-                  />
                 </li>
               </ul>
               <div className="tab-content" id="myTabContent">
@@ -533,18 +531,22 @@ const TambahApi = ({ token }) => {
                                     <input
                                       id="kt_datatable_search_query"
                                       type="text"
+                                      value={search}
                                       className="form-control pl-10"
                                       placeholder="Ketik disini untuk Pencarian..."
-                                      // onChange={(e) =>
-                                      //   handleChangeValueSearch(e.target.value)
-                                      // }
+                                      onChange={(e) =>
+                                        setSearch(e.target.value)
+                                      }
                                     />
                                     <button
-                                      type="handleSubmit"
+                                      type="button"
                                       className="btn bg-blue-primary text-white right-center-absolute"
                                       style={{
                                         borderTopLeftRadius: "0",
                                         borderBottomLeftRadius: "0",
+                                      }}
+                                      onClick={e => {
+                                        dispatch(getAllListPelatihan(token, search))
                                       }}
                                     >
                                       Cari

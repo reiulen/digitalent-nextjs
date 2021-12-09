@@ -17,7 +17,7 @@ import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-
 const SeleksiAdministrasi = dynamic(
   () =>
     import(
-      "../../../user-component-new/content/peserta/administrasi/seleksiAdmin.jsx"
+      "../../../user-component-new/components/global/Riwayat-pelatihan-detail/index"
     ),
   {
     loading: function loadingNow() {
@@ -28,10 +28,7 @@ const SeleksiAdministrasi = dynamic(
 );
 
 const BelumTersedia = dynamic(
-  () =>
-    import(
-      "../../../user-component-new/content/peserta/administrasi/administrasi-belum-tersedia.jsx"
-    ),
+  () => import("../../../user-component-new/content/peserta/empty-state/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -63,7 +60,7 @@ export default function RiwayatPelatihanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 
@@ -148,25 +145,71 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 
-      const { data } = await store.dispatch(
-        getDashboardPeserta(session?.user.user.data.user.token)
-      );
-      const status = data.pelatihan.pelatihan_berjalan.status || "";
-      if (!status || status == "") {
-        success = false;
-      } else if (
-        status.includes("administrasi") &&
-        !status.includes("administrasi akhir")
-      ) {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            data.pelatihan.pelatihan_berjalan.id,
-            session.user.user.data.user.token
-          )
+      if (query.id) {
+        //jika ada query id
+        const data = await store.dispatch(
+          getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
         );
-        success = true;
+        if (data) {
+          if (
+            data?.data?.status?.includes("administrasi") &&
+            !data?.data?.status?.includes("administrasi akhir")
+          ) {
+            success = true;
+          } else {
+            success = false;
+          }
+        } else {
+          success = false;
+        }
       } else {
-        success = false;
+        // jika gak ada gw cek di dashboard ada gak status adminisstrasi?
+        const dataDashboard = await store.dispatch(
+          getDashboardPeserta(session?.user.user.data.user.token)
+        );
+        if (dataDashboard) {
+          const status =
+            dataDashboard.data.pelatihan.pelatihan_berjalan.status || "";
+
+          if (!status || status == "") {
+            success = false;
+          } else if (
+            status.includes("administrasi") &&
+            !status.includes("administrasi akhir")
+          ) {
+            await store.dispatch(
+              getDetailRiwayatPelatihan(
+                dataDashboard.data.pelatihan.pelatihan_berjalan.id,
+                session.user.user.data.user.token
+              )
+            );
+            success = true;
+          } else {
+            //jika gak ada gw cek di riwayat pelatihan ada gak datanya
+            const { data } = await store.dispatch(
+              getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+            );
+            success = false;
+            const list = data.list.filter((item) => {
+              return (
+                item.status.includes("administrasi") &&
+                !item.status.includes("administrasi akhir")
+              );
+            });
+
+            if (list.length == 0 || !list) {
+              success = false;
+            } else {
+              await store.dispatch(
+                getDetailRiwayatPelatihan(
+                  list[0].id,
+                  session.user.user.data.user.token
+                )
+              );
+              success = true;
+            }
+          }
+        }
       }
 
       return {

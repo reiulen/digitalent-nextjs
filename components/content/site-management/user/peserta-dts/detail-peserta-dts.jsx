@@ -14,6 +14,7 @@ import AlertBar from "../../../partnership/components/BarAlert";
 import Image from "next/image";
 import ListPeserta from "./list-peserta-pelatihan";
 import Tables from "./detail-list-peserta-pelatihan";
+import UbahPelatihan from "./ubah-list-peserta-pelatihan";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -42,104 +43,109 @@ const Table = ({ token }) => {
   return (
     <PageWrapper>
       <div className="row ">
-        <div className="col-12 col-xl-3 order-0 d-flex align-items-self">
-          <div className="card card-custom card-stretch gutter-b px-10 py-12">
-            <div className="form-group" style={{ maxWidth: "19rem" }}>
-              <div>
-                <div
-                  className="image-input image-input-outline w-100"
-                  style={{ height: "19rem" }}
-                >
+        {!router.query.ubah_pelatihan_id && (
+          <div className="col-12 col-xl-3 order-0 d-flex align-items-self" style={{ height: "530px" }}>
+            <div className="card card-custom card-stretch gutter-b px-10 py-12">
+              <div className="form-group" style={{ maxWidth: "19rem" }}>
+                <div>
                   <div
-                    className="image-input-wrapper w-100"
+                    className="image-input image-input-outline w-100"
                     style={{ height: "19rem" }}
                   >
-                    <Image
-                      src={
-                        allDetailPeserta.data.data?.foto
-                          ? allDetailPeserta.data.data.file_path +
-                            allDetailPeserta.data.data.foto
-                          : "/assets/media/logos/default.png"
-                      }
-                      width="1000"
-                      height="1000"
-                      alt="user2"
-                    />
-                  </div>
+                    <div
+                      className="image-input-wrapper w-100"
+                      style={{ height: "19rem" }}
+                    >
+                      <Image
+                        src={
+                          allDetailPeserta.data.data?.foto
+                            ? allDetailPeserta.data.data.file_path +
+                              allDetailPeserta.data.data.foto
+                            : "/assets/media/logos/default.png"
+                        }
+                        width="1000"
+                        height="1000"
+                        alt="user2"
+                      />
+                    </div>
 
-                  <span
-                    className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                    data-action="cancel"
-                    data-toggle="tooltip"
-                    title="Cancel avatar"
-                  >
-                    <i className="ki ki-bold-close icon-xs text-muted"></i>
-                  </span>
-                </div>
-                <div className="mt-4 w-100">
-                  <Link
-                    href={`/site-management/user/peserta-dts/ubah-peserta-dts/${router.query.id}`}
-                  >
-                    <a className="btn btn-outline-primary rounded-full w-100">
-                      Ubah Data
-                    </a>
-                  </Link>
-                  <ul style={listUl}>
-                    <li
-                      className={
-                        sideBar
-                          ? "p-4 listDTS isactive mb-2"
-                          : "p-4 listDTS mb-2"
-                      }
-                      style={{ fontSize: "15px" }}
-                      onClick={() => {
-                        setSideBar(true);
-                      }}
+                    <span
+                      className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                      data-action="cancel"
+                      data-toggle="tooltip"
+                      title="Cancel avatar"
                     >
-                      <div className="d-flex align-items-center">
-                        <Image
-                          src={
-                            sideBar
-                              ? "/assets/icon/user2.svg"
-                              : "/assets/icon/useract.svg"
-                          }
-                          width="20"
-                          height="20"
-                          alt="user2"
-                        />
-                        <p className="m-0 ml-4 mt-1">Informasi Data Pribadi</p>
-                      </div>
-                    </li>
-                    <li
-                      className={
-                        sideBar ? "p-4 listDTS" : "p-4 listDTS isactive"
-                      }
-                      style={{ fontSize: "15px" }}
-                      onClick={() => {
-                        setSideBar(false);
-                      }}
+                      <i className="ki ki-bold-close icon-xs text-muted"></i>
+                    </span>
+                  </div>
+                  <div className="mt-4 w-100">
+                    <Link
+                      href={`/site-management/user/peserta-dts/ubah-peserta-dts/${router.query.id}`}
                     >
-                      <div className="d-flex align-items-center">
-                        <Image
-                          src={
-                            sideBar
-                              ? "/assets/icon/Briefcase.svg"
-                              : "/assets/icon/BriefcaseAct.svg"
-                          }
-                          width="20"
-                          height="20"
-                          alt="user2"
-                        />
-                        <p className="m-0 ml-4 mt-1">Data Pelatihan</p>
-                      </div>
-                    </li>
-                  </ul>
+                      <a className="btn btn-outline-primary rounded-full w-100">
+                        Ubah Data
+                      </a>
+                    </Link>
+                    <ul style={listUl}>
+                      <li
+                        className={
+                          sideBar
+                            ? "p-4 listDTS isactive mb-2"
+                            : "p-4 listDTS mb-2"
+                        }
+                        style={{ fontSize: "15px" }}
+                        onClick={() => {
+                          setSideBar(true);
+                        }}
+                      >
+                        <div className="d-flex align-items-center">
+                          <Image
+                            src={
+                              sideBar
+                                ? "/assets/icon/user2.svg"
+                                : "/assets/icon/useract.svg"
+                            }
+                            width="20"
+                            height="20"
+                            alt="user2"
+                          />
+                          <p className="m-0 ml-4 mt-1">
+                            Informasi Data Pribadi
+                          </p>
+                        </div>
+                      </li>
+                      <li
+                        className={
+                          sideBar ? "p-4 listDTS" : "p-4 listDTS isactive"
+                        }
+                        style={{ fontSize: "15px" }}
+                        onClick={() => {
+                          setSideBar(false);
+                        }}
+                      >
+                        <div className="d-flex align-items-center">
+                          <Image
+                            src={
+                              sideBar
+                                ? "/assets/icon/Briefcase.svg"
+                                : "/assets/icon/BriefcaseAct.svg"
+                            }
+                            width="20"
+                            height="20"
+                            alt="user2"
+                          />
+                          <p className="m-0 ml-4 mt-1">Data Pelatihan</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        {sideBar && (
+        )}
+
+        {sideBar && !router.query.ubah_pelatihan_id && (
           <div className="col-12 col-xl-9 order-1">
             <div className="card card-custom card-stretch gutter-b px-4 px-sm-8 py-4">
               {/* Data Probadi */}
@@ -210,7 +216,9 @@ const Table = ({ token }) => {
                         Tanggal Lahir
                       </p>
                       <p className="fz-16">
-                        {moment(allDetailPeserta.data.data?.tanggal_lahir).format("D MMMM YYYY")}
+                        {moment(
+                          allDetailPeserta.data.data?.tanggal_lahir
+                        ).format("D MMMM YYYY")}
                       </p>
                     </div>
                   </div>
@@ -321,7 +329,17 @@ const Table = ({ token }) => {
           </div>
         )}
 
-        {!sideBar && <ListPeserta token={token} />}
+        {!sideBar &&
+        !router.query.pelatihan_id &&
+        !router.query.ubah_pelatihan_id ? (
+          <ListPeserta token={token} />
+        ) : null}
+        {!sideBar && router.query.pelatihan_id ? (
+          <Tables token={token} />
+        ) : null}
+        {router.query.ubah_pelatihan_id ? (
+          <UbahPelatihan token={token} />
+        ) : null}
       </div>
     </PageWrapper>
   );

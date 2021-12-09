@@ -16,6 +16,7 @@ import {
   getDetailReportTraining,
   uploadSertifikat,
 } from "../../../../redux/actions/pelatihan/report-training.actions";
+import axios from "axios";
 
 const DetailReport = ({ token }) => {
   const dispatch = useDispatch();
@@ -114,15 +115,31 @@ const DetailReport = ({ token }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`;
+    let link =
+      process.env.END_POINT_API_PELATIHAN +
+      `api/v1/formPendaftaran/export-pendaftaran?pelatian_id=${pelatian_id}`;
     if (search) link = link.concat(`&keyword=${search}`);
-    if (status) link = link.concat(`&status=${status}`);
-    if (nilai) link = link.concat(`&nilai=${nilai}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+    if (statusAdmin) link = link.concat(`&administrasi=${statusAdmin.value}`);
+    if (statusPeserta) link = link.concat(`&peserta=${statusPeserta.value}`);
+    if (statusSubstansi)
+      link = link.concat(`&pelatihan=${statusSubstansi.value}`);
+    if (sertifikasi) link = link.concat(`&sertifikat=${sertifikasi.value}`);
 
-    await axios.get(link).then((res) => {
-      window.location.href = res.data.data;
-    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios
+      .get(link, config)
+      .then((res) => {
+        window.location.href = res.data.data;
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const optionStatusAdministrasi = [
@@ -191,7 +208,7 @@ const DetailReport = ({ token }) => {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-                maxWidth: "4rem",
+                maxWidth: "12rem",
               }}
             >
               {item.alamat}
@@ -339,19 +356,14 @@ const DetailReport = ({ token }) => {
                 </div>
 
                 <div className="col-md-2">
-                  <Link
-                    href="dts-pelatihan:8080/storage/excel/a08a0e15-8c2e-4eb8-a3d0-4cae45d24b1c-November.xlsx"
-                    passHref
+                  <button
+                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2 d-flex justify-content-center"
+                    onClick={() => handleExportReport()}
                   >
-                    <a
-                      target="_blank"
-                      className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
-                    >
-                      {" "}
-                      Export
-                      <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                    </a>
-                  </Link>
+                    {" "}
+                    Export
+                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                  </button>
                 </div>
               </div>
             </div>

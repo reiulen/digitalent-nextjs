@@ -23,7 +23,7 @@ export default function SubvitUserSubtansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Mid Test - Subvit" session={session}>
+        <Layout title="Mid Test" session={session}>
           <SubtansiUser token={session.token} />
         </Layout>
       </div>

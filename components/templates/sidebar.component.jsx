@@ -8,6 +8,7 @@ import { useSession } from "next-auth/client";
 import { getSidebar } from "../../redux/actions/site-management/role.actions";
 import axios from "axios";
 import LoadingTable from "../LoadingTable";
+import Cookies from "js-cookie";
 
 import {
   IS_ASSIDE_MOBILE_SIDEBAR,
@@ -124,6 +125,10 @@ const Sidebar = ({ session }) => {
         )
         .then((data) => {
           setMenu(data.data.data.menu);
+          localStorage.setItem("sidebar", JSON.stringify(data.data.data.menu))
+          localStorage.setItem("token-permission", data.data.data.tokenPermission)
+          localStorage.setItem("permissions", data.data.data.permissions)
+          Cookies.set("token_permission", data.data.data.tokenPermission)
         });
     }
 

@@ -69,7 +69,7 @@ const IndexForm = ({ token, session }) => {
   useEffect(() => {
     switch (view) {
       case 1:
-        return setBreadcrumb("Pendaftaran Pelatihan");
+        return setBreadcrumb("");
       case 2:
         return setBreadcrumb("Form Komitmen");
       case 3:
@@ -96,6 +96,7 @@ const IndexForm = ({ token, session }) => {
                             dataPelatihan.thumbnail
                           : "/assets/media/default-card.png"
                       }`}
+                      alt="Thumbnail"
                       style={{ height: "105px", objectFit: "cover" }}
                     />
                   </Col>
@@ -103,16 +104,16 @@ const IndexForm = ({ token, session }) => {
                     <div className="d-flex flex-row flex-wrap">
                       <img
                         src={`${
-                          dataPelatihan
-                            ? process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                dataPelatihan.gambar_mitra ||
-                              process.env.END_POINT_API_IMAGE_BEASISWA +
-                                dataPelatihan.logo
-                            : "/assets/media/default-card.png"
+                          !dataPelatihan?.logo && !dataPelatihan?.gambar_mitra
+                            ? "/assets/media/default-card.png"
+                            : dataPelatihan?.file_path + dataPelatihan.logo ||
+                              process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                                dataPelatihan?.gambar_mitra
                         }`}
                         width={58}
                         height={58}
                         className={`${style.image_mitra}`}
+                        alt="mitra"
                       />
                       <div className="tema-mitra d-flex flex-column ml-5">
                         <p className={`my-0 ${style.text_title_card}`}>
@@ -288,7 +289,9 @@ const IndexForm = ({ token, session }) => {
         session={session}
         breadcrumb={breadcrumb}
       >
-        <Container fluid>{showViewForm()}</Container>
+        <Container fluid className="mx-7">
+          {showViewForm()}
+        </Container>
       </Layout>
     </>
   );

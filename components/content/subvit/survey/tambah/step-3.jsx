@@ -297,7 +297,7 @@ const StepThree = ({ token }) => {
                     <input
                       type="text"
                       name="durasi"
-                      placeholder="123"
+                      placeholder="360"
                       maxLength={3}
                       className="form-control"
                       aria-describedby="basic-addon2"

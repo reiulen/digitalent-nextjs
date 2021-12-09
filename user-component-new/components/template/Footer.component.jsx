@@ -51,7 +51,7 @@ export default function Footer() {
   return (
     <div className={`color-secondary-${warna}`}>
       <Container fluid className="padding-content-footer">
-        <Row className="w-100 px-0 mx-0 mb-0">
+        <Row>
           <Col md={2} sm={12}>
             <div className="mt-5">
               <Image

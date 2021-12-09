@@ -7,6 +7,16 @@
   color: #ffffff !important;
 }
 
+.btn-beranda-gosh {
+  background-color: transparent !important;
+  color: #007cff !important;
+}
+
+.btn-beranda-gosh:hover {
+  background-color: #e6f2ff !important;
+  color: #007cff !important;
+}
+
 .text-beranda-primary {
   color: #007cff !important;
 }
@@ -115,7 +125,6 @@
   font-weight: 600;
   color: #6c6c6c;
   text-align: start;
-  max-width: 20rem;
 }
 
 .status-mitra-open-new {
@@ -141,10 +150,6 @@
   font-size: 18px;
   color: #1f1f1f;
   text-align: start;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  max-width: 40rem !important;
 }
 
 .text-date-register-new {
@@ -176,7 +181,7 @@
 
 .btn-disabled-pelatihan-new {
   background-color: #ffffff;
-  opacity: 0.5 !important;
+  opacity: 0.6 !important;
   cursor: default !important;
 }
 
@@ -199,7 +204,7 @@
 /* STEP REGISTER */
 .title-step-register h1 {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 40px;
   line-height: 140%;
   text-align: center;
   color: #1f1f1f;
@@ -369,18 +374,25 @@
 }
 /* END PENYELENGGARA */
 
+.image-thumbnail-detail {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+
 @media (min-width: 768px) {
+  .image-thumbnail-detail {
+    position: relative;
+    width: 100%;
+    height: 380px;
+  }
   .text-mitra-new {
     font-size: 14px;
     font-weight: 600;
     color: #6c6c6c;
     text-align: start;
-    max-width: 17rem;
   }
 
-  .title-step-register h1 {
-    font-size: 40px;
-  }
   .penyelenggara-title-filter h1 {
     font-size: 40px;
   }
@@ -389,6 +401,9 @@
   }
   .padding-content-akademi-slider {
     padding: 40px 56px;
+  }
+  .caption-image-new {
+    width: 284px;
   }
 }
 
@@ -408,6 +423,9 @@
   .padding-content-footer {
     padding: 40px 32px;
   }
+  .caption-image-new {
+    width: 328px;
+  }
 }
 
 @media (max-width: 500px) {
@@ -416,12 +434,6 @@
   }
   .padding-content-tema {
     padding: 32px 18px;
-  }
-  .title-card-new {
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-    max-width: 11rem !important;
   }
   .padding-content-footer {
     padding: 20px 30px;
@@ -438,6 +450,9 @@
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
     max-width: 20rem !important;
+  }
+  .caption-image-new {
+    width: 100%;
   }
 }
 
@@ -457,4 +472,44 @@
     white-space: nowrap !important;
     max-width: 1rem !important;
   }
+}
+
+.module {
+  width: 250px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.module-pelatihan-mitra {
+  width: 400px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  line-height: 25px;
+}
+
+.module-pelatihan-name {
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  line-height: 25px;
+}
+
+.title-tahapan-new {
+  text-transform: uppercase;
+  color: #007cff;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.caption-tahapan-new {
+  font-size: 16px;
+  color: #6c6c6c;
+  width: 252px;
+  text-align: center;
 }

@@ -310,7 +310,7 @@ const ViewReviewTraining = ({ token }) => {
                 <p className="text-neutral-body mb-2 fz-14">Silabus</p>
                 <p
                   className="fz-16 text-primary"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", textDecoration:'underline' }}
                   onClick={() =>
                     window.open(review.file_path + review.silabus, "_blank")
                   }
@@ -504,6 +504,37 @@ const ViewReviewTraining = ({ token }) => {
                     Tuna Daksa
                   </p>
                 )}
+              </div>
+            </div>
+
+            <h3 className="font-weight-bolder pb-5 pt-4">Status Pelatihan</h3>
+            <div className="row">
+              <div className="col-md-12">
+                <p className="text-neutral-body mb-2 fz-14">Status Publish</p>
+                <p className="fz-16" style={{ color: "#1f1f1f" }}>
+                  {review.status_publish === "0"
+                    ? "Unpublish"
+                    : review.status_publish === "1"
+                    ? "Publish"
+                    : "Unlisted"}
+                </p>
+              </div>
+              <div className="col-md-12">
+                <p className="text-neutral-body mb-2 fz-14">
+                  Link Detail Pelatihan
+                </p>
+                <p
+                  className="fz-16 text-primary"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    window.open(
+                      `http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`,
+                      "_blank"
+                    )
+                  }
+                >
+                  {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
+                </p>
               </div>
             </div>
 

@@ -38,8 +38,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
-        getDetailSurveyQuestionBanks(query.id, session.user.user.data.token)
+        getDetailSurveyQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
       );
       return {
         props: { session, title: "Edit Test Survey - Step 2" },

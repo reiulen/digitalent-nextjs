@@ -55,8 +55,8 @@
 }
 
 .responsive-date-from-without-background {
-  top: 96px;
-  left: 59%;
+  margin-top: 96px;
+  margin-left: 61%;
 }
 
 .responsive-year {
@@ -65,8 +65,8 @@
 }
 
 .responsive-year-without-background {
-  top: 105px;
-  left: 60%;
+  margin-top: 40%;
+  margin-left: 63%;
 }
 
 .responsive-date-text {
@@ -89,7 +89,7 @@
   margin-top: 17%;
 }
 .responsive-margin-peserta-1 {
-  margin-top: 17% !important;
+  margin-top: 20% !important;
 }
 
 @media (min-width: 768px) {
@@ -110,8 +110,8 @@
   }
 
   .responsive-date-from-without-background {
-    top: 265px;
-    left: 59%;
+    margin-top: 265px;
+    margin-left: 59%;
   }
 
   .responsive-date-text {
@@ -124,8 +124,8 @@
   }
 
   .responsive-year-without-background {
-    top: 290px;
-    left: 60%;
+    margin-top: 40.8%;
+    margin-left: 63%;
   }
 
   .responsive-font-size-nama-peserta {
@@ -140,7 +140,7 @@
     margin-top: 19%;
   }
   .responsive-margin-peserta-1 {
-    margin-top: 19% !important;
+    margin-top: 21.5% !important;
   }
   .responsive-normal-font-size {
     font-size: 10px;
@@ -189,8 +189,8 @@
   }
 
   .responsive-date-from-without-background {
-    top: 250px;
-    left: 59%;
+    margin-top: 37%;
+    margin-left: 62%;
   }
 
   .responsive-date-text {
@@ -203,8 +203,8 @@
   }
 
   .responsive-year-without-background {
-    top: 275px;
-    left: 60%;
+    margin-top: 40%;
+    margin-left: 63%;
   }
 
   .responsive-font-size-nama-peserta {
@@ -219,7 +219,7 @@
     margin-top: 18% !important;
   }
   .responsive-margin-peserta-1 {
-    margin-top: 18% !important;
+    margin-top: 21.5% !important;
   }
   .responsive-normal-font-size {
     font-size: 10px;
@@ -232,7 +232,7 @@
   }
 
   .responsive-margin-peserta-1 {
-    margin-top: 19% !important;
+    margin-top: 21.5% !important;
   }
 
   .responsive-font-size-peserta {
@@ -248,8 +248,8 @@
   }
 
   .responsive-date-from-without-background {
-    top: 315px;
-    left: 59%;
+    margin-top: 37%;
+    margin-left: 63%;
   }
 
   .responsive-font-size-nama-peserta {
@@ -270,8 +270,8 @@
   }
 
   .responsive-year-without-background {
-    top: 345px;
-    left: 60%;
+    margin-top: 40.8%;
+    margin-left: 63%;
   }
 
   .responsive-font-size-sertifikat {

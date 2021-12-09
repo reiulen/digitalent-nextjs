@@ -23,7 +23,6 @@ export const loadDataPrompt = (token) => {
         payload: data,
       });
     } catch (error) {
-      // notify(error.response.data.message);
       Swal.fire("Oops...", "Isi data dengan benar !", "error");
     }
   };
@@ -50,7 +49,7 @@ export const postTemplate = (token, subject, body, status) => {
         });
       })
       .catch((error) => {
-        Swal.fire("Oops...", "Isi data dengan benar !", "error");
+        Swal.fire("Oops...", error.response.data.message, "error");
       });
   };
 };
@@ -143,18 +142,18 @@ export const postViaFilter = (
 ) => {
   let data = {
     title,
-    year,
-    academy,
-    theme,
-    organizer,
-    training,
-    profileStatus,
-    selectionStatus,
-    participantSelectionStatusUpdate,
-    status,
-    broadcastEmailSendNotification,
-    emailSubject,
-    emailContent,
+    tahun: year,
+    akademi: academy,
+    tema: theme,
+    penyelenggara: organizer,
+    pelatihan: training,
+    status_profile: profileStatus,
+    status_seleksi: selectionStatus,
+    status_update: participantSelectionStatusUpdate,
+    status_peserta: status,
+    broadcast_email: broadcastEmailSendNotification,
+    subjek_email: emailSubject,
+    konten_email: emailContent,
   };
 
   let subm = new FormData();
@@ -173,9 +172,16 @@ export const postViaFilter = (
         }
       )
       .then((response) => {
-        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
-          router.push("/partnership/user/auth/login");
-        });
+        if(response.data.status){
+          Swal.fire("Berhasil", response.data.message, "success").then(() => {
+            router.push("/partnership/user/auth/login");
+          });
+
+        }else{
+          Swal.fire("Ooopss", response.data.message, "error").then(() => {
+            router.push("/partnership/user/auth/login");
+          });
+        }
       })
       .catch((error) => {
         Swal.fire("Oops...", "Isi data dengan benar !", "error");
@@ -191,31 +197,35 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
   emailContent, via) => {
   const data = {
     title,
-    year: "",
-    academy: "",
-    theme: "",
-    organizer: "",
-    training: "",
-    profileStatus: "",
-    selectionStatus: "",
-    participantSelectionStatusUpdate,
-    status,
-    broadcastEmailSendNotification,
-    emailSubject,
-    emailContent,
+    tahun: "",
+    akademi: "",
+    tema: "",
+    penyelenggara: "",
+    pelatihan: "",
+    status_profile: "",
+    status_seleksi: "",
+    status_update: participantSelectionStatusUpdate,
+    status_peserta: status,
+    broadcast_email: broadcastEmailSendNotification,
+    subjek_email: emailSubject,
+    konten_email: emailContent,
   };
 
 
   let subm = new FormData();
 
   subm.append("status_types", via);
-  subm.append("participant", file);
-  subm.append("training_rules", JSON.stringify(data));
+  subm.append("file", file);
+  subm.append("status_update", data.status_update);
+  subm.append("status_peserta", data.status_peserta);
+  subm.append("broadcast_email", data.broadcast_email);
+  subm.append("subjek_email", data.subjek_email);
+  subm.append("konten_email", data.konten_email);
 
   return (dispatch) => {
     axios
       .post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/import-subm`,
         subm,
         {
           headers: {
@@ -225,9 +235,16 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
         }
       )
       .then((response) => {
-        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
-          router.push("/partnership/user/auth/login");
-        });
+        if(response.data.status){
+          Swal.fire("Berhasil", response.data.message, "success").then(() => {
+            router.push("/partnership/user/auth/login");
+          });
+
+        }else{
+          Swal.fire("Ooopss", response.data.message, "error").then(() => {
+            router.push("/partnership/user/auth/login");
+          });
+        }
       })
       .catch((error) => {
         Swal.fire("Oops...", "Isi data dengan benar !", "error");

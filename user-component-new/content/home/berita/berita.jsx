@@ -5,15 +5,13 @@ import Pagination from "react-js-pagination";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import {
-    Container,
-  } from "react-bootstrap";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import Select from "react-select";
 
 import { getAllBerandaBerita } from "../../../../redux/actions/beranda/berita.actions"
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
+import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
 import styles from "../artikel/artikel.module.css"
 
@@ -25,8 +23,6 @@ const Berita = () => {
     const { kategori } = useSelector((state) => state.kategoriBerandaBerita)
     const { akademi } = useSelector((state) => state.allAkademi);
     const { tags } = useSelector((state) => state.allTagBerandaBerita)
-
-    const descToTrim = 120
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
     const [ kategoriBerita, setKategoriBerita ] = useState ("")
@@ -75,7 +71,6 @@ const Berita = () => {
 
     useEffect(() => {
         handleTagEachCard()
-        // handleKategoriToShow()
     }, [berita])
 
     useEffect(() => {
@@ -390,7 +385,7 @@ const Berita = () => {
     }
 
     return (
-        <Container fluid className="px-lg-20 px-md-15 px-10 py-10 bg-white">
+        <HomeWrapper>
 
             {/* BreadCrumb */}
             <SubHeaderComponent 
@@ -417,14 +412,15 @@ const Berita = () => {
             </div>
 
             {/* Filter Button */}
+            {/* Filter on Desktop */}
             {
                 kategoriToShow ?
                     <div
                         className={
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                                "col-12 pl-0 ml-4 mt-10 mb-5"
+                                "col-12 pl-0 ml-4 mt-10 mb-5 d-none d-lg-block"
                             :
-                                "col-lg-8 col-12 pl-0 ml-n2 mt-10 mb-5 pr-10"
+                                "col-lg-8 col-12 pl-0 ml-n2 mt-10 mb-5 pr-10 d-none d-lg-block"
                         }
                     >
                         {
@@ -441,6 +437,7 @@ const Berita = () => {
                                             gap: "1rem",
                                             drag: "free",
                                             perPage: 4,
+                                            autoWidth: true,
                                             breakpoints:{
                                                 830: {
                                                     perPage: 2,
@@ -525,6 +522,7 @@ const Berita = () => {
                                             gap: "1rem",
                                             drag: "free",
                                             perPage: 4,
+                                            autoWidth: true,
                                             breakpoints:{
                                                 830: {
                                                     perPage: 2,
@@ -609,6 +607,181 @@ const Berita = () => {
                 :
                     null
             }
+            {/* Filter on Tablet */}
+            <div className="col-12 pl-0 ml-4 mt-10 mb-5 d-none d-md-block d-lg-none">
+                <Splide
+                    options={{
+                        arrows: true,
+                        pagination: false,
+                        gap: "1rem",
+                        drag: "free",
+                        perPage: 4,
+                        autoWidth: true,
+                        breakpoints:{
+                            830: {
+                                perPage: 2,
+                            },
+                            450: {
+                                perPage: 1,
+                                },
+                        }
+                    }}
+                    className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
+                >
+                    {
+                        kategoriBerita === "" ?
+                            <SplideSlide>
+                                <div 
+                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
+                                    style={{ cursor: "pointer", height:"40px" }}
+                                    onClick={() => handleFilterKategori("")}
+                                >
+                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                        SEMUA
+                                    </div>
+                                </div>
+                            </SplideSlide>
+                        :
+                            <SplideSlide>
+                                <div 
+                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                    style={{ cursor: "pointer", height:"40px" }}
+                                    onClick={() => handleFilterKategori("")}
+                                >
+                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                        SEMUA
+                                    </div>
+                                </div>
+                            </SplideSlide>
+                            
+                    }
+                    {
+                        kategoriToShow ?
+                            kategoriToShow.map((el, i) => {
+                                return (
+                                    kategoriBerita == el ?
+                                        <SplideSlide>
+                                            <div 
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                style={{ cursor: "pointer", height:"40px" }}
+                                                onClick={() => handleFilterKategori(el)}
+                                                key={i}
+                                            >
+                                                <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
+                                                    {el.toString().toUpperCase()}
+                                                </div>
+                                            </div>
+                                        </SplideSlide>
+                                    :
+                                        <SplideSlide>
+                                            <div 
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                style={{ cursor: "pointer", height:"40px" }}
+                                                onClick={() => handleFilterKategori(el)}
+                                                key={i}
+                                            >
+                                                <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
+                                                    {el.toString().toUpperCase()}
+                                                </div>
+                                            </div> 
+                                        </SplideSlide>
+                                        
+                                )
+                            })
+                        :
+                            null
+                    }
+
+                </Splide>
+            </div>
+
+            {/* Filter on Mobile */}
+            <div className="col-12 pl-0 ml-4 mt-10 mb-5 d-block d-md-none">
+            <Splide
+                    options={{
+                        arrows: true,
+                        pagination: false,
+                        gap: "1rem",
+                        drag: "free",
+                        perPage: 4,
+                        autoWidth: true,
+                        breakpoints:{
+                            830: {
+                                perPage: 2,
+                            },
+                            450: {
+                                perPage: 1,
+                                },
+                        }
+                    }}
+                    className="px-20 mr-n5 mr-sm-n2 ml-n5 ml-sm-n2"
+                >
+                    {
+                        kategoriBerita === "" ?
+                            <SplideSlide>
+                                <div 
+                                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
+                                    style={{ cursor: "pointer", height:"40px" }}
+                                    onClick={() => handleFilterKategori("")}
+                                >
+                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                        SEMUA
+                                    </div>
+                                </div>
+                            </SplideSlide>
+                        :
+                            <SplideSlide>
+                                <div 
+                                    className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                    style={{ cursor: "pointer", height:"40px" }}
+                                    onClick={() => handleFilterKategori("")}
+                                >
+                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                        SEMUA
+                                    </div>
+                                </div>
+                            </SplideSlide>
+                            
+                    }
+                    {
+                        kategoriToShow ?
+                            kategoriToShow.map((el, i) => {
+                                return (
+                                    kategoriBerita == el ?
+                                        <SplideSlide>
+                                            <div 
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
+                                                style={{ cursor: "pointer", height:"40px" }}
+                                                onClick={() => handleFilterKategori(el)}
+                                                key={i}
+                                            >
+                                                <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
+                                                    {el.toString().toUpperCase()}
+                                                </div>
+                                            </div>
+                                        </SplideSlide>
+                                    :
+                                        <SplideSlide>
+                                            <div 
+                                                className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
+                                                style={{ cursor: "pointer", height:"40px" }}
+                                                onClick={() => handleFilterKategori(el)}
+                                                key={i}
+                                            >
+                                                <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
+                                                    {el.toString().toUpperCase()}
+                                                </div>
+                                            </div> 
+                                        </SplideSlide>
+                                        
+                                )
+                            })
+                        :
+                            null
+                    }
+
+                </Splide>
+            </div>
             {/* End Filter Button */}
 
             {/* Content */}
@@ -620,7 +793,7 @@ const Berita = () => {
                         windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
                             "col-lg-8 col-12"
                         :
-                            "col-lg-8 col-12 pr-15"
+                            "col-lg-8 col-12 pr-15 mb-20"
                     }
                 >
 
@@ -800,7 +973,7 @@ const Berita = () => {
                     }
                     
                     {/* Search Tab */}
-                    <form className="mb-3 ml-0">
+                    <form className="mb-3 ml-0 ml-md-0">
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <div 
@@ -873,9 +1046,12 @@ const Berita = () => {
                             berita && berita.berita && berita.berita.length !== 0 ?
                                 berita.berita.map ((el, i) => {
                                     return (
-                                        <div className="row mt-5 pl-1 mb-15 " key={i}>
-                                            <div className="col col-7">
-                                                <div className="row col-12 justify-content-between align-items-center">
+                                        <div 
+                                            className= "row mt-20 mb-3 pl-7"
+                                            key={i}
+                                        >
+                                            <div className="col-4 col-sm-8 pr-md-8 pr-2 pl-lg-2">
+                                                <div className="row justify-content-between align-items-center">
                                                     <div className=" d-flex align-self-center mb-2">
                                                         <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
                                                             {/* Insert Logo Image Here */}
@@ -899,8 +1075,16 @@ const Berita = () => {
                                                     </div>
 
                                                     <div className="mr-2 mb-3">
-                                                        <div className="badge badge-pill badge-light mr-2">
-                                                            <div className="text-primary p-1">
+                                                        <div className="badge badge-pill badge-light mr-0 mr-sm-2">
+                                                            <div 
+                                                                className="text-primary p-1 text-truncate d-inline-block"
+                                                                style={
+                                                                    windowDimensions && windowDimensions.width && windowDimensions.width <= 320 ?
+                                                                        {maxWidth:"75px"}
+                                                                    :
+                                                                        null
+                                                                }
+                                                            >
                                                                 {/* Insert Kategori Here */}
                                                                 {el.nama_kategori}
                                                             </div>
@@ -916,54 +1100,89 @@ const Berita = () => {
                                                         }
                                                     </div>
                                                 </div>
+                                                
+                                                {
+                                                    windowDimensions && windowDimensions.width && windowDimensions.width > 576 ?
+                                                        <div className="my-5 ml-n3">
+                                                            {/* Insert Title Here */}
+                                                            <Link href={`/berita/detail/${el.slug}`}>
+                                                                <a>
+                                                                    <h1 
+                                                                        className={`text-dark font-weight-bolder ${styles.fontText}`}
+                                                                        style=
+                                                                        {{
+                                                                            display:"-webkit-box", 
+                                                                            overflow: 'hidden', 
+                                                                            textOverflow: 'ellipsis', 
+                                                                            WebkitLineClamp: "2",
+                                                                            WebkitBoxOrient:"vertical"
+                                                                        }}
+                                                                    >
+                                                                        {el.judul}
+                                                                    </h1>
+                                                                </a>
+                                                            </Link>
+                                                            
+                                                        </div>
+                                                    :
+                                                        <div className="my-5 ml-n3">
+                                                            {/* Insert Title Here */}
+                                                            <Link href={`/berita/detail/${el.slug}`}>
+                                                                <a>
+                                                                    <h1 
+                                                                        className={`text-dark font-weight-bolder ${styles.fontText}`}
+                                                                        style=
+                                                                        {{
+                                                                            display:"-webkit-box", 
+                                                                            overflow: 'hidden', 
+                                                                            textOverflow: 'ellipsis', 
+                                                                            WebkitLineClamp: "3",
+                                                                            WebkitBoxOrient:"vertical"
+                                                                        }}
+                                                                    >
+                                                                        {el.judul}
+                                                                    </h1>
+                                                                </a>
+                                                            </Link>
+                                                            
+                                                        </div>
 
-                                                <div className="my-5">
-                                                    {/* Insert Title Here */}
-                                                    <Link href={`/berita/detail/${el.slug}`}>
-                                                        <a>
-                                                            <h1 
-                                                                className={`text-dark font-weight-bolder ${styles.fontText}`}
-                                                                style=
-                                                                {{
+                                                }
+                                                
+                                                
+                                                {
+                                                    windowDimensions && windowDimensions.width && windowDimensions.width >= 768 ?
+                                                        <div 
+                                                            className="my-5 d-flex flex-wrap "
+                                                        >
+                                                            {/* Insert Desc Here */}
+                                                            <div 
+                                                                dangerouslySetInnerHTML={{__html: (el.isi_berita)}}
+                                                                style={{ 
+                                                                    fontSize:"16px", 
+                                                                    fontFamily:"Poppins", 
+                                                                    color: "#6C6C6C",
                                                                     display:"-webkit-box", 
                                                                     overflow: 'hidden', 
                                                                     textOverflow: 'ellipsis', 
                                                                     WebkitLineClamp: "2",
                                                                     WebkitBoxOrient:"vertical"
                                                                 }}
-                                                            >
-                                                                {el.judul}
-                                                            </h1>
-                                                        </a>
-                                                    </Link>
-                                                    
-                                                </div>
-                                                
-                                                {
-                                                    windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                                                        <div 
-                                                            className="mt-5 d-flex flex-wrap "
-                                                        >
-                                                            {/* Insert Desc Here */}
-                                                            <div 
-                                                                dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}}
-                                                                className="text-wrap d-flex flex-wrap overflow-hidden"
-                                                                style={{maxWidth:"450px", fontSize:"16px", fontFamily:"Poppins" }}
-                                                                // className={`${styles.fontContent} text-wrap d-flex flex-wrap overflow-hidden`}
+                                                                className="ml-n3"
                                                             />
                                                         </div>
                                                     :
                                                         null
                                                 }
                                                 
-                                                <div className="row mb-3 d-flex align-items-center">
+                                                <div className="row mb-3 mt-5 d-flex align-items-center ml-n7">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12 pl-3">
+                                                    <div className="text-muted col-xl-5 col-12">
                                                         {moment(el.tanggal_publish).format("DD MMM")} | {el.dibaca} dibaca
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
-                                                    <div className="col-xl-7 col-12 d-flex flex-row flex-wrap mt-3 pl-2 ">
+                                                    <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-2 ">
                                                         {   
                                                           berita && berita.berita && berita.berita.length !== 0 && tagCards && tagCards.length !== 0 ?
                                                                 showTagCards(i)
@@ -975,9 +1194,7 @@ const Berita = () => {
                                             </div>
 
                                             <div 
-                                                className="col-5 position-relative d-flex align-md-self-center " 
-                                                // style={{objectFit:"contain"}}
-                                                style={{objectFit:"cover"}}
+                                                className="col-8 col-sm-4 position-relative img-fluid" 
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/berita/detail/${el.slug}`}>
@@ -987,10 +1204,11 @@ const Berita = () => {
                                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                 "publikasi/images/" + el.gambar
                                                             }
-                                                            width={350}
+                                                            width={300}
                                                             height={250}
                                                             alt="Card Image"
-                                                            className="rounded-lg"
+                                                            className="rounded-lg img-fluid"
+                                                            objectFit="cover"
                                                         />
                                                     </a>
                                                 </Link>
@@ -1024,7 +1242,7 @@ const Berita = () => {
                     {/* Pagination */}
                     {
                         berita && berita.total !== 0 && berita.total > 5 ?
-                            <div className="row mt-5 mb-10 d-flex justify-content-center">
+                            <div className="row mb-lg-n7 mb-10 mt-lg-0 mt-10 d-flex justify-content-center ">
                                 <div className="table-pagination">
                                     <Pagination 
                                         activePage = {activePage}
@@ -1236,7 +1454,7 @@ const Berita = () => {
                         className={windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                                 "row d-flex flex-column mx-auto px-10 my-5 d-flex justify-content-center order-3"
                             :
-                                "row d-flex flex-column ml-0 ml-xl-5 mb-5 d-flex justify-content-center order-3"
+                                "row d-flex flex-column ml-0 ml-xl-5 mb-0 d-flex justify-content-center order-3"
                         }
                     >
                         <h3 className="font-weight-bolder"> 
@@ -1279,7 +1497,7 @@ const Berita = () => {
             
             
             
-        </Container>
+        </HomeWrapper>
     )
 }
 

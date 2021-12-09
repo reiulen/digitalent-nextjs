@@ -105,6 +105,7 @@ const StepTwo = ({ token }) => {
           }
         };
       }
+      const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
     }
   };

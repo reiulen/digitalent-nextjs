@@ -107,6 +107,21 @@
   }
 }
 
+@media (max-width: 320px) {
+  .btnNext {
+    font-size: 10px !important;
+  }
+  .btnSkip {
+    font-size: 10px !important;
+  }
+  .btnBack {
+    font-size: 10px !important;
+  }
+  .cardPanduan {
+    font-size: 7px !important;
+  }
+}
+
 @media (max-width: 280px) {
   .btnNext {
     font-size: 10px !important;
