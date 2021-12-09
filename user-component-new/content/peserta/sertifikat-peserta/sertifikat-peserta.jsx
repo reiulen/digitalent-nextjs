@@ -11,7 +11,7 @@ import { toPng } from "html-to-image";
 export default function RiwayatPelatihanDetail(props) {
   const {
     data: { data },
-  } = useSelector(state => state.sertifikatPeserta);
+  } = useSelector((state) => state.sertifikatPeserta);
 
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
@@ -19,7 +19,7 @@ export default function RiwayatPelatihanDetail(props) {
     data?.data_sertifikat?.certificate?.certificate_type
   );
 
-  const convertDivToPng = async div => {
+  const convertDivToPng = async (div) => {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -30,7 +30,8 @@ export default function RiwayatPelatihanDetail(props) {
   };
 
   const handleDownload = async () => {
-    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${data?.data_sertifikat?.pelatihan?.id}`;
+    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${data?.data_user?.nomor_registrasi}`;
+
     const check = await axios.get(linkChecker);
     // check udh pernah di sign apa belum?
     if (!check.data.status) {
@@ -38,7 +39,7 @@ export default function RiwayatPelatihanDetail(props) {
       if (data) {
         const formData = new FormData();
         formData.append("certificate", data);
-        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/${data?.data_sertifikat?.pelatihan?.id}`;
+        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${data?.data_sertifikat.pelatihan.id}&nomor_registrasi=${data?.data_user?.nomor_registrasi}`;
 
         const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
         const a = document.createElement("a");
@@ -163,7 +164,7 @@ export default function RiwayatPelatihanDetail(props) {
               </div>
               <div className="row mt-10 col-12 p-0 m-0">
                 <div
-                  onClick={e => {
+                  onClick={(e) => {
                     handleDownload();
                   }}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"

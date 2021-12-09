@@ -6,6 +6,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
 
 import Sidebar from "../../../components/template/helpdesk/index";
+import { helperRegexNumber } from "../../../../utils/middleware/helper";
 
 export default function FormPengaduan() {
   const router = useRouter();
@@ -38,7 +39,7 @@ export default function FormPengaduan() {
   };
 
   return (
-    <Container fluid className="px-md-30 px-10 py-10 bg-white">
+    <Container fluid className="px-md-17 px-10 py-10 bg-white">
       <SubHeaderComponent data={[{ link: router.asPath, name: "Helpdesk" }]} />
       <Sidebar>
         <h1 className={`font-weight-boldest text-blue-primary mb-15 `}>
@@ -61,15 +62,25 @@ export default function FormPengaduan() {
           <Form.Group className="mb-8 text-capitalize">
             <Form.Label>Nomor Handphone</Form.Label>
             <Form.Control
-              onChange={(e) => setHandphone(e.target.value)}
+              onChange={(e) => {
+                if (
+                  e.target.value === "" ||
+                  helperRegexNumber.test(e.target.value)
+                ) {
+                  setHandphone(e.target.value);
+                }
+              }}
               type="text"
               placeholder="08xxxxxxxxxxxx"
               className="rounded-full"
+              value={handphone}
+              maxLength={14}
+              minLength={4}
             />
             {simpleValidator.current.message(
               "nomor handphone",
               handphone,
-              "required",
+              "required|max:14|min:4",
               {
                 className: "text-danger",
               }

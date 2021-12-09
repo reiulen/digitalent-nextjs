@@ -124,6 +124,23 @@ const TambahPage = ({ token }) => {
     };
   });
 
+  const handleDate = () => {
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1; //January is 0!
+    let yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+
+    today = yyyy + "-" + mm + "-" + dd;
+
+    document.getElementById("setTodaysDate").setAttribute("max", today);
+  };
+
   const optionKabupaten = dataKabupaten.data?.map((item) => {
     return {
       label: item.value,
@@ -329,6 +346,10 @@ const TambahPage = ({ token }) => {
   };
 
   const listLi = {};
+
+  useEffect(() => {
+    handleDate();
+  }, []);
 
   return (
     <PageWrapper>
@@ -585,7 +606,7 @@ const TambahPage = ({ token }) => {
                       {simpleValidator.current.message(
                         "nomorHandphone",
                         nomorHandphone,
-                        "required",
+                        "required|max:14",
                         {
                           className: "text-danger",
                         }
@@ -595,6 +616,7 @@ const TambahPage = ({ token }) => {
                       <label>Tanggal Lahir</label>
                       <input
                         type="date"
+                        id="setTodaysDate"
                         className="form-control"
                         placeholder="Masukkan Tanggal Lahir"
                         value={tanggalLahir}
@@ -969,9 +991,7 @@ const TambahPage = ({ token }) => {
                       </label>
                     </div>
                   </div>
-                  <p className="text-muted">
-                    *JPG/JPEG/PNG (Max.2 MB).
-                  </p>
+                  <p className="text-muted">*JPG/JPEG/PNG (Max.2 MB).</p>
                 </div>
                 <div className="form-group">
                   <label>Ijazah</label>
@@ -1006,9 +1026,7 @@ const TambahPage = ({ token }) => {
                       </label>
                     </div>
                   </div>
-                      <p className="text-muted">
-                    *JPG/JPEG/PNG (Max.5 MB).
-                  </p>
+                  <p className="text-muted">*JPG/JPEG/PNG (Max.5 MB).</p>
                 </div>
 
                 <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">

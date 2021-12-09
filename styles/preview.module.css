@@ -31,7 +31,7 @@
 
 .descriptionVideo{
   /* border: 1px solid black; */
-  height: 120px;
+  /* height: 120px; */
   flex-wrap: wrap;
   overflow-y: auto;
   overflow-wrap: break-word;
