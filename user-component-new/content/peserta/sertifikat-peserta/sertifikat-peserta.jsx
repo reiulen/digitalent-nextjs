@@ -43,14 +43,15 @@ export default function RiwayatPelatihanDetail(props) {
 
         const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
         const a = document.createElement("a");
-        a.download = `Sertifikat - p12 ${data?.data_user?.name}.png`;
+        a.download = `Sertifikat - ${data?.data_user?.name}.png`;
         a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
         a.click();
       }
     } else {
       const a = document.createElement("a");
-      a.download = `Sertifikat - p12 ${data?.data_user?.name}.png`;
-      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${data?.data_sertifikat?.certificate?.certificate_pdf}`;
+      a.download = `Sertifikat - ${data?.data_user?.name}.png`;
+      a.target = "_blank";
+      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
       a.click();
     }
   };
