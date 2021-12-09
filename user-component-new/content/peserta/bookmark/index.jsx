@@ -51,7 +51,6 @@ export default function Bookmark({ session }) {
   useEffect(() => {
     dispatch(getAllBookmark(session?.token));
   }, [dispatch, allBookmark.page]);
-  console.log(allBookmark, "ini bookmark");
   return (
     <PesertaWrapper>
       <Row className="my-n10 my-md-0">

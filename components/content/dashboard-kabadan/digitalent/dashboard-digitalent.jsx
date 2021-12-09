@@ -198,7 +198,6 @@ const DashboardDigitalent = ({ token }) => {
   }
 
   if (dataPribadi) {
-    // console.log(Object.keys(dataPribadi.umur_pendaftar));
     const dataUmurPendaftar = [];
   }
   const dataUmur = [
