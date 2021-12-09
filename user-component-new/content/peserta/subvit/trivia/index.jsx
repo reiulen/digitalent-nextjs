@@ -106,6 +106,8 @@ const SubtansiUser = ({ token }) => {
         } else {
           handlePageNext();
         }
+      } else {
+        router.push(`/peserta/done-trivia`);
       }
     }, 1000);
   }
@@ -122,7 +124,7 @@ const SubtansiUser = ({ token }) => {
   useEffect(() => {
     // Handle Error akan langsung ke done
     if (error) {
-      // router.push(`/peserta/done-trivia`);
+      router.push(`/peserta/done-trivia`);
     }
 
     // Hitung Waktu Mundur
@@ -138,14 +140,13 @@ const SubtansiUser = ({ token }) => {
     } else {
       localStorage.clear();
 
-      // router.push(`/peserta/done-trivia`);
+      router.push(`/peserta/done-trivia`);
     }
   }, [count, router]);
 
   useEffect(() => {
-    // setData(random_trivia);
-    setData(initialData);
-  }, []);
+    setData(random_trivia);
+  }, [data, random_trivia]);
 
   const handleModalSoal = () => {
     setModalSoal(true);
