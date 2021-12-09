@@ -281,7 +281,6 @@ export const getProfilePekerjaan = (token) => async (dispatch) => {
     });
     return data;
   } catch (error) {
-    console.log(error, "ini error");
     dispatch({
       type: GET_PEKERJAAN_FAIL,
       payload: error.response.data.message,

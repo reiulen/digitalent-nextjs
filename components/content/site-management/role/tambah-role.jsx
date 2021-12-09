@@ -296,7 +296,6 @@ const TambahRole = ({ token }) => {
                     <input
                       type="checkbox"
                       name="Checkboxes1"
-                      checked={sub.manage}
                       onClick={() => {
                         permission.filter((filter) => {
                           if (sub.id === filter.id) {
@@ -325,8 +324,6 @@ const TambahRole = ({ token }) => {
                             filter.manage = !(
                               filter.manage === true || filter.manage === 1
                             );
-                            filter.view =
-                              filter.manage === true || filter.manage === 1;
                           }
                           return filter;
                         });

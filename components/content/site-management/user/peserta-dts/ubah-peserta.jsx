@@ -1090,7 +1090,7 @@ const TambahPage = ({ token }) => {
 
                 <div className="form-group row mt-6">
                   <div className="col-sm-12 d-flex justify-content-end">
-                    <Link href="/site-management/user/peserta-dts" passHref>
+                    <Link href="/site-management/user/user-dts" passHref>
                       <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                         Kembali
                       </a>
