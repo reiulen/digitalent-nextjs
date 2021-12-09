@@ -48,12 +48,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailFaq(query.id, session.user.user.data.token)
+        getDetailFaq(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
       await store.dispatch(
-        getAllKategoriInput("Faq", session.user.user.data.token)
+        getAllKategoriInput("Faq", session.user.user.data.token, req.cookies.token_permission)
       );
-      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token, req.cookies.token_permission));
 
       return {
         props: { session, title: "Ubah Faq - Publikasi" },

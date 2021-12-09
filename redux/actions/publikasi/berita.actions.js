@@ -47,7 +47,7 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
             },
         };
 
-        const { data } = await axios.get (link, config)
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: BERITA_SUCCESS,
@@ -133,7 +133,7 @@ export const updateBerita = (beritaData, token) => async (dispatch) => {
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/berita/${beritaData.id}`
 
-        const { data } = await axios.post (link, beritaData, config)
+        const { data } = await axios.post(link, beritaData, config)
 
         dispatch({
             type: UPDATE_BERITA_SUCCESS,

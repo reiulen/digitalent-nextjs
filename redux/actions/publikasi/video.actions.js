@@ -52,7 +52,6 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
             },
         };
 
-        // const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'api/video')
         const { data } = await axios.get(link, config)
 
         dispatch({

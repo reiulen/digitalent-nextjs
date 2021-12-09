@@ -52,16 +52,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
         getDashboardSubvit(
           query.page_substansi,
           query.page_trivia,
           query.page_survey,
-          session.user.user.data.token
+          session.user.user.data.token,
+          permission
         )
       );
 
-      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
+      await store.dispatch(
+        getPermissionSubvit(session.user.user.data.token, permission)
+      );
 
       return {
         props: { session, title: "Dashboard - Subvit" },
