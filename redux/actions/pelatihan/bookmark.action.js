@@ -16,6 +16,7 @@ export const getAllBookmark = (token) => async (dispatch, getState) => {
 
     const params = {
       page: pageState,
+      limit: 6,
     };
 
     const config = {

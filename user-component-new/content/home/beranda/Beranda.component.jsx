@@ -284,7 +284,7 @@ const Beranda = ({ session }) => {
     if (session) {
       const data = await dispatch(checkRegisterPelatihan(id, session.token));
       if (data.status === true) {
-        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
+        router.push(`/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
         let errMessage = data.message;
         SweatAlert("Gagal", errMessage, "error");

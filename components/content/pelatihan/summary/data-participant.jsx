@@ -96,7 +96,7 @@ const DataParticipant = ({ token }) => {
     tempatLahir: dataPeserta.tempat_lahir,
     tanggalLahir: moment(dataPeserta.tanggal_lahir).format("DD MMMM YYYY"),
   });
-
+  console.log(dataPeserta, "ini data peserta");
   let optionsPeserta = [
     { value: "seleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },

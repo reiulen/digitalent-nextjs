@@ -42,7 +42,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
@@ -52,7 +52,7 @@ const Navigationbar = ({ session }) => {
       : null
   );
 
-  const { footer, loading } = useSelector(state => state.berandaFooter);
+  const { footer, loading } = useSelector((state) => state.berandaFooter);
 
   useEffect(() => {
     if (!session) {
@@ -89,7 +89,7 @@ const Navigationbar = ({ session }) => {
     }
   }, []);
 
-  const getDataGeneral = async token => {
+  const getDataGeneral = async (token) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
@@ -106,7 +106,7 @@ const Navigationbar = ({ session }) => {
     } catch (error) {}
   };
 
-  const getMenu = async token => {
+  const getMenu = async (token) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
@@ -182,7 +182,7 @@ const Navigationbar = ({ session }) => {
 
   const [search, setSearch] = useState("");
 
-  const handleEnter = e => {
+  const handleEnter = (e) => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
@@ -209,9 +209,7 @@ const Navigationbar = ({ session }) => {
     "galeri",
     "video",
   ]);
-  const [lainnya, setLainnya] = useState(["about us", "about DTS"]);
   const [index, setIndex] = useState(0);
-
   return (
     <>
       <Navbar
@@ -267,7 +265,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={e => {
+              onClick={(e) => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -292,7 +290,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={e => {
+                onKeyDown={(e) => {
                   setSearch(e.target.value);
                   if (e.code == "Enter") {
                     handleEnter(e);
@@ -327,7 +325,7 @@ const Navigationbar = ({ session }) => {
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={e => {
+                      onClick={(e) => {
                         setNavbarItems(akademi);
 
                         if (index != 1) {
@@ -345,18 +343,24 @@ const Navigationbar = ({ session }) => {
                         <span className="ri-arrow-right-s-line" />
                       </div>
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      pusat informasi
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      tentang kami
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      penyelenggara
-                    </NavDropdown.Item>
+                    <Link href="/pusat-informasi" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        pusat informasi
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/tentang-kami" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        tentang kami
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/penyelenggara" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        penyelenggara
+                      </NavDropdown.Item>
+                    </Link>
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={e => {
+                      onClick={(e) => {
                         setNavbarItems(rilisMedia);
                         if (index != 2) {
                           setIndex(2);
@@ -373,15 +377,19 @@ const Navigationbar = ({ session }) => {
                         <span className="ri-arrow-right-s-line" />
                       </div>
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      FAQ
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      Kontak
-                    </NavDropdown.Item>
+                    <Link href="/faq" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        FAQ
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/kontak" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        Kontak
+                      </NavDropdown.Item>
+                    </Link>
                     <NavDropdown.Item
-                      onClick={e => {
-                        setNavbarItems(lainnya);
+                      onClick={(e) => {
+                        setNavbarItems(menu);
                         if (index != 3) {
                           setIndex(3);
                         } else {
@@ -399,19 +407,28 @@ const Navigationbar = ({ session }) => {
                       </div>
                     </NavDropdown.Item>
                   </Col>
-                  <Col className="p-0 m-0 h-350px overflow-auto">
+                  <Col
+                    className="p-0 m-0 h-350px overflow-auto"
+                    style={
+                      navbarItems ? { borderLeft: "1px solid #6c6c6c" } : {}
+                    }
+                  >
                     {navbarItems &&
                       navbarItems.map((el, i) => {
                         return (
                           <Link
                             key={i}
                             href={
-                              el.slug ? `/detail/akademi/${el.id}` : `/${el}`
+                              el.slug
+                                ? `/detail/akademi/${el.id}`
+                                : el.name
+                                ? `/lainnya/${el.url}`
+                                : `/${el}`
                             }
                             passHref
                           >
                             <NavDropdown.Item className="navdropdown-child">
-                              {el.slug ? el.slug : el}
+                              {el.slug ? el.slug : el.name ? el.name : el}
                             </NavDropdown.Item>
                           </Link>
                         );
@@ -544,12 +561,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={e => {
+                onKeyDown={(e) => {
                   if (e.code == "Enter") {
                     handleEnter(e);
                   }
                 }}
-                onChange={e => {
+                onChange={(e) => {
                   setSearch(e.target.value);
                 }}
               />
@@ -718,15 +735,17 @@ const Navigationbar = ({ session }) => {
                           PELATIHAN
                         </li>
                       </Link>{" "}
-                      <Link href="/peserta/artikel" passHref>
-                        <li className="items-lists rounded-0">
-                          <div
-                            style={{ fontSize: "16px" }}
-                            className="ri-bar-chart-horizontal-line mr-2"
-                          ></div>
-                          ARTIKEL
-                        </li>
-                      </Link>
+                      {dataPribadi?.lulus && (
+                        <Link href="/peserta/artikel" passHref>
+                          <li className="items-lists rounded-0">
+                            <div
+                              style={{ fontSize: "16px" }}
+                              className="ri-bar-chart-horizontal-line mr-2"
+                            ></div>
+                            ARTIKEL
+                          </li>
+                        </Link>
+                      )}
                       <Link href="/peserta/pengaturan" passHref>
                         <li className="items-lists rounded-0">
                           <div
