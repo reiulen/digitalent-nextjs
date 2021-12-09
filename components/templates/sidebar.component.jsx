@@ -124,6 +124,9 @@ const Sidebar = ({ session }) => {
         )
         .then((data) => {
           setMenu(data.data.data.menu);
+          localStorage.setItem("sidebar", JSON.stringify(data.data.data.menu))
+          localStorage.setItem("token-permission", data.data.data.tokenPermission)
+          localStorage.setItem("permissions", data.data.data.permissions)
         });
     }
 
