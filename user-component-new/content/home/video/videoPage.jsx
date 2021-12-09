@@ -1189,7 +1189,8 @@ const VideoPage = () => {
               onHide={() => handleToggleModal()}
               show={show}
               centered
-              dialogClassName="mx-10 mx-md-auto"
+              dialogClassName="mx-10 mx-md-auto rounded-lg"
+              style={{borderRadius:"12px"}}
             >
               
               <Modal.Header>
@@ -1289,36 +1290,7 @@ const VideoPage = () => {
                           style={{fontSize:'14px'}}
                         >
                           {detail.isi_video}
-
-                          {/* Insert Tag Here */}
-                          <div className="d-flex flex-row flex-wrap my-2">
-                            {
-                              detail.tag && detail.tag.length === 0 && detail.tag == undefined ?
-                                null
-                                :
-                                detail?.tag?.map((el, i) => {
-                                  return (
-                                    <div
-                                      style={{
-                                        background: "#fff",
-                                        border: "1px solid #d7e1ea",
-                                        height: "25px"
-                                      }}
-                                      className="mr-2 px-3 py-1 rounded text-truncate mb-2"
-                                      key={i}
-                                    >
-                                      <div
-                                        className="text-center text-truncate"
-                                        style={{ fontSize: "12px", color: "#6C6C6C" }}
-                                      >
-                                        {/* #{el.toUpperCase()} */}
-                                        #{el}
-                                      </div>
-                                    </div>
-                                  );
-                                })
-                            }
-                          </div>
+                          
                           <div
                             className="mt-1 mb-3 text-primary"
                             style={{ cursor: "pointer" }}
@@ -1331,7 +1303,7 @@ const VideoPage = () => {
                     }
                   </div>
 
-                  <div className="mt-5 mb-5 row d-flex justify-content-between">
+                  <div className="mt-5 mb-5 row d-flex justify-content-md-between justify-content-start">
                     <div className="d-flex align-self-center ml-4">
                       {/* Insert Date Here */}
                       {
@@ -1352,15 +1324,43 @@ const VideoPage = () => {
 
                     {
                       windowDimensions && windowDimensions.width && windowDimensions.width >= 770 ?
-                        <div className="mr-3">
-                          {detail.nama_kategori === null ? null : (
-                            <span className="p-2 badge badge-light font-weight-bold" style={{ color: "#0063CC", fontSize: "12px" }}>
-                              {detail.nama_kategori}
-                            </span>
-                          )}
-                        </div>
+                          <div className="mr-3">
+                            {detail.nama_kategori === null ? null : (
+                              <span className="p-2 badge badge-light font-weight-bold" style={{ color: "#0063CC", fontSize: "12px" }}>
+                                {detail.nama_kategori}
+                              </span>
+                            )}
+                          </div>
                         :
-                        null
+                          // Insert Tag Here
+                          <div className="d-flex flex-row flex-wrap my-2">
+                              {
+                                detail.tag && detail.tag.length === 0 && detail.tag == undefined ?
+                                  null
+                                  :
+                                  detail?.tag?.map((el, i) => {
+                                    return (
+                                      <div
+                                        style={{
+                                          background: "#fff",
+                                          border: "1px solid #d7e1ea",
+                                          height: "25px"
+                                        }}
+                                        className="mr-2 px-3 py-1 rounded text-truncate mb-2"
+                                        key={i}
+                                      >
+                                        <div
+                                          className="text-center text-truncate"
+                                          style={{ fontSize: "12px", color: "#6C6C6C" }}
+                                        >
+                                          {/* #{el.toUpperCase()} */}
+                                          #{el}
+                                        </div>
+                                      </div>
+                                    );
+                                  })
+                              }
+                            </div>
                     }
 
                   </div>
