@@ -20,7 +20,6 @@ export const getAllBerandaGaleri =
   async (dispatch) => {
     try {
       dispatch({ type: BERANDA_GALERI_REQUEST });
-
       let link =
         process.env.END_POINT_API_PUBLIKASI_1 + `api/home/gallery?page=${page}`;
 
@@ -28,11 +27,11 @@ export const getAllBerandaGaleri =
       if (tag) link = link.concat(`&tag=${tag}`);
 
       const { data } = await axios.get(link);
-
       dispatch({
         type: BERANDA_GALERI_SUCCESS,
         payload: data,
       });
+
     } catch (error) {
       dispatch({
         type: BERANDA_GALERI_FAIL,
