@@ -1,7 +1,6 @@
 import React from "react";
 
 const FileRegister = ({ file }) => {
-  // console.log(file, "ini file");a
   const handleDownload = (row) => {
     if (row.type.includes("file_doc") || row.type.includes("file_image")) {
       window.location.href =
