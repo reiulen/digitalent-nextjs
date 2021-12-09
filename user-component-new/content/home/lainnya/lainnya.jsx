@@ -54,7 +54,7 @@ const Berita = () => {
   return (
     <HomeWrapper>
       {/* BreadCrumb */}
-      <SubHeaderComponent data={[{ link: router.asPath, name: "Berita" }]} />
+      <SubHeaderComponent data={[{ link: router.asPath, name: "Lainnya" }]} />
       <div className="row">
         {pages.template_type === 0 && (
           <div className="col-12 order-1">
@@ -72,7 +72,7 @@ const Berita = () => {
                   pages.property_template.image
                 }
                 width="1500vw"
-                height="413"
+                height="413vh"
                 objectFit="fill"
                 alt="Detail Image"
                 className="rounded-lg"

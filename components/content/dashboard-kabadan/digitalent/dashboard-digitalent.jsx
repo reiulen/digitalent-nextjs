@@ -231,6 +231,7 @@ const DashboardDigitalent = ({ token }) => {
   const dataPendidikanPendaftar = [];
 
   if (dataPribadi) {
+    const dataUmurPendaftar = [];
     if (dataPribadi.umur_pendaftar) {
       dataPribadi.umur_pendaftar.map((row, i) => {
         let val = {

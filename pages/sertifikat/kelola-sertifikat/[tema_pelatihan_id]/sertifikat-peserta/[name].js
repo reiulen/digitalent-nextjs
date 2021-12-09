@@ -34,8 +34,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-
       const middleware = middlewareAuthAdminSession(session);
+
       if (!middleware.status) {
         return {
           redirect: {

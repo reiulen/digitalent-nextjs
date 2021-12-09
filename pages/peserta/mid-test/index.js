@@ -85,14 +85,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
         const data = await store.dispatch(
           getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
         );
-        if (
-          data?.data?.status.includes(
-            "substansi" || "belum tersedia" || "belum mengerjakan"
-          )
-        ) {
-          success = true;
-        } else {
-          success = false;
+        if (data) {
+          const status = data.data.status;
+          if (
+            status.includes("substansi") ||
+            status.includes("belum tersedia") ||
+            status.includes("belum mengerjakan")
+          ) {
+            success = true;
+          } else {
+            success = false;
+          }
         }
       } else {
         // jika gak ada gw cek di dashboard ada gak status tes substansi?
@@ -105,9 +108,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         if (!status || status == "") {
           success = false;
         } else if (
-          status?.includes(
-            "substansi" || "belum tersedia" || "belum mengerjakan"
-          )
+          status.includes("substansi") ||
+          status.includes("belum tersedia") ||
+          status.includes("belum mengerjakan")
         ) {
           await store.dispatch(
             getDetailRiwayatPelatihan(
@@ -123,8 +126,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           );
           success = false;
           const list = data.list.filter((item) => {
-            return item.status.includes(
-              "substansi" || "belum tersedia" || "belum mengerjakan"
+            return (
+              item.status.includes("substansi") ||
+              item.status.includes("belum tersedia") ||
+              item.status.includes("belum mengerjakan")
             );
           });
 

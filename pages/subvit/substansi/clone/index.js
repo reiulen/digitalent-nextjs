@@ -38,7 +38,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      const permission = req.cookies.token_permission;
+
+      await store.dispatch(
+        dropdownAkademi(session.user.user.data.token, permission)
+      );
 
       return {
         props: { session, title: "Clone Bank Soal Test Subtansi - Subvit" },

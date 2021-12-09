@@ -475,7 +475,7 @@ const Navigationbar = ({ session }) => {
                             }
                             passHref
                           >
-                            <NavDropdown.Item className="navdropdown-child">
+                            <NavDropdown.Item className={`navdropdown-child ${el.url === "-" ? "d-none" : ""}`}>
                               {el.slug ? el.slug : el.name ? el.name : el}
                             </NavDropdown.Item>
                           </Link>
@@ -771,7 +771,7 @@ const Navigationbar = ({ session }) => {
                             style={{ fontSize: "16px" }}
                             className="ri-user-line mr-2"
                           ></div>
-                          PROFILE
+                          PROFIL
                         </li>
                       </Link>
                       <Link href="/peserta/riwayat-pelatihan" passHref>

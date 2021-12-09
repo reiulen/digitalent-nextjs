@@ -323,17 +323,16 @@ const Dashboard = ({ session, success }) => {
                         <div className={style.bungkus_mitra_pelatihan}>
                           <Image
                             src={
-                              (dataDashboard?.pelatihan.pelatihan_berjalan
-                                .gambar_mitra &&
-                                process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                              dataDashboard?.pelatihan?.pelatihan_berjalan.logo
+                                ? process.env.END_POINT_API_IMAGE_BEASISWA +
                                   dataDashboard?.pelatihan.pelatihan_berjalan
-                                    .gambar_mitra) ||
-                              (dataDashboard?.pelatihan.pelatihan_berjalan
-                                .logo &&
-                                process.env.END_POINT_API_IMAGE_BEASISWA +
+                                    .logo
+                                : dataDashboard?.pelatihan.pelatihan_berjalan
+                                    .gambar_mitra
+                                ? process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                                   dataDashboard?.pelatihan.pelatihan_berjalan
-                                    .logo) ||
-                              `/assets/media/default-card.png`
+                                    .gambar_mitra
+                                : `/assets/media/default-card.png`
                             }
                             width={62}
                             height={62}
@@ -497,16 +496,18 @@ const Dashboard = ({ session, success }) => {
                         <div className={style.bungkus_mitra_pelatihan}>
                           <Image
                             src={
-                              !dataDashboard.pelatihan.pelatihan_selesi.logo
+                              !dataDashboard.pelatihan.pelatihan_selesi.logo &&
+                              !dataDashboard.pelatihan.pelatihan_selesi
+                                .gambar_mitra
                                 ? "/assets/media/default-card.png"
+                                : dataDashboard.pelatihan.pelatihan_selesi.logo
+                                ? dataDashboard.pelatihan.pelatihan_selesi
+                                    .file_path +
+                                  dataDashboard.pelatihan.pelatihan_selesi.logo
                                 : dataDashboard.pelatihan.pelatihan_selesi
                                     .file_path +
-                                    dataDashboard.pelatihan.pelatihan_selesi
-                                      .logo ||
                                   dataDashboard.pelatihan.pelatihan_selesi
-                                    .file_path +
-                                    dataDashboard.pelatihan.pelatihan_selesi
-                                      .gambar_mitra
+                                    .gambar_mitra
                             }
                             width={62}
                             height={62}

@@ -44,12 +44,24 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
-      await store.dispatch(dropdownTema(session.user.user.data.token));
-      await store.dispatch(dropdownPelatihan(session.user.user.data.token));
+      const permission = req.cookies.token_permission;
 
       await store.dispatch(
-        getDetailSubtanceQuestionBanks(query.id, session.user.user.data.token)
+        dropdownAkademi(session.user.user.data.token, permission)
+      );
+      await store.dispatch(
+        dropdownTema(session.user.user.data.token, permission)
+      );
+      await store.dispatch(
+        dropdownPelatihan(session.user.user.data.token, permission)
+      );
+
+      await store.dispatch(
+        getDetailSubtanceQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
       );
 
       return {
