@@ -106,7 +106,7 @@ export const newFaq = (faqData, token) => async (dispatch) => {
 
         const config = {
             headers: {
-            Authorization: 'Bearer ' + token,
+                Authorization: 'Bearer ' + token,
             },
         };
 
@@ -183,7 +183,7 @@ export const updateFaq = (faqData, id, token) => async (dispatch) => {
 
         const config = {
             headers: {
-            Authorization: 'Bearer ' + token,
+                Authorization: 'Bearer ' + token,
             },
         };
 
@@ -213,7 +213,7 @@ export const updatePinFaq = (faq, id, token) => async (dispatch) => {
 
         const config = {
             headers: {
-            Authorization: 'Bearer ' + token,
+                Authorization: 'Bearer ' + token,
             },
         };
 

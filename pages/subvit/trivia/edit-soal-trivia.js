@@ -40,8 +40,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
-        detailTriviaQuestionDetail(query.id, session.user.user.data.token)
+        detailTriviaQuestionDetail(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
       );
       return {
         props: { session, title: "Edit Trivia - Subvit" },

@@ -146,7 +146,9 @@ function ReviewDokumenKerjasama({ token }) {
     }
 
     setDataSingle(router.query.id);
-  }, [router.query.id, token, router]);
+  }, []
+  // [router.query.id, token, router]
+  );
 
   return (
     <PageWrapper>

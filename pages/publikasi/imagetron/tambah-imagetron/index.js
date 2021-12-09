@@ -1,9 +1,6 @@
 import dynamic from "next/dynamic";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
-// import Layout from "../../../components/templates/layout.component";
-// import Tambah from "../../../components/content/publikasi/imagetron/tambah";
-
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
@@ -14,8 +11,6 @@ import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-p
 const Tambah = dynamic(
   () => import("../../../../components/content/publikasi/imagetron/tambah"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingPage />;
     },
@@ -48,9 +43,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(getAllKategori(session.user.user.data.token));
-      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
-      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      await store.dispatch(getAllKategori(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getSettingPublikasi(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token, req.cookies.token_permission));
 
       return {
         props: { session, title: "Tambah Imagetron - Publikasi" },

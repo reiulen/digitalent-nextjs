@@ -87,7 +87,7 @@ const Table = ({ token }) => {
           <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-sm-4">
                   <div className="d-flex align-items-center w-100 mt-4">
                     <div className="position-relative overflow-hidden w-100">
                       <IconSearch
@@ -116,7 +116,7 @@ const Table = ({ token }) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-sm-6 ml-auto">
                   {localStorage
                     .getItem("permissions")
                     .includes("site_management.export_data.manage") && (
@@ -258,12 +258,12 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row px-4">
-                <div className="table-pagination">
+                <div className="table-pagination pagination-custom col-12 col-md-6">
                   <Pagination
                     activePage={allExportData.page}
                     itemsCountPerPage={allExportData.data.perPage}
                     totalItemsCount={allExportData.data.total}
-                    pageRangeDisplayed={3}
+                    pageRangeDisplayed={2}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}
