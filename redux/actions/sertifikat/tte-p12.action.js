@@ -10,33 +10,31 @@ import {
   NEW_TTE_P12_REQUEST,
   NEW_TTE_P12_FAIL,
 } from "../../types/sertifikat/TTE-P12.type";
-import Cookies from "js-cookie";
-export const getTTEP12 =
-  (token, tokenPermission) => async (dispatch, getState) => {
-    try {
-      dispatch({ type: TTE_P12_REQUEST });
-      let link = process.env.END_POINT_API_SERTIFIKAT + `api/tte-p12/show`;
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Permission: Cookies.get("token_permission"),
-        },
-      };
+export const getTTEP12 = (token) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: TTE_P12_REQUEST });
+    let link = process.env.END_POINT_API_SERTIFIKAT + `api/tte-p12/show`;
 
-      const { data } = await axios.get(link, config);
-      if (data) {
-        dispatch({ type: TTE_P12_SUCCESS, payload: data });
-      }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-      return data;
-    } catch (error) {
-      dispatch({
-        type: TTE_P12_FAIL,
-        payload: error?.response?.data?.message || error.message,
-      });
+    const { data } = await axios.get(link, config);
+    if (data) {
+      dispatch({ type: TTE_P12_SUCCESS, payload: data });
     }
-  };
+
+    return data;
+  } catch (error) {
+    dispatch({
+      type: TTE_P12_FAIL,
+      payload: error?.response?.data?.message || error.message,
+    });
+  }
+};
 
 export const PostTTEP12 = (token, data) => async (dispatch, getState) => {
   try {
@@ -47,7 +45,6 @@ export const PostTTEP12 = (token, data) => async (dispatch, getState) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      Permission: Cookies.get("token_permission"),
     };
 
     const { data } = await axios.get(link, data, config);

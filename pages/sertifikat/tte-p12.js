@@ -43,8 +43,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      console.log(req.cookies.token_permission, "ini cookies");
-      const tokenPermission = req.cookies.token_permission;
 
       const data = await store.dispatch(
         getTTEP12(session.user.user.data.token)
