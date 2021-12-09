@@ -30,6 +30,22 @@ const TambahApi = ({ token }) => {
   const allProvincesSite = useSelector((state) => state.allProvincesSite);
   let sortirOptionTempProvList = allProvincesSite?.data
 
+  // let optionTempProvList = sortirOptionTempProvList.map((items) => {
+  //   return { ...items, value: items.label }
+  // })
+  // console.log(optionTempProv)
+  // console.log(optionTempProvList)
+  // const optionTempProvList = [];
+  // if (sortirOptionTempProvList) {
+  //   for (let index = 0; index < sortirOptionTempProvList.length; index++) {
+  //     let val = {
+  //       id: sortirOptionTempProvList[index].id,
+  //       label: sortirOptionTempProvList[index].label,
+  //     };
+  //     optionTempProvList.push(val);
+  //   }
+  // }
+
   let optionTempProvList = sortirOptionTempProvList.map((items) => {
     return { ...items, value: items.label }
   })
@@ -52,6 +68,30 @@ const TambahApi = ({ token }) => {
   const [status, setStatus] = useState(detailUnitWork.unitWork.status);
   const [changeProvince, setChangeProvince] = useState(false)
   const [showProvince, setShowProvince] = useState(false)
+
+  // useEffect(() => {
+  // optionTempProvList.filter((val) =>
+  //   optionTempProv.map((row, i) => {
+  //     if (val.label === row.label) {
+  //       return setShowProvince(false)
+  //     } else {
+  //       return setShowProvince(true)
+  //     }
+  //   })
+  // )
+  // }, [])
+
+  // console.log(
+  //   optionTempProvList.filter((val) =>
+  //     optionTempProv.map((row, i) => {
+  //       if (val.label === row.label) {
+  //         return setShowProvince(false)
+  //       } else {
+  //         return setShowProvince(true)
+  //       }
+  //     })
+  //   )
+  // )
 
   // filter data just region show
   const changeListProvinsi = (e) => {
@@ -212,6 +252,13 @@ const TambahApi = ({ token }) => {
                   classNamePrefix="select"
                   placeholder="Pilih provinsi"
                   defaultValue={optionTempProv}
+                  // defaultValue={
+                  //   showProvince !== true
+                  //     ? optionTempProvList.filter((value) => {
+                  //       return console.log("INI Data : ", value)
+                  //     })
+                  //     : null
+                  // }
                   isMulti
                   isDisabled={false}
                   isLoading={false}
