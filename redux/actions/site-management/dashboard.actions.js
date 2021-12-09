@@ -7,7 +7,7 @@ import {
 
 import axios from "axios";
 
-export const loadDataZonasi = (token, type, page) => {
+export const loadDataZonasi = (token, type, page, tokenPermission) => {
   const params = {
     type,
     page,
@@ -25,7 +25,7 @@ export const loadDataZonasi = (token, type, page) => {
           params,
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            permissionToken: tokenPermission
           },
         }
       );
@@ -40,7 +40,7 @@ export const loadDataZonasi = (token, type, page) => {
   };
 };
 
-export const loadDataPeserta = (token, type, page) => {
+export const loadDataPeserta = (token, type, page, tokenPermission) => {
   const params = {
     type,
     page,
@@ -58,7 +58,7 @@ export const loadDataPeserta = (token, type, page) => {
           params,
           headers: {
             authorization: `Bearer ${token}`,
-            permissionToken: localStorage.getItem("token-permission")
+            permissionToken: tokenPermission
 
           },
         }

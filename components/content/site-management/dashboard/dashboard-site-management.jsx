@@ -20,7 +20,7 @@ import {
   loadDataZonasi,
   loadDataZonasiNext,
 } from "../../../../redux/actions/site-management/dashboard.actions";
-import { set } from "js-cookie";
+import  Cookies  from "js-cookie";
 
 const DashboardSiteManagement = ({ token, user }) => {
   const [participant, setParticipant] = useState(0);
@@ -38,7 +38,7 @@ const DashboardSiteManagement = ({ token, user }) => {
       .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/card`, {
         headers: {
           authorization: `Bearer ${token}`,
-          permissionToken: localStorage.getItem("token-permission")
+          permissionToken: Cookies.get("token_permission")
         },
       })
       .then((items) => {
@@ -47,8 +47,8 @@ const DashboardSiteManagement = ({ token, user }) => {
         setMitra(items.data.data.mitra);
       });
 
-    dispatch(loadDataZonasi(token, type, pageZonasi));
-    dispatch(loadDataPeserta(token, typePeserta, pagePeserta));
+    dispatch(loadDataZonasi(token, type, pageZonasi, Cookies.get("token_permission")));
+    dispatch(loadDataPeserta(token, typePeserta, pagePeserta, Cookies.get("token_permission")));
   }, [dispatch, token, type, pageZonasi, typePeserta, pagePeserta]);
 
   const { allDataZonasi, allDataPeserta } = useSelector(

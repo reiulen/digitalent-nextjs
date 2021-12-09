@@ -17,6 +17,7 @@ import Select from "react-select";
 import { getEditTrainingStep1 } from "../../../../../redux/actions/pelatihan/training.actions";
 import { getAllListPelatihan } from "../../../../../redux/actions/site-management/user/admin-site.action";
 import { pindahPelatihan } from "../../../../../redux/actions/site-management/user/peserta-dts";
+import Cookies from 'js-cookie'
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -57,7 +58,7 @@ const Table = ({ token }) => {
       "ubah_data" : ubahData === true || ubahData === 1 ? 1 : 0,
       "id_peserta": router.query.id
     }
-    dispatch(pindahPelatihan(token, data))
+    dispatch(pindahPelatihan(token, data, Cookies.get("token_permission")))
   }
 
   useEffect(() => {
@@ -127,7 +128,7 @@ const Table = ({ token }) => {
                       className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                       onClick={(e) => {
                         e.preventDefault();
-                        router.back();
+                        router.push(router.asPath.split("?")[0]);
                       }}
                     >
                       Kembali

@@ -5,9 +5,9 @@ import { wrapper } from "../../../../../redux/store";
 import {
   getDetailPesertaManage,
   getPelatihanByPeserta,
-  getPelatihanWithPagination
+  getPelatihanWithPagination,
 } from "../../../../../redux/actions/site-management/user/peserta-dts";
-import {dropdownProvinsi} from '../../../../../redux/actions/pelatihan/function.actions'
+import { dropdownProvinsi } from "../../../../../redux/actions/pelatihan/function.actions";
 
 const PageUbah = dynamic(
   () =>
@@ -42,17 +42,29 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailPesertaManage(session.user.user.data.token, query.id)
+        getDetailPesertaManage(
+          session.user.user.data.token,
+          query.id,
+          req.cookies.token_permission
+        )
       );
 
       await store.dispatch(
-        getPelatihanByPeserta(session.user.user.data.token, query.id)
+        getPelatihanByPeserta(
+          session.user.user.data.token,
+          query.id,
+          req.cookies.token_permission
+        )
       );
 
       await store.dispatch(
         getPelatihanWithPagination(
           session.user.user.data.token,
-          query.id
+          query.id,
+          null,
+          null,
+          null,
+          req.cookies.token_permission
         )
       );
 

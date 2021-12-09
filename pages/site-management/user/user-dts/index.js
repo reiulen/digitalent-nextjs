@@ -42,7 +42,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(getAllListsPeserta(session.user.user.data.token));
+      await store.dispatch(getAllListsPeserta(session.user.user.data.token, null, null, null, req.cookies.token_permission));
 
       return {
         props: { session, title: "List User Peserta DTS - Site Management" },

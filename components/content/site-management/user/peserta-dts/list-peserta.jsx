@@ -12,6 +12,7 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
 import { getAllListsPeserta } from "../../../../../redux/actions/site-management/user/peserta-dts";
+import Cookies from "js-cookie";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -38,7 +39,7 @@ const Table = ({ token }) => {
             <td className="align-middle text-left">
               <div className="d-flex align-items-center">
                 <Link
-                  href={`/site-management/user/peserta-dts/ubah-peserta-dts/${item.user_id}`}
+                  href={`/site-management/user/user-dts/ubah-peserta-dts/${item.user_id}`}
                 >
                   <a className={`btn btn-link-action bg-blue-secondary position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.manage")}`}>
                     <IconPencil width="16" height="16" />
@@ -46,7 +47,7 @@ const Table = ({ token }) => {
                   </a>
                 </Link>
                 <Link
-                  href={`/site-management/user/peserta-dts/detail-peserta-dts/${item.user_id}`}
+                  href={`/site-management/user/user-dts/detail-peserta-dts/${item.user_id}`}
                 >
                   <a className={`btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.view")}`}>
                     <IconEye width="16" height="16" />
@@ -108,7 +109,7 @@ const Table = ({ token }) => {
                             onClick={() => {
                               setPage(1);
                               dispatch(
-                                getAllListsPeserta(token, limit, 1, search)
+                                getAllListsPeserta(token, limit, 1, search, Cookies.get("token_permission"))
                               );
                             }}
                             className="btn bg-blue-primary text-white right-center-absolute"
@@ -154,7 +155,7 @@ const Table = ({ token }) => {
                     pageRangeDisplayed={2}
                     onChange={(e) => {
                       setPage(e);
-                      dispatch(getAllListsPeserta(token, limit, e, search));
+                      dispatch(getAllListsPeserta(token, limit, e, search, Cookies.get("token_permission")));
                     }}
                     nextPageText={">"}
                     prevPageText={"<"}
@@ -179,7 +180,8 @@ const Table = ({ token }) => {
                               token,
                               e.target.value,
                               page,
-                              search
+                              search,
+                              Cookies.get("token_permission")
                             )
                           );
                         }}

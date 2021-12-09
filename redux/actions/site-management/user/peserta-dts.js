@@ -14,7 +14,7 @@ import {
 import axios from 'axios'
 
 export const getAllListsPeserta =
-  (token, limit = 5, page = 1, search = "") =>
+  (token, limit = 5, page = 1, search = "", tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({ type: LIST_PESERTA_REQUEST });
@@ -31,6 +31,7 @@ export const getAllListsPeserta =
           params,
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: tokenPermission
           },
         }
       );
@@ -48,7 +49,7 @@ export const getAllListsPeserta =
   };
 
   export const getDetailPesertaManage =
-  (token, id) =>
+  (token, id, tokenPermission) =>
   async (dispatch) => {
     try {
       const { data } = await axios.get(
@@ -56,6 +57,7 @@ export const getAllListsPeserta =
         {
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: tokenPermission
           },
         }
       );
@@ -73,7 +75,7 @@ export const getAllListsPeserta =
   };
 
   export const getPelatihanWithPagination =
-  (token,id, search = "", limit = 5, page = 1) =>
+  (token,id, search = "", limit = 5, page = 1, tokenPermission) =>
   async (dispatch) => {
     try {
 
@@ -89,6 +91,7 @@ export const getAllListsPeserta =
           },
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: tokenPermission
           },
         }
       );
@@ -108,7 +111,7 @@ export const getAllListsPeserta =
 
 
   export const getPelatihanByPeserta =
-  (token, id) =>
+  (token, id, tokenPermission) =>
   async (dispatch) => {
     try {
 
@@ -118,6 +121,7 @@ export const getAllListsPeserta =
         {
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: tokenPermission
           },
         }
       );
@@ -164,7 +168,7 @@ export const getAllListsPeserta =
   };
 
   export const pindahPelatihan =
-  (token, datas) =>
+  (token, datas, tokenPermission) =>
   async (dispatch) => {
     try {
       const { data } = await axios.post(
@@ -172,12 +176,13 @@ export const getAllListsPeserta =
         {
           headers: {
             authorization: `Bearer ${token}`,
+            permissionToken: tokenPermission
           },
         }
       );
       if(data.status){
         Swal.fire("Berhasil", data.message, "success").then(() => {
-          window.location = `/site-management/user/peserta-dts/detail-peserta-dts/${datas.id_peserta}`;
+          window.location = `/site-management/user/user-dts/detail-peserta-dts/${datas.id_peserta}`;
         });
 
       }else{

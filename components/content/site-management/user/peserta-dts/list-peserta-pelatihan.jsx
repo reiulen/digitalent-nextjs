@@ -14,6 +14,7 @@ import AlertBar from "../../../partnership/components/BarAlert";
 import Image from "next/image";
 import IconArrow from "../../../../assets/icon/Arrow";
 import {getPelatihanWithPagination} from '../../../../../redux/actions/site-management/user/peserta-dts'
+import Cookies from "js-cookie";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -49,8 +50,8 @@ const Table = ({ token }) => {
   const [search, setSearch] = useState(null);
 
   const listPelatihan =
-    allListPelatihanPagination.data.data.list.length > 0 ? (
-      allListPelatihanPagination.data.data.list.map((item, index) => {
+    allListPelatihanPagination.data?.data?.list.length > 0 ? (
+      allListPelatihanPagination.data?.data?.list.map((item, index) => {
         return (
           <tr key={index}>
             <td className="align-middle text-left">
@@ -141,7 +142,7 @@ const Table = ({ token }) => {
                           <button
                             type="button"
                             onClick={e => {
-                              dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, page))  
+                              dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, page, Cookies.get("token_permission")))  
                             }}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
@@ -185,7 +186,7 @@ const Table = ({ token }) => {
                     pageRangeDisplayed={3}
                     onChange={(e) => {
                       setPage(e);
-                      dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, e))  
+                      dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, e, Cookies.get("token_permission")))  
                     }}
                     nextPageText={">"}
                     prevPageText={"<"}
@@ -211,7 +212,7 @@ const Table = ({ token }) => {
                         }}
                         onChange={e => {
                           setLimit(e.target.value)
-                          dispatch(getPelatihanWithPagination(token, router.query.id, search, e.target.value, page))
+                          dispatch(getPelatihanWithPagination(token, router.query.id, search, e.target.value, page, Cookies.get("token_permission")))
                         }}
                       >
                         <option value="5">5</option>
