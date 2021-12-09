@@ -209,7 +209,7 @@ const Navigationbar = ({ session }) => {
     "galeri",
     "video",
   ]);
-
+  console.log(menu);
   const [index, setIndex] = useState(0);
   return (
     <>
@@ -418,7 +418,7 @@ const Navigationbar = ({ session }) => {
                               el.slug
                                 ? `/detail/akademi/${el.id}`
                                 : el.name
-                                ? `/${el.url}`
+                                ? `/lainnya/${el.url}`
                                 : `/${el}`
                             }
                             passHref
