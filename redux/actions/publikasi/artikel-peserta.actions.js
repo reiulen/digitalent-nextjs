@@ -69,7 +69,6 @@ export const getDetailArtikelPeserta = (id, token, permission) => async (dispatc
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 
@@ -96,12 +95,10 @@ export const newArtikelPeserta = (artikelPesertaData, token, permission) => asyn
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 
     let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel`
-    //   let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${role}`
 
     const { data } = await axios.post(link, artikelPesertaData, config);
 
@@ -128,7 +125,6 @@ export const updateArtikelPeserta = (artikelPesertaData, token, permission) => a
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 
@@ -153,7 +149,6 @@ export const deleteArtikelPeserta = (id, token, permission) => async (dispatch) 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 

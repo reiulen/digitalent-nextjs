@@ -403,7 +403,7 @@ const Artikel = ({ token }) => {
             background="bg-light-success"
             icon='user-white.svg'
             color='#ffffff'
-            value="0"
+            value={artikel && artikel.total_pembaca != "" ? artikel.total_pembaca : 0}
             titleValue="Orang"
             title="Total Pembaca"
             publishedVal=""

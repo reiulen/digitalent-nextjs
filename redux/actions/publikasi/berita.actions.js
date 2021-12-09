@@ -29,7 +29,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, startdate = null, enddate = null, token, permission) => async (dispatch) => {
+export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
     try {
 
         dispatch({ type: BERITA_REQUEST })
@@ -44,7 +44,6 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -63,7 +62,7 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
     }
 }
 
-export const newBerita = (beritaData, token, permission) => async (dispatch) => {
+export const newBerita = (beritaData, token) => async (dispatch) => {
     try {
 
         dispatch({
@@ -73,7 +72,6 @@ export const newBerita = (beritaData, token, permission) => async (dispatch) => 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -92,7 +90,7 @@ export const newBerita = (beritaData, token, permission) => async (dispatch) => 
     }
 }
 
-export const getDetailBerita = (id, token, permission) => async (dispatch) => {
+export const getDetailBerita = (id, token) => async (dispatch) => {
     try {
 
         dispatch({
@@ -102,7 +100,6 @@ export const getDetailBerita = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -123,7 +120,7 @@ export const getDetailBerita = (id, token, permission) => async (dispatch) => {
 }
 
 
-export const updateBerita = (beritaData, token, permission) => async (dispatch) => {
+export const updateBerita = (beritaData, token) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_BERITA_REQUEST })
@@ -131,7 +128,6 @@ export const updateBerita = (beritaData, token, permission) => async (dispatch) 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -152,7 +148,7 @@ export const updateBerita = (beritaData, token, permission) => async (dispatch) 
     }
 }
 
-export const deleteBerita = (id, token, permission) => async (dispatch) => {
+export const deleteBerita = (id, token) => async (dispatch) => {
 
     try {
         dispatch({ type: DELETE_BERITA_REQUEST })
@@ -160,7 +156,6 @@ export const deleteBerita = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 

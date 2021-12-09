@@ -27,7 +27,7 @@ import {
 
 import axios from 'axios'
 
-export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token, permission) => async (dispatch) => {
+export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
     try {
 
         dispatch({ type: IMAGETRON_REQUEST })
@@ -42,7 +42,6 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = nul
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                "Permission": permission
             },
         };
 
@@ -61,14 +60,13 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = nul
     }
 }
 
-export const getDetailImagetron = (id, token, permission) => async (dispatch) => {
+export const getDetailImagetron = (id, token) => async (dispatch) => {
     try {
         let link = process.env.END_POINT_API_PUBLIKASI + `api/imagetron/${id}`;
 
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                "Permission": permission
             },
         };
 
@@ -87,7 +85,7 @@ export const getDetailImagetron = (id, token, permission) => async (dispatch) =>
 };
 
 
-export const newImagetron = (imagetronData, token, permission) => async (dispatch) => {
+export const newImagetron = (imagetronData, token) => async (dispatch) => {
     try {
 
         dispatch({
@@ -97,7 +95,6 @@ export const newImagetron = (imagetronData, token, permission) => async (dispatc
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                "Permission": permission
             },
         };
         const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/imagetron', imagetronData, config)
@@ -115,7 +112,7 @@ export const newImagetron = (imagetronData, token, permission) => async (dispatc
     }
 }
 
-export const updateImagetron = (imagetronData, token, permission) => async (dispatch) => {
+export const updateImagetron = (imagetronData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_IMAGETRON_REQUEST });
 
@@ -124,7 +121,6 @@ export const updateImagetron = (imagetronData, token, permission) => async (disp
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                "Permission": permission
             },
         };
 
@@ -142,7 +138,7 @@ export const updateImagetron = (imagetronData, token, permission) => async (disp
     }
 };
 
-export const deleteImagetron = (id, token, permission) => async (dispatch) => {
+export const deleteImagetron = (id, token) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_IMAGETRON_REQUEST })
@@ -150,7 +146,6 @@ export const deleteImagetron = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                "Permission": permission
             },
         };
 

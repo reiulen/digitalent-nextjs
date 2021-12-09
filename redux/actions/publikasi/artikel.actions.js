@@ -40,7 +40,6 @@ export const getAllArtikel =
     startdate = null,
     enddate = null,
     token,
-    permission
   ) =>
     async (dispatch) => {
       try {
@@ -56,7 +55,6 @@ export const getAllArtikel =
         const config = {
           headers: {
             Authorization: "Bearer " + token,
-            "Permission": permission
           },
         };
 
@@ -101,7 +99,6 @@ export const getAllArtikelsPeserta =
           },
           headers: {
             Authorization: "Bearer " + token,
-            "Permission": permission
           },
         };
 
@@ -118,12 +115,11 @@ export const getAllArtikelsPeserta =
       }
     };
 
-export const getDetailArtikel = (id, token, permission) => async (dispatch) => {
+export const getDetailArtikel = (id, token) => async (dispatch) => {
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 
@@ -143,12 +139,11 @@ export const getDetailArtikel = (id, token, permission) => async (dispatch) => {
   }
 };
 
-export const getDetailArtikelsPeserta = (id, token, permission) => async (dispatch) => {
+export const getDetailArtikelsPeserta = (id, token) => async (dispatch) => {
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 
@@ -168,7 +163,7 @@ export const getDetailArtikelsPeserta = (id, token, permission) => async (dispat
   }
 };
 
-export const newArtikel = (artikelData, token, permission) => async (dispatch) => {
+export const newArtikel = (artikelData, token) => async (dispatch) => {
   try {
     dispatch({
       type: NEW_ARTIKEL_REQUEST,
@@ -177,7 +172,6 @@ export const newArtikel = (artikelData, token, permission) => async (dispatch) =
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 
@@ -198,12 +192,11 @@ export const newArtikel = (artikelData, token, permission) => async (dispatch) =
   }
 };
 
-export const newArtikelPeserta = (artikelData, token, permission) => async (dispatch) => {
+export const newArtikelPeserta = (artikelData, token) => async (dispatch) => {
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 
@@ -226,14 +219,13 @@ export const newArtikelPeserta = (artikelData, token, permission) => async (disp
   }
 };
 
-export const updateArtikel = (artikelData, token, permission) => async (dispatch) => {
+export const updateArtikel = (artikelData, token) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ARTIKEL_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 
@@ -255,14 +247,13 @@ export const updateArtikel = (artikelData, token, permission) => async (dispatch
   }
 };
 
-export const updateArtikelPeserta = (artikelData, token, id, permission) => async (dispatch) => {
+export const updateArtikelPeserta = (artikelData, token, id) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ARTIKEL_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
 
@@ -280,14 +271,13 @@ export const updateArtikelPeserta = (artikelData, token, id, permission) => asyn
   }
 };
 
-export const deleteArtikelPeserta = (id, token, permission) => async (dispatch) => {
+export const deleteArtikelPeserta = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ARTIKEL_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
     const { data } = await axios.delete(
@@ -307,14 +297,13 @@ export const deleteArtikelPeserta = (id, token, permission) => async (dispatch) 
   }
 };
 
-export const deleteArtikel = (id, token, permission) => async (dispatch) => {
+export const deleteArtikel = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ARTIKEL_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        "Permission": permission
       },
     };
     const { data } = await axios.delete(
