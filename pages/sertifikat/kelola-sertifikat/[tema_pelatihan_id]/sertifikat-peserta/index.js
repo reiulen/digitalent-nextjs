@@ -5,6 +5,7 @@ import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getAllParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 const ListPeserta = dynamic(
   () =>
@@ -30,17 +31,20 @@ export default function KelokaSertifikatPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+
       await store.dispatch(
         getAllParticipant(
           query.id ? query.id : req.cookies.nama_pelatihan_id,

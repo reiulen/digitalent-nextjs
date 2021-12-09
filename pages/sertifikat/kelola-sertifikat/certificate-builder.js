@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 const AddSertifikat = dynamic(
   () =>
@@ -34,18 +35,21 @@ export default function AddSertifikatPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+
+      // certificate builder pake theme id
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
-      // certificate builder pake theme id
+
       await store.dispatch(
         getDetailSertifikat(
           query.theme_id,

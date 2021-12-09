@@ -1,4 +1,4 @@
-@media (min-width: 375px) and (max-width: 767px) {
+@media (max-width: 426px) {
   .mainCard {
     padding: 20px !important;
     border-radius: 0px !important;
@@ -7,11 +7,14 @@
   .base {
     padding: 0px !important;
   }
+  .titleResponsive {
+    display: inline-block !important;
+  }
   .academy {
-    padding: 0px !important;
+    display: none;
   }
   .training {
-    padding: 0px !important;
+    display: none;
   }
   .rowNumber {
     display: none;
@@ -44,6 +47,24 @@
   .rowNumberResponsive {
     margin-top: 20px;
   }
+  .academy2 {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 160%;
+
+    color: #1f1f1f;
+  }
+  .training2 {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 160%;
+
+    color: #6c6c6c;
+  }
   .btnHelp {
     float: left;
   }
@@ -70,6 +91,7 @@
   }
   .soalResponsive {
     display: inline-block !important;
+    margin-bottom: 20px;
   }
   .total {
     text-align: left;
@@ -91,14 +113,14 @@
     text-align: right;
     float: right;
     letter-spacing: 0.015em;
-
+    cursor: pointer;
     /* Brand/Primary/Primary */
 
     color: #007cff;
   }
 }
-.check {
-  user-select: none;
+.titleResponsive {
+  display: none;
 }
 .soalResponsive {
   display: none;
@@ -201,7 +223,6 @@
   border: 2px solid #d6d6e0;
   box-sizing: border-box;
   border-radius: 5px;
-  margin-bottom: 50px;
 }
 .textArea::placeholder {
   font-family: Poppins;
@@ -251,7 +272,23 @@
   line-height: 140%;
   color: #80808f;
 }
+.totalSoal2 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 155%;
+  /* identical to box height, or 28px */
 
+  letter-spacing: 0.1em;
+
+  /* Status/Warning/Normal */
+
+  color: #ffa800;
+}
+.align {
+  text-align: right;
+}
 .baseAll {
   position: absolute;
   top: 255px;
@@ -323,7 +360,6 @@
   padding: 30px;
   background: #ffffff;
   border-radius: 10px;
-  margin-bottom: 20px;
 }
 .cardNumber {
   padding: 30px;
@@ -339,7 +375,7 @@
   margin-bottom: 12px;
   width: 40px;
   height: 40px;
-  cursor: pointer;
+
   font-size: 12px;
 }
 .daftarSoal {
@@ -407,7 +443,7 @@
   font-weight: normal;
   font-size: 12px;
   line-height: 160%;
-  background: #007cff;
+  background: #e6f2ff;
 
   /* border: 2px solid #007cff; */
   box-sizing: border-box;
@@ -425,7 +461,8 @@
   color: #007cff;
   text-decoration: none !important;
 }
-.btnBack:hover {
+.btnBack:hover,
+.btnBack:focus {
   text-decoration: none !important;
 }
 .btnSkip {
@@ -456,7 +493,7 @@
   letter-spacing: 0.015em;
 
   color: #ffffff;
-  margin-left: 30px;
+
   padding: 5px 15px;
 }
 .cardPanduan {
@@ -497,7 +534,7 @@
   margin-bottom: 12px;
   width: 40px;
   height: 40px;
-  cursor: pointer;
+
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
@@ -517,7 +554,7 @@
   margin-bottom: 12px;
   width: 40px;
   height: 40px;
-  cursor: pointer;
+
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;

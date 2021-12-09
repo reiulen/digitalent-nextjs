@@ -45,14 +45,14 @@ const TambahApi = ({ token }) => {
   })
 
   let province = optionTempProvList.filter((items, i) => {
-    for (let j = 0; j < optionTempProv.length; j++) {
-      if (items.label !== optionTempProv[j].label) {
-        return { ...items }
-      }
-    }
-    // if (items.label !== optionTempProv[0].label) {
-    //   return { ...items }
+    // for (let j = 0; j < optionTempProv.length; j++) {
+    //   if (items.label !== optionTempProv[j].label) {
+    //     return { ...items }
+    //   }
     // }
+    if (items.label !== optionTempProv[0].label) {
+      return { ...items }
+    }
   })
 
 

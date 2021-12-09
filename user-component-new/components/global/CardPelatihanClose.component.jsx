@@ -95,8 +95,8 @@ const CardPelatihanClose = ({ row }) => {
               <i className="ri-time-line"></i>
               <span className={`text-date-register-new pl-2`}>
                 Registrasi:{" "}
-                {moment(row.pendaftaran_mulai).format("DD MMM YYYY")} -{" "}
-                {moment(row.pendaftaran_selesai).format("DD MMM YYYY")}
+                {moment(row.pendaftaran_mulai).utc().format("DD MMM YYYY")} -{" "}
+                {moment(row.pendaftaran_selesai).utc().format("DD MMM YYYY")}
               </span>
             </div>
             <div className="date d-flex align-items-center align-middle">
