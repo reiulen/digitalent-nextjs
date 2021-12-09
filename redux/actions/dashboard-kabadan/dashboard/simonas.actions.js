@@ -41,6 +41,17 @@ import {
   SIMONAS_APPLIER_EDUCATION_PROJECT_REQUEST,
   SIMONAS_APPLIER_EDUCATION_PROJECT_SUCCESS,
   SIMONAS_APPLIER_EDUCATION_PROJECT_FAIL,
+  // REGION PELAMAR
+  SIMONAS_REGION_APPLIER_REQUEST,
+  SIMONAS_REGION_APPLIER_SUCCESS,
+  SIMONAS_REGION_APPLIER_FAIL,
+  // DATA FILTER
+  SIMONAS_FILTER_YEAR_REQUEST,
+  SIMONAS_FILTER_YEAR_SUCCESS,
+  SIMONAS_FILTER_YEAR_FAIL,
+  SIMONAS_FILTER_STATUS_REQUEST,
+  SIMONAS_FILTER_STATUS_SUCCESS,
+  SIMONAS_FILTER_STATUS_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/dashboard-kabadan/dashboard/simonas.type";
 import axios from "axios";
@@ -370,6 +381,90 @@ export const getSimonasApplierEducationProject =
       });
     }
   };
+
+export const getSimonasRegionApplier =
+  (token, date = null, status = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: SIMONAS_REGION_APPLIER_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_SIMONAS + `jobs/applier/count/province-map?`;
+      if (date) link = link.concat(`&date=${date}`);
+      if (status) link = link.concat(`&status=${status}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: SIMONAS_REGION_APPLIER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: SIMONAS_REGION_APPLIER_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+export const getSimonasFilterYear = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: SIMONAS_FILTER_YEAR_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_SIMONAS + `jobs/applier/filtered/province`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: SIMONAS_FILTER_YEAR_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: SIMONAS_FILTER_YEAR_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getSimonasFilterStatus = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: SIMONAS_FILTER_STATUS_REQUEST });
+
+    let link = process.env.END_POINT_API_SIMONAS + `candidates/status`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: SIMONAS_FILTER_STATUS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: SIMONAS_FILTER_STATUS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({

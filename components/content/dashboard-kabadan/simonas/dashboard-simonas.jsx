@@ -22,8 +22,8 @@ import {
 
 const DashboardSimonas = ({ token }) => {
   const dispatch = useDispatch();
-  const MapDigitalent = dynamic(
-    () => import("../component/map-digitalent.component"),
+  const MapSimonas = dynamic(
+    () => import("../component/map-simonas.component"),
     { ssr: false }
   );
 
@@ -290,18 +290,24 @@ const DashboardSimonas = ({ token }) => {
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Lowongan Pekerjaan
                 </p>
-                <ListCardInfo data={dataCompanyAmount} />
+                {loadingCompanyAmount ? (
+                  <LoadingDashboard loading={loadingCompanyAmount} />
+                ) : (
+                  <>
+                    <ListCardInfo data={dataCompanyAmount} />
 
-                <PaginationDashboard
-                  total={companyAmount?.data?.total}
-                  perPage={companyAmount?.data?.perPage}
-                  title="Pekerjaan"
-                  activePage={pageCompanyAmount}
-                  funcPagination={(value) => {
-                    setPageCompanyAmount(value);
-                    dispatch(getSimonasCompanyAmount(token, value));
-                  }}
-                />
+                    <PaginationDashboard
+                      total={companyAmount?.data?.total}
+                      perPage={companyAmount?.data?.perPage}
+                      title="Pekerjaan"
+                      activePage={pageCompanyAmount}
+                      funcPagination={(value) => {
+                        setPageCompanyAmount(value);
+                        dispatch(getSimonasCompanyAmount(token, value));
+                      }}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -311,17 +317,23 @@ const DashboardSimonas = ({ token }) => {
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Proyek
                 </p>
-                <ListCardInfo data={dataProjectAmount} />
-                <PaginationDashboard
-                  total={projectAmount?.data?.total}
-                  perPage={projectAmount?.data?.perPage}
-                  title="Proyek"
-                  activePage={pageCompanyProject}
-                  funcPagination={(value) => {
-                    setPageCompanyProject(value);
-                    dispatch(getSimonasProjectAmount(token, value));
-                  }}
-                />
+                {loadingProjectAmount ? (
+                  <LoadingDashboard loading={loadingProjectAmount} />
+                ) : (
+                  <>
+                    <ListCardInfo data={dataProjectAmount} />
+                    <PaginationDashboard
+                      total={projectAmount?.data?.total}
+                      perPage={projectAmount?.data?.perPage}
+                      title="Proyek"
+                      activePage={pageCompanyProject}
+                      funcPagination={(value) => {
+                        setPageCompanyProject(value);
+                        dispatch(getSimonasProjectAmount(token, value));
+                      }}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -356,15 +368,24 @@ const DashboardSimonas = ({ token }) => {
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Pelamar Kerja
                 </p>
-                <ListCardInfo data={dataApplierAmountJob} />
+                {loadingApplierAmountJob ? (
+                  <LoadingDashboard loading={loadingApplierAmountJob} />
+                ) : (
+                  <>
+                    <ListCardInfo data={dataApplierAmountJob} />
 
-                <PaginationDashboard
-                  total={applierAmountJob?.data?.total}
-                  perPage={applierAmountJob?.data?.perPage}
-                  title="Pekerjaan"
-                  activePage={1}
-                  funcPagination={(value) => {}}
-                />
+                    <PaginationDashboard
+                      total={applierAmountJob?.data?.total}
+                      perPage={applierAmountJob?.data?.perPage}
+                      title="Pekerjaan"
+                      activePage={pageApplierJob}
+                      funcPagination={(value) => {
+                        setPageApplierJob(value);
+                        dispatch(getSimonasApplierAmountJob(token, value));
+                      }}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -374,14 +395,23 @@ const DashboardSimonas = ({ token }) => {
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Pelamar Proyek
                 </p>
-                <ListCardInfo data={dataApplierAmountProject} />
-                <PaginationDashboard
-                  total={applierAmountProject?.data?.total}
-                  perPage={applierAmountProject?.data?.perPage}
-                  title="Proyek"
-                  activePage={1}
-                  funcPagination={(value) => {}}
-                />
+                {loadingApplierAmountProject ? (
+                  <LoadingDashboard loading={loadingApplierAmountProject} />
+                ) : (
+                  <>
+                    <ListCardInfo data={dataApplierAmountProject} />
+                    <PaginationDashboard
+                      total={applierAmountProject?.data?.total}
+                      perPage={applierAmountProject?.data?.perPage}
+                      title="Proyek"
+                      activePage={pageApplierProject}
+                      funcPagination={(value) => {
+                        setPageApplierProject(value);
+                        dispatch(getSimonasApplierAmountProject(token, value));
+                      }}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -424,7 +454,7 @@ const DashboardSimonas = ({ token }) => {
             <div className="row">
               <div className="map-penyebaran col-md-12 mt-5">
                 <div id="map">
-                  <MapDigitalent />
+                  <MapSimonas />
                 </div>
               </div>
             </div>

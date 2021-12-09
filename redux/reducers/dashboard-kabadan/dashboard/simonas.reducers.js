@@ -41,6 +41,17 @@ import {
   SIMONAS_APPLIER_EDUCATION_PROJECT_REQUEST,
   SIMONAS_APPLIER_EDUCATION_PROJECT_SUCCESS,
   SIMONAS_APPLIER_EDUCATION_PROJECT_FAIL,
+  // REGION PELAMAR
+  SIMONAS_REGION_APPLIER_REQUEST,
+  SIMONAS_REGION_APPLIER_SUCCESS,
+  SIMONAS_REGION_APPLIER_FAIL,
+  // DATA FILTER
+  SIMONAS_FILTER_YEAR_REQUEST,
+  SIMONAS_FILTER_YEAR_SUCCESS,
+  SIMONAS_FILTER_YEAR_FAIL,
+  SIMONAS_FILTER_STATUS_REQUEST,
+  SIMONAS_FILTER_STATUS_SUCCESS,
+  SIMONAS_FILTER_STATUS_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/dashboard-kabadan/dashboard/simonas.type";
 
@@ -424,6 +435,105 @@ export const simonasApplierEducationProjectReducer = (
       };
 
     case SIMONAS_APPLIER_EDUCATION_PROJECT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const simonasRegionApplierReducer = (
+  state = { regionApplier: [] },
+  action
+) => {
+  switch (action.type) {
+    case SIMONAS_REGION_APPLIER_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case SIMONAS_REGION_APPLIER_SUCCESS:
+      return {
+        loading: false,
+        regionApplier: action.payload.data,
+      };
+
+    case SIMONAS_REGION_APPLIER_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const simonasFilterYearReducer = (
+  state = { filterYear: [] },
+  action
+) => {
+  switch (action.type) {
+    case SIMONAS_FILTER_YEAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case SIMONAS_FILTER_YEAR_SUCCESS:
+      return {
+        loading: false,
+        filterYear: action.payload.data,
+      };
+
+    case SIMONAS_FILTER_YEAR_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const simonasFilterStatusReducer = (
+  state = { filterStatus: [] },
+  action
+) => {
+  switch (action.type) {
+    case SIMONAS_FILTER_STATUS_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case SIMONAS_FILTER_STATUS_SUCCESS:
+      return {
+        loading: false,
+        filterStatus: action.payload.data,
+      };
+
+    case SIMONAS_FILTER_STATUS_FAIL:
       return {
         loading: false,
         error: action.payload,

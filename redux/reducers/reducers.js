@@ -44,6 +44,9 @@ import {
   simonasApplierGenderReducer,
   simonasApplierEducationJobReducer,
   simonasApplierEducationProjectReducer,
+  simonasRegionApplierReducer,
+  simonasFilterYearReducer,
+  simonasFilterStatusReducer,
 } from "./dashboard-kabadan/dashboard/simonas.reducers";
 // DATA PESERTA
 import {
@@ -632,6 +635,9 @@ const reducer = combineReducers({
   simonasApplierGender: simonasApplierGenderReducer,
   simonasApplierEducationJob: simonasApplierEducationJobReducer,
   simonasApplierEducationProject: simonasApplierEducationProjectReducer,
+  simonasRegionApplier: simonasRegionApplierReducer,
+  simonasFilterYear: simonasFilterYearReducer,
+  simonasFilterStatus: simonasFilterStatusReducer,
   // END DASHBOARD KABADAN
 
   // PUBLIKASI

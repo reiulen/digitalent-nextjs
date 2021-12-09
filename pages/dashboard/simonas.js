@@ -16,6 +16,9 @@ import {
   getSimonasApplierGender,
   getSimonasApplierEducationJob,
   getSimonasApplierEducationProject,
+  getSimonasRegionApplier,
+  getSimonasFilterYear,
+  getSimonasFilterStatus,
 } from "../../redux/actions/dashboard-kabadan/dashboard/simonas.actions";
 import { getDigitalentTotalPengguna } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 
@@ -30,7 +33,7 @@ export default function DashboardSimonasPage(props) {
   const MyMap = dynamic(
     () =>
       import(
-        "../../components/content/dashboard-kabadan/component/map-digitalent.component"
+        "../../components/content/dashboard-kabadan/component/map-simonas.component"
       ),
     { ssr: false }
   );
@@ -98,6 +101,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
       await store.dispatch(
         getSimonasApplierEducationProject(session.user.user.data.token)
+      );
+      await store.dispatch(
+        getSimonasRegionApplier(session.user.user.data.token)
+      );
+      await store.dispatch(getSimonasFilterYear(session.user.user.data.token));
+      await store.dispatch(
+        getSimonasFilterStatus(session.user.user.data.token)
       );
 
       return {
