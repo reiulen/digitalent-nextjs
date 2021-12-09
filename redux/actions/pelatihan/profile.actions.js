@@ -279,7 +279,9 @@ export const getProfilePekerjaan = (token) => async (dispatch) => {
       type: GET_PEKERJAAN_SUCCESS,
       payload: data,
     });
+    return data;
   } catch (error) {
+    console.log(error, "ini error");
     dispatch({
       type: GET_PEKERJAAN_FAIL,
       payload: error.response.data.message,
@@ -333,9 +335,8 @@ export const getDataRefPekerjaan = (token) => async (dispatch) => {
     const { data } = await axios.get(link, config);
     dispatch({
       type: GET_REF_PEKERJAAN_SUCCESS,
-      payload: data
+      payload: data,
     });
-
   } catch (error) {
     dispatch({
       type: GET_REF_PEKERJAAN_FAIL,

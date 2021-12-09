@@ -18,7 +18,7 @@ const StatistikWrapper = ({ title, funcFilterYear }) => {
             className="border-0 p-0"
           >
             {beasiswaYear &&
-              beasiswaYear.map((row, i) => <option value={row}>{row}</option>)}
+              beasiswaYear.map((row, i) => <option key={i} value={row}>{row}</option>)}
           </select>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,11 +16,9 @@ import LoadingTable from "../../../../components/LoadingTable";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
-
   const { error: errorDashboard, dataDashboard } = useSelector(
     (state) => state.dashboardPeserta
   );
-
   // useEffect(() => {
   //   if (!success) {
   //     router.push("/peserta/wizzard");
@@ -144,9 +142,9 @@ const Dashboard = ({ session, success }) => {
   }, []);
 
   return (
-    <>
+    <Fragment>
       <PesertaWrapper padding={"10"}>
-        <Row className="mx-1">
+        <Row className="mx-1 mt-n14 mt-md-0">
           <CardPill
             background="bg-extras"
             backgroundImg="new-duplicate.svg"
@@ -230,8 +228,8 @@ const Dashboard = ({ session, success }) => {
         <Row className="mx-1">
           {dataDashboard &&
             dataDashboard?.pelatihan.pelatihan_berjalan.length === 0 && (
-              <Col md={6} className="mb-4 px-2">
-                <Card className="rounded-xl h-100">
+              <Col md={6} className="mb-4 px-2 ">
+                <Card className="rounded-xl h-100 ">
                   <Card.Body>
                     <Card.Title>
                       <p className={style.card_title}>Pelatihan Terkini</p>
@@ -286,11 +284,12 @@ const Dashboard = ({ session, success }) => {
                           `/detail/pelatihan/${dataDashboard?.pelatihan.pelatihan_berjalan.id}?akademiId=${dataDashboard.pelatihan.pelatihan_berjalan.akademi_id}`
                         );
                       }}
+                      style={{ cursor: "pointer" }}
                     >
                       <Image
                         className={`${style.image_dashboard}`}
                         src={
-                          !pelatihan?.pelatihan_berjalan?.gambar
+                          !dataDashboard?.pelatihan?.pelatihan_berjalan?.gambar
                             ? `/assets/media/default-card.png`
                             : dataDashboard?.pelatihan.pelatihan_berjalan
                                 .gambar &&
@@ -369,7 +368,7 @@ const Dashboard = ({ session, success }) => {
                             <span
                               className={`${style.text_date_register} pl-2`}
                             >
-                              Registrasi :{" "}
+                              Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
                                   .pendaftaran_mulai
@@ -385,9 +384,13 @@ const Dashboard = ({ session, success }) => {
                           <div className="date d-flex align-items-center align-middle">
                             <i className="ri-history-fill"></i>
                             <span
-                              className={`${style.text_date_register} pl-2`}
+                              className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
-                              Status : {pelatihan?.pelatihan_berjalan.status}
+                              Status :{" "}
+                              {
+                                dataDashboard?.pelatihan?.pelatihan_berjalan
+                                  .status
+                              }
                             </span>
                           </div>
                         </div>
@@ -454,6 +457,7 @@ const Dashboard = ({ session, success }) => {
                       `/detail/pelatihan/${dataDashboard.pelatihan.pelatihan_selesi.id}?akademiId=${dataDashboard.pelatihan.pelatihan_selesi.akademi_id}`
                     );
                   }}
+                  style={{ cursor: "pointer" }}
                 >
                   <Card.Body>
                     <Card.Title>
@@ -534,7 +538,7 @@ const Dashboard = ({ session, success }) => {
                             <span
                               className={`${style.text_date_register} pl-2`}
                             >
-                              Registrasi :{" "}
+                              Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
                                   .pendaftaran_mulai
@@ -550,7 +554,7 @@ const Dashboard = ({ session, success }) => {
                           <div className="date d-flex align-items-center align-middle">
                             <i className="ri-history-fill"></i>
                             <span
-                              className={`${style.text_date_register} pl-2`}
+                              className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
                               Status :{" "}
                               {dataDashboard?.pelatihan.pelatihan_selesi.status}
@@ -721,8 +725,15 @@ const Dashboard = ({ session, success }) => {
                           >
                             {row.name}
                           </p>
-                          <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                            {row?.study[0]?.name}
+                          <p
+                            style={{
+                              fontSize: "14px",
+                              color: "#6C6C6C",
+                              maxWidth: "14rem",
+                            }}
+                            className="text-truncate"
+                          >
+                            {row?.study[0]?.name}{" "}
                           </p>
                         </div>
 
@@ -747,7 +758,7 @@ const Dashboard = ({ session, success }) => {
           </Col>
         </Row>
       </PesertaWrapper>
-    </>
+    </Fragment>
   );
 };
 

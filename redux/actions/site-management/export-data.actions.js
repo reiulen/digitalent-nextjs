@@ -123,12 +123,16 @@ export const getDetailsExportData =
     }
   };
 
-export const postFilterExportData = (token, datas) => async (dispatch) => {
+export const postFilterExportData = (token, datas, page = 1, limit = 5) => async (dispatch) => {
   try {
     dispatch({
       type: POST_EXPORT_DATA_REQUEST,
     });
     const config = {
+      params: {
+        page, 
+        limit
+      },
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -136,17 +140,30 @@ export const postFilterExportData = (token, datas) => async (dispatch) => {
 
     let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/store`;
 
-    const { data } = await axios.post(link, datas, config);
-
+    const  data  = await axios.post(link, datas, config);
+    
+    
     if(datas.button_type === 1){
-      Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-        router.push("/site-management/export-data");
-      });
+      var url = data.config.url;
+      fetch(url, {
+        body: JSON.stringify(datas),
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: "POST",
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          var _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus();
+        })
+        .catch((error) => {
+        });
     }
 
     dispatch({
       type: POST_EXPORT_DATA_SUCCESS,
-      payload: data,
+      payload: data.data,
     });
   } catch (error) {
     Swal.fire("Ooppss", JSON.stringify(error.message), "error").then(() => {

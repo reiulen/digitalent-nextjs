@@ -3,7 +3,7 @@ import React, { Fragment, useState } from "react";
 import CustomButton from "../../../content/peserta/riwayat-pelatihan/card/Buttons/CustomButton";
 import axios from "axios";
 import { Col, Row, Card, Button, Modal } from "react-bootstrap";
-
+import Cookies from "js-cookie";
 export default function ButtonStatusPeserta({ data, token }) {
   const router = useRouter();
   const [imageSertifikasi, setImageSertifikasi] = useState();

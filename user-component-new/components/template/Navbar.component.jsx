@@ -46,6 +46,11 @@ const Navigationbar = ({ session }) => {
   );
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
+  const [menu, setMenu] = useState(
+    localStorage.getItem("menu")
+      ? JSON.parse(localStorage.getItem("menu"))
+      : null
+  );
 
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
@@ -53,13 +58,12 @@ const Navigationbar = ({ session }) => {
     if (!session) {
       return;
     }
-    if (session) {
+    if (session && session.roles[0] == "user") {
       if (
         !dataPribadi || // 👈 null and undefined check
         (dataPribadi && Object.keys(dataPribadi).length === 0)
       ) {
         signOut();
-        // console.log("masuk sini");
       }
     }
 
@@ -102,9 +106,27 @@ const Navigationbar = ({ session }) => {
     } catch (error) {}
   };
 
+  const getMenu = async (token) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      localStorage.setItem("menu", JSON.stringify(data.data));
+    } catch (error) {}
+  };
+
   useEffect(() => {
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
+    }
+    if (!localStorage.getItem("menu")) {
+      getMenu();
     }
     if (localStorage.getItem("navbar") === "1") {
       setWarna("primary");
@@ -346,6 +368,32 @@ const Navigationbar = ({ session }) => {
                     Kontak
                   </NavDropdown.Item>
                 </Link>
+                <div className="btn-group dropright w-100">
+                  <a
+                    type="button"
+                    className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Lainnya
+                  </a>
+                  <div className="dropdown-menu ml-3">
+                    {menu
+                      ? menu.map((item, index) => {
+                          return (
+                            <Link href={"/lainnya/" + item.url} key={index}>
+                              <a className="dropdown-item navdropdown-child">
+                                {item.name}
+                              </a>
+                            </Link>
+                          );
+                        })
+                      : null}
+
+                   
+                  </div>
+                </div>
               </NavDropdown>
             </div>
             {/* END MENU */}
@@ -688,6 +736,42 @@ const Navigationbar = ({ session }) => {
               </Col>
               <Col className="mb-8" sm={12}>
                 <Link href="/kontak">Kontak</Link>
+              </Col>
+              <Col sm={12}>
+                <Dropdown color="white">
+                  <Dropdown.Toggle
+                    id="dropdown-basic"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "transparent",
+                      color: "#6C6C6C",
+                      fontSize: "14px",
+                    }}
+                    className="p-0"
+                  >
+                    <div className="d-flex align-items-center justify-content-between p-0 m-0">
+                      Lainnya
+                      <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
+                    </div>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
+
+                    {menu ? menu.map((item, index) => {
+                      return  <Fragment key={index}>
+                      <div
+                        onClick={() => {
+                          router.push("/lainnya/" + item.url);
+                        }}
+                        className="p-4 fz-12"
+                      >
+                        {item.name}
+                      </div>
+                      <hr className="w-100 p-0 m-0" />
+                    </Fragment>
+                    }) : null}
+                   
+                  </Dropdown.Menu>
+                </Dropdown>
               </Col>
             </Row>
             <hr />
