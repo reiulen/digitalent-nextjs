@@ -218,12 +218,13 @@ export const detailTriviaQuestionDetail =
   };
 
 export const updateTriviaQuestionDetail =
-  (id, dataBankSoal, token) => async (dispatch) => {
+  (id, dataBankSoal, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({ type: UPDATE_TRIVIA_QUESTION_DETAIL_REQUEST });
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.post(

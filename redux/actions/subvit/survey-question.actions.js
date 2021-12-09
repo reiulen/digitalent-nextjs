@@ -67,7 +67,7 @@ export const getAllSurveyQuestionBanks =
   };
 
 export const newSurveyQuestionBanks =
-  (subtanceData, token) => async (dispatch) => {
+  (subtanceData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_SURVEY_QUESTION_BANKS_REQUEST,
@@ -83,6 +83,7 @@ export const newSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.post(
@@ -159,7 +160,7 @@ export const getOneSurveyQuestionBanks =
   };
 
 export const updateSurveyQuestionBanks =
-  (id, substanceQuestionData, token) => async (dispatch) => {
+  (id, substanceQuestionData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SURVEY_QUESTION_BANKS_REQUEST,
@@ -167,6 +168,7 @@ export const updateSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.post(
@@ -187,33 +189,35 @@ export const updateSurveyQuestionBanks =
     }
   };
 
-export const deleteSurveyQuestionBanks = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_SURVEY_QUESTION_BANKS_REQUEST });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`,
-      config
-    );
+export const deleteSurveyQuestionBanks =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_SURVEY_QUESTION_BANKS_REQUEST });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
+      const { data } = await axios.delete(
+        process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_SURVEY_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_SURVEY_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updateSurveyQuestionBanksPublish =
-  (subtanceData, id, token) => async (dispatch) => {
+  (subtanceData, id, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
@@ -229,6 +233,7 @@ export const updateSurveyQuestionBanksPublish =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.post(

@@ -19,7 +19,7 @@ import LoadingPage from "../../../../LoadingPage";
 import styles from "./step.module.css";
 import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -75,7 +75,9 @@ const StepTwo = ({ token }) => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateTriviaQuestionBanksPublish(data, id, token));
+      dispatch(
+        updateTriviaQuestionBanksPublish(data, id, token, tokenPermission)
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -102,7 +104,9 @@ const StepTwo = ({ token }) => {
         status: status,
         questions_to_share: jumlah_soal,
       };
-      dispatch(updateTriviaQuestionBanksPublish(data, id, token));
+      dispatch(
+        updateTriviaQuestionBanksPublish(data, id, token, tokenPermission)
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

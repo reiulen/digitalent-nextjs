@@ -155,7 +155,7 @@ export const getOneTriviaQuestionBanks =
   };
 
 export const updatewTriviaQuestionBanks =
-  (id, triviaData, token) => async (dispatch) => {
+  (id, triviaData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_TRIVIA_QUESTION_BANKS_REQUEST,
@@ -163,6 +163,7 @@ export const updatewTriviaQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.post(
@@ -183,32 +184,34 @@ export const updatewTriviaQuestionBanks =
     }
   };
 
-export const deleteTriviaQuestionBanks = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_TRIVIA_QUESTION_BANKS_REQUEST });
+export const deleteTriviaQuestionBanks =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_TRIVIA_QUESTION_BANKS_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_SUBVIT + `api/trivia-question-banks/${id}`,
-      config
-    );
+      const { data } = await axios.delete(
+        process.env.END_POINT_API_SUBVIT + `api/trivia-question-banks/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DELETE_TRIVIA_QUESTION_BANKS_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_TRIVIA_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DELETE_TRIVIA_QUESTION_BANKS_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_TRIVIA_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updateTriviaQuestionBanksPublish =
   (subtanceData, id, token, tokenPermission) => async (dispatch) => {

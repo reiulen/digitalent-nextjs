@@ -11,7 +11,10 @@ export default function ReportSurveyPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ReportSurvey token={session.token} />
+        <ReportSurvey
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -56,7 +59,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Report Survey - Subvit" },
+        props: { session, title: "Report Survey - Subvit", permission },
       };
     }
 );
