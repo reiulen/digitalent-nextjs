@@ -19,6 +19,8 @@ import {
   getSimonasRegionApplier,
   getSimonasFilterYear,
   getSimonasFilterStatus,
+  getSimonasProvinsiApplier,
+  getSimonasProvinsiApplierRequired,
 } from "../../redux/actions/dashboard-kabadan/dashboard/simonas.actions";
 import { getDigitalentTotalPengguna } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 
@@ -108,6 +110,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getSimonasFilterYear(session.user.user.data.token));
       await store.dispatch(
         getSimonasFilterStatus(session.user.user.data.token)
+      );
+      await store.dispatch(
+        getSimonasProvinsiApplier(session.user.user.data.token)
+      );
+      await store.dispatch(
+        getSimonasProvinsiApplierRequired(session.user.user.data.token)
       );
 
       return {

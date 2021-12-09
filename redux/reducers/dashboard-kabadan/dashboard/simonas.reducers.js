@@ -52,6 +52,13 @@ import {
   SIMONAS_FILTER_STATUS_REQUEST,
   SIMONAS_FILTER_STATUS_SUCCESS,
   SIMONAS_FILTER_STATUS_FAIL,
+  // PROVINSI APPLIER SIMONAS
+  SIMONAS_PROVINSI_APPLIER_REQUEST,
+  SIMONAS_PROVINSI_APPLIER_SUCCESS,
+  SIMONAS_PROVINSI_APPLIER_FAIL,
+  SIMONAS_PROVINSI_APPLIER_REQUITED_REQUEST,
+  SIMONAS_PROVINSI_APPLIER_REQUITED_SUCCESS,
+  SIMONAS_PROVINSI_APPLIER_REQUITED_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/dashboard-kabadan/dashboard/simonas.type";
 
@@ -534,6 +541,72 @@ export const simonasFilterStatusReducer = (
       };
 
     case SIMONAS_FILTER_STATUS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const simonasProvinsiApplierReducer = (
+  state = { provinceApplier: [] },
+  action
+) => {
+  switch (action.type) {
+    case SIMONAS_PROVINSI_APPLIER_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case SIMONAS_PROVINSI_APPLIER_SUCCESS:
+      return {
+        loading: false,
+        provinceApplier: action.payload.data,
+      };
+
+    case SIMONAS_PROVINSI_APPLIER_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const simonasProvinsiApplierRequiredReducer = (
+  state = { provinceApplierRequited: [] },
+  action
+) => {
+  switch (action.type) {
+    case SIMONAS_PROVINSI_APPLIER_REQUITED_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case SIMONAS_PROVINSI_APPLIER_REQUITED_SUCCESS:
+      return {
+        loading: false,
+        provinceApplierRequited: action.payload.data,
+      };
+
+    case SIMONAS_PROVINSI_APPLIER_REQUITED_FAIL:
       return {
         loading: false,
         error: action.payload,

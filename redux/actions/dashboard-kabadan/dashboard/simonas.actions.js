@@ -52,6 +52,13 @@ import {
   SIMONAS_FILTER_STATUS_REQUEST,
   SIMONAS_FILTER_STATUS_SUCCESS,
   SIMONAS_FILTER_STATUS_FAIL,
+  // PROVINSI APPLIER SIMONAS
+  SIMONAS_PROVINSI_APPLIER_REQUEST,
+  SIMONAS_PROVINSI_APPLIER_SUCCESS,
+  SIMONAS_PROVINSI_APPLIER_FAIL,
+  SIMONAS_PROVINSI_APPLIER_REQUITED_REQUEST,
+  SIMONAS_PROVINSI_APPLIER_REQUITED_SUCCESS,
+  SIMONAS_PROVINSI_APPLIER_REQUITED_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/dashboard-kabadan/dashboard/simonas.type";
 import axios from "axios";
@@ -465,6 +472,67 @@ export const getSimonasFilterStatus = (token) => async (dispatch) => {
     });
   }
 };
+
+export const getSimonasProvinsiApplier =
+  (token, page = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: SIMONAS_PROVINSI_APPLIER_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_SIMONAS + `jobs/applier/count/province`;
+      if (page) link = link.concat(`?page=${page}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: SIMONAS_PROVINSI_APPLIER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: SIMONAS_PROVINSI_APPLIER_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+export const getSimonasProvinsiApplierRequired =
+  (token, page = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: SIMONAS_PROVINSI_APPLIER_REQUITED_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_SIMONAS +
+        `jobs/applier/count/province?status=reqruited`;
+      if (page) link = link.concat(`&page=${page}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: SIMONAS_PROVINSI_APPLIER_REQUITED_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: SIMONAS_PROVINSI_APPLIER_REQUITED_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({
