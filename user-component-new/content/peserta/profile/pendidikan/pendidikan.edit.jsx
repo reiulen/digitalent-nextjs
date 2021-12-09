@@ -38,7 +38,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const { error: errorPendidikanData, pendidikan } = useSelector(
     (state) => state.dataPendidikan
   );
-
   const {
     error: errorUpdateData,
     loading,
@@ -51,7 +50,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       label: pendidikan.jenjang,
     }) || {
       value: "",
-      label: "",
+      label: "Silahkan Pilih Jenjang Pendidikan",
     }
   );
 

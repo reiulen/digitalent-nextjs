@@ -24,9 +24,8 @@ export default function RiwayatPelatihanDetail({ session }) {
   const router = useRouter();
   const [description, setDescription] = useState(data?.deskripsi || "-");
   const [finalDescription, setFinalDescription] = useState();
-  const dateFrom = moment(data?.pendaftaran_mulai).format("LL") || "-";
-  const dateTo = moment(data?.pendaftaran_selesai).format("LL") || "-";
-
+  const dateFrom = moment(data?.pelatihan_mulai).format("LL") || "-";
+  const dateTo = moment(data?.pelatihan_selesai).format("LL") || "-";
   useEffect(() => {
     let newText = description.split(" ");
     let test = [];
@@ -51,7 +50,6 @@ export default function RiwayatPelatihanDetail({ session }) {
   }, []);
 
   const [truncate, setTruncate] = useState(true);
-
   return (
     <PesertaWrapper>
       <Col lg={12} className="px-0">
@@ -59,7 +57,7 @@ export default function RiwayatPelatihanDetail({ session }) {
           <Row className="p-10 m-0">
             <Col md={9} className="d-flex align-items-start">
               <h1
-                className="font-weight-bolder my-0"
+                className="font-weight-bolder my-0 max-w-sm-100 max-w-200px mb-5 mb-md-0"
                 style={{ fontSize: "32px" }}
               >
                 {data?.name || "-"}
@@ -178,7 +176,7 @@ export default function RiwayatPelatihanDetail({ session }) {
                   <div className="d-flex">
                     <img
                       src={
-                        !data?.gambar_mitra || data?.logo
+                        !data?.gambar_mitra && data?.logo
                           ? "/assets/media/default-card.png"
                           : data?.logo
                           ? data?.file_path + data?.logo

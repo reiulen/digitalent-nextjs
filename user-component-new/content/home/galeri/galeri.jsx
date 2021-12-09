@@ -116,16 +116,25 @@ const Galeri = () => {
     }
 
     const handleFilterKategori = (str) => {
-        if (str === "") {
-            setActiveTitle("Galeri Terupdate dan Terkini")
-        }
+        setActiveTitle("Galeri Terupdate dan Terkini")
         setKategoriGaleri(str)
 
-        dispatch(getAllBerandaGaleri(
-            activePage,
-            str,
-            tag
-        ))
+        if (str.includes("&")){
+            let text = str.replace("&", "%26")
+            dispatch(getAllBerandaGaleri(
+                activePage,
+                text,
+                tag
+            ))
+            
+        } else {
+            dispatch(getAllBerandaGaleri(
+                activePage,
+                str,
+                tag
+            ))
+        }
+        
     }
 
     const handleKategoriToShow = () => {
@@ -194,19 +203,6 @@ const Galeri = () => {
         return result;
     };
 
-    const handleCategoryToTrim = (str) => {
-        let result = null
-
-        if (str.length > categoryToTrim) {
-            result = str.slice(0, categoryToTrim) + "..."
-
-        } else {
-            result = str
-        }
-
-        return result
-    }
-
     const handleDescToTrim = (str) => {
         let result = null
 
@@ -230,7 +226,6 @@ const Galeri = () => {
                 <SubHeaderComponent
                     data={[{ link: router.asPath, name: "Galeri" }]}
                 />
-
                 <div className="row flex-column">
                     {/* Header */}
                     <div className="col-12 mt-5">
@@ -244,21 +239,24 @@ const Galeri = () => {
 
                     {/* Filter Button */}
                     {
-                        kategori ?
+                        kategoriToShow ?
                             <div
                                 className="col-12 pl-0 ml-4 mt-10 mb-5"
                             >
                                 {
                                     showArrow === null ? <div className="col-12"><PulseLoaderRender /></div> :
                                         showArrow === true ?
-                                            <div style={{ marginLeft: '-17px' }}>
+                                            <div 
+                                                style={{ marginLeft: '-17px' }} 
+                                            >
                                                 <Splide
                                                     options={{
                                                         arrows: true,
-                                                        pagination: true,
+                                                        pagination: false,
                                                         gap: "1rem",
                                                         drag: "free",
                                                         perPage: 5,
+                                                        autoWidth: true,
                                                         breakpoints: {
                                                             830: {
                                                                 perPage: 2,
@@ -272,7 +270,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                    style={{ cursor: "pointer", height: "40px" }}
+                                                                    style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                     onClick={() => handleFilterKategori("")}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -284,7 +282,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                    style={{ cursor: "pointer", height: "40px" }}
+                                                                    style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                     onClick={() => handleFilterKategori("")}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -302,7 +300,7 @@ const Galeri = () => {
                                                                         <SplideSlide>
                                                                             <div
                                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                                style={{ cursor: "pointer", height: "40px" }}
+                                                                                style={{ cursor: "pointer", height: "40px" , minWidth:"236px"}}
                                                                                 onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
@@ -315,7 +313,7 @@ const Galeri = () => {
                                                                         <SplideSlide>
                                                                             <div
                                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                                style={{ cursor: "pointer", height: "40px" }}
+                                                                                style={{ cursor: "pointer", height: "40px" , minWidth:"236px"}}
                                                                                 onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
@@ -340,19 +338,21 @@ const Galeri = () => {
                                                     gap: "1rem",
                                                     drag: "free",
                                                     perPage: 5,
+                                                    autoWidth: true,
                                                     breakpoints: {
                                                         830: {
                                                             perPage: 2,
                                                         },
                                                     }
                                                 }}
+                                                className="ml-0"
                                             >
                                                 {
                                                     kategoriGaleri === "" ?
                                                         <SplideSlide>
                                                             <div
                                                                 className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                style={{ cursor: "pointer", height: "40px" }}
+                                                                style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                 onClick={() => handleFilterKategori("")}
                                                             >
                                                                 <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -364,7 +364,7 @@ const Galeri = () => {
                                                         <SplideSlide>
                                                             <div
                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                style={{ cursor: "pointer", height: "40px" }}
+                                                                style={{ cursor: "pointer", height: "40px" , minWidth:"236px"}}
                                                                 onClick={() => handleFilterKategori("")}
                                                             >
                                                                 <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -382,7 +382,7 @@ const Galeri = () => {
                                                                     <SplideSlide>
                                                                         <div
                                                                             className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                            style={{ cursor: "pointer", height: "40px" }}
+                                                                            style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                             onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
@@ -395,7 +395,7 @@ const Galeri = () => {
                                                                     <SplideSlide>
                                                                         <div
                                                                             className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                            style={{ cursor: "pointer", height: "40px" }}
+                                                                            style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
                                                                             onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
@@ -432,9 +432,18 @@ const Galeri = () => {
                             <div className="row d-flex justify-content-evenly flex-wrap">
                                 {
                                     galeri && galeri.gallery && galeri.gallery.length === 0 ?
-                                        <div className="col-12 d-flex justify-content-center my-5">
-                                            <h1 className="font-weight-bolder">
-                                                Galeri Tidak Tersedia
+                                        <div className="col-12 d-flex flex-column justify-content-center my-5">
+                                            <Image
+                                                src={`/assets/media/gambar-belum-tersedia-page.svg`}
+                                                width={525}
+                                                height={350}
+                                                alt="Tidak Tersedia"
+                                            />
+                                            <h1 
+                                                className="font-weight-bolder mt-15 text-center fw-600" 
+                                                style={{fontFamily:"Poppins", fontSize:"24px"}}
+                                            >
+                                                Tidak ada galeri terkait "{kategoriGaleri}"
                                             </h1>
                                         </div>
                                         :

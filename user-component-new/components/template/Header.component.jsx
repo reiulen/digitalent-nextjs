@@ -84,7 +84,11 @@ const Header = () => {
           }
         >
           <Row>
-            <Col sm={3} hidden={router.pathname.includes(routerPath)}>
+            <Col
+              className="d-lg-block d-none"
+              sm={3}
+              hidden={router.pathname.includes(routerPath)}
+            >
               <center>
                 <Image
                   src={`${
@@ -105,7 +109,10 @@ const Header = () => {
                 </p>
               </center>
             </Col>
-            <Col sm={router.pathname.includes(routerPath) ? 12 : 9}>
+            <Col
+              className="mx-lg-0 px-11 px-lg-8"
+              lg={router.pathname.includes(routerPath) ? 12 : 9}
+            >
               <Card
                 className={styles.cardBody}
                 hidden={router.pathname.includes(routerPath)}
