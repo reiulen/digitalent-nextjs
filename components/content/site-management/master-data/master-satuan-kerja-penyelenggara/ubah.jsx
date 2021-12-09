@@ -29,34 +29,35 @@ const TambahApi = ({ token }) => {
   const allProvincesSite = useSelector((state) => state.allProvincesSite);
   let sortirOptionTempProvList = allProvincesSite?.data
 
-  // const optionTempProvList = [];
-  // if (sortirOptionTempProvList) {
-  //   for (let index = 0; index < sortirOptionTempProvList.length; index++) {
-  //     let val = {
-  //       id: sortirOptionTempProvList[index].id,
-  //       label: sortirOptionTempProvList[index].label,
-  //     };
-  //     optionTempProvList.push(val);
-  //   }
-  // }
+  const [changeProvince, setChangeProvince] = useState(false)
 
-
-  // let province = optionTempProvList.filter((items, i) => {
-  //   // for (let j = 0; j < optionTempProv.length; j++) {
-  //   //   if (items.label !== optionTempProv[j].label) {
-  //   //     return { ...items }
-  //   //   }
-  //   // }
-  //   if (items.label !== optionTempProv[0].label) {
-  //     return { ...items }
-  //   }
-  // })
 
   let optionTempProvList = sortirOptionTempProvList.map((items) => {
     return { ...items, value: items.label }
   })
 
+  const optionTempProvList = [];
+  if (sortirOptionTempProvList) {
+    for (let index = 0; index < sortirOptionTempProvList.length; index++) {
+      let val = {
+        id: sortirOptionTempProvList[index].id,
+        label: sortirOptionTempProvList[index].label,
+      };
+      optionTempProvList.push(val);
+    }
+  }
 
+
+  let province = optionTempProvList.filter((items, i) => {
+    // for (let j = 0; j < optionTempProv.length; j++) {
+    //   if (items.label !== optionTempProv[j].label) {
+    //     return { ...items }
+    //   }
+    // }
+    if (items.label !== optionTempProv[0].label) {
+      return { ...items }
+    }
+  })
 
   const [valueProvinsi, setValueProvinsi] = useState([]);
   const [nameUnitWork, setNameUnitWork] = useState(detailUnitWork.unitWork.name);
