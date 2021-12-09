@@ -141,7 +141,6 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
-  console.log(dataDashboard.pelatihan.pelatihan_selesi);
   return (
     <Fragment>
       <PesertaWrapper padding={"10"}>

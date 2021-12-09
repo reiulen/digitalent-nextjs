@@ -29,33 +29,7 @@ export default function RiwayatPelatihanDetail(props) {
     });
     return data;
   };
-  // const handleDownload = async () => {
-  //   const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${data?.data_user?.nomor_registrasi}`;
-  //   const check = await axios.get(linkChecker);
-  //   console.log(check, "ini checknya");
-  //   // check udh pernah di sign apa belum?
-  //   if (!check.data.status) {
-  //     const data = await convertDivToPng(divReference.current);
-  //     if (data) {
-  //       const formData = new FormData();
-  //       formData.append("certificate", data);
-  //       console.log(data, "ini data");
 
-  //       const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${data.data_sertifikat.pelatihan.id}&nomor_registrasi=${data.data_user.nomor_registrasi}`;
-  //       const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
-  //       const a = document.createElement("a");
-  //       a.download = `Sertifikat - ${data?.data_user?.name}.png`;
-  //       a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
-  //       a.click();
-  //     }
-  //   } else {
-  //     const a = document.createElement("a");
-  //     a.download = `Sertifikat - ${data?.data_user?.name}.png`;
-  //     a.target = "_blank";
-  //     a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
-  //     a.click();
-  //   }
-  // };
   const handleDownload = async (id, noRegis, nama) => {
     const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${noRegis}`;
     try {
@@ -64,7 +38,6 @@ export default function RiwayatPelatihanDetail(props) {
         const data = await convertDivToPng(divReference.current);
         if (data) {
           try {
-            console.log("masuk data sini");
             const formData = new FormData();
             formData.append("certificate", data);
             const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
@@ -73,7 +46,7 @@ export default function RiwayatPelatihanDetail(props) {
             if (!result.data.status) {
               SweatAlert(
                 "Gagal",
-                "Harap menunggu... Sertifikat masih dalam proses pengesahan",
+                "Harap menunggu, Sertifikat masih dalam proses pengesahan",
                 "error"
               );
             } else {
@@ -84,7 +57,6 @@ export default function RiwayatPelatihanDetail(props) {
               a.click();
             }
           } catch (e) {
-            console.log(e, "ini errornya");
             SweatAlert("Gagal", e.message, "error");
           }
         }
