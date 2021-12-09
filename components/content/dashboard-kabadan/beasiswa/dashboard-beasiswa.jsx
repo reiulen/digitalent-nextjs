@@ -260,6 +260,7 @@ const DashboardBeasiswa = ({ token }) => {
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Statistik Beasiswa Dalam Negeri"}
+                  year={beasiswaYear}
                   funcFilterYear={(value) => {
                     setFilterStatistikDalam(value);
                     dispatch(getBeasiswaStatistikDalam(token, value));
@@ -297,6 +298,7 @@ const DashboardBeasiswa = ({ token }) => {
             <div className="card card-custom bg-white h-100">
               <div className="card-body py-4">
                 <StatistikWrapper
+                  year={beasiswaYear}
                   title={"Statistik Beasiswa Luar Negeri"}
                   funcFilterYear={(value) => {
                     setFilterStatistikLuar(value);
@@ -438,6 +440,7 @@ const DashboardBeasiswa = ({ token }) => {
                 <div className="card h-100">
                   <div className="card-body pb-3">
                     <StatistikWrapper
+                      year={beasiswaYear}
                       title={"Tujuan Beasiswa Dalam Negeri"}
                       funcFilterYear={(value) => {
                         setFilterUniversitasDalam(value);
@@ -481,6 +484,7 @@ const DashboardBeasiswa = ({ token }) => {
                   <div className="card-body pb-3">
                     <StatistikWrapper
                       title={"Tujuan Beasiswa Luar Negeri"}
+                      year={beasiswaYear}
                       funcFilterYear={(value) => {
                         setFilterUniversitasLuar(value);
                         dispatch(
