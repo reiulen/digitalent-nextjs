@@ -27,7 +27,7 @@ import ButtonAction from "../../../../ButtonAction";
 import styles from "../edit/step.module.css";
 import axios from "axios";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -84,22 +84,30 @@ const StepTwo = ({ token }) => {
   const [imageFileName, setImageFileName] = useState("");
 
   useEffect(() => {
-    dispatch(getAllTriviaQuestionDetail(id, token));
+    dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
     // if (error) {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      dispatch(getAllTriviaQuestionDetail(id, token));
+      dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
     }
 
     if (successImages) {
-      dispatch(getAllTriviaQuestionDetail(id, token));
+      dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
     }
 
     if (isDeleted) {
-      dispatch(getAllTriviaQuestionDetail(id, token));
+      dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
     }
-  }, [dispatch, id, successFile, successImages, isDeleted, token]);
+  }, [
+    dispatch,
+    id,
+    successFile,
+    successImages,
+    isDeleted,
+    token,
+    tokenPermission,
+  ]);
 
   const saveDraft = () => {
     let valid = true;
@@ -186,7 +194,7 @@ const StepTwo = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(importFileTriviaQuestionDetail(data, token));
+        dispatch(importFileTriviaQuestionDetail(data, token, tokenPermission));
       }
     });
   };
@@ -196,17 +204,19 @@ const StepTwo = ({ token }) => {
     data.append("trivia_question_bank_id", id);
     data.append("image_file", image_file, image_file.name);
 
-    dispatch(importImagesTriviaQuestionDetail(data, token));
+    dispatch(importImagesTriviaQuestionDetail(data, token, tokenPermission));
   };
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllTriviaQuestionDetail(id, pageNumber, token));
+    dispatch(
+      getAllTriviaQuestionDetail(id, pageNumber, token, tokenPermission)
+    );
   };
 
   const handleLimit = (val) => {
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllTriviaQuestionDetail(id, 1, val, token));
+    dispatch(getAllTriviaQuestionDetail(id, 1, val, token, tokenPermission));
   };
 
   const handleDelete = (id) => {
@@ -221,7 +231,7 @@ const StepTwo = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteTriviaQuestionDetail(id, token));
+        dispatch(deleteTriviaQuestionDetail(id, token, tokenPermission));
       }
     });
   };

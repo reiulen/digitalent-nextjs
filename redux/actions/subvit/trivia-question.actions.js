@@ -67,7 +67,7 @@ export const getAllTriviaQuestionBanks =
   };
 
 export const newTriviaQuestionBanks =
-  (triviaData, token) => async (dispatch) => {
+  (triviaData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_TRIVIA_QUESTION_BANKS_REQUEST,
@@ -75,6 +75,7 @@ export const newTriviaQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -210,7 +211,7 @@ export const deleteTriviaQuestionBanks = (id, token) => async (dispatch) => {
 };
 
 export const updateTriviaQuestionBanksPublish =
-  (subtanceData, id, token) => async (dispatch) => {
+  (subtanceData, id, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_REQUEST,
@@ -218,6 +219,7 @@ export const updateTriviaQuestionBanksPublish =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       // const config = {
