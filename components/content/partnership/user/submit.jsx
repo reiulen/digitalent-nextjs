@@ -358,7 +358,7 @@ const SubmitKerjasama = ({ token }) => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal Penandatangan
                 </label>
-                <div className="d-flex align-items-center position-relative datepicker-w w-100">
+                <div className="d-flex align-items-center position-relative datepicker-w w-100" style={{zIndex:"10"}}>
                   <DatePicker
                     className="form-search-date form-control cursor-pointer"
                     selected={endDate}
