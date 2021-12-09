@@ -427,7 +427,7 @@ const Navigationbar = ({ session }) => {
                             }
                             passHref
                           >
-                            <NavDropdown.Item className="navdropdown-child">
+                            <NavDropdown.Item className={`navdropdown-child ${el.url === "-" ? "d-none" : ""}`}>
                               {el.slug ? el.slug : el.name ? el.name : el}
                             </NavDropdown.Item>
                           </Link>

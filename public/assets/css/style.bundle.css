@@ -7409,6 +7409,7 @@ input[type="button"].btn-block {
   color: #3699ff;
   background-color: #ffffff;
   border: 1px solid #e4e6ef;
+  width: fit-content;
 }
 
 .page-link:hover {
