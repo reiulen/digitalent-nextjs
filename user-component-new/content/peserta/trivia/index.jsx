@@ -29,7 +29,7 @@ const TestSubstansi = () => {
     axios
       .get(
         process.env.END_POINT_API_SUBVIT +
-          `/api/trivia-question-bank-details/info?training_id=${
+          `api/trivia-question-bank-details/info?training_id=${
             routerTraining || pelatihanId
           }&theme_id=${routerTema || temaId}`
       )
