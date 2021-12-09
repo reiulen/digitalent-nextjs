@@ -116,12 +116,12 @@ const Navigationbar = ({ session }) => {
           },
         }
       );
-
       localStorage.setItem("menu", JSON.stringify(data.data));
     } catch (error) {}
   };
 
   useEffect(() => {
+    getMenu();
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
     }

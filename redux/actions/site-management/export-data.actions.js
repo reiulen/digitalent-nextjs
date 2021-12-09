@@ -144,21 +144,8 @@ export const postFilterExportData = (token, datas, page = 1, limit = 5) => async
     
     
     if(datas.button_type === 1){
-      var url = data.config.url;
-      fetch(url, {
-        body: JSON.stringify(datas),
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-        method: "POST",
-      })
-        .then((response) => response.blob())
-        .then((blob) => {
-          var _url = window.URL.createObjectURL(blob);
-          window.open(_url, "_blank").focus();
-        })
-        .catch((error) => {
-        });
+      let url =  window.URL.createObjectURL(data);
+      window.open(url, "_blank")
     }
 
     dispatch({
