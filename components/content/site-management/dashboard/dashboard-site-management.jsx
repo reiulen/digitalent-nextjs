@@ -76,13 +76,15 @@ const DashboardSiteManagement = ({ token, user }) => {
   const tableZonasi = allDataZonasi.map((item, index) => {
     return (
       <tr key={index}>
-        <div className="d-flex align-items-center">
-          <td className="data-daerah py-4">
-            <span className="nomor">{item.nomor}</span>
-          </td>
-          <td className="data-daerah-provinsi">{item.provinsi}</td>
-        </div>
-        <td className="total-peserta">{item?.total} Zonasi</td>
+        <div className="row justify-content-between align-items-center ml-0 mr-10">
+          <div className="d-flex align-items-center">
+            <td className="data-daerah py-4">
+              <span className="nomor">{item.nomor}</span>
+            </td>
+            <td className="data-daerah-provinsi">{item.provinsi}</td>
+          </div>
+          <td className="total-peserta text-right">{item?.total} Zonasi</td>
+        </div >
       </tr>
     );
   });
@@ -90,13 +92,15 @@ const DashboardSiteManagement = ({ token, user }) => {
   const tablePeserta = allDataPeserta.map((item, index) => {
     return (
       <tr className="" key={index}>
-        <div className="d-flex align-items-center">
-          <td className="data-daerah py-4">
-            <span className="nomor">{item.nomor}</span>
-          </td>
-          <td className="data-daerah-provinsi">{item.provinsi}</td>
+        <div className="row justify-content-between align-items-center ml-0 mr-10">
+          <div className=" d-flex align-items-center">
+            <td className="data-daerah py-4">
+              <span className="nomor">{item.nomor}</span>
+            </td>
+            <td className="data-daerah-provinsi">{item.provinsi}</td>
+          </div>
+          <td className="total-peserta text-right">{item.total} Peserta</td>
         </div>
-        <td className="total-peserta">{item.total} Peserta</td>
       </tr>
     );
   });
@@ -112,7 +116,7 @@ const DashboardSiteManagement = ({ token, user }) => {
       <PageWrapper>
         <div className="row">
           <div className="col-lg-12 col-md-12">
-            <div className="row">
+            <div className="row ml-1 mr-0">
               {/* card 1 */}
               <CardDashboardSM
                 background="bg-light-success "
@@ -185,6 +189,7 @@ const DashboardSiteManagement = ({ token, user }) => {
           <div className="row mx-0">
             <div className="col-lg-6 mt-2">
               <div className="content-data bg-white">
+                {/* <div className="d-flex flex-column justify-content-between" style={{border:'1px solid black'}}> */}
                 <div className="row">
                   <div className="col-lg-12 ml-5 my-4">
                     <div className="data-peserta">Data Peserta</div>
@@ -232,8 +237,10 @@ const DashboardSiteManagement = ({ token, user }) => {
                     </div>
                   </div>
                 </div>
-
-                {tablePeserta.length > 0 ? tablePeserta : emptyData}
+                <div className="d-flex flex-column">
+                  {tablePeserta.length > 0 ? tablePeserta : emptyData}
+                </div>
+                {/* </div> */}
 
                 <div className="d-flex ml-6 justify-content-between align-items-center pagination-button">
                   <p className="pt-5">
@@ -346,7 +353,9 @@ const DashboardSiteManagement = ({ token, user }) => {
                   </div>
                 </div>
 
-                {tableZonasi.length > 0 ? tableZonasi : emptyData}
+                <div className="d-flex flex-column">
+                  {tableZonasi.length > 0 ? tableZonasi : emptyData}
+                </div>
 
                 <div className="d-flex ml-6 justify-content-between align-items-center pagination-button">
                   <p className="pt-5">

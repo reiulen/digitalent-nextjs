@@ -32,6 +32,7 @@ export default function ArtikelPage(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
+      console.log("Cookies : ",req.cookies)
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session)
       if (!middleware.status) {

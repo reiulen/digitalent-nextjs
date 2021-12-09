@@ -69,10 +69,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       let success = false;
 
-      if (query.id) {
+      if (query.no) {
         //jika ada query id
         const data = await store.dispatch(
-          getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
+          getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
         );
         if (data) {
           if (data?.data?.status.includes("administrasi akhir")) {

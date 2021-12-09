@@ -96,7 +96,7 @@ const DataParticipant = ({ token }) => {
     tempatLahir: dataPeserta.tempat_lahir,
     tanggalLahir: moment(dataPeserta.tanggal_lahir).format("DD MMMM YYYY"),
   });
-
+  console.log(dataPeserta, "ini data peserta");
   let optionsPeserta = [
     { value: "seleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
@@ -354,12 +354,15 @@ const DataParticipant = ({ token }) => {
                   {peserta.list[0].subtansi_status || "Belum Tersedia"}
                 </p>
               </div>
-              <div className="col-md-4">
-                <p className="text-neutral-body my-0">Mid Test</p>
-                <p className="text-success">
-                  {peserta.list[0].status_mid_test || "Belum Tersedia"}
-                </p>
-              </div>
+              {peserta.list[0].status_mid_test !==
+                "mid test belum tersedia" && (
+                <div className="col-md-4">
+                  <p className="text-neutral-body my-0">Mid Test</p>
+                  <p className="text-success">
+                    {peserta.list[0].status_mid_test || "Belum Tersedia"}
+                  </p>
+                </div>
+              )}
               <div className="col-md-4">
                 <p className="text-neutral-body my-0">Survey</p>
                 <p className="text-success">

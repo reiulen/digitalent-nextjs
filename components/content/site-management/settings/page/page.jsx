@@ -151,14 +151,14 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allPage.data.setting_page.length === 0 ? (
+                      {allPage?.data?.setting_page?.length === 0 ? (
                         <tr>
                           <td colSpan="8" className="text-center">
                             Data Kosong
                           </td>
                         </tr>
                       ) : (
-                        allPage.data.setting_page.reverse().map((items, index) => {
+                        allPage.data?.setting_page?.reverse().map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">

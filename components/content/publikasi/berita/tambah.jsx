@@ -297,6 +297,7 @@ const TambahBerita = ({ token, id }) => {
                                             <div style={{ width: "100%", height: "300px" }}>
                                                 <div
                                                     ref={quillRef}
+                                                    style={{fontFamily:'Poppins'}}
                                                 />
                                             </div>
                                             :

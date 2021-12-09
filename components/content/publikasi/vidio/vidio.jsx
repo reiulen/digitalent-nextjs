@@ -849,7 +849,7 @@ const Vidio = ({ token }) => {
                         <h2 className="font-weight-bolder">
                             {judul_video}
                         </h2>
-
+                        
                         <div className={`${styles.descriptionVideo} text-break text-justify`}>
                             <span>
                                 {/* {isiVideo} */}
@@ -869,6 +869,33 @@ const Vidio = ({ token }) => {
                                         :
                                         <div className="overflow-auto">
                                             {isiVideo}
+                                            {/* <div className="col-12 col-md-5 col-lg-4 my-2"> */}
+                                                <div className="d-flex flex-wrap flex-row mt-2">
+                                                    {
+                                                        tag === null ?
+                                                            null
+                                                            : tag.map((el, i) => {
+                                                                return (
+                                                                    <div
+                                                                        style={{
+                                                                            background: "#fff",
+                                                                            border: "1px solid #d7e1ea",
+                                                                        }}
+                                                                        className="mr-2 px-3 py-1 mb-2 rounded"
+                                                                        key={i}
+                                                                    >
+                                                                        <div
+                                                                            className="text-center"
+                                                                            style={{ fontSize: "10px" }}
+                                                                        >
+                                                                            #{el.toUpperCase()}
+                                                                        </div>
+                                                                    </div>
+                                                                );
+                                                            })
+                                                    }
+                                                </div>
+                                            {/* </div> */}
 
                                             <div
                                                 className="mt-1 mb-3 text-primary"
@@ -884,40 +911,13 @@ const Vidio = ({ token }) => {
                         </div>
 
                         <div className="mt-10 mb-5 row justify-content-between">
-                            <div className="col-12 col-md-4 col-lg-4">
+                            <div className="col-12 col-md-4 col-lg-4 text-muted">
                                 {
                                     tanggal_publish !== null ?
                                         `${moment(tanggal_publish).format("MMMM DD")} | 120 Ditonton`
                                         :
                                         ""
                                 }
-                            </div>
-                            <div className="col-12 col-md-5 col-lg-4 my-2">
-                                <div className="d-flex flex-wrap flex-row">
-                                    {
-                                        tag === null ?
-                                            null
-                                            : tag.map((el, i) => {
-                                                return (
-                                                    <div
-                                                        style={{
-                                                            background: "#fff",
-                                                            border: "1px solid #d7e1ea",
-                                                        }}
-                                                        className="mr-2 px-3 py-1 mb-2 rounded"
-                                                        key={i}
-                                                    >
-                                                        <div
-                                                            className="text-center"
-                                                            style={{ fontSize: "10px" }}
-                                                        >
-                                                            #{el.toUpperCase()}
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })
-                                    }
-                                </div>
                             </div>
                             <div className="col-12 col-md-3 col-lg-4 text-sm-right text-md-right text-lg-right">
                                 {kategori === null ? null : (

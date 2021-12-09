@@ -112,7 +112,7 @@ export const getRandomSubtanceQuestionDetail =
   };
 
 export const getDashboardSubvit =
-  (page_substansi = 1, page_triva = 1, page_survey = 1, token) =>
+  (page_substansi = 1, page_trivia = 1, page_survey = 1, token) =>
   async (dispatch) => {
     try {
       dispatch({ type: DASHBOARD_SUBVIT_REQUEST });
@@ -122,7 +122,7 @@ export const getDashboardSubvit =
       if (page_survey) link = link.concat(`page_survey=${page_survey}`);
       if (page_substansi)
         link = link.concat(`&page_substansi=${page_substansi}`);
-      if (page_triva) link = link.concat(`&page_trivia=${page_triva}`);
+      if (page_trivia) link = link.concat(`&page_trivia=${page_trivia}`);
 
       const config = {
         headers: {

@@ -121,7 +121,7 @@ const ViewTrainingStep2 = () => {
                 disabled
                 type="file"
                 className="custom-file-input"
-                accept="image/png, image/jpeg , image/jpg"
+                accept="image/png, image/jpeg, image/jpg"
                 required={row.required}
               />
               <label className="custom-file-label" htmlFor="customFile">
