@@ -517,9 +517,9 @@ const SubtansiUser = ({ token }) => {
                     data &&
                     data.list_questions[parseInt(router.query.id) - 1]
                       ?.answer !== null &&
-                    data.list_questions[
-                      parseInt(router.query.id) - 1
-                    ]?.answer.map((item, index) => {
+                    JSON.parse(
+                      data.list_questions[parseInt(router.query.id) - 1]?.answer
+                    ).map((item, index) => {
                       return (
                         <>
                           {item.image !== null && item.image !== "" ? (
@@ -706,161 +706,6 @@ const SubtansiUser = ({ token }) => {
                         })}
                     </div>
                   </Collapse>
-                  {/* {data &&
-                  data.list_questions[parseInt(router.query.id) - 1]?.answer !==
-                    null &&
-                  data &&
-                  data.list_questions[parseInt(router.query.id) - 1].open ===
-                    true
-                    ? data.list_questions[
-                        parseInt(router.query.id) - 1
-                      ]?.answer.map((item, index) => {
-                        return (
-                          <>
-                            {item.image !== null && item.image !== "" ? (
-                              <div className="d-flex flex-row">
-                                <div className="p-2">
-                                  <Image
-                                    src={
-                                      process.env.END_POINT_API_IMAGE_SUBVIT +
-                                        item.image || defaultImage
-                                    }
-                                    alt=""
-                                    width={70}
-                                    height={70}
-                                  />
-                                </div>
-                                <div
-                                  className="p-4"
-                                  style={{ width: "100%", height: "100%" }}
-                                >
-                                  <Card
-                                    className={
-                                      localStorage.getItem(router.query.id) ===
-                                      item.key
-                                        ? styles.answer
-                                        : styles.boxAnswer
-                                    }
-                                    key={index}
-                                    onClick={() => {
-                                      handleAnswerTriggered(item, index);
-                                    }}
-                                    aria-controls="example-collapse-text"
-                                    aria-expanded={open}
-                                  >
-                                    <table>
-                                      <tr>
-                                        <td style={{ width: "5px" }}>
-                                          {item.key}
-                                        </td>
-                                        <td style={{ width: "15px" }}>.</td>
-                                        <td>{item.option}</td>
-                                      </tr>
-                                    </table>
-                                  </Card>
-                                </div>
-                              </div>
-                            ) : (
-                              <Card
-                                className={
-                                  localStorage.getItem(router.query.id) ===
-                                  item.key
-                                    ? styles.answer
-                                    : styles.boxAnswer
-                                }
-                                key={index}
-                                onClick={() => {
-                                  handleAnswerTriggered(item, index);
-                                }}
-                                aria-controls="example-collapse-text"
-                                aria-expanded={open}
-                              >
-                                <table>
-                                  <tr>
-                                    <td style={{ width: "5px" }}>{item.key}</td>
-                                    <td style={{ width: "15px" }}>.</td>
-
-                                    <td>{item.option} </td>
-                                  </tr>
-                                </table>
-                              </Card>
-                            )}
-                          </>
-                        );
-                      })
-                    : data.list_questions[parseInt(router.query.id) - 1]
-                        ?.answer &&
-                      data.list_questions[
-                        parseInt(router.query.id) - 1
-                      ]?.answer.map((item, index) => {
-                        return (
-                          <>
-                            {item.image !== null && item.image !== "" ? (
-                              <div className="d-flex flex-row">
-                                <div className="p-2">
-                                  <Image
-                                    src={
-                                      process.env.END_POINT_API_IMAGE_SUBVIT +
-                                        item.image || defaultImage
-                                    }
-                                    alt=""
-                                    width={70}
-                                    height={70}
-                                  />
-                                </div>
-                                <div
-                                  className="p-4"
-                                  style={{ width: "100%", height: "100%" }}
-                                >
-                                  <Card
-                                    className={
-                                      localStorage.getItem(router.query.id) ===
-                                      item.key
-                                        ? styles.answer
-                                        : styles.boxAnswer
-                                    }
-                                    key={index}
-                                    onClick={() => {
-                                      handleAnswerTriggered(item, index);
-                                    }}
-                                  >
-                                    <table>
-                                      <tr>
-                                        <td style={{ width: "5px" }}>
-                                          {item.key}
-                                        </td>
-                                        <td style={{ width: "15px" }}>.</td>
-                                        <td>{item.option}</td>
-                                      </tr>
-                                    </table>
-                                  </Card>
-                                </div>
-                              </div>
-                            ) : (
-                              <Card
-                                className={
-                                  localStorage.getItem(router.query.id) ===
-                                  item.key
-                                    ? styles.answer
-                                    : styles.boxAnswer
-                                }
-                                key={index}
-                                onClick={() => {
-                                  handleAnswerTriggered(item, index);
-                                }}
-                              >
-                                <table>
-                                  <tr>
-                                    <td style={{ width: "5px" }}>{item.key}</td>
-                                    <td style={{ width: "15px" }}>.</td>
-                                    <td>{item.option} </td>
-                                  </tr>
-                                </table>
-                              </Card>
-                            )}
-                          </>
-                        );
-                      })} */}
                 </>
               )}
 
@@ -906,11 +751,12 @@ const SubtansiUser = ({ token }) => {
                     </h1>
                     <hr />
                     {data &&
-                      data.list_questions[parseInt(router.query.id) - 1]
+                      data?.list_questions[parseInt(router.query.id) - 1]
                         ?.answer !== null &&
-                      data.list_questions[
-                        parseInt(router.query.id) - 1
-                      ]?.answer.map((item, index) => {
+                      JSON.parse(
+                        data?.list_questions[parseInt(router.query.id) - 1]
+                          ?.answer
+                      ).map((item, index) => {
                         return (
                           <>
                             {item.image !== null && item.image !== "" ? (
@@ -1034,9 +880,10 @@ const SubtansiUser = ({ token }) => {
                     {data &&
                       data.list_questions[parseInt(router.query.id) - 1]
                         ?.answer !== null &&
-                      data.list_questions[
-                        parseInt(router.query.id) - 1
-                      ]?.answer.map((item, index) => {
+                      JSON.parse(
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          ?.answer
+                      ).map((item, index) => {
                         return (
                           <>
                             {item.image !== null && item.image !== "" ? (
