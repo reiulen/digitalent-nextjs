@@ -75,11 +75,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
         );
         if (data) {
-          if (
-            data?.data?.status.includes("administrasi akhir") ||
-            data?.data?.status.includes("survey") ||
-            data?.data?.survei
-          ) {
+          if (data?.data?.survei) {
             console.log("masuk sini,");
             success = true;
           } else {
@@ -98,7 +94,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
         if (!status || status == "") {
           success = false;
-        } else if (status?.includes("administrasi akhir")) {
+        } else if (dataDashboard?.data?.pelatihan?.pelatihan_berjalan.survei) {
           await store.dispatch(
             getDetailRiwayatPelatihan(
               dataDashboard?.data.pelatihan.pelatihan_berjalan.id,
@@ -113,7 +109,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           );
           success = false;
           const list = data.list.filter((item) => {
-            return item.status.includes("administrasi akhir");
+            return item.survei;
           });
           if (list.length == 0 || !list) {
             success = false;
