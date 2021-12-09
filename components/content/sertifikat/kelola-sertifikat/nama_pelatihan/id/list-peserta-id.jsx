@@ -42,10 +42,9 @@ export default function ListPesertaID({ token }) {
     });
     return data;
   };
-
+  console.log(participant.data.nomor_registrasi, "ini participant");
   const handleDownload = async () => {
-    // "api/tte-p12/sign-pdf?training_id=251&nomor_registrasi=63251100-3";
-    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${nomer_registrasi}`;
+    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${participant?.data?.nomor_registrasi}`;
     const check = await axios.get(linkChecker);
     // check udh pernah di sign apa belum?
     if (!check.data.status) {
@@ -53,7 +52,7 @@ export default function ListPesertaID({ token }) {
       if (data) {
         const formData = new FormData();
         formData.append("certificate", data);
-        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/${certificate?.data?.pelatihan?.id}`;
+        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${certificate?.data?.pelatihan?.id}&nomor_registrasi=${participant?.data?.nomor_registrasi}`;
         const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
         const a = document.createElement("a");
         a.download = `Sertifikat - p12 ${query.name}.png`;
