@@ -184,9 +184,9 @@
   color: #1F1F1F;
   position: sticky;
   left: 50px;
-  width: 220px;
+  /* width: 220px; */
   flex-wrap: wrap;
-  margin-right: 100px;
+  /* margin-right: 100px; */
 }
 
 .total-peserta {
