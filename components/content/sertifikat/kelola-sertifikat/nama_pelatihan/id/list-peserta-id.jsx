@@ -66,7 +66,6 @@ export default function ListPesertaID({ token }) {
           }
         }
       } else {
-        console.log(check, "ini checknya");
         const a = document.createElement("a");
         a.download = `Sertifikat - p12 ${query.name}.png`;
         a.target = "_blank";
