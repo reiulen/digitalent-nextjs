@@ -174,11 +174,19 @@ const CheckboxComponent = ({
                   <div className="row align-items-end">
                     <div className="form-group col-7 col-md-4 col-lg-4 col-xl-4 mb-0">
                       <input
-                        type="number"
+                        type="text"
                         className={`${styles.inputNilaiCheckbox} form-control`}
                         name="value"
+                        maxLength={2}
                         value={x.value}
-                        onChange={(e) => handleInputChange(e, i)}
+                        onChange={(e) => {
+                          if (
+                            e.target.value === "" ||
+                            helperRegexNumber.test(e.target.value)
+                          ) {
+                            handleInputChange(e, i);
+                          }
+                        }}
                         autoComplete="off"
                         placeholder="2"
                       />
