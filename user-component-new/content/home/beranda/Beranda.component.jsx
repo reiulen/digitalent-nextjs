@@ -30,11 +30,11 @@ const Beranda = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { publikasi } = useSelector(state => state.allPublikasiBeranda);
+  const { publikasi } = useSelector((state) => state.allPublikasiBeranda);
   const { tema, loading: loadingTema } = useSelector(
-    state => state.temaByAkademi
+    (state) => state.temaByAkademi
   );
-  const { akademi } = useSelector(state => state.allAkademi);
+  const { akademi } = useSelector((state) => state.allAkademi);
   const [activeTab, setActiveTab] = useState(0);
   const [akademiId, setAkademiId] = useState(null);
 
@@ -269,7 +269,7 @@ const Beranda = ({ session }) => {
     setCardBookmark(bookmark);
   };
 
-  const handleCloseQuickView = indexTema => {
+  const handleCloseQuickView = (indexTema) => {
     let obj = [...pelatihan];
 
     for (let i = 0; i < obj.length; i++) {
@@ -284,7 +284,7 @@ const Beranda = ({ session }) => {
     if (session) {
       const data = await dispatch(checkRegisterPelatihan(id, session.token));
       if (data.status === true) {
-        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
+        router.push(`/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
         let errMessage = data.message;
         SweatAlert("Gagal", errMessage, "error");
@@ -294,7 +294,7 @@ const Beranda = ({ session }) => {
     }
   };
 
-  const PrintTextTrim = word => {
+  const PrintTextTrim = (word) => {
     let str = null;
     if (word.length > 200) {
       str = word.slice(0, 200) + "...";
@@ -305,7 +305,7 @@ const Beranda = ({ session }) => {
     return str;
   };
 
-  const handleBookmark = async pelatihan => {
+  const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
