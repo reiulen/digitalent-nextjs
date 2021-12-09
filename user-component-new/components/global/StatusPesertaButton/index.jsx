@@ -139,7 +139,11 @@ export default function ButtonStatusPeserta({ data, token }) {
           </CustomButton>
           <CustomButton
             disabled={!data?.lpj}
-            click={() => handleClick("download", data?.id_pendaftaran)}
+            click={() => {
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
+              router.push(`/peserta/form-lpj`);
+            }}
           >
             Isi Laporan Pertangung Jawaban
             <i className="ri-arrow-right-s-line mr-2"></i>
@@ -315,7 +319,11 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             disabled
             outline
-            click={() => handleClick("download", data?.id_pendaftaran)}
+            click={() => {
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
+              router.push(`/peserta/form-lpj`);
+            }}
           >
             <i className="ri-file-text-line mr-2"></i>
             Isi Laporan Pertangungjawaban
