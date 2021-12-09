@@ -141,7 +141,7 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
-
+  console.log(dataDashboard.pelatihan.pelatihan_selesi);
   return (
     <Fragment>
       <PesertaWrapper padding={"10"}>
@@ -504,8 +504,7 @@ const Dashboard = ({ session, success }) => {
                                 ? dataDashboard.pelatihan.pelatihan_selesi
                                     .file_path +
                                   dataDashboard.pelatihan.pelatihan_selesi.logo
-                                : dataDashboard.pelatihan.pelatihan_selesi
-                                    .file_path +
+                                : process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                                   dataDashboard.pelatihan.pelatihan_selesi
                                     .gambar_mitra
                             }
