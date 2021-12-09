@@ -43,36 +43,38 @@ import axios from "axios";
 import { getSession } from "next-auth/client";
 
 // GET PERMISSIONS SUBVIT
-export const getPermissionSubvit = (token) => async (dispatch) => {
-  try {
-    dispatch({ type: GET_PERMISSIONS_SUBVIT_REQUEST });
+export const getPermissionSubvit =
+  (token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: GET_PERMISSIONS_SUBVIT_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/permissions`;
+      let link =
+        process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/permissions`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_PERMISSIONS_SUBVIT_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_PERMISSIONS_SUBVIT_FAIL,
-      payload: error.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_PERMISSIONS_SUBVIT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_PERMISSIONS_SUBVIT_FAIL,
+        payload: error.message,
+      });
+    }
+  };
 
 // get all data
 export const getAllSubtanceQuestionBanks =
-  (page = 1, keyword = "", limit = 5, token) =>
+  (page = 1, keyword = "", limit = 5, token, tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({ type: SUBTANCE_QUESTION_BANKS_REQUEST });
@@ -86,6 +88,7 @@ export const getAllSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
         },
       };
 
@@ -135,7 +138,7 @@ export const newSubtanceQuestionBanks =
   };
 
 export const getDetailSubtanceQuestionBanks =
-  (id, token) => async (dispatch) => {
+  (id, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({ type: DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST });
 
@@ -146,6 +149,7 @@ export const getDetailSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
         },
       };
 
@@ -163,32 +167,34 @@ export const getDetailSubtanceQuestionBanks =
     }
   };
 
-export const getOneSubtanceQuestionBanks = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST });
+export const getOneSubtanceQuestionBanks =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`;
+      let link =
+        process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updatewSubtanceQuestionBanks =
   (id, substanceQuestionData, token) => async (dispatch) => {
@@ -320,7 +326,8 @@ export const allReportSubtanceQuestionBanks =
     status = null,
     nilai = null,
     card = null,
-    token
+    token,
+    tokenPermission
   ) =>
   async (dispatch) => {
     try {
@@ -339,6 +346,7 @@ export const allReportSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
         },
       };
 

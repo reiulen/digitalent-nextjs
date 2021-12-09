@@ -184,11 +184,12 @@ export const storeCommitmentStep3 = (data) => async (dispatch) => {
   });
 };
 
-export const dropdownAkademi = (token) => async (dispatch) => {
+export const dropdownAkademi = (token, tokenPermission) => async (dispatch) => {
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        permissionToken: tokenPermission,
       },
     };
     const { data } = await axios.get(
@@ -230,11 +231,12 @@ export const drowpdownFormBuilder = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownTema = (token) => async (dispatch) => {
+export const dropdownTema = (token, tokenPermission) => async (dispatch) => {
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        permissionToken: tokenPermission,
       },
     };
     const { data } = await axios.get(
@@ -278,28 +280,30 @@ export const dropdownTemabyAkademi = (id, token) => async (dispatch) => {
   }
 };
 
-export const dropdownPelatihan = (token) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/dropdown`,
-      config
-    );
-    dispatch({
-      type: GET_DROPDOWN_PELATIHAN,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ERROR_DROPDOWN_PELATIHAN,
-      payload: error.response.data.message,
-    });
-  }
-};
+export const dropdownPelatihan =
+  (token, tokenPermission) => async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/dropdown`,
+        config
+      );
+      dispatch({
+        type: GET_DROPDOWN_PELATIHAN,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ERROR_DROPDOWN_PELATIHAN,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const dropdownPelatihanbyTema = (id, token) => async (dispatch) => {
   try {

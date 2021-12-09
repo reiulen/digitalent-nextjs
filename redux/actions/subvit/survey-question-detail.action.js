@@ -32,13 +32,14 @@ import {
 import axios from "axios";
 
 export const getAllSurveyQuestionDetail =
-  (id, page = 1, limit = null, keyword = "", token) =>
+  (id, page = 1, limit = null, keyword = "", token, tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({ type: SURVEY_QUESTION_DETAIL_REQUEST });
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
         },
       };
       let link =
@@ -178,31 +179,33 @@ export const deleteSurveyQuestionDetail = (id, token) => async (dispatch) => {
   }
 };
 
-export const detailSurveyQuestionDetail = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_SURVEY_QUESTION_DETAIL_REQUEST });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_SUBVIT +
-        `api/survey-question-bank-details/${id}`,
-      config
-    );
+export const detailSurveyQuestionDetail =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_SURVEY_QUESTION_DETAIL_REQUEST });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_SUBVIT +
+          `api/survey-question-bank-details/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DETAIL_SURVEY_QUESTION_DETAIL_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_SURVEY_QUESTION_DETAIL_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_SURVEY_QUESTION_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_SURVEY_QUESTION_DETAIL_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updateSurveyQuestionDetail =
   (id, dataBankSoal, token) => async (dispatch) => {

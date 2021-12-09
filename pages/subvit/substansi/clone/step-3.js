@@ -38,8 +38,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
-        getDetailSubtanceQuestionBanks(query.id, session.user.user.data.token)
+        getDetailSubtanceQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
       );
       return {
         props: { session, title: "Clone Bank Soal Test Subtansi - Subvit" },

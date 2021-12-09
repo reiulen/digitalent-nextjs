@@ -34,7 +34,7 @@ import axios from "axios";
 
 // get all data
 export const getAllSurveyQuestionBanks =
-  (page = 1, keyword = "", limit = 5, token) =>
+  (page = 1, keyword = "", limit = 5, token, tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({ type: SURVEY_QUESTION_BANKS_REQUEST });
@@ -48,6 +48,7 @@ export const getAllSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
         },
       };
 
@@ -102,56 +103,60 @@ export const newSurveyQuestionBanks =
     }
   };
 
-export const getDetailSurveyQuestionBanks = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_SURVEY_QUESTION_BANKS_REQUEST });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    let link =
-      process.env.END_POINT_API_SUBVIT +
-      `api/survey-question-banks/detail/${id}`;
+export const getDetailSurveyQuestionBanks =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_SURVEY_QUESTION_BANKS_REQUEST });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
+        },
+      };
+      let link =
+        process.env.END_POINT_API_SUBVIT +
+        `api/survey-question-banks/detail/${id}`;
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_SURVEY_QUESTION_BANKS_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_SURVEY_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_SURVEY_QUESTION_BANKS_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_SURVEY_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getOneSurveyQuestionBanks = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    let link =
-      process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`;
+export const getOneSurveyQuestionBanks =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
+        },
+      };
+      let link =
+        process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`;
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_ONE_SURVEY_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_ONE_SURVEY_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updateSurveyQuestionBanks =
   (id, substanceQuestionData, token) => async (dispatch) => {
@@ -254,7 +259,8 @@ export const allReportSurveyQuestionBanks =
     pelatihan = null,
     status = null,
     card = null,
-    token
+    token,
+    tokenPermission
   ) =>
   async (dispatch) => {
     try {
@@ -272,6 +278,7 @@ export const allReportSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          permissionToken: tokenPermission,
         },
       };
 

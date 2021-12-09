@@ -29,6 +29,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {
@@ -38,10 +39,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
         getDetailSubtanceQuestionBanksType(
           params.id,
-          session.user.user.data.token
+          session.user.user.data.token,
+          permission
         )
       );
       return {
