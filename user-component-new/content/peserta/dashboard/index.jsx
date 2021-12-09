@@ -229,7 +229,12 @@ const Dashboard = ({ session, success }) => {
           {dataDashboard &&
             dataDashboard?.pelatihan.pelatihan_berjalan.length === 0 && (
               <Col md={6} className="mb-4 px-2 ">
-                <Card className="rounded-xl h-100 ">
+                <Card
+                  className="rounded-xl h-100"
+                  onClick={() => {
+                    router.push("/");
+                  }}
+                >
                   <Card.Body>
                     <Card.Title>
                       <p className={style.card_title}>Pelatihan Terkini</p>
@@ -407,9 +412,7 @@ const Dashboard = ({ session, success }) => {
                 <Card
                   className="rounded-xl h-100"
                   onClick={() => {
-                    router.push(
-                      `/detail/pelatihan/${dataDashboard.pelatihan.pelatihan_selesi.id}?akademiId=${dataDashboard.pelatihan.pelatihan_selesi.akademi_id}`
-                    );
+                    router.push(`/`);
                   }}
                 >
                   <Card.Body>
@@ -642,7 +645,7 @@ const Dashboard = ({ session, success }) => {
                         </div>
 
                         <div className="pekerjaan-next align-items-center ml-auto">
-                          <Link href="/peserta" passHref>
+                          <Link href={row?.url} passHref>
                             <i
                               className="ri-arrow-right-s-line"
                               style={{ fontSize: "24px", color: "#09121F" }}
