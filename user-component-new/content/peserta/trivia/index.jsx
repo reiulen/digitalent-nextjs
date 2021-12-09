@@ -28,7 +28,7 @@ const TestSubstansi = () => {
   useEffect(() => {
     axios
       .get(
-        END_POINT_API_SUBVIT +
+        process.env.END_POINT_API_SUBVIT +
           `/api/trivia-question-bank-details/info?training_id=${
             routerTraining || pelatihanId
           }&theme_id=${routerTema || temaId}`
