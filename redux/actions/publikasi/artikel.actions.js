@@ -56,7 +56,7 @@ export const getAllArtikel =
         const config = {
           headers: {
             Authorization: "Bearer " + token,
-            permissionToken: permission
+            "Permission": permission
           },
         };
 
@@ -101,7 +101,7 @@ export const getAllArtikelsPeserta =
           },
           headers: {
             Authorization: "Bearer " + token,
-            permissionToken: permission
+            "Permission": permission
           },
         };
 
@@ -123,7 +123,7 @@ export const getDetailArtikel = (id, token, permission) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: permission
+        "Permission": permission
       },
     };
 
@@ -148,7 +148,7 @@ export const getDetailArtikelsPeserta = (id, token, permission) => async (dispat
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: permission
+        "Permission": permission
       },
     };
 
@@ -177,7 +177,7 @@ export const newArtikel = (artikelData, token, permission) => async (dispatch) =
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: permission
+        "Permission": permission
       },
     };
 
@@ -203,7 +203,7 @@ export const newArtikelPeserta = (artikelData, token, permission) => async (disp
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: permission
+        "Permission": permission
       },
     };
 
@@ -233,7 +233,7 @@ export const updateArtikel = (artikelData, token, permission) => async (dispatch
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: permission
+        "Permission": permission
       },
     };
 
@@ -262,7 +262,7 @@ export const updateArtikelPeserta = (artikelData, token, id, permission) => asyn
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: permission
+        "Permission": permission
       },
     };
 
@@ -287,7 +287,7 @@ export const deleteArtikelPeserta = (id, token, permission) => async (dispatch) 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: permission
+        "Permission": permission
       },
     };
     const { data } = await axios.delete(
@@ -314,7 +314,7 @@ export const deleteArtikel = (id, token, permission) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
-        permissionToken: permission
+        "Permission": permission
       },
     };
     const { data } = await axios.delete(

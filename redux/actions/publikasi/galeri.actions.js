@@ -48,7 +48,7 @@ export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
         const { data } = await axios.get(link, config)
@@ -72,7 +72,7 @@ export const getDetailGaleri = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -102,7 +102,7 @@ export const newGaleri = (galeriData, token, permission) => async (dispatch) => 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -126,7 +126,7 @@ export const updateGaleri = (galeriData, token, permission) => async (dispatch) 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -155,7 +155,7 @@ export const deleteGaleri = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -181,7 +181,7 @@ export const viewGaleri = (galeriData, token, permission) => async (dispatch) =>
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 

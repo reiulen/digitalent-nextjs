@@ -44,7 +44,7 @@ export const getAllFaq = (token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -80,7 +80,7 @@ export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish =
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -109,7 +109,7 @@ export const newFaq = (faqData, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -136,7 +136,7 @@ export const deleteFaq = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -162,7 +162,7 @@ export const getDetailFaq = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -189,7 +189,7 @@ export const updateFaq = (faqData, id, token, permission) => async (dispatch) =>
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -220,7 +220,7 @@ export const updatePinFaq = (faq, id, token, permission) => async (dispatch) => 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 

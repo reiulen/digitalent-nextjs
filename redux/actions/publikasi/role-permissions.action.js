@@ -16,7 +16,7 @@ export const getAllRolePermission = (token, permission) =>
       const config = {
         headers: {
           Authorization: 'Bearer ' + token,
-          permissionToken: permission
+          "Permission": permission
         },
       };
 
@@ -30,6 +30,7 @@ export const getAllRolePermission = (token, permission) =>
       });
 
     } catch (error) {
+      console.log(error)
       dispatch({
         type: ROLE_PERMISSION_FAIL,
         payload: error.response.data.message,

@@ -44,7 +44,7 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -73,7 +73,7 @@ export const newBerita = (beritaData, token, permission) => async (dispatch) => 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -102,7 +102,7 @@ export const getDetailBerita = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -131,7 +131,7 @@ export const updateBerita = (beritaData, token, permission) => async (dispatch) 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -160,7 +160,7 @@ export const deleteBerita = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 

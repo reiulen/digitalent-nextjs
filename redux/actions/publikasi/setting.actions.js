@@ -31,7 +31,7 @@ export const getSettingPublikasi = (token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -63,7 +63,7 @@ export const updateSettingImagePublikasi = (settingData, token, permission) => a
             headers: {
                 Authorization: "Bearer " + token,
                 'Content-Type': 'application/x-www-form-urlencoded',
-                permissionToken: permission
+                "Permission": permission
             }
         }
 
@@ -95,7 +95,7 @@ export const updateSettingImagetronPublikasi = (settingData, token, permission) 
             headers: {
                 Authorization: "Bearer " + token,
                 'Content-Type': 'application/x-www-form-urlencoded',
-                permissionToken: permission
+                "Permission": permission
             }
         }
 
@@ -127,7 +127,7 @@ export const updateSettingSliderPublikasi = (settingData, token, permission) => 
             headers: {
                 Authorization: "Bearer " + token,
                 'Content-Type': 'application/x-www-form-urlencoded',
-                permissionToken: permission
+                "Permission": permission
             }
         }
 
@@ -160,7 +160,7 @@ export const updateSettingFaqPublikasi = (settingData, token, permission) => asy
             headers: {
                 Authorization: "Bearer " + token,
                 'Content-Type': 'application/x-www-form-urlencoded',
-                permissionToken: permission
+                "Permission": permission
             }
         }
 

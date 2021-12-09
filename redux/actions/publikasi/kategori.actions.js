@@ -31,7 +31,7 @@ export const getAllKategori = (token, permission) => async dispatch => {
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -67,7 +67,7 @@ export const paginationKategori =
                 const config = {
                     headers: {
                         Authorization: "Bearer " + token,
-                        permissionToken: permission
+                        "Permission": permission
                     },
                 };
 
@@ -96,7 +96,7 @@ export const getAllKategoriInput = (kategori, token, permission) => async dispat
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -123,7 +123,7 @@ export const newKategori = (kategoriData, token, permission) => async dispatch =
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -151,7 +151,7 @@ export const deleteKategori = (id, token, permission) => async dispatch => {
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -178,7 +178,7 @@ export const getDetailKategori = (id, token, permission) => async dispatch => {
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 
@@ -205,7 +205,7 @@ export const updateKategori = (kategori, id, token, permission) => async dispatc
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                permissionToken: permission
+                "Permission": permission
             },
         };
 

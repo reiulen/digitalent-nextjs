@@ -89,10 +89,19 @@ const Galeri = () => {
         let arr = [...show]
 
         for (let i = 0; i < arr.length; i++) {
-            if (i == index) {
-                arr[i] = true
+            for (let j = 0; j < arr[i].show?.length; j++) {
+                arr[i].show[j].hover = false;
+                if (i === index) {
+                    arr[i].show[j].hover = true;
+                }
             }
         }
+
+        // for (let i = 0; i < arr.length; i++) {
+        //     if (i == index) {
+        //         arr[i] = true
+        //     }
+        // }
 
         setShow(arr)
     }
@@ -101,10 +110,19 @@ const Galeri = () => {
         let arr = [...show]
 
         for (let i = 0; i < arr.length; i++) {
-            if (i == index) {
-                arr[i] = false
+            for (let j = 0; j < arr[i].show?.length; j++) {
+                arr[i].show[j].hover = false;
+                if (i === index) {
+                    arr[i].show[j].hover = true;
+                }
             }
         }
+
+        // for (let i = 0; i < arr.length; i++) {
+        //     if (i == index) {
+        //         arr[i] = false
+        //     }
+        // }
 
         setShow(arr)
     }
@@ -119,14 +137,14 @@ const Galeri = () => {
         setActiveTitle("Galeri Terupdate dan Terkini")
         setKategoriGaleri(str)
 
-        if (str.includes("&")){
+        if (str.includes("&")) {
             let text = str.replace("&", "%26")
             dispatch(getAllBerandaGaleri(
                 activePage,
                 text,
                 tag
             ))
-            
+
         } else {
             dispatch(getAllBerandaGaleri(
                 activePage,
@@ -134,7 +152,7 @@ const Galeri = () => {
                 tag
             ))
         }
-        
+
     }
 
     const handleKategoriToShow = () => {
@@ -220,7 +238,7 @@ const Galeri = () => {
     }
 
     return (
-        <div className="bg-white">
+        <div className={`${styles.containerGaleri} bg-white`}>
             <HomeWrapper>
                 {/* BreadCrumb */}
                 <SubHeaderComponent
@@ -246,8 +264,8 @@ const Galeri = () => {
                                 {
                                     showArrow === null ? <div className="col-12"><PulseLoaderRender /></div> :
                                         showArrow === true ?
-                                            <div 
-                                                style={{ marginLeft: '-17px' }} 
+                                            <div
+                                                style={{ marginLeft: '-17px' }}
                                             >
                                                 <Splide
                                                     options={{
@@ -270,7 +288,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                    style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
+                                                                    style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
                                                                     onClick={() => handleFilterKategori("")}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -282,7 +300,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                    style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
+                                                                    style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
                                                                     onClick={() => handleFilterKategori("")}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -300,7 +318,7 @@ const Galeri = () => {
                                                                         <SplideSlide>
                                                                             <div
                                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                                style={{ cursor: "pointer", height: "40px" , minWidth:"236px"}}
+                                                                                style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
                                                                                 onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
@@ -313,7 +331,7 @@ const Galeri = () => {
                                                                         <SplideSlide>
                                                                             <div
                                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                                style={{ cursor: "pointer", height: "40px" , minWidth:"236px"}}
+                                                                                style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
                                                                                 onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
@@ -352,7 +370,7 @@ const Galeri = () => {
                                                         <SplideSlide>
                                                             <div
                                                                 className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
+                                                                style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
                                                                 onClick={() => handleFilterKategori("")}
                                                             >
                                                                 <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -364,7 +382,7 @@ const Galeri = () => {
                                                         <SplideSlide>
                                                             <div
                                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                style={{ cursor: "pointer", height: "40px" , minWidth:"236px"}}
+                                                                style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
                                                                 onClick={() => handleFilterKategori("")}
                                                             >
                                                                 <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -382,7 +400,7 @@ const Galeri = () => {
                                                                     <SplideSlide>
                                                                         <div
                                                                             className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5"
-                                                                            style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
+                                                                            style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
                                                                             onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
@@ -395,7 +413,7 @@ const Galeri = () => {
                                                                     <SplideSlide>
                                                                         <div
                                                                             className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5"
-                                                                            style={{ cursor: "pointer", height: "40px", minWidth:"236px" }}
+                                                                            style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
                                                                             onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
@@ -439,9 +457,9 @@ const Galeri = () => {
                                                 height={350}
                                                 alt="Tidak Tersedia"
                                             />
-                                            <h1 
-                                                className="font-weight-bolder mt-15 text-center fw-600" 
-                                                style={{fontFamily:"Poppins", fontSize:"24px"}}
+                                            <h1
+                                                className="font-weight-bolder mt-15 text-center fw-600"
+                                                style={{ fontFamily: "Poppins", fontSize: "24px" }}
                                             >
                                                 Tidak ada galeri terkait "{kategoriGaleri}"
                                             </h1>

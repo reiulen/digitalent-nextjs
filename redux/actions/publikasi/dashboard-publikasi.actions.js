@@ -20,7 +20,7 @@ export const getAllDashboardPublikasi = (token,permission) =>
       const config = {
         headers: {
           Authorization: 'Bearer ' + token,
-          permissionToken: permission
+          "Permission": permission
         },
       };
 
@@ -49,7 +49,7 @@ export const getRoleAdmin = (token,permission) =>
       const config = {
         headers: {
           Authorization: 'Bearer ' + token,
-          permissionToken: permission
+          "Permission": permission
         }
       };
 

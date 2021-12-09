@@ -113,6 +113,9 @@
 
 /* HOME PAGE GALERI */
 
+.containerGaleri{
+  padding: 0 24px;
+}
 .contentGaleri{
   margin-left: -4px;
 }
