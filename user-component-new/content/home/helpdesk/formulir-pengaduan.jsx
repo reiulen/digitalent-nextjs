@@ -40,7 +40,7 @@ export default function FormPengaduan() {
 
   return (
     <Container fluid className="px-md-17 px-10 py-10 bg-white">
-      <SubHeaderComponent data={[{ link: router.asPath, name: "Helpdesk" }]} />
+      <SubHeaderComponent data={[{ link: router.asPath, name: "Bantuan" }]} />
       <Sidebar>
         <h1 className={`font-weight-boldest text-blue-primary mb-15 `}>
           Formulir Pengaduan
