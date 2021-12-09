@@ -29,8 +29,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
-        getDetailTriviaQuestionBanks(query.id, session.user.user.data.token)
+        getDetailTriviaQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
       );
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {

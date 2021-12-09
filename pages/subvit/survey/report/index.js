@@ -39,6 +39,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
         allReportSurveyQuestionBanks(
           query.id,
@@ -48,7 +51,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.pelatihan,
           query.status,
           query.card,
-          session.user.user.data.token
+          session.user.user.data.token,
+          permission
         )
       );
       return {

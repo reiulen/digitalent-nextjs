@@ -43,7 +43,8 @@ export const getAllSubtanceQuestionDetail =
     status = "",
     category = "",
     pelatihan = "",
-    token
+    token,
+    tokenPermission
   ) =>
   async (dispatch) => {
     try {
@@ -62,6 +63,7 @@ export const getAllSubtanceQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -112,7 +114,13 @@ export const getRandomSubtanceQuestionDetail =
   };
 
 export const getDashboardSubvit =
-  (page_substansi = 1, page_triva = 1, page_survey = 1, token) =>
+  (
+    page_substansi = 1,
+    page_trivia = 1,
+    page_survey = 1,
+    token,
+    tokenPermission
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: DASHBOARD_SUBVIT_REQUEST });
@@ -122,11 +130,12 @@ export const getDashboardSubvit =
       if (page_survey) link = link.concat(`page_survey=${page_survey}`);
       if (page_substansi)
         link = link.concat(`&page_substansi=${page_substansi}`);
-      if (page_triva) link = link.concat(`&page_trivia=${page_triva}`);
+      if (page_trivia) link = link.concat(`&page_triva=${page_trivia}`);
 
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -205,33 +214,35 @@ export const postResult = (resultData, token) => async (dispatch) => {
   }
 };
 
-export const detailSubtanceQuestionDetail = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_SUBTANCE_QUESTION_DETAIL_REQUEST });
+export const detailSubtanceQuestionDetail =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_SUBTANCE_QUESTION_DETAIL_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    const { data } = await axios.get(
-      process.env.END_POINT_API_SUBVIT +
-        `api/subtance-question-bank-details/${id}`,
-      config
-    );
+      const { data } = await axios.get(
+        process.env.END_POINT_API_SUBVIT +
+          `api/subtance-question-bank-details/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DETAIL_SUBTANCE_QUESTION_DETAIL_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_SUBTANCE_QUESTION_DETAIL_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_SUBTANCE_QUESTION_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_SUBTANCE_QUESTION_DETAIL_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const deleteSubtanceQuestionDetail = (id, token) => async (dispatch) => {
   try {

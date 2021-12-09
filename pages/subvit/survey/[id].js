@@ -42,20 +42,29 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
         getAllSurveyQuestionDetail(
           params.id,
           query.page,
           query.limit,
           query.keyword,
-          session.user.user.data.token
+          session.user.user.data.token,
+          permission
         )
       );
       await store.dispatch(
-        getDetailSurveyQuestionBanks(params.id, session.user.user.data.token)
+        getDetailSurveyQuestionBanks(
+          params.id,
+          session.user.user.data.token,
+          permission
+        )
       );
 
-      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
+      await store.dispatch(
+        getPermissionSubvit(session.user.user.data.token, permission)
+      );
 
       return {
         props: { session, title: "Detail Survey - Subvit" },

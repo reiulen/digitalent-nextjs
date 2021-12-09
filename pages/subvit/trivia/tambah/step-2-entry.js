@@ -38,8 +38,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
-        getOneTriviaQuestionBanks(query.id, session.user.user.data.token)
+        getOneTriviaQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
       );
       return {
         props: { session, title: "Step 2 Entry - Subvit" },
