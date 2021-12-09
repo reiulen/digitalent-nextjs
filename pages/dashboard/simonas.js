@@ -17,6 +17,7 @@ import {
   getSimonasApplierEducationJob,
   getSimonasApplierEducationProject,
 } from "../../redux/actions/dashboard-kabadan/dashboard/simonas.actions";
+import { getDigitalentTotalPengguna } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 
 export default function DashboardSimonasPage(props) {
   const DashboardSimonas = dynamic(
@@ -59,6 +60,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getDigitalentTotalPengguna(session.user.user.data.token)
+      );
 
       await store.dispatch(
         getSimonasCompanyTotal(session.user.user.data.token)

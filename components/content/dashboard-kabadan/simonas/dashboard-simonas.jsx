@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 
@@ -9,6 +9,7 @@ import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
 
 import PaginationDashboard from "../component/pagination-dashbaord.component";
+import LoadingDashboard from "../component/loading-dashboard.component";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -26,6 +27,16 @@ const DashboardSimonas = ({ token }) => {
     { ssr: false }
   );
 
+  const [pageCompanyAmount, setPageCompanyAmount] = useState(1);
+  const [pageCompanyProject, setPageCompanyProject] = useState(1);
+  const [pageApplierJob, setPageApplierJob] = useState(1);
+  const [pageApplierProject, setPageApplierProject] = useState(1);
+
+  const {
+    loading: loadingTotalPengguna,
+    error: errorTotalPengguna,
+    totalPengguna,
+  } = useSelector((state) => state.digitalentTotalPengguna);
   const {
     loading: loadingCompanyTotal,
     error: errorCompanyTotal,
@@ -232,12 +243,22 @@ const DashboardSimonas = ({ token }) => {
     { id: 7, title: "Other", percent: 5, total: "100" },
   ];
 
+  const handlePercentage = (totalAdd, total) => {
+    return Math.ceil((100 * totalAdd) / total);
+  };
+
   return (
     <PageWrapper>
       <section className="opening-hello">
         <Header
           name={"Kepala Badan Litbang SDM Kementerian Kominfo"}
           text={"SIMONAS"}
+          value={totalPengguna?.total}
+          statisticDay={totalPengguna?.total_penambahan}
+          dailyAdd={handlePercentage(
+            totalPengguna?.total_penambahan,
+            totalPengguna?.total
+          )}
         />
       </section>
 
@@ -264,7 +285,7 @@ const DashboardSimonas = ({ token }) => {
 
         <div className="row mt-5">
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-            <div className="card card-custom border bg-white">
+            <div className="card card-custom border bg-white h-100">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Lowongan Pekerjaan
@@ -275,14 +296,17 @@ const DashboardSimonas = ({ token }) => {
                   total={companyAmount?.data?.total}
                   perPage={companyAmount?.data?.perPage}
                   title="Pekerjaan"
-                  activePage={1}
-                  funcPagination={(value) => {}}
+                  activePage={pageCompanyAmount}
+                  funcPagination={(value) => {
+                    setPageCompanyAmount(value);
+                    dispatch(getSimonasCompanyAmount(token, value));
+                  }}
                 />
               </div>
             </div>
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-            <div className="card card-custom border bg-white">
+            <div className="card card-custom border bg-white h-100">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Proyek
@@ -292,8 +316,11 @@ const DashboardSimonas = ({ token }) => {
                   total={projectAmount?.data?.total}
                   perPage={projectAmount?.data?.perPage}
                   title="Proyek"
-                  activePage={1}
-                  funcPagination={(value) => {}}
+                  activePage={pageCompanyProject}
+                  funcPagination={(value) => {
+                    setPageCompanyProject(value);
+                    dispatch(getSimonasProjectAmount(token, value));
+                  }}
                 />
               </div>
             </div>
@@ -324,7 +351,7 @@ const DashboardSimonas = ({ token }) => {
 
         <div className="row mt-5">
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-            <div className="card card-custom border bg-white">
+            <div className="card card-custom border bg-white h-100">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Pelamar Kerja
@@ -342,7 +369,7 @@ const DashboardSimonas = ({ token }) => {
             </div>
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-            <div className="card card-custom border bg-white">
+            <div className="card card-custom border bg-white h-100">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Pelamar Proyek

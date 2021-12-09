@@ -181,7 +181,11 @@ const DashboardDigitalent = ({ token }) => {
   }
 
   const dataProvinsiPeserta = [];
-  if (provinsiPeserta && provinsiPeserta.list.length > 0) {
+  if (
+    provinsiPeserta &&
+    provinsiPeserta.list &&
+    provinsiPeserta.list.length > 0
+  ) {
     provinsiPeserta.list.map((row, i) => {
       let val = {
         id: i + 1,
