@@ -107,7 +107,7 @@ function ReviewDokumenKerjasama({ token }) {
 
   // kondisi jika note terisi alihkan page ke revisi
   useEffect(() => {
-    async function setDataSingle(id, token) {
+    async function setDataSingle(id) {
       try {
         let { data } = await axios.get(
           `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
@@ -153,8 +153,8 @@ function ReviewDokumenKerjasama({ token }) {
       }
     }
 
-    setDataSingle(router.query.id, token);
-    // setDataSingle(idQuery);
+    // setDataSingle(router.query.id, token);
+    setDataSingle(idQuery);
   }, []
   // [router.query.id, token, router]
   );

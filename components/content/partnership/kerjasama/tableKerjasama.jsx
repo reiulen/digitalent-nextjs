@@ -192,7 +192,7 @@ const Table = ({ token }) => {
       }
     }
     getWillExpire(token);
-  }, [dispatch, token]);
+  }, [dispatch, token, cookiePermission]);
   return (
     <PageWrapper>
       {update ? (

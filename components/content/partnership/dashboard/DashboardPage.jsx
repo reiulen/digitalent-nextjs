@@ -77,7 +77,7 @@ export default function DashboardPage({ token }) {
       setUser(session.user.user.data.user);
     });
 
-  }, [dispatch, token]);
+  }, [dispatch, token, cookiePermission]);
 
   return (
     <PageWrapper>

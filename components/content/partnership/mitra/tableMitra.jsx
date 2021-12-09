@@ -111,6 +111,7 @@ const Table = ({ token }) => {
     allMitra.card,
     update,
     token,
+    cookiePermission
   ]);
 
   return (

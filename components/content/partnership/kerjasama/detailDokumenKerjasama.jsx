@@ -40,7 +40,7 @@ const DetailDokumenKerjasama = ({ token }) => {
 
     getSingleValue(router.query.id);
     dispatch(getSingleCooperation(token, router.query.id, cookiePermission));
-  }, [dispatch, router.query.id, token]);
+  }, [dispatch, router.query.id, token, cookiePermission]);
 
   return (
     <PageWrapper>
