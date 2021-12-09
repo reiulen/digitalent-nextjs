@@ -54,9 +54,6 @@ export const updateSettingImagePublikasi = (settingData, token) => async (dispat
         dispatch({ type: UPDATE_SETTING_REQUEST });
 
         let linkImage = process.env.END_POINT_API_PUBLIKASI + `api/settings/size-upload-image`
-        // let linkImagetron = process.env.END_POINT_API_PUBLIKASI + `api/settings/size-upload-imagetron`
-        // let linkSlider = process.env.END_POINT_API_PUBLIKASI + `api/settings/size-slider`
-        // let linkFaq = process.env.END_POINT_API_PUBLIKASI + `api/settings/size-pin-faq`
 
         let params = new URLSearchParams()
         params.append("max_size", settingData)
@@ -64,7 +61,7 @@ export const updateSettingImagePublikasi = (settingData, token) => async (dispat
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
         }
 
@@ -95,7 +92,7 @@ export const updateSettingImagetronPublikasi = (settingData, token) => async (di
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
         }
 
@@ -126,7 +123,7 @@ export const updateSettingSliderPublikasi = (settingData, token) => async (dispa
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
         }
 
@@ -158,7 +155,7 @@ export const updateSettingFaqPublikasi = (settingData, token) => async (dispatch
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
         }
 

@@ -28,8 +28,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
-        getOneSurveyQuestionBanks(query.id, session.user.user.data.token)
+        getOneSurveyQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
       );
       return {
         props: { session, title: "Tambah Bank Soal Tes Survey - Subvit" },

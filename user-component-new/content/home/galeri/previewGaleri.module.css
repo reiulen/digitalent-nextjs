@@ -276,13 +276,22 @@
     visibility: visible;
   }
   .padModalGaleri{
-    padding: 0 20px;
+    /* padding: 0 32px; */
+    margin: 0 195px;
     /* margin-left: 50px; */
   }
   .kategoriGaleri{
     text-align: center;
     min-width: 160px;
     width: 85px;
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .padModalGaleri{
+    /* padding: 0 32px; */
+    margin: 0 84px;
+    /* margin-left: 50px; */
   }
 }
 
@@ -341,6 +350,11 @@
     min-width: 105px;
     width: 85px;
   }
+
+  .padModalGaleri{
+    /* padding: 0 32px; */
+    margin: 0 32px !important;
+  }
 }
 
 @media only screen and (max-width: 280px){
@@ -373,5 +387,10 @@
     font-size: 9px;
     min-width: 70px;
     width: 55px;
+  }
+
+  .padModalGaleri{
+    /* padding: 0 32px; */
+    margin: 0 32px !important;
   }
 }

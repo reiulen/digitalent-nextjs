@@ -22,22 +22,6 @@ export default function TambahBankSoalTesSubstansiStep1(props) {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const session = await getSession({ req: context.req });
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: "http://dts-dev.majapahit.id/login/admin",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: { session, title: "Tambah Bank Soal Test Substansi - Subvit" },
-//   };
-// }
-
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
@@ -52,7 +36,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      const permission = req.cookies.token_permission;
+
+      await store.dispatch(
+        dropdownAkademi(session.user.user.data.token, permission)
+      );
 
       return {
         props: { session, title: "Tambah Bank Soal Test Substansi - Subvit" },

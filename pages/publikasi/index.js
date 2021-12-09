@@ -1,14 +1,10 @@
 import dynamic from "next/dynamic";
 import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
 
-// import Layout from "../../../components/templates/layout.component";
-// import Berita from "../../../components/content/publikasi/berita/berita";
-
 import { getAllDashboardPublikasi } from "../../redux/actions/publikasi/dashboard-publikasi.actions";
 import { wrapper } from "../../redux/store";
 import { getSession } from "next-auth/client";
 
-// import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 const DashboardPublikasi = dynamic(
@@ -17,8 +13,6 @@ const DashboardPublikasi = dynamic(
       "../../components/content/publikasi/dashboard-publikasi/dashboard-publikasi"
     ),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingSkeleton />;
     },
@@ -52,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getAllDashboardPublikasi(session.user.user.data.token)
+        getAllDashboardPublikasi(session.user.user.data.token, req.cookies.token_permission)
       );
       return {
         props: { session, title: "Dashboard - Publikasi" },

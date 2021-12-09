@@ -51,7 +51,7 @@ export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, 
             },
         };
         const { data } = await axios.get(link, config)
-        
+
         dispatch({
             type: GALERI_SUCCESS,
             payload: data
@@ -127,7 +127,7 @@ export const updateGaleri = (galeriData, token) => async (dispatch) => {
         };
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id}`
-        
+
         const { data } = await axios.post(link, galeriData, config)
 
         dispatch({
@@ -178,7 +178,7 @@ export const viewGaleri = (galeriData, token) => async (dispatch) => {
                 Authorization: 'Bearer ' + token,
             },
         };
-        
+
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/show/${galeriData.id}`
         const { data } = await axios.get(link, config)
 

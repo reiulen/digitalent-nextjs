@@ -39,38 +39,38 @@ export const getAllArtikel =
     publish = null,
     startdate = null,
     enddate = null,
-    token
+    token,
   ) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: ARTIKEL_REQUEST });
-      let link =
-        process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
+    async (dispatch) => {
+      try {
+        dispatch({ type: ARTIKEL_REQUEST });
+        let link =
+          process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
+        if (keyword) link = link.concat(`&keyword=${keyword}`);
+        if (limit) link = link.concat(`&limit=${limit}`);
+        if (publish) link = link.concat(`&publish=${publish}`);
+        if (startdate) link = link.concat(`&startdate=${startdate}`);
+        if (enddate) link = link.concat(`&enddate=${enddate}`);
 
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      };
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        };
 
-      const { data } = await axios.get(link, config);
+        const { data } = await axios.get(link, config);
 
-      dispatch({
-        type: ARTIKEL_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: ARTIKEL_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+        dispatch({
+          type: ARTIKEL_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: ARTIKEL_FAIL,
+          payload: error.response.data.message,
+        });
+      }
+    };
 
 export const getAllArtikelsPeserta =
   (
@@ -80,39 +80,40 @@ export const getAllArtikelsPeserta =
     keyword = null,
     publish = null,
     startdate = null,
-    enddate = null
+    enddate = null,
+    permission
   ) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: ARTIKEL_PESERTA_REQUEST });
-      let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/auth/peserta`;
+    async (dispatch) => {
+      try {
+        dispatch({ type: ARTIKEL_PESERTA_REQUEST });
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/auth/peserta`;
 
-      const config = {
-        params: {
-          page,
-          keyword,
-          limit,
-          publish,
-          startdate,
-          enddate,
-        },
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      };
+        const config = {
+          params: {
+            page,
+            keyword,
+            limit,
+            publish,
+            startdate,
+            enddate,
+          },
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        };
 
-      const { data } = await axios.get(link, config);
-      dispatch({
-        type: ARTIKEL_PESERTA_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: ARTIKEL_PESERTA_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+        const { data } = await axios.get(link, config);
+        dispatch({
+          type: ARTIKEL_PESERTA_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: ARTIKEL_PESERTA_FAIL,
+          payload: error.response.data.message,
+        });
+      }
+    };
 
 export const getDetailArtikel = (id, token) => async (dispatch) => {
   try {
@@ -205,16 +206,16 @@ export const newArtikelPeserta = (artikelData, token) => async (dispatch) => {
       config
     );
 
-    if(data.status === true){
+    if (data.status === true) {
       Swal.fire("Berhasil", "Artikel Berhasil Dibuat", "success").then(() => {
         window.location = "/peserta/artikel";
       });
-    }else{
-      Swal.fire("Oops !", data.message, "error").then(() => {});
+    } else {
+      Swal.fire("Oops !", data.message, "error").then(() => { });
     }
 
   } catch (error) {
-    Swal.fire("Oops !", data.message, "error").then(() => {});
+    Swal.fire("Oops !", data.message, "error").then(() => { });
   }
 };
 
@@ -266,7 +267,7 @@ export const updateArtikelPeserta = (artikelData, token, id) => async (dispatch)
       window.location = "/peserta/artikel";
     });
   } catch (error) {
-    Swal.fire("Gagal", data.message, "error").then(() => {});
+    Swal.fire("Gagal", data.message, "error").then(() => { });
   }
 };
 

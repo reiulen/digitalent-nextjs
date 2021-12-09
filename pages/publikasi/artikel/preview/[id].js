@@ -39,11 +39,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       await store.dispatch(
-        getDetailArtikel(params.id, session.user.user.data.token)
+        getDetailArtikel(params.id, session.user.user.data.token, req.cookies.token_permission)
       );
 
       await store.dispatch(
-        getTagBerandaArtikel(session.user.user.data.token)
+        getTagBerandaArtikel(session.user.user.data.token, req.cookies.token_permission)
       )
 
       return {
