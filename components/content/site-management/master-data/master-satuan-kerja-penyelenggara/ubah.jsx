@@ -32,9 +32,9 @@ const TambahApi = ({ token }) => {
   const [changeProvince, setChangeProvince] = useState(false)
 
 
-  let optionTempProvList = sortirOptionTempProvList.map((items) => {
-    return { ...items, value: items.label }
-  })
+  // let optionTempProvList = sortirOptionTempProvList.map((items) => {
+  //   return { ...items, value: items.label }
+  // })
 
   const optionTempProvList = [];
   if (sortirOptionTempProvList) {
@@ -212,7 +212,7 @@ const TambahApi = ({ token }) => {
                   isSearchable={true}
                   name="color"
                   onChange={(e) => changeListProvinsi(e)}
-                  options={optionTempProvList}
+                  options={province}
                   onBlur={() => simpleValidator.current.showMessageFor("provinsi")}
                 />
 
