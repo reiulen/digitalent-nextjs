@@ -38,14 +38,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
+
       // certificate builder pake theme id
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
