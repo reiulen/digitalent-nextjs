@@ -13,8 +13,6 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const FAQ = dynamic(
   () => import("../../../components/content/publikasi/faq/faq"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingSkeleton />;
     },
@@ -36,7 +34,6 @@ export default function FaqPage(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
-      // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -56,20 +53,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.publish,
           query.startdate,
           query.enddate,
-          session.user.user.data.token
+          session.user.user.data.token,
+          req.cookies.token_permission
         )
       );
       
-      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token, req.cookies.token_permission));
       
       return {
         props: { session, title: "FAQ - Publikasi" },
       };
     }
 );
-
-// export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-//     // await store.dispatch(getAllFaq())
-//     // await store.dispatch(getAllFaq(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
-//     await store.dispatch(getAllFaqPagination(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
-// })

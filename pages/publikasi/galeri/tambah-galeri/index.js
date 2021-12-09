@@ -3,8 +3,6 @@ import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 import Layout from "../../../../components/templates/layout.component";
-// import Tambah from "../../../components/content/publikasi/galeri/tambah";
-
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 
@@ -47,9 +45,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(getAllKategori(session.user.user.data.token));
-      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
-      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      await store.dispatch(getAllKategori(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getSettingPublikasi(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token, req.cookies.token_permission));
 
       return {
         props: { session, title: "Tambah Galeri - Publikasi" },

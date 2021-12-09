@@ -48,11 +48,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailGaleri(query.id, session.user.user.data.token)
+        getDetailGaleri(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
-      await store.dispatch(getAllKategori(session.user.user.data.token));
-      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
-      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      await store.dispatch(getAllKategori(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getSettingPublikasi(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token, req.cookies.token_permission));
       
       return {
         props: { session, title: "Ubah Galeri" },

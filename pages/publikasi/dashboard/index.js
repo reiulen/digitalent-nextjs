@@ -46,11 +46,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getAllDashboardPublikasi(session.user.user.data.token)
+        getAllDashboardPublikasi(session.user.user.data.token, req.cookies.token_permission)
       );
 
       await store.dispatch(
-        getRoleAdmin(session.user.user.data.token)
+        getRoleAdmin(session.user.user.data.token, req.cookies.token_permission)
       );
       
       return {

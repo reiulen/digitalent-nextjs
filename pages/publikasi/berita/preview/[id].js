@@ -40,11 +40,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailBerita(params.id, session.user.user.data.token)
+        getDetailBerita(params.id, session.user.user.data.token, req.cookies.token_permission)
       );
 
       await store.dispatch(
-        getTagBerandaBerita(session.user.user.data.token)
+        getTagBerandaBerita(session.user.user.data.token, req.cookies.token_permission)
       )
 
       return {

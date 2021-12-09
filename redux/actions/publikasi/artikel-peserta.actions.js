@@ -29,7 +29,7 @@ import axios from "axios";
 
 // get all data
 export const getAllArtikelPeserta =
-  (role, page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) =>
+  (role, page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token, permission) =>
     async (dispatch) => {
       try {
         dispatch({ type: ARTIKEL_PESERTA_REQUEST });
@@ -45,6 +45,7 @@ export const getAllArtikelPeserta =
         const config = {
           headers: {
             Authorization: "Bearer " + token,
+            permissionToken: permission
           },
         };
 
@@ -61,13 +62,14 @@ export const getAllArtikelPeserta =
       }
     };
 
-export const getDetailArtikelPeserta = (id, token) => async (dispatch) => {
+export const getDetailArtikelPeserta = (id, token, permission) => async (dispatch) => {
   try {
     let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`;
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        permissionToken: permission
       },
     };
 
@@ -85,7 +87,7 @@ export const getDetailArtikelPeserta = (id, token) => async (dispatch) => {
   }
 };
 
-export const newArtikelPeserta = (artikelPesertaData , token) => async (dispatch) => {
+export const newArtikelPeserta = (artikelPesertaData, token, permission) => async (dispatch) => {
   try {
     dispatch({
       type: NEW_ARTIKEL_PESERTA_REQUEST,
@@ -94,6 +96,7 @@ export const newArtikelPeserta = (artikelPesertaData , token) => async (dispatch
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        permissionToken: permission
       },
     };
 
@@ -115,7 +118,7 @@ export const newArtikelPeserta = (artikelPesertaData , token) => async (dispatch
   }
 };
 
-export const updateArtikelPeserta = (artikelPesertaData, token) => async (dispatch) => {
+export const updateArtikelPeserta = (artikelPesertaData, token, permission) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ARTIKEL_PESERTA_REQUEST });
 
@@ -125,6 +128,7 @@ export const updateArtikelPeserta = (artikelPesertaData, token) => async (dispat
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        permissionToken: permission
       },
     };
 
@@ -142,13 +146,14 @@ export const updateArtikelPeserta = (artikelPesertaData, token) => async (dispat
   }
 };
 
-export const deleteArtikelPeserta = (id, token) => async (dispatch) => {
+export const deleteArtikelPeserta = (id, token, permission) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ARTIKEL_PESERTA_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        permissionToken: permission
       },
     };
 

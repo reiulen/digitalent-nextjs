@@ -3,7 +3,6 @@ import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 import Layout from "../../../../components/templates/layout.component";
-// import EditKategori from "../../../components/content/publikasi/kategori/edit";
 
 import { getDetailKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
@@ -13,8 +12,6 @@ import LoadingPage from "../../../../components/LoadingPage";
 const EditKategori = dynamic(
   () => import("../../../../components/content/publikasi/kategori/edit"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingPage />;
     },
@@ -48,7 +45,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailKategori(query.id, session.user.user.data.token)
+        getDetailKategori(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
       return {
         props: { session, title: "Ubah Kategori - Publikasi" },
