@@ -186,7 +186,7 @@ const Table = ({ token }) => {
                                       "site_management.export_data.manage"
                                     ) && (
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                       onClick={() =>
                                         dispatch(exportFileCSV(items.id, token))
                                       }
@@ -222,7 +222,7 @@ const Table = ({ token }) => {
                                     <Link
                                       href={`/site-management/export-data/detail-data/${items.id}`}
                                     >
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mx-3">
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
                                         <IconEye width="16" height="16" />
                                         <div className="text-hover-show-hapus">
                                           Detail
