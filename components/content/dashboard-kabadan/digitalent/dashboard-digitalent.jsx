@@ -114,9 +114,9 @@ const DashboardDigitalent = ({ token }) => {
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
-  const drowpdownTemabyAkademi = useSelector(
-    (state) => state.drowpdownTemabyAkademi
-  );
+  // const drowpdownTemabyAkademi = useSelector(
+  //   (state) => state.drowpdownTemabyAkademi
+  // );
 
   const year = ["2021", "2020", "2019", "2018", "2017", "2016"];
   const dataStatistikAkademiPendaftar = [];
@@ -650,14 +650,14 @@ const DashboardDigitalent = ({ token }) => {
                       }}
                     >
                       <option value="">Semua</option>
-                      {drowpdownTemabyAkademi &&
+                      {/* {drowpdownTemabyAkademi &&
                         drowpdownTemabyAkademi.data &&
                         drowpdownTemabyAkademi.data.data.length > 0 &&
                         drowpdownTemabyAkademi.data.data.map((row, i) => (
                           <option key={i} value={row.value}>
                             {row.label}
                           </option>
-                        ))}
+                        ))} */}
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
