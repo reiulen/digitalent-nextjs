@@ -10,10 +10,14 @@ const TestSubstansi = () => {
   const router = useRouter();
   const temaId = Cookies.get("id_tema");
   const pelatihanId = Cookies.get("id_pelatihan");
+  const routerTraining = router.query.id_pelatihan;
+  const routerTema = router.query.id_tema;
 
   const handlePage = () => {
     router.push(
-      `/peserta/subvit/trivia/1?theme_id=${temaId}&training_id=${pelatihanId}`
+      `/peserta/subvit/trivia/1?theme_id=${routerTema || temaId}&training_id=${
+        routerTraining || pelatihanId
+      }`
     );
   };
 

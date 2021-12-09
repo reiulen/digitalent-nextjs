@@ -8,7 +8,10 @@ import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMidd
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 
 import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
-import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import {
+  getAllRiwayatPelatihanPeserta,
+  getDetailRiwayatPelatihan,
+} from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
 const TriviaPage = dynamic(
   () => import("../../../user-component-new/content/peserta/trivia"),
@@ -66,23 +69,60 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       let success = false;
 
-      const { data } = await store.dispatch(
-        getDashboardPeserta(session?.user.user.data.user.token)
-      );
-
-      const status = data.pelatihan.pelatihan_berjalan.status || "";
-      if (!status || status == "") {
-        success = false;
-      } else if (status.includes("pelatihan")) {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            data.pelatihan.pelatihan_berjalan.id,
-            session.user.user.data.user.token
-          )
+      if (query.no) {
+        //jika ada query id
+        const data = await store.dispatch(
+          getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
         );
-        success = true;
+
+        if (data) {
+          if (data?.data?.trivia) {
+            success = true;
+          } else {
+            success = false;
+          }
+        } else {
+          success = false;
+        }
       } else {
-        success = false;
+        // jika gak ada gw cek di dashboard ada gak status tes substansi?
+        const dataDashboard = await store.dispatch(
+          getDashboardPeserta(session?.user.user.data.user.token)
+        );
+        const status =
+          dataDashboard?.data.pelatihan.pelatihan_berjalan.status || "";
+
+        if (!status || status == "") {
+          success = false;
+        } else if (dataDashboard?.data?.pelatihan?.pelatihan_berjalan?.trivia) {
+          await store.dispatch(
+            getDetailRiwayatPelatihan(
+              dataDashboard?.data.pelatihan.pelatihan_berjalan.id,
+              session.user.user.data.user.token
+            )
+          );
+          success = true;
+        } else {
+          //jika gak ada gw cek di riwayat pelatihan ada gak datanya
+          const { data } = await store.dispatch(
+            getAllRiwayatPelatihanPeserta(session?.user.user.data.user.token)
+          );
+          success = false;
+          const list = data.list.filter((item) => {
+            return item.trivia;
+          });
+          if (list.length == 0 || !list) {
+            success = false;
+          } else {
+            await store.dispatch(
+              getDetailRiwayatPelatihan(
+                list[0].id,
+                session.user.user.data.user.token
+              )
+            );
+            success = true;
+          }
+        }
       }
 
       if (session) {
