@@ -76,78 +76,107 @@ const GeneralPage = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    if (simpleValidator.current.allValid()) {
 
-      if (description === "") {
-        Swal.fire("Oops !", "Form description tidak boleh kosong", "error");
-      } else {
-        Swal.fire({
-          title: "Apakah anda yakin simpan ?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          cancelButtonText: "Batal",
-          confirmButtonText: "Ya !",
-          dismissOnDestroy: false,
-        }).then(async (result) => {
-          if (result.value) {
-            const sendData = {
-              logo: {
-                header_logo: !imageLogo ? imageLogoApi : imageLogo,
-                footer_logo: !imageLogo2 ? imageLogoApi2 : imageLogo2,
-              },
-              logo_description: description,
-              social_media: formSocialMedia,
-              external_link: formExternalLink,
-              alamat: address,
-              color: [
-                {
-                  name: "Primary",
-                  color: colorPrimary,
-                },
-                {
-                  name: "Secondary",
-                  color: colorSecondary,
-                },
-                {
-                  name: "Extras",
-                  color: colorExtras,
-                },
-              ],
-            };
+    let dataSosmedImage = formSocialMedia.map((row, i) => {
+      return row.image_logo
+    })
 
-            try {
-              const { data } = await axios.post(
-                `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
-                sendData,
-                {
-                  headers: {
-                    authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-              Swal.fire("Berhasil", "Berhasil simpan data", "success");
-              window.location.reload()
-            } catch (error) {
-              Swal.fire(
-                "Oops !",
-                `${error.response.data.message}`,
-                "error"
-              );
-            }
-          }
-        });
-      }
+    let dataSosmedName = formSocialMedia.map((row, i) => {
+      return row.name
+    })
+
+    let dataSosmedLink = formSocialMedia.map((row, i) => {
+      return row.link_social_media
+    })
+
+    let dataExternal = formExternalLink.map((row, i) => {
+      return row.name
+    })
+
+    let dataExternalLink = formExternalLink.map((row, i) => {
+      return row.link
+    })
+
+    if (dataExternal.includes("") || dataExternalLink.includes("")) {
+      Swal.fire("Oops !", "Isi data dengan benar !", "error");
+    } else if (dataSosmedImage.includes("") || dataSosmedName.includes("") || dataSosmedLink.includes("")) {
+      Swal.fire("Oops !", "Isi data dengan benar !", "error");
     } else {
-      simpleValidator.current.showMessages();
-      forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
+      if (simpleValidator.current.allValid()) {
+
+        if (description === "") {
+          Swal.fire("Oops !", "Isi data dengan benar !", "error");
+        } else {
+          Swal.fire({
+            title: "Apakah anda yakin simpan ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Batal",
+            confirmButtonText: "Ya !",
+            dismissOnDestroy: false,
+          }).then(async (result) => {
+            if (result.value) {
+              const sendData = {
+                logo: {
+                  header_logo: !imageLogo ? imageLogoApi : imageLogo,
+                  footer_logo: !imageLogo2 ? imageLogoApi2 : imageLogo2,
+                },
+                logo_description: description,
+                social_media: formSocialMedia,
+                external_link: formExternalLink,
+                alamat: address,
+                color: [
+                  {
+                    name: "Primary",
+                    color: colorPrimary,
+                  },
+                  {
+                    name: "Secondary",
+                    color: colorSecondary,
+                  },
+                  {
+                    name: "Extras",
+                    color: colorExtras,
+                  },
+                ],
+              };
+
+              try {
+                const { data } = await axios.post(
+                  `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
+                  sendData,
+                  {
+                    headers: {
+                      authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+                Swal.fire("Berhasil", "Berhasil simpan data", "success");
+                window.location.reload()
+              } catch (error) {
+                Swal.fire(
+                  "Oops !",
+                  `${error.response.data.message}`,
+                  "error"
+                );
+              }
+            }
+          });
+        }
+      }
     }
+
+    // else {
+    //   simpleValidator.current.showMessages();
+    //   forceUpdate(1);
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: "Isi data dengan benar !",
+    //   });
+    // }
   };
 
   const addExternalLink = () => {
