@@ -41,6 +41,7 @@ import {
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/management_cooporation.type";
+import Cookies from "js-cookie"
 
 const Table = ({ token }) => {
   const router = useRouter();
@@ -48,6 +49,7 @@ const Table = ({ token }) => {
   let selectRefKerjasama = null;
   let selectRefStatus = null;
   let selectRefMitra = null;
+  const cookiePermission = Cookies.get("token_permission")
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
@@ -135,10 +137,23 @@ const Table = ({ token }) => {
     setIsStatusBar(false);
     router.replace("/partnership/kerjasama", undefined, { shallow: true });
   };
+  
 
   useEffect(() => {
-    dispatch(fetchAllMK(token));
-  }, [dispatch, allMK.keyword, allMK.page, allMK.status, allMK.categories_cooporation, allMK.partner, allMK.limit, allMK.card, allMK.status_delete, allMK.status_list, token]);
+    dispatch(fetchAllMK(token, cookiePermission));
+  }, [dispatch, 
+    allMK.keyword, 
+    allMK.page, 
+    allMK.status, 
+    allMK.categories_cooporation, 
+    allMK.partner, 
+    allMK.limit, 
+    allMK.card, 
+    allMK.status_delete, 
+    allMK.status_list, 
+    token,
+    cookiePermission
+  ]);
 
   const [sumWillExpire, setSumWillExpire] = useState(0);
 
@@ -168,6 +183,7 @@ const Table = ({ token }) => {
         let { data } = await axios.get(`${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`, {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: cookiePermission
           },
         });
         setSumWillExpire(data.data.total);

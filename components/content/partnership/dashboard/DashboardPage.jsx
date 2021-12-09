@@ -26,26 +26,23 @@ export default function DashboardPage({ token }) {
   const colors = ["#215480", "#4299E1", "#357AB4"];
   const [dataPieChartStatusPengajuan, setDataPieChartStatusPengajuan] =
     useState([]);
+
   const [dataPieChartPengajuanDisetujui, setDataPieChartPengajuanDisetujui] =
     useState([]);
 
   const [errorGetData, setErrorGetData] = useState("");
+  const cookiePermission = Cookies.get("token_permission")
 
   useEffect(() => {
     // dispatch (fetchDashboard(token))
-
     async function fetchDashboards() {
-      // const cookiePermission = Cookies.get("token_permission")
-      
       try {
         let { data } = await axios.get(
           `${process.env.END_POINT_API_PARTNERSHIP}api/dashbord`,
           {
             headers: {
               authorization: `Bearer ${token}`,
-              // permissionToken: localStorage.getItem("token-permission")
-              // permissionToken: "U2FsdGVkX1/8bJA1yPuTitjBQIWEy1GEsyNFohOq7F2PIsPVfNgnmPPOWcJXAKFEgbMppK8Fyw0xReLhnj+Pmf6udk18GMKI1929EvT0DZafMFtuR/iRg3fz1L1ntUCC8J9DXy/FmNThOaTiYI7q8Q355IC5RgKGtHfkQxDRDLfS/XwQ8y1hnRRurzZgJAV9cTJs/7ZPQbI5r0E1ymvHbg6hzwCXeONeRcX3U7rsXaO6ouwfN6/ymcJUEGMxVNv/64NkXTk0ISzV06+jyuhoT/on/emeQ6prfLCjaPxzDDCdSlUKAD3kA/FYLAtJKdyUZVkQMx1T9d5UIuI1eO8WZfP0jV+R12qrzM12QCsr5jiTJTe2UiCGWhm3fLdJJKMKPxWJJyHyhGLE47qFGjK84iEVvqAvuSGyGOPCjN7g49ARR0H9vBC0qCtekN/58zGfyqGORFjcZFLSlKnsTQip1U2qgPvDTf6b6rot3gSsEYJRyhhG3ksp1uyFDxGmNR+qfo4C/iQ4qodADfQg+mFGOx2mVhMuj+8wcbRD6XW9v0vmAHiW/Zx+bN4/dOYsaLrGdnWssuoNi9yIRCVPkqYImGRgMI2A2BM7/ZpRrD8/HvI="
-              // permissionToken: cookiePermission
+              Permission: cookiePermission
             },
           }
         );

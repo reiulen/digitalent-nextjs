@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Style from "../../../../styles/progressbar.module.css";
 import axios from "axios";
+import Cookies from "js-cookie"
 
 function Pembahasan({ token }) {
   const router = useRouter();
@@ -21,6 +22,7 @@ function Pembahasan({ token }) {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
@@ -34,6 +36,9 @@ function Pembahasan({ token }) {
 
   return (
     <PageWrapper>
+      {
+        console.log (status)
+      }
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -162,7 +167,6 @@ function Pembahasan({ token }) {
                     ) : (
                       ""
                     )}
-
                   </div>
                 </div>
               </div>

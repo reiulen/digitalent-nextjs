@@ -9,6 +9,7 @@ import axios from "axios";
 import IconCalender from "../../../assets/icon/Calender";
 
 import moment from "moment";
+import Cookies from "js-cookie"
 
 const SubmitKerjasama = ({ token }) => {
   const [startDate, setStartDate] = useState(null);
@@ -128,6 +129,7 @@ const SubmitKerjasama = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -311,7 +313,7 @@ const SubmitKerjasama = ({ token }) => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal Tanda Tangan
                 </label>
-                <div className="d-flex align-items-center position-relative datepicker-w w-100">
+                <div className="d-flex align-items-center position-relative datepicker-w w-100" style={{zIndex: "10"}}>
                   <DatePicker
                     className="form-search-date form-control-sm form-control cursor-pointer"
                     selected={endDate}

@@ -8,8 +8,9 @@ import {
 } from "../../types/partnership/partnership_permission.type"
 
 import axios from "axios";
+import Cookies from "js-cookie";
 
-export const getPartnershipPermissions = (token) => async (dispatch) => {
+export const getPartnershipPermissions = (token, permission) => async (dispatch) => {
     try {
 
         dispatch({ type: FETCH_PARTNERSHIP_PERMISSION_REQUEST });
@@ -17,7 +18,7 @@ export const getPartnershipPermissions = (token) => async (dispatch) => {
         const config = {
             headers: {
               Authorization: "Bearer " + token,
-            //   permissionToken: localStorage.getItem("token-permission")
+              Permission: permission
             },
         };
 

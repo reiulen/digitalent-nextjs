@@ -14,6 +14,7 @@ import {
 
 import axios from "axios";
 import AlertBar from "../components/BarAlert";
+import Cookies from 'js-cookie'
 
 function ReviewKerjasama({ token }) {
   const router = useRouter();
@@ -60,6 +61,7 @@ function ReviewKerjasama({ token }) {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              // Permission: Cookies.get("token_permission")
             },
           }
         );

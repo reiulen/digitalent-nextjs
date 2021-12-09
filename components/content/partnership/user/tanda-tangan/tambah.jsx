@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 
 import axios from "axios";
+import Cookies from "js-cookie"
 
 const TambahTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
@@ -98,6 +99,7 @@ const TambahTandaTangan = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get ("token_permission")
                 },
               }
             );
