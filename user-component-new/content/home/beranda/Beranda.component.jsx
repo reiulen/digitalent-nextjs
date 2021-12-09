@@ -30,11 +30,11 @@ const Beranda = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { publikasi } = useSelector(state => state.allPublikasiBeranda);
+  const { publikasi } = useSelector((state) => state.allPublikasiBeranda);
   const { tema, loading: loadingTema } = useSelector(
-    state => state.temaByAkademi
+    (state) => state.temaByAkademi
   );
-  const { akademi } = useSelector(state => state.allAkademi);
+  const { akademi } = useSelector((state) => state.allAkademi);
   const [activeTab, setActiveTab] = useState(0);
   const [akademiId, setAkademiId] = useState(null);
 
@@ -269,7 +269,7 @@ const Beranda = ({ session }) => {
     setCardBookmark(bookmark);
   };
 
-  const handleCloseQuickView = indexTema => {
+  const handleCloseQuickView = (indexTema) => {
     let obj = [...pelatihan];
 
     for (let i = 0; i < obj.length; i++) {
@@ -284,7 +284,7 @@ const Beranda = ({ session }) => {
     if (session) {
       const data = await dispatch(checkRegisterPelatihan(id, session.token));
       if (data.status === true) {
-        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
+        router.push(`/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
         let errMessage = data.message;
         SweatAlert("Gagal", errMessage, "error");
@@ -294,7 +294,7 @@ const Beranda = ({ session }) => {
     }
   };
 
-  const PrintTextTrim = word => {
+  const PrintTextTrim = (word) => {
     let str = null;
     if (word.length > 200) {
       str = word.slice(0, 200) + "...";
@@ -305,7 +305,7 @@ const Beranda = ({ session }) => {
     return str;
   };
 
-  const handleBookmark = async pelatihan => {
+  const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -651,13 +651,17 @@ const Beranda = ({ session }) => {
                                                     Registrasi:{" "}
                                                     {moment(
                                                       row.pendaftaran_mulai
-                                                    ).format(
-                                                      "DD MMM YYYY"
-                                                    )}{" "}
+                                                    )
+                                                      .utc()
+                                                      .format(
+                                                        "DD MMM YYYY"
+                                                      )}{" "}
                                                     -{" "}
                                                     {moment(
                                                       row.pendaftaran_selesai
-                                                    ).format("DD MMM YYYY")}
+                                                    )
+                                                      .utc()
+                                                      .format("DD MMM YYYY")}
                                                   </span>
                                                 </div>
                                                 <div className="date d-flex align-items-center align-middle">
@@ -861,13 +865,13 @@ const Beranda = ({ session }) => {
                                                 style={{ color: "#6C6C6C" }}
                                               >
                                                 Registrasi:{" "}
-                                                {moment(
-                                                  cardPendaftaranMulai
-                                                ).format("DD MMM YYYY")}{" "}
+                                                {moment(cardPendaftaranMulai)
+                                                  .utc()
+                                                  .format("DD MMM YYYY")}{" "}
                                                 -{" "}
-                                                {moment(
-                                                  cardPendaftaranSelesai
-                                                ).format("DD MMM YYYY")}
+                                                {moment(cardPendaftaranSelesai)
+                                                  .utc()
+                                                  .format("DD MMM YYYY")}
                                               </span>
                                             </div>
                                             <div className="date d-flex align-items-center align-middle mr-5">
@@ -988,14 +992,14 @@ const Beranda = ({ session }) => {
       <section className="step-register-new my-lg-20 ">
         <Container fluid className="padding-content-home">
           <div className="title-step-register text-center">
-            <h1>
+            <h1 className="fw-600 text-center" style={{ color: "#1F1F1F" }}>
               Tahapan Pendaftaran <br /> Digital Talent Scholarship
             </h1>
 
             <div className="mt-25 p-0 m-0 d-flex justify-content-center justify-content-md-between flex-wrap">
               <div className="content">
                 <img
-                  src="/assets/media/pendaftaran-illustration-new.svg"
+                  src="/assets/media/pendaftaran-illustration-new.png"
                   className="caption-image-new"
                 />
                 <div className="caption d-flex align-items-center flex-column mt-6">
@@ -1007,7 +1011,7 @@ const Beranda = ({ session }) => {
               </div>
               <div className="content">
                 <img
-                  src="/assets/media/seleksi-illustration-new.svg"
+                  src="/assets/media/seleksi-illustration-new.png"
                   className="caption-image-new"
                 />
                 <div className="caption d-flex align-items-center flex-column mt-6">
@@ -1020,7 +1024,7 @@ const Beranda = ({ session }) => {
               </div>
               <div className="content">
                 <img
-                  src="/assets/media/verifikasi-illustration-new.svg"
+                  src="/assets/media/verifikasi-illustration-new.png"
                   className="caption-image-new"
                 />
                 <div className="caption d-flex align-items-center flex-column mt-6">
@@ -1033,7 +1037,7 @@ const Beranda = ({ session }) => {
               </div>
               <div className="content">
                 <img
-                  src="/assets/media/pelatihan-illustration-new.svg"
+                  src="/assets/media/pelatihan-illustration-new.png"
                   className="caption-image-new"
                 />
                 <div className="caption d-flex align-items-center flex-column mt-6">

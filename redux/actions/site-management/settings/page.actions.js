@@ -141,7 +141,6 @@ export const getDetailPages =
         payload: data,
       });
     } catch (error) {
-      console.log(error)
       dispatch({
         type: DETAIL_PAGE_FAIL,
         payload: error.response.data.message,

@@ -149,22 +149,18 @@ export const postViaFilter = (
     pelatihan: training,
     status_profile: profileStatus,
     status_seleksi: selectionStatus,
-    status_update: participantSelectionStatusUpdate,
-    status_peserta: status,
+    status_update: status,
+    status_peserta: participantSelectionStatusUpdate,
     broadcast_email: broadcastEmailSendNotification,
     subjek_email: emailSubject,
     konten_email: emailContent,
   };
 
-  let subm = new FormData();
-  subm.append("status_types", via);
-  subm.append("training_rules", JSON.stringify(data));
-
   return (dispatch) => {
     axios
       .post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
-        subm,
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/filter-subm`,
+        data,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -184,7 +180,7 @@ export const postViaFilter = (
         }
       })
       .catch((error) => {
-        Swal.fire("Oops...", "Isi data dengan benar !", "error");
+        Swal.fire("Oops...", error.message, "error");
 
       });
   };
@@ -204,8 +200,8 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
     pelatihan: "",
     status_profile: "",
     status_seleksi: "",
-    status_update: participantSelectionStatusUpdate,
-    status_peserta: status,
+    status_update: status,
+    status_peserta: participantSelectionStatusUpdate,
     broadcast_email: broadcastEmailSendNotification,
     subjek_email: emailSubject,
     konten_email: emailContent,

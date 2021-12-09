@@ -116,12 +116,12 @@ const Navigationbar = ({ session }) => {
           },
         }
       );
-
       localStorage.setItem("menu", JSON.stringify(data.data));
     } catch (error) {}
   };
 
   useEffect(() => {
+    getMenu();
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
     }
@@ -190,6 +190,26 @@ const Navigationbar = ({ session }) => {
     }
   };
 
+  const [notification, setNotification] = useState(false);
+  const data = [
+    { icon: "Fail", text: "test" },
+    { icon: "Success", text: "test" },
+    { icon: "Warning", text: "test" },
+    { icon: "File", text: "test" },
+    { icon: "Fail", text: "test" },
+    { icon: "Success", text: "test" },
+    { icon: "Warning", text: "test" },
+    { icon: "File", text: "test" },
+  ];
+
+  const [navbarItems, setNavbarItems] = useState("");
+  const [rilisMedia, setRilisMedia] = useState([
+    "berita",
+    "artikel",
+    "galeri",
+    "video",
+  ]);
+  const [index, setIndex] = useState(0);
   return (
     <>
       <Navbar
@@ -287,113 +307,244 @@ const Navigationbar = ({ session }) => {
         <Navbar.Collapse id="basic-navbar-nav" className={`${style.collapsed}`}>
           <Nav className="me-auto dropdown-explore btn-masuk-peserta mr-1 d-lg-block d-none">
             {/* MENU */}
+
             <div className="row mx-1 my-0">
               <NavDropdown
                 title="Menu"
                 id="basic-nav-dropdown"
-                className="navdropdown-child position-relative w-100 text-menu"
+                className="navdropdown-child text-capitalize position-relative w-100 text-menu"
               >
-                <NavDropdown.Item href="/" className="navdropdown-child">
-                  Beranda
-                </NavDropdown.Item>
-                <div className="btn-group dropright w-100">
-                  <a
-                    type="button"
-                    className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Pelatihan
-                  </a>
-                  <div className="dropdown-menu ml-3">
-                    {akademi.map((item, i) => {
-                      return (
-                        <Link key={item.id} href={`/detail/akademi/${item.id}`}>
-                          <a className="dropdown-item navdropdown-child ">
-                            {item.slug}
-                          </a>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-                <Link href="/pusat-informasi" passHref>
-                  <NavDropdown.Item className="navdropdown-child">
-                    Pusat Informasi
-                  </NavDropdown.Item>
-                </Link>
-                <Link href="/tentang-kami" passHref>
-                  <NavDropdown.Item className="navdropdown-child">
-                    Tentang Kami
-                  </NavDropdown.Item>
-                </Link>
-                <Link href="/penyelenggara" passHref>
-                  <NavDropdown.Item className="navdropdown-child">
-                    Penyelenggara
-                  </NavDropdown.Item>
-                </Link>
-                <div className="btn-group dropright w-100">
-                  <a
-                    type="button"
-                    className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Rilis Media
-                  </a>
-                  <div className="dropdown-menu ml-3">
-                    <Link href="/berita">
-                      <a className="dropdown-item navdropdown-child">Berita</a>
-                    </Link>
-                    <Link href="/artikel">
-                      <a className="dropdown-item navdropdown-child">Artikel</a>
-                    </Link>
-                    <Link href="/galeri">
-                      <a className="dropdown-item navdropdown-child">Galeri</a>
-                    </Link>
-                    <Link href="/video">
-                      <a className="dropdown-item navdropdown-child">Video</a>
-                    </Link>
-                  </div>
-                </div>
-                <Link href="/faq" passHref>
-                  <NavDropdown.Item className="navdropdown-child">
-                    FAQ
-                  </NavDropdown.Item>
-                </Link>
-                <Link href="/kontak" passHref>
-                  <NavDropdown.Item className="navdropdown-child">
-                    Kontak
-                  </NavDropdown.Item>
-                </Link>
-                <div className="btn-group dropright w-100">
-                  <a
-                    type="button"
-                    className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Lainnya
-                  </a>
-                  <div className="dropdown-menu ml-3">
-                    {menu
-                      ? menu.map((item, index) => {
-                          return (
-                            <Link href={"/lainnya/" + item.url} key={index}>
-                              <a className="dropdown-item navdropdown-child">
-                                {item.name}
-                              </a>
-                            </Link>
-                          );
-                        })
-                      : null}
+                <Row
+                  className={
+                    navbarItems ? `w-350px p-0 m-0` : "w-175px p-0 m-0"
+                  }
+                >
+                  <Col md={navbarItems ? 6 : 12} className="p-0 m-0">
+                    <NavDropdown.Item href="/" className="navdropdown-child">
+                      Beranda
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      className="navdropdown-child"
+                      onClick={(e) => {
+                        setNavbarItems(akademi);
 
-                   
+                        if (index != 1) {
+                          setIndex(1);
+                        } else {
+                          setNavbarItems(null);
+                          setIndex(0);
+                        }
+                        e.stopPropagation();
+                      }}
+                      active={index == 1 ? true : false}
+                    >
+                      <div className="d-flex justify-content-between align-items-center">
+                        Pelatihan
+                        <span className="ri-arrow-right-s-line" />
+                      </div>
+                    </NavDropdown.Item>
+                    <Link href="/pusat-informasi" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        pusat informasi
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/tentang-kami" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        tentang kami
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/penyelenggara" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        penyelenggara
+                      </NavDropdown.Item>
+                    </Link>
+                    <NavDropdown.Item
+                      className="navdropdown-child"
+                      onClick={(e) => {
+                        setNavbarItems(rilisMedia);
+                        if (index != 2) {
+                          setIndex(2);
+                        } else {
+                          setNavbarItems(null);
+                          setIndex(0);
+                        }
+                        e.stopPropagation();
+                      }}
+                      active={index == 2 ? true : false}
+                    >
+                      <div className="d-flex justify-content-between align-items-center">
+                        rilis media
+                        <span className="ri-arrow-right-s-line" />
+                      </div>
+                    </NavDropdown.Item>
+                    <Link href="/faq" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        FAQ
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/kontak" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        Kontak
+                      </NavDropdown.Item>
+                    </Link>
+                    <NavDropdown.Item
+                      onClick={(e) => {
+                        setNavbarItems(menu);
+                        if (index != 3) {
+                          setIndex(3);
+                        } else {
+                          setNavbarItems(null);
+                          setIndex(0);
+                        }
+                        e.stopPropagation();
+                      }}
+                      active={index == 3 ? true : false}
+                      className="navdropdown-child"
+                    >
+                      <div className="d-flex justify-content-between align-items-center">
+                        lainnya
+                        <span className="ri-arrow-right-s-line" />
+                      </div>
+                    </NavDropdown.Item>
+                  </Col>
+                  <Col
+                    className="p-0 m-0 h-350px overflow-auto"
+                    style={
+                      navbarItems ? { borderLeft: "1px solid #6c6c6c" } : {}
+                    }
+                  >
+                    {navbarItems &&
+                      navbarItems.map((el, i) => {
+                        return (
+                          <Link
+                            key={i}
+                            href={
+                              el.slug
+                                ? `/detail/akademi/${el.id}`
+                                : el.name
+                                ? `/lainnya/${el.url}`
+                                : `/${el}`
+                            }
+                            passHref
+                          >
+                            <NavDropdown.Item className="navdropdown-child">
+                              {el.slug ? el.slug : el.name ? el.name : el}
+                            </NavDropdown.Item>
+                          </Link>
+                        );
+                      })}
+                  </Col>
+                </Row>
+                {/* <Fragment>
+                  <NavDropdown.Item href="/" className="navdropdown-child">
+                    Beranda
+                  </NavDropdown.Item>
+                  <div className="btn-group dropright w-100">
+                    <a
+                      type="button"
+                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Pelatihan
+                    </a>
+                    <div className="dropdown-menu ml-3">
+                      {akademi.map((item, i) => {
+                        return (
+                          <Link
+                            key={item.id}
+                            href={`/detail/akademi/${item.id}`}
+                          >
+                            <a className="dropdown-item navdropdown-child ">
+                              {item.slug}
+                            </a>
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                  <Link href="/pusat-informasi" passHref>
+                    <NavDropdown.Item className="navdropdown-child">
+                      Pusat Informasi
+                    </NavDropdown.Item>
+                  </Link>
+                  <Link href="/tentang-kami" passHref>
+                    <NavDropdown.Item className="navdropdown-child">
+                      Tentang Kami
+                    </NavDropdown.Item>
+                  </Link>
+                  <Link href="/penyelenggara" passHref>
+                    <NavDropdown.Item className="navdropdown-child">
+                      Penyelenggara
+                    </NavDropdown.Item>
+                  </Link>
+                  <div className="btn-group dropright w-100">
+                    <a
+                      type="button"
+                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Rilis Media
+                    </a>
+                    <div className="dropdown-menu ml-3">
+                      <Link href="/berita">
+                        <a className="dropdown-item navdropdown-child">
+                          Berita
+                        </a>
+                      </Link>
+                      <Link href="/artikel">
+                        <a className="dropdown-item navdropdown-child">
+                          Artikel
+                        </a>
+                      </Link>
+                      <Link href="/galeri">
+                        <a className="dropdown-item navdropdown-child">
+                          Galeri
+                        </a>
+                      </Link>
+                      <Link href="/video">
+                        <a className="dropdown-item navdropdown-child">Video</a>
+                      </Link>
+                    </div>
+                  </div>
+                  <Link href="/faq" passHref>
+                    <NavDropdown.Item className="navdropdown-child">
+                      FAQ
+                    </NavDropdown.Item>
+                  </Link>
+                  <Link href="/kontak" passHref>
+                    <NavDropdown.Item className="navdropdown-child">
+                      Kontak
+                    </NavDropdown.Item>
+                  </Link>
+                  <div className="btn-group dropright w-100">
+                    <a
+                      type="button"
+                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Lainnya
+                    </a>
+                    <div className="dropdown-menu ml-3">
+                      {menu
+                        ? menu.map((item, index) => {
+                            return (
+                              <Link href={"/lainnya/" + item.url} key={index}>
+                                <a className="dropdown-item navdropdown-child">
+                                  {item.name}
+                                </a>
+                              </Link>
+                            );
+                          })
+                        : null}
+                    </div>
+                  </div>
+                </Fragment> */}
               </NavDropdown>
             </div>
             {/* END MENU */}
@@ -428,7 +579,7 @@ const Navigationbar = ({ session }) => {
 
           {/* Icon */}
           {session && session.roles[0] === "user" && (
-            <div className="row mr-3 d-lg-block d-none">
+            <div className="row mr-3 d-lg-block d-none position-relative">
               <Link href="/helpdesk/live-chat" passHref>
                 <a className="col-4 col-sm-4 col-md-4 col-xl-4 text-center">
                   <i className="ri-customer-service-2-line ri-2x  text-gray"></i>
@@ -443,8 +594,44 @@ const Navigationbar = ({ session }) => {
                 href="#"
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
               >
-                <i className="ri-notification-4-line ri-2x  text-gray"></i>
+                <i
+                  onClick={() => setNotification(!notification)}
+                  className="ri-notification-4-line ri-2x  text-gray"
+                ></i>
               </a>
+              {notification && (
+                <div
+                  className="position-absolute px-5 bg-white w-400px right-0 p-12"
+                  style={{ color: "#6C6C6C" }}
+                >
+                  <div className="d-flex align-items-center fz-20 justify-content-between mb-9">
+                    <div>Notification</div>
+                    <img
+                      src="/assets/media/notification/Close_Button.png"
+                      alt="close_button"
+                      onClick={() => setNotification(!notification)}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                  {data.map((el, i) => {
+                    return (
+                      <Fragment key={i}>
+                        <div className="d-flex align-items-center position-relative">
+                          <img
+                            src={`/assets/media/notification/${el.icon}.png`}
+                            alt="success"
+                            style={{ objectFit: "cover" }}
+                          />
+                          <span className="ml-5 fz-14 text-capitalize">
+                            dokumen anda sedang di tahap pengumuman akhir
+                          </span>
+                        </div>
+                        <hr className="my-3" />
+                      </Fragment>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
           <hr />
@@ -548,15 +735,17 @@ const Navigationbar = ({ session }) => {
                           PELATIHAN
                         </li>
                       </Link>{" "}
-                      <Link href="/peserta/artikel" passHref>
-                        <li className="items-lists rounded-0">
-                          <div
-                            style={{ fontSize: "16px" }}
-                            className="ri-bar-chart-horizontal-line mr-2"
-                          ></div>
-                          ARTIKEL
-                        </li>
-                      </Link>
+                      {dataPribadi?.lulus && (
+                        <Link href="/peserta/artikel" passHref>
+                          <li className="items-lists rounded-0">
+                            <div
+                              style={{ fontSize: "16px" }}
+                              className="ri-bar-chart-horizontal-line mr-2"
+                            ></div>
+                            ARTIKEL
+                          </li>
+                        </Link>
+                      )}
                       <Link href="/peserta/pengaturan" passHref>
                         <li className="items-lists rounded-0">
                           <div
@@ -755,21 +944,23 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
-
-                    {menu ? menu.map((item, index) => {
-                      return  <Fragment key={index}>
-                      <div
-                        onClick={() => {
-                          router.push("/lainnya/" + item.url);
-                        }}
-                        className="p-4 fz-12"
-                      >
-                        {item.name}
-                      </div>
-                      <hr className="w-100 p-0 m-0" />
-                    </Fragment>
-                    }) : null}
-                   
+                    {menu
+                      ? menu.map((item, index) => {
+                          return (
+                            <Fragment key={index}>
+                              <div
+                                onClick={() => {
+                                  router.push("/lainnya/" + item.url);
+                                }}
+                                className="p-4 fz-12"
+                              >
+                                {item.name}
+                              </div>
+                              <hr className="w-100 p-0 m-0" />
+                            </Fragment>
+                          );
+                        })
+                      : null}
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>

@@ -276,7 +276,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   };
 
   const onChangeInput = (index, value) => {
-    let list = [...dataPendaftaran];
+    let list = [...dataForm.form_pendaftaran];
     list[index].value = value;
     if (list[index].type === "file_image" || list[index].type === "file_doc") {
       let type = [""];
@@ -344,8 +344,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         <form onSubmit={onSubmit}>
           <h3 className="font-weight-bolder pb-5 pt-4">{title}</h3>
           <div className="row">
-            {dataPendaftaran &&
-              dataPendaftaran.map((row, i) => (
+            {dataForm &&
+              dataForm.form_pendaftaran.map((row, i) => (
                 <>{readerElementHandler(row, i)}</>
               ))}
           </div>

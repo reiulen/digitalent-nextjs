@@ -181,7 +181,7 @@ const ProfileUser = ({ profile }) => {
                   <div className="col-md-12">
                     <p className="text-neutral-body my-0">Status Pekerjaan</p>
                     <p className="text-dark">
-                      {profile.staatus_pekerjaan || "-"}
+                      {profile.status_pekerjaan || "-"}
                     </p>
                   </div>
                 </div>
@@ -265,14 +265,12 @@ const ProfileUser = ({ profile }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Image
+          <img
             src={
               (profile.File_ktp &&
                 process.env.END_POINT_API_IMAGE_BEASISWA + profile.File_ktp) ||
               "/assets/media/default.jpg"
             }
-            objectFit="cover"
-            height={200}
             width={400}
             alt="ktp-modal"
           />
@@ -300,14 +298,12 @@ const ProfileUser = ({ profile }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Image
+          <img
             src={
               (profile.ijasah &&
                 process.env.END_POINT_API_IMAGE_BEASISWA + profile.ijasah) ||
               "/assets/media/default.jpg"
             }
-            objectFit="cover"
-            height={200}
             width={400}
             alt="ktp-modal"
           />
