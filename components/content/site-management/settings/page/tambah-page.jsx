@@ -380,7 +380,7 @@ const TambahPage = ({ token }) => {
                         {simpleValidator.current.message(
                           "isi_artikel",
                           isi_artikel,
-                          template === "0" ? "required" : "",
+                          template === "0" ? "required|min:5|max:2000" : "",
                           {
                             className: "text-danger",
                           }
@@ -489,7 +489,7 @@ const TambahPage = ({ token }) => {
                          {simpleValidator.current.message(
                           "isi_artikel",
                           isi_artikel,
-                          template === "1" ? "required" : "",
+                          template === "1" ? "required|min:5|max:2000" : "",
                           {
                             className: "text-danger",
                           }
@@ -656,7 +656,7 @@ const TambahPage = ({ token }) => {
                          {simpleValidator.current.message(
                           "isi_artikel",
                           isi_artikel,
-                          template === "2" ? "required" : "",
+                          template === "2" ? "required|min:5|max:2000" : "",
                           {
                             className: "text-danger",
                           }

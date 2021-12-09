@@ -19,8 +19,8 @@ import {
 } from "../../../../../redux/actions/site-management/zonasi.actions";
 import { DELETE_ZONASI_RESET } from "../../../../../redux/types/site-management/zonasi.type";
 
-import styles from "../../../../../styles/previewGaleri.module.css"
-import stylesPag from "../../../../../styles/pagination.module.css"
+import styles from "../../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../../styles/pagination.module.css";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -51,23 +51,30 @@ const Table = ({ token }) => {
             >
               List Master Zonasi
             </h3>
-            <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
-              <Link
-                href="/site-management/master-data/master-zonasi/tambah-zonasi"
-                passHref
-              >
-                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Master Zonasi
-                </a>
-              </Link>
-            </div>
+            {localStorage
+              .getItem("permissions")
+              .includes("site_management.master-data.master_zonasi.manage") && (
+              <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
+                <Link
+                  href="/site-management/master-data/master-zonasi/tambah-zonasi"
+                  passHref
+                >
+                  <a
+                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
+                  >
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah Master Zonasi
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row">
                 <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                  <div className="position-relative overflow-hidden mt-3"
+                  <div
+                    className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
                     <i className="ri-search-line left-center-absolute ml-2"></i>
@@ -130,7 +137,6 @@ const Table = ({ token }) => {
                   </div>
                 </div>
               </div> */}
-
             </div>
 
             <div className="table-page mt-5">
@@ -149,7 +155,9 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allZonasi?.data?.zonasi?.length === 0 ? (
-                        <td className="align-middle text-center" colSpan="4">Data Kosong</td>
+                        <td className="align-middle text-center" colSpan="4">
+                          Data Kosong
+                        </td>
                       ) : (
                         allZonasi?.data?.zonasi?.map((items, index) => {
                           return (
@@ -158,53 +166,63 @@ const Table = ({ token }) => {
                                 {allZonasi.page === 1
                                   ? index + 1
                                   : (allZonasi.page - 1) * allZonasi.limit +
-                                  (index + 1)}
+                                    (index + 1)}
                               </td>
-                              <td className="align-middle text-left">{items.label}</td>
                               <td className="align-middle text-left">
-                                {items.status == 1 ?
+                                {items.label}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.status == 1 ? (
                                   <p
                                     className="status-div-green mb-0"
                                     style={{ width: "max-content" }}
                                   >
                                     Aktif
                                   </p>
-                                  :
-
+                                ) : (
                                   <p
                                     className="status-div-red mb-0"
                                     style={{ width: "max-content" }}
                                   >
                                     Tidak Aktif
                                   </p>
-                                }
+                                )}
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <Link
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.master-data.master_zonasi.manage"
+                                    ) && (
+                                    <Link
+                                      href={`/site-management/master-data/master-zonasi/ubah-zonasi/${items.value}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                        <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
 
-                                    href={`/site-management/master-data/master-zonasi/ubah-zonasi/${items.value}`}
-
-
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </a>
-                                  </Link>
-
-                                  <Link
-                                    href={`/site-management/master-data/master-zonasi/detail-zonasi/${items.value}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
-                                      <IconEye width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Detail
-                                      </div>
-                                    </a>
-                                  </Link>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.master-data.master_zonasi.view"
+                                    ) && (
+                                    <Link
+                                      href={`/site-management/master-data/master-zonasi/detail-zonasi/${items.value}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                        <IconEye width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
                                 </div>
                               </td>
                             </tr>
@@ -217,27 +235,30 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                {allZonasi && allZonasi?.data?.perPage < allZonasi?.data?.total &&
-                  <>
-                    <div className={`${stylesPag.pagination} table-pagination`}>
-                      <Pagination
-                        activePage={allZonasi?.page}
-                        itemsCountPerPage={allZonasi?.data?.perPage}
-                        totalItemsCount={allZonasi?.data?.total}
-                        pageRangeDisplayed={3}
-                        onChange={(page) => dispatch(setPage(page))}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  </>
-                }
+                {allZonasi &&
+                  allZonasi?.data?.perPage < allZonasi?.data?.total && (
+                    <>
+                      <div
+                        className={`${stylesPag.pagination} table-pagination`}
+                      >
+                        <Pagination
+                          activePage={allZonasi?.page}
+                          itemsCountPerPage={allZonasi?.data?.perPage}
+                          totalItemsCount={allZonasi?.data?.total}
+                          pageRangeDisplayed={3}
+                          onChange={(page) => dispatch(setPage(page))}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
+                      </div>
+                    </>
+                  )}
 
-                {allZonasi ?
+                {allZonasi ? (
                   <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
                       <div className="col-4 mr-0">
@@ -267,13 +288,15 @@ const Table = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                         >
-                          Total Data {allZonasi?.data && allZonasi?.data?.total} List
-                          Data
+                          Total Data {allZonasi?.data && allZonasi?.data?.total}{" "}
+                          List Data
                         </p>
                       </div>
                     </div>
-                  </div> : ""
-                }
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

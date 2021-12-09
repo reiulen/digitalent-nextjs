@@ -134,7 +134,7 @@ function Pembahasan({ token }) {
                       passHref
                     >
                       <a
-                        className="btn bg-blue-secondary btn-rounded-full text-white mr-sm-5 mr-0 mt-3"
+                        className="btn bg-blue-secondary btn-rounded-full text-white mr-sm-5 mr-0 mt-3 d-flex justify-content-center"
                         style={{ whiteSpace: "nowrap" }}
                       >
                         Tanda Tangan Digital
@@ -153,7 +153,8 @@ function Pembahasan({ token }) {
                         passHref
                       >
                         <a
-                          className="btn btn-rounded-full bg-blue-primary text-white mt-3 "
+                          className="btn btn-rounded-full bg-blue-primary text-white mt-3 d-flex justify-content-center"
+                          style={{ whiteSpace: "nowrap" }}
                         >
                           Submit Dokumen Kerjasama
                         </a>

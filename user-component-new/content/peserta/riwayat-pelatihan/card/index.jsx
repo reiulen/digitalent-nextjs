@@ -11,11 +11,11 @@ import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { helperUserStatusColor } from "../../../../../utils/middleware/helper";
 import ButtonStatusPeserta from "../../../../components/global/StatusPesertaButton";
-
+import Image from "next/image";
 export default function CardTemplateOriginal({ data, session }) {
   const router = useRouter();
-  const dateFrom = moment(data.pendaftaran_mulai).format("LL");
-  const dateTo = moment(data.pendaftaran_selesai).format("LL");
+  const dateFrom = moment(data.pelatihan_mulai).format("LL");
+  const dateTo = moment(data.pelatihan_selesai).format("LL");
   const [label, setLabel] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
@@ -25,10 +25,9 @@ export default function CardTemplateOriginal({ data, session }) {
   useEffect(() => {
     helperUserStatusColor(data.status, setLabel);
   }, [data.status]);
-
   return (
     <Fragment>
-      <Card className="position-relative">
+      <Card className="position-relative mb-8 rounded-lg">
         <Button
           variant="white"
           disabled={
@@ -38,10 +37,15 @@ export default function CardTemplateOriginal({ data, session }) {
               ? true
               : false
           }
+          className="p-0  rounded-lg"
         >
           <Card.Body
             onClick={() => {
-              if (data.status.includes("tidak")) return false;
+              if (
+                data.status.includes("tidak") ||
+                data.status.includes("tolak")
+              )
+                return false;
               if (data.status.includes("menunggu jadwal tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
@@ -59,13 +63,12 @@ export default function CardTemplateOriginal({ data, session }) {
                   `/peserta/riwayat-pelatihan/${data.name
                     .split(" ")
                     .join("-")
-                    .toLowerCase()}`
+                    .toLowerCase()}?no=${data.id}`
                 );
               }
               if (data.status.includes("tes substansi")) {
                 Cookies.set("id_pelatihan", data.id);
                 Cookies.set("id_tema", data.tema_id);
-                console.log("klik ini");
                 return router.push(`/peserta/test-substansi?id=${data.id}`);
               } else {
                 Cookies.set("id_pelatihan", data.id);
@@ -94,16 +97,21 @@ export default function CardTemplateOriginal({ data, session }) {
                     lg={2}
                     className="d-flex justify-content-start align-items-center my-10 my-lg-0 order-2 order-lg-1"
                   >
-                    <img
+                    <Image
                       src={
-                        data.gambar_mitra
-                          ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
-                          : "/assets/media/default-card.png"
+                        !data?.logo && !data?.gambar_mitra
+                          ? "/assets/media/default-card.png"
+                          : data?.logo
+                          ? data?.file_path + data?.logo
+                          : process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                            data.gambar_mitra
                       }
                       width={58}
                       height={58}
-                      alt="test2"
-                      style={{ borderRadius: "50%", objectFit: "cover" }}
+                      alt="Image Mitras"
+                      className="rounded-full"
+                      objectFit="cover"
+                      // style={{ borderRadius: "50%", objectFit: "cover" }}
                     />
                   </Col>
                   <Col lg={6} className="my-auto order-3 order-lg-2 row p-0 ">

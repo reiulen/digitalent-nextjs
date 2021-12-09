@@ -10,6 +10,7 @@ import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import Cookies from "js-cookie";
 import { getAllPermission } from "../../../../redux/actions/utils/utils.actions";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const KelolaSertifikatNamaPelatihanID = dynamic(
   () =>
@@ -39,10 +40,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

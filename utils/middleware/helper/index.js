@@ -28,7 +28,7 @@ export const SweatAlert = (title, message, status) => {
 };
 
 export const helperRegexNumber = /^[0-9\b]+$/;
-export const helperRegexAlphabet = /^[A-Za-z]+$/;
+export const helperRegexAlphabet = /^[A-Za-z ]+$/;
 export const helperRegexNumberIpk = /^[0-9.\b]+$/;
 // CARA PAKAI REGEX
 // if (

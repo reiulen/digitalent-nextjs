@@ -833,7 +833,6 @@ const GeneralPage = ({ token }) => {
                                         simpleValidator.current.showMessageFor("linkExternalLinks")
                                       }
                                     />
-
                                   </div>
                                 </div>
 

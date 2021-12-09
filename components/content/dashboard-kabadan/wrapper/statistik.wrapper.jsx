@@ -1,6 +1,6 @@
 import React from "react";
 
-const StatistikWrapper = ({ title, funcFilterYear }) => {
+const StatistikWrapper = ({ title, funcFilterYear, year = [] }) => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-center flex-wrap">
@@ -11,8 +11,12 @@ const StatistikWrapper = ({ title, funcFilterYear }) => {
             onChange={(e) => funcFilterYear(e.target.value)}
             className="border-0 p-0"
           >
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
+            {year &&
+              year.map((row, i) => (
+                <option key={i} value={row}>
+                  {row}
+                </option>
+              ))}
           </select>
         </div>
       </div>

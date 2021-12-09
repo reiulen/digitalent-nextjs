@@ -108,6 +108,7 @@ const RegisterUser = () => {
             SweatAlert("Gagal", err.response.data.message, "error");
           });
       } else {
+        setLoading(false);
         SweatAlert("Gagal", "Password Tidak Sama", "error");
       }
     } else {

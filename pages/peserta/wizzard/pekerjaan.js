@@ -17,6 +17,7 @@ import {
   getProfileAlamat,
   getProfilePendidikan,
   getProfilePekerjaan,
+  getDataRefPekerjaan,
 } from "../../../redux/actions/pelatihan/profile.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 
@@ -69,9 +70,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getProfilePendidikan(data.token));
 
       await store.dispatch(dropdownProvinsi(data.token));
+      await store.dispatch(dropdownAgama(data.token));
       await store.dispatch(dropdownStatusPekerjaan(data.token));
       await store.dispatch(dropdownPendidikan(data.token));
       await store.dispatch(getProfilePekerjaan(data.token));
+      await store.dispatch(getDataRefPekerjaan(data.token));
 
       return {
         props: { data: "auth", session, title: "Profile - Peserta" },

@@ -4,8 +4,11 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
+import styles from "../listTraining.module.css";
+
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
+import { Link } from "react-router-dom";
 
 const ViewTrainingStep1 = () => {
   const router = useRouter();
@@ -170,7 +173,7 @@ const ViewTrainingStep1 = () => {
               <div className="col-md-6">
                 <p className="text-neutral-body mb-2 fz-14">Silabus</p>
                 <p
-                  className="fz-16 text-primary"
+                  className={`${styles.linkTraining} fz-16 `}
                   style={{ cursor: "pointer" }}
                   onClick={() =>
                     window.open(review.file_path + review.silabus, "_blank")
@@ -365,7 +368,11 @@ const ViewTrainingStep1 = () => {
               <div className="col-md-12">
                 <p className="text-neutral-body mb-2 fz-14">Status Publish</p>
                 <p className="fz-16" style={{ color: "#1f1f1f" }}>
-                  Unlisted
+                  {review.status_publish === "0"
+                    ? "Unpublish"
+                    : review.status_publish === "1"
+                    ? "Publish"
+                    : "Unlisted"}
                 </p>
               </div>
               <div className="col-md-12">
@@ -373,7 +380,7 @@ const ViewTrainingStep1 = () => {
                   Link Detail Pelatihan
                 </p>
                 <p
-                  className="fz-16 text-primary"
+                  className={`${styles.linkTraining} fz-16 `}
                   style={{ cursor: "pointer" }}
                   onClick={() =>
                     window.open(

@@ -5,12 +5,8 @@ import Pagination from "react-js-pagination";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import {
-    Container
-  } from "react-bootstrap";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import Select from "react-select";
-
 
 import { getAllBerandaArtikel } from "../../../../redux/actions/beranda/artikel.actions"
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
@@ -27,8 +23,6 @@ const Artikel = () => {
     const { kategori } = useSelector((state) => state.kategoriBerandaArtikel)
     const { akademi } = useSelector((state) => state.allAkademi);
     const { tags } = useSelector((state) => state.allTagBerandaArtikel)
-    
-    const descToTrim = 120
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
     const [ kategoriArtikel, setKategoriArtikel ] = useState ("")
@@ -76,7 +70,6 @@ const Artikel = () => {
 
     useEffect(() => {
         handleTagEachCard()
-        // handleKategoriToShow()
     }, [artikel])
 
     useEffect(() => {
@@ -307,18 +300,6 @@ const Artikel = () => {
         window.scrollTo(0,0)
     }
 
-    const handleDescToTrim = (str) => {
-        let result = null
-        
-        if (str.length > descToTrim){
-            result = str.slice(0, descToTrim) + "..."
-
-        } else {
-            result = str
-        }
-        return result
-    }
-
     const handleFilterPublish = (publish, status) => {
         setFilterPublish(publish)
         setShowDescButton(status)
@@ -439,6 +420,7 @@ const Artikel = () => {
                                             gap: "1rem",
                                             drag: "free",
                                             perPage: 4,
+                                            autoWidth: true,
                                             breakpoints:{
                                                 830: {
                                                     perPage: 2,
@@ -523,6 +505,7 @@ const Artikel = () => {
                                             gap: "1rem",
                                             drag: "free",
                                             perPage: 4,
+                                            autoWidth: true,
                                             breakpoints:{
                                                 830: {
                                                     perPage: 2,
@@ -612,6 +595,7 @@ const Artikel = () => {
                         gap: "1rem",
                         drag: "free",
                         perPage: 4,
+                        autoWidth: true,
                         breakpoints:{
                             830: {
                                 perPage: 2,
@@ -699,6 +683,7 @@ const Artikel = () => {
                         gap: "1rem",
                         drag: "free",
                         perPage: 4,
+                        autoWidth: true,
                         breakpoints:{
                             830: {
                                 perPage: 2,
@@ -967,7 +952,7 @@ const Artikel = () => {
                     }
                     
                     {/* Search Tab */}
-                    <form className="mb-3 ml-0">
+                    <form className="mb-3 ml-2 ml-md-0">
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <div 
@@ -1040,9 +1025,12 @@ const Artikel = () => {
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
                                 artikel.artikel.map ((el, i) => {
                                     return (
-                                        <div className="row mt-15 pl-1" key={i}>
-                                            <div className="col col-7">
-                                                <div className="row col-12 justify-content-between align-items-center">
+                                        <div 
+                                            className= "row mt-20 mb-3 pl-7"
+                                            key={i}
+                                        >
+                                            <div className="col-4 col-sm-8 pr-md-8 pr-2 pl-lg-2">
+                                                <div className="row justify-content-between align-items-center">
                                                     <div className=" d-flex align-self-center mb-2">
                                                         <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
                                                             {/* Insert Logo Image Here */}
@@ -1066,8 +1054,16 @@ const Artikel = () => {
                                                     </div>
 
                                                     <div className="mr-2 mb-3">
-                                                        <div className="badge badge-pill badge-light mr-2">
-                                                            <div className="text-primary p-1">
+                                                        <div className="badge badge-pill badge-light mr-0 mr-sm-2">
+                                                            <div 
+                                                                className="text-primary p-1 text-truncate d-inline-block"
+                                                                style={
+                                                                    windowDimensions && windowDimensions.width && windowDimensions.width <= 320 ?
+                                                                        {maxWidth:"75px"}
+                                                                    :
+                                                                        null
+                                                                }
+                                                            >
                                                                 {/* Insert Kategori Here */}
                                                                 {el.nama_kategori}
                                                             </div>
@@ -1083,49 +1079,85 @@ const Artikel = () => {
                                                         }
                                                     </div>
                                                 </div>
-
-                                                <div className="my-5">
-                                                    {/* Insert Title Here */}
-                                                    <Link href={`/artikel/detail/${el.slug}`}>
-                                                        <a>
-                                                            <h1 
-                                                                className={`text-dark font-weight-bolder ${styles.fontText}`}
-                                                                style=
-                                                                {{
+                                                
+                                                {
+                                                    windowDimensions && windowDimensions.width && windowDimensions.width > 576 ?
+                                                        <div className="my-5 ml-n3">
+                                                            {/* Insert Title Here */}
+                                                            <Link href={`/artikel/detail/${el.slug}`}>
+                                                                <a>
+                                                                    <h1 
+                                                                        className={`text-dark font-weight-bolder ${styles.fontText}`}
+                                                                        style=
+                                                                        {{
+                                                                            display:"-webkit-box", 
+                                                                            overflow: 'hidden', 
+                                                                            textOverflow: 'ellipsis', 
+                                                                            WebkitLineClamp: "2",
+                                                                            WebkitBoxOrient:"vertical"
+                                                                        }}
+                                                                    >
+                                                                        {/* {handleTitleToTrim(el.judul)} */}
+                                                                        {el.judul}
+                                                                    </h1>
+                                                                </a>
+                                                            </Link>
+                                                            
+                                                        </div>
+                                                    :
+                                                        <div className="my-5 ml-n3">
+                                                            {/* Insert Title Here */}
+                                                            <Link href={`/artikel/detail/${el.slug}`}>
+                                                                <a>
+                                                                    <h1 
+                                                                        className={`text-dark font-weight-bolder ${styles.fontText}`}
+                                                                        style=
+                                                                        {{
+                                                                            display:"-webkit-box", 
+                                                                            overflow: 'hidden', 
+                                                                            textOverflow: 'ellipsis', 
+                                                                            WebkitLineClamp: "3",
+                                                                            WebkitBoxOrient:"vertical"
+                                                                        }}
+                                                                    >
+                                                                        {/* {handleTitleToTrim(el.judul)} */}
+                                                                        {el.judul}
+                                                                    </h1>
+                                                                </a>
+                                                            </Link>
+                                                            
+                                                        </div>
+                                                }
+                                                
+                                                
+                                                {
+                                                    windowDimensions && windowDimensions.width && windowDimensions.width >= 768 ?
+                                                        <div 
+                                                            className="my-5 d-flex flex-wrap "
+                                                        >
+                                                            {/* Insert Desc Here */}
+                                                            <div 
+                                                                dangerouslySetInnerHTML={{__html: (el.isi_artikel)}}
+                                                                style={{ 
+                                                                    fontSize:"16px", 
+                                                                    fontFamily:"Poppins", 
+                                                                    color: "#6C6C6C",
                                                                     display:"-webkit-box", 
                                                                     overflow: 'hidden', 
                                                                     textOverflow: 'ellipsis', 
                                                                     WebkitLineClamp: "2",
                                                                     WebkitBoxOrient:"vertical"
                                                                 }}
-                                                            >
-                                                                {/* {handleTitleToTrim(el.judul)} */}
-                                                                {el.judul}
-                                                            </h1>
-                                                        </a>
-                                                    </Link>
-                                                    
-                                                </div>
-                                                
-                                                {
-                                                    windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                                                        <div 
-                                                            className="my-5 d-flex flex-wrap "
-                                                        >
-                                                            {/* Insert Desc Here */}
-                                                            <div 
-                                                                dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}}
-                                                                className={`${styles.fontContent} text-wrap d-flex flex-wrap overflow-hidden`}
-                                                                style={{maxWidth:"450px", fontSize:"16px", fontFamily:"Poppins"}}
+                                                                className="ml-n3"
                                                             />
                                                         </div>
                                                     :
                                                         null
                                                 }
                                                 
-                                                <div className="row mb-3 d-flex align-items-center">
+                                                <div className="row mb-3 mt-5 d-flex align-items-center ml-n7 ">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12 pl-4">
+                                                    <div className="text-muted col-xl-5 col-12">
                                                         {moment(el.tanggal_publish).format("DD MMM")} | {el.dibaca} dibaca
                                                     </div>
 
@@ -1142,8 +1174,7 @@ const Artikel = () => {
                                             </div>
 
                                             <div 
-                                                className="col-5 position-relative d-flex align-md-self-center" 
-                                                style={{objectFit:"cover"}}
+                                                className="col-8 col-sm-4 position-relative img-fluid" 
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/artikel/detail/${el.slug}`}>
@@ -1153,10 +1184,10 @@ const Artikel = () => {
                                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                 "publikasi/images/" + el.gambar
                                                             }
-                                                            width={350}
+                                                            width={300}
                                                             height={250}
                                                             alt="Card Image"
-                                                            className="rounded-lg"
+                                                            className="rounded-lg img-fluid"
                                                             objectFit="cover"
                                                         />
                                                     </a>
@@ -1192,7 +1223,7 @@ const Artikel = () => {
                     {/* Pagination */}
                     {
                         artikel && artikel.total !== 0 && artikel.total > 5?
-                            <div className="row  mb-10 d-flex justify-content-center">
+                            <div className="row mb-lg-n7 mb-10 mt-lg-0 mt-10 d-flex justify-content-center ">
                                 <div className="table-pagination">
                                     <Pagination 
                                         activePage = {activePage}
@@ -1392,7 +1423,7 @@ const Artikel = () => {
                         className={windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                                 "row d-flex flex-column mx-auto px-10 my-5 d-flex justify-content-center order-3"
                             :
-                                "row d-flex flex-column ml-0 ml-xl-5 mb-5 d-flex justify-content-center order-3"
+                                "row d-flex flex-column ml-0 ml-xl-5 mb-0 d-flex justify-content-center order-3"
                         }
                     >
                         <h3 className="font-weight-bolder"> 

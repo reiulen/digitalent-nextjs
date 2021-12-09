@@ -85,14 +85,18 @@ const Table = ({ token }) => {
             <h3 className="card-title font-weight-bolder text-dark titles-1">
               List Role
             </h3>
-            <div className="card-toolbar">
-              <Link href="/site-management/role/tambah-role">
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Role
-                </a>
-              </Link>
-            </div>
+            {localStorage
+              .getItem("permissions")
+              .includes("site_management.role.manage") && (
+              <div className="card-toolbar">
+                <Link href="/site-management/role/tambah-role">
+                  <a className="btn btn-rounded-full bg-blue-primary text-white">
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah Role
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
@@ -186,38 +190,54 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <Link
-                                    href={`/site-management/role/ubah-role/${items.id}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </a>
-                                  </Link>
-                                  <Link
-                                    href={`/site-management/role/detail-role/${items.id}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
-                                      <IconEye width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Detail
-                                      </div>
-                                    </a>
-                                  </Link>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.role.manage"
+                                    ) && (
+                                    <Link
+                                      href={`/site-management/role/ubah-role/${items.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                        <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes("site_management.role.view") && (
+                                    <Link
+                                      href={`/site-management/role/detail-role/${items.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                        <IconEye width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
 
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      handleDelete(items.id, token)
-                                    }
-                                  >
-                                    <IconDelete width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Hapus
-                                    </div>
-                                  </button>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.role.manage"
+                                    ) && (
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                      onClick={() =>
+                                        handleDelete(items.id, token)
+                                      }
+                                    >
+                                      <IconDelete width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Hapus
+                                      </div>
+                                    </button>
+                                  )}
                                 </div>
                               </td>
                             </tr>

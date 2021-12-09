@@ -7,6 +7,16 @@
   color: #ffffff !important;
 }
 
+.btn-beranda-gosh {
+  background-color: transparent !important;
+  color: #007cff !important;
+}
+
+.btn-beranda-gosh:hover {
+  background-color: #e6f2ff !important;
+  color: #007cff !important;
+}
+
 .text-beranda-primary {
   color: #007cff !important;
 }
@@ -194,7 +204,7 @@
 /* STEP REGISTER */
 .title-step-register h1 {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 40px;
   line-height: 140%;
   text-align: center;
   color: #1f1f1f;
@@ -383,9 +393,6 @@
     text-align: start;
   }
 
-  .title-step-register h1 {
-    font-size: 40px;
-  }
   .penyelenggara-title-filter h1 {
     font-size: 40px;
   }

@@ -90,9 +90,6 @@ export default function Template(props) {
         setSubject(items.data.data.training_rules.subject);
         setBody(items.data.data.training_rules.body);
       })
-      // .catch((error) => {
-        
-      // })
   }, [props.token, status]);
 
   return (

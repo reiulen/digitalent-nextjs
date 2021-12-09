@@ -31,6 +31,7 @@ const TambahApi = ({ token }) => {
 
   const [name, setName] = useState(detailAdminSite?.adminSite?.data?.name);
   const [email, setEmail] = useState(detailAdminSite?.adminSite?.data?.email);
+  const [search, setSearch] = useState(null)
   const [status, setStatus] = useState(
     detailAdminSite?.adminSite?.data?.status
   );
@@ -55,6 +56,19 @@ const TambahApi = ({ token }) => {
     detailAdminSite?.adminSite?.data?.unit_works?.map((items) => {
       return { value: items.id, label: items.name, id: items.id };
     })
+  );
+
+  const [akademi, setAkademi] = useState(
+    detailAdminSite?.adminSite?.data?.training_access?.map((items) => {
+      return items.id;
+    })
+  );
+
+  const [akademiAkses, setAkademiAkses] = useState(
+    detailAdminSite?.adminSite?.data?.type_access === "akademi" ?
+    detailAdminSite?.adminSite?.data?.training_access?.map((items) => {
+      return { value: items.id, label: items.name, id: items.id };
+    }) : null
   );
   const [statusAcademy, setStatusAcademy] = useState([]);
   const [typeAccess, setTypeAccess] = useState(
@@ -84,6 +98,7 @@ const TambahApi = ({ token }) => {
     academyIds: detailAdminSite?.adminSite?.data?.academy_ids,
   });
   const [sortListPelatihan, setSortListPelatihan] = useState(
+    detailAdminSite?.adminSite?.data?.type_access !== "akademi" ? 
     detailAdminSite?.adminSite?.data.training_access.map((items) => {
       return {
         ...items,
@@ -92,6 +107,13 @@ const TambahApi = ({ token }) => {
         manage: items.manage === 1 ? true : false,
         view: items.view === 1 ? true : false,
         allSelect: items.manage === 1 && items.view === 1 ? true: false,
+      };
+    }) :  allListPelatihan.data.map((items) => {
+      return {
+        ...items,
+        manage: false,
+        view: false,
+        allSelect: false,
       };
     })
   );
@@ -112,6 +134,15 @@ const TambahApi = ({ token }) => {
     setUnitWork(data);
     setUnitWorkOption(e);
   };
+
+  const changeListAcademy = (e) => {
+    let data = e.map((items) => {
+      return items.value;
+    });
+    setAkademi(data)
+    setAkademiAkses(e);
+  };
+
 
   useEffect(() => {
     // dispatch(getDetailAdminSite(router.query.id, token));
@@ -141,9 +172,6 @@ const TambahApi = ({ token }) => {
     }
   };
 
-  const changeListAcademy = (e) => {
-    setStatusAcademy(e);
-  };
 
   const handleChangePelatihan = (e, index) => {
     let _temp = [...sortListPelatihan];
@@ -215,9 +243,7 @@ const TambahApi = ({ token }) => {
                 unit_work_ids: unitWork,
                 type_access: typeAccess,
 
-                academy_ids: statusAcademy.map((items) => {
-                  return items.value;
-                }),
+                academy_ids: akademi,
                 status: status,
               };
               try {
@@ -392,7 +418,15 @@ const TambahApi = ({ token }) => {
                     />
                   )}
                 </div>
+                <p style={{ color: "#b7b5cf" }}>
+                Min 8 Karakter,
+                <br />
+                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
+                <br />
+                Min 1 Symbol/angka
+              </p>
               </div>
+              
               <div className="form-group">
                 <label>Konfirmasi Password</label>
                 <div className="position-relative">
@@ -418,13 +452,7 @@ const TambahApi = ({ token }) => {
                   )}
                 </div>
               </div>
-              <p style={{ color: "#b7b5cf" }}>
-                Min 8 Karakter,
-                <br />
-                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
-                <br />
-                Min 1 Symbol/angka
-              </p>
+            
               <div className="form-group">
                 <label>Role</label>
                 <Select
@@ -556,7 +584,7 @@ const TambahApi = ({ token }) => {
                   <div className="form-group mt-6">
                     <label htmlFor="exampleSelect1">Akademi</label>
                     <Select
-                      value={statusAcademy}
+                      value={akademiAkses}
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder="Pilih status"
@@ -601,18 +629,22 @@ const TambahApi = ({ token }) => {
                                     <input
                                       id="kt_datatable_search_query"
                                       type="text"
+                                      value={search}
                                       className="form-control pl-10"
                                       placeholder="Ketik disini untuk Pencarian..."
-                                      // onChange={(e) =>
-                                      //   handleChangeValueSearch(e.target.value)
-                                      // }
+                                      onChange={(e) =>
+                                        setSearch(e.target.value)
+                                      }
                                     />
                                     <button
-                                      type="submit"
+                                      type="button"
                                       className="btn bg-blue-primary text-white right-center-absolute"
                                       style={{
                                         borderTopLeftRadius: "0",
                                         borderBottomLeftRadius: "0",
+                                      }}
+                                      onClick={e => {
+                                        dispatch(getAllListPelatihan(token, search))
                                       }}
                                     >
                                       Cari

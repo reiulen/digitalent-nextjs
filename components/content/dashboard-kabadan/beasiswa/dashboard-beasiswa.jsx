@@ -39,11 +39,16 @@ const DashboardBeasiswa = ({ token }) => {
     { ssr: false }
   );
 
+  // const {
+  //   loading: loadingTotalPengguna,
+  //   error: errorTotalPengguna,
+  //   totalPengguna,
+  // } = useSelector((state) => state.beasiswaTotalPengguna);
   const {
     loading: loadingTotalPengguna,
     error: errorTotalPengguna,
     totalPengguna,
-  } = useSelector((state) => state.beasiswaTotalPengguna);
+  } = useSelector((state) => state.digitalentTotalPengguna);
   const {
     loading: loadingTotalPendaftar,
     error: errorTotalPendaftar,
@@ -118,22 +123,17 @@ const DashboardBeasiswa = ({ token }) => {
       dataBeasiwaDalamNegeri.push(val);
     });
   }
+  const dataBeasiwaLuarNegeri = [];
   if (statistikLuar) {
-    statistikLuar.map((row, i) => {});
+    statistikLuar.map((row, i) => {
+      let val = {
+        name: row.category,
+        awardee: row.type.awardee,
+        pendaftar: row.type.pendaftar,
+      };
+      dataBeasiwaLuarNegeri.push(val);
+    });
   }
-
-  const dataBeasiwaLuarNegeri = [
-    {
-      name: "Skema Reguler",
-      awardee: 2400,
-      pendaftar: 2000,
-    },
-    {
-      name: "Skema StuNed",
-      awardee: 2210,
-      pendaftar: 2100,
-    },
-  ];
 
   const dataProvinsiPendaftar = [];
   if (provinsiPendaftar) {
@@ -213,15 +213,22 @@ const DashboardBeasiswa = ({ token }) => {
     });
   }
 
+  const handlePercentage = (totalAdd, total) => {
+    return Math.ceil((100 * totalAdd) / total);
+  };
+
   return (
     <PageWrapper>
       <section className="opening-hello">
         <Header
           name={"Kepala Badan Litbang SDM Kementerian Kominfo"}
           text={"Beasiswa Kominfo"}
-          value={totalPengguna.all}
-          dailyAdd={totalPengguna.percetage}
-          statisticDay={totalPengguna.latest}
+          value={totalPengguna?.total}
+          statisticDay={totalPengguna?.total_penambahan}
+          dailyAdd={handlePercentage(
+            totalPengguna?.total_penambahan,
+            totalPengguna?.total
+          )}
         />
       </section>
 
@@ -253,6 +260,7 @@ const DashboardBeasiswa = ({ token }) => {
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Statistik Beasiswa Dalam Negeri"}
+                  year={beasiswaYear}
                   funcFilterYear={(value) => {
                     setFilterStatistikDalam(value);
                     dispatch(getBeasiswaStatistikDalam(token, value));
@@ -290,6 +298,7 @@ const DashboardBeasiswa = ({ token }) => {
             <div className="card card-custom bg-white h-100">
               <div className="card-body py-4">
                 <StatistikWrapper
+                  year={beasiswaYear}
                   title={"Statistik Beasiswa Luar Negeri"}
                   funcFilterYear={(value) => {
                     setFilterStatistikLuar(value);
@@ -342,6 +351,7 @@ const DashboardBeasiswa = ({ token }) => {
                     </p>
                     <select
                       className="border-0 p-0"
+                      value={filterPeta}
                       onChange={(e) => {
                         setFilterPeta(e.target.value);
                         dispatch(
@@ -349,8 +359,12 @@ const DashboardBeasiswa = ({ token }) => {
                         );
                       }}
                     >
-                      <option value="2021">2021</option>
-                      <option value="2020">2020</option>
+                      {beasiswaYear &&
+                        beasiswaYear.map((row, i) => (
+                          <option key={i} value={row}>
+                            {row}
+                          </option>
+                        ))}
                     </select>
                   </div>
                 </div>
@@ -426,7 +440,8 @@ const DashboardBeasiswa = ({ token }) => {
                 <div className="card h-100">
                   <div className="card-body pb-3">
                     <StatistikWrapper
-                      title={"Perguruan Tinggi Dalam Negeri Tujuan Beasiswa"}
+                      year={beasiswaYear}
+                      title={"Tujuan Beasiswa Dalam Negeri"}
                       funcFilterYear={(value) => {
                         setFilterUniversitasDalam(value);
                         dispatch(
@@ -468,7 +483,8 @@ const DashboardBeasiswa = ({ token }) => {
                 <div className="card h-100">
                   <div className="card-body pb-3">
                     <StatistikWrapper
-                      title={"Universitas Luar Negeri Tujuan Beasiswa"}
+                      title={"Tujuan Beasiswa Luar Negeri"}
+                      year={beasiswaYear}
                       funcFilterYear={(value) => {
                         setFilterUniversitasLuar(value);
                         dispatch(

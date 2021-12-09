@@ -12,7 +12,7 @@ import {
   getAllTemaOriginal,
 } from "../../../../../redux/actions/beranda/beranda.actions";
 
-const FilterBar = ({ session }) => {
+const FilterBar = ({ session, funcSetPage }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -125,6 +125,7 @@ const FilterBar = ({ session }) => {
 
   const handleSearch = () => {
     setChangeTheme(true);
+    funcSetPage(1);
     let temaArr = [];
     temaId !== null &&
       temaId.forEach((row, i) => {

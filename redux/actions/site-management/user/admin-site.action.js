@@ -80,14 +80,14 @@ export const getAllAdminSite = (token) => async (dispatch, getState) => {
   }
 };
 
-export const getAllListPelatihan = (token) => async (dispatch, getState) => {
+export const getAllListPelatihan = (token, cari) => async (dispatch, getState) => {
   try {
     dispatch({ type: PELATIHAN_LIST_REQUEST });
 
     let cariState = getState().allListPelatihan.cari || "";
 
     const params = {
-      cari: cariState,
+      cari: cari,
     };
 
     const { data } = await axios.get(

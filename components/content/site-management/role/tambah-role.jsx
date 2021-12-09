@@ -282,7 +282,7 @@ const TambahRole = ({ token }) => {
                       <span></span>
                     </label>
                   </td>
-                ) :(
+                ) : (
                   <td
                     className="text-right child-permission align-middle"
                     style={{ width: "10rem" }}
@@ -296,12 +296,13 @@ const TambahRole = ({ token }) => {
                     <input
                       type="checkbox"
                       name="Checkboxes1"
+                      checked={sub.manage}
                       onClick={() => {
                         permission.filter((filter) => {
                           if (sub.id === filter.id) {
                             filter.view = !(
                               filter.view === true || filter.view === 1
-                            );
+                            ) || (filter.manage === true || filter.manage === 1)
                           }
                           return filter;
                         });
@@ -324,6 +325,8 @@ const TambahRole = ({ token }) => {
                             filter.manage = !(
                               filter.manage === true || filter.manage === 1
                             );
+                            filter.view =
+                              filter.manage === true || filter.manage === 1;
                           }
                           return filter;
                         });
@@ -413,6 +416,7 @@ const TambahRole = ({ token }) => {
         };
       }),
     };
+
     if (simpleValidator.current.allValid()) {
       dispatch(postRoles(data, token));
     } else {

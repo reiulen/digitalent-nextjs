@@ -10,8 +10,6 @@ export default function RilisMedia({ berita, dimension }) {
       <h1 className="fw-600 text-center" style={{ color: "#1F1F1F" }}>
         Rilis Media & Informasi Terbaru
       </h1>
-      {console.log(dimension)}
-
       <div className="row mt-20">
         {berita &&
           berita.map((row, i) =>

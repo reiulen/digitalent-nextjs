@@ -252,7 +252,8 @@ const TambahArtikelPeserta = ({ session }) => {
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <div style={{ width: "100%", height: "300px" }}>
-                          <div ref={quillRef} />
+                          <div ref={quillRef} 
+                            style={{fontFamily:'Poppins'}}/>
                         </div>
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -330,7 +331,7 @@ const TambahArtikelPeserta = ({ session }) => {
                       <option value="" selected disabled>
                         Pilih Kategori
                       </option>
-                      {allKategori.kategori.kategori.map((item) => {
+                      {allKategori.kategori?.kategori.map((item) => {
                         if (item.jenis_kategori === "Artikel")
                           return (
                             <option value={item.id} key={item.id}>

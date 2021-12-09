@@ -80,7 +80,7 @@ const DetailPelatihan = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(getDetailPelatihan(router.query.id, session?.token));
@@ -97,7 +97,7 @@ const DetailPelatihan = ({ session }) => {
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
 
@@ -129,20 +129,20 @@ const DetailPelatihan = ({ session }) => {
                   <p className="badgess-green">{pelatihan?.Status}</p>
                 </div>
 
-                <Row className="mt-8">
-                  <div className="col-6 col-sm-6 col-md-3">
+                <Row className="mt-5">
+                  <div className="col-6 col-sm-6 col-md-4">
                     <div>
                       <p className="mb-1 fz-14" style={{ color: "#6C6C6C" }}>
                         Registrasi
                       </p>
                       <p className="fz-16 fw-400">
-                        {moment(pelatihan?.pendaftaran_mulai).format(
-                          "DD MMM YYYY"
-                        )}{" "}
+                        {moment(pelatihan?.pendaftaran_mulai)
+                          .utc()
+                          .format("DD MMM YYYY")}{" "}
                         -{" "}
-                        {moment(pelatihan?.pendaftaran_selesai).format(
-                          "DD MMM YYYY"
-                        )}
+                        {moment(pelatihan?.pendaftaran_selesai)
+                          .utc()
+                          .format("DD MMM YYYY")}
                       </p>
                     </div>
                   </div>
@@ -169,7 +169,7 @@ const DetailPelatihan = ({ session }) => {
                     </div>
                   </div>
 
-                  <div className="col-6 col-sm-6 col-md-3">
+                  <div className="col-6 col-sm-6 col-md-2">
                     <div className="d-flex align-items-center justify-content-md-end">
                       <ShareOverlay
                         url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
@@ -228,8 +228,11 @@ const DetailPelatihan = ({ session }) => {
             <div className="border rounded-xl p-6 mb-5 ikuti-pelatihan">
               <h4 className="fz-20 fw-600">Ikuti Pelatihan</h4>
               <span className="fz-16">
-                {moment(pelatihan?.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
-                {moment(pelatihan?.pelatihan_selesai).format("DD MMM YYYY")}
+                {moment(pelatihan?.pelatihan_mulai).utc().format("DD MMM YYYY")}{" "}
+                -{" "}
+                {moment(pelatihan?.pelatihan_selesai)
+                  .utc()
+                  .format("DD MMM YYYY")}
               </span>
               <div className="mt-7">
                 {pelatihan?.status !== "Closed" && (
@@ -275,8 +278,13 @@ const DetailPelatihan = ({ session }) => {
                 <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Jadwal Pelatihan</p>
                   <p className="fz-16">
-                    {moment(pelatihan?.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
-                    {moment(pelatihan?.pelatihan_selesai).format("DD MMM YYYY")}
+                    {moment(pelatihan?.pelatihan_mulai)
+                      .utc()
+                      .format("DD MMM YYYY")}{" "}
+                    -{" "}
+                    {moment(pelatihan?.pelatihan_selesai)
+                      .utc()
+                      .format("DD MMM YYYY")}
                   </p>
                 </div>
               </div>
@@ -302,7 +310,7 @@ const DetailPelatihan = ({ session }) => {
                     src={
                       (pelatihan?.logo &&
                         pelatihan.logo !== "Belum ada file" &&
-                        pelatihan.file_path + pelatihan?.logo) ||
+                        pelatihan.file_path + pelatihan?.gambar_mitra) ||
                       "/assets/media/mitra-default.png"
                     }
                     width={60}

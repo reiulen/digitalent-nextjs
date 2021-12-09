@@ -295,6 +295,7 @@ const EditArtikelPeserta = ({ session }) => {
                       <div style={{ width: "100%", height: "300px" }}>
                         <div
                           ref={quillRef}
+                          style={{fontFamily:'Poppins'}}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor("deskripsi")
                           }
@@ -368,7 +369,7 @@ const EditArtikelPeserta = ({ session }) => {
                       simpleValidator.current.showMessageFor("kategori");
                     }}
                   >
-                    {allKategori.kategori.kategori.map((item) => {
+                    {allKategori.kategori?.kategori.map((item) => {
                       if (item.jenis_kategori === "Artikel")
                         return (
                           <option value={item.id} key={item.id}>

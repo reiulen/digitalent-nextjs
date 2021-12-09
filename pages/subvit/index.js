@@ -55,7 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDashboardSubvit(
           query.page_substansi,
-          query.page_triva,
+          query.page_trivia,
           query.page_survey,
           session.user.user.data.token
         )
