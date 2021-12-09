@@ -407,7 +407,12 @@ const Navigationbar = ({ session }) => {
                       </div>
                     </NavDropdown.Item>
                   </Col>
-                  <Col className="p-0 m-0 h-350px overflow-auto">
+                  <Col
+                    className="p-0 m-0 h-350px overflow-auto"
+                    style={
+                      navbarItems ? { borderLeft: "1px solid #6c6c6c" } : {}
+                    }
+                  >
                     {navbarItems &&
                       navbarItems.map((el, i) => {
                         return (
