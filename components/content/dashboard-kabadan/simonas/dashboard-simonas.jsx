@@ -18,6 +18,9 @@ import {
   getSimonasProjectAmount,
   getSimonasApplierAmountJob,
   getSimonasApplierAmountProject,
+  getSimonasRegionApplier,
+  getSimonasProvinsiApplier,
+  getSimonasProvinsiApplierRequired,
 } from "../../../../redux/actions/dashboard-kabadan/dashboard/simonas.actions";
 
 const DashboardSimonas = ({ token }) => {
@@ -31,6 +34,13 @@ const DashboardSimonas = ({ token }) => {
   const [pageCompanyProject, setPageCompanyProject] = useState(1);
   const [pageApplierJob, setPageApplierJob] = useState(1);
   const [pageApplierProject, setPageApplierProject] = useState(1);
+
+  const [pageProvinceApplier, setPageProvinceApplier] = useState(1);
+  const [pageProvinceApplierRequired, setPageProvinceApplierRequired] =
+    useState(1);
+
+  const [filterMapStatus, setFilterMapStatus] = useState("");
+  const [filterMapYear, setFilterMapYear] = useState("");
 
   const {
     loading: loadingTotalPengguna,
@@ -97,6 +107,26 @@ const DashboardSimonas = ({ token }) => {
     error: errorApplierEducationProject,
     applierEducationProject,
   } = useSelector((state) => state.simonasApplierEducationProject);
+  const {
+    loading: loadingFilterStatus,
+    error: errorFilterStatus,
+    filterStatus,
+  } = useSelector((state) => state.simonasFilterStatus);
+  const {
+    loading: loadingFilterYear,
+    error: errorFilterYear,
+    filterYear,
+  } = useSelector((state) => state.simonasFilterYear);
+  const {
+    loading: loadingProvinsiApplier,
+    error: errorProvinsiApplier,
+    provinceApplier,
+  } = useSelector((state) => state.simonasProvinsiApplier);
+  const {
+    loading: loadingProvinsiApplierRequired,
+    error: errorProvinsiApplierRequired,
+    provinceApplierRequited,
+  } = useSelector((state) => state.simonasProvinsiApplierRequired);
 
   const dataCompanyAmount = [];
   if (
@@ -165,13 +195,39 @@ const DashboardSimonas = ({ token }) => {
     });
   }
 
-  const dataProvinsi = [
-    { id: 1, title: "DKI Jakarta", percent: 50, total: "3.000" },
-    { id: 2, title: "Jawa Barat", percent: 30, total: "2.000" },
-    { id: 3, title: "Jawa Timur", percent: 40, total: "1.000" },
-    { id: 4, title: "Sumatra Utara", percent: 10, total: "50" },
-    { id: 5, title: "Nusa Tenggara Timur", percent: 10, total: "50" },
-  ];
+  const dataProvinsiApplier = [];
+  if (
+    provinceApplier &&
+    provinceApplier.data &&
+    provinceApplier.data.list.length > 0
+  ) {
+    provinceApplier.data.list.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.name_province,
+        percent: row.percentage,
+        total: row.applicant,
+      };
+      dataProvinsiApplier.push(val);
+    });
+  }
+
+  const dataProvinsiApplierRequited = [];
+  if (
+    provinceApplierRequited &&
+    provinceApplierRequited.data &&
+    provinceApplierRequited.data.list.length > 0
+  ) {
+    provinceApplierRequited.data.list.map((row, i) => {
+      let val = {
+        id: i + 1,
+        title: row.name_province,
+        percent: row.percentage,
+        total: row.applicant,
+      };
+      dataProvinsiApplierRequited.push(val);
+    });
+  }
 
   const dataApplierAge = [];
   if (applierAge && applierAge.data && applierAge.data.length > 0) {
@@ -232,16 +288,6 @@ const DashboardSimonas = ({ token }) => {
       dataApplierEducationProject.push(data);
     });
   }
-
-  const dataPendidikan = [
-    { id: 1, title: "D3", percent: 50, total: "3.000" },
-    { id: 2, title: "S1", percent: 40, total: "2.000" },
-    { id: 3, title: "SMA", percent: 40, total: "1.000" },
-    { id: 4, title: "SMK", percent: 30, total: "1.000" },
-    { id: 5, title: "S2", percent: 20, total: "1.000" },
-    { id: 6, title: "D4", percent: 10, total: "500" },
-    { id: 7, title: "Other", percent: 5, total: "100" },
-  ];
 
   const handlePercentage = (totalAdd, total) => {
     return Math.ceil((100 * totalAdd) / total);
@@ -431,21 +477,53 @@ const DashboardSimonas = ({ token }) => {
                     <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Status
                     </p>
-                    <select className="border-0 p-0">
-                      <option value="Semua">Semua</option>
-                      <option value="Submitted">Submitted</option>
-                      <option value="Selection">Selection</option>
-                      <option value="Rejected">Rejected</option>
-                      <option value="Hired">Hired</option>
+                    <select
+                      className="border-0 p-0"
+                      value={filterMapStatus}
+                      onChange={(e) => {
+                        setFilterMapStatus(e.target.value);
+                        dispatch(
+                          getSimonasRegionApplier(
+                            token,
+                            filterMapYear,
+                            e.target.value
+                          )
+                        );
+                      }}
+                    >
+                      <option value="">Semua</option>
+                      {filterStatus &&
+                        filterStatus.map((row, i) => (
+                          <option value={row.id} key={i}>
+                            {row.name}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div className="d-flex align-items-center">
                     <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Tahun
                     </p>
-                    <select className="border-0 p-0">
-                      <option value="2021">2021</option>
-                      <option value="2020">2020</option>
+                    <select
+                      className="border-0 p-0"
+                      value={filterMapYear}
+                      onChange={(e) => {
+                        setFilterMapYear(e.target.value);
+                        dispatch(
+                          getSimonasRegionApplier(
+                            token,
+                            e.target.value,
+                            filterMapStatus
+                          )
+                        );
+                      }}
+                    >
+                      {filterYear &&
+                        filterYear.map((row, i) => (
+                          <option value={row} key={i}>
+                            {row}
+                          </option>
+                        ))}
                     </select>
                   </div>
                 </div>
@@ -460,37 +538,59 @@ const DashboardSimonas = ({ token }) => {
             </div>
             <div className="row mt-10">
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <div className="card card-custom border bg-white">
+                <div className="card card-custom border bg-white h-100">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Asal Provinsi Pelamar
                     </p>
-                    <ListCardInfo data={dataProvinsi} />
+                    {loadingProvinsiApplier ? (
+                      <LoadingDashboard loading={loadingProvinsiApplier} />
+                    ) : (
+                      <>
+                        <ListCardInfo data={dataProvinsiApplier} />
 
-                    <PaginationDashboard
-                      total={10}
-                      perPage={5}
-                      title="Pelamar"
-                      activePage={1}
-                      funcPagination={(value) => {}}
-                    />
+                        <PaginationDashboard
+                          total={provinceApplier?.data?.total}
+                          perPage={provinceApplier?.data?.perPage}
+                          title="Pelamar"
+                          activePage={pageProvinceApplier}
+                          funcPagination={(value) => {
+                            setPageProvinceApplier(value);
+                            dispatch(getSimonasProvinsiApplier(token, value));
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <div className="card card-custom border bg-white">
+                <div className="card card-custom border bg-white h-100">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Asal Provinsi Pelamar yang direkrut
                     </p>
-                    <ListCardInfo data={dataProvinsi} />
-                    <PaginationDashboard
-                      total={10}
-                      perPage={5}
-                      title="Direkrut"
-                      activePage={1}
-                      funcPagination={(value) => {}}
-                    />
+                    {loadingProvinsiApplierRequired ? (
+                      <LoadingDashboard
+                        loading={loadingProvinsiApplierRequired}
+                      />
+                    ) : (
+                      <>
+                        <ListCardInfo data={dataProvinsiApplierRequited} />
+                        <PaginationDashboard
+                          total={provinceApplierRequited?.data?.total}
+                          perPage={provinceApplierRequited?.data?.perPage}
+                          title="Direkrut"
+                          activePage={pageProvinceApplierRequired}
+                          funcPagination={(value) => {
+                            setPageProvinceApplierRequired(value);
+                            dispatch(
+                              getSimonasProvinsiApplierRequired(token, value)
+                            );
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

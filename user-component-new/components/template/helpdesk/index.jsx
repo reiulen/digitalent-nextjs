@@ -20,8 +20,8 @@ export default function Index({ children }) {
 
   return (
     <Fragment>
-      <Row>
-        <Col md={4}>
+      <Row style={{ marginBottom: "184px" }}>
+        <Col md={3}>
           <h1 style={{ fontSize: "40px", fontWeight: 700 }}>BANTUAN</h1>
           <p className="fz-18 mb-18" style={{ color: "#6C6C6C" }}>
             Ada yang bisa kami bantu?

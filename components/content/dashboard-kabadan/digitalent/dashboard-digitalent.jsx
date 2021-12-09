@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 
 import Header from "../component/header.component";
 import CardTotal from "../component/card-total.component";
 import StatistikWrapper from "../wrapper/statistik.wrapper";
+import LoadingDashboard from "../component/loading-dashboard.component";
 
 import CardInfo from "../component/card-info.component";
 import ListCardInfo from "../component/list-card-info.component";
@@ -19,6 +20,7 @@ import {
   getDigitalentProvinsiPendaftar,
   getDigitalentProvinsiPeserta,
 } from "../../../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
+import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 import {
   BarChart,
@@ -36,6 +38,23 @@ const DashboardDigitalent = ({ token }) => {
   const MyMap = dynamic(() => import("../component/map-digitalent.component"), {
     ssr: false,
   });
+  const dispatch = useDispatch();
+
+  const [filterStatistikAkademiPendaftar, setFilterStatistikAkademiPendaftar] =
+    useState("");
+  const [filterStatistikAkademiPeserta, setFilterStatistikAkademiPeserta] =
+    useState("");
+
+  const [yearPesertaWilayah, setYearPesertaWilayah] = useState("");
+  const [themePesertaWilayah, setThemePesertaWilayah] = useState("");
+  const [academyPesertaWilayah, setAcademyPesertaWilayah] = useState("");
+
+  const [pageMitraPendaftaran, setPageMitraPendaftaran] = useState(1);
+  const [pageMitraPeserta, setPageMitraPeserta] = useState(1);
+
+  const [pageTablePendaftaran, setPageTablePendaftaran] = useState(1);
+  const [pageProvinsiPendaftar, setPageProvinsiPendaftar] = useState(1);
+  const [pageProvinsiPeserta, setPageProvinsiPeserta] = useState(1);
 
   const {
     loading: loadingTotalPengguna,
@@ -92,12 +111,19 @@ const DashboardDigitalent = ({ token }) => {
     error: errorDataPribadi,
     dataPribadi,
   } = useSelector((state) => state.digitalentDataPribadi);
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
+  );
 
+  const year = ["2021", "2020", "2019", "2018", "2017", "2016"];
   const dataStatistikAkademiPendaftar = [];
   if (statistikAkademiPendaftar && statistikAkademiPendaftar.length > 0) {
     statistikAkademiPendaftar.map((row, i) => {
       let val = {
-        name: row.name,
+        name: row.slug,
         data: row.jumlah,
       };
       dataStatistikAkademiPendaftar.push(val);
@@ -108,7 +134,7 @@ const DashboardDigitalent = ({ token }) => {
   if (statistikAkademiPeserta && statistikAkademiPeserta.length > 0) {
     statistikAkademiPeserta.map((row, i) => {
       let val = {
-        name: row.name,
+        name: row.slug,
         pendaftar: row.pendaftar,
         peserta: row.peserta,
         lulus: row.lulus,
@@ -128,7 +154,7 @@ const DashboardDigitalent = ({ token }) => {
       let val = {
         id: i + 1,
         title: row.mitra,
-        percent: 0,
+        percent: row.persentase,
         total: row.hasil,
       };
       dataStatistikMitraPendaftar.push(val);
@@ -145,7 +171,7 @@ const DashboardDigitalent = ({ token }) => {
       let val = {
         id: i + 1,
         title: row.mitra,
-        percent: 0,
+        percent: row.persentase,
         total: row.hasil,
       };
       dataStatistikMitraPeserta.push(val);
@@ -173,7 +199,7 @@ const DashboardDigitalent = ({ token }) => {
       let val = {
         id: i + 1,
         title: row.label,
-        percent: 0,
+        percent: row.persentase,
         total: row.pendaftar,
       };
       dataProvinsiPendaftar.push(val);
@@ -190,16 +216,92 @@ const DashboardDigitalent = ({ token }) => {
       let val = {
         id: i + 1,
         title: row.label,
-        percent: 0,
+        percent: row.persentase,
         total: row.pendaftar,
       };
       dataProvinsiPeserta.push(val);
     });
   }
 
+  const dataPendidikanPeserta = [];
+  const dataUmurPendaftar = [];
+  const dataUmurPeserta = [];
+  const dataKelaminPendaftar = [];
+  const dataKelaminPeserta = [];
+  const dataPendidikanPendaftar = [];
+
   if (dataPribadi) {
-    // console.log(Object.keys(dataPribadi.umur_pendaftar));
-    const dataUmurPendaftar = [];
+    if (dataPribadi.umur_pendaftar) {
+      dataPribadi.umur_pendaftar.map((row, i) => {
+        let val = {
+          id: i + 1,
+          title: row.name,
+          percent: row.persentase,
+          total: row.total,
+        };
+        dataUmurPendaftar.push(val);
+      });
+    }
+
+    if (dataPribadi.umur_peserta) {
+      dataPribadi.umur_peserta.map((row, i) => {
+        let val = {
+          id: i + 1,
+          title: row.name,
+          percent: row.persentase,
+          total: row.total,
+        };
+        dataUmurPeserta.push(val);
+      });
+    }
+
+    if (dataPribadi.jenis_kelamin_pendaftar) {
+      dataPribadi.jenis_kelamin_pendaftar.map((row, i) => {
+        let val = {
+          id: i + 1,
+          title: row.name,
+          percent: row.persentase,
+          total: row.total,
+        };
+        dataKelaminPendaftar.push(val);
+      });
+    }
+
+    if (dataPribadi.jenis_kelamin_peserta) {
+      dataPribadi.jenis_kelamin_peserta.map((row, i) => {
+        let val = {
+          id: i + 1,
+          title: row.name,
+          percent: row.persentase,
+          total: row.total,
+        };
+        dataKelaminPeserta.push(val);
+      });
+    }
+
+    if (dataPribadi.pendidikan_pendaftar) {
+      dataPribadi.pendidikan_pendaftar.map((row, i) => {
+        let val = {
+          id: i + 1,
+          title: row.name,
+          percent: row.persentase,
+          total: row.total,
+        };
+        dataPendidikanPendaftar.push(val);
+      });
+    }
+
+    if (dataPribadi.pendidikan_peserta) {
+      dataPribadi.pendidikan_peserta.map((row, i) => {
+        let val = {
+          id: i + 1,
+          title: row.name,
+          percent: row.persentase,
+          total: row.total,
+        };
+        dataPendidikanPeserta.push(val);
+      });
+    }
   }
   const dataUmur = [
     { id: 1, title: "<20", percent: 50, total: "3.000" },
@@ -272,30 +374,42 @@ const DashboardDigitalent = ({ token }) => {
         <h2 className="title-section-dashboard">statistik peserta</h2>
         <div className="row mt-5">
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-            <div className="card card-custom bg-white">
+            <div className="card card-custom bg-white h-100">
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Pesebaran Pendaftaran Akademi"}
-                  funcFilterYear={(value) => {}}
+                  funcFilterYear={(value) => {
+                    setFilterStatistikAkademiPendaftar(value);
+                    dispatch(
+                      getDigitalentStatistikAkademiPendaftar(token, value)
+                    );
+                  }}
+                  year={year}
                 />
 
                 <div className="chard-bar mt-5">
-                  <ResponsiveContainer width={"100%"} height={300}>
-                    <BarChart
-                      data={dataStatistikAkademiPendaftar}
-                      margin={{
-                        top: 5,
-                        right: 30,
-                        left: -10,
-                        bottom: 5,
-                      }}
-                    >
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip cursor={{ fill: "transparent" }} />
-                      <Bar dataKey="data" fill="#0063CC" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  {loadingStatistikAkademiPendaftar ? (
+                    <LoadingDashboard
+                      loading={loadingStatistikAkademiPendaftar}
+                    />
+                  ) : (
+                    <ResponsiveContainer width={"100%"} height={300}>
+                      <BarChart
+                        data={dataStatistikAkademiPendaftar}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: -10,
+                          bottom: 5,
+                        }}
+                      >
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip cursor={{ fill: "transparent" }} />
+                        <Bar dataKey="data" fill="#0063CC" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  )}
                 </div>
               </div>
             </div>
@@ -305,29 +419,41 @@ const DashboardDigitalent = ({ token }) => {
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Pesebaran Peserta Akademi"}
-                  funcFilterYear={(value) => {}}
+                  funcFilterYear={(value) => {
+                    setFilterStatistikAkademiPeserta(value);
+                    dispatch(
+                      getDigitalentStatistikAkademiPeserta(token, value)
+                    );
+                  }}
+                  year={year}
                 />
 
                 <div className="chard-bar mt-5">
-                  <ResponsiveContainer width={"100%"} height={300}>
-                    <BarChart
-                      data={dataStatistikAkademiPeserta}
-                      margin={{
-                        top: 5,
-                        right: 30,
-                        left: -10,
-                        bottom: 5,
-                      }}
-                    >
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip cursor={{ fill: "transparent" }} />
-                      <Bar stackId="a" dataKey="sertifikasi" fill="#007CFF" />
-                      <Bar stackId="a" dataKey="lulus" fill="#1A3266" />
-                      <Bar stackId="a" dataKey="peserta" fill="#203E80" />
-                      <Bar stackId="a" dataKey="pendaftar" fill="#4CBDE2" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  {loadingStatistikAkademiPeserta ? (
+                    <LoadingDashboard
+                      loading={loadingStatistikAkademiPeserta}
+                    />
+                  ) : (
+                    <ResponsiveContainer width={"100%"} height={300}>
+                      <BarChart
+                        data={dataStatistikAkademiPeserta}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: -10,
+                          bottom: 5,
+                        }}
+                      >
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip cursor={{ fill: "transparent" }} />
+                        <Bar stackId="a" dataKey="sertifikasi" fill="#007CFF" />
+                        <Bar stackId="a" dataKey="lulus" fill="#1A3266" />
+                        <Bar stackId="a" dataKey="peserta" fill="#203E80" />
+                        <Bar stackId="a" dataKey="pendaftar" fill="#4CBDE2" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  )}
                 </div>
               </div>
             </div>
@@ -339,36 +465,58 @@ const DashboardDigitalent = ({ token }) => {
         <h2 className="title-section-dashboard">statistik mitra</h2>
         <div className="row mt-5">
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-            <div className="card card-custom bg-white">
+            <div className="card card-custom bg-white h-100">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Pendaftaran
                 </p>
-                <ListCardInfo data={dataStatistikMitraPendaftar} />
-                <PaginationDashboard
-                  total={statistikMitraPendaftar?.total}
-                  perPage={statistikMitraPendaftar?.perPage}
-                  title="Pendaftar"
-                  activePage={1}
-                  funcPagination={(value) => {}}
-                />
+                {loadingStatistikMitraPendaftar ? (
+                  <LoadingDashboard loading={loadingStatistikMitraPendaftar} />
+                ) : (
+                  <>
+                    <ListCardInfo data={dataStatistikMitraPendaftar} />
+                    <PaginationDashboard
+                      total={statistikMitraPendaftar?.total}
+                      perPage={statistikMitraPendaftar?.perPage}
+                      title="Pendaftar"
+                      activePage={pageMitraPendaftaran}
+                      funcPagination={(value) => {
+                        setPageMitraPendaftaran(value);
+                        dispatch(
+                          getDigitalentStatistikMitraPendaftar(token, value)
+                        );
+                      }}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
           <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-            <div className="card card-custom bg-white">
+            <div className="card card-custom bg-white h-100">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
                   Jumlah Peserta
                 </p>
-                <ListCardInfo data={dataStatistikMitraPeserta} />
-                <PaginationDashboard
-                  total={statistikMitraPeserta?.total}
-                  perPage={statistikMitraPeserta?.perPage}
-                  title="Peserta"
-                  activePage={1}
-                  funcPagination={(value) => {}}
-                />
+                {loadingStatistikMitraPeserta ? (
+                  <LoadingDashboard loading={loadingStatistikMitraPeserta} />
+                ) : (
+                  <>
+                    <ListCardInfo data={dataStatistikMitraPeserta} />
+                    <PaginationDashboard
+                      total={statistikMitraPeserta?.total}
+                      perPage={statistikMitraPeserta?.perPage}
+                      title="Peserta"
+                      activePage={pageMitraPeserta}
+                      funcPagination={(value) => {
+                        setPageMitraPeserta(value);
+                        dispatch(
+                          getDigitalentStatistikMitraPeserta(token, value)
+                        );
+                      }}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -397,7 +545,12 @@ const DashboardDigitalent = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody className="w-100">
-                      {tablePendaftar &&
+                      {loadingTablePendaftaran ? (
+                        <td colSpan={6}>
+                          <LoadingDashboard loading={loadingTablePendaftaran} />
+                        </td>
+                      ) : (
+                        tablePendaftar &&
                         tablePendaftar.list.length > 0 &&
                         tablePendaftar.list.map((row, i) => (
                           <tr key={i}>
@@ -416,7 +569,8 @@ const DashboardDigitalent = ({ token }) => {
                                 .format("DD MMMM YYYY")}
                             </td>
                           </tr>
-                        ))}
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -424,8 +578,11 @@ const DashboardDigitalent = ({ token }) => {
                   total={tablePendaftar?.total}
                   perPage={tablePendaftar?.perPage}
                   title="Pendaftar"
-                  activePage={1}
-                  funcPagination={(value) => {}}
+                  activePage={pageTablePendaftaran}
+                  funcPagination={(value) => {
+                    setPageTablePendaftaran(value);
+                    dispatch(getDigitalentTablePendaftaran(token, value));
+                  }}
                 />
               </div>
             </div>
@@ -446,26 +603,88 @@ const DashboardDigitalent = ({ token }) => {
                     <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Akademi:
                     </p>
-                    <select className="border-0 p-0">
-                      <option value="Semua">Semua</option>
+                    <select
+                      className="border-0 p-0"
+                      value={academyPesertaWilayah}
+                      onChange={(e) => {
+                        setAcademyPesertaWilayah(e.target.value);
+                        dispatch(dropdownTemabyAkademi(e.target.value, token));
+                        dispatch(
+                          getDigitalentPesertaWilayah(
+                            token,
+                            e.target.value,
+                            themePesertaWilayah,
+                            yearPesertaWilayah
+                          )
+                        );
+                      }}
+                    >
+                      <option value="">Semua</option>
+                      {dataAkademi &&
+                        dataAkademi.data &&
+                        dataAkademi.data.length > 0 &&
+                        dataAkademi.data.map((row, i) => (
+                          <option value={row.value} key={i}>
+                            {row.slug}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center mr-3">
                     <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Tema:
                     </p>
-                    <select className="border-0 p-0">
-                      <option value="Semua">Semua</option>
+                    <select
+                      className="border-0 p-0"
+                      value={themePesertaWilayah}
+                      onChange={(e) => {
+                        setThemePesertaWilayah(e.target.value);
+                        dispatch(
+                          getDigitalentPesertaWilayah(
+                            token,
+                            academyPesertaWilayah,
+                            e.target.value,
+                            yearPesertaWilayah
+                          )
+                        );
+                      }}
+                    >
+                      <option value="">Semua</option>
+                      {drowpdownTemabyAkademi &&
+                        drowpdownTemabyAkademi.data &&
+                        drowpdownTemabyAkademi.data.data.length > 0 &&
+                        drowpdownTemabyAkademi.data.data.map((row, i) => (
+                          <option key={i} value={row.value}>
+                            {row.label}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
                     <p className="mt-4 mr-3 text-dashboard-gray-caption">
                       Tahun:
                     </p>
-                    <select className="border-0 p-0">
-                      <option value="Semua">Semua</option>
-                      <option value="2021">2021</option>
-                      <option value="2022">2022</option>
+                    <select
+                      className="border-0 p-0"
+                      value={yearPesertaWilayah}
+                      onChange={(e) => {
+                        setYearPesertaWilayah(e.target.value);
+                        dispatch(
+                          getDigitalentPesertaWilayah(
+                            token,
+                            academyPesertaWilayah,
+                            themePesertaWilayah,
+                            e.target.value
+                          )
+                        );
+                      }}
+                    >
+                      {year &&
+                        year.map((row, i) => (
+                          <option key={i} value={row}>
+                            {row}
+                          </option>
+                        ))}
                     </select>
                   </div>
                 </div>
@@ -480,60 +699,88 @@ const DashboardDigitalent = ({ token }) => {
             </div>
             <div className="row mt-10">
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <div className="card card-custom border bg-white">
+                <div className="card card-custom border bg-white h-100">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Komposisi Provinsi Pendaftar
                     </p>
-                    <ListCardInfo data={dataProvinsiPendaftar} />
+                    {loadingProvinsiPendaftar ? (
+                      <LoadingDashboard loading={loadingProvinsiPendaftar} />
+                    ) : (
+                      <>
+                        <ListCardInfo data={dataProvinsiPendaftar} />
 
-                    <PaginationDashboard
-                      total={provinsiPendaftar?.total}
-                      perPage={provinsiPendaftar?.perPage}
-                      title="Pendaftar"
-                      activePage={1}
-                      funcPagination={(value) => {}}
-                    />
+                        <PaginationDashboard
+                          total={provinsiPendaftar?.total}
+                          perPage={provinsiPendaftar?.perPage}
+                          title="Pendaftar"
+                          activePage={pageProvinsiPendaftar}
+                          funcPagination={(value) => {
+                            setPageProvinsiPendaftar(value);
+                            dispatch(
+                              getDigitalentProvinsiPendaftar(token, value)
+                            );
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <div className="card card-custom border bg-white">
+                <div className="card card-custom border bg-white h-100">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
                       Komposisi Provinsi Peserta
                     </p>
-                    <ListCardInfo data={dataProvinsiPeserta} />
-                    <PaginationDashboard
-                      total={provinsiPeserta?.total}
-                      perPage={provinsiPeserta?.perPage}
-                      title="Peserta"
-                      activePage={1}
-                      funcPagination={(value) => {}}
-                    />
+                    {loadingProvinsiPeserta ? (
+                      <LoadingDashboard loading={loadingProvinsiPeserta} />
+                    ) : (
+                      <>
+                        <ListCardInfo data={dataProvinsiPeserta} />
+                        <PaginationDashboard
+                          total={provinsiPeserta?.total}
+                          perPage={provinsiPeserta?.perPage}
+                          title="Peserta"
+                          activePage={pageProvinsiPeserta}
+                          funcPagination={(value) => {
+                            setPageProvinsiPeserta(value);
+                            dispatch(
+                              getDigitalentProvinsiPeserta(token, value)
+                            );
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
             <div className="row mt-5">
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <CardInfo title={"Komposisi Usia Pendaftar"} data={dataUmur} />
+                <CardInfo
+                  title={"Komposisi Usia Pendaftar"}
+                  data={dataUmurPendaftar}
+                />
               </div>
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
-                <CardInfo title={"Komposisi Usia Peserta"} data={dataUmur} />
+                <CardInfo
+                  title={"Komposisi Usia Peserta"}
+                  data={dataUmurPeserta}
+                />
               </div>
             </div>
             <div className="row mt-5">
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Total Pendaftar berdasarkan Jenis Kelamin"}
-                  data={dataJenisKelamin}
+                  data={dataKelaminPendaftar}
                 />
               </div>
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Total Peserta berdasarkan Jenis Kelamin"}
-                  data={dataJenisKelamin}
+                  data={dataKelaminPeserta}
                 />
               </div>
             </div>
@@ -542,13 +789,13 @@ const DashboardDigitalent = ({ token }) => {
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Komposisi Pendidikan Pendaftar"}
-                  data={dataPendidikan}
+                  data={dataPendidikanPendaftar}
                 />
               </div>
               <div className="col-md-12 col-sm-12 col-lg-6 mb-5">
                 <CardInfo
                   title={"Komposisi Pendidikan Peserta"}
-                  data={dataPendidikan}
+                  data={dataPendidikanPeserta}
                 />
               </div>
             </div>

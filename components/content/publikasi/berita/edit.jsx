@@ -379,6 +379,7 @@ const EditBerita = ({ token, idUser }) => {
                                                 <div style={{ width: "100%", height: "300px" }}>
                                                     <div
                                                         ref={quillRef}
+                                                        style={{fontFamily:'Poppins'}}
                                                     />
                                                 </div>
                                                 :
