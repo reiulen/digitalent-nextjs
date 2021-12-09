@@ -10,6 +10,7 @@ import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-s
 import { toPng } from "html-to-image";
 import moment from "moment";
 import axios from "axios";
+import { SweatAlert } from "../../../../../../utils/middleware/helper";
 // #Icon
 
 export default function ListPesertaID({ token }) {
@@ -42,31 +43,40 @@ export default function ListPesertaID({ token }) {
     });
     return data;
   };
-  console.log(participant.data.nomor_registrasi, "ini participant");
+
   const handleDownload = async () => {
     const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${participant?.data?.nomor_registrasi}`;
-    const check = await axios.get(linkChecker);
-    // check udh pernah di sign apa belum?
-    if (!check.data.status) {
-      const data = await convertDivToPng(divReference.current);
-      if (data) {
-        const formData = new FormData();
-        formData.append("certificate", data);
-        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${certificate?.data?.pelatihan?.id}&nomor_registrasi=${participant?.data?.nomor_registrasi}`;
-        const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
+    try {
+      const check = await axios.get(linkChecker);
+      if (!check.data.status) {
+        const data = await convertDivToPng(divReference.current);
+        if (data) {
+          const formData = new FormData();
+          formData.append("certificate", data);
+          const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${certificate?.data?.pelatihan?.id}&nomor_registrasi=${participant?.data?.nomor_registrasi}`;
+          try {
+            const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
+            const a = document.createElement("a");
+            a.download = `Sertifikat - p12 ${query.name}.png`;
+            a.target = "_blank";
+            a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.file_pdf}`;
+            a.click();
+          } catch (e) {
+            throw e;
+          }
+        }
+      } else {
+        console.log(check, "ini checknya");
         const a = document.createElement("a");
         a.download = `Sertifikat - p12 ${query.name}.png`;
         a.target = "_blank";
-        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
+        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
         a.click();
       }
-    } else {
-      const a = document.createElement("a");
-      a.download = `Sertifikat - p12 ${query.name}.png`;
-      a.target = "_blank";
-      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${certificate?.data?.certificate?.certificate_pdf}`;
-      a.click();
+    } catch (e) {
+      SweatAlert("Gagal", e.message, "error");
     }
+    // check udh pernah di sign apa belum?
   };
 
   return (
