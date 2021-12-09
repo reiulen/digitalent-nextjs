@@ -231,9 +231,7 @@ const DashboardDigitalent = ({ token }) => {
   const dataPendidikanPendaftar = [];
 
   if (dataPribadi) {
-<<<<<<< HEAD
     const dataUmurPendaftar = [];
-=======
     if (dataPribadi.umur_pendaftar) {
       dataPribadi.umur_pendaftar.map((row, i) => {
         let val = {
@@ -305,7 +303,6 @@ const DashboardDigitalent = ({ token }) => {
         dataPendidikanPeserta.push(val);
       });
     }
->>>>>>> bf874fec5eb4661963106b9f2c5eda610586e011
   }
   const dataUmur = [
     { id: 1, title: "<20", percent: 50, total: "3.000" },
