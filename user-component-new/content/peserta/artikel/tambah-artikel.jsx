@@ -252,7 +252,8 @@ const TambahArtikelPeserta = ({ session }) => {
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <div style={{ width: "100%", height: "300px" }}>
-                          <div ref={quillRef} />
+                          <div ref={quillRef} 
+                            style={{fontFamily:'Poppins'}}/>
                         </div>
                       ) : (
                         <p>Tunggu Sebentar</p>

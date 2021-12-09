@@ -24,7 +24,7 @@ const Alamat = ({ token }) => {
         <h3 className="font-weight-bolder mb-5">Alamat</h3>
         <Row>
           <Col md={12}>
-            <p className="text-neutral-body my-1">Alamat (Sesuai KTP)</p>
+            <p className="text-neutral-body my-1">Alamat</p>
             <p>{(alamat && alamat.address_ktp) || "-"}</p>
           </Col>
         </Row>
@@ -58,9 +58,7 @@ const Alamat = ({ token }) => {
         <h3 className="font-weight-bolder mb-3">Alamat Domisili</h3>
         <Row>
           <Col md={12}>
-            <p className="text-neutral-body my-1">
-              Alamat Domisili (Sesuai KTP)
-            </p>
+            <p className="text-neutral-body my-1">Alamat Domisili </p>
             <p>{(alamat && alamat.address) || "-"}</p>
           </Col>
         </Row>

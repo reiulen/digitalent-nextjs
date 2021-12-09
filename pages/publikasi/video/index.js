@@ -50,10 +50,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.publish,
           query.startdate,
           query.enddate,
-          session.user.user.data.token
+          session.user.user.data.token,
+          req.cookies.token_permission
         )
       );
-      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token, req.cookies.token_permission));
       return {
         props: { session, title: "Video - Publikasi" },
       };

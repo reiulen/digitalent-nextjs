@@ -285,9 +285,27 @@ const ListKandidatBeasiswa = ({ token }) => {
                               <p className="fz-15 mb-0">{row.type || "-"}</p>
                             </td>
                             <td className="align-middle">
-                              <span className="label label-inline label-light-success font-weight-bold py-5">
-                                {row.status}
-                              </span>
+                              {row.status === "Menunggu Verifikasi" ||
+                              row.status === "Menunggu Konfirmasi" ? (
+                                <span className="label label-inline label-light-warning font-weight-bold py-5">
+                                  {row.status}
+                                </span>
+                              ) : row.status === "Revisi Formulir" ||
+                                row.status === "Undangan" ? (
+                                <span className="label label-inline label-light-primary font-weight-bold py-5">
+                                  {row.status}
+                                </span>
+                              ) : row.status === "Gagal" ||
+                                row.status === "Registrasi Ditolak" ||
+                                row.status === "Ditolak" ? (
+                                <span className="label label-inline label-light-danger font-weight-bold py-5">
+                                  {row.status}
+                                </span>
+                              ) : (
+                                <span className="label label-inline label-light-success font-weight-bold py-5">
+                                  {row.status}
+                                </span>
+                              )}
                             </td>
                           </tr>
                         ))

@@ -34,7 +34,7 @@ export const getAllListsPeserta =
           },
         }
       );
-
+        
       dispatch({
         type: LIST_PESERTA_SUCCESS,
         payload: data,
@@ -148,7 +148,7 @@ export const getAllListsPeserta =
       );
       if(data.status){
         Swal.fire("Berhasil", data.message, "success").then(() => {
-          window.location = "/site-management/user/peserta-dts";
+          window.location = "/site-management/user/user-dts";
         });
 
       }else{
@@ -177,7 +177,7 @@ export const getAllListsPeserta =
       );
       if(data.status){
         Swal.fire("Berhasil", data.message, "success").then(() => {
-          window.location = `/site-management/user/peserta-dts/detail-peserta-dts/${datas.id_peserta}`;
+          window.location = `/site-management/user/user-dts/detail-peserta-dts/${datas.id_peserta}`;
         });
 
       }else{

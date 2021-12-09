@@ -4,6 +4,7 @@ import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/li
 import { getPublishedSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { wrapper } from "../../../../../redux/store";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 const ListPesertaId = dynamic(
   () =>
@@ -33,10 +34,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
