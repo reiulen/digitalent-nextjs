@@ -118,7 +118,7 @@ export default function ButtonStatusPeserta({ data, token }) {
             disabled={!data?.survei}
             click={() => {
               router.push(
-                `/peserta/survey?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/survey?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -150,7 +150,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/mid-test/panduan-mid-test?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/mid-test/panduan-mid-test?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -162,7 +162,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/trivia?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -176,7 +176,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/mid-test/panduan-mid-test?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/mid-test/panduan-mid-test?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -191,7 +191,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/trivia?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -256,7 +256,7 @@ export default function ButtonStatusPeserta({ data, token }) {
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
               router.push(
-                `/peserta/test-substansi/panduan-substansi?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/test-substansi/panduan-substansi?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
             }}
             disabled={!data?.tes_subtansi}

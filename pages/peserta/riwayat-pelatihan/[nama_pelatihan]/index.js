@@ -47,7 +47,6 @@ const Layout = dynamic(() =>
 
 export default function RiwayatPelatihanPage(props) {
   const session = props.session.user.user.data.user;
-
   return (
     <>
       <Layout title="Administrasi" session={session}>
@@ -92,7 +91,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           if (
             status.includes("seleksi akhir") ||
             status.includes("pelatihan") ||
-            status.includes("lpj")
+            status.includes("lpj") ||
+            status.includes("survey belum mengerjakan") ||
+            data.includes("survey") ||
+            data.data.survey
           ) {
             success = true;
           } else {

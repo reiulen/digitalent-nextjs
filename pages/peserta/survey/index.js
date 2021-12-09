@@ -75,7 +75,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
           getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
         );
         if (data) {
-          if (data?.data?.status.includes("administrasi akhir")) {
+          if (
+            data?.data?.status.includes("administrasi akhir") ||
+            data?.data?.status.includes("survey") ||
+            data?.data?.survei
+          ) {
+            console.log("masuk sini,");
             success = true;
           } else {
             success = false;
@@ -123,6 +128,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           }
         }
       }
+
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 
