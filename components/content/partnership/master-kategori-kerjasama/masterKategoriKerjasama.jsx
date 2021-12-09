@@ -19,6 +19,7 @@ import IconAdd from "../../../assets/icon/Add";
 import AlertBar from "../components/BarAlert";
 
 import IconSearch from "../../../assets/icon/Search";
+import Cookies from "js-cookie"
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -37,6 +38,8 @@ const Table = ({ token }) => {
 
   const [successDelete, setSuccessDelete] = useState(false);
 
+  const cookiePermission = Cookies.get("token_permission")
+
   const cooperationDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
@@ -51,23 +54,23 @@ const Table = ({ token }) => {
       if (result.value) {
         let formData = new FormData();
         formData.append("_method", "put");
-        dispatch(deleteCooporation(token, formData, id));
+        dispatch(deleteCooporation(token, formData, id, cookiePermission));
         setSuccessDelete(true);
         router.replace(`/partnership/master-kategori-kerjasama`);
       }
     });
   };
-  useEffect(() => {
-    dispatch(fetchAllMKCooporation(token));
-  }, [
-    dispatch,
-    allMKCooporation.keyword,
-    allMKCooporation.limit,
-    allMKCooporation.page,
-    allMKCooporation.status_delete,
-    allMKCooporation.status_list,
-    token
-  ]);
+  // useEffect(() => {
+  //   dispatch(fetchAllMKCooporation(token));
+  // }, [
+  //   dispatch,
+  //   allMKCooporation.keyword,
+  //   allMKCooporation.limit,
+  //   allMKCooporation.page,
+  //   allMKCooporation.status_delete,
+  //   allMKCooporation.status_list,
+  //   token
+  // ]);
 
 
   const onNewReset = () => {

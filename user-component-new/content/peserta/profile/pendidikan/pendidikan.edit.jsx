@@ -165,7 +165,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   };
 
   const onChangeIjazah = (e) => {
-    const type = ["image/jpeg", "image/jpg", "application/pdf"];
+    const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
         if (e.target.files[0].size > 5000000) {
@@ -186,7 +186,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         e.target.value = null;
         Swal.fire(
           "Oops !",
-          "Data yang bisa dimasukkan hanya berupa data jpg atau pdf.",
+          "Data yang bisa dimasukkan hanya berupa image.",
           "error"
         );
       }
@@ -2399,7 +2399,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg ,application/pdf"
+                  accept="image/png, image/jpeg, image/jpg"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2422,7 +2422,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>

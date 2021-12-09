@@ -5,6 +5,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const RevisiSubmit = ({token}) => {
   const router = useRouter();
@@ -51,6 +52,7 @@ const RevisiSubmit = ({token}) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -87,6 +89,7 @@ const RevisiSubmit = ({token}) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -109,6 +112,7 @@ const RevisiSubmit = ({token}) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
           },
         }
       );

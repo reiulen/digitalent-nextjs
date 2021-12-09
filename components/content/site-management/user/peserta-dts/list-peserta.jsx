@@ -25,7 +25,7 @@ const Table = ({ token }) => {
 
 
   const listPeserta =
-    allListPeserta.loading === false ? (
+  allListPeserta?.data?.data?.list?.length > 0 ? (
       allListPeserta?.data?.data?.list?.map((item, index) => {
         return (
           <tr key={index}>
@@ -38,7 +38,7 @@ const Table = ({ token }) => {
             <td className="align-middle text-left">
               <div className="d-flex align-items-center">
                 <Link
-                  href={`/site-management/user/peserta-dts/ubah-peserta-dts/${item.user_id}`}
+                  href={`/site-management/user/user-dts/ubah-peserta-dts/${item.user_id}`}
                 >
                   <a className={`btn btn-link-action bg-blue-secondary position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.manage")}`}>
                     <IconPencil width="16" height="16" />
@@ -46,7 +46,7 @@ const Table = ({ token }) => {
                   </a>
                 </Link>
                 <Link
-                  href={`/site-management/user/peserta-dts/detail-peserta-dts/${item.user_id}`}
+                  href={`/site-management/user/user-dts/detail-peserta-dts/${item.user_id}`}
                 >
                   <a className={`btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.view")}`}>
                     <IconEye width="16" height="16" />
@@ -60,8 +60,8 @@ const Table = ({ token }) => {
       })
     ) : (
       <tr>
-        <td colSpan="8">
-          <LoadingTable />
+        <td colSpan="8" className="align-middle text-center">
+          Data Kosong
         </td>
       </tr>
     );
@@ -77,7 +77,7 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark titles-1">
-              List User Peserta DTS
+              List User DTS
             </h3>
           </div>
           <div className="card-body pt-0 px-4 px-sm-8">
@@ -138,7 +138,7 @@ const Table = ({ token }) => {
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>{allListPeserta?.data?.data?.list.length > 0 ? listPeserta : <tr><td colSpan="8" className="align-middle text-center">Data Kosong</td></tr>}</tbody>
+                  <tbody>{!allListPeserta?.loading ? listPeserta : <tr><td colSpan="8" className="align-middle text-center"><LoadingTable /></td></tr>}</tbody>
                 </table>
               </div>
 

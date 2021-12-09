@@ -29,7 +29,7 @@ const DetailPelatihan = ({ session }) => {
   const { akademiId } = router.query;
 
   const dispatch = useDispatch();
-  const { pelatihan } = useSelector(state => state.detailPelatihan);
+  const { pelatihan } = useSelector((state) => state.detailPelatihan);
 
   useEffect(() => {
     if (pelatihan.Status === "Close") {
@@ -58,7 +58,7 @@ const DetailPelatihan = ({ session }) => {
   };
 
   //disini kurang
-  const handleBookmark = async pelatihan => {
+  const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -136,13 +136,13 @@ const DetailPelatihan = ({ session }) => {
                         Registrasi
                       </p>
                       <p className="fz-16 fw-400">
-                        {moment(pelatihan?.pendaftaran_mulai).format(
-                          "DD MMM YYYY"
-                        )}{" "}
+                        {moment(pelatihan?.pendaftaran_mulai)
+                          .utc()
+                          .format("DD MMM YYYY")}{" "}
                         -{" "}
-                        {moment(pelatihan?.pendaftaran_selesai).format(
-                          "DD MMM YYYY"
-                        )}
+                        {moment(pelatihan?.pendaftaran_selesai)
+                          .utc()
+                          .format("DD MMM YYYY")}
                       </p>
                     </div>
                   </div>
@@ -228,8 +228,11 @@ const DetailPelatihan = ({ session }) => {
             <div className="border rounded-xl p-6 mb-5 ikuti-pelatihan">
               <h4 className="fz-20 fw-600">Ikuti Pelatihan</h4>
               <span className="fz-16">
-                {moment(pelatihan?.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
-                {moment(pelatihan?.pelatihan_selesai).format("DD MMM YYYY")}
+                {moment(pelatihan?.pelatihan_mulai).utc().format("DD MMM YYYY")}{" "}
+                -{" "}
+                {moment(pelatihan?.pelatihan_selesai)
+                  .utc()
+                  .format("DD MMM YYYY")}
               </span>
               <div className="mt-7">
                 {pelatihan?.status !== "Closed" && (
@@ -275,8 +278,13 @@ const DetailPelatihan = ({ session }) => {
                 <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Jadwal Pelatihan</p>
                   <p className="fz-16">
-                    {moment(pelatihan?.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
-                    {moment(pelatihan?.pelatihan_selesai).format("DD MMM YYYY")}
+                    {moment(pelatihan?.pelatihan_mulai)
+                      .utc()
+                      .format("DD MMM YYYY")}{" "}
+                    -{" "}
+                    {moment(pelatihan?.pelatihan_selesai)
+                      .utc()
+                      .format("DD MMM YYYY")}
                   </p>
                 </div>
               </div>
@@ -302,7 +310,7 @@ const DetailPelatihan = ({ session }) => {
                     src={
                       (pelatihan?.logo &&
                         pelatihan.logo !== "Belum ada file" &&
-                        pelatihan.file_path + pelatihan?.logo) ||
+                        pelatihan.file_path + pelatihan?.gambar_mitra) ||
                       "/assets/media/mitra-default.png"
                     }
                     width={60}

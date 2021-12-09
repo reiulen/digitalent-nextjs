@@ -38,7 +38,6 @@ export default function FormPendaftaran(props) {
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
     (state) => state.getFormBuilder
   );
-
   useEffect(() => {
     let data = {
       komitmen: false,
@@ -84,11 +83,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       await store.dispatch(getAllAkademi());
 
-      const data = await store.dispatch(
-        getDataPribadi(session?.user.user.data.user.token)
-      );
+      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
 
-      await store.dispatch(
+      const data = await store.dispatch(
         getFormBuilder(session?.user.user.data.user.token, query.id)
       );
       await store.dispatch(

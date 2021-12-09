@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie"
 
 const Edit = ({ token }) => {
   const router = useRouter();
@@ -118,6 +119,7 @@ const Edit = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -148,6 +150,7 @@ const Edit = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
