@@ -23,7 +23,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const TambahSurveyStepOne = ({ token }) => {
+const TambahSurveyStepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -51,8 +51,8 @@ const TambahSurveyStepOne = ({ token }) => {
   const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (error) {
       dispatch(clearErrors());
     }
@@ -82,6 +82,7 @@ const TambahSurveyStepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
@@ -128,7 +129,7 @@ const TambahSurveyStepOne = ({ token }) => {
         training_id,
       };
 
-      dispatch(newSurveyQuestionBanks(data, token));
+      dispatch(newSurveyQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -159,7 +160,7 @@ const TambahSurveyStepOne = ({ token }) => {
         training_id,
       };
 
-      dispatch(newSurveyQuestionBanks(data, token));
+      dispatch(newSurveyQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

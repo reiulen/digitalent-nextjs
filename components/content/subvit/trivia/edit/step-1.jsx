@@ -22,7 +22,7 @@ import {
 
 import { Form } from "react-bootstrap";
 
-const StepOne = ({ token }) => {
+const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -56,8 +56,8 @@ const StepOne = ({ token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     // if (error) {
     //     dispatch(clearErrors())
     // }
@@ -89,6 +89,7 @@ const StepOne = ({ token }) => {
     token,
     theme_id,
     trivia,
+    tokenPermission,
   ]);
 
   // const saveAndContinue = () => {
@@ -104,7 +105,7 @@ const StepOne = ({ token }) => {
         training_id,
         _method: "put",
       };
-      dispatch(updatewTriviaQuestionBanks(id, data, token));
+      dispatch(updatewTriviaQuestionBanks(id, data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -127,7 +128,7 @@ const StepOne = ({ token }) => {
         training_id,
         _method: "put",
       };
-      dispatch(updatewTriviaQuestionBanks(id, data, token));
+      dispatch(updatewTriviaQuestionBanks(id, data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

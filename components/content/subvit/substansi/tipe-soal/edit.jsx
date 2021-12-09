@@ -16,7 +16,7 @@ import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
-const EditTipeSoal = ({ token }) => {
+const EditTipeSoal = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -65,7 +65,9 @@ const EditTipeSoal = ({ token }) => {
         _method: "put",
       };
 
-      dispatch(updatewSubtanceQuestionBanksType(id, data, token));
+      dispatch(
+        updatewSubtanceQuestionBanksType(id, data, token, tokenPermission)
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
