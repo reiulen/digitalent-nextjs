@@ -1,0 +1,9 @@
+.linkTraining:hover {
+  text-decoration: underline;
+  color: #0c66fb;
+}
+
+.linkTraining {
+  text-decoration: underline;
+  color: #0c79fa;
+}

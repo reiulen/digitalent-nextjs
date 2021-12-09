@@ -38,7 +38,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
       image: "",
     },
   ]);
-  const [duration, setDuration] = useState(null);
+  const [duration, setDuration] = useState("");
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -141,11 +141,19 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                   <div className="row justify-content-center align-items-center">
                     <div className="form-group col-12 col-md-5 mb-3">
                       <input
-                        type="number"
+                        type="text"
                         className={`${styles.inputNilai} form-control`}
                         name="value"
+                        maxLength={2}
                         value={x.value}
-                        onChange={(e) => handleInputChange(e, i)}
+                        onChange={(e) => {
+                          if (
+                            e.target.value === "" ||
+                            helperRegexNumber.test(e.target.value)
+                          ) {
+                            handleInputChange(e, i);
+                          }
+                        }}
                         autoComplete="off"
                         placeholder="2"
                       />
