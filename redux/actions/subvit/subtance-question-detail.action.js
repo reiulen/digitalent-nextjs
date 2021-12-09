@@ -122,7 +122,7 @@ export const getDashboardSubvit =
       if (page_survey) link = link.concat(`page_survey=${page_survey}`);
       if (page_substansi)
         link = link.concat(`&page_substansi=${page_substansi}`);
-      if (page_trivia) link = link.concat(`&page_triva=${page_trivia}`);
+      if (page_trivia) link = link.concat(`&page_trivia=${page_trivia}`);
 
       const config = {
         headers: {
