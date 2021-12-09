@@ -176,10 +176,10 @@ export default function RiwayatPelatihan({ session }) {
                 alt="Tidak Tersedia"
               />
               <h1
-                className="font-weight-bolder mt-15 text-center fw-600 mb-10"
+                className="font-weight-bolder text-capitalize mt-15 text-center fw-600 mb-10"
                 style={{ fontFamily: "Poppins", fontSize: "24px" }}
               >
-                Anda belum pernah mengikuti pelatihan
+                Data pelatihan tidak ditemukan
               </h1>
             </div>
           </div>

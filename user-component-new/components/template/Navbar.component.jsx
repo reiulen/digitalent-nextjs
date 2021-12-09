@@ -209,7 +209,6 @@ const Navigationbar = ({ session }) => {
     "galeri",
     "video",
   ]);
-  console.log(menu);
   const [index, setIndex] = useState(0);
   return (
     <>
