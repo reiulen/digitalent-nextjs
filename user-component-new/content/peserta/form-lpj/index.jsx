@@ -2,14 +2,15 @@ import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../../components/template/Footer.component";
 import styles from "./formLpj.module.css";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { getBerandaFooter } from "../../../../redux/actions/beranda/beranda.actions";
 import moment from "moment";
 import "moment/locale/id";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import axios from "axios";
-
+import { useRouter } from "next/router";
 const FormLPJ = ({ token }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const { dataPribadi } = useSelector((state) => state.getDataPribadi);
@@ -67,7 +68,10 @@ const FormLPJ = ({ token }) => {
 
     axios
       .post(link, setData, config)
-      .then((res) => SweatAlert("Berhasil", res.data.data.message, "success"))
+      .then((res) => {
+        router.push("/peserta/riwayat-pelatihan");
+        SweatAlert("Berhasil", res.data.data.message, "success");
+      })
       .catch((err) => SweatAlert("Gagal", err.response.data.message, "error"));
   };
 
@@ -172,35 +176,51 @@ const FormLPJ = ({ token }) => {
             </Row>
             <hr />
             <h1 className={styles.subTitle}>Pelaksanaan Kegiatan</h1>
-            <table>
-              <tr>
-                <td className={styles.tableLabel}>No</td>
-                <td
-                  className={styles.tableLabel}
-                  style={{ textAlign: "center" }}
-                >
-                  Uraian
-                </td>
-                <td className={styles.tableLabel}>Checklist</td>
-              </tr>
-              {dataLPJ &&
-                dataLPJ.map((item, index) => {
-                  return (
-                    <>
-                      <tr>
-                        <td className={styles.numberTable}>{index + 1}</td>
-                        <td className={styles.contentTable}>{item.name}</td>
-                        <td className={styles.checkbox}>
-                          <input
-                            type="checkbox"
-                            onChange={(event) => handleLPJ(event, index)}
-                          />
-                        </td>
-                      </tr>
-                    </>
-                  );
-                })}
-            </table>
+
+            <Row>
+              <Col
+                md={1}
+                className={styles.tableLabel}
+                style={{ textAlign: "center" }}
+              >
+                No
+              </Col>
+              <Col
+                md={1}
+                className={styles.tableLabel}
+                style={{ textAlign: "center" }}
+              >
+                Uraian
+              </Col>
+              <Col className={styles.tableLabel} style={{ textAlign: "end" }}>
+                Checklist
+              </Col>
+            </Row>
+            {dataLPJ &&
+              dataLPJ.map((item, index) => {
+                return (
+                  <Fragment key={index}>
+                    <Row className="d-flex justify-content-around text-center">
+                      <Col md={1} className={styles.numberTable}>
+                        {index + 1}
+                      </Col>
+                      <Col md={1} className={styles.contentTable}>
+                        {item.name}
+                      </Col>
+                      <Col
+                        className={styles.checkbox}
+                        style={{ textAlign: "end", marginRight: "20px" }}
+                      >
+                        <input
+                          type="checkbox"
+                          onChange={(event) => handleLPJ(event, index)}
+                        />
+                      </Col>
+                    </Row>
+                  </Fragment>
+                );
+              })}
+
             <hr />
             <h1 className={styles.subTitle}>
               Saran/Rekomendasi Pelaksanaan Kegiatan
