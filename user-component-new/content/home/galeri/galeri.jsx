@@ -553,7 +553,6 @@ const Galeri = () => {
 
                 {/* Modal */}
 
-                {/* <div className={`${styles.padModalGaleri} bg-white`}> */}
                 {
                     detail && showModal === true ?
                         <Modal
@@ -565,9 +564,12 @@ const Galeri = () => {
                                     :
                                     "lg"
                             }
+                            dialogClassName={`${styles.padModalGaleri}`}
                             centered
+                            aria-labelledby="example-custom-modal-styling-title"
                         >
-                            <Modal.Body className="p-0 m-0">
+                            {/* <div className={`${styles.padModalGaleri} p-0 m-0`}> */}
+                            <Modal.Body className={` p-0 m-0`}>
                                 <div className="row">
                                     <div
                                         className="col-12 col-md-12 col-lg-7 position-relative"
@@ -818,8 +820,10 @@ const Galeri = () => {
                                     </div>
                                 </div>
                             </Modal.Body>
+                            {/* </div> */}
                         </Modal>
                         :
+                        // <div className={`${styles.padModalGaleri}`}>
                         <Modal
                             show={showModal}
                             onHide={() => handleCloseModal()}
@@ -849,6 +853,7 @@ const Galeri = () => {
                                 </button>
                             </Modal.Footer>
                         </Modal>
+                    // </div>
                 }
 
 

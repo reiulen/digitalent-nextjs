@@ -114,7 +114,7 @@ const Table = ({ token }) => {
             },
           }
         );
-        
+
         setArray(data.data.map((row, i) => {
           return {
             ...row, id: row.page_id
@@ -237,23 +237,27 @@ const Table = ({ token }) => {
 
               {!array.length ? <div className="d-flex justify-content-center py-5">Data kosong</div> : ""}
 
-              <div className="form-group row mt-10 mt-sm-5">
-                <div className="col-sm-12 d-flex justify-content-end">
-                  <button
-                    className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
-                    type="button"
-                    onClick={() => cancel()}
-                  >
-                    Batal
-                  </button>
-                  <button
-                    type="submit"
-                    className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-                  >
-                    Simpan
-                  </button>
-                </div>
-              </div>
+              {
+                !array.length ? null :
+
+                  <div className="form-group row mt-10 mt-sm-5">
+                    <div className="col-sm-12 d-flex justify-content-end">
+                      <button
+                        className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                        type="button"
+                        onClick={() => cancel()}
+                      >
+                        Batal
+                      </button>
+                      <button
+                        type="submit"
+                        className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+                      >
+                        Simpan
+                      </button>
+                    </div>
+                  </div>
+              }
             </form>
           </div>
         </div>

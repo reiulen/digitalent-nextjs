@@ -275,9 +275,10 @@
   .closeModal{
     visibility: visible;
   }
-  /* .padModalGaleri{
+  .padModalGaleri{
     padding: 0 20px;
-  } */
+    /* margin-left: 50px; */
+  }
   .kategoriGaleri{
     text-align: center;
     min-width: 160px;
