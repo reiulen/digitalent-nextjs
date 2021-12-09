@@ -1,4 +1,8 @@
 import {
+  // TOTAL DATA PENDAFTAR
+  DTS_TOTAL_PENDAFTAR_REQUEST,
+  DTS_TOTAL_PENDAFTAR_SUCCESS,
+  DTS_TOTAL_PENDAFTAR_FAIL,
   // TOTAL PENGGUNA
   DTS_TOTAL_PENGGUNA_REQUEST,
   DTS_TOTAL_PENGGUNA_SUCCESS,
@@ -32,29 +36,46 @@ import {
   DTS_PROVINSI_PESERTA_REQUEST,
   DTS_PROVINSI_PESERTA_SUCCESS,
   DTS_PROVINSI_PESERTA_FAIL,
-  // UMUR PENDAFTAR || PESERTA
-  DTS_UMUR_PENDAFTAR_REQUEST,
-  DTS_UMUR_PENDAFTAR_SUCCESS,
-  DTS_UMUR_PENDAFTAR_FAIL,
-  DTS_UMUR_PESERTA_REQUEST,
-  DTS_UMUR_PESERTA_SUCCESS,
-  DTS_UMUR_PESERTA_FAIL,
-  // JENIS_KELAMIN PENDAFTAR || PESERTA
-  DTS_JENIS_KELAMIN_PENDAFTAR_REQUEST,
-  DTS_JENIS_KELAMIN_PENDAFTAR_SUCCESS,
-  DTS_JENIS_KELAMIN_PENDAFTAR_FAIL,
-  DTS_JENIS_KELAMIN_PESERTA_REQUEST,
-  DTS_JENIS_KELAMIN_PESERTA_SUCCESS,
-  DTS_JENIS_KELAMIN_PESERTA_FAIL,
-  // PENDIDIKAN PENDAFTAR || PESERTA
-  DTS_PENDIDIKAN_PENDAFTAR_REQUEST,
-  DTS_PENDIDIKAN_PENDAFTAR_SUCCESS,
-  DTS_PENDIDIKAN_PENDAFTAR_FAIL,
-  DTS_PENDIDIKAN_PESERTA_REQUEST,
-  DTS_PENDIDIKAN_PESERTA_SUCCESS,
-  DTS_PENDIDIKAN_PESERTA_FAIL,
+  // DATA PRIBADI UMUR | JENIS KELAMIN | PEKERJAAN
+  DTS_PRIBADI_PESERTA_REQUEST,
+  DTS_PRIBADI_PESERTA_SUCCESS,
+  DTS_PRIBADI_PESERTA_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/dashboard-kabadan/dashboard/digitalent.type";
+
+// TOTAL DATA PENDAFTAR
+export const digitalentTotalDataPendaftarReducer = (
+  state = { totalPendaftar: [] },
+  action
+) => {
+  switch (action.type) {
+    case DTS_TOTAL_PENDAFTAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DTS_TOTAL_PENDAFTAR_SUCCESS:
+      return {
+        loading: false,
+        totalPendaftar: action.payload.data,
+      };
+
+    case DTS_TOTAL_PENDAFTAR_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
 
 // TOTAL PENGGUNA
 export const digitalentTotalPenggunaReducer = (
@@ -91,25 +112,55 @@ export const digitalentTotalPenggunaReducer = (
 };
 
 // STATISTIK PESERTA
-export const digitalentStatistikAkademiReducer = (
-  state = { statistik: [] },
+export const digitalentStatistikAkademiPesertaReducer = (
+  state = { statistikAkademiPeserta: [] },
   action
 ) => {
   switch (action.type) {
     case DTS_STATISTIK_AKADEMI_PESERTA_REQUEST:
-    case DTS_STATISTIK_AKADEMI_PENDAFTAR_REQUEST:
       return {
         loading: true,
       };
 
     case DTS_STATISTIK_AKADEMI_PESERTA_SUCCESS:
-    case DTS_STATISTIK_AKADEMI_PENDAFTAR_SUCCESS:
       return {
         loading: false,
-        statistik: action.payload.data,
+        statistikAkademiPeserta: action.payload.data,
       };
 
     case DTS_STATISTIK_AKADEMI_PESERTA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const digitalentStatistikAkademiPendaftarReducer = (
+  state = { statistikAkademiPendaftar: [] },
+  action
+) => {
+  switch (action.type) {
+    case DTS_STATISTIK_AKADEMI_PENDAFTAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DTS_STATISTIK_AKADEMI_PENDAFTAR_SUCCESS:
+      return {
+        loading: false,
+        statistikAkademiPendaftar: action.payload.data,
+      };
+
     case DTS_STATISTIK_AKADEMI_PENDAFTAR_FAIL:
       return {
         loading: false,
@@ -128,25 +179,55 @@ export const digitalentStatistikAkademiReducer = (
 };
 
 //   STATISTIK MITRA
-export const digitalentStatistikMitraReducer = (
-  state = { statistik: [] },
+export const digitalentStatistikMitraPesertaReducer = (
+  state = { statistikMitraPeserta: [] },
   action
 ) => {
   switch (action.type) {
     case DTS_STATISTIK_MITRA_PESERTA_REQUEST:
-    case DTS_STATISTIK_MITRA_PENDAFTAR_REQUEST:
       return {
         loading: true,
       };
 
     case DTS_STATISTIK_MITRA_PESERTA_SUCCESS:
-    case DTS_STATISTIK_MITRA_PENDAFTAR_SUCCESS:
       return {
         loading: false,
-        statistik: action.payload.data,
+        statistikMitraPeserta: action.payload.data,
       };
 
     case DTS_STATISTIK_MITRA_PESERTA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const digitalentStatistikMitraPendaftarReducer = (
+  state = { statistikMitraPendaftar: [] },
+  action
+) => {
+  switch (action.type) {
+    case DTS_STATISTIK_MITRA_PENDAFTAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DTS_STATISTIK_MITRA_PENDAFTAR_SUCCESS:
+      return {
+        loading: false,
+        statistikMitraPendaftar: action.payload.data,
+      };
+
     case DTS_STATISTIK_MITRA_PENDAFTAR_FAIL:
       return {
         loading: false,
@@ -233,22 +314,54 @@ export const digitalentPesertaWilayahReducer = (
 };
 
 // PROVINSI PENDAFTAR || PESERTA
-export const digitalentProvinsiReducer = (state = { provinsi: [] }, action) => {
+export const digitalentProvinsiPesertaReducer = (
+  state = { provinsiPeserta: [] },
+  action
+) => {
   switch (action.type) {
     case DTS_PROVINSI_PESERTA_REQUEST:
-    case DTS_PROVINSI_PENDAFTAR_REQUEST:
       return {
         loading: true,
       };
 
     case DTS_PROVINSI_PESERTA_SUCCESS:
-    case DTS_PROVINSI_PENDAFTAR_SUCCESS:
       return {
         loading: false,
-        provinsi: action.payload.data,
+        provinsiPeserta: action.payload.data,
       };
 
     case DTS_PROVINSI_PESERTA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const digitalentProvinsiPendaftarReducer = (
+  state = { provinsiPendaftar: [] },
+  action
+) => {
+  switch (action.type) {
+    case DTS_PROVINSI_PENDAFTAR_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DTS_PROVINSI_PENDAFTAR_SUCCESS:
+      return {
+        loading: false,
+        provinsiPendaftar: action.payload.data,
+      };
+
     case DTS_PROVINSI_PENDAFTAR_FAIL:
       return {
         loading: false,
@@ -266,98 +379,24 @@ export const digitalentProvinsiReducer = (state = { provinsi: [] }, action) => {
   }
 };
 
-// UMUR PENDAFTAR || PESERTA
-export const digitalentUmurReducer = (state = { umur: [] }, action) => {
-  switch (action.type) {
-    case DTS_UMUR_PESERTA_REQUEST:
-    case DTS_UMUR_PENDAFTAR_REQUEST:
-      return {
-        loading: true,
-      };
-
-    case DTS_UMUR_PESERTA_SUCCESS:
-    case DTS_UMUR_PENDAFTAR_SUCCESS:
-      return {
-        loading: false,
-        umur: action.payload.data,
-      };
-
-    case DTS_UMUR_PESERTA_FAIL:
-    case DTS_UMUR_PENDAFTAR_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-      };
-
-    case CLEAR_ERRORS:
-      return {
-        ...state,
-        error: null,
-      };
-
-    default:
-      return state;
-  }
-};
-
-// JENIS KELAMIN PENDAFTAR || PESERTA
-export const digitalentJenisKelaminReducer = (
-  state = { jenis_kelamin: [] },
+// DATA PRIBADI UMUR | JENIS KELAMIN | PEKERJAAN
+export const digitalentDataPribadiReducer = (
+  state = { dataPribadi: [] },
   action
 ) => {
   switch (action.type) {
-    case DTS_JENIS_KELAMIN_PESERTA_REQUEST:
-    case DTS_JENIS_KELAMIN_PENDAFTAR_REQUEST:
+    case DTS_PRIBADI_PESERTA_REQUEST:
       return {
         loading: true,
       };
 
-    case DTS_JENIS_KELAMIN_PESERTA_SUCCESS:
-    case DTS_JENIS_KELAMIN_PENDAFTAR_SUCCESS:
+    case DTS_PRIBADI_PESERTA_SUCCESS:
       return {
         loading: false,
-        jenis_kelamin: action.payload.data,
+        dataPribadi: action.payload.data,
       };
 
-    case DTS_JENIS_KELAMIN_PESERTA_FAIL:
-    case DTS_JENIS_KELAMIN_PENDAFTAR_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-      };
-
-    case CLEAR_ERRORS:
-      return {
-        ...state,
-        error: null,
-      };
-
-    default:
-      return state;
-  }
-};
-
-// PENDIDIKAN PENDAFTAR || PESERTA
-export const digitalentPendidikanReducer = (
-  state = { pendidikan: [] },
-  action
-) => {
-  switch (action.type) {
-    case DTS_PENDIDIKAN_PESERTA_REQUEST:
-    case DTS_PENDIDIKAN_PENDAFTAR_REQUEST:
-      return {
-        loading: true,
-      };
-
-    case DTS_PENDIDIKAN_PESERTA_SUCCESS:
-    case DTS_PENDIDIKAN_PENDAFTAR_SUCCESS:
-      return {
-        loading: false,
-        pendidikan: action.payload.data,
-      };
-
-    case DTS_PENDIDIKAN_PESERTA_FAIL:
-    case DTS_PENDIDIKAN_PENDAFTAR_FAIL:
+    case DTS_PRIBADI_PESERTA_FAIL:
       return {
         loading: false,
         error: action.payload,
