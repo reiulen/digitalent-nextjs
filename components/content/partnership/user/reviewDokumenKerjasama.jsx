@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import AlertBar from "../components/BarAlert";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie"
 
 function ReviewDokumenKerjasama({ token }) {
   const router = useRouter();
@@ -27,6 +28,7 @@ function ReviewDokumenKerjasama({ token }) {
   const [pdfFileError, setPdfFileError] = useState("");
   const [NamePDF, setNamePDF] = useState(null);
   // onchange pdf
+  const idQuery = router.query.id
 
   const fileType = ["application/pdf"];
   const handlePdfFileChange = (e) => {
@@ -80,6 +82,7 @@ function ReviewDokumenKerjasama({ token }) {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                // Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -111,9 +114,11 @@ function ReviewDokumenKerjasama({ token }) {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              // Permission: Cookies.get("token_permission")
             },
           }
         );
+
         setPeriod_start(data.data.period_date_start);
         setPeriod_end(data.data.period_date_end);
         setNo_perjanjianLembaga(data.data.agreement_number_partner);
@@ -122,11 +127,13 @@ function ReviewDokumenKerjasama({ token }) {
         setDokument(data.data.document);
         setCatatanREvisi(data.data.note);
         setNote(data.data.note);
+
         if ((data.data.status_migrates_id.status === "aktif") || (data.data.status_migrates_id.status === "dibatalkan") ) {
           router.push({
             pathname: "/partnership/user/kerjasama/hasil",
             query: {
               id: router.query.id,
+              // id:idQuery,
               statusKerjasama: data.data.status_migrates_id.status,
             },
           });
@@ -137,6 +144,7 @@ function ReviewDokumenKerjasama({ token }) {
             pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama",
             query: {
               id: router.query.id,
+              // id:idQuery,
             },
           });
         }
@@ -145,8 +153,11 @@ function ReviewDokumenKerjasama({ token }) {
       }
     }
 
-    setDataSingle(router.query.id);
-  }, [router.query.id, token, router]);
+    // setDataSingle(router.query.id, token);
+    setDataSingle(idQuery);
+  }, []
+  // [router.query.id, token, router]
+  );
 
   return (
     <PageWrapper>

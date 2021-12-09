@@ -18,6 +18,7 @@ import IconCalender from "../../../assets/icon/Calender";
 import moment from "moment";
 
 import Swal from "sweetalert2";
+import Cookies from "js-cookie"
 
 const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
@@ -158,6 +159,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -221,6 +223,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );

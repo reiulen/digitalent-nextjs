@@ -39,6 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const cookiePermission = req.cookies.token_permission
       // if (!session) {
       //   return {
       //     redirect: {
@@ -48,8 +49,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   };
       // }
 
-      await store.dispatch(fetchSignature(session.user.user.data.token));
-      await store.dispatch(getPartnershipPermissions(session.user.user.data.token))
+      await store.dispatch(fetchSignature(session.user.user.data.token, cookiePermission));
+      await store.dispatch(getPartnershipPermissions(session.user.user.data.token, cookiePermission))
 
       return {
         props: { session, title: "Tanda Tangan Digital - Partnership" },
