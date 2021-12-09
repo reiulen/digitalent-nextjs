@@ -146,6 +146,11 @@
   top: 4px;
   right: 8px;
 }
+.kategoriGaleri{
+  cursor: pointer;
+  height: 40px;
+  min-width: 236px;
+}
 
 @media only screen and (max-width: 1024px) {
   .modal-body {
@@ -270,6 +275,14 @@
   .closeModal{
     visibility: visible;
   }
+  /* .padModalGaleri{
+    padding: 0 20px;
+  } */
+  .kategoriGaleri{
+    text-align: center;
+    min-width: 160px;
+    width: 85px;
+  }
 }
 
 @media only screen and (max-width: 320px){
@@ -322,6 +335,11 @@
     padding-left: 13px;
     padding-right: 13px;
   }
+  .kategoriGaleri{
+    text-align: center;
+    min-width: 105px;
+    width: 85px;
+  }
 }
 
 @media only screen and (max-width: 280px){
@@ -349,5 +367,10 @@
     padding-bottom: 5px;
     padding-left: 13px;
     padding-right: 13px;
+  }
+  .kategoriGaleri{
+    font-size: 9px;
+    min-width: 70px;
+    width: 55px;
   }
 }

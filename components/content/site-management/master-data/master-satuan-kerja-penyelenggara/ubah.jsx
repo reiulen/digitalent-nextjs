@@ -14,7 +14,6 @@ import styles from "../../../../../styles/previewGaleri.module.css"
 const TambahApi = ({ token }) => {
   const router = useRouter();
 
-  // const { id, province_id } = router.query
   let selectRefProvinsi;
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -30,12 +29,6 @@ const TambahApi = ({ token }) => {
   const allProvincesSite = useSelector((state) => state.allProvincesSite);
   let sortirOptionTempProvList = allProvincesSite?.data
 
-  // let optionTempProvList = sortirOptionTempProvList.map((items) => {
-  //   return { ...items, value: items.label }
-  // })
-  
-  // console.log(optionTempProv)
-  // console.log(optionTempProvList)
   // const optionTempProvList = [];
   // if (sortirOptionTempProvList) {
   //   for (let index = 0; index < sortirOptionTempProvList.length; index++) {
@@ -61,39 +54,11 @@ const TambahApi = ({ token }) => {
     //   return { ...items }
     // }
   })
-  console.log("Province :", province)
 
 
-  // const [valueProvinsi, setValueProvinsi] = useState(null);
   const [valueProvinsi, setValueProvinsi] = useState([]);
   const [nameUnitWork, setNameUnitWork] = useState(detailUnitWork.unitWork.name);
   const [status, setStatus] = useState(detailUnitWork.unitWork.status);
-  const [changeProvince, setChangeProvince] = useState(false)
-  const [showProvince, setShowProvince] = useState(false)
-
-  // useEffect(() => {
-  // optionTempProvList.filter((val) =>
-  //   optionTempProv.map((row, i) => {
-  //     if (val.label === row.label) {
-  //       return setShowProvince(false)
-  //     } else {
-  //       return setShowProvince(true)
-  //     }
-  //   })
-  // )
-  // }, [])
-
-  // console.log(
-  //   optionTempProvList.filter((val) =>
-  //     optionTempProv.map((row, i) => {
-  //       if (val.label === row.label) {
-  //         return setShowProvince(false)
-  //       } else {
-  //         return setShowProvince(true)
-  //       }
-  //     })
-  //   )
-  // )
 
   // filter data just region show
   const changeListProvinsi = (e) => {
@@ -226,24 +191,6 @@ const TambahApi = ({ token }) => {
                   "required",
                   { className: "text-danger" }
                 )}
-                {/* {detailUnitWork.unitWork.status == "0" ? (
-                  <select
-                  
-                    className="form-control"
-                    onChange={(e) => setStatus(e.target.value)}
-                  >
-                    <option value="0">Tidak Aktif</option>
-                    <option value="1">Aktif</option>
-                  </select>
-                ) : (
-                  <select
-                    className="form-control"
-                    onChange={(e) => setStatus(e.target.value)}
-                  >
-                    <option value="1">Aktif</option>
-                    <option value="0">Tidak Aktif</option>
-                  </select>
-                )} */}
               </div>
 
               <div className="form-group">
@@ -254,13 +201,6 @@ const TambahApi = ({ token }) => {
                   classNamePrefix="select"
                   placeholder="Pilih provinsi"
                   defaultValue={optionTempProv}
-                  // defaultValue={
-                  //   showProvince !== true
-                  //     ? optionTempProvList.filter((value) => {
-                  //       return console.log("INI Data : ", value)
-                  //     })
-                  //     : null
-                  // }
                   isMulti
                   isDisabled={false}
                   isLoading={false}
@@ -269,7 +209,7 @@ const TambahApi = ({ token }) => {
                   isSearchable={true}
                   name="color"
                   onChange={(e) => changeListProvinsi(e)}
-                  options={province}
+                  options={optionTempProvList}
                   onBlur={() => simpleValidator.current.showMessageFor("provinsi")}
                 />
 
