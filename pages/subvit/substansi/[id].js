@@ -45,6 +45,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
         getAllSubtanceQuestionDetail(
           params.id,
@@ -54,17 +56,27 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.status,
           query.category,
           query.pelatihan,
-          session.user.user.data.token
+          session.user.user.data.token,
+          permission
         )
       );
       await store.dispatch(
-        getDetailSubtanceQuestionBanks(params.id, session.user.user.data.token)
+        getDetailSubtanceQuestionBanks(
+          params.id,
+          session.user.user.data.token,
+          permission
+        )
       );
       await store.dispatch(
-        getAllSubtanceQuestionBanksType(session.user.user.data.token)
+        getAllSubtanceQuestionBanksType(
+          session.user.user.data.token,
+          permission
+        )
       );
 
-      await store.dispatch(getPermissionSubvit(session.user.user.data.token));
+      await store.dispatch(
+        getPermissionSubvit(session.user.user.data.token, permission)
+      );
 
       return {
         props: { session, title: "Detail Substansi - Subvit" },
