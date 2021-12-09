@@ -354,12 +354,15 @@ const DataParticipant = ({ token }) => {
                   {peserta.list[0].subtansi_status || "Belum Tersedia"}
                 </p>
               </div>
-              <div className="col-md-4">
-                <p className="text-neutral-body my-0">Mid Test</p>
-                <p className="text-success">
-                  {peserta.list[0].status_mid_test || "Belum Tersedia"}
-                </p>
-              </div>
+              {peserta.list[0].status_mid_test !==
+                "mid test belum tersedia" && (
+                <div className="col-md-4">
+                  <p className="text-neutral-body my-0">Mid Test</p>
+                  <p className="text-success">
+                    {peserta.list[0].status_mid_test || "Belum Tersedia"}
+                  </p>
+                </div>
+              )}
               <div className="col-md-4">
                 <p className="text-neutral-body my-0">Survey</p>
                 <p className="text-success">

@@ -513,14 +513,14 @@ const DetailSummary = ({ token }) => {
                               </p>
                               <p className="my-0">
                                 {row.update_time !== null
-                                  ? moment(row.update_time).format(
-                                      "DD MMMM YYYY"
-                                    )
+                                  ? moment(row.update_time)
+                                      .utc()
+                                      .format("DD MMMM YYYY")
                                   : "-"}
                               </p>
                               <p className="my-0">
                                 {row.update_time !== null
-                                  ? moment(row.update_time).format("hh:mm:ss")
+                                  ? moment(row.update_time).format("LTS")
                                   : "-"}
                               </p>
                             </td>
