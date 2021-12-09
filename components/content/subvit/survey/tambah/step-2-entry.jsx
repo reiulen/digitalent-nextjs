@@ -340,7 +340,7 @@ const StepTwo = ({ token }) => {
         }
         break;
       case "triggered_question":
-        console.log(answer_triggered.type);
+        // console.log(answer_triggered.type);
         answer_triggered.forEach((row, j) => {
           if (row.option == "" && row.image == "" && row.type !== "empty") {
             valid = false;
