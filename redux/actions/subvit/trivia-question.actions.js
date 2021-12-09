@@ -34,7 +34,7 @@ import axios from "axios";
 
 // get all data
 export const getAllTriviaQuestionBanks =
-  (page = 1, keyword = "", limit = 5, token) =>
+  (page = 1, keyword = "", limit = 5, token, tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({ type: TRIVIA_QUESTION_BANKS_REQUEST });
@@ -48,6 +48,7 @@ export const getAllTriviaQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -95,58 +96,62 @@ export const newTriviaQuestionBanks =
     }
   };
 
-export const getDetailTriviaQuestionBanks = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_TRIVIA_QUESTION_BANKS_REQUEST });
+export const getDetailTriviaQuestionBanks =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_TRIVIA_QUESTION_BANKS_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_SUBVIT +
-      `api/trivia-question-banks/detail/${id}`;
+      let link =
+        process.env.END_POINT_API_SUBVIT +
+        `api/trivia-question-banks/detail/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_TRIVIA_QUESTION_BANKS_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_TRIVIA_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_TRIVIA_QUESTION_BANKS_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_TRIVIA_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getOneTriviaQuestionBanks = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_ONE_TRIVIA_QUESTION_BANKS_REQUEST });
+export const getOneTriviaQuestionBanks =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_ONE_TRIVIA_QUESTION_BANKS_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_SUBVIT + `api/trivia-question-banks/${id}`;
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.get(link, config);
+      let link =
+        process.env.END_POINT_API_SUBVIT + `api/trivia-question-banks/${id}`;
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_ONE_TRIVIA_QUESTION_BANKS_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_ONE_TRIVIA_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_ONE_TRIVIA_QUESTION_BANKS_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_ONE_TRIVIA_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updatewTriviaQuestionBanks =
   (id, triviaData, token) => async (dispatch) => {
@@ -243,13 +248,22 @@ export const updateTriviaQuestionBanksPublish =
   };
 
 export const allReportTriviaQuestionBanks =
-  (id, page = 1, keyword = "", limit = null, card = null, token) =>
+  (
+    id,
+    page = 1,
+    keyword = "",
+    limit = null,
+    card = null,
+    token,
+    tokenPermission
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: REPORT_TRIVIA_QUESTION_BANKS_REQUEST });
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       let link =
