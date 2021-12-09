@@ -65,8 +65,8 @@ const TentangKami = ({ token }) => {
                   "site-management/images/" +
                   pages.property_template.image
                 }
-                width="1500vw"
-                height="413"
+                width="1255vw"
+                height="413vh"
                 objectFit="fill"
                 alt="Detail Image"
                 className="rounded-lg"
