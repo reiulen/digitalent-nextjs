@@ -13,6 +13,7 @@ import {
   clearErrors,
   getAllSummary,
 } from "../../../redux/actions/pelatihan/summary.actions";
+import { dropdownTemabyAkademi } from "../../../redux/actions/pelatihan/function.actions";
 
 import PageWrapper from "../../wrapper/page.wrapper";
 import LoadingTable from "../../LoadingTable";
@@ -32,6 +33,9 @@ const ListDaftarPelatihan = ({ token }) => {
   );
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
     (state) => state.drowpdownTema
+  );
+  const { data: dataTemaByAkademi } = useSelector(
+    (state) => state.drowpdownTemabyAkademi
   );
   const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
     useSelector((state) => state.drowpdownPenyelenggara);
@@ -162,6 +166,7 @@ const ListDaftarPelatihan = ({ token }) => {
     setDatePelaksanaan([null, null]);
     setShowModal(false);
     setPage(1);
+    dispatch(dropdownTemabyAkademi(null, token));
     dispatch(
       getAllSummary(
         1,
@@ -501,13 +506,16 @@ const ListDaftarPelatihan = ({ token }) => {
             <Select
               options={optionsAkademi}
               defaultValue={academy}
-              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+              onChange={(e) => {
+                setAcademy({ value: e.value, label: e.label });
+                dispatch(dropdownTemabyAkademi(e.value, token));
+              }}
             />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              options={optionsTema}
+              options={dataTemaByAkademi?.data}
               defaultValue={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />

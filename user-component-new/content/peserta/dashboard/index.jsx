@@ -292,7 +292,10 @@ const Dashboard = ({ session, success }) => {
                       <Image
                         className={`${style.image_dashboard}`}
                         src={
-                          !dataDashboard?.pelatihan?.pelatihan_berjalan?.gambar
+                          !dataDashboard?.pelatihan?.pelatihan_berjalan
+                            ?.gambar ||
+                          dataDashboard?.pelatihan?.pelatihan_berjalan
+                            ?.gambar === "Beluma ada file"
                             ? `/assets/media/default-card.png`
                             : dataDashboard?.pelatihan.pelatihan_berjalan
                                 .gambar &&
@@ -322,12 +325,17 @@ const Dashboard = ({ session, success }) => {
                         <div className={style.bungkus_mitra_pelatihan}>
                           <Image
                             src={
-                              dataDashboard?.pelatihan?.pelatihan_berjalan.logo
+                              dataDashboard?.pelatihan?.pelatihan_berjalan
+                                .logo &&
+                              dataDashboard?.pelatihan?.pelatihan_berjalan
+                                .logo !== "Belum ada file"
                                 ? process.env.END_POINT_API_IMAGE_BEASISWA +
                                   dataDashboard?.pelatihan.pelatihan_berjalan
                                     .logo
                                 : dataDashboard?.pelatihan.pelatihan_berjalan
-                                    .gambar_mitra
+                                    .gambar_mitra &&
+                                  dataDashboard?.pelatihan.pelatihan_berjalan
+                                    .gambar_mitra === "Belum ada file"
                                 ? process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                                   dataDashboard?.pelatihan.pelatihan_berjalan
                                     .gambar_mitra
@@ -468,7 +476,9 @@ const Dashboard = ({ session, success }) => {
                       <Image
                         className={`${style.image_dashboard}`}
                         src={`${
-                          !dataDashboard?.pelatihan?.pelatihan_selesi?.gambar
+                          !dataDashboard?.pelatihan?.pelatihan_selesi?.gambar &&
+                          dataDashboard?.pelatihan?.pelatihan_selesi?.gambar ===
+                            "Belum ada file"
                             ? "/assets/media/default-card.png"
                             : dataDashboard?.pelatihan?.pelatihan_selesi
                                 ?.file_path +
@@ -495,7 +505,11 @@ const Dashboard = ({ session, success }) => {
                         <div className={style.bungkus_mitra_pelatihan}>
                           <Image
                             src={
-                              !dataDashboard.pelatihan.pelatihan_selesi.logo &&
+                              dataDashboard.pelatihan.pelatihan_selesi.logo ===
+                                "Belum ada file" ||
+                              dataDashboard.pelatihan.pelatihan_selesi
+                                .gambar_mitra === "Belum ada file" ||
+                              !dataDashboard.pelatihan.pelatihan_selesi.logo ||
                               !dataDashboard.pelatihan.pelatihan_selesi
                                 .gambar_mitra
                                 ? "/assets/media/default-card.png"
