@@ -95,7 +95,10 @@ const DataParticipant = ({ token }) => {
     tempatLahir: dataPeserta.tempat_lahir,
     tanggalLahir: moment(dataPeserta.tanggal_lahir).format("DD MMMM YYYY"),
   });
+<<<<<<< HEAD
+=======
 
+>>>>>>> 35f8e9a84ee7c901c4b28c5312b2d67f10454cb9
   let optionsPeserta = [
     { value: "seleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
