@@ -315,12 +315,14 @@ const TambahPage = ({ token }) => {
       kota_ktp: kota?.label ? kota?.label : kota,
       kode_pos_ktp: kodePostKtp,
       user_id: allDetailPeserta.data.data.user_id,
-      kecamatan_ktp: kecamatanKtp,
-      kelurahan_ktp: kelurahanKtp,
+      kecamatan_ktp:
+        typeof kecamatanKtp === "object" ? kecamatanKtp.label : kecamatanKtp,
+      kelurahan_ktp:
+        typeof kelurahanKtp === "object" ? kelurahanKtp.label : kelurahanKtp,
       password: password,
       konfirmasi_password: passwordConfirm,
-      kecamatan: kecamatan,
-      kelurahan: kelurahan,
+      kecamatan: typeof kecamatan === "object" ? kecamatan.label : kecamatan,
+      kelurahan: typeof kelurahan === "object" ? kelurahan.label : kelurahan,
     };
     if (simpleValidator.current.allValid()) {
       dispatch(updatePesertaDts(token, data));
@@ -526,17 +528,27 @@ const TambahPage = ({ token }) => {
                         type="number"
                         className="form-control"
                         placeholder="1627152715145161218787"
+                        maxLength={16}
                         value={nik}
                         onChange={(e) => {
-                          setNik(e.target.value);
+                          if (e.target.value.length === 16) {
+                            setNik(e.target.value.replace(e.target.value, ""));
+                          }else{
+                            setNik(e.target.value)
+                          }
                         }}
                         onBlur={(e) => {
                           simpleValidator.current.showMessageFor("nik");
                         }}
                       />
-                      {simpleValidator.current.message("nik", nik, "required", {
-                        className: "text-danger",
-                      })}
+                      {simpleValidator.current.message(
+                        "nik",
+                        nik,
+                        "required|max:17",
+                        {
+                          className: "text-danger",
+                        }
+                      )}
                     </div>
                     <div className="form-group">
                       <label>Tempat Lahir</label>

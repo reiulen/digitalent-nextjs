@@ -9,7 +9,6 @@ import Select from "react-select";
 import moment from "moment";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
-import CardPage from "../../../CardPage";
 import StepParticipantPelatihan from "../../../StepParticipantPelatihan";
 import LoadingTable from "../../../LoadingTable";
 
@@ -96,6 +95,10 @@ const DataParticipant = ({ token }) => {
     tempatLahir: dataPeserta.tempat_lahir,
     tanggalLahir: moment(dataPeserta.tanggal_lahir).format("DD MMMM YYYY"),
   });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 35f8e9a84ee7c901c4b28c5312b2d67f10454cb9
   let optionsPeserta = [
     { value: "seleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
@@ -194,6 +197,8 @@ const DataParticipant = ({ token }) => {
     peserta.list[0].status || null
   );
 
+  const [socket, setSocket] = useState(null);
+
   useEffect(() => {
     if (peserta) {
       dispatch(getDataPribadi(token, peserta.list[0].id));
@@ -224,6 +229,7 @@ const DataParticipant = ({ token }) => {
       dispatch(getFormLpj(token, peserta.list[0].id));
       SweatAlert("Berhasil", "Berhasil Mengubah Status", "success");
       dispatch({ type: UPDATE_STATUS_RESET });
+      handleSendNotification();
     }
 
     if (successReminder) {
@@ -235,6 +241,8 @@ const DataParticipant = ({ token }) => {
       dispatch(getFormLpj(token, peserta.list[0].id));
       dispatch({ type: UPDATE_REMINDER_RESET });
     }
+
+    handleConnectSocket();
   }, [
     dispatch,
     peserta,
@@ -244,6 +252,46 @@ const DataParticipant = ({ token }) => {
     successStatus,
     successReminder,
   ]);
+
+  const handleConnectSocket = () => {
+    let ws = new WebSocket(
+      "ws://api-dts-dev.majapahit.id/pelatihan/api/v1/formPendaftaran/notification"
+    );
+    let timeout = 0;
+    let connectInterval;
+
+    ws.onopen = () => {
+      setSocket(ws);
+      timeout = 250;
+      clearTimeout(connectInterval);
+    };
+
+    ws.onclose = (e) => {
+      timeout = timeout + timeout;
+      connectInterval = setTimeout(handleCheckSocket, Math.min(10000, timeout));
+    };
+
+    ws.onerror = (err) => {
+      ws.close();
+    };
+  };
+
+  const handleCheckSocket = () => {
+    if (!socket || socket.readyState === WebSocket.CLOSED)
+      handleConnectSocket();
+  };
+
+  const handleSendNotification = () => {
+    const data = {
+      pelatihan_id: pelatihan_id,
+      status: statusPeserta.value || statusPeserta,
+      User_id: peserta.list[0].id,
+    };
+    try {
+      socket.send(JSON.stringify({ Message: JSON.stringify(data) }));
+      handleConnectSocket();
+    } catch (err) {}
+  };
 
   const handleResetError = () => {
     if (error) {
