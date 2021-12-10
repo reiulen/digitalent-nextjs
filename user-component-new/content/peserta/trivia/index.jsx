@@ -28,8 +28,8 @@ const TestSubstansi = () => {
   useEffect(() => {
     axios
       .get(
-        END_POINT_API_SUBVIT +
-          `/api/trivia-question-bank-details/info?training_id=${
+        process.env.END_POINT_API_SUBVIT +
+          `api/trivia-question-bank-details/info?training_id=${
             routerTraining || pelatihanId
           }&theme_id=${routerTema || temaId}`
       )
@@ -72,7 +72,7 @@ const TestSubstansi = () => {
                 <td>
                   {" "}
                   Peserta wajib menjawab seluruh trivia yang berjumlah{" "}
-                  {question}
+                  {question || 50}
                   pertanyaan.
                 </td>
               </tr>
@@ -91,7 +91,8 @@ const TestSubstansi = () => {
                 <td>&nbsp;</td>
                 <td>
                   {" "}
-                  Waktu yang tersedia untuk mengisi trivia ini {time} Menit.
+                  Waktu yang tersedia untuk mengisi trivia ini {time || 5}{" "}
+                  Menit.
                 </td>
               </tr>
             </table>

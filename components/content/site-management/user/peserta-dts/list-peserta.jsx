@@ -23,9 +23,8 @@ const Table = ({ token }) => {
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState(null);
 
-
   const listPeserta =
-  allListPeserta?.data?.data?.list?.length > 0 ? (
+    allListPeserta?.data?.data?.list?.length > 0 ? (
       allListPeserta?.data?.data?.list?.map((item, index) => {
         return (
           <tr key={index}>
@@ -40,7 +39,11 @@ const Table = ({ token }) => {
                 <Link
                   href={`/site-management/user/user-dts/ubah-peserta-dts/${item.user_id}`}
                 >
-                  <a className={`btn btn-link-action bg-blue-secondary position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.manage")}`}>
+                  <a
+                    className={`btn btn-link-action bg-blue-secondary position-relative btn-delete ${localStorage
+                      .getItem("permissions")
+                      .includes("site_management.user.peserta_dts.manage")}`}
+                  >
                     <IconPencil width="16" height="16" />
                     <div className="text-hover-show-hapus">Ubah</div>
                   </a>
@@ -48,7 +51,11 @@ const Table = ({ token }) => {
                 <Link
                   href={`/site-management/user/user-dts/detail-peserta-dts/${item.user_id}`}
                 >
-                  <a className={`btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete ${localStorage.getItem("permissions").includes("site_management.user.peserta_dts.view")}`}>
+                  <a
+                    className={`btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete ${localStorage
+                      .getItem("permissions")
+                      .includes("site_management.user.peserta_dts.view")}`}
+                  >
                     <IconEye width="16" height="16" />
                     <div className="text-hover-show-hapus">Detail</div>
                   </a>
@@ -107,9 +114,8 @@ const Table = ({ token }) => {
                             type="button"
                             onClick={() => {
                               setPage(1);
-                              dispatch(
-                                getAllListsPeserta(token, limit, 1, search)
-                              );
+                              setLimit(5);
+                              dispatch(getAllListsPeserta(token, 5, 1, search));
                             }}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
@@ -138,76 +144,88 @@ const Table = ({ token }) => {
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>{!allListPeserta?.loading ? listPeserta : <tr><td colSpan="8" className="align-middle text-center"><LoadingTable /></td></tr>}</tbody>
+                  <tbody>
+                    {!allListPeserta?.loading ? (
+                      listPeserta
+                    ) : (
+                      <tr>
+                        <td colSpan="8" className="align-middle text-center">
+                          <LoadingTable />
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
                 </table>
               </div>
 
-              <div className="row px-4">
-                <div
-                  className="table-pagination table-pagination pagination-custom col-12 col-md-6"
-                  style={{ width: "max-content" }}
-                >
-                  <Pagination
-                    activePage={page}
-                    itemsCountPerPage={allListPeserta?.data?.data?.perPage}
-                    totalItemsCount={allListPeserta?.data?.data?.total}
-                    pageRangeDisplayed={2}
-                    onChange={(e) => {
-                      setPage(e);
-                      dispatch(getAllListsPeserta(token, limit, e, search));
-                    }}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
+              {allListPeserta?.data?.data?.totalFiltered >= 5 && (
+                <div className="row px-4">
+                  <div
+                    className="table-pagination table-pagination pagination-custom col-12 col-md-6"
+                    style={{ width: "max-content" }}
+                  >
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={allListPeserta?.data?.data?.perPage}
+                      totalItemsCount={allListPeserta?.data?.data?.total}
+                      pageRangeDisplayed={2}
+                      onChange={(e) => {
+                        setPage(e);
+                        dispatch(getAllListsPeserta(token, limit, e, search));
+                      }}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
 
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control pr-2 cursor-pointer"
-                        id="exampleFormControlSelect2"
-                        value={limit}
-                        onChange={(e) => {
-                          setLimit(e.target.value);
-                          dispatch(
-                            getAllListsPeserta(
-                              token,
-                              e.target.value,
-                              page,
-                              search
-                            )
-                          );
-                        }}
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data {allListPeserta?.data?.data?.total}
-                      </p>
+                  <div className="table-total ml-auto mr-4">
+                    <div className="row mt-4">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control pr-2 cursor-pointer"
+                          id="exampleFormControlSelect2"
+                          value={limit}
+                          onChange={(e) => {
+                            setLimit(e.target.value);
+                            dispatch(
+                              getAllListsPeserta(
+                                token,
+                                e.target.value,
+                                page,
+                                search
+                              )
+                            );
+                          }}
+                          style={{
+                            width: "63px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                          >
+                          Total Data {allListPeserta?.data?.data?.total}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

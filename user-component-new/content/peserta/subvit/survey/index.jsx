@@ -338,11 +338,11 @@ const SubtansiUser = ({ token }) => {
   const handleAnswerTriggered = (e, i) => {
     setAnswerTriggered(e);
 
-    let sub = data.list_questions[parseInt(router.query.id) - 1]?.answer.map(
-      (item) => {
-        return item;
-      }
-    );
+    let sub = JSON.parse(
+      data.list_questions[parseInt(router.query.id) - 1]?.answer
+    ).map((item) => {
+      return item;
+    });
 
     setSub(sub[i]);
 

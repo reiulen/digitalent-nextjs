@@ -53,15 +53,17 @@ export default function EditTTEP12({ setUbah, data, token }) {
 
     try {
       const data = await axios.post(link, formData);
-      if (data.status == 200) {
+      if (data.data.data) {
         SweatAlert("Berhasil", "Anda berhasil mengunggah file p12", "success");
         const success = await dispatch(getTTEP12(token));
         if (success.status) {
           setUbah(false);
         }
+      } else {
+        SweatAlert("Berhasil", data.data.message, "error");
       }
     } catch (e) {
-      SweatAlert("Gagal", "Anda gagal mengunggah file", "error");
+      SweatAlert("Gagal", e.response.data.message || e.message, "error");
     }
   };
 
