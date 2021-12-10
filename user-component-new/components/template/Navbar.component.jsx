@@ -475,7 +475,11 @@ const Navigationbar = ({ session }) => {
                             }
                             passHref
                           >
-                            <NavDropdown.Item className={`navdropdown-child ${el.url === "-" ? "d-none" : ""}`}>
+                            <NavDropdown.Item
+                              className={`navdropdown-child ${
+                                el.url === "-" ? "d-none" : ""
+                              }`}
+                            >
                               {el.slug ? el.slug : el.name ? el.name : el}
                             </NavDropdown.Item>
                           </Link>
@@ -901,7 +905,7 @@ const Navigationbar = ({ session }) => {
                 <Link href="/pusat-informasi">Pusat Informasi</Link>
               </Col>
               <Col className="mb-8" sm={12}>
-                Tentang Kami
+                <Link href="/tentang-kami">Tentang Kami</Link>
               </Col>
               <Col className="mb-8" sm={12}>
                 <Link href="/penyelenggara">Penyelenggara</Link>

@@ -354,7 +354,9 @@ export default function NamaPelatihan({ token }) {
                                   href={`/sertifikat/kelola-sertifikat/${certificate.name
                                     .split(" ")
                                     .join("-")
-                                    .toLowerCase()}?id=${certificate.id}`}
+                                    .toLowerCase()}?id=${
+                                    certificate.id
+                                  }&page=1`}
                                   passHref
                                 >
                                   <a
