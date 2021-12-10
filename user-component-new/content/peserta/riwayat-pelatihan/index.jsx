@@ -28,7 +28,7 @@ export default function RiwayatPelatihan({ session }) {
   let refSelect = null;
   const [showModal, setShowModal] = useState(false);
   const dataRiwayatPelatihan = useSelector(
-    (state) => state.getAllRiwayatPelatihanPeserta
+    state => state.getAllRiwayatPelatihanPeserta
   );
 
   const [status, setStatus] = useState(null);
@@ -77,7 +77,7 @@ export default function RiwayatPelatihan({ session }) {
     dataRiwayatPelatihan.sedang_berjalan,
   ]);
 
-  const handleSearchEnter = (e) => {
+  const handleSearchEnter = e => {
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
     }
@@ -91,7 +91,7 @@ export default function RiwayatPelatihan({ session }) {
         <Col lg={12} className="px-0 ">
           <Card className="card-custom gutter-b rounded-lg">
             <Card.Body>
-              <Row>
+              <Row className="d-flex justify-content-center">
                 <Col lg={8}>
                   <div className="position-relative overflow-hidden ">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
@@ -99,8 +99,8 @@ export default function RiwayatPelatihan({ session }) {
                       type="search"
                       className="form-control pl-10 bg-neutral rounded-full"
                       placeholder="Cari..."
-                      onChange={(e) => setSearch(e.target.value)}
-                      onKeyDown={(e) => {
+                      onChange={e => setSearch(e.target.value)}
+                      onKeyDown={e => {
                         handleSearchEnter(e);
                       }}
                     />
@@ -130,15 +130,15 @@ export default function RiwayatPelatihan({ session }) {
                 <Row className="pt-4 w-100">
                   {filter.map((item, i) => {
                     return (
-                      <Col md={2} sm={3} key={i} className="d-flex w-100">
+                      <Col md={3} sm={3} key={i} className="d-flex  w-100">
                         <Button
-                          onClick={(e) => {
+                          onClick={e => {
                             setSelected(i);
                             dispatch(setValuePeserta(filter[i].value));
                           }}
                           className={
                             selected == i
-                              ? ` btn-primary rounded-full btn-primary mx-4 w-md-100 w-100 my-2 my-md-0 text-capitalize `
+                              ? ` rounded-full btn-primary mx-4 w-md-100 w-100 my-2 my-md-0 text-capitalize `
                               : ` ${style.background_outline_primary} rounded-full btn-primary mx-4 w-md-100 w-100 my-2 my-md-0 text-capitalize `
                           }
                         >
@@ -192,7 +192,7 @@ export default function RiwayatPelatihan({ session }) {
                 itemsCountPerPage={dataRiwayatPelatihan?.listPelatihan?.perPage}
                 totalItemsCount={dataRiwayatPelatihan?.listPelatihan?.total}
                 pageRangeDisplayed={3}
-                onChange={(page) => dispatch(setValuePage(page))}
+                onChange={page => dispatch(setValuePage(page))}
                 nextPageText={">"}
                 prevPageText={"<"}
                 firstPageText={"<<"}
@@ -210,11 +210,11 @@ export default function RiwayatPelatihan({ session }) {
         </Modal.Header>
         <Modal.Body>
           <Select
-            ref={(ref) => (refSelect = ref)}
+            ref={ref => (refSelect = ref)}
             placeholder={"Pilih Filter...."}
             // defaultValue={options[0].value}
             name="color"
-            onChange={(e) => {
+            onChange={e => {
               setStatus(e);
             }}
             value={status}

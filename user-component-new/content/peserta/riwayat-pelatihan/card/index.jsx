@@ -19,12 +19,13 @@ export default function CardTemplateOriginal({ data, session }) {
   const [label, setLabel] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
 
   useEffect(() => {
     helperUserStatusColor(data.status, setLabel);
   }, [data.status]);
+
   return (
     <Fragment>
       <Card className="position-relative mb-8 rounded-lg">
@@ -86,7 +87,11 @@ export default function CardTemplateOriginal({ data, session }) {
               <Col lg={3}>
                 <img
                   className="rounded-xl img-fluid d-block w-100"
-                  src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
+                  src={
+                    !data.gambar
+                      ? "/assets/media/default-card.png"
+                      : `${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`
+                  }
                   alt="test1"
                   style={{ height: "200px", objectFit: "cover" }}
                 />
