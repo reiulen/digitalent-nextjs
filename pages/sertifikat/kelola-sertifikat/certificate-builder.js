@@ -55,7 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.theme_id,
           query.page,
           query.keyword,
-          query.limit,
+          100,
           query.status,
           session.user.user.data.token
         )

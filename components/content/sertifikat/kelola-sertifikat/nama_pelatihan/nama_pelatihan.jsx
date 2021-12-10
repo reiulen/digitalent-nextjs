@@ -24,7 +24,7 @@ export default function NamaPelatihanID({ token }) {
     error,
     certificate: certificates,
   } = useSelector((state) => state.detailCertificates);
-
+  const allCertificates = useSelector((state) => state.detailCertificates);
   // #Pagination
   const [limit, setLimit] = useState(null);
   const [search, setSearch] = useState("");
@@ -41,7 +41,7 @@ export default function NamaPelatihanID({ token }) {
 
   const [status, setStatus] = useState(null);
 
-  let { page = 1 } = router.query;
+  let page = 1;
 
   const handleLimit = (val) => {
     setLimit(val);
@@ -526,9 +526,9 @@ export default function NamaPelatihanID({ token }) {
                 {certificates && certificates?.data?.pelatihan?.total > 5 && (
                   <div className="table-pagination col">
                     <Pagination
-                      activePage={+page}
-                      itemsCountPerPage={certificates.data.perPage}
-                      totalItemsCount={certificates.data.total}
+                      activePage={1}
+                      itemsCountPerPage={certificates.data.pelatihan.perPage}
+                      totalItemsCount={certificates.data.pelatihan.total}
                       pageRangeDisplayed={3}
                       onChange={handlePagination}
                       nextPageText={">"}
