@@ -49,7 +49,6 @@ export default function RiwayatPelatihanDetail(props) {
 
   const handleDownload = async (id, noRegis, nama) => {
     setLoading(true);
-
     const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${noRegis}`;
     try {
       const check = await axios.get(linkChecker);
