@@ -135,8 +135,7 @@ const RevisiSubmit = ({token}) => {
           <div className="card-body pt-0">
             <div className="row mt-8 mb-10 relative-progress">
               <div className="col-2 p-0">
-                <div className="progress-items">
-                  <div className="line-progress"></div>
+              <div className="progress-items">
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>
