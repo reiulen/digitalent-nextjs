@@ -29,7 +29,7 @@
 
 .title-section-dashboard {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 32px;
   line-height: 120%;
   color: #6c6c6c;
   text-transform: capitalize;
@@ -83,9 +83,6 @@
       url("/assets/media/ilustrator-1.svg");
     background-repeat: no-repeat;
     background-position: left bottom, right bottom;
-  }
-  .title-section-dashboard {
-    font-size: 32px;
   }
   .opening-hello .card .card-body h2 {
     font-size: 24px;
