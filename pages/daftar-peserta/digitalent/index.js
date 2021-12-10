@@ -10,6 +10,7 @@ import {
   dropdownTema,
   dropdownPenyelenggara,
 } from "../../../redux/actions/pelatihan/function.actions";
+import { dropdownTemabyAkademi } from "../../../redux/actions/pelatihan/function.actions";
 
 import { wrapper } from "../../../redux/store";
 
@@ -70,6 +71,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(dropdownAkademi(session.user.user.data.token));
       await store.dispatch(dropdownTema(session.user.user.data.token));
       await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
+      await store.dispatch(
+        dropdownTemabyAkademi(null, session.user.user.data.token)
+      );
 
       return {
         props: { session, title: "Daftar Pelatihan - Digitalent" },
