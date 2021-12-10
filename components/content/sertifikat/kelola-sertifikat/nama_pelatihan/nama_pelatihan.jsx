@@ -41,7 +41,7 @@ export default function NamaPelatihanID({ token }) {
 
   const [status, setStatus] = useState(null);
 
-  let page = 1;
+  let { page = 1 } = router.query;
 
   const handleLimit = (val) => {
     setLimit(val);
@@ -526,7 +526,7 @@ export default function NamaPelatihanID({ token }) {
                 {certificates && certificates?.data?.pelatihan?.total > 5 && (
                   <div className="table-pagination col">
                     <Pagination
-                      activePage={1}
+                      activePage={+page}
                       itemsCountPerPage={certificates.data.pelatihan.perPage}
                       totalItemsCount={certificates.data.pelatihan.total}
                       pageRangeDisplayed={3}
