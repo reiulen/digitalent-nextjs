@@ -18,7 +18,7 @@ import moment from "moment";
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
   const { error: errorDashboard, dataDashboard } = useSelector(
-    (state) => state.dashboardPeserta
+    state => state.dashboardPeserta
   );
   // useEffect(() => {
   //   if (!success) {
@@ -141,6 +141,7 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
+
   return (
     <Fragment>
       <PesertaWrapper padding={"10"}>
