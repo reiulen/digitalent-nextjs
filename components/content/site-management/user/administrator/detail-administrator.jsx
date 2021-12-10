@@ -185,10 +185,10 @@ const DetailAdmin = ({ token }) => {
                                 {index + 1}
                               </td>
                               <td className="py-8 border-bottom">
-                                {items.training_id}
+                                {items.id}
                               </td>
                               <td className="py-8 border-bottom">
-                                Belom ada dari api
+                                {items.name}
                               </td>
                               <td className="text-center py-8 border-bottom">
                                 <label className="checkbox checkbox-disabled d-flex justify-content-center">
