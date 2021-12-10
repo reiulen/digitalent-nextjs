@@ -18,8 +18,8 @@ import {
 
 const Sidebar = ({ session }) => {
   const dispatch = useDispatch();
-  const allFunctionls = useSelector(state => state.allFunctionls);
-  const allSidebar = useSelector(state => state.allSidebar);
+  const allFunctionls = useSelector((state) => state.allFunctionls);
+  const allSidebar = useSelector((state) => state.allSidebar);
   const router = useRouter();
 
   // mitra partnership sementara
@@ -124,7 +124,7 @@ const Sidebar = ({ session }) => {
             process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
             config
           )
-          .then(data => {
+          .then((data) => {
             setMenu(data.data.data.menu);
             localStorage.setItem(
               "sidebar",
@@ -137,7 +137,7 @@ const Sidebar = ({ session }) => {
             localStorage.setItem("permissions", data.data.data.permissions);
             Cookies.set("token_permission", data.data.data.tokenPermission);
           })
-          .catch(e => {
+          .catch((e) => {
             return;
           });
       }
@@ -344,7 +344,7 @@ const Sidebar = ({ session }) => {
                       data-menu-toggle="hover"
                       key={index}
                       id="main-menu"
-                      onClick={e => {
+                      onClick={(e) => {
                         handleOpenMenu(e, index, items.selected);
                       }}
                     >
@@ -373,7 +373,7 @@ const Sidebar = ({ session }) => {
                                     child.selected ? "menu-item-active" : ""
                                   }`}
                                   aria-haspopup="true"
-                                  onClick={e =>
+                                  onClick={(e) =>
                                     handleActiveSubmenu(e, index, i)
                                   }
                                 >
@@ -396,7 +396,7 @@ const Sidebar = ({ session }) => {
                                   aria-haspopup="true"
                                   data-menu-toggle="hover"
                                   id="sub-menu"
-                                  onClick={e =>
+                                  onClick={(e) =>
                                     handleOpenMenuSubMenu(e, index, i)
                                   }
                                 >
@@ -420,7 +420,7 @@ const Sidebar = ({ session }) => {
                                               "menu-item-active"
                                             }`}
                                             aria-haspopup="true"
-                                            onClick={e =>
+                                            onClick={(e) =>
                                               handleActiveSubSubmenu(
                                                 e,
                                                 index,
