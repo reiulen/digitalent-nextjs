@@ -79,6 +79,7 @@ const Sidebar = ({ session }) => {
       ? JSON.parse(localStorage.getItem("sidebar"))
       : []
   );
+
   const pathRoute = router.route;
   const splitRouteToMakingActive = pathRoute.split("/");
 
@@ -117,19 +118,29 @@ const Sidebar = ({ session }) => {
           Authorization: "Bearer " + session.user.user.data.token,
         },
       };
-
-      axios
-        .get(
-          process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
-          config
-        )
-        .then((data) => {
-          setMenu(data.data.data.menu);
-          localStorage.setItem("sidebar", JSON.stringify(data.data.data.menu))
-          localStorage.setItem("token-permission", data.data.data.tokenPermission)
-          localStorage.setItem("permissions", data.data.data.permissions)
-          Cookies.set("token_permission", data.data.data.tokenPermission)
-        });
+      if (!session?.user?.user?.data?.user?.mitra_profile) {
+        axios
+          .get(
+            process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
+            config
+          )
+          .then((data) => {
+            setMenu(data.data.data.menu);
+            localStorage.setItem(
+              "sidebar",
+              JSON.stringify(data.data.data.menu)
+            );
+            localStorage.setItem(
+              "token-permission",
+              data.data.data.tokenPermission
+            );
+            localStorage.setItem("permissions", data.data.data.permissions);
+            Cookies.set("token_permission", data.data.data.tokenPermission);
+          })
+          .catch((e) => {
+            return;
+          });
+      }
     }
 
     if (!menu) {

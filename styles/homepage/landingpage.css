@@ -204,7 +204,7 @@
 /* STEP REGISTER */
 .title-step-register h1 {
   font-weight: 600;
-  font-size: 40px;
+  font-size: 28px;
   line-height: 140%;
   text-align: center;
   color: #1f1f1f;
@@ -359,6 +359,21 @@
   background-color: #5ec8f2;
 }
 
+.module-rilis-media {
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  line-height: normal;
+}
+
+.media-card {
+  color: #1b283f;
+  font-weight: 600;
+  font-size: 18px;
+}
+
 @media (max-width: 395px) {
   .penyelenggara-mitra .penyelenggara-wrapper {
     width: 130px;
@@ -391,6 +406,9 @@
     font-weight: 600;
     color: #6c6c6c;
     text-align: start;
+  }
+  .title-step-register h1 {
+    font-size: 40px;
   }
 
   .penyelenggara-title-filter h1 {
@@ -498,6 +516,21 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   line-height: 25px;
+}
+
+.module-rilis-media {
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  line-height: normal;
+}
+
+.media-card {
+  color: #1b283f;
+  font-weight: 600;
+  font-size: 18px;
 }
 
 .title-tahapan-new {

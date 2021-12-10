@@ -52,6 +52,9 @@ const Navigationbar = ({ session }) => {
       : null
   );
 
+  const [socket, setSocket] = useState(null);
+  const [dataNotification, setDataNotification] = useState([]);
+
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
   useEffect(() => {
@@ -87,7 +90,62 @@ const Navigationbar = ({ session }) => {
         }
       }
     }
+
+    handleConnectSocket();
   }, []);
+
+  const handleConnectSocket = () => {
+    let ws = new WebSocket(
+      "ws://api-dts-dev.majapahit.id/pelatihan/api/v1/formPendaftaran/notification"
+    );
+    let timeout = 0;
+    let connectInterval;
+
+    ws.onopen = () => {
+      setSocket(ws);
+      timeout = 250;
+      clearTimeout(connectInterval);
+    };
+    ws.onmessage = (e) => {
+      axios
+        .get(
+          process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
+          {
+            headers: {
+              authorization: `Bearer ${session.token}`,
+            },
+          }
+        )
+        .then((res) => {
+          setDataNotification(res.data.data);
+        })
+        .catch((err) => {});
+    };
+
+    ws.onclose = (e) => {
+      // connectInterval = setTimeout(handleCheckSocket, Math.min(10000, timeout));
+    };
+
+    ws.onerror = (err) => {
+      ws.close();
+    };
+  };
+
+  // const data = [
+  //   // { icon: "Fail", text: "test" },
+  //   // { icon: "Success", text: "test" },
+  //   // { icon: "Warning", text: "test" },
+  //   // { icon: "File", text: "test" },
+  //   // { icon: "Fail", text: "test" },
+  //   // { icon: "Success", text: "test" },
+  //   // { icon: "Warning", text: "test" },
+  //   // { icon: "File", text: "test" },
+  // ];
+
+  // const handleCheckSocket = () => {
+  //   if (!socket || socket.readyState === WebSocket.CLOSED)
+  //     handleConnectSocket();
+  // };
 
   const getDataGeneral = async (token) => {
     try {
@@ -191,16 +249,6 @@ const Navigationbar = ({ session }) => {
   };
 
   const [notification, setNotification] = useState(false);
-  const data = [
-    { icon: "Fail", text: "test" },
-    { icon: "Success", text: "test" },
-    { icon: "Warning", text: "test" },
-    { icon: "File", text: "test" },
-    { icon: "Fail", text: "test" },
-    { icon: "Success", text: "test" },
-    { icon: "Warning", text: "test" },
-    { icon: "File", text: "test" },
-  ];
 
   const [navbarItems, setNavbarItems] = useState("");
   const [rilisMedia, setRilisMedia] = useState([
@@ -427,7 +475,11 @@ const Navigationbar = ({ session }) => {
                             }
                             passHref
                           >
-                            <NavDropdown.Item className={`navdropdown-child ${el.url === "-" ? "d-none" : ""}`}>
+                            <NavDropdown.Item
+                              className={`navdropdown-child ${
+                                el.url === "-" ? "d-none" : ""
+                              }`}
+                            >
                               {el.slug ? el.slug : el.name ? el.name : el}
                             </NavDropdown.Item>
                           </Link>
@@ -601,7 +653,7 @@ const Navigationbar = ({ session }) => {
               </a>
               {notification && (
                 <div
-                  className="position-absolute px-5 bg-white w-400px right-0 p-12"
+                  className="position-absolute px-5 bg-white w-400px right-0 p-12 max-h-275px overflow-auto"
                   style={{ color: "#6C6C6C" }}
                 >
                   <div className="d-flex align-items-center fz-20 justify-content-between mb-9">
@@ -613,17 +665,17 @@ const Navigationbar = ({ session }) => {
                       className="cursor-pointer"
                     />
                   </div>
-                  {data.map((el, i) => {
+                  {dataNotification.map((el, i) => {
                     return (
                       <Fragment key={i}>
-                        <div className="d-flex align-items-center position-relative">
+                        <div className="d-flex align-items-center position-relative ">
                           <img
                             src={`/assets/media/notification/${el.icon}.png`}
                             alt="success"
                             style={{ objectFit: "cover" }}
                           />
                           <span className="ml-5 fz-14 text-capitalize">
-                            dokumen anda sedang di tahap pengumuman akhir
+                            {el.Pesan}
                           </span>
                         </div>
                         <hr className="my-3" />
@@ -853,7 +905,7 @@ const Navigationbar = ({ session }) => {
                 <Link href="/pusat-informasi">Pusat Informasi</Link>
               </Col>
               <Col className="mb-8" sm={12}>
-                Tentang Kami
+                <Link href="/tentang-kami">Tentang Kami</Link>
               </Col>
               <Col className="mb-8" sm={12}>
                 <Link href="/penyelenggara">Penyelenggara</Link>
