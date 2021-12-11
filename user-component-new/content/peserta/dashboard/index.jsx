@@ -141,7 +141,7 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
-
+  console.log(dataDashboard, "ini data dashboard");
   return (
     <Fragment>
       <PesertaWrapper padding={"10"}>
@@ -382,12 +382,12 @@ const Dashboard = ({ session, success }) => {
                               Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
-                                  .pendaftaran_mulai
+                                  .pelatihan_mulai
                               ).format("DD MMM YYYY")}{" "}
                               -{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
-                                  .pendaftaran_selesai
+                                  .pelatihan_selesai
                               ).format("DD MMM YYYY")}{" "}
                             </span>
                           </div>
@@ -557,12 +557,12 @@ const Dashboard = ({ session, success }) => {
                               Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
-                                  .pendaftaran_mulai
+                                  .pelatihan_mulai
                               ).format("DD MMM YYYY")}{" "}
                               -{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
-                                  .pendaftaran_selesai
+                                  .pelatihan_selesai
                               ).format("DD MMM YYYY")}{" "}
                             </span>
                           </div>
