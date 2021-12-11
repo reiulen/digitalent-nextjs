@@ -177,46 +177,44 @@ const FormLPJ = ({ token }) => {
             <hr />
             <h1 className={styles.subTitle}>Pelaksanaan Kegiatan</h1>
 
-            <Row>
-              <Col
-                md={1}
-                className={styles.tableLabel}
-                style={{ textAlign: "center" }}
-              >
-                No
-              </Col>
-              <Col
-                md={1}
-                className={styles.tableLabel}
-                style={{ textAlign: "center" }}
-              >
-                Uraian
-              </Col>
-              <Col className={styles.tableLabel} style={{ textAlign: "end" }}>
-                Checklist
-              </Col>
-            </Row>
+            <table>
+              <tr>
+                <td
+                  className={styles.tableLabel}
+                  style={{ textAlign: "center" }}
+                >
+                  No
+                </td>
+                <td
+                  className={styles.tableLabel}
+                  style={{ textAlign: "center" }}
+                >
+                  Uraian
+                </td>
+                <td className={styles.tableLabel} style={{ textAlign: "end" }}>
+                  Checklist
+                </td>
+              </tr>
+            </table>
             {dataLPJ &&
               dataLPJ.map((item, index) => {
                 return (
                   <Fragment key={index}>
-                    <Row className="d-flex justify-content-around text-center">
-                      <Col md={1} className={styles.numberTable}>
-                        {index + 1}
-                      </Col>
-                      <Col md={1} className={styles.contentTable}>
-                        {item.name}
-                      </Col>
-                      <Col
-                        className={styles.checkbox}
-                        style={{ textAlign: "end", marginRight: "20px" }}
-                      >
-                        <input
-                          type="checkbox"
-                          onChange={(event) => handleLPJ(event, index)}
-                        />
-                      </Col>
-                    </Row>
+                    <table>
+                      <tr>
+                        <td className={styles.numberTable}>{index + 1}</td>
+                        <td className={styles.contentTable}>{item.name}</td>
+                        <td
+                          className={styles.checkbox}
+                          style={{ textAlign: "end", marginRight: "20px" }}
+                        >
+                          <input
+                            type="checkbox"
+                            onChange={(event) => handleLPJ(event, index)}
+                          />
+                        </td>
+                      </tr>
+                    </table>
                   </Fragment>
                 );
               })}

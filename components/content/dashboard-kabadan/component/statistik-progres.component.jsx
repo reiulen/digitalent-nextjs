@@ -12,7 +12,7 @@ const StatistikProgres = ({ user, value, percent, total }) => {
 
         <div className="col-6 text-right pr-0 mr-0">
           <p className="text-dashboard-neutral mb-0 fz-14 fw-600 pr-0 mr-0">
-            {percent + `%`} ({total})
+            {Math.ceil(percent) + `%`} ({total})
           </p>
         </div>
       </div>

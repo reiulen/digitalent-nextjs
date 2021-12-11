@@ -149,9 +149,13 @@ const ForgotPassword = () => {
                       <p className="text-white text-center">
                         Belum menerima e-mail?
                         <span>
-                            <a onClick={submit} className="ml-3" style={{ color: "#4CBDE2", cursor: "pointer" }}>
-                              Kirim Ulang
-                            </a>
+                          <a
+                            onClick={submit}
+                            className="ml-3"
+                            style={{ color: "#4CBDE2", cursor: "pointer" }}
+                          >
+                            Kirim Ulang
+                          </a>
                         </span>
                       </p>
                     </div>
