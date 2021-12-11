@@ -212,12 +212,18 @@ const Dashboard = ({ session, success }) => {
               col={col === 1 ? 12 : 6}
             />
           )}
+          {/* `/peserta/riwayat-pelatihan/${data?.name.split(" ").join("-").toLowerCase()}/sertifikat/${data?.id}` */}
           {dataDashboard?.subvit.sertifikat.status && (
             <CardPage
               backgroundImage="new-game-2.svg"
               background="warning"
               color="#FFA800"
-              link="/peserta"
+              link={`/peserta/riwayat-pelatihan/${dataDashboard?.pelatihan?.pelatihan_selesi?.name
+                .split(" ")
+                .join("-")
+                .toLowerCase()}/sertifikat/${
+                dataDashboard?.pelatihan?.pelatihan_selesi?.id
+              }`}
               text="Unduh Sertifikat"
               desc="Anda Sudah bisa mengunduh Sertifikat"
               total={dataDashboard?.subvit.sertifikat.status}
