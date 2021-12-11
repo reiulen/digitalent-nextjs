@@ -456,7 +456,7 @@ const Navigationbar = ({ session }) => {
                     </NavDropdown.Item>
                   </Col>
                   <Col
-                    className="p-0 m-0 h-350px overflow-auto"
+                    className={`p-0 m-0 h-350px overflow-auto ${style.scrollbar_navbar}`}
                     style={
                       navbarItems ? { borderLeft: "1px solid #6c6c6c" } : {}
                     }

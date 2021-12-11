@@ -389,12 +389,16 @@ const Dashboard = ({ session, success }) => {
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
                                   .pelatihan_mulai
-                              ).format("DD MMM YYYY")}{" "}
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                               -{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
                                   .pelatihan_selesai
-                              ).format("DD MMM YYYY")}{" "}
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                             </span>
                           </div>
 
@@ -564,12 +568,16 @@ const Dashboard = ({ session, success }) => {
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
                                   .pelatihan_mulai
-                              ).format("DD MMM YYYY")}{" "}
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                               -{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
                                   .pelatihan_selesai
-                              ).format("DD MMM YYYY")}{" "}
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                             </span>
                           </div>
 
