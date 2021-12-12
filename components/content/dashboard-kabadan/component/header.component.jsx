@@ -7,10 +7,7 @@ const Header = ({ name, text, value = 0, dailyAdd = 0, statisticDay = 0 }) => {
         <div className="col-lg-12 col-xxl-12 mt-4">
           <div className="card card-custom bg-white h-100">
             <div className="card-body p-10">
-              <h2>
-                Selamat Datang, <br /> {name}
-              </h2>{" "}
-              <p>Selamat Datang di Dashboard {text}</p>
+              <h2>Selamat Datang</h2> <p>Selamat Datang di Dashboard {text}</p>
               <div className="total-pengguna-header mt-5">
                 <p className="text-dashboard-neutral fz-16 fw-600">
                   Total Seluruh Pengguna

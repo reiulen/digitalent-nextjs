@@ -1197,6 +1197,57 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
               <div className="col-sm-10 my-auto">
                 <div className="form-check form-check-inline">
                   <input
+                    id="sertification1"
+                    type="radio"
+                    name="sertification"
+                    className="form-check-input"
+                    value="global"
+                    checked={sertification === "global"}
+                    onClick={() => setSertification("global")}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("sertifikasi")
+                    }
+                  />
+                  <label className="form-check-label" htmlFor="sertification1">
+                    Global
+                  </label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    id="sertification2"
+                    type="radio"
+                    name="sertification"
+                    className="form-check-input"
+                    value="skkni"
+                    checked={sertification === "skkni"}
+                    onClick={() => setSertification("skkni")}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("sertifikasi")
+                    }
+                  />
+                  <label className="form-check-label" htmlFor="sertification2">
+                    SKKNI (Nasional)
+                  </label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    id="sertification3"
+                    type="radio"
+                    name="sertification"
+                    className="form-check-input"
+                    value="industri"
+                    checked={sertification === "industri"}
+                    onClick={() => setSertification("industri")}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("sertifikasi")
+                    }
+                  />
+                  <label className="form-check-label" htmlFor="sertification3">
+                    Industri
+                  </label>
+                </div>
+                {/* <div className="form-check form-check-inline">
+                  <input
                     type="radio"
                     name="sertification"
                     className="form-check-input"
@@ -1208,7 +1259,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="form-check-label">Ya</label>
-                </div>
+                </div> */}
                 <div className="form-check form-check-inline">
                   <input
                     type="radio"
@@ -1378,9 +1429,14 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 onBlur={() => simpleValidator.current.showMessageFor("alamat")}
                 placeholder="Silahkan Masukan Alamat Disini"
               />
-              {simpleValidator.current.message("alamat", address, "required", {
-                className: "text-danger",
-              })}
+              {simpleValidator.current.message(
+                "alamat",
+                address,
+                metodeTraining !== "Online" ? "required" : "",
+                {
+                  className: "text-danger",
+                }
+              )}
             </div>
 
             <div className="form-group row mb-2">
@@ -1403,7 +1459,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 {simpleValidator.current.message(
                   "provinsi",
                   province,
-                  "required",
+                  metodeTraining !== "Online" ? "required" : "",
                   {
                     className: "text-danger",
                   }
@@ -1428,7 +1484,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 {simpleValidator.current.message(
                   "kota/kabupaten",
                   city,
-                  "required",
+                  metodeTraining !== "Online" ? "required" : "",
                   {
                     className: "text-danger",
                   }
