@@ -141,6 +141,7 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
+  console.log(dataDashboard, "ini datadashboard");
   return (
     <Fragment>
       <PesertaWrapper padding={"10"}>
@@ -176,7 +177,7 @@ const Dashboard = ({ session, success }) => {
               backgroundImage="new-game-4.svg"
               background="primary"
               color="#6C6C6C"
-              link={`/peserta/subvit/substansi/1?theme_id=${dataDashboard?.subvit.subvit.tema_id}&training_id=${dataDashboard?.subvit.subvit.pelatihan_id}&category=Test Substansi`}
+              link={`/peserta/test-substansi/panduan-substansi?no=${dataDashboard?.subvit.subvit.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit.subvit.pelatihan_id}&id_tema=${dataDashboard?.subvit.subvit.tema_id}`}
               text="Lakukan Test Substansi"
               desc="Anda Belum Melakukan Test Substansi"
               total={dataDashboard?.subvit.subvit.status}
@@ -190,7 +191,7 @@ const Dashboard = ({ session, success }) => {
               backgroundImage="new-game-3.svg"
               background="success"
               color="#00B27A"
-              link="/peserta"
+              link={`/peserta/survey?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
               text="Lakukan Survey"
               desc="Anda Belum Melakukan Test Survey"
               total={dataDashboard?.subvit.survei.status}
@@ -203,7 +204,7 @@ const Dashboard = ({ session, success }) => {
               backgroundImage="new-game-1.svg"
               background="danger"
               color="#EE2D41"
-              link="/peserta"
+              link={`/peserta/trivia?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
               text="Lakukan TRIVIA"
               desc="Anda Belum Melakukan TRIVIA"
               total={dataDashboard.subvit.trivia.status}
@@ -211,7 +212,6 @@ const Dashboard = ({ session, success }) => {
               col={col === 1 ? 12 : 6}
             />
           )}
-          {/* `/peserta/riwayat-pelatihan/${data?.name.split(" ").join("-").toLowerCase()}/sertifikat/${data?.id}` */}
           {dataDashboard?.subvit.sertifikat.status && (
             <CardPage
               backgroundImage="new-game-2.svg"
