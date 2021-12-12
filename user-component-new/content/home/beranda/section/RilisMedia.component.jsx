@@ -44,10 +44,8 @@ export default function RilisMedia({ berita, dimension }) {
                           </p>
                         </div>
                       </div>
-                      <div className="mb-2">
-                        <p className={`${style.media_card}`}>
-                          {row.judul_berita}
-                        </p>
+                      <div className="mb-2 module-rilis-media">
+                        <p className="media-card ">{row.judul_berita}</p>
                       </div>
 
                       <div
@@ -98,17 +96,15 @@ export default function RilisMedia({ berita, dimension }) {
                         </p>
                       </div>
                     </div>
-                    <div className="mb-2">
-                      <p className={`${style.media_card}`}>
-                        {row.judul_berita}
-                      </p>
+                    <div className="mb-2 module-rilis-media">
+                      <p className="media-card ">{row.judul_berita}</p>
                     </div>
 
                     <div
                       className="d-flex align-content-end justify-content-end align-self-end mb-3 mr-3"
                       style={{
                         position: "absolute",
-                        bottom: "8px",
+                        bottom: "0px",
                         right: "16px",
                       }}
                     >

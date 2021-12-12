@@ -50,6 +50,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
     localStorage.removeItem("sidebar")
     localStorage.removeItem("token-permission")
     localStorage.removeItem("permissions")
+    localStorage.removeItem("trainings")
     // {
     //   callbackUrl: `${window.location.origin}/login/admin`,
     // } LAGI DEVELOP JANGAN DIHAPUS

@@ -13,7 +13,7 @@ import PesertaWrapper from "../../wrapper/Peserta.wrapper";
 
 export default function RiwayatPelatihanDetail({ session }) {
   const { state: data } = useSelector(
-    (state) => state.getDetailRiwayatPelatihanPeserta
+    state => state.getDetailRiwayatPelatihanPeserta
   );
 
   const handleDownloadSilabus = async () => {
@@ -24,8 +24,8 @@ export default function RiwayatPelatihanDetail({ session }) {
   const router = useRouter();
   const [description, setDescription] = useState(data?.deskripsi || "-");
   const [finalDescription, setFinalDescription] = useState();
-  const dateFrom = moment(data?.pelatihan_mulai).format("LL") || "-";
-  const dateTo = moment(data?.pelatihan_selesai).format("LL") || "-";
+  const dateFrom = moment(data?.pelatihan_mulai).utc().format("LL") || "-";
+  const dateTo = moment(data?.pelatihan_selesai).utc().format("LL") || "-";
   useEffect(() => {
     let newText = description.split(" ");
     let test = [];
@@ -48,8 +48,8 @@ export default function RiwayatPelatihanDetail({ session }) {
   useEffect(() => {
     helperUserStatusColor(data?.status, setLabel);
   }, []);
-
   const [truncate, setTruncate] = useState(true);
+
   return (
     <PesertaWrapper>
       <Col lg={12} className="px-0">
@@ -72,7 +72,20 @@ export default function RiwayatPelatihanDetail({ session }) {
                 className={`label label-inline label-light-${label}  text-center font-weight-bold text-capitalize`}
                 style={{ borderRadius: "25px" }}
               >
-                {data?.status || "-"}
+                {data?.lpj
+                  ? "Isi LPJ"
+                  : data?.survei
+                  ? "Isi Survey"
+                  : data?.status == "pelatihan" && data.midtest && !data.trivia
+                  ? "Kerjakan Mid Test"
+                  : data?.status == "pelatihan" && data.trivia
+                  ? "kerjakan trivia"
+                  : data?.status == "survey belum tersedia" ||
+                    data.status.includes("survey")
+                  ? "Isi Survey"
+                  : data?.status.includes("LPJ") || data.status.includes("lpj")
+                  ? "Isi LPJ"
+                  : data?.status}
               </span>
             </Col>
             <Col lg={12} className="my-5">
@@ -196,7 +209,7 @@ export default function RiwayatPelatihanDetail({ session }) {
                         {data?.mitra || data?.penyelenggara || "-"}
                       </div>
                       <div style={{ fontSize: "12px" }}>
-                        {data?.lokasi_mitra || "-"}
+                        {data?.mitra ? data?.lokasi_mitra : "-"}
                       </div>
                     </div>
                   </div>

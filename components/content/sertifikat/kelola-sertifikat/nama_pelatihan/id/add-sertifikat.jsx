@@ -19,6 +19,7 @@ import {
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import * as moment from "moment";
 import { Modal } from "react-bootstrap";
+import { SweatAlert } from "../../../../../../utils/middleware/helper";
 
 export default function TambahMasterSertifikat({ token }) {
   const router = useRouter();
@@ -36,7 +37,6 @@ export default function TambahMasterSertifikat({ token }) {
 
   // #Redux state
   const { certificate } = useSelector(state => state.detailCertificates);
-
   const { error, certificate: newCertificate } = useSelector(
     state => state.newCertificates
   );
@@ -58,11 +58,10 @@ export default function TambahMasterSertifikat({ token }) {
 
   useEffect(() => {
     const filter = certificate.data.pelatihan.list.filter(
-      item => item.training == query.theme_name
+      item => item.id == query.id
     );
     setPelatihan(filter[0]);
   }, []);
-
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -286,18 +285,17 @@ export default function TambahMasterSertifikat({ token }) {
     });
     return data;
   };
-
   // # END IMAGE
   const handlePost = async (e, status) => {
-    const currentData = certificate.data.pelatihan.list.filter(
-      el => el.id == query.id
-    );
-    const id = {
-      training_id: currentData[0].training_id,
-      theme_id: currentData[0].theme_id,
-      academy_id: currentData[0].academy_id,
-    };
     try {
+      const currentData = certificate.data.pelatihan.list.filter(
+        el => el.id == query.id
+      );
+      const id = {
+        training_id: currentData[0].training_id,
+        theme_id: currentData[0].theme_id,
+        academy_id: currentData[0].academy_id,
+      };
       e.preventDefault();
       if (certificate_type == "1 lembar") {
         simpleValidator.current.fields.Jabatan = true;
@@ -374,7 +372,6 @@ export default function TambahMasterSertifikat({ token }) {
             );
           }
         }
-
         syllabus.forEach((item, i) => {
           formData.append(`syllabus[${i}]`, item);
         });
@@ -388,7 +385,11 @@ export default function TambahMasterSertifikat({ token }) {
         Swal.fire("Oops !", "Isi data dengan benar.", "error");
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert(
+        "Gagal",
+        error.response.data.message || error.message,
+        "error"
+      );
     }
   };
 
@@ -542,7 +543,7 @@ export default function TambahMasterSertifikat({ token }) {
                         className="text-center font-weight-bolder w-100 "
                         style={{ fontSize: "125%" }}
                       >
-                        {query.theme_name || "Nama Pelatihan"}
+                        {pelatihan?.training || "Nama Pelatihan"}
                       </div>
                       <div className="mt-2 w-100">
                         <span className="w-100">
@@ -556,13 +557,13 @@ export default function TambahMasterSertifikat({ token }) {
                           className="px-2 border-2 w-100 font-weight-boldest"
                           style={{ width: "19px" }}
                         >
-                          {moment(pelatihan?.pelatihan_mulai).format(
-                            "DD/MM/YYYY"
-                          )}{" "}
+                          {moment(pelatihan?.pelatihan_mulai)
+                            .utc()
+                            .format("DD/MM/YYYY")}{" "}
                           -{" "}
-                          {moment(pelatihan?.pelatihan_selesai).format(
-                            "DD/MM/YYYY"
-                          )}
+                          {moment(pelatihan?.pelatihan_selesai)
+                            .utc()
+                            .format("DD/MM/YYYY")}
                         </span>
                       </div>
                       <div className="mt-2 w-100">
@@ -571,7 +572,9 @@ export default function TambahMasterSertifikat({ token }) {
                           className="px-2 border-2 font-weight-boldest"
                           style={{ width: "19px" }}
                         >
-                          {moment(pelatihan?.pendaftaran_mulai).format("YYYY")}
+                          {moment(pelatihan?.pelatihan_mulai)
+                            .utc()
+                            .format("YYYY")}
                         </span>
                       </div>
                       <div className="my-4 w-100 text-center">

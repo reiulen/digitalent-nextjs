@@ -109,6 +109,7 @@ const Table = ({ token }) => {
         (result) => {
           if (result.isConfirmed) {
             dispatch(getAllAdminSite(token));
+            window.location.reload()
           }
         }
       );

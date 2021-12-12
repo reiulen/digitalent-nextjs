@@ -36,14 +36,12 @@ export default function Footer() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("footer")) {
-      getDataGeneral();
-    }
-    if (localStorage.getItem("footer") === "1") {
+    getDataGeneral();
+    if (localStorage.getItem("footer") == "1") {
       setWarna("primary");
-    } else if (localStorage.getItem("footer") === "2") {
+    } else if (localStorage.getItem("footer") == "2") {
       setWarna("secondary");
-    } else if (localStorage.getItem("footer") === "3") {
+    } else if (localStorage.getItem("footer") == "3") {
       setWarna("extras");
     }
   }, []);
@@ -124,36 +122,47 @@ export default function Footer() {
               </p>
             </div>
           </Col>
-          <Col md={8} sm={12}>
-            <h1 className="fw-700 fz-20 text-white">Pranala Luar</h1>
-            <div
-              className={
-                footer &&
-                footer.external_link &&
-                footer.external_link.length > 5
-                  ? `row ml-0`
-                  : undefined
-              }
-            >
-              {footer &&
-                footer.external_link &&
-                footer.external_link.length > 0 &&
-                footer.external_link.map((row, i) => (
-                  <div
-                    className={
-                      footer.external_link.length > 5
-                        ? `col-md-6 pl-0`
-                        : `col-md-12 pl-0`
-                    }
-                    key={i}
-                  >
-                    <Link href={row.link}>
-                      <a className="text-white fw-500" target="_blank">
-                        {row.name}
-                      </a>
-                    </Link>
-                  </div>
-                ))}
+          <Col
+            md={8}
+            sm={12}
+            className={
+              footer &&
+              footer.external_link &&
+              footer.external_link.length < 5 &&
+              `d-flex justify-content-md-center`
+            }
+          >
+            <div className="content-pranala">
+              <h1 className="fw-700 fz-20 text-white">Pranala Luar</h1>
+              <div
+                className={
+                  footer &&
+                  footer.external_link &&
+                  footer.external_link.length > 5
+                    ? `row ml-0`
+                    : undefined
+                }
+              >
+                {footer &&
+                  footer.external_link &&
+                  footer.external_link.length > 0 &&
+                  footer.external_link.map((row, i) => (
+                    <div
+                      className={
+                        footer.external_link.length > 5
+                          ? `col-md-6 pl-0`
+                          : `col-md-12 pl-0`
+                      }
+                      key={i}
+                    >
+                      <Link href={row.link}>
+                        <a className="text-white fw-500" target="_blank">
+                          {row.name}
+                        </a>
+                      </Link>
+                    </div>
+                  ))}
+              </div>
             </div>
           </Col>
         </Row>
