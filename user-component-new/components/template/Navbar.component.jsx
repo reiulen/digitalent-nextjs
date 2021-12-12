@@ -258,6 +258,7 @@ const Navigationbar = ({ session }) => {
     "video",
   ]);
   const [index, setIndex] = useState(0);
+
   return (
     <>
       <Navbar
@@ -435,28 +436,32 @@ const Navigationbar = ({ session }) => {
                         Kontak
                       </NavDropdown.Item>
                     </Link>
-                    <NavDropdown.Item
-                      onClick={e => {
-                        setNavbarItems(menu);
-                        if (index != 3) {
-                          setIndex(3);
-                        } else {
-                          setNavbarItems(null);
-                          setIndex(0);
-                        }
-                        e.stopPropagation();
-                      }}
-                      active={index == 3 ? true : false}
-                      className="navdropdown-child"
-                    >
-                      <div className="d-flex justify-content-between align-items-center">
-                        lainnya
-                        <span className="ri-arrow-right-s-line" />
-                      </div>
-                    </NavDropdown.Item>
+                    {menu.length > 0 && (
+                      <NavDropdown.Item
+                        onClick={e => {
+                          setNavbarItems(menu);
+                          if (index != 3) {
+                            setIndex(3);
+                          } else {
+                            setNavbarItems(null);
+                            setIndex(0);
+                          }
+                          e.stopPropagation();
+                        }}
+                        active={index == 3 ? true : false}
+                        className="navdropdown-child"
+                      >
+                        <div className="d-flex justify-content-between align-items-center">
+                          lainnya
+                          <span className="ri-arrow-right-s-line" />
+                        </div>
+                      </NavDropdown.Item>
+                    )}
                   </Col>
                   <Col
-                    className={`p-0 m-0 h-350px overflow-auto ${style.scrollbar_navbar}`}
+                    className={`p-0 m-0 ${
+                      menu.length > 0 ? `h-350px` : "h-300px"
+                    } overflow-auto ${style.scrollbar_navbar}`}
                     style={
                       navbarItems ? { borderLeft: "1px solid #6c6c6c" } : {}
                     }
@@ -978,44 +983,46 @@ const Navigationbar = ({ session }) => {
               <Col className="mb-8" sm={12}>
                 <Link href="/kontak">Kontak</Link>
               </Col>
-              <Col sm={12}>
-                <Dropdown color="white">
-                  <Dropdown.Toggle
-                    id="dropdown-basic"
-                    style={{
-                      backgroundColor: "transparent",
-                      border: "transparent",
-                      color: "#6C6C6C",
-                      fontSize: "14px",
-                    }}
-                    className="p-0"
-                  >
-                    <div className="d-flex align-items-center justify-content-between p-0 m-0">
-                      Lainnya
-                      <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
-                    </div>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
-                    {menu
-                      ? menu.map((item, index) => {
-                          return (
-                            <Fragment key={index}>
-                              <div
-                                onClick={() => {
-                                  router.push("/lainnya/" + item.url);
-                                }}
-                                className="p-4 fz-12"
-                              >
-                                {item.name}
-                              </div>
-                              <hr className="w-100 p-0 m-0" />
-                            </Fragment>
-                          );
-                        })
-                      : null}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Col>
+              {menu.length > 0 && (
+                <Col sm={12}>
+                  <Dropdown color="white">
+                    <Dropdown.Toggle
+                      id="dropdown-basic"
+                      style={{
+                        backgroundColor: "transparent",
+                        border: "transparent",
+                        color: "#6C6C6C",
+                        fontSize: "14px",
+                      }}
+                      className="p-0"
+                    >
+                      <div className="d-flex align-items-center justify-content-between p-0 m-0">
+                        Lainnya
+                        <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
+                      </div>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
+                      {menu
+                        ? menu.map((item, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <div
+                                  onClick={() => {
+                                    router.push("/lainnya/" + item.url);
+                                  }}
+                                  className="p-4 fz-12"
+                                >
+                                  {item.name}
+                                </div>
+                                <hr className="w-100 p-0 m-0" />
+                              </Fragment>
+                            );
+                          })
+                        : null}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Col>
+              )}
             </Row>
             <hr />
             {/* Start side bar */}
