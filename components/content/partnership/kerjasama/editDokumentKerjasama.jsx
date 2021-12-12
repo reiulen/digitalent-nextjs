@@ -306,7 +306,7 @@ const EditDokumentKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark mb-0 titles-1">
-              Ubah Dokumen Kerjasama
+              Ubah Kerjasama
             </h3>
           </div>
 
