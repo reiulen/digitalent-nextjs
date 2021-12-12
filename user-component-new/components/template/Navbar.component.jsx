@@ -258,7 +258,24 @@ const Navigationbar = ({ session }) => {
     "video",
   ]);
   const [index, setIndex] = useState(0);
-
+  const test = [
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+    { Pesan: "tes 1231", icon: "Success" },
+  ];
   return (
     <>
       <Navbar
@@ -308,7 +325,47 @@ const Navigationbar = ({ session }) => {
                   </a>
                 </Link>
                 <a href="#" className="col-3 p-md-0 col-xl-4 text-center">
-                  <i className="ri-notification-4-line ri-2x mx-0 mx-md-3 text-gray"></i>
+                  <i
+                    className="ri-notification-4-line ri-2x mx-0 mx-md-3 text-gray"
+                    onClick={() => {
+                      setNotification(!notification);
+                    }}
+                  ></i>
+                  {notification && (
+                    <div
+                      className="position-absolute px-5 bg-white w-200px right-0 p-6 max-h-275px overflow-auto"
+                      style={{ color: "#6C6C6C" }}
+                    >
+                      <div className="d-flex align-items-center fz-12 justify-content-between mb-9">
+                        <div>Notification</div>
+                        <img
+                          src="/assets/media/notification/Close_Button.png"
+                          alt="close_button"
+                          onClick={() => setNotification(!notification)}
+                          className="cursor-pointer"
+                          style={{ width: "20px", height: "20px" }}
+                        />
+                      </div>
+                      {dataNotification?.length > 0 &&
+                        dataNotification.map((el, i) => {
+                          return (
+                            <Fragment key={i}>
+                              <div className="d-flex align-items-center position-relative ">
+                                <img
+                                  src={`/assets/media/notification/${el.icon}.png`}
+                                  alt="success"
+                                  style={{ objectFit: "cover" }}
+                                />
+                                <span className="ml-5 fz-14 text-capitalize">
+                                  {el.Pesan}
+                                </span>
+                              </div>
+                              <hr className="my-3" />
+                            </Fragment>
+                          );
+                        })}
+                    </div>
+                  )}
                 </a>
               </div>
             )}
@@ -492,116 +549,6 @@ const Navigationbar = ({ session }) => {
                       })}
                   </Col>
                 </Row>
-                {/* <Fragment>
-                  <NavDropdown.Item href="/" className="navdropdown-child">
-                    Beranda
-                  </NavDropdown.Item>
-                  <div className="btn-group dropright w-100">
-                    <a
-                      type="button"
-                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Pelatihan
-                    </a>
-                    <div className="dropdown-menu ml-3">
-                      {akademi.map((item, i) => {
-                        return (
-                          <Link
-                            key={item.id}
-                            href={`/detail/akademi/${item.id}`}
-                          >
-                            <a className="dropdown-item navdropdown-child ">
-                              {item.slug}
-                            </a>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <Link href="/pusat-informasi" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Pusat Informasi
-                    </NavDropdown.Item>
-                  </Link>
-                  <Link href="/tentang-kami" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Tentang Kami
-                    </NavDropdown.Item>
-                  </Link>
-                  <Link href="/penyelenggara" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Penyelenggara
-                    </NavDropdown.Item>
-                  </Link>
-                  <div className="btn-group dropright w-100">
-                    <a
-                      type="button"
-                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Rilis Media
-                    </a>
-                    <div className="dropdown-menu ml-3">
-                      <Link href="/berita">
-                        <a className="dropdown-item navdropdown-child">
-                          Berita
-                        </a>
-                      </Link>
-                      <Link href="/artikel">
-                        <a className="dropdown-item navdropdown-child">
-                          Artikel
-                        </a>
-                      </Link>
-                      <Link href="/galeri">
-                        <a className="dropdown-item navdropdown-child">
-                          Galeri
-                        </a>
-                      </Link>
-                      <Link href="/video">
-                        <a className="dropdown-item navdropdown-child">Video</a>
-                      </Link>
-                    </div>
-                  </div>
-                  <Link href="/faq" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      FAQ
-                    </NavDropdown.Item>
-                  </Link>
-                  <Link href="/kontak" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Kontak
-                    </NavDropdown.Item>
-                  </Link>
-                  <div className="btn-group dropright w-100">
-                    <a
-                      type="button"
-                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Lainnya
-                    </a>
-                    <div className="dropdown-menu ml-3">
-                      {menu
-                        ? menu.map((item, index) => {
-                            return (
-                              <Link href={"/lainnya/" + item.url} key={index}>
-                                <a className="dropdown-item navdropdown-child">
-                                  {item.name}
-                                </a>
-                              </Link>
-                            );
-                          })
-                        : null}
-                    </div>
-                  </div>
-                </Fragment> */}
               </NavDropdown>
             </div>
             {/* END MENU */}
@@ -658,7 +605,7 @@ const Navigationbar = ({ session }) => {
               </a>
               {notification && (
                 <div
-                  className="position-absolute px-5 bg-white w-400px right-0 p-12 max-h-275px overflow-auto"
+                  className="position-absolute px-5 bg-white w-400px right-0 p-12 max-h-275px overflow-auto d-md-block d-none"
                   style={{ color: "#6C6C6C" }}
                 >
                   <div className="d-flex align-items-center fz-20 justify-content-between mb-9">
@@ -670,23 +617,24 @@ const Navigationbar = ({ session }) => {
                       className="cursor-pointer"
                     />
                   </div>
-                  {dataNotification.map((el, i) => {
-                    return (
-                      <Fragment key={i}>
-                        <div className="d-flex align-items-center position-relative ">
-                          <img
-                            src={`/assets/media/notification/${el.icon}.png`}
-                            alt="success"
-                            style={{ objectFit: "cover" }}
-                          />
-                          <span className="ml-5 fz-14 text-capitalize">
-                            {el.Pesan}
-                          </span>
-                        </div>
-                        <hr className="my-3" />
-                      </Fragment>
-                    );
-                  })}
+                  {dataNotification?.length > 0 &&
+                    dataNotification.map((el, i) => {
+                      return (
+                        <Fragment key={i}>
+                          <div className="d-flex align-items-center position-relative ">
+                            <img
+                              src={`/assets/media/notification/${el.icon}.png`}
+                              alt="success"
+                              style={{ objectFit: "cover" }}
+                            />
+                            <span className="ml-5 fz-14 text-capitalize">
+                              {el.Pesan}
+                            </span>
+                          </div>
+                          <hr className="my-3" />
+                        </Fragment>
+                      );
+                    })}
                 </div>
               )}
             </div>
