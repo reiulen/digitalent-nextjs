@@ -317,7 +317,7 @@ export const updateProfilePekerjaan =
     }
   };
 
-export const getDataRefPekerjaan = (token) => async (dispatch) => {
+export const getDataRefPekerjaan = (token) => async (dispatch) => { 
   try {
     dispatch({ type: GET_REF_PEKERJAAN_REQUEST });
 

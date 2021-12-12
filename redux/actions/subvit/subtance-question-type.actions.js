@@ -37,7 +37,7 @@ export const getAllSubtanceQuestionBanksType =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -64,7 +64,7 @@ export const getDetailSubtanceQuestionBanksType =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -108,7 +108,7 @@ export const newSubtanceQuestionBanksType =
     } catch (error) {
       dispatch({
         type: NEW_SUBTANCE_QUESTION_TYPE_FAIL,
-        payload: error.response.data.message,
+        payload: error.response.data.message.status[0],
       });
     }
   };

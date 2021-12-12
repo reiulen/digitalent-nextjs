@@ -65,7 +65,13 @@ const ListTrivia = ({ token }) => {
 
   const handleLimit = (e) => {
     setLimit(e.target.value);
-    router.push(`${router.pathname}?page=1&limit=${e.target.value}`);
+    if (search) {
+      router.push(
+        `${router.pathname}?page=1&keyword=${search}&limit=${e.target.value}`
+      );
+    } else {
+      router.push(`${router.pathname}?page=1&limit=${e.target.value}`);
+    }
   };
 
   const handleDelete = (id) => {
@@ -229,8 +235,6 @@ const ListTrivia = ({ token }) => {
               List TRIVIA
             </h1>
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.trivia.manage"
             ) ? (
@@ -297,8 +301,6 @@ const ListTrivia = ({ token }) => {
                         <th>Bank Soal</th>
                         <th>Status</th>
                         {dataPermission &&
-                        dataPermission.roles.includes("Super Admin") &&
-                        dataPermission &&
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.trivia.manage"
                         ) ? (
@@ -366,8 +368,6 @@ const ListTrivia = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.trivia.manage"
                                 ) ? (
@@ -502,36 +502,11 @@ const ListTrivia = ({ token }) => {
                           onBlur={(event) => handleLimit(event)}
                           value={limit}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="30"
-                            selected={limit == "30" ? true : false}
-                          >
-                            30
-                          </option>
-                          <option
-                            value="40"
-                            selected={limit == "40" ? true : false}
-                          >
-                            40
-                          </option>
-                          <option
-                            value="50"
-                            selected={limit == "50" ? true : false}
-                          >
-                            50
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">

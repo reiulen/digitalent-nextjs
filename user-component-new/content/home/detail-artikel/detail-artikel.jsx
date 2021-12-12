@@ -226,8 +226,8 @@ const DetailArtikel = () => {
               windowDimensions &&
               windowDimensions.width &&
               windowDimensions.width > 770
-                ? "col-12 col-lg-8 pr-11"
-                : "col-12 col-lg-8"
+                ? "col-12 col-lg-8 pr-11 "
+                : "col-12 col-lg-8 "
             }
           >
             {/* Image */}
@@ -259,6 +259,7 @@ const DetailArtikel = () => {
                 :
                   361
                 }
+              // layout="fill"
               objectFit="cover"
               alt="Detail Image"
               className="rounded-lg img-fluid"

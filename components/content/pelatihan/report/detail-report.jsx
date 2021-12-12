@@ -135,10 +135,9 @@ const DetailReport = ({ token }) => {
       .get(link, config)
       .then((res) => {
         window.location.href = res.data.data;
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire("Oops !", err, "error");
       });
   };
 

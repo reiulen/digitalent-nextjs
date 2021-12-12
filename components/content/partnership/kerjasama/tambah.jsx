@@ -27,8 +27,15 @@ const Tambah = ({ token }) => {
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");
   const changeInstitusi = (value) => {
-    setInstitution_name(value);
-    dispatch(setNameLembaga(value));
+    if (value){
+      setInstitution_name(value);
+      dispatch(setNameLembaga(value));
+      setError({ ...error, institution_name: "" });
+
+    } else {
+      setError({ ...error, institution_name: "Harus pilih nama lembaga" });
+    }
+    
   };
   const [error, setError] = useState({
     institution_name: "",

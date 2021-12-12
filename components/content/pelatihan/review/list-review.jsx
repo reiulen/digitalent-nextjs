@@ -247,7 +247,7 @@ const ListReview = ({ token }) => {
   };
 
   const onNewReset = () => {
-    router.replace("/pelatihan/review", undefined, { shallow: true });
+    router.replace("/pelatihan/review-pelatihan", undefined, { shallow: true });
   };
 
   const handlePublish = (val, type) => {

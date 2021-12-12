@@ -452,8 +452,7 @@ const Vidio = ({ token }) => {
                     <div className="card-header row border-0">
                         <h3 className={`${styles2.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Video</h3>
                         {
-                            role_permission.permissions === "publikasi.video.view" && role_permission.roles !== "Super Admin" ? null
-                                :
+                            role_permission.permissions.includes("publikasi.video.manage") || role_permission.roles.includes("Super Admin") ?
                                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                                     <Link href='/publikasi/video/tambah-video'>
                                         <a className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
@@ -462,6 +461,7 @@ const Vidio = ({ token }) => {
                                         </a>
                                     </Link>
                                 </div>
+                                : null
                         }
                     </div>
 
@@ -656,9 +656,9 @@ const Vidio = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions === "publikasi.video.view" && role_permission.roles !== "Super Admin" ? null
-                                                        :
+                                                    role_permission.permissions.includes("publikasi.video.manage") || role_permission.roles.includes("Super Admin") ?
                                                         <th style={{ width: '9.7vw' }}>Aksi</th>
+                                                        : null
                                                 }
                                             </tr>
                                         </thead>
@@ -719,8 +719,7 @@ const Vidio = ({ token }) => {
                                                             </td>
                                                             <td className='align-middle'>{row.role[0].name}</td>
                                                             {
-                                                                role_permission.permissions === "publikasi.video.view" && role_permission.roles !== "Super Admin" ? null
-                                                                    :
+                                                                role_permission.permissions.includes("publikasi.video.manage") || role_permission.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex">
 
                                                                         <button
@@ -757,6 +756,7 @@ const Vidio = ({ token }) => {
                                                                         </button>
 
                                                                     </td>
+                                                                    : null
                                                             }
                                                         </tr>
                                                     })
@@ -849,7 +849,7 @@ const Vidio = ({ token }) => {
                         <h2 className="font-weight-bolder">
                             {judul_video}
                         </h2>
-                        
+
                         <div className={`${styles.descriptionVideo} text-break text-justify`}>
                             <span>
                                 {/* {isiVideo} */}
@@ -870,31 +870,31 @@ const Vidio = ({ token }) => {
                                         <div className="overflow-auto">
                                             {isiVideo}
                                             {/* <div className="col-12 col-md-5 col-lg-4 my-2"> */}
-                                                <div className="d-flex flex-wrap flex-row mt-2">
-                                                    {
-                                                        tag === null ?
-                                                            null
-                                                            : tag.map((el, i) => {
-                                                                return (
+                                            <div className="d-flex flex-wrap flex-row mt-2">
+                                                {
+                                                    tag === null ?
+                                                        null
+                                                        : tag.map((el, i) => {
+                                                            return (
+                                                                <div
+                                                                    style={{
+                                                                        background: "#fff",
+                                                                        border: "1px solid #d7e1ea",
+                                                                    }}
+                                                                    className="mr-2 px-3 py-1 mb-2 rounded"
+                                                                    key={i}
+                                                                >
                                                                     <div
-                                                                        style={{
-                                                                            background: "#fff",
-                                                                            border: "1px solid #d7e1ea",
-                                                                        }}
-                                                                        className="mr-2 px-3 py-1 mb-2 rounded"
-                                                                        key={i}
+                                                                        className="text-center"
+                                                                        style={{ fontSize: "10px" }}
                                                                     >
-                                                                        <div
-                                                                            className="text-center"
-                                                                            style={{ fontSize: "10px" }}
-                                                                        >
-                                                                            #{el.toUpperCase()}
-                                                                        </div>
+                                                                        #{el.toUpperCase()}
                                                                     </div>
-                                                                );
-                                                            })
-                                                    }
-                                                </div>
+                                                                </div>
+                                                            );
+                                                        })
+                                                }
+                                            </div>
                                             {/* </div> */}
 
                                             <div

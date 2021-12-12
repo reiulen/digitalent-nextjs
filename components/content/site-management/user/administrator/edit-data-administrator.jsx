@@ -27,79 +27,79 @@ const TambahApi = ({ token }) => {
 
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
 
-  const detailAdminSite = useSelector((state) => state.detailAdminSite);
+  const editAdminSite = useSelector((state) => state.editAdminSite);
 
-  const [name, setName] = useState(detailAdminSite?.adminSite?.data?.name);
-  const [email, setEmail] = useState(detailAdminSite?.adminSite?.data?.email);
+  const [name, setName] = useState(editAdminSite?.adminSite?.data?.name);
+  const [email, setEmail] = useState(editAdminSite?.adminSite?.data?.email);
   const [search, setSearch] = useState(null)
   const [status, setStatus] = useState(
-    detailAdminSite?.adminSite?.data?.status
+    editAdminSite?.adminSite?.data?.status
   );
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [roleOption, setRoleOption] = useState(
-    detailAdminSite?.adminSite?.data?.roles.map((items) => {
+    editAdminSite?.adminSite?.data?.roles.map((items) => {
       return { value: items.id, label: items.name, id: items.id };
     })
   );
   const [role, setRole] = useState(
-    detailAdminSite?.adminSite?.data?.roles?.map((items) => {
+    editAdminSite?.adminSite?.data?.roles?.map((items) => {
       return items.id;
     })
   );
   const [unitWork, setUnitWork] = useState(
-    detailAdminSite?.adminSite?.data?.unit_works?.map((items) => {
+    editAdminSite?.adminSite?.data?.unit_works?.map((items) => {
       return items.id;
     })
   );
   const [unitWorkOption, setUnitWorkOption] = useState(
-    detailAdminSite?.adminSite?.data?.unit_works?.map((items) => {
+    editAdminSite?.adminSite?.data?.unit_works?.map((items) => {
       return { value: items.id, label: items.name, id: items.id };
     })
   );
 
   const [akademi, setAkademi] = useState(
-    detailAdminSite?.adminSite?.data?.training_access?.map((items) => {
+    editAdminSite?.adminSite?.data?.training_access?.map((items) => {
       return items.id;
     })
   );
 
   const [akademiAkses, setAkademiAkses] = useState(
-    detailAdminSite?.adminSite?.data?.type_access === "akademi" ?
-    detailAdminSite?.adminSite?.data?.training_access?.map((items) => {
+    editAdminSite?.adminSite?.data?.type_access === "akademi" ?
+    editAdminSite?.adminSite?.data?.training_access?.map((items) => {
       return { value: items.id, label: items.name, id: items.id };
     }) : null
   );
   const [statusAcademy, setStatusAcademy] = useState([]);
   const [typeAccess, setTypeAccess] = useState(
-    detailAdminSite?.adminSite?.data?.type_access
+    editAdminSite?.adminSite?.data?.type_access
   );
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
 
   const [formData, setFormData] = useState({
-    name: detailAdminSite?.adminSite?.data?.name,
-    email: detailAdminSite?.adminSite?.data?.email,
-    status: detailAdminSite?.adminSite?.data?.status,
+    name: editAdminSite?.adminSite?.data?.name,
+    email: editAdminSite?.adminSite?.data?.email,
+    status: editAdminSite?.adminSite?.data?.status,
     password: "",
     confirmPassword: "",
     roleOption: allRolesList?.data?.list_role?.map((items) => {
       return { ...items, label: items.name, value: items.name };
     }),
-    role: detailAdminSite?.adminSite?.data?.roles?.map((items) => {
+    role: editAdminSite?.adminSite?.data?.roles?.map((items) => {
       return { ...items, value: items.name, label: items.name };
     }),
     unitWorkOption: allUnitWorkList?.data?.unit_work?.map((items) => {
       return { ...items, label: items.name, value: items.name };
     }),
-    unitWorksIds: detailAdminSite?.adminSite?.data?.unit_work_ids,
-    typeAcces: detailAdminSite?.adminSite?.data?.type_access,
-    trainingAccess: detailAdminSite?.adminSite?.data?.training_access,
-    academyIds: detailAdminSite?.adminSite?.data?.academy_ids,
+    unitWorksIds: editAdminSite?.adminSite?.data?.unit_work_ids,
+    typeAcces: editAdminSite?.adminSite?.data?.type_access,
+    trainingAccess: editAdminSite?.adminSite?.data?.training_access,
+    academyIds: editAdminSite?.adminSite?.data?.academy_ids,
   });
   const [sortListPelatihan, setSortListPelatihan] = useState(
-    detailAdminSite?.adminSite?.data?.type_access !== "akademi" ? 
-    detailAdminSite?.adminSite?.data.training_access.map((items) => {
+    editAdminSite?.adminSite?.data?.type_access !== "akademi" ? 
+    editAdminSite?.adminSite?.data.training_access.map((items) => {
       return {
         ...items,
         value: items.id,
@@ -383,6 +383,9 @@ const TambahApi = ({ token }) => {
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("status");
                   }}
+                  onChange={e => {
+                    setStatus(e.target.value)
+                  }}
                 >
                   <option value="" selected disabled hidden>
                     Pilih status
@@ -531,7 +534,7 @@ const TambahApi = ({ token }) => {
                 >
                   <a
                     className={`nav-link ${
-                      detailAdminSite?.adminSite?.data?.type_access ===
+                      editAdminSite?.adminSite?.data?.type_access ===
                       "akademi"
                         ? "active"
                         : ""
@@ -553,7 +556,7 @@ const TambahApi = ({ token }) => {
                 >
                   <a
                     className={`nav-link ${
-                      detailAdminSite?.adminSite?.data?.type_access ===
+                      editAdminSite?.adminSite?.data?.type_access ===
                       "pelatihan"
                         ? "active"
                         : ""
@@ -573,7 +576,7 @@ const TambahApi = ({ token }) => {
               <div className="tab-content" id="myTabContent">
                 <div
                  className={
-                  detailAdminSite?.adminSite?.data?.type_access === "akademi"
+                  editAdminSite?.adminSite?.data?.type_access === "akademi"
                     ? "tab-pane fade show active"
                     : "tab-pane fade"
                 }
@@ -602,7 +605,7 @@ const TambahApi = ({ token }) => {
                 </div>
                 <div
                   className={
-                    detailAdminSite?.adminSite?.data?.type_access === "pelatihan"
+                    editAdminSite?.adminSite?.data?.type_access === "pelatihan"
                       ? "tab-pane fade show active"
                       : "tab-pane fade"
                   }

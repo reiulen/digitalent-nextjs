@@ -39,6 +39,20 @@ const IndexInsert = ({ token }) => {
   const { training, loading, success, error } = useSelector(
     (state) => state.newTraining
   );
+  const { data: dataReferenceOption } = useSelector(
+    (state) => state.allDataReference
+  );
+
+  const dataOptions = [];
+  if (dataReferenceOption) {
+    dataReferenceOption.list_reference.map((row, i) => {
+      let data = {
+        id: row.id,
+        value: row.name,
+      };
+      dataOptions.push(data);
+    });
+  }
 
   useEffect(() => {
     if (error) {
@@ -61,6 +75,7 @@ const IndexInsert = ({ token }) => {
         return (
           <AddRegistrationStep2
             propsStep={(value) => setView(value)}
+            dataOptions={dataOptions}
             token={token}
           />
         );

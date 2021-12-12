@@ -37,6 +37,10 @@ import {
   UPDATE_ADMIN_SITE_SUCCESS,
   UPDATE_ADMIN_SITE_FAIL,
   UPDATE_ADMIN_SITE_RESET,
+  EDIT_ADMIN_SITE_REQUEST,
+  EDIT_ADMIN_SITE_SUCCESS,
+  EDIT_ADMIN_SITE_FAIL,
+  EDIT_ADMIN_SITE_RESET,
   LIMIT_CONFIGURATION,
   SET_PAGE,
   SEARCH_COORPORATION,
@@ -345,6 +349,40 @@ export const detailAdminSiteReducer = (state = { adminSite: {} }, action) => {
       };
 
     case DETAIL_ADMIN_SITE_RESET:
+      return {
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const editAdminSiteReducer = (state = { adminSite: {} }, action) => {
+  switch (action.type) {
+    case EDIT_ADMIN_SITE_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case EDIT_ADMIN_SITE_SUCCESS:
+      return {
+        loading: false,
+        adminSite: action.payload,
+      };
+
+    case EDIT_ADMIN_SITE_FAIL:
+      return {
+        loading: false,
+        error: null,
+      };
+
+    case EDIT_ADMIN_SITE_RESET:
       return {
         success: false,
       };

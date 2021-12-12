@@ -9,6 +9,24 @@ import {
   newPendaftaranPelatihan,
   storeFormRegister,
 } from "../../../../redux/actions/pelatihan/register-training.actions";
+import {
+  getDropdownStatusMenikah,
+  dropdownStatusPekerjaan,
+  getDropdownHubungan,
+  dropdownLevelPelatihan,
+  dropdownAgama,
+  dropdownPenyelenggara,
+  dropdownProvinsi,
+  getDropdownKabupatenAll,
+  dropdownPendidikan,
+} from "../../../../redux/actions/pelatihan/function.actions";
+import {
+  getDataRefPekerjaan,
+  getDataAsalSekolah,
+} from "../../../../redux/actions/pelatihan/profile.actions";
+import RadioReference from "../../../../components/content/pelatihan/training/components/radio-reference.component";
+import OptionsReference from "../../../../components/content/pelatihan/training/components/option-reference.component";
+import CheckboxReference from "../../../../components/content/pelatihan/training/components/checkbox-reference.component";
 
 const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const router = useRouter();
@@ -24,6 +42,37 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   );
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
+  );
+  const { data: statusMenikah } = useSelector(
+    (state) => state.drowpdownStatusMenikah
+  );
+  const { data: dataPendidikan } = useSelector(
+    (state) => state.drowpdownPendidikan
+  );
+  const { data: statusPekerjaan } = useSelector(
+    (state) => state.drowpdownStatusPekerjaan
+  );
+  const { data: dataHubungan } = useSelector(
+    (state) => state.drowpdownHubungan
+  );
+  const { dataRefPekerjaan: dataBidangPekerjaan } = useSelector(
+    (state) => state.getRefPekerjaan
+  );
+  const { data: dataLevelPelatihan } = useSelector(
+    (state) => state.drowpdownLevelPelatihan
+  );
+  const { data: dataAgama } = useSelector((state) => state.drowpdownAgama);
+  const { data: dataPenyelenggara } = useSelector(
+    (state) => state.drowpdownPenyelenggara
+  );
+  const { data: dataProvinsi } = useSelector(
+    (state) => state.drowpdownProvinsi
+  );
+  const { data: dataKabupaten } = useSelector(
+    (state) => state.drowpdownKabupaten
+  );
+  const { data: dataUniversitas } = useSelector(
+    (state) => state.getAsalSekolah
   );
 
   const readerElementHandler = (row, i) => {
@@ -69,13 +118,15 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
               <option value="" disabled selected>
                 Silahkan Pilih {row.name}
               </option>
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <option value={dat} key={i}>
-                      {dat}
-                    </option>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <option value={dat} key={i}>
+                    {dat}
+                  </option>
+                ))
+              ) : (
+                <OptionsReference id={row.dataOption} token={token} />
+              )}
             </select>
             {simpleValidator.current.message(
               row.name,
@@ -95,23 +146,30 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, j) => (
-                    <div className="form-check pb-3" key={j}>
-                      <input
-                        type="checkbox"
-                        name="plotRegistration"
-                        className="form-check-input"
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor(row.name)
-                        }
-                        onChange={(e) => onChangeInput(i, dat)}
-                        value={dat}
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, j) => (
+                  <div className="form-check pb-3" key={j}>
+                    <input
+                      type="checkbox"
+                      name="plotRegistration"
+                      className="form-check-input"
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor(row.name)
+                      }
+                      onChange={(e) => onChangeInput(i, dat)}
+                      value={dat}
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <CheckboxReference
+                  id={row.dataOption}
+                  token={token}
+                  required={row.required}
+                  onChangeValue={(value) => onChangeInput(i, value)}
+                />
+              )}
             </div>
             {simpleValidator.current.message(
               row.name,
@@ -157,24 +215,31 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, j) => (
-                    <div className="form-check pb-3" key={j}>
-                      <input
-                        type="radio"
-                        name={row.name}
-                        className="form-check-input"
-                        value={dat}
-                        onChange={(e) => onChangeInput(i, dat)}
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor(row.name)
-                        }
-                        value={row.value}
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, j) => (
+                  <div className="form-check pb-3" key={j}>
+                    <input
+                      type="radio"
+                      name={row.name}
+                      className="form-check-input"
+                      value={dat}
+                      onChange={(e) => onChangeInput(i, dat)}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor(row.name)
+                      }
+                      value={row.value}
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <RadioReference
+                  id={row.dataOption}
+                  token={token}
+                  required={row.required}
+                  onChangeValue={(value) => onChangeInput(i, value)}
+                />
+              )}
             </div>
             {simpleValidator.current.message(
               row.name,
@@ -334,7 +399,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         form_pendaftaran: dataPendaftaran,
         pelatian_id: +router.query.id,
       };
-      dispatch(newPendaftaranPelatihan(data, token));
+      console.log(data);
+      // dispatch(newPendaftaranPelatihan(data, token));
     }
   };
 

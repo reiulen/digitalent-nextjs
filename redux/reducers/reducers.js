@@ -308,6 +308,7 @@ import {
   allAcademyListReducer,
   allListPelatihanReducer,
   updateStatusAdminReducer,
+  editAdminSiteReducer,
 } from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
@@ -324,6 +325,7 @@ import {
   detailGeneralReducer,
   newGeneralReducer,
   updateGeneralReducer,
+  allDataGeneralReducer
 } from "./site-management/settings/general.reducers";
 // ============== zonasi ===============
 import {
@@ -483,6 +485,8 @@ import {
   drowpdownFormBuilderReducers,
   drowpdownTempatLahirReducers,
   drowpdownYearReducers,
+  drowpdownHubunganReducers,
+  drowpdownStatusMenikahReducers,
 } from "./pelatihan/admin/function.reducers";
 import {
   allProvinsiReducer,
@@ -856,6 +860,7 @@ const reducer = combineReducers({
   allListPelatihan: allListPelatihanReducer,
   allListPelatihanByPeserta: allListPelatihanByPesertaReducer,
   allListPelatihanPagination: allListPelatihanPaginationReducer,
+  editAdminSite: editAdminSiteReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
@@ -869,6 +874,7 @@ const reducer = combineReducers({
   newGeneral: newGeneralReducer,
   detailGeneral: detailGeneralReducer,
   updateGeneral: updateGeneralReducer,
+  allDataGeneral: allDataGeneralReducer,
   // ============ DATA ZONASI =======
   allZonasi: allZonasiReducer,
   deleteZonasi: deleteZonasiReducer,
@@ -995,6 +1001,8 @@ const reducer = combineReducers({
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
   drowpdownYear: drowpdownYearReducers,
+  drowpdownHubungan: drowpdownHubunganReducers,
+  drowpdownStatusMenikah: drowpdownStatusMenikahReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,
