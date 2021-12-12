@@ -6,6 +6,8 @@ import Image from "next/dist/client/image";
 import Default from "../../../public/assets/media/logos/default.png";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
+import moment from "moment";
+import "moment/locale/id";
 
 const Header = () => {
   const router = useRouter();
@@ -305,7 +307,8 @@ const Header = () => {
                         ></i>
                       </div>
                       <div className="p-1">
-                        {thisDay} , <span id="jam">{jam}</span>
+                        {thisDay} {moment().format("ll")} ,{" "}
+                        <span id="jam">{jam}</span>
                       </div>
                     </div>
                   </Col>

@@ -235,8 +235,6 @@ const ListSubstansi = ({ token }) => {
             </h1>
 
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.substansi.manage"
             ) ? (
@@ -326,8 +324,6 @@ const ListSubstansi = ({ token }) => {
                         <th>Status</th>
 
                         {dataPermission &&
-                        dataPermission.roles.includes("Super Admin") &&
-                        dataPermission &&
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.substansi.manage"
                         ) ? (
@@ -407,8 +403,6 @@ const ListSubstansi = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.substansi.manage"
                                 ) ? (

@@ -235,8 +235,6 @@ const ListTrivia = ({ token }) => {
               List TRIVIA
             </h1>
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.trivia.manage"
             ) ? (
@@ -303,8 +301,6 @@ const ListTrivia = ({ token }) => {
                         <th>Bank Soal</th>
                         <th>Status</th>
                         {dataPermission &&
-                        dataPermission.roles.includes("Super Admin") &&
-                        dataPermission &&
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.trivia.manage"
                         ) ? (
@@ -372,8 +368,6 @@ const ListTrivia = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.trivia.manage"
                                 ) ? (

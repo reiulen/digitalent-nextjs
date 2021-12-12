@@ -28,6 +28,7 @@ const ListSurvey = ({ token }) => {
     (state) => state.permissionsSubvit
   );
 
+  console.log(dataPermission);
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -240,25 +241,21 @@ const ListSurvey = ({ token }) => {
               List Survey
             </h1>
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
-            dataPermission.permissions.includes(
-              "subvit.manage" && "subvit.survey.manage"
-            ) ? (
-              <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
-                <Link href="/subvit/survey/tambah">
-                  {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
-                  <a
-                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
-                  >
-                    <i className="ri-add-fill"></i>
-                    Tambah Survey
-                  </a>
-                </Link>
-              </div>
-            ) : (
-              ""
-            )}
+              dataPermission.permissions.includes(
+                "subvit.manage" && "subvit.survey.manage"
+              ) && (
+                <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
+                  <Link href="/subvit/survey/tambah">
+                    {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
+                    <a
+                      className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
+                    >
+                      <i className="ri-add-fill"></i>
+                      Tambah Survey
+                    </a>
+                  </Link>
+                </div>
+              )}
           </div>
 
           <div className="card-body pt-0">
@@ -376,8 +373,6 @@ const ListSurvey = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.survey.manage"
                                 ) ? (

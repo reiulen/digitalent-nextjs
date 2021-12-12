@@ -668,6 +668,12 @@ const DashbardSubvit = ({ token }) => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={() => handleBackPagination()}
                       disabled={parseInt(router.query.page_substansi) === 1}
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_substansi) === 1
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-left-s-line"

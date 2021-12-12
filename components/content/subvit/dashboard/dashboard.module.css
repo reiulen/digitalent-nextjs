@@ -498,6 +498,14 @@
   border: #4299e1 !important;
   margin: 5px;
 }
+
+.btnNextD {
+  background: #4299e1 !important;
+  border-radius: 8px;
+  border: #4299e1 !important;
+  margin: 5px;
+  cursor: not-allowed;
+}
 .rowBottom {
   margin-top: 20px !important;
   position: absolute;
