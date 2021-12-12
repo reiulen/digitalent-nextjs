@@ -37,7 +37,6 @@ export default function TambahMasterSertifikat({ token }) {
 
   // #Redux state
   const { certificate } = useSelector(state => state.detailCertificates);
-  console.log(certificate, "ini certificate");
   const { error, certificate: newCertificate } = useSelector(
     state => state.newCertificates
   );

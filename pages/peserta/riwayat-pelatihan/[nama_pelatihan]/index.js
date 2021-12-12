@@ -61,7 +61,7 @@ export default function RiwayatPelatihanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 
@@ -93,7 +93,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             status.includes("pelatihan") ||
             status.includes("lpj") ||
             status.includes("survey belum mengerjakan") ||
-            data.includes("survey") ||
+            status.includes("survey") ||
             data.data.survey
           ) {
             success = true;
@@ -131,7 +131,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
               getAllRiwayatPelatihanPeserta(session?.user.user.data.user.token)
             );
             success = false;
-            const list = data.list.filter((item) => {
+            const list = data.list.filter(item => {
               return (
                 item.status.includes("seleksi akhir") ||
                 item.status.includes("pelatihan") ||

@@ -141,7 +141,6 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
-  console.log(dataDashboard, "ini data dashboard");
   return (
     <Fragment>
       <PesertaWrapper padding={"10"}>
