@@ -22,7 +22,9 @@ const Done = () => {
     (state) => state.getPelatihan
   );
 
-  const { dataDashboard } = useSelector((state) => state.dashboardPeserta);
+  const dataRiwayatPelatihan = useSelector(
+    (state) => state.getAllRiwayatPelatihanPeserta
+  );
 
   const handleDone = () => {
     router.push("/peserta/form-lpj");
@@ -64,12 +66,12 @@ const Done = () => {
               variant="primary"
               className={styles.btnNext}
               disabled={
-                dataDashboard?.pelatihan?.pelatihan_berjalan?.lpj === false
+                dataRiwayatPelatihan?.listPelatihan?.list[0]?.lpj === false
               }
               onClick={handleDone}
               style={{
                 cursor:
-                  dataDashboard?.pelatihan?.pelatihan_berjalan?.lpj === false
+                  dataRiwayatPelatihan?.listPelatihan?.list[0]?.lpj === false
                     ? "not-allowed"
                     : "pointer",
               }}
