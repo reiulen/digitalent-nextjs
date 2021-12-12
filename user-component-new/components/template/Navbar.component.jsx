@@ -258,24 +258,7 @@ const Navigationbar = ({ session }) => {
     "video",
   ]);
   const [index, setIndex] = useState(0);
-  const test = [
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-    { Pesan: "tes 1231", icon: "Success" },
-  ];
+
   return (
     <>
       <Navbar
