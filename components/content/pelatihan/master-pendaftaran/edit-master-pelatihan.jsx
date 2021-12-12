@@ -13,16 +13,32 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { updateMasterPelatihanAction } from "../../../../redux/actions/pelatihan/master-pendaftaran.action";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 
-const AddRegistrationStep2 = ({ token }) => {
+const EditRegistrationStep2 = ({ token }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { form } = useSelector((state) => state.getDetailMasterPelatihan);
   const updateState = useSelector((state) => state.updateMasterPelatihan);
+  const { data: dataReferenceOption } = useSelector(
+    (state) => state.allDataReference
+  );
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [modalShow, setModalShow] = useState(false);
+  const [dataOptions, setDataOptions] = useState([]);
 
   useEffect(() => {
+    const dataOptionsArr = [];
+    if (dataReferenceOption) {
+      dataReferenceOption.list_reference.map((row, i) => {
+        let data = {
+          id: row.id,
+          value: row.name,
+        };
+        dataOptionsArr.push(data);
+      });
+    }
+    setDataOptions(dataOptionsArr);
     if (updateState.success) {
       SweatAlert("Berhasil", "Berhasil update form pendaftaran", "success");
       return router.push("/pelatihan/master-pendaftaran");
@@ -79,42 +95,6 @@ const AddRegistrationStep2 = ({ token }) => {
     {
       name: "Select Reference",
       value: "select_reference",
-    },
-  ]);
-
-  const [dataOptions] = useState([
-    {
-      value: "status_menikah",
-    },
-    {
-      value: "pendidikan",
-    },
-    {
-      value: "status_pekerjaan",
-    },
-    {
-      value: "hubungan",
-    },
-    {
-      value: "bidang_pekerjaan",
-    },
-    {
-      value: "level_pelatihan",
-    },
-    {
-      value: "agama",
-    },
-    {
-      value: "penyelengaara",
-    },
-    {
-      value: "provinsi",
-    },
-    {
-      value: "kota/kabupaten",
-    },
-    {
-      value: "universitas",
     },
   ]);
 
@@ -183,7 +163,7 @@ const AddRegistrationStep2 = ({ token }) => {
                 -- PILIH --
               </option>
               {dataOptions.map((datOpt, i) => (
-                <option key={i} value={datOpt.value}>
+                <option key={i} value={datOpt.id}>
                   {datOpt.value}
                 </option>
               ))}
@@ -448,13 +428,12 @@ const AddRegistrationStep2 = ({ token }) => {
                   </div>
 
                   {renderMultipleHandler(row, i)}
-
                   <div className="col-sm-6 col-md-2">
-                    <label className="col-form-label font-weight-bold">
+                    <label className="col-form-label font-weight-bold ml-md-10">
                       Required
                     </label>
-                    <div className="d-flex align-items-end">
-                      <div className="form-group mr-7">
+                    <div className="d-flex align-items-end justify-content-between">
+                      <div className="form-group ml-md-10">
                         <div className="form-check form-check-inline">
                           <input
                             type="checkbox"
@@ -467,7 +446,7 @@ const AddRegistrationStep2 = ({ token }) => {
                       </div>
                       {formBuilder.length !== 1 && row.key !== 1 ? (
                         <button
-                          className="btn btn-link-action bg-danger text-white mb-3 ml-9"
+                          className="btn btn-link-action bg-danger text-white mb-3 "
                           type="button"
                           onClick={() => removeFieldHandler(i)}
                         >
@@ -475,7 +454,7 @@ const AddRegistrationStep2 = ({ token }) => {
                         </button>
                       ) : (
                         <button
-                          className="btn btn-link-action bg-danger text-white mb-3 ml-9 invisible"
+                          className="btn btn-link-action bg-danger text-white mb-3  invisible"
                           type="button"
                           onClick={() => removeFieldHandler(i)}
                         >
@@ -539,6 +518,7 @@ const AddRegistrationStep2 = ({ token }) => {
               propsModalShow={modalShow}
               sendPropsFormBuilder={(form) => setFormBuilder(form)}
               sendPropsModalShow={(value) => setModalShow(value)}
+              propsToken={token}
             />
           </Modal>
         </div>
@@ -547,4 +527,4 @@ const AddRegistrationStep2 = ({ token }) => {
   );
 };
 
-export default AddRegistrationStep2;
+export default EditRegistrationStep2;
