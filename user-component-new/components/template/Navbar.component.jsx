@@ -97,7 +97,7 @@ const Navigationbar = ({ session }) => {
 
   const handleConnectSocket = () => {
     let ws = new WebSocket(
-      "ws://192.168.11.70:83/api/v1/formPendaftaran/notification"
+      "ws://api-dts-dev.majapahit.id/pelatihan/api/v1/formPendaftaran/notification"
     );
     let timeout = 0;
     let connectInterval;
