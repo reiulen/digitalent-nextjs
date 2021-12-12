@@ -99,6 +99,18 @@ const ListReport = ({ token }) => {
     );
   };
 
+  const downloadPdf = async (e, id) => {
+    e.preventDefault();
+    await axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/pelatihan/export-rekap-pendaftaran-data-pdf?pelatihan_id=${id}`
+      )
+      .then((res) => {
+        window.open(res.data.data, "_blank");
+      });
+  };
+
   const listReportTraining =
     getDataReportTraining.list?.length > 0 ? (
       getDataReportTraining.list.map((item, index) => {
@@ -209,6 +221,7 @@ const ListReport = ({ token }) => {
                       data-toggle="tooltip"
                       data-placement="bottom"
                       title="Download As PDF"
+                      onClick={(e) => downloadPdf(e, item.id)}
                       disabled={
                         item.status_pelatihan === "selesai" ? false : true
                       }

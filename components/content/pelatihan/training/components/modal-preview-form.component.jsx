@@ -12,7 +12,6 @@ import {
   dropdownPendidikan,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import {
-  getProfilePendidikan,
   getDataRefPekerjaan,
   getDataAsalSekolah,
 } from "../../../../../redux/actions/pelatihan/profile.actions";

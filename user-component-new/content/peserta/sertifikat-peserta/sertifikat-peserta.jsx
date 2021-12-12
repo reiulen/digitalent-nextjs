@@ -138,6 +138,9 @@ export default function RiwayatPelatihanDetail(props) {
                 <div
                   className={`position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1`}
                 >
+                  {data?.data_sertifikat?.pelatihan?.slug}/
+                  {data?.data_user?.tahun}/
+                  {data?.data_sertifikat?.pelatihan?.id}/
                   {data?.data_user?.nomor_registrasi}
                 </div>
                 <div

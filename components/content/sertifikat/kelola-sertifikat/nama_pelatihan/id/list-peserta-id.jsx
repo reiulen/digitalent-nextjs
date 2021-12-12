@@ -17,10 +17,8 @@ export default function ListPesertaID({ token }) {
   const router = useRouter();
   const { query } = router;
 
-  const { error, certificate } = useSelector(
-    (state) => state.publishCertificate
-  );
-  const { participant } = useSelector((state) => state.detailParticipant);
+  const { error, certificate } = useSelector(state => state.publishCertificate);
+  const { participant } = useSelector(state => state.detailParticipant);
 
   const [type, setType] = useState(
     certificate?.data?.certificate?.certificate_type
@@ -34,7 +32,7 @@ export default function ListPesertaID({ token }) {
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
 
-  const convertDivToPng = async (div) => {
+  const convertDivToPng = async div => {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -145,6 +143,8 @@ export default function ListPesertaID({ token }) {
                 ref={divReference}
               >
                 <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
+                  {certificate?.data?.pelatihan?.slug}/
+                  {participant?.data?.tahun}/{certificate?.data?.pelatihan?.id}/
                   {participant?.data?.nomor_registrasi}
                 </div>
                 <div
@@ -215,7 +215,7 @@ export default function ListPesertaID({ token }) {
               </div>
               <div className="row mt-10 col-12 p-0 m-0">
                 <div
-                  onClick={(e) => {
+                  onClick={e => {
                     handleDownload(
                       certificate.data.pelatihan.id,
                       participant.data.nomor_registrasi,
