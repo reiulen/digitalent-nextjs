@@ -5,8 +5,11 @@ import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
 import { useDispatch, useSelector } from "react-redux";
+import OptionsReference from "../../training/components/option-reference.component";
+import CheckboxReference from "../../training/components/checkbox-reference.component";
+import RadioReference from "../../training/components/radio-reference.component";
 
-const ViewTrainingStep2 = () => {
+const ViewTrainingStep2 = ({ token }) => {
   const router = useRouter();
 
   const { error: errorReview, review } = useSelector(
@@ -76,13 +79,18 @@ const ViewTrainingStep2 = () => {
               required={row.required}
               disabled
             >
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <option value={dat} key={i}>
-                      {dat}
-                    </option>
-                  ))
-                : ""}
+              <option value="" disabled selected>
+                Silahkan Pilih {row.name}
+              </option>
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <option value={dat} key={i}>
+                    {dat}
+                  </option>
+                ))
+              ) : (
+                <OptionsReference id={row.dataOption} token={token} />
+              )}
             </select>
           </div>
         );
@@ -94,21 +102,27 @@ const ViewTrainingStep2 = () => {
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <div className="form-check pb-3" key={i}>
-                      <input
-                        type="checkbox"
-                        name="plotRegistration"
-                        className="form-check-input"
-                        required={row.required}
-                        value={dat}
-                        disabled
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <div className="form-check pb-3" key={i}>
+                    <input
+                      type="checkbox"
+                      name="plotRegistration"
+                      className="form-check-input"
+                      required={row.required}
+                      value={dat}
+                      disabled
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <CheckboxReference
+                  id={row.dataOption}
+                  token={token}
+                  onChangeValue={(value) => {}}
+                />
+              )}
             </div>
           </div>
         );
@@ -137,21 +151,27 @@ const ViewTrainingStep2 = () => {
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <div className="form-check pb-3" key={i}>
-                      <input
-                        type="radio"
-                        name={row.name}
-                        className="form-check-input"
-                        value={dat}
-                        required={row.required}
-                        disabled
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <div className="form-check pb-3" key={i}>
+                    <input
+                      type="radio"
+                      name={row.name}
+                      className="form-check-input"
+                      value={dat}
+                      required={row.required}
+                      disabled
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <RadioReference
+                  id={row.dataOption}
+                  token={token}
+                  onChangeValue={(value) => {}}
+                />
+              )}
             </div>
           </div>
         );

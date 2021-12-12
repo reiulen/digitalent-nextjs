@@ -23,7 +23,7 @@ import FormCopy from "../components/step-registration/form-copy";
 import FormCopyEdit from "../components/step-registration/form-copy-edit";
 import { getDetailMasterPelatihan } from "../../../../../redux/actions/pelatihan/master-pendaftaran.action";
 
-const AddRegistrationStep2 = ({ propsStep, token }) => {
+const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -87,41 +87,41 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
     },
   ]);
 
-  const [dataOptions] = useState([
-    {
-      value: "status_menikah",
-    },
-    {
-      value: "pendidikan",
-    },
-    {
-      value: "status_pekerjaan",
-    },
-    {
-      value: "hubungan",
-    },
-    {
-      value: "bidang_pekerjaan",
-    },
-    {
-      value: "level_pelatihan",
-    },
-    {
-      value: "agama",
-    },
-    {
-      value: "penyelengaara",
-    },
-    {
-      value: "provinsi",
-    },
-    {
-      value: "kota/kabupaten",
-    },
-    {
-      value: "universitas",
-    },
-  ]);
+  // const [dataOptions,setDataOptions] = useState([
+  //   {
+  //     value: "status_menikah",
+  //   },
+  //   {
+  //     value: "pendidikan",
+  //   },
+  //   {
+  //     value: "status_pekerjaan",
+  //   },
+  //   {
+  //     value: "hubungan",
+  //   },
+  //   {
+  //     value: "bidang_pekerjaan",
+  //   },
+  //   {
+  //     value: "level_pelatihan",
+  //   },
+  //   {
+  //     value: "agama",
+  //   },
+  //   {
+  //     value: "penyelengaara",
+  //   },
+  //   {
+  //     value: "provinsi",
+  //   },
+  //   {
+  //     value: "kota/kabupaten",
+  //   },
+  //   {
+  //     value: "universitas",
+  //   },
+  // ]);
 
   const optionsForm = dataForm.data || [];
 

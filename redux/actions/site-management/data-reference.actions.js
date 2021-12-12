@@ -37,7 +37,7 @@ export const getAllDataReference = (token) => async (dispatch, getState) => {
     const params = {
       page: pageState,
       cari: cariState,
-      limit: limitState,
+      limit: 1000,
     };
 
     const { data } = await axios.get(
