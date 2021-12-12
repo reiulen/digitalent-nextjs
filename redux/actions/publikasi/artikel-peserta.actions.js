@@ -45,7 +45,7 @@ export const getAllArtikelPeserta =
         const config = {
           headers: {
             Authorization: "Bearer " + token,
-            "Permission": permission
+            // "Permission": permission
           },
         };
 
