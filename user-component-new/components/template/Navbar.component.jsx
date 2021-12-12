@@ -92,6 +92,7 @@ const Navigationbar = ({ session }) => {
     }
 
     handleConnectSocket();
+    GetNotifikasi();
   }, []);
 
   const handleConnectSocket = () => {
@@ -106,20 +107,10 @@ const Navigationbar = ({ session }) => {
       timeout = 250;
       clearTimeout(connectInterval);
     };
-    ws.onmessage = e => {
-      axios
-        .get(
-          process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
-          {
-            headers: {
-              authorization: `Bearer ${session.token}`,
-            },
-          }
-        )
-        .then(res => {
-          setDataNotification(res.data.data);
-        })
-        .catch(err => {});
+    
+    ws.onmessage = (e) => {
+      let res = JSON.parse(e.data)
+      res?.To == session?.id ?  GetNotifikasi() : "";
     };
 
     ws.onclose = e => {
@@ -164,7 +155,24 @@ const Navigationbar = ({ session }) => {
     } catch (error) {}
   };
 
-  const getMenu = async token => {
+  const GetNotifikasi = async () => {
+    axios
+    .get(
+      process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
+      {
+        headers: {
+          authorization: `Bearer ${session.token}`,
+        },
+      }
+    )
+    .then((res) => {
+      setDataNotification(res.data.data);
+    })
+    .catch((err) => {});
+  };
+  
+
+  const getMenu = async (token) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
