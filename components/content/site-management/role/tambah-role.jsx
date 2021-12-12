@@ -26,6 +26,7 @@ const TambahRole = ({ token }) => {
   const [editTable, setEditTable] = useState("");
   const [nameRole, setNameRole] = useState("");
   const [allCheck, setAllCheck] = useState(false);
+  const [force, setForce] = useState(false)
 
   const allPermission = useSelector((state) => state.allPermission);
 
@@ -89,6 +90,7 @@ const TambahRole = ({ token }) => {
                 <input
                   type="checkbox"
                   name="Checkboxes1"
+                  checked={item.view === true || item.view === 1}
                   onClick={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
@@ -96,6 +98,7 @@ const TambahRole = ({ token }) => {
                           filter.view === true || filter.view === 1
                         );
                       }
+                      setForce(!force)
                       return filter;
                     });
                   }}
@@ -117,7 +120,11 @@ const TambahRole = ({ token }) => {
                         filter.manage = !(
                           filter.manage === true || filter.manage === 1
                         );
+                        filter.view = (
+                          filter.manage === true || filter.manage === 1
+                        );
                       }
+                      setForce(!force)
                       return filter;
                     });
                   }}
@@ -296,13 +303,16 @@ const TambahRole = ({ token }) => {
                     <input
                       type="checkbox"
                       name="Checkboxes1"
+                      checked={sub.view === true || sub.view === 1}
                       onClick={() => {
                         permission.filter((filter) => {
                           if (sub.id === filter.id) {
                             filter.view = !(
-                              filter.view === true || filter.view === 1
-                            ) || (filter.manage === true || filter.manage === 1)
+                              filter.view === true ||
+                              filter.view === 1
+                            );
                           }
+                          setForce(!force)
                           return filter;
                         });
                       }}
@@ -324,7 +334,11 @@ const TambahRole = ({ token }) => {
                             filter.manage = !(
                               filter.manage === true || filter.manage === 1
                             );
+                            filter.view = (
+                              filter.manage === true || filter.manage === 1
+                            );
                           }
+                          setForce(!force)
                           return filter;
                         });
                       }}
@@ -357,6 +371,7 @@ const TambahRole = ({ token }) => {
               <input
                 type="checkbox"
                 name="Checkboxes1"
+                checked={item.view === true || item.view === 1}
                 onClick={() => {
                   permission.filter((filter) => {
                     if (item.id === filter.id) {
@@ -364,6 +379,7 @@ const TambahRole = ({ token }) => {
                         filter.view === true || filter.view === 1
                       );
                     }
+                    setForce(!force)
                     return filter;
                   });
                 }}
@@ -385,7 +401,11 @@ const TambahRole = ({ token }) => {
                       filter.manage = !(
                         filter.manage === true || filter.manage === 1
                       );
+                      filter.view = (
+                        filter.manage === true || filter.manage === 1
+                      );
                     }
+                    setForce(!force)
                     return filter;
                   });
                 }}
@@ -413,7 +433,6 @@ const TambahRole = ({ token }) => {
         };
       }),
     };
-
     if (simpleValidator.current.allValid()) {
       dispatch(postRoles(data, token));
     } else {
