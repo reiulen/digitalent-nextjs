@@ -484,6 +484,8 @@ import {
   drowpdownFormBuilderReducers,
   drowpdownTempatLahirReducers,
   drowpdownYearReducers,
+  drowpdownHubunganReducers,
+  drowpdownStatusMenikahReducers,
 } from "./pelatihan/admin/function.reducers";
 import {
   allProvinsiReducer,
@@ -997,6 +999,8 @@ const reducer = combineReducers({
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
   drowpdownYear: drowpdownYearReducers,
+  drowpdownHubungan: drowpdownHubunganReducers,
+  drowpdownStatusMenikah: drowpdownStatusMenikahReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,

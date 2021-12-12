@@ -80,6 +80,7 @@ const StepTwo = ({ token }) => {
   const [question_file, setQuestionFile] = useState(null);
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
+  const [limit, setLimit] = useState(null);
   const [fileSoalName, setFileSoalName] = useState("");
   const [imageFileName, setImageFileName] = useState("");
 
@@ -201,12 +202,13 @@ const StepTwo = ({ token }) => {
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllTriviaQuestionDetail(id, pageNumber, token));
+    dispatch(getAllTriviaQuestionDetail(id, pageNumber, "", limit, token));
   };
 
   const handleLimit = (val) => {
+    setLimit(val);
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllTriviaQuestionDetail(id, 1, val, token));
+    dispatch(getAllTriviaQuestionDetail(id, 1, "", val, token));
   };
 
   const handleDelete = (id) => {
@@ -475,11 +477,13 @@ const StepTwo = ({ token }) => {
                           trivia_question_detail.list_questions &&
                           trivia_question_detail.list_questions.map(
                             (question, i) => {
+                              const paginate = i + 1 * (page * limit);
+                              const dividers = limit - 1;
                               return (
                                 <tr key={question.id}>
                                   <td className="align-middle text-center">
                                     <span className="">
-                                      {i + 1 * (page * 5 || limit) - 4}
+                                      {paginate - dividers}
                                     </span>
                                   </td>
                                   <td className="align-middle font-weight-bold">
@@ -503,7 +507,7 @@ const StepTwo = ({ token }) => {
                                   <td className="align-middle">
                                     <div className="d-flex">
                                       <Link
-                                        href={`edit-soal-trivia?id=${question.id}`}
+                                        href={`/subvit/trivia/edit-soal-trivia?id=${question.id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -568,6 +572,7 @@ const StepTwo = ({ token }) => {
                           <div className="row">
                             <div className="col-4 mr-0 p-0">
                               <select
+                                value={limit}
                                 className="form-control"
                                 id="exampleFormControlSelect2"
                                 style={{

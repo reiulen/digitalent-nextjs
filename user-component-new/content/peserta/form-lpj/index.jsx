@@ -179,45 +179,38 @@ const FormLPJ = ({ token }) => {
 
             <table>
               <tr>
+                <td className={styles.tableLabel}>No</td>
                 <td
                   className={styles.tableLabel}
-                  style={{ textAlign: "center" }}
-                >
-                  No
-                </td>
-                <td
-                  className={styles.tableLabel}
-                  style={{ textAlign: "center" }}
+                  style={{ textAlign: "center", width: "100%" }}
                 >
                   Uraian
                 </td>
-                <td className={styles.tableLabel} style={{ textAlign: "end" }}>
-                  Checklist
-                </td>
+                <td className={styles.tableLabel}>Checklist</td>
               </tr>
-            </table>
-            {dataLPJ &&
-              dataLPJ.map((item, index) => {
-                return (
-                  <Fragment key={index}>
-                    <table>
+              {dataLPJ &&
+                dataLPJ.map((item, index) => {
+                  return (
+                    <>
                       <tr>
                         <td className={styles.numberTable}>{index + 1}</td>
-                        <td className={styles.contentTable}>{item.name}</td>
                         <td
-                          className={styles.checkbox}
-                          style={{ textAlign: "end", marginRight: "20px" }}
+                          className={styles.contentTable}
+                          style={{ paddingLeft: "40px" }}
                         >
+                          {item.name}
+                        </td>
+                        <td className={styles.checkbox}>
                           <input
                             type="checkbox"
                             onChange={(event) => handleLPJ(event, index)}
                           />
                         </td>
                       </tr>
-                    </table>
-                  </Fragment>
-                );
-              })}
+                    </>
+                  );
+                })}
+            </table>
 
             <hr />
             <h1 className={styles.subTitle}>

@@ -606,14 +606,19 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
           <div className="form-group mb-4">
             <label className="col-form-label font-weight-bold">Tema</label>
             <div className="position-relative" style={{ zIndex: "4" }}>
-              <Select
-                placeholder="Silahkan Pilih Tema"
-                options={drowpdownTemabyAkademi.data.data}
-                defaultValue={theme}
-                value={theme}
-                onChange={(e) => setTheme({ value: e?.value, label: e?.label })}
-                onBlur={() => simpleValidator.current.showMessageFor("tema")}
-              />
+              <div className={!academy ? "cursor-notallowed" : ""}>
+                <Select
+                  placeholder="Silahkan Pilih Tema"
+                  options={drowpdownTemabyAkademi.data.data}
+                  defaultValue={theme}
+                  value={theme}
+                  onChange={(e) =>
+                    setTheme({ value: e?.value, label: e?.label })
+                  }
+                  onBlur={() => simpleValidator.current.showMessageFor("tema")}
+                  isDisabled={academy ? false : true}
+                />
+              </div>
             </div>
             {simpleValidator.current.message("tema", theme, "required", {
               className: "text-danger",
@@ -867,12 +872,15 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     startDateRegistration ? startDateRegistration : today
                   }
                   showTimeSelect
-                  className="form-control w-100 d-block"
+                  className={`form-control w-100 d-block ${
+                    !startDateRegistration ? `cursor-notallowed` : ""
+                  }`}
                   locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                   filterTime={filterPassedTime2}
+                  disabled={startDateRegistration ? false : true}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -930,11 +938,14 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   value={endDateTraining}
                   filterTime={filterPassedTime4}
                   showTimeSelect
-                  className="form-control w-100 d-block"
+                  className={`form-control w-100 d-block ${
+                    !startDateRegistration ? `cursor-notallowed` : ""
+                  }`}
                   locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
+                  disabled={startDateTraining ? false : true}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -1182,15 +1193,49 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   type="radio"
                   name="sertification"
                   className="form-check-input"
-                  value="1"
-                  checked={sertification === "1"}
-                  onClick={() => setSertification("1")}
+                  value="global"
+                  checked={sertification === "global"}
+                  onClick={() => setSertification("global")}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("sertifikasi")
                   }
                 />
                 <label className="form-check-label" htmlFor="sertification1">
-                  Ya
+                  Global
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  id="sertification2"
+                  type="radio"
+                  name="sertification"
+                  className="form-check-input"
+                  value="skkni"
+                  checked={sertification === "skkni"}
+                  onClick={() => setSertification("skkni")}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("sertifikasi")
+                  }
+                />
+                <label className="form-check-label" htmlFor="sertification2">
+                  SKKNI (Nasional)
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  id="sertification3"
+                  type="radio"
+                  name="sertification"
+                  className="form-check-input"
+                  value="industri"
+                  checked={sertification === "industri"}
+                  onClick={() => setSertification("industri")}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("sertifikasi")
+                  }
+                />
+                <label className="form-check-label" htmlFor="sertification3">
+                  Industri
                 </label>
               </div>
               <div className="form-check form-check-inline">
@@ -1387,9 +1432,14 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               onBlur={() => simpleValidator.current.showMessageFor("alamat")}
               placeholder="Silahkan Masukan Alamat Disini"
             />
-            {simpleValidator.current.message("alamat", address, "required", {
-              className: "text-danger",
-            })}
+            {simpleValidator.current.message(
+              "alamat",
+              address,
+              metodeTraining !== "Online" ? "required" : "",
+              {
+                className: "text-danger",
+              }
+            )}
           </div>
 
           <div className="form-group row mb-2">
@@ -1413,7 +1463,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               {simpleValidator.current.message(
                 "provinsi",
                 province.value,
-                "required",
+                metodeTraining !== "Online" ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -1423,21 +1473,25 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <label className="col-form-label font-weight-bold">
                 Kota / Kabupaten
               </label>
-              <Select
-                ref={(ref) => (selectRefKabupaten = ref)}
-                placeholder="Silahkan Pilih Kota / Kabupaten"
-                options={optionsKabupaten}
-                defaultValue={city}
-                onChange={(e) => setCity({ value: e?.value, label: e?.label })}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("kota/kabupaten")
-                }
-                isDisabled={province ? false : true}
-              />
+              <div className={!province ? "cursor-notallowed" : ""}>
+                <Select
+                  ref={(ref) => (selectRefKabupaten = ref)}
+                  placeholder="Silahkan Pilih Kota / Kabupaten"
+                  options={optionsKabupaten}
+                  defaultValue={city}
+                  onChange={(e) =>
+                    setCity({ value: e?.value, label: e?.label })
+                  }
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("kota/kabupaten")
+                  }
+                  isDisabled={province ? false : true}
+                />
+              </div>
               {simpleValidator.current.message(
                 "kota/kabupaten",
                 city.value,
-                "required",
+                metodeTraining !== "Online" ? "required" : "",
                 {
                   className: "text-danger",
                 }

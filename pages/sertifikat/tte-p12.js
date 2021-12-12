@@ -6,6 +6,7 @@ import Pagination from "react-js-pagination";
 import { wrapper } from "../../redux/store";
 import { getTTEP12 } from "../../redux/actions/sertifikat/tte-p12.action";
 import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
+import { getAllPermission } from "../../redux/actions/utils/utils.actions";
 
 const TTEP12 = dynamic(
   () => import("../../components/content/sertifikat/tte-p12/index"),
@@ -30,7 +31,7 @@ export default function KelokaSertifikatPage(props) {
 
 // Function GETSERVERSIDE PROPS
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 
@@ -44,10 +45,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      const data = await store.dispatch(
-        getTTEP12(session.user.user.data.token)
-      );
+      await store.dispatch(getTTEP12(session.user.user.data.token));
 
+      const data = await store.dispatch(
+        getAllPermission(session.user.user.data.token)
+      );
       return {
         props: { session, title: "List Akademi - Sertifikat" },
       };

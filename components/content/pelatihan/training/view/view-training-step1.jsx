@@ -61,7 +61,7 @@ const ViewTrainingStep1 = () => {
     statusKuota: review.status_kuota,
     alurPendaftaran: review.alur_pendaftaran,
     zonasi: review.zonasi,
-    batch: "2",
+    batch: review.batch,
   });
   const [alamatPelatihan, setAlamatPelatihan] = useState({
     alamat: review.alamat,
