@@ -191,7 +191,7 @@ const SubmitKerjasama = ({ token }) => {
               <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Submit Kerjasama</span>
+                    <span className="title-progress">Submit Kerjasamaa</span>
                   </div>
                 </div>
               </div>

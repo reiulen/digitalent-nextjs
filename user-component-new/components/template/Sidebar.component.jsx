@@ -183,7 +183,6 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                     router.pathname ===
                       "/peserta/test-substansi/panduan-substansi" ||
                     router.pathname === "/peserta/done-substansi" ||
-                    router.pathname === "/peserta/done-mid-tes" ||
                     router.pathname === "/peserta/mid-test" ||
                     router.pathname === "/peserta/mid-test/panduan-mid-test"
                       ? styles.activeMenuItem
@@ -197,7 +196,6 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                         router.pathname ===
                           "/peserta/test-substansi/panduan-substansi" ||
                         router.pathname === "/peserta/done-substansi" ||
-                        router.pathname === "/peserta/done-mid-tes" ||
                         router.pathname === "/peserta/mid-test" ||
                         router.pathname === "/peserta/mid-test/panduan-mid-test"
                           ? styles.activeIconMenu
@@ -268,6 +266,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                 <div
                   className={`${
                     router.pathname === "/peserta/riwayat-pelatihan" ||
+                    router.pathname === "/peserta/done-mid-tes" ||
                     router.pathname.includes("riwayat-pelatihan")
                       ? styles.activeMenuItem
                       : styles.menuItem

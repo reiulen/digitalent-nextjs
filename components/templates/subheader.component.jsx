@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 // import { Breadcrumb } from "react-bootstrap";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import moment from "moment";
+import "moment/locale/id";
 
 const snakeToPascal = (string) => {
   return string
@@ -150,7 +152,7 @@ const SubHeader = () => {
               id="kt_dashboard_daterangepicker_title"
             >
               <div className="p-1">
-                {thisDay}, <span id="jam">{jam}</span>
+                {thisDay} {moment().format("ll")}, <span id="jam">{jam}</span>
               </div>
             </span>
           </div>

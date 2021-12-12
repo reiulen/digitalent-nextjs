@@ -21,6 +21,9 @@ import {
   LIMIT_CONFIGURATION,
   SET_PAGE,
   SEARCH_COORPORATION,
+  DATA_GENERAL_REQUEST,
+  DATA_GENERAL_SUCCESS,
+  DATA_GENERAL_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/site-management/settings/general.type";
 
@@ -39,6 +42,35 @@ export const allGeneralReducer = (state = { dataReference: [] }, action) => {
       };
 
     case GENERAL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allDataGeneralReducer = (state = { data_general: [] }, action) => {
+  switch (action.type) {
+    case DATA_GENERAL_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DATA_GENERAL_SUCCESS:
+      return {
+        loading: false,
+        data_general: action.payload.data,
+      };
+
+    case DATA_GENERAL_FAIL:
       return {
         loading: false,
         error: action.payload,

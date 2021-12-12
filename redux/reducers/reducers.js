@@ -324,6 +324,7 @@ import {
   detailGeneralReducer,
   newGeneralReducer,
   updateGeneralReducer,
+  allDataGeneralReducer
 } from "./site-management/settings/general.reducers";
 // ============== zonasi ===============
 import {
@@ -871,6 +872,7 @@ const reducer = combineReducers({
   newGeneral: newGeneralReducer,
   detailGeneral: detailGeneralReducer,
   updateGeneral: updateGeneralReducer,
+  allDataGeneral: allDataGeneralReducer,
   // ============ DATA ZONASI =======
   allZonasi: allZonasiReducer,
   deleteZonasi: deleteZonasiReducer,
