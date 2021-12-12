@@ -9,6 +9,21 @@ import {
   newPendaftaranPelatihan,
   storeFormRegister,
 } from "../../../../redux/actions/pelatihan/register-training.actions";
+import {
+  getDropdownStatusMenikah,
+  dropdownStatusPekerjaan,
+  getDropdownHubungan,
+  dropdownLevelPelatihan,
+  dropdownAgama,
+  dropdownPenyelenggara,
+  dropdownProvinsi,
+  getDropdownKabupatenAll,
+  dropdownPendidikan,
+} from "../../../../redux/actions/pelatihan/function.actions";
+import {
+  getDataRefPekerjaan,
+  getDataAsalSekolah,
+} from "../../../../redux/actions/pelatihan/profile.actions";
 
 const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const router = useRouter();
@@ -25,6 +40,66 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
   );
+  const { data: statusMenikah } = useSelector(
+    (state) => state.drowpdownStatusMenikah
+  );
+  const { data: dataPendidikan } = useSelector(
+    (state) => state.drowpdownPendidikan
+  );
+  const { data: statusPekerjaan } = useSelector(
+    (state) => state.drowpdownStatusPekerjaan
+  );
+  const { data: dataHubungan } = useSelector(
+    (state) => state.drowpdownHubungan
+  );
+  const { dataRefPekerjaan: dataBidangPekerjaan } = useSelector(
+    (state) => state.getRefPekerjaan
+  );
+  const { data: dataLevelPelatihan } = useSelector(
+    (state) => state.drowpdownLevelPelatihan
+  );
+  const { data: dataAgama } = useSelector((state) => state.drowpdownAgama);
+  const { data: dataPenyelenggara } = useSelector(
+    (state) => state.drowpdownPenyelenggara
+  );
+  const { data: dataProvinsi } = useSelector(
+    (state) => state.drowpdownProvinsi
+  );
+  const { data: dataKabupaten } = useSelector(
+    (state) => state.drowpdownKabupaten
+  );
+  const { data: dataUniversitas } = useSelector(
+    (state) => state.getAsalSekolah
+  );
+
+  useEffect(() => {
+    if (dataForm && dataForm.form_pendaftaran.length > 0) {
+      dataForm.form_pendaftaran.map((row, i) => {
+        if (row.option === "select_reference") {
+          if (row.dataOption === "status_menikah")
+            dispatch(getDropdownStatusMenikah(token));
+          if (row.dataOption === "pendidikan")
+            dispatch(dropdownPendidikan(token));
+          if (row.dataOption === "status_pekerjaan")
+            dispatch(dropdownStatusPekerjaan(token));
+          if (row.dataOption === "hubungan")
+            dispatch(getDropdownHubungan(token));
+          if (row.dataOption === "bidang_pekerjaan")
+            dispatch(getDataRefPekerjaan(token));
+          if (row.dataOption === "level_pelatihan")
+            dispatch(dropdownLevelPelatihan(token));
+          if (row.dataOption === "agama") dispatch(dropdownAgama(token));
+          if (row.dataOption === "penyelengaara")
+            dispatch(dropdownPenyelenggara(token));
+          if (row.dataOption === "provinsi") dispatch(dropdownProvinsi(token));
+          if (row.dataOption === "kota/kabupaten")
+            dispatch(getDropdownKabupatenAll(token));
+          if (row.dataOption === "universitas")
+            dispatch(getDataAsalSekolah(token));
+        }
+      });
+    }
+  }, [dispatch]);
 
   const readerElementHandler = (row, i) => {
     switch (row.type) {
@@ -75,6 +150,111 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
                       {dat}
                     </option>
                   ))
+                : row.dataOption === "status_menikah"
+                ? statusMenikah &&
+                  statusMenikah.data &&
+                  statusMenikah.data.length > 0 &&
+                  statusMenikah.data.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "pendidikan"
+                ? dataPendidikan &&
+                  dataPendidikan.data &&
+                  dataPendidikan.data.length > 0 &&
+                  dataPendidikan.data.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "status_pekerjaan"
+                ? statusPekerjaan &&
+                  statusPekerjaan.data &&
+                  statusPekerjaan.data.length > 0 &&
+                  statusPekerjaan.data.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "hubungan"
+                ? dataHubungan &&
+                  dataHubungan.data &&
+                  dataHubungan.data.length > 0 &&
+                  dataHubungan.data.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "bidang_pekerjaan"
+                ? dataBidangPekerjaan &&
+                  dataBidangPekerjaan.length > 0 &&
+                  dataBidangPekerjaan.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "bidang_pekerjaan"
+                ? dataBidangPekerjaan &&
+                  dataBidangPekerjaan.length > 0 &&
+                  dataBidangPekerjaan.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "level_pelatihan"
+                ? dataLevelPelatihan &&
+                  dataLevelPelatihan.data &&
+                  dataLevelPelatihan.data.length > 0 &&
+                  dataLevelPelatihan.data.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "agama"
+                ? dataAgama &&
+                  dataAgama.data &&
+                  dataAgama.data.length > 0 &&
+                  dataAgama.data.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "penyelengaara"
+                ? dataPenyelenggara &&
+                  dataPenyelenggara.data &&
+                  dataPenyelenggara.data.length > 0 &&
+                  dataPenyelenggara.data.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "provinsi"
+                ? dataProvinsi &&
+                  dataProvinsi.data &&
+                  dataProvinsi.data.length > 0 &&
+                  dataProvinsi.data.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "kota/kabupaten"
+                ? dataKabupaten &&
+                  dataKabupaten.data &&
+                  dataKabupaten.data.length > 0 &&
+                  dataKabupaten.data.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
+                : row.dataOption === "universitas"
+                ? dataUniversitas &&
+                  dataUniversitas.length > 0 &&
+                  dataUniversitas.map((row, i) => (
+                    <option value={row.label} key={i}>
+                      {row.label}
+                    </option>
+                  ))
                 : ""}
             </select>
             {simpleValidator.current.message(
@@ -109,6 +289,195 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
                         value={dat}
                       />
                       <label className="form-check-label">{dat}</label>
+                    </div>
+                  ))
+                : row.dataOption === "status_menikah"
+                ? statusMenikah &&
+                  statusMenikah.data &&
+                  statusMenikah.data.length > 0 &&
+                  statusMenikah.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "pendidikan"
+                ? dataPendidikan &&
+                  dataPendidikan.data &&
+                  dataPendidikan.data.length > 0 &&
+                  dataPendidikan.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "status_pekerjaan"
+                ? statusPekerjaan &&
+                  statusPekerjaan.data &&
+                  statusPekerjaan.data.length > 0 &&
+                  statusPekerjaan.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "hubungan"
+                ? dataHubungan &&
+                  dataHubungan.data &&
+                  dataHubungan.data.length > 0 &&
+                  dataHubungan.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "bidang_pekerjaan"
+                ? dataBidangPekerjaan &&
+                  dataBidangPekerjaan.length > 0 &&
+                  dataBidangPekerjaan.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "bidang_pekerjaan"
+                ? dataBidangPekerjaan &&
+                  dataBidangPekerjaan.length > 0 &&
+                  dataBidangPekerjaan.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "level_pelatihan"
+                ? dataLevelPelatihan &&
+                  dataLevelPelatihan.data &&
+                  dataLevelPelatihan.data.length > 0 &&
+                  dataLevelPelatihan.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "agama"
+                ? dataAgama &&
+                  dataAgama.data &&
+                  dataAgama.data.length > 0 &&
+                  dataAgama.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "penyelengaara"
+                ? dataPenyelenggara &&
+                  dataPenyelenggara.data &&
+                  dataPenyelenggara.data.length > 0 &&
+                  dataPenyelenggara.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "provinsi"
+                ? dataProvinsi &&
+                  dataProvinsi.data &&
+                  dataProvinsi.data.length > 0 &&
+                  dataProvinsi.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "kota/kabupaten"
+                ? dataKabupaten &&
+                  dataKabupaten.data &&
+                  dataKabupaten.data.length > 0 &&
+                  dataKabupaten.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "universitas"
+                ? dataUniversitas &&
+                  dataUniversitas.length > 0 &&
+                  dataUniversitas.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={el.label}
+                      />
+                      <label className="form-check-label">{el.label}</label>
                     </div>
                   ))
                 : ""}
@@ -172,6 +541,195 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
                         value={row.value}
                       />
                       <label className="form-check-label">{dat}</label>
+                    </div>
+                  ))
+                : row.dataOption === "status_menikah"
+                ? statusMenikah &&
+                  statusMenikah.data &&
+                  statusMenikah.data.length > 0 &&
+                  statusMenikah.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "pendidikan"
+                ? dataPendidikan &&
+                  dataPendidikan.data &&
+                  dataPendidikan.data.length > 0 &&
+                  dataPendidikan.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "status_pekerjaan"
+                ? statusPekerjaan &&
+                  statusPekerjaan.data &&
+                  statusPekerjaan.data.length > 0 &&
+                  statusPekerjaan.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "hubungan"
+                ? dataHubungan &&
+                  dataHubungan.data &&
+                  dataHubungan.data.length > 0 &&
+                  dataHubungan.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "bidang_pekerjaan"
+                ? dataBidangPekerjaan &&
+                  dataBidangPekerjaan.length > 0 &&
+                  dataBidangPekerjaan.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "bidang_pekerjaan"
+                ? dataBidangPekerjaan &&
+                  dataBidangPekerjaan.length > 0 &&
+                  dataBidangPekerjaan.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "level_pelatihan"
+                ? dataLevelPelatihan &&
+                  dataLevelPelatihan.data &&
+                  dataLevelPelatihan.data.length > 0 &&
+                  dataLevelPelatihan.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "agama"
+                ? dataAgama &&
+                  dataAgama.data &&
+                  dataAgama.data.length > 0 &&
+                  dataAgama.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "penyelengaara"
+                ? dataPenyelenggara &&
+                  dataPenyelenggara.data &&
+                  dataPenyelenggara.data.length > 0 &&
+                  dataPenyelenggara.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "provinsi"
+                ? dataProvinsi &&
+                  dataProvinsi.data &&
+                  dataProvinsi.data.length > 0 &&
+                  dataProvinsi.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "kota/kabupaten"
+                ? dataKabupaten &&
+                  dataKabupaten.data &&
+                  dataKabupaten.data.length > 0 &&
+                  dataKabupaten.data.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
+                    </div>
+                  ))
+                : row.dataOption === "universitas"
+                ? dataUniversitas &&
+                  dataUniversitas.length > 0 &&
+                  dataUniversitas.map((el, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={el.label}
+                        className="form-check-input"
+                        value={el.label}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{el.label}</label>
                     </div>
                   ))
                 : ""}
