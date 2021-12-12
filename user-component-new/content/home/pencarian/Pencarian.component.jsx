@@ -17,6 +17,7 @@ import {
 import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
 
 import axios from "axios";
+import ShareOverlay from "../../../components/global/ShareOverlay.component";
 
 const Pencarian = ({ session }) => {
   const router = useRouter();
@@ -344,17 +345,22 @@ const Pencarian = ({ session }) => {
                                 }}
                               ></i>
                             </Button>
-                            <Button
-                              variant="light"
-                              className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                            <ShareOverlay
+                              quote={row?.name}
+                              url={`http://dts-dev.majapahit.id/detail/pelatihan/${row?.id}`}
                             >
-                              <i
-                                className="ri-share-line p-0"
-                                style={{
-                                  color: "#6C6C6C",
-                                }}
-                              ></i>
-                            </Button>
+                              <Button
+                                variant="light"
+                                className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                              >
+                                <i
+                                  className="ri-share-line p-0"
+                                  style={{
+                                    color: "#6C6C6C",
+                                  }}
+                                ></i>
+                              </Button>
+                            </ShareOverlay>
                           </div>
                         )}
 
