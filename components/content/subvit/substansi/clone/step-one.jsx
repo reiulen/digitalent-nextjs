@@ -126,11 +126,6 @@ const StepOne = ({ token }) => {
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -158,11 +153,6 @@ const StepOne = ({ token }) => {
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -257,6 +247,7 @@ const StepOne = ({ token }) => {
                   Tema
                 </Form.Label>
                 <Select
+                  isDisabled={!academy_id}
                   placeholder={themeLabel || "Silahkan Pilih Tema"}
                   options={optionsTema}
                   value={themeLabel}
@@ -274,6 +265,7 @@ const StepOne = ({ token }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
+                  isDisabled={!theme_id}
                   placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
                   value={trainingLabel}
@@ -302,7 +294,18 @@ const StepOne = ({ token }) => {
                   options={optionsKategori}
                   className={styles.selectForm}
                   onChange={(e) => setCategory(e.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("kategori")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "kategori",
+                  category,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
             </Form>
             <div className="row mt-7">

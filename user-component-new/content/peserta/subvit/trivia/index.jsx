@@ -230,12 +230,12 @@ const SubtansiUser = ({ token }) => {
         data.list_questions.map((item, index) => {
           return {
             ...item,
-            participant_answer: localStorage.getItem(index + 1),
+            participant_answer: sessionStorage.getItem(index + 1),
           };
         })
       ),
       training_id: router.query.training_id,
-      type: router.query.category === "Test Substansi" && "substansi",
+      type: "trivia",
     };
     dispatch(postResultTrivia(setData, token));
     localStorage.clear();

@@ -381,7 +381,7 @@ const SubtansiUser = ({ token }) => {
           return {
             ...item,
 
-            participant_answer: localStorage.getItem(index + 1),
+            participant_answer: sessionStorage.getItem(index + 1),
           };
         })
       ),
