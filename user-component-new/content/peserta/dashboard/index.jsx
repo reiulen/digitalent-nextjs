@@ -141,7 +141,6 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
-
   return (
     <Fragment>
       <PesertaWrapper padding={"10"}>
