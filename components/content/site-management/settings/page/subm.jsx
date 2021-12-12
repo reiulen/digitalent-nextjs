@@ -493,7 +493,6 @@ export default function SUBM(props) {
                       setDisablePelatihan(false);
                     }}
                     required
-<<<<<<< HEAD
                     disabled={disablePenyelenggara === true || disablePenyelenggara === ""}
                     style={{
                       cursor: (
@@ -501,12 +500,6 @@ export default function SUBM(props) {
                           "not-allowed" : "pointer"
                       )
                     }}
-=======
-                    disabled={
-                      disablePenyelenggara === true ||
-                      disablePenyelenggara === ""
-                    }
->>>>>>> b784a1453f53b866f4466ab70967a478e7f4049f
                   >
                     <option disabled selected>
                       PILIH PELATIHAN
@@ -529,7 +522,6 @@ export default function SUBM(props) {
                       setDisableStatusProfile(false);
                     }}
                     required
-<<<<<<< HEAD
                     disabled={disablePelatihan === true || disablePelatihan === ""}
                     style={{
                       cursor: (
@@ -537,11 +529,6 @@ export default function SUBM(props) {
                           "not-allowed" : "pointer"
                       )
                     }}
-=======
-                    disabled={
-                      disablePelatihan === true || disablePelatihan === ""
-                    }
->>>>>>> b784a1453f53b866f4466ab70967a478e7f4049f
                   >
                     <option disabled selected>
                       PILIH STATUS PROFIL
@@ -563,7 +550,6 @@ export default function SUBM(props) {
                       setDisableStatusSelection(false);
                     }}
                     required
-<<<<<<< HEAD
                     disabled={disableStatusProfile === true || disableStatusProfile === ""}
                     style={{
                       cursor: (
@@ -571,12 +557,6 @@ export default function SUBM(props) {
                           "not-allowed" : "pointer"
                       )
                     }}
-=======
-                    disabled={
-                      disableStatusProfile === true ||
-                      disableStatusProfile === ""
-                    }
->>>>>>> b784a1453f53b866f4466ab70967a478e7f4049f
                   >
                     <option disabled selected>
                       PILIH STATUS SELEKSI
@@ -604,10 +584,6 @@ export default function SUBM(props) {
             <span className="d-flex switch switch-primary status-peserta">
               <label className="checkbox-button">
                 <input
-<<<<<<< HEAD
-
-=======
->>>>>>> b784a1453f53b866f4466ab70967a478e7f4049f
                   type="checkbox"
                   name="select"
                   checked={participantSelectionStatusUpdate}
