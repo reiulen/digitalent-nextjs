@@ -19,7 +19,6 @@ export default function ListPesertaID({ token }) {
 
   const { error, certificate } = useSelector(state => state.publishCertificate);
   const { participant } = useSelector(state => state.detailParticipant);
-
   const [type, setType] = useState(
     certificate?.data?.certificate?.certificate_type
   );
@@ -143,9 +142,7 @@ export default function ListPesertaID({ token }) {
                 ref={divReference}
               >
                 <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
-                  {certificate?.data?.pelatihan?.slug}/
-                  {participant?.data?.tahun}/{certificate?.data?.pelatihan?.id}/
-                  {participant?.data?.nomor_registrasi}
+                  {participant?.data?.nomor_sertifikat}
                 </div>
                 <div
                   className={`position-absolute w-100 text-center ${
