@@ -260,6 +260,10 @@ a {
   width: 100%;
 }
 
+.cursor-not-allowed{
+  cursor: not-allowed !important;
+}
+
 .wrapper-chart-pie,
 .wrapper-chart-pie .recharts-wrapper,
 .wrapper-chart-pie .recharts-wrapper .recharts-surface {
