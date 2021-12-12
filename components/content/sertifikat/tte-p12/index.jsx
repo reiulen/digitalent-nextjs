@@ -15,7 +15,7 @@ export default function TTEP12({ token }) {
 
   useEffect(() => {
     const filterPermission = permission.permissions.filter(item =>
-      item.includes("sertifi")
+      item.includes("sertifikat")
     );
     setListPermission(filterPermission);
   }, []);
