@@ -19,9 +19,9 @@ import moment from "moment";
 export default function Bookmark({ session }) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const allBookmark = useSelector((state) => state.allBookmark);
+  const allBookmark = useSelector(state => state.allBookmark);
 
-  const handleBookmark = async (pelatihan) => {
+  const handleBookmark = async pelatihan => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -225,13 +225,13 @@ export default function Bookmark({ session }) {
                           <i className="ri-time-line"></i>
                           <span className={`${style.text_date_register} pl-2`}>
                             Registrasi:{" "}
-                            {moment(el.pendaftaran_mulai).format(
-                              "DD MMMM YYYY"
-                            )}{" "}
+                            {moment(el.pendaftaran_mulai)
+                              .utc()
+                              .format("DD MMMM YYYY")}{" "}
                             -{" "}
-                            {moment(el.pendaftaran_selesai).format(
-                              "DD MMMM YYYY"
-                            )}
+                            {moment(el.pendaftaran_selesai)
+                              .utc()
+                              .format("DD MMMM YYYY")}
                           </span>
                         </div>
                         <div className="date d-flex align-items-center align-middle">
@@ -266,8 +266,11 @@ export default function Bookmark({ session }) {
                 className="d-flex justify-content-center font-weight-bolder mt-15"
                 style={{ fontSize: "24px" }}
               >
-                Halaman Belum Tersedia
+                Belum Ada Pelatihan yang Difavoritkan
               </p>
+              <div className="text-center fz-16">
+                <p>Anda dapat melihat pelatihan favorit Anda di sini.</p>
+              </div>
             </Card>
           </Col>
         )}
@@ -280,7 +283,7 @@ export default function Bookmark({ session }) {
               itemsCountPerPage={allBookmark?.bookmark?.perPage}
               totalItemsCount={allBookmark?.bookmark?.total}
               pageRangeDisplayed={3}
-              onChange={(page) => dispatch(setValuePage(page))}
+              onChange={page => dispatch(setValuePage(page))}
               nextPageText={">"}
               prevPageText={"<"}
               firstPageText={"<<"}

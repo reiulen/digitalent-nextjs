@@ -13,7 +13,7 @@ import PesertaWrapper from "../../wrapper/Peserta.wrapper";
 
 export default function RiwayatPelatihanDetail({ session }) {
   const { state: data } = useSelector(
-    (state) => state.getDetailRiwayatPelatihanPeserta
+    state => state.getDetailRiwayatPelatihanPeserta
   );
 
   const handleDownloadSilabus = async () => {
@@ -24,8 +24,8 @@ export default function RiwayatPelatihanDetail({ session }) {
   const router = useRouter();
   const [description, setDescription] = useState(data?.deskripsi || "-");
   const [finalDescription, setFinalDescription] = useState();
-  const dateFrom = moment(data?.pelatihan_mulai).format("LL") || "-";
-  const dateTo = moment(data?.pelatihan_selesai).format("LL") || "-";
+  const dateFrom = moment(data?.pelatihan_mulai).utc().format("LL") || "-";
+  const dateTo = moment(data?.pelatihan_selesai).utc().format("LL") || "-";
   useEffect(() => {
     let newText = description.split(" ");
     let test = [];
