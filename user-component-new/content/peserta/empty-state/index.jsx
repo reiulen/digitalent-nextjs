@@ -25,14 +25,14 @@ export default function SeleksiAdministrasi() {
             />
           </div>
           <p
-            className="d-flex justify-content-center font-weight-bolder mt-15"
+            className="d-flex justify-content-center text-center font-weight-bolder mt-15"
             style={{ fontSize: "24px" }}
           >
             Halaman Belum Tersedia
           </p>
-          <div className="d-flex justify-content-center">
+          <div className="d-flex align-items-center justify-content-center">
             <Button
-              className="btn-rounded-full font-weight-bold btn-block d-flex justify-content-center mt-10 w-25"
+              className="btn-rounded-full font-weight-bold  d-flex justify-content-center mt-10"
               style={{
                 height: "40px",
                 fontFamily: "poppins",
