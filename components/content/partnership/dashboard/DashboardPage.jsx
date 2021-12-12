@@ -65,8 +65,8 @@ export default function DashboardPage({ token }) {
             value: data?.data?.cooperation_active,
           },
           {
-            name: "Disetujui",
-            value: data?.data?.cooperation_approved,
+            name: "Tidak Aktif",
+            value: data?.data?.cooperation_non_active,
           },
         ]);
       } catch (error) {

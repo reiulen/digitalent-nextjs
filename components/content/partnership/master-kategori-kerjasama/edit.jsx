@@ -216,7 +216,7 @@ const Edit = ({ token }) => {
                               htmlFor="staticEmail"
                               className="col-form-label"
                             >
-                              Form Kerjasama
+                              Judul Form Isian Kerjasama
                             </label>
                           ) : (
                             ""
