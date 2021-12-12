@@ -8,7 +8,17 @@ import moment from "moment";
 
 export default function TTEP12({ token }) {
   const [ubah, setUbah] = useState(false);
-  const { ttep12 } = useSelector((state) => state.TTEP12Data);
+  const { ttep12 } = useSelector(state => state.TTEP12Data);
+
+  const [listPermission, setListPermission] = useState([]);
+  const { permission } = useSelector(state => state.adminPermission);
+
+  useEffect(() => {
+    const filterPermission = permission.permissions.filter(item =>
+      item.includes("sertifi")
+    );
+    setListPermission(filterPermission);
+  }, []);
 
   useEffect(() => {
     if (!ttep12?.data) {
@@ -63,19 +73,23 @@ export default function TTEP12({ token }) {
                 <Form.Group className="mb-8 text-capitalize">
                   <Form.Label className="fz-16">Tanggal Unggah File</Form.Label>
                   <p className="fz-14">
-                    {moment(ttep12?.data?.created_at).format("DD MMMM YYYY")}
+                    {moment(ttep12?.data?.created_at)
+                      .utc()
+                      .format("DD MMMM YYYY")}
                   </p>
                 </Form.Group>
               </Form>
-              <div className="d-flex justify-content-end">
-                <Button
-                  className="rounded-full px-10 py-4"
-                  variant="outline-primary"
-                  onClick={handleUbah}
-                >
-                  Ubah File
-                </Button>
-              </div>
+              {listPermission.includes("sertifikat.tte_p12.manage") && (
+                <div className="d-flex justify-content-end">
+                  <Button
+                    className="rounded-full px-10 py-4"
+                    variant="outline-primary"
+                    onClick={handleUbah}
+                  >
+                    Ubah File
+                  </Button>
+                </div>
+              )}
             </Card.Body>
           </Card>
         </Fragment>
