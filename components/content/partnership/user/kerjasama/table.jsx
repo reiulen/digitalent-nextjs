@@ -699,7 +699,7 @@ const Table = ({ token }) => {
               <div className="row">
                 <div className="table-pagination col-12 col-md-8 overflow-auto">
                   <Pagination
-                    activePage={allCooperationUser.page}
+                    activePage={allCooperationUser?.page}
                     itemsCountPerPage={allCooperationUser?.cooperationMitra?.data?.perPage}
                     totalItemsCount={allCooperationUser?.cooperationMitra?.data?.total}
                     pageRangeDisplayed={3}
@@ -741,6 +741,7 @@ const Table = ({ token }) => {
                   </div>
                 </div>
               </div>
+              
             </div>
           </div>
         </div>

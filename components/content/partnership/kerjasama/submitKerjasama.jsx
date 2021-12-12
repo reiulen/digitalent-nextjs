@@ -241,7 +241,7 @@ const SubmitKerjasama = ({ token }) => {
                   <div className="col-12 col-xl-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-10 mt-xl-2 ">
                       <DatePicker
-                        className="form-search-date form-control cursor-pointer"
+                        className="form-search-date form-control cursor-not-allowed"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         disabled
@@ -253,6 +253,8 @@ const SubmitKerjasama = ({ token }) => {
                         maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
+                        isDisabled={true}
+                        
                       />
                       <IconCalender
                         className="right-center-absolute"

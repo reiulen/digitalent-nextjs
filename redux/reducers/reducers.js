@@ -308,6 +308,7 @@ import {
   allAcademyListReducer,
   allListPelatihanReducer,
   updateStatusAdminReducer,
+  editAdminSiteReducer,
 } from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
@@ -859,6 +860,7 @@ const reducer = combineReducers({
   allListPelatihan: allListPelatihanReducer,
   allListPelatihanByPeserta: allListPelatihanByPesertaReducer,
   allListPelatihanPagination: allListPelatihanPaginationReducer,
+  editAdminSite: editAdminSiteReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,

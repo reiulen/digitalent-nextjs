@@ -22,11 +22,12 @@ const ViewTraining = dynamic(
   }
 );
 
-export default function ViewTrainingPage() {
+export default function ViewTrainingPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ViewTraining />
+        <ViewTraining token={session.token} />
       </div>
     </>
   );

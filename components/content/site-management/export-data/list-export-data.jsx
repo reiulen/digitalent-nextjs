@@ -171,7 +171,7 @@ const Table = ({ token }) => {
                                     (index + 1)}
                               </td>
                               <td className="align-middle text-left">
-                                {items.user?.name}
+                                {items?.user?.name || "-"}
                               </td>
                               <td className="align-middle text-left">
                                 {moment(items.filtered_at).format(

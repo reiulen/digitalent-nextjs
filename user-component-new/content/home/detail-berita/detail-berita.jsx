@@ -228,8 +228,8 @@ const DetailBerita = () => {
               windowDimensions &&
               windowDimensions.width &&
               windowDimensions.width > 770
-                ? "col-12 col-lg-8 pr-11"
-                : "col-12 col-lg-8"
+                ? "col-12 col-lg-8 pr-11 "
+                : "col-12 col-lg-8 "
             }
           >
             {/* Image */}
