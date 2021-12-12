@@ -330,7 +330,7 @@ const Navigationbar = ({ session }) => {
                         />
                       </div>
                       {dataNotification?.length > 0 &&
-                        dataNotification.map((el, i) => {
+                        dataNotification?.map((el, i) => {
                           return (
                             <Fragment key={i}>
                               <div className="d-flex align-items-center position-relative ">
@@ -476,7 +476,7 @@ const Navigationbar = ({ session }) => {
                         Kontak
                       </NavDropdown.Item>
                     </Link>
-                    {menu.length > 0 && (
+                    {menu?.length > 0 && (
                       <NavDropdown.Item
                         onClick={e => {
                           setNavbarItems(menu);
@@ -500,14 +500,14 @@ const Navigationbar = ({ session }) => {
                   </Col>
                   <Col
                     className={`p-0 m-0 ${
-                      menu.length > 0 ? `h-350px` : "h-300px"
+                      menu?.length > 0 ? `h-350px` : "h-300px"
                     } overflow-auto ${style.scrollbar_navbar}`}
                     style={
                       navbarItems ? { borderLeft: "1px solid #6c6c6c" } : {}
                     }
                   >
                     {navbarItems &&
-                      navbarItems.map((el, i) => {
+                      navbarItems?.map((el, i) => {
                         return (
                           <Link
                             key={i}
@@ -601,7 +601,7 @@ const Navigationbar = ({ session }) => {
                     />
                   </div>
                   {dataNotification?.length > 0 &&
-                    dataNotification.map((el, i) => {
+                    dataNotification?.map((el, i) => {
                       return (
                         <Fragment key={i}>
                           <div className="d-flex align-items-center position-relative ">
@@ -821,7 +821,7 @@ const Navigationbar = ({ session }) => {
                   <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
                     {/* gw map disini */}
                     {akademi &&
-                      akademi.map((item, i) => {
+                      akademi?.map((item, i) => {
                         return (
                           <Fragment key={item.id}>
                             <Link href={`/detail/akademi/${item.id}`} passHref>
@@ -914,7 +914,7 @@ const Navigationbar = ({ session }) => {
               <Col className="mb-8" sm={12}>
                 <Link href="/kontak">Kontak</Link>
               </Col>
-              {menu.length > 0 && (
+              {menu?.length > 0 && (
                 <Col sm={12}>
                   <Dropdown color="white">
                     <Dropdown.Toggle
@@ -934,7 +934,7 @@ const Navigationbar = ({ session }) => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
                       {menu
-                        ? menu.map((item, index) => {
+                        ? menu?.map((item, index) => {
                             return (
                               <Fragment key={index}>
                                 <div
