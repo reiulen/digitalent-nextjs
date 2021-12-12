@@ -264,13 +264,8 @@ a {
   width: 100%;
 }
 
-<<<<<<< HEAD
-.cursor-not-allowed {
-  cursor:not-allowed !important;
-=======
 .cursor-not-allowed{
   cursor: not-allowed !important;
->>>>>>> 6279c0070f66ac2bf946957066fe9c40ebf9db3e
 }
 
 .wrapper-chart-pie,
