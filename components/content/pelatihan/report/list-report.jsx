@@ -195,6 +195,9 @@ const ListReport = ({ token }) => {
                       data-placement="bottom"
                       title="Download As Word"
                       onClick={(e) => downloadWord(e, item.id)}
+                      disabled={
+                        item.status_pelatihan === "selesai" ? false : true
+                      }
                     >
                       <i className="ri-file-word-fill text-white p-0"></i>
                     </button>
@@ -206,6 +209,9 @@ const ListReport = ({ token }) => {
                       data-toggle="tooltip"
                       data-placement="bottom"
                       title="Download As PDF"
+                      disabled={
+                        item.status_pelatihan === "selesai" ? false : true
+                      }
                     >
                       <i className="ri-file-ppt-fill text-white p-0"></i>
                     </button>
