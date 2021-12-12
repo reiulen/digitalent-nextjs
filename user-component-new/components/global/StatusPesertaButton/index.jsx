@@ -6,6 +6,7 @@ import { Col, Row, Card, Button, Modal } from "react-bootstrap";
 import Cookies from "js-cookie";
 export default function ButtonStatusPeserta({ data, token }) {
   const router = useRouter();
+
   const [imageSertifikasi, setImageSertifikasi] = useState();
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
   const [fileName, setFileName] = useState();
@@ -36,7 +37,7 @@ export default function ButtonStatusPeserta({ data, token }) {
     }
   };
 
-  const onChangeFile = (e) => {
+  const onChangeFile = e => {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
@@ -226,7 +227,7 @@ export default function ButtonStatusPeserta({ data, token }) {
       ) : data?.status == "lulus pelatihan" ||
         data?.status == "Lulus Pelatihan" ? (
         <Fragment>
-          {data?.sertifikasi == "1" && (
+          {data?.sertifikasi != "0" && (
             <CustomButton outline click={() => setShowModalSertifikasi(true)}>
               <i className="ri-upload-2-fill mr-2"></i>
               Unggah Sertifikasi
@@ -270,7 +271,7 @@ export default function ButtonStatusPeserta({ data, token }) {
         </Fragment>
       ) : data?.status == "diterima" ? (
         <Fragment>
-          {data?.sertifikasi == "1" && (
+          {data?.sertifikasi != "0" && (
             <CustomButton outline click={() => setShowModalSertifikasi(true)}>
               <i className="ri-upload-2-fill mr-2"></i>
               Unggah Sertifikasi
@@ -399,7 +400,7 @@ export default function ButtonStatusPeserta({ data, token }) {
                   type="file"
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
-                  onChange={(e) => {
+                  onChange={e => {
                     onChangeFile(e);
                   }}
                 />

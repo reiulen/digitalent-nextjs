@@ -33,8 +33,8 @@ const UbahPage = ({ token }) => {
   } = useSelector((state) => state.detailPage);
 
   const { isUpdateSuccess, errorUpdate } = useSelector((state) => state.updatePage);
-
   const [isi_artikel, setIsiArtikel] = useState(pages.property_template.content);
+  const [pageURL, setPageURL] = useState(`http://dts-dev.majapahit.id/lainnya/${pages.url}`)
   const [pageName, setPageName] = useState(pages.name);
   const [pageStatus, setPageStatus] = useState(pages.status);
   const [titlePage, setTitlePage] = useState(pages.property_template.title);
@@ -43,8 +43,8 @@ const UbahPage = ({ token }) => {
   );
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
-      "site-management/images/" +
-      pages.property_template.image
+    "site-management/images/" +
+    pages.property_template.image
   );
   const [gambarName, setGambarName] = useState(null);
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -125,7 +125,7 @@ const UbahPage = ({ token }) => {
               },
             };
           }
-          dispatch(updatePage(sendData, pages.id, token ));
+          dispatch(updatePage(sendData, pages.id, token));
         }
       });
     } else {
@@ -154,7 +154,7 @@ const UbahPage = ({ token }) => {
       });
     }
     if (errorUpdate) {
-      Swal.fire(errorUpdate, "", "error").then(() => {});
+      Swal.fire(errorUpdate, "", "error").then(() => { });
     }
 
     setEditorLoaded(true);
@@ -206,6 +206,33 @@ const UbahPage = ({ token }) => {
                         className: "text-danger",
                       }
                     )}
+                    {/* <span className="form-text text-muted">
+                      Please enter your full name
+                    </span> */}
+                  </div>
+                  <div className="form-group">
+                    <label style={{ fontSize: "16px" }}>URL</label>
+                    <input
+                      value={pageURL}
+                      // onChange={(e) => setPageName(e.target.value)}
+                      type="text"
+                      className="form-control"
+                      placeholder="Masukkan Page Name"
+                      onBlur={(e) => {
+                        simpleValidator.current.showMessageFor("pageURL");
+                      }}
+                      disabled
+                      style={{ backgroundColor: '#fff' }}
+                    // readOnly
+                    />
+                    {/* {simpleValidator.current.message(
+                      "pageURL",
+                      pageURL,
+                      "required",
+                      {
+                        className: "text-danger",
+                      }
+                    )} */}
                     {/* <span className="form-text text-muted">
                       Please enter your full name
                     </span> */}
@@ -477,7 +504,7 @@ const UbahPage = ({ token }) => {
                           <CKEditor
                             editor={ClassicEditor}
                             data={isi_artikel}
-                            onReady={(editor) => {}}
+                            onReady={(editor) => { }}
                             onChange={(event, editor) => {
                               const data = editor.getData();
                               setIsiArtikel(data);

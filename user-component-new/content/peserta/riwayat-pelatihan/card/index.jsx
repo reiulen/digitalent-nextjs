@@ -14,8 +14,8 @@ import ButtonStatusPeserta from "../../../../components/global/StatusPesertaButt
 import Image from "next/image";
 export default function CardTemplateOriginal({ data, session }) {
   const router = useRouter();
-  const dateFrom = moment(data.pelatihan_mulai).format("LL");
-  const dateTo = moment(data.pelatihan_selesai).format("LL");
+  const dateFrom = moment(data.pelatihan_mulai).utc().format("LL");
+  const dateTo = moment(data.pelatihan_selesai).utc().format("LL");
   const [label, setLabel] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(

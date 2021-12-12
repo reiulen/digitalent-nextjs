@@ -42,7 +42,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
@@ -55,7 +55,7 @@ const Navigationbar = ({ session }) => {
   const [socket, setSocket] = useState(null);
   const [dataNotification, setDataNotification] = useState([]);
 
-  const { footer, loading } = useSelector((state) => state.berandaFooter);
+  const { footer, loading } = useSelector(state => state.berandaFooter);
 
   useEffect(() => {
     if (!session) {
@@ -106,7 +106,7 @@ const Navigationbar = ({ session }) => {
       timeout = 250;
       clearTimeout(connectInterval);
     };
-    ws.onmessage = (e) => {
+    ws.onmessage = e => {
       axios
         .get(
           process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
@@ -116,17 +116,17 @@ const Navigationbar = ({ session }) => {
             },
           }
         )
-        .then((res) => {
+        .then(res => {
           setDataNotification(res.data.data);
         })
-        .catch((err) => {});
+        .catch(err => {});
     };
 
-    ws.onclose = (e) => {
+    ws.onclose = e => {
       // connectInterval = setTimeout(handleCheckSocket, Math.min(10000, timeout));
     };
 
-    ws.onerror = (err) => {
+    ws.onerror = err => {
       ws.close();
     };
   };
@@ -147,7 +147,7 @@ const Navigationbar = ({ session }) => {
   //     handleConnectSocket();
   // };
 
-  const getDataGeneral = async (token) => {
+  const getDataGeneral = async token => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
@@ -164,7 +164,7 @@ const Navigationbar = ({ session }) => {
     } catch (error) {}
   };
 
-  const getMenu = async (token) => {
+  const getMenu = async token => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
@@ -180,6 +180,8 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     getMenu();
+    getDataGeneral();
+    
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
     }
@@ -240,7 +242,7 @@ const Navigationbar = ({ session }) => {
 
   const [search, setSearch] = useState("");
 
-  const handleEnter = (e) => {
+  const handleEnter = e => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
@@ -258,6 +260,7 @@ const Navigationbar = ({ session }) => {
     "video",
   ]);
   const [index, setIndex] = useState(0);
+
   return (
     <>
       <Navbar
@@ -307,13 +310,53 @@ const Navigationbar = ({ session }) => {
                   </a>
                 </Link>
                 <a href="#" className="col-3 p-md-0 col-xl-4 text-center">
-                  <i className="ri-notification-4-line ri-2x mx-0 mx-md-3 text-gray"></i>
+                  <i
+                    className="ri-notification-4-line ri-2x mx-0 mx-md-3 text-gray"
+                    onClick={() => {
+                      setNotification(!notification);
+                    }}
+                  ></i>
+                  {notification && (
+                    <div
+                      className="position-absolute px-5 bg-white w-200px right-0 p-6 max-h-275px overflow-auto"
+                      style={{ color: "#6C6C6C" }}
+                    >
+                      <div className="d-flex align-items-center fz-12 justify-content-between mb-9">
+                        <div>Notification</div>
+                        <img
+                          src="/assets/media/notification/Close_Button.png"
+                          alt="close_button"
+                          onClick={() => setNotification(!notification)}
+                          className="cursor-pointer"
+                          style={{ width: "20px", height: "20px" }}
+                        />
+                      </div>
+                      {dataNotification?.length > 0 &&
+                        dataNotification?.map((el, i) => {
+                          return (
+                            <Fragment key={i}>
+                              <div className="d-flex align-items-center position-relative ">
+                                <img
+                                  src={`/assets/media/notification/${el.icon}.png`}
+                                  alt="success"
+                                  style={{ objectFit: "cover" }}
+                                />
+                                <span className="ml-5 fz-14 text-capitalize">
+                                  {el.Pesan}
+                                </span>
+                              </div>
+                              <hr className="my-3" />
+                            </Fragment>
+                          );
+                        })}
+                    </div>
+                  )}
                 </a>
               </div>
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={(e) => {
+              onClick={e => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -338,7 +381,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   setSearch(e.target.value);
                   if (e.code == "Enter") {
                     handleEnter(e);
@@ -373,7 +416,7 @@ const Navigationbar = ({ session }) => {
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={(e) => {
+                      onClick={e => {
                         setNavbarItems(akademi);
 
                         if (index != 1) {
@@ -387,7 +430,7 @@ const Navigationbar = ({ session }) => {
                       active={index == 1 ? true : false}
                     >
                       <div className="d-flex justify-content-between align-items-center">
-                        Pelatihan
+                        Akademi
                         <span className="ri-arrow-right-s-line" />
                       </div>
                     </NavDropdown.Item>
@@ -408,7 +451,7 @@ const Navigationbar = ({ session }) => {
                     </Link>
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={(e) => {
+                      onClick={e => {
                         setNavbarItems(rilisMedia);
                         if (index != 2) {
                           setIndex(2);
@@ -435,34 +478,38 @@ const Navigationbar = ({ session }) => {
                         Kontak
                       </NavDropdown.Item>
                     </Link>
-                    <NavDropdown.Item
-                      onClick={(e) => {
-                        setNavbarItems(menu);
-                        if (index != 3) {
-                          setIndex(3);
-                        } else {
-                          setNavbarItems(null);
-                          setIndex(0);
-                        }
-                        e.stopPropagation();
-                      }}
-                      active={index == 3 ? true : false}
-                      className="navdropdown-child"
-                    >
-                      <div className="d-flex justify-content-between align-items-center">
-                        lainnya
-                        <span className="ri-arrow-right-s-line" />
-                      </div>
-                    </NavDropdown.Item>
+                    {menu?.length > 0 && (
+                      <NavDropdown.Item
+                        onClick={e => {
+                          setNavbarItems(menu);
+                          if (index != 3) {
+                            setIndex(3);
+                          } else {
+                            setNavbarItems(null);
+                            setIndex(0);
+                          }
+                          e.stopPropagation();
+                        }}
+                        active={index == 3 ? true : false}
+                        className="navdropdown-child"
+                      >
+                        <div className="d-flex justify-content-between align-items-center">
+                          lainnya
+                          <span className="ri-arrow-right-s-line" />
+                        </div>
+                      </NavDropdown.Item>
+                    )}
                   </Col>
                   <Col
-                    className="p-0 m-0 h-350px overflow-auto"
+                    className={`p-0 m-0 ${
+                      menu?.length > 0 ? `h-350px` : "h-300px"
+                    } overflow-auto ${style.scrollbar_navbar}`}
                     style={
                       navbarItems ? { borderLeft: "1px solid #6c6c6c" } : {}
                     }
                   >
                     {navbarItems &&
-                      navbarItems.map((el, i) => {
+                      navbarItems?.map((el, i) => {
                         return (
                           <Link
                             key={i}
@@ -487,116 +534,6 @@ const Navigationbar = ({ session }) => {
                       })}
                   </Col>
                 </Row>
-                {/* <Fragment>
-                  <NavDropdown.Item href="/" className="navdropdown-child">
-                    Beranda
-                  </NavDropdown.Item>
-                  <div className="btn-group dropright w-100">
-                    <a
-                      type="button"
-                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Pelatihan
-                    </a>
-                    <div className="dropdown-menu ml-3">
-                      {akademi.map((item, i) => {
-                        return (
-                          <Link
-                            key={item.id}
-                            href={`/detail/akademi/${item.id}`}
-                          >
-                            <a className="dropdown-item navdropdown-child ">
-                              {item.slug}
-                            </a>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <Link href="/pusat-informasi" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Pusat Informasi
-                    </NavDropdown.Item>
-                  </Link>
-                  <Link href="/tentang-kami" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Tentang Kami
-                    </NavDropdown.Item>
-                  </Link>
-                  <Link href="/penyelenggara" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Penyelenggara
-                    </NavDropdown.Item>
-                  </Link>
-                  <div className="btn-group dropright w-100">
-                    <a
-                      type="button"
-                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Rilis Media
-                    </a>
-                    <div className="dropdown-menu ml-3">
-                      <Link href="/berita">
-                        <a className="dropdown-item navdropdown-child">
-                          Berita
-                        </a>
-                      </Link>
-                      <Link href="/artikel">
-                        <a className="dropdown-item navdropdown-child">
-                          Artikel
-                        </a>
-                      </Link>
-                      <Link href="/galeri">
-                        <a className="dropdown-item navdropdown-child">
-                          Galeri
-                        </a>
-                      </Link>
-                      <Link href="/video">
-                        <a className="dropdown-item navdropdown-child">Video</a>
-                      </Link>
-                    </div>
-                  </div>
-                  <Link href="/faq" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      FAQ
-                    </NavDropdown.Item>
-                  </Link>
-                  <Link href="/kontak" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Kontak
-                    </NavDropdown.Item>
-                  </Link>
-                  <div className="btn-group dropright w-100">
-                    <a
-                      type="button"
-                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Lainnya
-                    </a>
-                    <div className="dropdown-menu ml-3">
-                      {menu
-                        ? menu.map((item, index) => {
-                            return (
-                              <Link href={"/lainnya/" + item.url} key={index}>
-                                <a className="dropdown-item navdropdown-child">
-                                  {item.name}
-                                </a>
-                              </Link>
-                            );
-                          })
-                        : null}
-                    </div>
-                  </div>
-                </Fragment> */}
               </NavDropdown>
             </div>
             {/* END MENU */}
@@ -613,12 +550,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.code == "Enter") {
                     handleEnter(e);
                   }
                 }}
-                onChange={(e) => {
+                onChange={e => {
                   setSearch(e.target.value);
                 }}
               />
@@ -653,7 +590,7 @@ const Navigationbar = ({ session }) => {
               </a>
               {notification && (
                 <div
-                  className="position-absolute px-5 bg-white w-400px right-0 p-12 max-h-275px overflow-auto"
+                  className="position-absolute px-5 bg-white w-400px right-0 p-12 max-h-275px overflow-auto d-md-block d-none"
                   style={{ color: "#6C6C6C" }}
                 >
                   <div className="d-flex align-items-center fz-20 justify-content-between mb-9">
@@ -665,23 +602,24 @@ const Navigationbar = ({ session }) => {
                       className="cursor-pointer"
                     />
                   </div>
-                  {dataNotification.map((el, i) => {
-                    return (
-                      <Fragment key={i}>
-                        <div className="d-flex align-items-center position-relative ">
-                          <img
-                            src={`/assets/media/notification/${el.icon}.png`}
-                            alt="success"
-                            style={{ objectFit: "cover" }}
-                          />
-                          <span className="ml-5 fz-14 text-capitalize">
-                            {el.Pesan}
-                          </span>
-                        </div>
-                        <hr className="my-3" />
-                      </Fragment>
-                    );
-                  })}
+                  {dataNotification?.length > 0 &&
+                    dataNotification?.map((el, i) => {
+                      return (
+                        <Fragment key={i}>
+                          <div className="d-flex align-items-center position-relative ">
+                            <img
+                              src={`/assets/media/notification/${el.icon}.png`}
+                              alt="success"
+                              style={{ objectFit: "cover" }}
+                            />
+                            <span className="ml-5 fz-14 text-capitalize">
+                              {el.Pesan}
+                            </span>
+                          </div>
+                          <hr className="my-3" />
+                        </Fragment>
+                      );
+                    })}
                 </div>
               )}
             </div>
@@ -878,14 +816,14 @@ const Navigationbar = ({ session }) => {
                     className="p-0 w-100"
                   >
                     <div className="d-flex align-items-center justify-content-between p-0 m-0">
-                      Pelatihan
+                      Akademi
                       <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
                     </div>
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
                     {/* gw map disini */}
                     {akademi &&
-                      akademi.map((item, i) => {
+                      akademi?.map((item, i) => {
                         return (
                           <Fragment key={item.id}>
                             <Link href={`/detail/akademi/${item.id}`} passHref>
@@ -978,44 +916,46 @@ const Navigationbar = ({ session }) => {
               <Col className="mb-8" sm={12}>
                 <Link href="/kontak">Kontak</Link>
               </Col>
-              <Col sm={12}>
-                <Dropdown color="white">
-                  <Dropdown.Toggle
-                    id="dropdown-basic"
-                    style={{
-                      backgroundColor: "transparent",
-                      border: "transparent",
-                      color: "#6C6C6C",
-                      fontSize: "14px",
-                    }}
-                    className="p-0"
-                  >
-                    <div className="d-flex align-items-center justify-content-between p-0 m-0">
-                      Lainnya
-                      <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
-                    </div>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
-                    {menu
-                      ? menu.map((item, index) => {
-                          return (
-                            <Fragment key={index}>
-                              <div
-                                onClick={() => {
-                                  router.push("/lainnya/" + item.url);
-                                }}
-                                className="p-4 fz-12"
-                              >
-                                {item.name}
-                              </div>
-                              <hr className="w-100 p-0 m-0" />
-                            </Fragment>
-                          );
-                        })
-                      : null}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Col>
+              {menu?.length > 0 && (
+                <Col sm={12}>
+                  <Dropdown color="white">
+                    <Dropdown.Toggle
+                      id="dropdown-basic"
+                      style={{
+                        backgroundColor: "transparent",
+                        border: "transparent",
+                        color: "#6C6C6C",
+                        fontSize: "14px",
+                      }}
+                      className="p-0"
+                    >
+                      <div className="d-flex align-items-center justify-content-between p-0 m-0">
+                        Lainnya
+                        <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
+                      </div>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
+                      {menu
+                        ? menu?.map((item, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <div
+                                  onClick={() => {
+                                    router.push("/lainnya/" + item.url);
+                                  }}
+                                  className="p-4 fz-12"
+                                >
+                                  {item.name}
+                                </div>
+                                <hr className="w-100 p-0 m-0" />
+                              </Fragment>
+                            );
+                          })
+                        : null}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Col>
+              )}
             </Row>
             <hr />
             {/* Start side bar */}

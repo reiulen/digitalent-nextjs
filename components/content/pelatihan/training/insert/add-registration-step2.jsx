@@ -445,7 +445,7 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
         </div>
         <Modal
           show={modalShow}
-          onHide={closePreviewHandler}
+          // onHide={closePreviewHandler}
           size="xl"
           aria-labelledby="contained-modal-title-vcenter"
           centered
@@ -474,6 +474,7 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
                 : viewForm === "2" && setFormBuilderCopyEdit(form);
             }}
             sendPropsModalShow={(value) => setModalShow(value)}
+            propsToken={token}
           />
         </Modal>
       </div>

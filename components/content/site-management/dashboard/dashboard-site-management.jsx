@@ -264,7 +264,7 @@ const DashboardSiteManagement = ({ token, user }) => {
                           setPagePeserta(pagePeserta - 1);
                         }
                       }}
-                      style={{ backgroundColor: '#203E80' }}
+                      style={{ backgroundColor: '#203E80', cursor:  pagePeserta === 1 ? "not-allowed" : "" }}
                     >
                       &lt;
                     </button>
@@ -295,7 +295,12 @@ const DashboardSiteManagement = ({ token, user }) => {
                           setPagePeserta(pagePeserta + 1);
                         }
                       }}
-                      style={{ backgroundColor: '#203E80' }}
+                      style={{ backgroundColor: '#203E80', cursor:  pagePeserta >=
+                      Math.ceil(
+                        allDataPeserta &&
+                        allDataPeserta.length > 0 &&
+                        allDataPeserta[0].totalPage / 5
+                      ) ? "not-allowed" : "" }}
                     >
                       &gt;
                     </button>
@@ -375,7 +380,7 @@ const DashboardSiteManagement = ({ token, user }) => {
                           setPageZonasi(pageZonasi - 1);
                         }
                       }}
-                      style={{ backgroundColor: '#203E80' }}
+                      style={{ backgroundColor: '#203E80', cursor :  pageZonasi === 1 ? "not-allowed" : "" }}
                     >
                       &lt;
                     </button>
@@ -397,7 +402,7 @@ const DashboardSiteManagement = ({ token, user }) => {
                           setPageZonasi(pageZonasi + 1);
                         }
                       }}
-                      style={{ backgroundColor: '#203E80' }}
+                      style={{ backgroundColor: '#203E80', cursor: pageZonasi >= Math.ceil(allDataZonasi[0]?.totalPage / 5) ? "not-allowed" : "" }}
                     >
                       &gt;
                     </button>
