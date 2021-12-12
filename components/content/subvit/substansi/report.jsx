@@ -24,7 +24,7 @@ const ListSubstansi = ({ token }) => {
   const { loading, error, subtance } = useSelector(
     (state) => state.allReportSubtanceQuestionBanks
   );
-  console.log(subtance);
+
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [status, setStatus] = useState("");
@@ -345,7 +345,6 @@ const ListSubstansi = ({ token }) => {
                       ) : (
                         subtance &&
                         subtance.data.reports.map((row, i) => {
-                          console.log(row);
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
@@ -412,7 +411,9 @@ const ListSubstansi = ({ token }) => {
                                 ) : row.start_datetime &&
                                   !row.finish_datetime ? (
                                   <td className="align-middle">
-                                    <Badge> P</Badge>
+                                    <Badge bg="success">
+                                      Sedang Mengerjakan
+                                    </Badge>
                                   </td>
                                 ) : row.finish == 1 && row.status == 0 ? (
                                   <td className="align-middle">
@@ -421,7 +422,7 @@ const ListSubstansi = ({ token }) => {
                                 ) : (
                                   <td className="align-middle">
                                     <span className="label label-inline label-light-danger font-weight-bold">
-                                      Ditolak
+                                      -
                                     </span>
                                   </td>
                                 )}

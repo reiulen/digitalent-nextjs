@@ -53,8 +53,6 @@ export const getAllTriviaQuestionDetail =
 
       const { data } = await axios.get(link, config);
 
-      console.log(data);
-
       dispatch({
         type: TRIVIA_QUESTION_DETAIL_SUCCESS,
         payload: data,

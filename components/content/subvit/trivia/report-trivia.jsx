@@ -12,6 +12,7 @@ import axios from "axios";
 import styles from "../trivia/edit/step.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
+import { Badge } from "react-bootstrap";
 
 const ReportTrivia = ({ token }) => {
   const dispatch = useDispatch();
@@ -170,7 +171,7 @@ const ReportTrivia = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter mb-5">
               <div className="row align-items-center">
-                <div className="col-md-5">
+                <div className="col-md-4">
                   <div className="position-relative overflow-hidden mt-2">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
@@ -191,10 +192,10 @@ const ReportTrivia = ({ token }) => {
                     </button>
                   </div>
                 </div>
-                <div className="col-md-1"></div>
+                <div className="col-md-3"></div>
                 <div className="col-md-3"></div>
 
-                <div className="col-md-3">
+                <div className="col-md-2">
                   <button
                     className={`${styles.btnResponsive} btn btn-rounded-full bg-blue-secondary text-white mt-2`}
                     type="button"
@@ -271,22 +272,39 @@ const ReportTrivia = ({ token }) => {
                                 </div>
                               </td>
 
-                              <td className="align-middle ">
-                                <center>
-                                  {row.status ? (
-                                    <td className="align-middle ">
-                                      <span className="label label-inline label-light-success font-weight-bold">
-                                        Diterima
-                                      </span>
-                                    </td>
-                                  ) : (
-                                    <td className="align-middle">
-                                      <span className="label label-inline label-light-danger font-weight-bold">
-                                        Ditolak
-                                      </span>
-                                    </td>
-                                  )}
-                                </center>
+                              <td className="align-middle">
+                                {row.status === 1 && row.finish === 1 ? (
+                                  <td className="align-middle">
+                                    {/* <span className="label label-inline label-light-success font-weight-bold">
+                                      Diterima
+                                    </span> */}
+                                    <Badge bg="success">Diterima</Badge>
+                                  </td>
+                                ) : !row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="warning">
+                                      Belum Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="success">
+                                      Sedang Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.finish == 1 && row.status == 0 ? (
+                                  <td className="align-middle">
+                                    <Badge bg="danger">Ditolak</Badge>
+                                  </td>
+                                ) : (
+                                  <td className="align-middle">
+                                    <span className="label label-inline label-light-danger font-weight-bold">
+                                      -
+                                    </span>
+                                  </td>
+                                )}
                               </td>
                             </tr>
                           );

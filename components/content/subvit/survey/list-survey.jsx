@@ -28,7 +28,6 @@ const ListSurvey = ({ token }) => {
     (state) => state.permissionsSubvit
   );
 
-  console.log(dataPermission);
   const {
     loading: deleteLoading,
     error: deleteError,
