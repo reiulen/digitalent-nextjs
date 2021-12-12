@@ -55,7 +55,7 @@ const FormManual = ({
                 -- PILIH --
               </option>
               {dataOptions.map((datOpt, i) => (
-                <option key={i} value={datOpt.value}>
+                <option key={i} value={datOpt.id}>
                   {datOpt.value}
                 </option>
               ))}

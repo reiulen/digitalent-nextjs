@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepReviewPelatihan from "../../../../StepReviewPelatihan";
 import LoadingPage from "../../../../LoadingPage";
+import OptionsReference from "../../training/components/option-reference.component";
+import CheckboxReference from "../../training/components/checkbox-reference.component";
+import RadioReference from "../../training/components/radio-reference.component";
 
 import {
   revisiReviewPelatihan,
@@ -154,13 +157,18 @@ const ReviewFormRegister = ({ token }) => {
               className="form-control"
               required={row.required === "1" ? true : false}
             >
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <option value={dat} key={i}>
-                      {dat}
-                    </option>
-                  ))
-                : ""}
+              <option value="" disabled selected>
+                Silahkan Pilih {row.name}
+              </option>
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <option value={dat} key={i}>
+                    {dat}
+                  </option>
+                ))
+              ) : (
+                <OptionsReference id={row.dataOption} token={token} />
+              )}
             </select>
           </div>
         );
@@ -172,20 +180,27 @@ const ReviewFormRegister = ({ token }) => {
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <div className="form-check pb-3" key={i}>
-                      <input
-                        type="checkbox"
-                        name="plotRegistration"
-                        className="form-check-input"
-                        required={row.required === "1" ? true : false}
-                        value={dat}
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <div className="form-check pb-3" key={i}>
+                    <input
+                      type="checkbox"
+                      name="plotRegistration"
+                      className="form-check-input"
+                      required={row.required === "1" ? true : false}
+                      value={dat}
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <CheckboxReference
+                  id={row.dataOption}
+                  token={token}
+                  required={row.required}
+                  onChangeValue={(value) => {}}
+                />
+              )}
             </div>
           </div>
         );
@@ -213,20 +228,27 @@ const ReviewFormRegister = ({ token }) => {
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <div className="form-check pb-3" key={i}>
-                      <input
-                        type="radio"
-                        name={row.name}
-                        className="form-check-input"
-                        value={dat}
-                        required={row.required === "1" ? true : false}
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <div className="form-check pb-3" key={i}>
+                    <input
+                      type="radio"
+                      name={row.name}
+                      className="form-check-input"
+                      value={dat}
+                      required={row.required === "1" ? true : false}
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <RadioReference
+                  id={row.dataOption}
+                  token={token}
+                  required={row.required}
+                  onChangeValue={(value) => {}}
+                />
+              )}
             </div>
           </div>
         );

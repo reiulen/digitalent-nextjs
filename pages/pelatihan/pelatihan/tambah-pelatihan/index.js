@@ -30,6 +30,7 @@ import {
   drowpdownFormBuilder,
   dropdownPenyelenggara,
 } from "../../../../redux/actions/pelatihan/function.actions";
+import { getAllDataReference } from "../../../../redux/actions/site-management/data-reference.actions";
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
@@ -72,6 +73,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(dropdownProvinsi(session.user.user.data.token));
       await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
       await store.dispatch(drowpdownFormBuilder(session.user.user.data.token));
+      await store.dispatch(getAllDataReference(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Pelatihan - Pelatihan" },
