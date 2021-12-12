@@ -86,11 +86,6 @@ const StepThree = ({ token }) => {
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Isi data dengan benar !",
-        });
       }
     }
   };
@@ -131,11 +126,6 @@ const StepThree = ({ token }) => {
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Isi data dengan benar !",
-        });
       }
     }
   };

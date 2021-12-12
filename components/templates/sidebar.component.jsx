@@ -135,6 +135,10 @@ const Sidebar = ({ session }) => {
               data.data.data.tokenPermission
             );
             localStorage.setItem("permissions", data.data.data.permissions);
+            localStorage.setItem(
+              "trainings",
+              JSON.stringify(data.data.data.user.trainings)
+            );
             Cookies.set("token_permission", data.data.data.tokenPermission);
           })
           .catch((e) => {

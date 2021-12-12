@@ -27,7 +27,7 @@ import ButtonAction from "../../../../ButtonAction";
 import axios from "axios";
 import styles from "../../trivia/edit/step.module.css";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -80,6 +80,7 @@ const StepTwo = ({ token }) => {
   const [question_file, setQuestionFile] = useState(null);
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
+  const [limit, setLimit] = useState(null);
 
   useEffect(() => {
     dispatch(getAllSurveyQuestionDetail(id, token));
@@ -193,12 +194,24 @@ const StepTwo = ({ token }) => {
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllSurveyQuestionDetail(id, pageNumber, token));
+    dispatch(
+      getAllSurveyQuestionDetail(
+        id,
+        pageNumber,
+        limit,
+        "",
+        token,
+        tokenPermission
+      )
+    );
   };
 
   const handleLimit = (val) => {
+    setLimit(val);
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllSurveyQuestionDetail(id, 1, val, token));
+    dispatch(
+      getAllSurveyQuestionDetail(id, 1, val, "", token, tokenPermission)
+    );
   };
 
   const handleDelete = (id) => {
@@ -459,6 +472,8 @@ const StepTwo = ({ token }) => {
                           survey_question_detail.list_questions &&
                           survey_question_detail.list_questions.map(
                             (question, i) => {
+                              const paginate = i + 1 * (page * limit);
+                              const dividers = limit - 1;
                               return (
                                 <tr key={question.id}>
                                   <td className="align-middle text-center">
@@ -486,7 +501,7 @@ const StepTwo = ({ token }) => {
                                   <td className="align-middle">
                                     <div className="d-flex">
                                       <Link
-                                        href={`edit-soal-survey?id=${question.id}`}
+                                        href={`/subvit/survey/edit-soal-survey?id=${question.id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -551,6 +566,7 @@ const StepTwo = ({ token }) => {
                           <div className="row">
                             <div className="col-4 mr-0 p-0">
                               <select
+                                value={limit}
                                 className="form-control"
                                 id="exampleFormControlSelect2"
                                 style={{

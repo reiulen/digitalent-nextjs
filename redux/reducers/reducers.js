@@ -324,6 +324,7 @@ import {
   detailGeneralReducer,
   newGeneralReducer,
   updateGeneralReducer,
+  allDataGeneralReducer
 } from "./site-management/settings/general.reducers";
 // ============== zonasi ===============
 import {
@@ -483,6 +484,8 @@ import {
   drowpdownFormBuilderReducers,
   drowpdownTempatLahirReducers,
   drowpdownYearReducers,
+  drowpdownHubunganReducers,
+  drowpdownStatusMenikahReducers,
 } from "./pelatihan/admin/function.reducers";
 import {
   allProvinsiReducer,
@@ -869,6 +872,7 @@ const reducer = combineReducers({
   newGeneral: newGeneralReducer,
   detailGeneral: detailGeneralReducer,
   updateGeneral: updateGeneralReducer,
+  allDataGeneral: allDataGeneralReducer,
   // ============ DATA ZONASI =======
   allZonasi: allZonasiReducer,
   deleteZonasi: deleteZonasiReducer,
@@ -995,6 +999,8 @@ const reducer = combineReducers({
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
   drowpdownYear: drowpdownYearReducers,
+  drowpdownHubungan: drowpdownHubunganReducers,
+  drowpdownStatusMenikah: drowpdownStatusMenikahReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,

@@ -212,7 +212,7 @@ const DetailPelatihan = ({ session }) => {
                         pelatihan?.thumbnail) ||
                     "/assets/media/default-card.png"
                   }
-                  objectFit="fill"
+                  objectFit="cover"
                   layout="fill"
                   className="rounded-lg"
                 />
@@ -264,7 +264,10 @@ const DetailPelatihan = ({ session }) => {
                 </div>
                 <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Alamat</p>
-                  <p className="fz-16">{pelatihan?.alamat}</p>
+                  <p className="fz-16">
+                    {pelatihan?.alamat},{pelatihan?.kabupaten},
+                    {pelatihan?.provinsi}
+                  </p>
                 </div>
               </div>
               <div className="d-flex flex-wrap align-items-start mt-4">
@@ -308,8 +311,8 @@ const DetailPelatihan = ({ session }) => {
                 <div className="dot-bullet-detail">
                   <Image
                     src={
-                      (pelatihan?.logo &&
-                        pelatihan.logo !== "Belum ada file" &&
+                      (pelatihan?.gambar_mitra &&
+                        pelatihan.gambar_mitra !== "Belum ada file" &&
                         pelatihan.file_path + pelatihan?.gambar_mitra) ||
                       "/assets/media/mitra-default.png"
                     }
