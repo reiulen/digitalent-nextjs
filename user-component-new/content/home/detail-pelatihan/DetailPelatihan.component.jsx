@@ -212,7 +212,7 @@ const DetailPelatihan = ({ session }) => {
                         pelatihan?.thumbnail) ||
                     "/assets/media/default-card.png"
                   }
-                  objectFit="fill"
+                  objectFit="cover"
                   layout="fill"
                   className="rounded-lg"
                 />
@@ -308,8 +308,8 @@ const DetailPelatihan = ({ session }) => {
                 <div className="dot-bullet-detail">
                   <Image
                     src={
-                      (pelatihan?.logo &&
-                        pelatihan.logo !== "Belum ada file" &&
+                      (pelatihan?.gambar_mitra &&
+                        pelatihan.gambar_mitra !== "Belum ada file" &&
                         pelatihan.file_path + pelatihan?.gambar_mitra) ||
                       "/assets/media/mitra-default.png"
                     }
