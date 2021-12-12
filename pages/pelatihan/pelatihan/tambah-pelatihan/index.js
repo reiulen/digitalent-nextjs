@@ -73,7 +73,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(dropdownProvinsi(session.user.user.data.token));
       await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
       await store.dispatch(drowpdownFormBuilder(session.user.user.data.token));
-      await store.dispatch(getAllDataReference(session.user.user.data.token));
+      await store.dispatch(
+        getAllDataReference(session.user.user.data.token, true)
+      );
 
       return {
         props: { session, title: "Tambah Pelatihan - Pelatihan" },
