@@ -1219,7 +1219,15 @@ const Artikel = () => {
                                             className="font-weight-bolder mt-15 text-center fw-600" 
                                             style={{fontFamily:"Poppins", fontSize:"24px"}}
                                         >
-                                            Tidak ada artikel terkait "{keyword}"
+                                            {
+                                                keyword ?
+                                                    `Tidak ada artikel terkait "${keyword}"`
+                                                :
+                                                    category_academy ?
+                                                        `Tidak ada artikel terkait "${category_academy}"`
+                                                    :
+                                                        `Tidak ada artikel terkait.`
+                                            }
                                         </h1>
                                 
                                         </div>
