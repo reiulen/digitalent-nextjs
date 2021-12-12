@@ -81,7 +81,8 @@ const LoginAdmin = () => {
             }
           })
           .catch((err) => {
-            console.log(err.response);
+            SweatAlert("Gagal", err.response, "error");
+            setLoading(false);
           });
       }
     } else {
