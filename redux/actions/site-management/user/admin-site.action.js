@@ -315,11 +315,14 @@ export const getEditAdminSite = (id, token) => async (dispatch) => {
 
     const { data } = await axios.get(link, config);
 
+    console.log(data)
+
     dispatch({
       type: EDIT_ADMIN_SITE_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    console.log(error)
     dispatch({
       type: EDIT_ADMIN_SITE_FAIL,
     });

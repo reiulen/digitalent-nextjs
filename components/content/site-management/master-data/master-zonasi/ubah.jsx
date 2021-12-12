@@ -312,7 +312,7 @@ const Tambah = ({ token }) => {
                             isSearchable={true}
                             name="color"
                             onChange={(e) => changeListProvinces(e, index)}
-                            options={provincesOption}
+                            options={province}
                             onBlur={() => simpleValidator.current.showMessageFor("province")}
                           />
 
