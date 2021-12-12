@@ -413,6 +413,7 @@
   color: #4cbde2;
 }
 .cardList {
+  height: 39px !important;
   border: transparent;
   margin: 30px;
 }
