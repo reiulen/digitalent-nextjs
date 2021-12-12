@@ -197,6 +197,11 @@ const SubtansiUser = ({ token }) => {
   const [listAnswer, setListAnswer] = useState();
   const [numberPage, setNumberPage] = useState("");
 
+  const [zoom, setZoom] = useState(false);
+  const [zoomJawab, setZoomJawab] = useState(false);
+  const [zoomTr, setZoomTr] = useState(false);
+  const [zoomTrJawab, setZoomTrJawab] = useState(false);
+
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
 
@@ -494,10 +499,23 @@ const SubtansiUser = ({ token }) => {
                             }
                             alt=""
                             width={150}
-                            ndl
+                            onClick={() => setZoom(true)}
                             height={150}
                           />
                         </div>
+                        <Modal show={zoom} onHide={() => setZoom(false)}>
+                          <Image
+                            src={
+                              process.env.END_POINT_API_IMAGE_SUBVIT +
+                                data.list_questions[
+                                  parseInt(router.query.id) - 1
+                                ]?.question_image || defaultImage
+                            }
+                            alt=""
+                            width={500}
+                            height={800}
+                          />
+                        </Modal>
                         <div className="p-5">
                           {data &&
                             data.list_questions[parseInt(router.query.id) - 1]
@@ -532,9 +550,24 @@ const SubtansiUser = ({ token }) => {
                                   }
                                   alt=""
                                   width={70}
+                                  onClick={() => setZoomJawab(true)}
                                   height={70}
                                 />
                               </div>
+                              <Modal
+                                show={zoomJawab}
+                                onHide={() => setZoomJawab(false)}
+                              >
+                                <Image
+                                  src={
+                                    process.env.END_POINT_API_IMAGE_SUBVIT +
+                                      item.image || defaultImage
+                                  }
+                                  alt=""
+                                  width={500}
+                                  height={800}
+                                />
+                              </Modal>
                               <div
                                 className="p-4"
                                 style={{ width: "100%", height: "100%" }}
@@ -618,10 +651,24 @@ const SubtansiUser = ({ token }) => {
                                 }
                                 alt=""
                                 width={150}
-                                ndl
+                                onClick={() => setZoomTr(true)}
                                 height={150}
                               />
                             </div>
+                            <Modal
+                              show={zoomTr}
+                              onHide={() => setZoomTr(false)}
+                            >
+                              <Image
+                                src={
+                                  process.env.END_POINT_API_IMAGE_SUBVIT +
+                                    sub?.sub[0]?.image || defaultImage
+                                }
+                                alt=""
+                                width={500}
+                                height={800}
+                              />
+                            </Modal>
                             <div className="p-5">
                               {sub && sub?.sub[0]?.question}
                             </div>
@@ -648,9 +695,24 @@ const SubtansiUser = ({ token }) => {
                                       }
                                       alt=""
                                       width={70}
+                                      onClick={() => setZoomTrJawab(true)}
                                       height={70}
                                     />
                                   </div>
+                                  <Modal
+                                    show={zoomTrJawab}
+                                    onHide={() => setZoomTrJawab(false)}
+                                  >
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                          item.image || defaultImage
+                                      }
+                                      alt=""
+                                      width={500}
+                                      height={800}
+                                    />
+                                  </Modal>
                                   <div
                                     className="p-4"
                                     style={{ width: "100%", height: "100%" }}
@@ -731,10 +793,23 @@ const SubtansiUser = ({ token }) => {
                               }
                               alt=""
                               width={150}
-                              ndl
+                              onClick={() => setZoom(true)}
                               height={150}
                             />
                           </div>
+                          <Modal show={zoom} onHide={() => setZoom(false)}>
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div className="p-5">
                             {data &&
                               data.list_questions[parseInt(router.query.id) - 1]
@@ -770,8 +845,23 @@ const SubtansiUser = ({ token }) => {
                                     alt=""
                                     width={70}
                                     height={70}
+                                    onClick={() => setZoomJawab(true)}
                                   />
                                 </div>
+                                <Modal
+                                  show={zoomJawab}
+                                  onHide={() => setZoomJawab(false)}
+                                >
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.image || defaultImage
+                                    }
+                                    alt=""
+                                    width={500}
+                                    height={800}
+                                  />
+                                </Modal>
                                 <div
                                   className="p-4"
                                   style={{ width: "100%", height: "100%" }}
@@ -848,10 +938,23 @@ const SubtansiUser = ({ token }) => {
                               }
                               alt=""
                               width={150}
-                              ndl
+                              onClick={() => setZoom(true)}
                               height={150}
                             />
                           </div>
+                          <Modal show={zoom} onHide={() => setZoom(false)}>
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div className="p-5">
                             {data &&
                               data.list_questions[parseInt(router.query.id) - 1]
@@ -897,8 +1000,23 @@ const SubtansiUser = ({ token }) => {
                                     alt=""
                                     width={70}
                                     height={70}
+                                    onClick={() => setZoomJawab(true)}
                                   />
                                 </div>
+                                <Modal
+                                  show={zoomJawab}
+                                  onHide={() => setZoomJawab(false)}
+                                >
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.image || defaultImage
+                                    }
+                                    alt=""
+                                    width={500}
+                                    height={800}
+                                  />
+                                </Modal>
                                 <div
                                   className="p-4"
                                   style={{ width: "100%", height: "100%" }}
@@ -977,10 +1095,23 @@ const SubtansiUser = ({ token }) => {
                               }
                               alt=""
                               width={150}
-                              ndl
                               height={150}
+                              onClick={() => setZoom(false)}
                             />
                           </div>
+                          <Modal show={zoom} onHide={() => setZoom(false)}>
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div className="p-5">
                             {data &&
                               data.list_questions[parseInt(router.query.id) - 1]
