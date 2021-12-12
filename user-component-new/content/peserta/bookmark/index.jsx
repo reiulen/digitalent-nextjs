@@ -249,11 +249,8 @@ export default function Bookmark({ session }) {
           })
         ) : (
           <Col lg={12} className="px-0">
-            <Card
-              className="card-custom card-stretch gutter-b p-0"
-              style={{ height: "602px" }}
-            >
-              <div className="d-flex justify-content-center pt-10">
+            <Card className="card-custom card-stretch gutter-b p-0">
+              <div className="d-flex justify-content-center pt-10 ">
                 <Image
                   src={"/assets/media/gambar-belum-tersedia-page.svg"}
                   width={525}
@@ -263,13 +260,28 @@ export default function Bookmark({ session }) {
                 />
               </div>
               <p
-                className="d-flex justify-content-center font-weight-bolder mt-15"
+                className="d-flex justify-content-center font-weight-bolder mt-15 text-center"
                 style={{ fontSize: "24px" }}
               >
                 Belum Ada Pelatihan yang Difavoritkan
               </p>
-              <div className="text-center fz-16">
+              <div className="text-center fz-16 text-center">
                 <p>Anda dapat melihat pelatihan favorit Anda di sini.</p>
+              </div>
+              <div className="d-flex justify-content-center mb-10">
+                <Button
+                  className="btn-rounded-full font-weight-bold d-flex justify-content-center my-10 "
+                  style={{
+                    height: "40px",
+                    fontFamily: "poppins",
+                    fontSize: "14px",
+                  }}
+                  onClick={() => {
+                    router.push("/");
+                  }}
+                >
+                  Halaman Utama
+                </Button>
               </div>
             </Card>
           </Col>
