@@ -288,7 +288,7 @@ const SubmitKerjasama = ({ token }) => {
                   <div className="col-12 col-sm-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-control cursor-pointer border-0"
+                        className="form-control cursor-not-allowed border-0"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         readOnly

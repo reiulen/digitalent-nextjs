@@ -286,6 +286,13 @@ const Berita = () => {
             tag
         ))
 
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
+        // }
+
         window.scrollTo(0,0)
     }
 
@@ -303,19 +310,9 @@ const Berita = () => {
             tag
         ))
 
+        // router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+            
         window.scrollTo(0,0)
-    }
-
-    const handleDescToTrim = (str) => {
-        let result = null
-        
-        if (str.length > descToTrim){
-            result = str.slice(0, descToTrim) + "..."
-
-        } else {
-            result = str
-        }
-        return result
     }
 
     const handleFilterPublish = (publish, status) => {
@@ -347,6 +344,13 @@ const Berita = () => {
             tag
         ))
 
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        // }
+
         window.scrollTo(0,0)
     }
 
@@ -364,6 +368,13 @@ const Berita = () => {
             str
         ))
 
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
+        // }
+
         window.scrollTo(0,0)
     }
 
@@ -380,6 +391,13 @@ const Berita = () => {
             category_academy,
             tag
         ))
+
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${pageNumber}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${pageNumber}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        // }
 
         window.scrollTo(0,0)
     }
@@ -1239,7 +1257,16 @@ const Berita = () => {
                                             className="font-weight-bolder mt-15 text-center fw-600" 
                                             style={{fontFamily:"Poppins", fontSize:"24px"}}
                                         >
-                                            Tidak ada berita terkait "{keyword}"
+                                            {
+                                                keyword ?
+                                                    `Tidak ada berita terkait "${keyword}"`
+                                                :
+                                                    category_academy ?
+                                                        `Tidak ada berita terkait "${category_academy}"`
+                                                    :
+                                                        `Tidak ada berita terkait.`
+                                            }
+                                            
                                         </h1>
                                 
                                         </div>

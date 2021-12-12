@@ -158,7 +158,7 @@ const Table = ({ token }) => {
             
             {
               permission ?
-                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
                   <div className="col-12 col-md-5 col-xl-3 ml-md-n6 ml-n10 mt-sm-0 mt-n5">
                     <Link href="/partnership/mitra/tambah">
                       <a className="btn btn-rounded-full bg-blue-primary text-white mt-4 d-flex justify-content-center">
@@ -241,7 +241,7 @@ const Table = ({ token }) => {
 
                     {
                       permission ? 
-                        permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                        permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
                           <th className="text-left align-middle">Aksi</th>
                         :
                           null
@@ -352,7 +352,7 @@ const Table = ({ token }) => {
                           </td>
                           {
                             permission ? 
-                              permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                              permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">
                                     <Link
