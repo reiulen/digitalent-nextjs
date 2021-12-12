@@ -224,9 +224,16 @@ const DataParticipant = ({ token }) => {
       dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
       dispatch(getFormKomitmen(token, peserta.list[0].id));
       dispatch(getFormLpj(token, peserta.list[0].id));
-      SweatAlert("Berhasil", "Berhasil Mengubah Status", "success");
       dispatch({ type: UPDATE_STATUS_RESET });
       handleSendNotification();
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: "Berhasil Mengubah Status",
+        confirmButtonText: "Tutup",
+      }).then((result) => {
+        window.location.reload();
+      });
     }
 
     if (successReminder) {
