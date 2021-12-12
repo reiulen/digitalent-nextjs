@@ -312,7 +312,7 @@ const Tambah = ({ token }) => {
                             isSearchable={true}
                             name="color"
                             onChange={(e) => changeListProvinces(e, index)}
-                            options={province}
+                            options={provincesOption}
                             onBlur={() => simpleValidator.current.showMessageFor("province")}
                           />
 
@@ -329,25 +329,26 @@ const Tambah = ({ token }) => {
                           <div className="position-relative d-flex align-items-end w-100">
                             <div className="form-group w-100 mr-2 mb-1">
                               <label>Kota / Kabupaten</label>
-                              <Select
-                                // ref={(ref) => (selectRefKabupaten = ref)}
-                                value={items.value}
-                                className="basic-single"
-                                classNamePrefix="select"
-                                placeholder="Pilih kota/kabupaten"
-                                isMulti={true}
-                                isDisabled={false}
-                                isLoading={false}
-                                isClearable={false}
-                                isRtl={false}
-                                defaultValue={items.kabupaten}
-                                isSearchable={true}
-                                name="color"
-                                onChange={(e) => changeListKabupaten(e, index)}
-                                options={items.kabupaten}
-                                onBlur={() => simpleValidator.current.showMessageFor("kabupaten")}
-                              />
-
+                              <div className={valueSend[index].provinsi === "" && "cursor-not-allowed"}>
+                                <Select
+                                  // ref={(ref) => (selectRefKabupaten = ref)}
+                                  value={items.value}
+                                  className="basic-single"
+                                  classNamePrefix="select"
+                                  placeholder="Pilih kota/kabupaten"
+                                  isMulti={true}
+                                  isDisabled={valueSend[index].provinsi === ""}
+                                  isLoading={false}
+                                  isClearable={false}
+                                  isRtl={false}
+                                  defaultValue={items.kabupaten}
+                                  isSearchable={true}
+                                  name="color"
+                                  onChange={(e) => changeListKabupaten(e, index)}
+                                  options={items.kabupaten}
+                                  onBlur={() => simpleValidator.current.showMessageFor("kabupaten")}
+                                />
+                              </div>
                             </div>
 
                             {index === 0 ? (

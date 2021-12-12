@@ -396,6 +396,12 @@ export default function SUBM(props) {
                     }}
                     required
                     disabled={disableOption === true || disableOption === ""}
+                    style={{
+                      cursor: (
+                        disableOption === true || disableOption === "" ?
+                          "not-allowed" : "pointer"
+                      )
+                    }}
                   >
                     <option disabled selected>
                       PILIH AKADEMI
@@ -421,6 +427,12 @@ export default function SUBM(props) {
                     }}
                     required
                     disabled={disableAkademi === true || disableAkademi === ""}
+                    style={{
+                      cursor: (
+                        disableAkademi === true || disableAkademi === "" ?
+                          "not-allowed" : "pointer"
+                      )
+                    }}
                   >
                     <option disabled selected>
                       PILIH TEMA
@@ -446,6 +458,12 @@ export default function SUBM(props) {
                     }}
                     required
                     disabled={disableTema === true || disableTema === ""}
+                    style={{
+                      cursor: (
+                        disableTema === true || disableTema === "" ?
+                          "not-allowed" : "pointer"
+                      )
+                    }}
                   >
                     <option disabled selected>
                       PILIH PENYELENGGARA
@@ -471,6 +489,12 @@ export default function SUBM(props) {
                     }}
                     required
                     disabled={disablePenyelenggara === true || disablePenyelenggara === ""}
+                    style={{
+                      cursor: (
+                        disablePenyelenggara === true || disablePenyelenggara === "" ?
+                          "not-allowed" : "pointer"
+                      )
+                    }}
                   >
                     <option disabled selected>
                       PILIH PELATIHAN
@@ -495,6 +519,12 @@ export default function SUBM(props) {
                     }}
                     required
                     disabled={disablePelatihan === true || disablePelatihan === ""}
+                    style={{
+                      cursor: (
+                        disablePelatihan === true || disablePelatihan === "" ?
+                          "not-allowed" : "pointer"
+                      )
+                    }}
                   >
                     <option disabled selected>
                       PILIH STATUS PROFIL
@@ -519,6 +549,12 @@ export default function SUBM(props) {
                     }}
                     required
                     disabled={disableStatusProfile === true || disableStatusProfile === ""}
+                    style={{
+                      cursor: (
+                        disableStatusProfile === true || disableStatusProfile === "" ?
+                          "not-allowed" : "pointer"
+                      )
+                    }}
                   >
                     <option disabled selected>
                       PILIH STATUS SELEKSI
@@ -547,7 +583,7 @@ export default function SUBM(props) {
             <span className="d-flex switch switch-primary status-peserta">
               <label className="checkbox-button">
                 <input
-                  
+
                   type="checkbox"
                   name="select"
                   checked={participantSelectionStatusUpdate}
