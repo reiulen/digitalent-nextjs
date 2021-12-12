@@ -42,7 +42,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
@@ -55,7 +55,7 @@ const Navigationbar = ({ session }) => {
   const [socket, setSocket] = useState(null);
   const [dataNotification, setDataNotification] = useState([]);
 
-  const { footer, loading } = useSelector((state) => state.berandaFooter);
+  const { footer, loading } = useSelector(state => state.berandaFooter);
 
   useEffect(() => {
     if (!session) {
@@ -106,7 +106,7 @@ const Navigationbar = ({ session }) => {
       timeout = 250;
       clearTimeout(connectInterval);
     };
-    ws.onmessage = (e) => {
+    ws.onmessage = e => {
       axios
         .get(
           process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
@@ -116,17 +116,17 @@ const Navigationbar = ({ session }) => {
             },
           }
         )
-        .then((res) => {
+        .then(res => {
           setDataNotification(res.data.data);
         })
-        .catch((err) => {});
+        .catch(err => {});
     };
 
-    ws.onclose = (e) => {
+    ws.onclose = e => {
       // connectInterval = setTimeout(handleCheckSocket, Math.min(10000, timeout));
     };
 
-    ws.onerror = (err) => {
+    ws.onerror = err => {
       ws.close();
     };
   };
@@ -147,7 +147,7 @@ const Navigationbar = ({ session }) => {
   //     handleConnectSocket();
   // };
 
-  const getDataGeneral = async (token) => {
+  const getDataGeneral = async token => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
@@ -164,7 +164,7 @@ const Navigationbar = ({ session }) => {
     } catch (error) {}
   };
 
-  const getMenu = async (token) => {
+  const getMenu = async token => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
@@ -240,7 +240,7 @@ const Navigationbar = ({ session }) => {
 
   const [search, setSearch] = useState("");
 
-  const handleEnter = (e) => {
+  const handleEnter = e => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
@@ -313,7 +313,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={(e) => {
+              onClick={e => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -338,7 +338,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   setSearch(e.target.value);
                   if (e.code == "Enter") {
                     handleEnter(e);
@@ -373,7 +373,7 @@ const Navigationbar = ({ session }) => {
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={(e) => {
+                      onClick={e => {
                         setNavbarItems(akademi);
 
                         if (index != 1) {
@@ -387,7 +387,7 @@ const Navigationbar = ({ session }) => {
                       active={index == 1 ? true : false}
                     >
                       <div className="d-flex justify-content-between align-items-center">
-                        Pelatihan
+                        Akademi
                         <span className="ri-arrow-right-s-line" />
                       </div>
                     </NavDropdown.Item>
@@ -408,7 +408,7 @@ const Navigationbar = ({ session }) => {
                     </Link>
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={(e) => {
+                      onClick={e => {
                         setNavbarItems(rilisMedia);
                         if (index != 2) {
                           setIndex(2);
@@ -436,7 +436,7 @@ const Navigationbar = ({ session }) => {
                       </NavDropdown.Item>
                     </Link>
                     <NavDropdown.Item
-                      onClick={(e) => {
+                      onClick={e => {
                         setNavbarItems(menu);
                         if (index != 3) {
                           setIndex(3);
@@ -456,7 +456,7 @@ const Navigationbar = ({ session }) => {
                     </NavDropdown.Item>
                   </Col>
                   <Col
-                    className="p-0 m-0 h-350px overflow-auto"
+                    className={`p-0 m-0 h-350px overflow-auto ${style.scrollbar_navbar}`}
                     style={
                       navbarItems ? { borderLeft: "1px solid #6c6c6c" } : {}
                     }
@@ -613,12 +613,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.code == "Enter") {
                     handleEnter(e);
                   }
                 }}
-                onChange={(e) => {
+                onChange={e => {
                   setSearch(e.target.value);
                 }}
               />
@@ -878,7 +878,7 @@ const Navigationbar = ({ session }) => {
                     className="p-0 w-100"
                   >
                     <div className="d-flex align-items-center justify-content-between p-0 m-0">
-                      Pelatihan
+                      Akademi
                       <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
                     </div>
                   </Dropdown.Toggle>

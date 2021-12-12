@@ -58,7 +58,7 @@ export default function TestSubstansiPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);
@@ -84,11 +84,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         );
         if (data) {
           const status = data.data.status;
-          if (
-            status.includes("substansi") ||
-            status.includes("belum tersedia") ||
-            status.includes("belum mengerjakan")
-          ) {
+          if (status.includes("substansi")) {
             success = true;
           } else {
             success = false;
@@ -107,11 +103,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
           if (!status || status == "") {
             success = false;
-          } else if (
-            status.includes("substansi") ||
-            status.includes("belum tersedia") ||
-            status.includes("belum mengerjakan")
-          ) {
+          } else if (status.includes("substansi")) {
             await store.dispatch(
               getDetailRiwayatPelatihan(
                 dataDashboard?.data.pelatihan.pelatihan_berjalan.id,
@@ -125,12 +117,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
               getAllRiwayatPelatihanPeserta(session?.user.user.data.user.token)
             );
             success = false;
-            const list = data.list.filter((item) => {
-              return (
-                item.status.includes("substansi") ||
-                item.status.includes("belum tersedia") ||
-                item.status.includes("belum mengerjakan")
-              );
+            const list = data.list.filter(item => {
+              return item.status.includes("substansi");
             });
 
             if (list.length == 0 || !list) {

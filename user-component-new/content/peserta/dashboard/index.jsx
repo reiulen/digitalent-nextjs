@@ -141,7 +141,7 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
-
+  console.log(dataDashboard, "ini data dashboard");
   return (
     <Fragment>
       <PesertaWrapper padding={"10"}>
@@ -212,12 +212,18 @@ const Dashboard = ({ session, success }) => {
               col={col === 1 ? 12 : 6}
             />
           )}
+          {/* `/peserta/riwayat-pelatihan/${data?.name.split(" ").join("-").toLowerCase()}/sertifikat/${data?.id}` */}
           {dataDashboard?.subvit.sertifikat.status && (
             <CardPage
               backgroundImage="new-game-2.svg"
               background="warning"
               color="#FFA800"
-              link="/peserta"
+              link={`/peserta/riwayat-pelatihan/${dataDashboard?.pelatihan?.pelatihan_selesi?.name
+                .split(" ")
+                .join("-")
+                .toLowerCase()}/sertifikat/${
+                dataDashboard?.pelatihan?.pelatihan_selesi?.id
+              }`}
               text="Unduh Sertifikat"
               desc="Anda Sudah bisa mengunduh Sertifikat"
               total={dataDashboard?.subvit.sertifikat.status}
@@ -382,13 +388,17 @@ const Dashboard = ({ session, success }) => {
                               Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
-                                  .pendaftaran_mulai
-                              ).format("DD MMM YYYY")}{" "}
+                                  .pelatihan_mulai
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                               -{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
-                                  .pendaftaran_selesai
-                              ).format("DD MMM YYYY")}{" "}
+                                  .pelatihan_selesai
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                             </span>
                           </div>
 
@@ -557,13 +567,17 @@ const Dashboard = ({ session, success }) => {
                               Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
-                                  .pendaftaran_mulai
-                              ).format("DD MMM YYYY")}{" "}
+                                  .pelatihan_mulai
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                               -{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
-                                  .pendaftaran_selesai
-                              ).format("DD MMM YYYY")}{" "}
+                                  .pelatihan_selesai
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                             </span>
                           </div>
 
