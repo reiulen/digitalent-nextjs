@@ -49,6 +49,7 @@ export default function RiwayatPelatihanDetail({ session }) {
     helperUserStatusColor(data?.status, setLabel);
   }, []);
   const [truncate, setTruncate] = useState(true);
+
   return (
     <PesertaWrapper>
       <Col lg={12} className="px-0">
@@ -208,7 +209,7 @@ export default function RiwayatPelatihanDetail({ session }) {
                         {data?.mitra || data?.penyelenggara || "-"}
                       </div>
                       <div style={{ fontSize: "12px" }}>
-                        {data?.lokasi_mitra || "-"}
+                        {data?.mitra ? data?.lokasi_mitra : "-"}
                       </div>
                     </div>
                   </div>
