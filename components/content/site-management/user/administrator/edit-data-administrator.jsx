@@ -383,6 +383,9 @@ const TambahApi = ({ token }) => {
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("status");
                   }}
+                  onChange={e => {
+                    setStatus(e.target.value)
+                  }}
                 >
                   <option value="" selected disabled hidden>
                     Pilih status

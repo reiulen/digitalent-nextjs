@@ -180,6 +180,8 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     getMenu();
+    getDataGeneral();
+    
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
     }
