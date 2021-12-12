@@ -225,13 +225,13 @@ export default function Bookmark({ session }) {
                           <i className="ri-time-line"></i>
                           <span className={`${style.text_date_register} pl-2`}>
                             Registrasi:{" "}
-                            {moment(el.pendaftaran_mulai).format(
-                              "DD MMMM YYYY"
-                            )}{" "}
+                            {moment(el.pendaftaran_mulai)
+                              .utc()
+                              .format("DD MMMM YYYY")}{" "}
                             -{" "}
-                            {moment(el.pendaftaran_selesai).format(
-                              "DD MMMM YYYY"
-                            )}
+                            {moment(el.pendaftaran_selesai)
+                              .utc()
+                              .format("DD MMMM YYYY")}
                           </span>
                         </div>
                         <div className="date d-flex align-items-center align-middle">
