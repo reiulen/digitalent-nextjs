@@ -406,10 +406,38 @@ const Dashboard = ({ session, success }) => {
                               className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
                               Status :{" "}
-                              {
-                                dataDashboard?.pelatihan?.pelatihan_berjalan
-                                  .status
-                              }
+                              {dataDashboard?.pelatihan?.pelatihan_berjalan?.lpj
+                                ? "Isi LPJ"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.survei
+                                ? "Isi Survey"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.status == "pelatihan" &&
+                                  dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    .midtest &&
+                                  !dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    .trivia
+                                ? "Kerjakan Mid Test"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.status == "pelatihan" &&
+                                  dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    .trivia
+                                ? "kerjakan trivia"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.status == "survey belum tersedia" ||
+                                  dataDashboard?.pelatihan?.pelatihan_berjalan.status.includes(
+                                    "survey"
+                                  )
+                                ? "Isi Survey"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan?.status.includes(
+                                    "LPJ"
+                                  ) ||
+                                  dataDashboard?.pelatihan?.pelatihan_berjalan.status.includes(
+                                    "lpj"
+                                  )
+                                ? "Isi LPJ"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.status}
                             </span>
                           </div>
                         </div>
@@ -585,7 +613,38 @@ const Dashboard = ({ session, success }) => {
                               className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
                               Status :{" "}
-                              {dataDashboard?.pelatihan.pelatihan_selesi.status}
+                              {dataDashboard?.pelatihan?.pelatihan_selesi?.lpj
+                                ? "Isi LPJ"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.survei
+                                ? "Isi Survey"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.status == "pelatihan" &&
+                                  dataDashboard?.pelatihan?.pelatihan_selesi
+                                    .midtest &&
+                                  !dataDashboard?.pelatihan?.pelatihan_selesi
+                                    .trivia
+                                ? "Kerjakan Mid Test"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.status == "pelatihan" &&
+                                  dataDashboard?.pelatihan?.pelatihan_selesi
+                                    .trivia
+                                ? "kerjakan trivia"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.status == "survey belum tersedia" ||
+                                  dataDashboard?.pelatihan?.pelatihan_selesi.status.includes(
+                                    "survey"
+                                  )
+                                ? "Isi Survey"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi?.status.includes(
+                                    "LPJ"
+                                  ) ||
+                                  dataDashboard?.pelatihan?.pelatihan_selesi.status.includes(
+                                    "lpj"
+                                  )
+                                ? "Isi LPJ"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.status}
                             </span>
                           </div>
                         </div>
