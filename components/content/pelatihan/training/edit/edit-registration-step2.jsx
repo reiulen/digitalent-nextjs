@@ -26,6 +26,10 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   const { data: dataForm, error: errorDropdownForm } = useSelector(
     (state) => state.drowpdownFormBuilder
   );
+  const { data: dataReferenceOption } = useSelector(
+    (state) => state.allDataReference
+  );
+  const [dataOptions, setDataOptions] = useState([]);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -98,41 +102,19 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
     },
   ]);
 
-  const [dataOptions] = useState([
-    {
-      value: "status_menikah",
-    },
-    {
-      value: "pendidikan",
-    },
-    {
-      value: "status_pekerjaan",
-    },
-    {
-      value: "hubungan",
-    },
-    {
-      value: "bidang_pekerjaan",
-    },
-    {
-      value: "level_pelatihan",
-    },
-    {
-      value: "agama",
-    },
-    {
-      value: "penyelengaara",
-    },
-    {
-      value: "provinsi",
-    },
-    {
-      value: "kota/kabupaten",
-    },
-    {
-      value: "universitas",
-    },
-  ]);
+  useEffect(() => {
+    const dataOptionsArr = [];
+    if (dataReferenceOption) {
+      dataReferenceOption.list_reference.map((row, i) => {
+        let data = {
+          id: row.id,
+          value: row.name,
+        };
+        dataOptionsArr.push(data);
+      });
+    }
+    setDataOptions(dataOptionsArr);
+  }, []);
 
   const optionsForm = dataForm.data || [];
 
@@ -362,6 +344,7 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
               : viewForm === "2" && setFormBuilderManual(form);
           }}
           sendPropsModalShow={(value) => setModalShow(value)}
+          propsToken={token}
         />
       </Modal>
     </div>
