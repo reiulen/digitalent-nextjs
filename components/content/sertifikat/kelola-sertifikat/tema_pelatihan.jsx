@@ -112,7 +112,7 @@ export default function NamaPelatihan({ token }) {
 		allCertificates.academy,
 		allCertificates.limit,
 	]);
-
+	console.log(certificate);
 	return (
 		<PageWrapper>
 			{/* error START */}
