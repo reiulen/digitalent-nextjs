@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 				};
 			}
 			const token_permission = req.cookies.token_permission;
-			console.log(token_permission, "ini tokennya");
+
 			await store.dispatch(
 				getAllAcademy(
 					query.page,
@@ -56,16 +56,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
 					token_permission
 				)
 			);
-			await store.dispatch(
-				getBeasiswaPendaftarWilayah(
-					session.user.user.data.token,
-					token_permission
-				)
-			);
 
 			await store.dispatch(
-				getAllPermission(session.user.user.data.token, token_permission)
+				getBeasiswaPendaftarWilayah(session.user.user.data.token)
 			);
+
+			await store.dispatch(getAllPermission(session.user.user.data.token));
 
 			return {
 				props: { session, title: "List Akademi - Pelatihan" },

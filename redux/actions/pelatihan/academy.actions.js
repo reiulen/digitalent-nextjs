@@ -139,32 +139,34 @@ export const updateAcademy = (academyData, token) => async (dispatch) => {
 	}
 };
 
-export const deleteAcademy = (id, token) => async (dispatch) => {
-	try {
-		dispatch({ type: DELETE_ACADEMY_REQUEST });
+export const deleteAcademy =
+	(id, token, token_permission) => async (dispatch) => {
+		try {
+			dispatch({ type: DELETE_ACADEMY_REQUEST });
 
-		const config = {
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		};
+			const config = {
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+				Permission: token_permission,
+			};
 
-		const { data } = await axios.delete(
-			process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/delete?id=${id}`,
-			config
-		);
+			const { data } = await axios.delete(
+				process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/delete?id=${id}`,
+				config
+			);
 
-		dispatch({
-			type: DELETE_ACADEMY_SUCCESS,
-			payload: data.status,
-		});
-	} catch (error) {
-		dispatch({
-			type: DELETE_ACADEMY_FAIL,
-			payload: error.response.data.message,
-		});
-	}
-};
+			dispatch({
+				type: DELETE_ACADEMY_SUCCESS,
+				payload: data.status,
+			});
+		} catch (error) {
+			dispatch({
+				type: DELETE_ACADEMY_FAIL,
+				payload: error.response.data.message,
+			});
+		}
+	};
 
 export const clearErrors = () => async (dispatch) => {
 	dispatch({
