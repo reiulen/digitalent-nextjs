@@ -34,7 +34,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token, permission) => async (dispatch) => {
+export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
     try {
 
         dispatch({ type: VIDEO_REQUEST })
@@ -49,7 +49,6 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -68,13 +67,12 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
     }
 }
 
-export const getDetailVideo = (id, token, permission) => async (dispatch) => {
+export const getDetailVideo = (id, token) => async (dispatch) => {
     try {
 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -95,7 +93,7 @@ export const getDetailVideo = (id, token, permission) => async (dispatch) => {
     }
 }
 
-export const newVideo = (videoData, token, permission) => async (dispatch) => {
+export const newVideo = (videoData, token) => async (dispatch) => {
     try {
 
         dispatch({
@@ -105,7 +103,6 @@ export const newVideo = (videoData, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -123,7 +120,7 @@ export const newVideo = (videoData, token, permission) => async (dispatch) => {
     }
 }
 
-export const updateVideo = (videoData, token, permission) => async (dispatch) => {
+export const updateVideo = (videoData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_VIDEO_REQUEST })
 
@@ -132,7 +129,6 @@ export const updateVideo = (videoData, token, permission) => async (dispatch) =>
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -149,7 +145,7 @@ export const updateVideo = (videoData, token, permission) => async (dispatch) =>
     }
 }
 
-export const deleteVideo = (id, token, permission) => async (dispatch) => {
+export const deleteVideo = (id, token) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_VIDEO_REQUEST })
@@ -157,7 +153,6 @@ export const deleteVideo = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -176,14 +171,13 @@ export const deleteVideo = (id, token, permission) => async (dispatch) => {
     }
 }
 
-export const playVideo = (videoData, token, permission) => async (dispatch) => {
+export const playVideo = (videoData, token) => async (dispatch) => {
     try {
         dispatch({ type: PLAY_VIDEO_REQUEST })
 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 

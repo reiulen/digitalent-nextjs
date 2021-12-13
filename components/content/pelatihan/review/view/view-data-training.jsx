@@ -104,7 +104,7 @@ const ViewReviewTraining = ({ token }) => {
     statusKuota: review.status_kuota,
     alurPendaftaran: review.alur_pendaftaran,
     zonasi: review.zonasi,
-    batch: "2",
+    batch: review.batch,
   });
   const [alamatPelatihan, setAlamatPelatihan] = useState({
     alamat: review.alamat,
@@ -310,7 +310,7 @@ const ViewReviewTraining = ({ token }) => {
                 <p className="text-neutral-body mb-2 fz-14">Silabus</p>
                 <p
                   className="fz-16 text-primary"
-                  style={{ cursor: "pointer", textDecoration:'underline' }}
+                  style={{ cursor: "pointer", textDecoration: "underline" }}
                   onClick={() =>
                     window.open(review.file_path + review.silabus, "_blank")
                   }
@@ -523,18 +523,24 @@ const ViewReviewTraining = ({ token }) => {
                 <p className="text-neutral-body mb-2 fz-14">
                   Link Detail Pelatihan
                 </p>
-                <p
-                  className="fz-16 text-primary"
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    window.open(
-                      `http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`,
-                      "_blank"
-                    )
-                  }
-                >
-                  {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
-                </p>
+                {review.status_publish === 0 ? (
+                  <p
+                    className="fz-16 text-primary"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      window.open(
+                        `http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
+                  </p>
+                ) : (
+                  <p className="fz-16 text-primary">
+                    {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
+                  </p>
+                )}
               </div>
             </div>
 

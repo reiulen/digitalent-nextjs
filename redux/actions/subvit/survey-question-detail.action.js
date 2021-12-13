@@ -39,7 +39,7 @@ export const getAllSurveyQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
       let link =
@@ -189,7 +189,7 @@ export const detailSurveyQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
       const { data } = await axios.get(
@@ -205,7 +205,7 @@ export const detailSurveyQuestionDetail =
     } catch (error) {
       dispatch({
         type: DETAIL_SURVEY_QUESTION_DETAIL_FAIL,
-        payload: error.response.data.message,
+        payload: error.response.data,
       });
     }
   };

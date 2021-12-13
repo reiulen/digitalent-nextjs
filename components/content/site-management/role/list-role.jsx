@@ -198,7 +198,7 @@ const Table = ({ token }) => {
                                     <Link
                                       href={`/site-management/role/ubah-role/${items.id}`}
                                     >
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <a className={`btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3 ${items.type === 1 ? "" : "d-none"}`}>
                                         <IconPencil width="16" height="16" />
                                         <div className="text-hover-show-hapus">
                                           Ubah
@@ -212,7 +212,7 @@ const Table = ({ token }) => {
                                     <Link
                                       href={`/site-management/role/detail-role/${items.id}`}
                                     >
-                                      <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                      <a className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete">
                                         <IconEye width="16" height="16" />
                                         <div className="text-hover-show-hapus">
                                           Detail
@@ -255,7 +255,7 @@ const Table = ({ token }) => {
                     activePage={allRoles.page}
                     itemsCountPerPage={allRoles.data.perPage}
                     totalItemsCount={allRoles.data.total}
-                    pageRangeDisplayed={3}
+                    pageRangeDisplayed={2}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}

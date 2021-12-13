@@ -375,7 +375,7 @@ const Artikel = () => {
             />
 
             {/* Header */}
-            <div className="col-12 mt-5 ml-n1">
+            <div className="col-12 mt-5 ml-n3">
                 <h1 className="fw-700" style={{fontSize: "40px", fontFamily:"Poppins"}}>
                     {activeTitle}
                 </h1>
@@ -1026,7 +1026,7 @@ const Artikel = () => {
                                 artikel.artikel.map ((el, i) => {
                                     return (
                                         <div 
-                                            className= "row mt-20 mb-3 pl-7"
+                                            className= "row mt-20 mb-3 pl-6"
                                             key={i}
                                         >
                                             <div className="col-4 col-sm-8 pr-md-8 pr-2 pl-lg-2">
@@ -1157,12 +1157,20 @@ const Artikel = () => {
                                                 
                                                 <div className="row mb-3 mt-5 d-flex align-items-center ml-n7 ">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12">
-                                                        {moment(el.tanggal_publish).format("DD MMM")} | {el.dibaca} dibaca
+                                                    <div className="text-muted col-xl-3 col-12 d-flex justify-content-between">
+                                                        <div>
+                                                            {moment(el.tanggal_publish).format("DD MMM")}
+                                                        </div>
+                                                        <div>
+                                                            |
+                                                        </div>
+                                                        <div>
+                                                            {el.dibaca} dibaca
+                                                        </div>
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
-                                                    <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-2 ">
+                                                    <div className="col-xl-9 col-12 d-flex flex-row flex-wrap my-3 pl-0 ">
                                                         {   
                                                             tagCards && tagCards.length !== 0 ?
                                                                 showTagCards(i)
@@ -1174,7 +1182,7 @@ const Artikel = () => {
                                             </div>
 
                                             <div 
-                                                className="col-8 col-sm-4 position-relative img-fluid" 
+                                                className="col-8 col-sm-4 pl-6 pl-sm-0 position-relative img-fluid" 
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/artikel/detail/${el.slug}`}>
@@ -1211,7 +1219,15 @@ const Artikel = () => {
                                             className="font-weight-bolder mt-15 text-center fw-600" 
                                             style={{fontFamily:"Poppins", fontSize:"24px"}}
                                         >
-                                            Tidak ada artikel terkait "{keyword}"
+                                            {
+                                                keyword ?
+                                                    `Tidak ada artikel terkait "${keyword}"`
+                                                :
+                                                    category_academy ?
+                                                        `Tidak ada artikel terkait "${category_academy}"`
+                                                    :
+                                                        `Tidak ada artikel terkait.`
+                                            }
                                         </h1>
                                 
                                         </div>

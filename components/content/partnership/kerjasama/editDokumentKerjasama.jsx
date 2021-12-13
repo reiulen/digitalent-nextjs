@@ -309,7 +309,7 @@ const EditDokumentKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark mb-0 titles-1">
-              Ubah Dokumen Kerjasama
+              Ubah Kerjasama
             </h3>
           </div>
 
@@ -475,7 +475,7 @@ const EditDokumentKerjasama = ({ token }) => {
                   <div className="col-12 col-sm-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-search-date form-control-sm form-control cursor-not-allowed"
                         disabled
                         onChange={(date) =>
                           setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))

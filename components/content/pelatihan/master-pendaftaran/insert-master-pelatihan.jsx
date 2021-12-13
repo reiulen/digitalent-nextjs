@@ -15,10 +15,15 @@ const AddMasterPelatihan = ({ token }) => {
   const router = useRouter();
 
   const { registrationData } = useSelector((state) => state.registrationStep2);
+  const { data: dataReferenceOption } = useSelector(
+    (state) => state.allDataReference
+  );
+
   const [success, setSuccess] = useState(0);
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [modalShow, setModalShow] = useState(false);
+  const [dataOptions, setDataOptions] = useState([]);
 
   const [element] = useState([
     {
@@ -71,45 +76,22 @@ const AddMasterPelatihan = ({ token }) => {
     },
   ]);
 
-  const [dataOptions] = useState([
-    {
-      value: "status_menikah",
-    },
-    {
-      value: "pendidikan",
-    },
-    {
-      value: "status_pekerjaan",
-    },
-    {
-      value: "hubungan",
-    },
-    {
-      value: "bidang_pekerjaan",
-    },
-    {
-      value: "level_pelatihan",
-    },
-    {
-      value: "agama",
-    },
-    {
-      value: "penyelengaara",
-    },
-    {
-      value: "provinsi",
-    },
-    {
-      value: "kota/kabupaten",
-    },
-    {
-      value: "universitas",
-    },
-  ]);
-
   const [title, setTitle] = useState(registrationData.judul_form);
   const [formBuilder, setFormBuilder] = useState(registrationData.formBuilder);
 
+  useEffect(() => {
+    const dataOptionsArr = [];
+    if (dataReferenceOption) {
+      dataReferenceOption.list_reference.map((row, i) => {
+        let data = {
+          id: row.id,
+          value: row.name,
+        };
+        dataOptionsArr.push(data);
+      });
+    }
+    setDataOptions(dataOptionsArr);
+  }, []);
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -172,7 +154,7 @@ const AddMasterPelatihan = ({ token }) => {
                 -- PILIH --
               </option>
               {dataOptions.map((datOpt, i) => (
-                <option key={i} value={datOpt.value}>
+                <option key={i} value={datOpt.id}>
                   {datOpt.value}
                 </option>
               ))}
@@ -461,13 +443,12 @@ const AddMasterPelatihan = ({ token }) => {
                   </div>
 
                   {renderMultipleHandler(row, i)}
-
                   <div className="col-sm-6 col-md-2">
-                    <label className="col-form-label font-weight-bold">
+                    <label className="col-form-label font-weight-bold ml-md-10">
                       Required
                     </label>
-                    <div className="d-flex align-items-end">
-                      <div className="form-group mr-7">
+                    <div className="d-flex align-items-end justify-content-between">
+                      <div className="form-group ml-md-10">
                         <div className="form-check form-check-inline">
                           <input
                             type="checkbox"
@@ -478,10 +459,9 @@ const AddMasterPelatihan = ({ token }) => {
                           />
                         </div>
                       </div>
-
                       {formBuilder.length !== 1 && row.key !== 1 ? (
                         <button
-                          className="btn btn-link-action bg-danger text-white mb-3 ml-9"
+                          className="btn btn-link-action bg-danger text-white mb-3 "
                           type="button"
                           onClick={() => removeFieldHandler(i)}
                         >
@@ -489,7 +469,7 @@ const AddMasterPelatihan = ({ token }) => {
                         </button>
                       ) : (
                         <button
-                          className="btn btn-link-action bg-danger text-white mb-3 ml-9 invisible"
+                          className="btn btn-link-action bg-danger text-white mb-3  invisible"
                           type="button"
                           onClick={() => removeFieldHandler(i)}
                         >
@@ -553,6 +533,7 @@ const AddMasterPelatihan = ({ token }) => {
               propsModalShow={modalShow}
               sendPropsFormBuilder={(form) => setFormBuilder(form)}
               sendPropsModalShow={(value) => setModalShow(value)}
+              propsToken={token}
             />
           </Modal>
         </div>

@@ -111,7 +111,7 @@ const Table = ({ token }) => {
 
             {
               permission ? 
-                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?
                   <div className="col-12 col-xl-6 d-flex justify-content-xl-end  mb-5">
                     <div className="card-toolbar mb-5">
                       <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
@@ -186,7 +186,7 @@ const Table = ({ token }) => {
                         <th className="text-left align-middle">Status</th>
                         {
                           permission ? 
-                            permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                            permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?
                               <th className="text-left align-middle">Aksi</th>
                             :
                               null
@@ -252,7 +252,7 @@ const Table = ({ token }) => {
 
                                 {
                                   permission ? 
-                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?
                                       <td className="text-left align-middle">
                                         <div className="d-flex align-items-center">
                                           <button

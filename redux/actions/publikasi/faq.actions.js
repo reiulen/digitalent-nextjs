@@ -36,7 +36,7 @@ import {
 import axios from 'axios'
 
 // get all data
-export const getAllFaq = (token, permission) => async (dispatch) => {
+export const getAllFaq = (token) => async (dispatch) => {
     try {
 
         dispatch({ type: FAQ_REQUEST })
@@ -44,7 +44,6 @@ export const getAllFaq = (token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -65,7 +64,7 @@ export const getAllFaq = (token, permission) => async (dispatch) => {
     }
 }
 
-export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token, permission) => async (dispatch) => {
+export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
     try {
 
         dispatch({ type: PAGINATION_FAQ_REQUEST })
@@ -80,7 +79,6 @@ export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish =
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
-                "Permission": permission
             },
         };
 
@@ -99,7 +97,7 @@ export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish =
     }
 }
 
-export const newFaq = (faqData, token, permission) => async (dispatch) => {
+export const newFaq = (faqData, token) => async (dispatch) => {
     try {
 
         dispatch({
@@ -109,7 +107,6 @@ export const newFaq = (faqData, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -128,7 +125,7 @@ export const newFaq = (faqData, token, permission) => async (dispatch) => {
     }
 }
 
-export const deleteFaq = (id, token, permission) => async (dispatch) => {
+export const deleteFaq = (id, token) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_FAQ_REQUEST })
@@ -136,7 +133,6 @@ export const deleteFaq = (id, token, permission) => async (dispatch) => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -155,14 +151,13 @@ export const deleteFaq = (id, token, permission) => async (dispatch) => {
     }
 }
 
-export const getDetailFaq = (id, token, permission) => async (dispatch) => {
+export const getDetailFaq = (id, token) => async (dispatch) => {
     try {
         dispatch({ type: DETAIL_FAQ_REQUEST })
 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -182,14 +177,13 @@ export const getDetailFaq = (id, token, permission) => async (dispatch) => {
     }
 };
 
-export const updateFaq = (faqData, id, token, permission) => async (dispatch) => {
+export const updateFaq = (faqData, id, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_FAQ_REQUEST });
 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 
@@ -210,7 +204,7 @@ export const updateFaq = (faqData, id, token, permission) => async (dispatch) =>
     }
 };
 
-export const updatePinFaq = (faq, id, token, permission) => async (dispatch) => {
+export const updatePinFaq = (faq, id, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_PIN_FAQ_REQUEST });
 
@@ -220,7 +214,6 @@ export const updatePinFaq = (faq, id, token, permission) => async (dispatch) => 
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
-                "Permission": permission
             },
         };
 

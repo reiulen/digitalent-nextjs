@@ -119,7 +119,7 @@ const Tambah = ({ token }) => {
                   <div className="form-group" key={index}>
                     {index === 0 ? (
                       <label htmlFor="staticEmail" className="col-form-label">
-                        Form Kerjasama
+                        Judul Form Isian Kerjasama
                       </label>
                     ) : (
                       ""

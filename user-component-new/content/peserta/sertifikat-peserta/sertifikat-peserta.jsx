@@ -7,19 +7,20 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { toPng } from "html-to-image";
-
+import { SweatAlert } from "../../../../utils/middleware/helper";
+import LoadingTable from "../../../../components/LoadingTable";
+import Swal from "sweetalert2";
 export default function RiwayatPelatihanDetail(props) {
   const {
     data: { data },
-  } = useSelector((state) => state.sertifikatPeserta);
+  } = useSelector(state => state.sertifikatPeserta);
 
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
   const [type, setType] = useState(
     data?.data_sertifikat?.certificate?.certificate_type
   );
-
-  const convertDivToPng = async (div) => {
+  const convertDivToPng = async div => {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -29,30 +30,69 @@ export default function RiwayatPelatihanDetail(props) {
     return data;
   };
 
-  const handleDownload = async () => {
-    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${data?.data_user?.nomor_registrasi}`;
+  const [loading, setLoading] = useState(false);
 
-    const check = await axios.get(linkChecker);
-    // check udh pernah di sign apa belum?
-    if (!check.data.status) {
-      const data = await convertDivToPng(divReference.current);
-      if (data) {
-        const formData = new FormData();
-        formData.append("certificate", data);
-        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${data?.data_sertifikat.pelatihan.id}&nomor_registrasi=${data?.data_user?.nomor_registrasi}`;
-
-        const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
-        const a = document.createElement("a");
-        a.download = `Sertifikat - p12 ${data?.data_user?.name}.png`;
-        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
-        a.click();
-      }
+  useEffect(() => {
+    if (loading) {
+      Swal.fire({
+        title: "Mengunduh Sertifikat",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
     } else {
-      const a = document.createElement("a");
-      a.download = `Sertifikat - p12 ${data?.data_user?.name}.png`;
-      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${data?.data_sertifikat?.certificate?.certificate_pdf}`;
-      a.click();
+      Swal.hideLoading();
     }
+  }, [loading]);
+
+  const handleDownload = async (id, noRegis, nama) => {
+    setLoading(true);
+    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${noRegis}`;
+    try {
+      const check = await axios.get(linkChecker);
+      if (!check.data.status) {
+        const data = await convertDivToPng(divReference.current);
+        if (data) {
+          try {
+            const formData = new FormData();
+            formData.append("certificate", data);
+            const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
+            const result = await axios.post(link, formData);
+            //post image certificate yang udah di render dari html
+            if (!result.data.status) {
+              setLoading(false);
+              SweatAlert(
+                "Gagal",
+                "Harap menunggu, Sertifikat masih dalam proses pengesahan",
+                "error"
+              );
+            } else {
+              const a = document.createElement("a");
+              a.download = `Sertifikat - ${nama} ${noRegis}.png`;
+              a.target = "_blank";
+              a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
+              a.click();
+              setLoading(false);
+            }
+          } catch (e) {
+            setLoading(false);
+            SweatAlert("Gagal", e.message, "error");
+          }
+        }
+      } else {
+        const a = document.createElement("a");
+        a.download = `Sertifikat - ${nama} ${noRegis}.png`;
+        a.target = "_blank";
+        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
+        a.click();
+        setLoading(false);
+      }
+    } catch (e) {
+      setLoading(false);
+      SweatAlert("Gagal", e.message, "error");
+    }
+    // check udh pernah di sign apa belum?
   };
 
   return (
@@ -85,6 +125,7 @@ export default function RiwayatPelatihanDetail(props) {
           </div>
           {/* END HEADER */}
           {/* START BODY */}
+
           <div className="card-body border-top">
             <div className="row p-0 justify-content-center">
               {/* START COL */}
@@ -93,47 +134,48 @@ export default function RiwayatPelatihanDetail(props) {
                 id="sertifikat1"
                 ref={divReference}
               >
-                <div className="position-relative">
-                  <div
-                    className={`position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1`}
-                  >
-                    {data?.data_user?.nomor_registrasi}
-                  </div>
-                  <div
-                    className={`position-absolute w-100 text-center ${
-                      data?.data_sertifikat?.certificate?.background
-                        ? ` responsive-margin-peserta-1`
-                        : ` responsive-margin-without-background`
-                    } zindex-1`}
-                  >
-                    <span
-                      className={`${style.responsive_font_size_peserta} font-weight-bolder`}
-                    >
-                      {data?.data_user?.nama_peserta}
-                    </span>
-                  </div>
-                  <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${data?.data_sertifikat?.certificate?.certificate_result}`}
-                    alt={`image ${data?.data_sertifikat?.certificate?.certificate_result}`}
-                    objectFit="fill"
-                    width={842}
-                    height={595}
-                    key={1}
-                  />
+                <div
+                  className={`position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1`}
+                >
+                  {data?.data_user?.nomor_sertifikat}
                 </div>
+                <div
+                  className={`position-absolute w-100 text-center ${
+                    data?.data_sertifikat?.certificate?.background
+                      ? ` responsive-margin-peserta-1`
+                      : ` responsive-margin-without-background`
+                  } zindex-1`}
+                >
+                  <span
+                    className={`${style.responsive_font_size_peserta} font-weight-bolder`}
+                  >
+                    {data?.data_user?.nama_peserta}
+                  </span>
+                </div>
+                <Image
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${data?.data_sertifikat?.certificate?.certificate_result}`}
+                  alt={`image ${data?.data_sertifikat?.certificate?.certificate_result}`}
+                  objectFit="fill"
+                  width={842}
+                  height={595}
+                  key={1}
+                />
               </div>
               {/* END COL */}
             </div>
             {type == "1 lembar" && (
               <div className="row mx-0 mt-10 col-12">
-                <div className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
-                  <a
-                    onClick={() => {
-                      handleDownload();
-                    }}
-                  >
-                    Unduh
-                  </a>
+                <div
+                  onClick={() => {
+                    handleDownload(
+                      data.data_sertifikat.pelatihan.id,
+                      data.data_user.nomor_registrasi,
+                      data.data_user.nama_peserta
+                    );
+                  }}
+                  className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                >
+                  <a>Unduh</a>
                 </div>
               </div>
             )}
@@ -164,8 +206,12 @@ export default function RiwayatPelatihanDetail(props) {
               </div>
               <div className="row mt-10 col-12 p-0 m-0">
                 <div
-                  onClick={(e) => {
-                    handleDownload();
+                  onClick={e => {
+                    handleDownload(
+                      data.data_sertifikat.pelatihan.id,
+                      data.data_user.nomor_registrasi,
+                      data.data_user.nama_peserta
+                    );
                   }}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
                 >

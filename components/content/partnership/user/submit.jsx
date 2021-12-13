@@ -194,7 +194,7 @@ const SubmitKerjasama = ({ token }) => {
               <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Submit Kerjasama</span>
+                    <span className="title-progress">Submit Kerjasamaa</span>
                   </div>
                 </div>
               </div>
@@ -291,7 +291,7 @@ const SubmitKerjasama = ({ token }) => {
                   <div className="col-12 col-sm-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-control cursor-pointer border-0"
+                        className="form-control cursor-not-allowed border-0"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         readOnly

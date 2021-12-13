@@ -135,11 +135,11 @@ const StepOne = ({ token, tokenPermission }) => {
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops...",
+      //   text: "Isi data dengan benar !",
+      // });
     }
   };
 
@@ -255,6 +255,7 @@ const StepOne = ({ token, tokenPermission }) => {
                   Tema
                 </Form.Label>
                 <Select
+                  isDisabled={!academy_id}
                   placeholder={themeLabel || "Silahkan Pilih Tema"}
                   options={optionsTema}
                   value={themeLabel}
@@ -272,6 +273,7 @@ const StepOne = ({ token, tokenPermission }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
+                  isDisabled={!theme_id}
                   placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
                   value={trainingLabel}
@@ -300,7 +302,18 @@ const StepOne = ({ token, tokenPermission }) => {
                   options={optionsKategori}
                   className={styles.selectForm}
                   onChange={(e) => setCategory(e.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("kategori")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "kategori",
+                  category,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
             </Form>
 

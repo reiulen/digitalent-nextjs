@@ -46,7 +46,7 @@ export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Survey" session={session}>
+      <Layout title="Survey & LPJ" session={session}>
         {props.success ? <SurveyPage session={session} /> : <BelumTersedia />}
       </Layout>
     </>
@@ -75,7 +75,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
         );
         if (data) {
-          if (data?.data?.status.includes("administrasi akhir")) {
+          if (data?.data?.survei) {
             success = true;
           } else {
             success = false;
@@ -93,7 +93,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
         if (!status || status == "") {
           success = false;
-        } else if (status?.includes("administrasi akhir")) {
+        } else if (dataDashboard?.data?.pelatihan?.pelatihan_berjalan.survei) {
           await store.dispatch(
             getDetailRiwayatPelatihan(
               dataDashboard?.data.pelatihan.pelatihan_berjalan.id,
@@ -108,7 +108,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           );
           success = false;
           const list = data.list.filter((item) => {
-            return item.status.includes("administrasi akhir");
+            return item.survei;
           });
           if (list.length == 0 || !list) {
             success = false;
@@ -123,6 +123,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           }
         }
       }
+
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 

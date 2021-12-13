@@ -27,6 +27,7 @@ const UbahRole = ({ token }) => {
   const [editTable, setEditTable] = useState(detailRoles.role.type);
   const [nameRole, setNameRole] = useState(detailRoles.role.name);
   const [, forceUpdate] = useState();
+  const [force, setForce] = useState(false);
 
   const btnIconPlus = {
     display: "flex",
@@ -94,7 +95,7 @@ const UbahRole = ({ token }) => {
                 <input
                   type="checkbox"
                   name="Checkboxes1"
-                  defaultChecked={item.view === 1 || item.view === true}
+                  checked={item.view === 1 || item.view === true}
                   onClick={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
@@ -124,7 +125,11 @@ const UbahRole = ({ token }) => {
                         filter.manage = !(
                           filter.manage === true || filter.manage === 1
                         );
+                        filter.view =
+                          filter.manage === true || filter.manage === 1;
                       }
+
+                      setForce(!force);
                       return filter;
                     });
                   }}
@@ -320,7 +325,7 @@ const UbahRole = ({ token }) => {
                     <input
                       type="checkbox"
                       name="Checkboxes1"
-                      defaultChecked={sub.view === 1 || sub.view === true}
+                      checked={sub.view === 1 || sub.view === true}
                       onClick={() => {
                         permission.filter((filter) => {
                           if (sub.id === filter.id) {
@@ -328,6 +333,7 @@ const UbahRole = ({ token }) => {
                               filter.view === true || filter.view === 1
                             );
                           }
+                          setForce(!force);
                           return filter;
                         });
                       }}
@@ -350,7 +356,10 @@ const UbahRole = ({ token }) => {
                             filter.manage = !(
                               filter.manage === true || filter.manage === 1
                             );
+                            filter.view =
+                              filter.manage === true || filter.manage === 1;
                           }
+                          setForce(!force);
                           return filter;
                         });
                       }}
@@ -383,7 +392,7 @@ const UbahRole = ({ token }) => {
               <input
                 type="checkbox"
                 name="Checkboxes1"
-                defaultChecked={item.view === 1 || item.view === true}
+                checked={item.view === 1 || item.view === true}
                 onClick={() => {
                   permission.filter((filter) => {
                     if (item.id === filter.id) {
@@ -391,6 +400,7 @@ const UbahRole = ({ token }) => {
                         filter.view === true || filter.view === 1
                       );
                     }
+                    setForce(!force);
                     return filter;
                   });
                 }}
@@ -413,7 +423,11 @@ const UbahRole = ({ token }) => {
                       filter.manage = !(
                         filter.manage === true || filter.manage === 1
                       );
+                      filter.view =
+                        filter.manage === true || filter.manage === 1;
                     }
+
+                    setForce(!force);
                     return filter;
                   });
                 }}

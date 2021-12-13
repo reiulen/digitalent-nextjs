@@ -135,10 +135,9 @@ const DetailReport = ({ token }) => {
       .get(link, config)
       .then((res) => {
         window.location.href = res.data.data;
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire("Oops !", err, "error");
       });
   };
 
@@ -543,6 +542,20 @@ const DetailReport = ({ token }) => {
               setStatusSubstansi(null);
               setSertifikasi(null);
               setStatusPeserta(null);
+              dispatch(
+                getDetailReportTraining(
+                  token,
+                  pelatian_id,
+                  1,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                )
+              );
+              setShowModal(false);
             }}
           >
             Reset

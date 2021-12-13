@@ -18,7 +18,7 @@ import moment from "moment";
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
   const { error: errorDashboard, dataDashboard } = useSelector(
-    (state) => state.dashboardPeserta
+    state => state.dashboardPeserta
   );
   // useEffect(() => {
   //   if (!success) {
@@ -141,7 +141,6 @@ const Dashboard = ({ session, success }) => {
       );
     }
   }, []);
-
   return (
     <Fragment>
       <PesertaWrapper padding={"10"}>
@@ -177,7 +176,7 @@ const Dashboard = ({ session, success }) => {
               backgroundImage="new-game-4.svg"
               background="primary"
               color="#6C6C6C"
-              link={`/peserta/subvit/substansi/1?theme_id=${dataDashboard?.subvit.subvit.tema_id}&training_id=${dataDashboard?.subvit.subvit.pelatihan_id}&category=Test Substansi`}
+              link={`/peserta/test-substansi/panduan-substansi?no=${dataDashboard?.subvit.subvit.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit.subvit.pelatihan_id}&id_tema=${dataDashboard?.subvit.subvit.tema_id}`}
               text="Lakukan Test Substansi"
               desc="Anda Belum Melakukan Test Substansi"
               total={dataDashboard?.subvit.subvit.status}
@@ -191,7 +190,7 @@ const Dashboard = ({ session, success }) => {
               backgroundImage="new-game-3.svg"
               background="success"
               color="#00B27A"
-              link="/peserta"
+              link={`/peserta/survey?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
               text="Lakukan Survey"
               desc="Anda Belum Melakukan Test Survey"
               total={dataDashboard?.subvit.survei.status}
@@ -204,7 +203,7 @@ const Dashboard = ({ session, success }) => {
               backgroundImage="new-game-1.svg"
               background="danger"
               color="#EE2D41"
-              link="/peserta"
+              link={`/peserta/trivia?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
               text="Lakukan TRIVIA"
               desc="Anda Belum Melakukan TRIVIA"
               total={dataDashboard.subvit.trivia.status}
@@ -217,7 +216,12 @@ const Dashboard = ({ session, success }) => {
               backgroundImage="new-game-2.svg"
               background="warning"
               color="#FFA800"
-              link="/peserta"
+              link={`/peserta/riwayat-pelatihan/${dataDashboard?.pelatihan?.pelatihan_selesi?.name
+                .split(" ")
+                .join("-")
+                .toLowerCase()}/sertifikat/${
+                dataDashboard?.pelatihan?.pelatihan_selesi?.id
+              }`}
               text="Unduh Sertifikat"
               desc="Anda Sudah bisa mengunduh Sertifikat"
               total={dataDashboard?.subvit.sertifikat.status}
@@ -293,7 +297,10 @@ const Dashboard = ({ session, success }) => {
                       <Image
                         className={`${style.image_dashboard}`}
                         src={
-                          !dataDashboard?.pelatihan?.pelatihan_berjalan?.gambar
+                          !dataDashboard?.pelatihan?.pelatihan_berjalan
+                            ?.gambar ||
+                          dataDashboard?.pelatihan?.pelatihan_berjalan
+                            ?.gambar === "Beluma ada file"
                             ? `/assets/media/default-card.png`
                             : dataDashboard?.pelatihan.pelatihan_berjalan
                                 .gambar &&
@@ -323,17 +330,21 @@ const Dashboard = ({ session, success }) => {
                         <div className={style.bungkus_mitra_pelatihan}>
                           <Image
                             src={
-                              (dataDashboard?.pelatihan.pelatihan_berjalan
-                                .gambar_mitra &&
-                                process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                  dataDashboard?.pelatihan.pelatihan_berjalan
-                                    .gambar_mitra) ||
-                              (dataDashboard?.pelatihan.pelatihan_berjalan
+                              dataDashboard?.pelatihan?.pelatihan_berjalan
                                 .logo &&
-                                process.env.END_POINT_API_IMAGE_BEASISWA +
+                              dataDashboard?.pelatihan?.pelatihan_berjalan
+                                .logo !== "Belum ada file"
+                                ? process.env.END_POINT_API_IMAGE_BEASISWA +
                                   dataDashboard?.pelatihan.pelatihan_berjalan
-                                    .logo) ||
-                              `/assets/media/default-card.png`
+                                    .logo
+                                : dataDashboard?.pelatihan.pelatihan_berjalan
+                                    .gambar_mitra &&
+                                  dataDashboard?.pelatihan.pelatihan_berjalan
+                                    .gambar_mitra === "Belum ada file"
+                                ? process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                                  dataDashboard?.pelatihan.pelatihan_berjalan
+                                    .gambar_mitra
+                                : `/assets/media/default-card.png`
                             }
                             width={62}
                             height={62}
@@ -375,13 +386,17 @@ const Dashboard = ({ session, success }) => {
                               Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
-                                  .pendaftaran_mulai
-                              ).format("DD MMM YYYY")}{" "}
+                                  .pelatihan_mulai
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                               -{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_berjalan
-                                  .pendaftaran_selesai
-                              ).format("DD MMM YYYY")}{" "}
+                                  .pelatihan_selesai
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                             </span>
                           </div>
 
@@ -391,10 +406,38 @@ const Dashboard = ({ session, success }) => {
                               className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
                               Status :{" "}
-                              {
-                                dataDashboard?.pelatihan?.pelatihan_berjalan
-                                  .status
-                              }
+                              {dataDashboard?.pelatihan?.pelatihan_berjalan?.lpj
+                                ? "Isi LPJ"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.survei
+                                ? "Isi Survey"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.status == "pelatihan" &&
+                                  dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    .midtest &&
+                                  !dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    .trivia
+                                ? "Kerjakan Mid Test"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.status == "pelatihan" &&
+                                  dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    .trivia
+                                ? "kerjakan trivia"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.status == "survey belum tersedia" ||
+                                  dataDashboard?.pelatihan?.pelatihan_berjalan.status.includes(
+                                    "survey"
+                                  )
+                                ? "Isi Survey"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan?.status.includes(
+                                    "LPJ"
+                                  ) ||
+                                  dataDashboard?.pelatihan?.pelatihan_berjalan.status.includes(
+                                    "lpj"
+                                  )
+                                ? "Isi LPJ"
+                                : dataDashboard?.pelatihan?.pelatihan_berjalan
+                                    ?.status}
                             </span>
                           </div>
                         </div>
@@ -470,7 +513,9 @@ const Dashboard = ({ session, success }) => {
                       <Image
                         className={`${style.image_dashboard}`}
                         src={`${
-                          !dataDashboard?.pelatihan?.pelatihan_selesi?.gambar
+                          !dataDashboard?.pelatihan?.pelatihan_selesi?.gambar &&
+                          dataDashboard?.pelatihan?.pelatihan_selesi?.gambar ===
+                            "Belum ada file"
                             ? "/assets/media/default-card.png"
                             : dataDashboard?.pelatihan?.pelatihan_selesi
                                 ?.file_path +
@@ -497,16 +542,21 @@ const Dashboard = ({ session, success }) => {
                         <div className={style.bungkus_mitra_pelatihan}>
                           <Image
                             src={
-                              !dataDashboard.pelatihan.pelatihan_selesi.logo
+                              dataDashboard.pelatihan.pelatihan_selesi.logo ===
+                                "Belum ada file" ||
+                              dataDashboard.pelatihan.pelatihan_selesi
+                                .gambar_mitra === "Belum ada file" ||
+                              !dataDashboard.pelatihan.pelatihan_selesi.logo ||
+                              !dataDashboard.pelatihan.pelatihan_selesi
+                                .gambar_mitra
                                 ? "/assets/media/default-card.png"
-                                : dataDashboard.pelatihan.pelatihan_selesi
+                                : dataDashboard.pelatihan.pelatihan_selesi.logo
+                                ? dataDashboard.pelatihan.pelatihan_selesi
                                     .file_path +
-                                    dataDashboard.pelatihan.pelatihan_selesi
-                                      .logo ||
+                                  dataDashboard.pelatihan.pelatihan_selesi.logo
+                                : process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                                   dataDashboard.pelatihan.pelatihan_selesi
-                                    .file_path +
-                                    dataDashboard.pelatihan.pelatihan_selesi
-                                      .gambar_mitra
+                                    .gambar_mitra
                             }
                             width={62}
                             height={62}
@@ -543,13 +593,17 @@ const Dashboard = ({ session, success }) => {
                               Pelatihan :{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
-                                  .pendaftaran_mulai
-                              ).format("DD MMM YYYY")}{" "}
+                                  .pelatihan_mulai
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                               -{" "}
                               {moment(
                                 dataDashboard?.pelatihan.pelatihan_selesi
-                                  .pendaftaran_selesai
-                              ).format("DD MMM YYYY")}{" "}
+                                  .pelatihan_selesai
+                              )
+                                .utc()
+                                .format("DD MMM YYYY")}{" "}
                             </span>
                           </div>
 
@@ -559,7 +613,38 @@ const Dashboard = ({ session, success }) => {
                               className={`${style.text_date_register} pl-2 text-capitalize`}
                             >
                               Status :{" "}
-                              {dataDashboard?.pelatihan.pelatihan_selesi.status}
+                              {dataDashboard?.pelatihan?.pelatihan_selesi?.lpj
+                                ? "Isi LPJ"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.survei
+                                ? "Isi Survey"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.status == "pelatihan" &&
+                                  dataDashboard?.pelatihan?.pelatihan_selesi
+                                    .midtest &&
+                                  !dataDashboard?.pelatihan?.pelatihan_selesi
+                                    .trivia
+                                ? "Kerjakan Mid Test"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.status == "pelatihan" &&
+                                  dataDashboard?.pelatihan?.pelatihan_selesi
+                                    .trivia
+                                ? "kerjakan trivia"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.status == "survey belum tersedia" ||
+                                  dataDashboard?.pelatihan?.pelatihan_selesi.status.includes(
+                                    "survey"
+                                  )
+                                ? "Isi Survey"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi?.status.includes(
+                                    "LPJ"
+                                  ) ||
+                                  dataDashboard?.pelatihan?.pelatihan_selesi.status.includes(
+                                    "lpj"
+                                  )
+                                ? "Isi LPJ"
+                                : dataDashboard?.pelatihan?.pelatihan_selesi
+                                    ?.status}
                             </span>
                           </div>
                         </div>

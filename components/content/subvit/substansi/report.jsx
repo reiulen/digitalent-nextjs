@@ -12,7 +12,7 @@ import styles from "../trivia/edit/step.module.css";
 import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Modal } from "react-bootstrap";
+import { Badge, Modal } from "react-bootstrap";
 
 import { clearErrors } from "/redux/actions/subvit/subtance.actions";
 import { allReportSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
@@ -267,7 +267,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-md-5">
+                <div className="col-md-4">
                   <div className="position-relative overflow-hidden mt-2">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
@@ -288,7 +288,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                     </button>
                   </div>
                 </div>
-                <div className="col-md-1"></div>
+                <div className="col-md-3"></div>
                 <div className="col-md-3">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-2 btn-block"
@@ -306,7 +306,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                   </button>
                 </div>
 
-                <div className="col-md-3">
+                <div className="col-md-2 ">
                   <button
                     className={`${styles.btnResponsive} btn w-200 btn-rounded-full bg-blue-secondary text-center text-white mt-2`}
                     type="button"
@@ -377,7 +377,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                                     {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">
-                                    {row.total_workmanship_time}
+                                    {row.total_workmanship_time} Menit
                                   </p>
                                 </div>
                               </td>
@@ -395,16 +395,35 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                                 </div>
                               </td>
                               <td className="align-middle">
-                                {row.status ? (
+                                {row.status === 1 && row.finish === 1 ? (
                                   <td className="align-middle">
-                                    <span className="label label-inline label-light-success font-weight-bold">
+                                    {/* <span className="label label-inline label-light-success font-weight-bold">
                                       Diterima
-                                    </span>
+                                    </span> */}
+                                    <Badge bg="success">Diterima</Badge>
+                                  </td>
+                                ) : !row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="warning">
+                                      Belum Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="success">
+                                      Sedang Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.finish == 1 && row.status == 0 ? (
+                                  <td className="align-middle">
+                                    <Badge bg="danger">Ditolak</Badge>
                                   </td>
                                 ) : (
                                   <td className="align-middle">
                                     <span className="label label-inline label-light-danger font-weight-bold">
-                                      Ditolak
+                                      -
                                     </span>
                                   </td>
                                 )}

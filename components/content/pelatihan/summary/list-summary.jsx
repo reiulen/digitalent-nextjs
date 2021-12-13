@@ -26,31 +26,31 @@ const ListSummary = ({ token }) => {
   const router = useRouter();
 
   let { success } = router.query;
-  const { permission } = useSelector((state) => state.adminPermission);
+  const { permission } = useSelector(state => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
 
   useEffect(() => {
-    const filterPermission = permission?.permissions?.filter((item) =>
+    const filterPermission = permission?.permissions?.filter(item =>
       item.includes("pelatihan")
     );
     setListPermission(filterPermission);
   }, []);
 
-  const { loading, error, summary } = useSelector((state) => state.allSummary);
+  const { loading, error, summary } = useSelector(state => state.allSummary);
   const {
     loading: statusLoading,
     error: statusError,
     success: statusSuccess,
     status,
-  } = useSelector((state) => state.updateStatus);
+  } = useSelector(state => state.updateStatus);
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
-    (state) => state.drowpdownAkademi
+    state => state.drowpdownAkademi
   );
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
-    (state) => state.drowpdownTema
+    state => state.drowpdownTema
   );
   const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
-    useSelector((state) => state.drowpdownPenyelenggara);
+    useSelector(state => state.drowpdownPenyelenggara);
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -100,12 +100,12 @@ const ListSummary = ({ token }) => {
     { value: "ditolak", label: "Ditolak" },
   ];
 
-  const handlePagination = (pageNumber) => {
+  const handlePagination = pageNumber => {
     setPage(pageNumber);
-    let register = dateRegister.map((item) => {
+    let register = dateRegister.map(item => {
       return moment(item).format("YYYY-MM-DD");
     });
-    let pelaksanaan = datePelaksanaan.map((item) => {
+    let pelaksanaan = datePelaksanaan.map(item => {
       return moment(item).format("YYYY-MM-DD");
     });
     dispatch(
@@ -148,10 +148,10 @@ const ListSummary = ({ token }) => {
     setShowModal(false);
     setDateDisabled(true);
     setPage(1);
-    let register = dateRegister.map((item) => {
+    let register = dateRegister.map(item => {
       return moment(item).format("YYYY-MM-DD");
     });
-    let pelaksanaan = datePelaksanaan.map((item) => {
+    let pelaksanaan = datePelaksanaan.map(item => {
       return moment(item).format("YYYY-MM-DD");
     });
     dispatch(
@@ -199,7 +199,7 @@ const ListSummary = ({ token }) => {
     );
   };
 
-  const handleLimit = (val) => {
+  const handleLimit = val => {
     setLimit(val);
     setPage(1);
     dispatch(
@@ -223,12 +223,12 @@ const ListSummary = ({ token }) => {
     router.replace("/subvit/substansi", undefined, { shallow: true });
   };
 
-  const handleExportReport = (e) => {
+  const handleExportReport = e => {
     e.preventDefault();
-    let register = dateRegister.map((item) => {
+    let register = dateRegister.map(item => {
       return moment(item).format("YYYY-MM-DD");
     });
-    let pelaksanaan = datePelaksanaan.map((item) => {
+    let pelaksanaan = datePelaksanaan.map(item => {
       return moment(item).format("YYYY-MM-DD");
     });
     let link =
@@ -252,7 +252,7 @@ const ListSummary = ({ token }) => {
       },
     };
 
-    axios.get(link, config).then((res) => {
+    axios.get(link, config).then(res => {
       window.open(res.data.data, "_blank");
     });
   };
@@ -334,7 +334,7 @@ const ListSummary = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -365,16 +365,20 @@ const ListSummary = ({ token }) => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
-                <div className="col-md-2">
-                  <button
-                    className="d-flex justify-content-center btn w-100 btn-rounded-full bg-blue-secondary text-white"
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export
-                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                  </button>
-                </div>
+                {listPermission.includes(
+                  "pelatihan.rekap_pendaftaran.manage"
+                ) && (
+                  <div className="col-md-2">
+                    <button
+                      className="d-flex justify-content-center btn w-100 btn-rounded-full bg-blue-secondary text-white"
+                      type="button"
+                      onClick={handleExportReport}
+                    >
+                      Export
+                      <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -525,8 +529,8 @@ const ListSummary = ({ token }) => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={(e) => handleLimit(e.target.value)}
-                          onBlur={(e) => handleLimit(e.target.value)}
+                          onChange={e => handleLimit(e.target.value)}
+                          onBlur={e => handleLimit(e.target.value)}
                           value={limit}
                         >
                           <option value="5">5</option>
@@ -575,7 +579,7 @@ const ListSummary = ({ token }) => {
             <Select
               options={optionsPenyelenggara}
               defaultValue={penyelenggara}
-              onChange={(e) =>
+              onChange={e =>
                 setPenyelenggara({ value: e.value, label: e.label })
               }
             />
@@ -585,7 +589,7 @@ const ListSummary = ({ token }) => {
             <Select
               options={optionsAkademi}
               defaultValue={academy}
-              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+              onChange={e => setAcademy({ value: e.value, label: e.label })}
             />
           </div>
           <div className="form-group mb-5">
@@ -593,7 +597,7 @@ const ListSummary = ({ token }) => {
             <Select
               options={optionsTema}
               defaultValue={theme}
-              onChange={(e) => setTheme({ value: e.value, label: e.label })}
+              onChange={e => setTheme({ value: e.value, label: e.label })}
             />
           </div>
           <div className="form-group mb-5">
@@ -601,7 +605,7 @@ const ListSummary = ({ token }) => {
             <Select
               options={optionsStatusSubstansi}
               defaultValue={statusSubstansi}
-              onChange={(e) =>
+              onChange={e =>
                 setStatusSubstansi({ value: e.value, label: e.label })
               }
             />
@@ -611,7 +615,7 @@ const ListSummary = ({ token }) => {
             <Select
               options={optionsStatusPelatihan}
               defaultValue={statusPelatihan}
-              onChange={(e) =>
+              onChange={e =>
                 setStatusPelatihan({ value: e.value, label: e.label })
               }
             />
@@ -624,7 +628,7 @@ const ListSummary = ({ token }) => {
                 className="form-control"
                 name="start_date"
                 selectsRange={true}
-                onChange={(date) => {
+                onChange={date => {
                   setDateRegister(date);
                   setDateDisabled(false);
                 }}
@@ -641,7 +645,7 @@ const ListSummary = ({ token }) => {
                 className="form-control"
                 name="start_date"
                 selectsRange={true}
-                onChange={(date) => setDatePelaksanaan(date)}
+                onChange={date => setDatePelaksanaan(date)}
                 startDate={datePelaksanaanStart}
                 endDate={datePelaksanaanEnd}
                 dateFormat="dd/MM/yyyy"

@@ -226,8 +226,8 @@ const DetailArtikel = () => {
               windowDimensions &&
               windowDimensions.width &&
               windowDimensions.width > 770
-                ? "col-12 col-lg-8 pr-11"
-                : "col-12 col-lg-8"
+                ? "col-12 col-lg-8 pr-11 "
+                : "col-12 col-lg-8 "
             }
           >
             {/* Image */}
@@ -259,6 +259,7 @@ const DetailArtikel = () => {
                 :
                   361
                 }
+              // layout="fill"
               objectFit="cover"
               alt="Detail Image"
               className="rounded-lg img-fluid"
@@ -276,19 +277,19 @@ const DetailArtikel = () => {
               }
             >
               <div
-                className="row my-5 mx-5 text-justify"
-                style={{ width: "95%", wordBreak: "break-word" }}
+                className="row"
+                style={{wordBreak: "break-word" }}
               >
                 {detailContent ? (
                   resultText ? (
                     <div
                       dangerouslySetInnerHTML={{ __html: resultText }}
-                      className={`${styles.detailArtikel}`}
+                      className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
                     />
                   ) : (
                     <div
                       dangerouslySetInnerHTML={{ __html: detailContent }}
-                      className={`${styles.detailArtikel}`}
+                      className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
                     />
                   )
                 ) : null}

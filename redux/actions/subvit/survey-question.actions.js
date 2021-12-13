@@ -48,7 +48,7 @@ export const getAllSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -73,13 +73,6 @@ export const newSurveyQuestionBanks =
         type: NEW_SURVEY_QUESTION_BANKS_REQUEST,
       });
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
       const config = {
         headers: {
           Authorization: "Bearer " + token,
@@ -111,7 +104,7 @@ export const getDetailSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
       let link =
@@ -139,7 +132,7 @@ export const getOneSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
       let link =
@@ -223,13 +216,6 @@ export const updateSurveyQuestionBanksPublish =
         type: UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
       });
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
       const config = {
         headers: {
           Authorization: "Bearer " + token,
@@ -283,7 +269,7 @@ export const allReportSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 

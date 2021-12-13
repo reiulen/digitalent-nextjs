@@ -16,7 +16,7 @@ import styles from "../../../../../styles/previewGaleri.module.css"
 const TambahApi = ({ token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
-  
+
   const router = useRouter();
   const listApi = useSelector((state) => state.listApi);
   const [nameApi, setNameApi] = useState("");
@@ -205,18 +205,6 @@ const TambahApi = ({ token }) => {
                     }}
                   />
                 </div>
-
-                {/* <select
-                  onChange={(e) => setStatus(e.target.value)}
-                  className={`${styles.cari} form-control`}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("status")
-                  }
-                >
-                  <option value="">Pilih status</option>
-                  <option value="1">Aktif</option>
-                  <option value="0">Tidak Aktif</option>
-                </select> */}
                 {simpleValidator.current.message("status", status, "required", {
                   className: "text-danger",
                 })}
@@ -249,24 +237,26 @@ const TambahApi = ({ token }) => {
               </div>
               <div className="form-group">
                 <label>Field</label>
-                <Select
-                  value={valueField}
-                  className={`${styles.cari} basic-single`}
-                  classNamePrefix="select"
-                  placeholder="Pilih Field"
-                  isMulti
-                  isDisabled={false}
-                  isLoading={false}
-                  isClearable={false}
-                  isRtl={false}
-                  isSearchable={true}
-                  name="color"
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("field")
-                  }
-                  onChange={(e) => changeListApi(e)}
-                  options={optionListField}
-                />
+                <div className={apiChoice === "" && "cursor-not-allowed"}>
+                  <Select
+                    value={valueField}
+                    className={`${styles.cari} basic-single`}
+                    classNamePrefix="select"
+                    placeholder="Pilih Field"
+                    isMulti
+                    isDisabled={apiChoice === ""}
+                    isLoading={false}
+                    isClearable={false}
+                    isRtl={false}
+                    isSearchable={true}
+                    name="color"
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("field")
+                    }
+                    onChange={(e) => changeListApi(e)}
+                    options={optionListField}
+                  />
+                </div>
                 {simpleValidator.current.message(
                   "field",
                   valueField,

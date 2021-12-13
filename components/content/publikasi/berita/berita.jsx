@@ -382,8 +382,7 @@ const Berita = ({ token }) => {
                         background='bg-light-success'
                         icon='user-white.svg'
                         color='#ffffff'
-                        value='0'
-                        // value={berita && berita.total_views !== null ? berita.total_views : 0} 
+                        value={berita && berita.total_pembaca !== null ? berita.total_pembaca : 0} 
                         titleValue='Orang'
                         title='Total Pembaca'
                         publishedVal=""

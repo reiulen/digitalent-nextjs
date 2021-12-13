@@ -89,6 +89,8 @@ const Galeri = () => {
         let arr = [...show]
 
         for (let i = 0; i < arr.length; i++) {
+            arr[i] = false
+            
             if (i == index) {
                 arr[i] = true
             }
@@ -481,6 +483,7 @@ const Galeri = () => {
                                                                     height={500}
                                                                     className="rounded-lg"
                                                                     objectFit="cover"
+                                                                   
                                                                 />
                                                             </div>
                                                             :
@@ -502,6 +505,7 @@ const Galeri = () => {
                                                                         height={500}
                                                                         className="rounded-lg"
                                                                         objectFit="cover"
+                                                                        
                                                                     />
                                                                 </div>
 
@@ -514,6 +518,7 @@ const Galeri = () => {
                                                                         background: "linear-gradient(to bottom, transparent 0%, black 100%)",
                                                                         borderRadius: "10px"
                                                                     }}
+                                                                    
                                                                 >
                                                                     <div className="d-flex flex-column">
                                                                         <div>
@@ -564,7 +569,8 @@ const Galeri = () => {
                                     :
                                     "lg"
                             }
-                            dialogClassName={`${styles.padModalGaleri}`}
+                            // dialogClassName={`${styles.padModalGaleri} rounded-lg`}
+                            dialogClassName="mx-10 mx-sm-auto rounded-lg"
                             centered
                             aria-labelledby="example-custom-modal-styling-title"
                         >
@@ -633,7 +639,7 @@ const Galeri = () => {
                                             kategori.map((element, index) => {
                                                 return (
                                                     detail.kategori_id == element.id ?
-                                                        <div className={`${styles.kategoriModal} badge badge-light`} key={index}>
+                                                        <div className={`${styles.kategoriModal} badge badge-light d-none d-sm-block`} key={index}>
                                                             <div className="text-primary">
                                                                 {element.nama_kategori}
                                                             </div>
@@ -666,30 +672,52 @@ const Galeri = () => {
                                         >
                                             <div className="d-flex align-items-center" style={{ fontSize: '12x' }}>
                                                 <i className="ri-calendar-2-line mr-2 ml-5"></i>
-                                                <span>{`Publish : 
+                                                <span>{`Terbit : 
                                                 ${moment(detail.tanggal_publish).format("DD MMMM YYYY")}`}
                                                 </span>
                                             </div>
+
                                             {
-                                                detail.dibaca === undefined ?
-                                                    <span className="mb-1 ml-6 p-0 d-flex align-items-center">
-                                                        <div className="">
-                                                            <i className="ri-eye-line"></i>
-                                                        </div>
-                                                        <span className="ml-2">
-                                                            Dibaca 0
+                                                windowDimensions && windowDimensions.width && windowDimensions.width > 768 ?
+                                                    detail.dibaca === undefined ?
+                                                        <span className="mb-1 ml-6 p-0 d-flex align-items-center d-none d-lg-block">
+                                                            <div className="">
+                                                                <i className="ri-eye-line"></i>
+                                                            </div>
+                                                            <span className="ml-2">
+                                                                Dibaca 0
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                                        :
+                                                        <span className="mb-1 ml-5 p-0 d-flex align-items-center d-none d-lg-block">
+                                                            <div className="">
+                                                                <i className="ri-eye-line"></i>
+                                                            </div>
+                                                            <span className="ml-2">
+                                                                Dibaca {detail.dibaca}
+                                                            </span>
+                                                        </span>
                                                     :
-                                                    <span className="mb-1 ml-5 p-0 d-flex align-items-center">
-                                                        <div className="">
-                                                            <i className="ri-eye-line"></i>
+                                                        <div className="ml-4 my-1">
+                                                            {
+                                                                kategori.map((element, index) => {
+                                                                    return (
+                                                                        detail.kategori_id == element.id ?
+                                                                            <div className={`${styles.kategoriModal} badge badge-light`} key={index}>
+                                                                                <div className="text-primary">
+                                                                                    {element.nama_kategori}
+                                                                                </div>
+                                                                            </div>
+                                                                            :
+                                                                            null
+                                                                    )
+                                                                })
+                                                            }
                                                         </div>
-                                                        <span className="ml-2">
-                                                            Dibaca {detail.dibaca}
-                                                        </span>
-                                                    </span>
+                                                        
+                                                    
                                             }
+                                            
 
                                         </div>
 
@@ -746,11 +774,21 @@ const Galeri = () => {
                                                     :
                                                     detail.isi_galeri && showFullDesc === false ?
                                                         <div className="text-justify ml-1 mr-5">
-                                                            <span>
-                                                                {handleDescToTrim(detail.isi_galeri)}
+                                                            <span
+                                                                style={{
+                                                                    fontSize:'14px',
+                                                                    display:"-webkit-box", 
+                                                                    overflow: 'hidden', 
+                                                                    textOverflow: 'ellipsis', 
+                                                                    WebkitLineClamp: "2",
+                                                                    WebkitBoxOrient:"vertical"
+                                                                  }}
+                                                            >
+                                                                {detail.isi_galeri}
+                                                                {/* {handleDescToTrim(detail.isi_galeri)} */}
                                                             </span>
                                                             <span
-                                                                className="text-justify ml-1 mr-5"
+                                                                className="text-justify ml-0 mr-5"
                                                                 style={{ color: "#007CFF" }}
                                                                 onClick={() => setShowFullDesc(true)}
                                                             >
@@ -761,46 +799,45 @@ const Galeri = () => {
                                                         <div>
                                                             <p className="text-justify ml-1 mr-5">
                                                                 {detail.isi_galeri}
-                                                                <div
-                                                                    className={
-                                                                        windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                                                                            "row mb-5 mt-3"
-                                                                            :
-                                                                            "row mb-5 mt-3"
-                                                                    }
-                                                                >
-                                                                    <div className="col-9 d-flex flex-row flex-wrap">
-                                                                        {
-                                                                            detail.tag ?
-                                                                                detail.tag.map((el, i) => {
-                                                                                    return (
-                                                                                        <div
-                                                                                            className="border p-2 rounded mr-2 my-1"
-                                                                                            key={i}
-                                                                                            onClick={() => handleFilterTag(el)}
-                                                                                            style={{ cursor: "pointer", fontSize: '10px' }}
-                                                                                        >
-                                                                                            #{el.toString().toUpperCase()}
-                                                                                        </div>
 
-                                                                                    )
-                                                                                })
-                                                                                :
-                                                                                null
-                                                                        }
+                                                                {
+                                                                    windowDimensions && windowDimensions.width && windowDimensions.width > 768 ?
+                                                                        <div className= "row mb-5 mt-3">
+                                                                            <div className="col-9 d-flex flex-row flex-wrap">
+                                                                                {
+                                                                                    detail.tag ?
+                                                                                        detail.tag.map((el, i) => {
+                                                                                            return (
+                                                                                                <div
+                                                                                                    className="border p-2 rounded mr-2 my-1"
+                                                                                                    key={i}
+                                                                                                    onClick={() => handleFilterTag(el)}
+                                                                                                    style={{ cursor: "pointer", fontSize: '10px' }}
+                                                                                                >
+                                                                                                    #{el.toString().toUpperCase()}
+                                                                                                </div>
 
-                                                                    </div>
+                                                                                            )
+                                                                                        })
+                                                                                        :
+                                                                                        null
+                                                                                }
 
-                                                                    <div className="col-3 text-right">
-                                                                        <ShareOverlay
-                                                                            url={`http://dts-dev.majapahit.id/detail/pelatihan`}
-                                                                        >
-                                                                            <button className="btn btn-outline-light rounded-circle" style={{ width: "40px", height: "40px" }}>
-                                                                                <i className="ri-share-line p-auto m-auto"></i>
-                                                                            </button>
-                                                                        </ShareOverlay>
-                                                                    </div>
-                                                                </div>
+                                                                            </div>
+
+                                                                            <div className="col-3 text-right">
+                                                                                <ShareOverlay
+                                                                                    url={`http://dts-dev.majapahit.id/detail/pelatihan`}
+                                                                                >
+                                                                                    <button className="btn btn-outline-light rounded-circle" style={{ width: "40px", height: "40px" }}>
+                                                                                        <i className="ri-share-line p-auto m-auto"></i>
+                                                                                    </button>
+                                                                                </ShareOverlay>
+                                                                            </div>
+                                                                        </div>
+                                                                    :
+                                                                        null
+                                                                }
                                                             </p>
                                                             <p
                                                                 style={{ color: "#007CFF" }}
@@ -820,6 +857,44 @@ const Galeri = () => {
                                     </div>
                                 </div>
                             </Modal.Body>
+                            <Modal.Footer
+                                className="d-block d-lg-none"
+                            >
+                                <div className= "row my-n2">
+                                    <div className="col-9 d-flex flex-row flex-wrap">
+                                        {
+                                            detail.tag ?
+                                                detail.tag.map((el, i) => {
+                                                    return (
+                                                        <div
+                                                            className="border p-2 rounded mr-9 my-1 ml-n7"
+                                                            key={i}
+                                                            onClick={() => handleFilterTag(el)}
+                                                            style={{ cursor: "pointer", fontSize: '10px' }}
+                                                        >
+                                                            #{el.toString().toUpperCase()}
+                                                        </div>
+
+                                                    )
+                                                })
+                                                :
+                                                null
+                                        }
+
+                                    </div>
+
+                                    <div className="col-3 text-right">
+                                        <ShareOverlay
+                                            url={`http://dts-dev.majapahit.id/detail/pelatihan`}
+                                        >
+                                            <button className="btn btn-outline-light rounded-circle" style={{ width: "40px", height: "40px" }}>
+                                                <i className="ri-share-line p-auto m-auto"></i>
+                                            </button>
+                                        </ShareOverlay>
+                                    </div>
+                                </div>
+                            </Modal.Footer>
+                      
                             {/* </div> */}
                         </Modal>
                         :

@@ -294,6 +294,7 @@ const ListTipeSoal = ({ token, tokenPermission }) => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
+                        <th className="text-center">ID Tipe Soal</th>
                         <th>Tipe Soal</th>
                         <th>Bobot Nilai</th>
                         <th>Status</th>
@@ -326,6 +327,12 @@ const ListTipeSoal = ({ token, tokenPermission }) => {
                             <tr key={row.id}>
                               <td className="align-middle text-center">
                                 <span className="">{paginate - dividers}</span>
+                              </td>
+                              <td
+                                className="align-middle text-center"
+                                style={{ width: "200px" }}
+                              >
+                                {row.id}
                               </td>
                               <td className="align-middle">{row.name}</td>
                               <td className="align-middle">{row.value}</td>

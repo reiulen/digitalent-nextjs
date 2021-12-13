@@ -36,7 +36,8 @@ const SubtansiUser = ({ token }) => {
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
-  const [numberAnswer, setNumberAnswer] = useState(false);
+  const [zoom, setZoom] = useState(false);
+  const [zoomJawab, setZoomJawab] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
 
@@ -272,8 +273,21 @@ const SubtansiUser = ({ token }) => {
                         alt=""
                         width={150}
                         height={150}
+                        onClick={() => setZoom(true)}
                       />
                     </div>
+                    <Modal show={zoom} onHide={() => setZoom(false)} size="lg">
+                      <Image
+                        src={
+                          process.env.END_POINT_API_IMAGE_SUBVIT +
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question_image || defaultImage
+                        }
+                        alt=""
+                        width={500}
+                        height={800}
+                      />
+                    </Modal>
                     <div className="p-5">
                       {data &&
                         data.list_questions[parseInt(router.query.id) - 1]
@@ -305,8 +319,24 @@ const SubtansiUser = ({ token }) => {
                               alt=""
                               width={70}
                               height={70}
+                              onClick={() => setZoomJawab(true)}
                             />
                           </div>
+                          <Modal
+                            show={zoomJawab}
+                            onHide={() => setZoomJawab(false)}
+                          >
+                            {" "}
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  item.image || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div
                             className="p-4"
                             style={{ width: "100%", height: "100%" }}

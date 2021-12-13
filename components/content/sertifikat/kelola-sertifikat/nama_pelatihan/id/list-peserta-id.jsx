@@ -10,17 +10,15 @@ import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-s
 import { toPng } from "html-to-image";
 import moment from "moment";
 import axios from "axios";
+import { SweatAlert } from "../../../../../../utils/middleware/helper";
 // #Icon
 
 export default function ListPesertaID({ token }) {
   const router = useRouter();
   const { query } = router;
 
-  const { error, certificate } = useSelector(
-    (state) => state.publishCertificate
-  );
-  const { participant } = useSelector((state) => state.detailParticipant);
-
+  const { error, certificate } = useSelector(state => state.publishCertificate);
+  const { participant } = useSelector(state => state.detailParticipant);
   const [type, setType] = useState(
     certificate?.data?.certificate?.certificate_type
   );
@@ -33,7 +31,7 @@ export default function ListPesertaID({ token }) {
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
 
-  const convertDivToPng = async (div) => {
+  const convertDivToPng = async div => {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -42,30 +40,41 @@ export default function ListPesertaID({ token }) {
     });
     return data;
   };
-  console.log(participant.data.nomor_registrasi, "ini participant");
-  const handleDownload = async () => {
-    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${participant?.data?.nomor_registrasi}`;
-    const check = await axios.get(linkChecker);
-    // check udh pernah di sign apa belum?
-    if (!check.data.status) {
-      const data = await convertDivToPng(divReference.current);
-      if (data) {
-        const formData = new FormData();
-        formData.append("certificate", data);
-        const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${certificate?.data?.pelatihan?.id}&nomor_registrasi=${participant?.data?.nomor_registrasi}`;
-        const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
+
+  const handleDownload = async (id, noRegis, name) => {
+    const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${noRegis}`;
+    try {
+      const check = await axios.get(linkChecker);
+      if (!check.data.status) {
+        const data = await convertDivToPng(divReference.current);
+        if (data) {
+          const formData = new FormData();
+          formData.append("certificate", data);
+          const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
+          try {
+            const result = await axios.post(link, formData); //post image certificate yang udah di render dari html
+            if (!result.data.status) {
+              SweatAlert("Gagal", result.data.message, "error");
+            } else {
+              const a = document.createElement("a");
+              a.download = `Sertifikat - ${query.name} ${noRegis}.png`;
+              a.target = "_blank";
+              a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
+              a.click();
+            }
+          } catch (e) {
+            SweatAlert("Gagal", e.message, "error");
+          }
+        }
+      } else {
         const a = document.createElement("a");
-        a.download = `Sertifikat - p12 ${query.name}.png`;
+        a.download = `Sertifikat - ${query.name} ${noRegis}.png`;
         a.target = "_blank";
-        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
+        a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
         a.click();
       }
-    } else {
-      const a = document.createElement("a");
-      a.download = `Sertifikat - p12 ${query.name}.png`;
-      a.target = "_blank";
-      a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${certificate?.data?.certificate?.certificate_pdf}`;
-      a.click();
+    } catch (e) {
+      SweatAlert("Gagal", e.message, "error");
     }
   };
 
@@ -133,7 +142,7 @@ export default function ListPesertaID({ token }) {
                 ref={divReference}
               >
                 <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
-                  {participant?.data?.nomor_registrasi}
+                  {participant?.data?.nomor_sertifikat}
                 </div>
                 <div
                   className={`position-absolute w-100 text-center ${
@@ -159,14 +168,17 @@ export default function ListPesertaID({ token }) {
             </div>
             {type == "1 lembar" && (
               <div className="row mx-0 mt-10 col-12">
-                <div className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
-                  <a
-                    onClick={() => {
-                      handleDownload();
-                    }}
-                  >
-                    Unduh
-                  </a>
+                <div
+                  onClick={() => {
+                    handleDownload(
+                      certificate.data.pelatihan.id,
+                      participant.data.nomor_registrasi,
+                      query.name
+                    );
+                  }}
+                  className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                >
+                  <a>Unduh</a>
                 </div>
               </div>
             )}
@@ -200,8 +212,12 @@ export default function ListPesertaID({ token }) {
               </div>
               <div className="row mt-10 col-12 p-0 m-0">
                 <div
-                  onClick={(e) => {
-                    handleDownload();
+                  onClick={e => {
+                    handleDownload(
+                      certificate.data.pelatihan.id,
+                      participant.data.nomor_registrasi,
+                      query.name
+                    );
                   }}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
                 >

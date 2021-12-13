@@ -176,7 +176,7 @@ const Table = ({ token }) => {
                                 {items.name}
                               </td>
                               <td className="align-middle text-left">
-                                {items.url}
+                                {process.env.NEXTAUTH_URL}/lainnya/{items.url}
                               </td>
                               <td className="align-middle text-left">
                                 {items.status == 1 ? (

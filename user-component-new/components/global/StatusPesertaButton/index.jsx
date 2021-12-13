@@ -6,6 +6,7 @@ import { Col, Row, Card, Button, Modal } from "react-bootstrap";
 import Cookies from "js-cookie";
 export default function ButtonStatusPeserta({ data, token }) {
   const router = useRouter();
+
   const [imageSertifikasi, setImageSertifikasi] = useState();
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
   const [fileName, setFileName] = useState();
@@ -36,7 +37,7 @@ export default function ButtonStatusPeserta({ data, token }) {
     }
   };
 
-  const onChangeFile = (e) => {
+  const onChangeFile = e => {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
@@ -118,7 +119,7 @@ export default function ButtonStatusPeserta({ data, token }) {
             disabled={!data?.survei}
             click={() => {
               router.push(
-                `/peserta/survey?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/survey?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -139,7 +140,11 @@ export default function ButtonStatusPeserta({ data, token }) {
           </CustomButton>
           <CustomButton
             disabled={!data?.lpj}
-            click={() => handleClick("download", data?.id_pendaftaran)}
+            click={() => {
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
+              router.push(`/peserta/form-lpj`);
+            }}
           >
             Isi Laporan Pertangung Jawaban
             <i className="ri-arrow-right-s-line mr-2"></i>
@@ -150,7 +155,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/mid-test/panduan-mid-test?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/mid-test/panduan-mid-test?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -162,7 +167,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/trivia?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -176,7 +181,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/mid-test/panduan-mid-test?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/mid-test/panduan-mid-test?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -191,7 +196,7 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/trivia?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
@@ -222,7 +227,7 @@ export default function ButtonStatusPeserta({ data, token }) {
       ) : data?.status == "lulus pelatihan" ||
         data?.status == "Lulus Pelatihan" ? (
         <Fragment>
-          {data?.sertifikasi == "1" && (
+          {data?.sertifikasi != "0" && (
             <CustomButton outline click={() => setShowModalSertifikasi(true)}>
               <i className="ri-upload-2-fill mr-2"></i>
               Unggah Sertifikasi
@@ -256,7 +261,7 @@ export default function ButtonStatusPeserta({ data, token }) {
               Cookies.set("id_pelatihan", data?.id);
               Cookies.set("id_tema", data?.tema_id);
               router.push(
-                `/peserta/test-substansi/panduan-substansi?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/test-substansi/panduan-substansi?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
             }}
             disabled={!data?.tes_subtansi}
@@ -266,7 +271,7 @@ export default function ButtonStatusPeserta({ data, token }) {
         </Fragment>
       ) : data?.status == "diterima" ? (
         <Fragment>
-          {data?.sertifikasi == "1" && (
+          {data?.sertifikasi != "0" && (
             <CustomButton outline click={() => setShowModalSertifikasi(true)}>
               <i className="ri-upload-2-fill mr-2"></i>
               Unggah Sertifikasi
@@ -315,7 +320,11 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             disabled
             outline
-            click={() => handleClick("download", data?.id_pendaftaran)}
+            click={() => {
+              Cookies.set("id_pelatihan", data?.id);
+              Cookies.set("id_tema", data?.tema_id);
+              router.push(`/peserta/form-lpj`);
+            }}
           >
             <i className="ri-file-text-line mr-2"></i>
             Isi Laporan Pertangungjawaban
@@ -391,7 +400,7 @@ export default function ButtonStatusPeserta({ data, token }) {
                   type="file"
                   className="custom-file-input"
                   accept="image/png, image/jpeg , image/jpg"
-                  onChange={(e) => {
+                  onChange={e => {
                     onChangeFile(e);
                   }}
                 />

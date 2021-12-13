@@ -132,11 +132,6 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -164,11 +159,6 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -252,6 +242,7 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
                   Tema
                 </Form.Label>
                 <Select
+                  isDisabled={!academy_id}
                   placeholder={themeLabel || "Silahkan Pilih Tema"}
                   options={optionsTema}
                   value={themeLabel}
@@ -269,6 +260,7 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
+                  isDisabled={!theme_id}
                   placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
                   value={trainingLabel}

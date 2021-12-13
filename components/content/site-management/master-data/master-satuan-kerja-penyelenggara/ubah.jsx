@@ -29,6 +29,13 @@ const TambahApi = ({ token }) => {
   const allProvincesSite = useSelector((state) => state.allProvincesSite);
   let sortirOptionTempProvList = allProvincesSite?.data
 
+  const [changeProvince, setChangeProvince] = useState(false)
+
+
+  let optionTempProvList = sortirOptionTempProvList.map((items) => {
+    return { ...items, value: items.label }
+  })
+
   // const optionTempProvList = [];
   // if (sortirOptionTempProvList) {
   //   for (let index = 0; index < sortirOptionTempProvList.length; index++) {
@@ -40,21 +47,22 @@ const TambahApi = ({ token }) => {
   //   }
   // }
 
-  let optionTempProvList = sortirOptionTempProvList.map((items) => {
-    return { ...items, value: items.label }
-  })
+  // let province = optionTempProvList.filter((items, i) => {
+  //   // for (let j = 0; j < optionTempProv.length; j++) {
+  //   //   if (items.label !== optionTempProv[j].label) {
+  //   //     return { ...items }
+  //   //   }
+  //   // }
+  //   if (items.label !== optionTempProv[0].label) {
+  //     return { ...items }
+  //   }
+  // })
 
-  let province = optionTempProvList.filter((items, i) => {
-    // for (let j = 0; j < optionTempProv.length; j++) {
-    //   if (items.label !== optionTempProv[j].label) {
-    //     return { ...items }
-    //   }
-    // }
-    if (items.label !== optionTempProv[0].label) {
-      return { ...items }
-    }
+  let province = optionTempProvList.filter(item => {
+    return !optionTempProv.some(filter => {
+      return item.label === filter.provinsi
+    })
   })
-
 
   const [valueProvinsi, setValueProvinsi] = useState([]);
   const [nameUnitWork, setNameUnitWork] = useState(detailUnitWork.unitWork.name);
@@ -209,7 +217,7 @@ const TambahApi = ({ token }) => {
                   isSearchable={true}
                   name="color"
                   onChange={(e) => changeListProvinsi(e)}
-                  options={optionTempProvList}
+                  options={province}
                   onBlur={() => simpleValidator.current.showMessageFor("provinsi")}
                 />
 

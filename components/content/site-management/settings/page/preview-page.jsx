@@ -56,7 +56,7 @@ const TentangKami = ({ token }) => {
               className="card-title font-weight-bolder text-dark w-100 pb-5 my-0 my-sm-5"
               style={{ fontSize: "40px" }}
             >
-              {pages.name}
+              {pages.property_template.title}
             </h3>
             <div className="" style={{marginBottom: "48px"}}>
               <Image
@@ -65,8 +65,8 @@ const TentangKami = ({ token }) => {
                   "site-management/images/" +
                   pages.property_template.image
                 }
-                width="1500vw"
-                height="413"
+                width="1255vw"
+                height="413vh"
                 objectFit="fill"
                 alt="Detail Image"
                 className="rounded-lg"
@@ -95,7 +95,7 @@ const TentangKami = ({ token }) => {
               className="card-title font-weight-bolder text-dark w-100 pb-5 my-0 my-sm-5"
               style={{ fontSize: "40px" }}
             >
-              {pages.name}
+              {pages.property_template.title}
             </h3>
             <div className="border-rounded">
               <div className="border rounded-lg mb-5">
@@ -120,7 +120,7 @@ const TentangKami = ({ token }) => {
               className="card-title font-weight-bolder text-dark w-100 pb-5 my-0 my-sm-5"
               style={{ fontSize: "40px" }}
             >
-              {pages.name}
+              {pages.property_template.title}
             </h3>
             <div className="row">
               <div className="col-md-4 mt-3">

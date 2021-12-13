@@ -286,6 +286,13 @@ const Berita = () => {
             tag
         ))
 
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
+        // }
+
         window.scrollTo(0,0)
     }
 
@@ -303,19 +310,9 @@ const Berita = () => {
             tag
         ))
 
+        // router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+            
         window.scrollTo(0,0)
-    }
-
-    const handleDescToTrim = (str) => {
-        let result = null
-        
-        if (str.length > descToTrim){
-            result = str.slice(0, descToTrim) + "..."
-
-        } else {
-            result = str
-        }
-        return result
     }
 
     const handleFilterPublish = (publish, status) => {
@@ -347,6 +344,13 @@ const Berita = () => {
             tag
         ))
 
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        // }
+
         window.scrollTo(0,0)
     }
 
@@ -363,6 +367,13 @@ const Berita = () => {
             category_academy,
             str
         ))
+
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
+        // }
 
         window.scrollTo(0,0)
     }
@@ -381,6 +392,13 @@ const Berita = () => {
             tag
         ))
 
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${pageNumber}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${pageNumber}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        // }
+
         window.scrollTo(0,0)
     }
 
@@ -393,7 +411,7 @@ const Berita = () => {
             />
 
             {/* Header */}
-            <div className="col-12 mt-5 ml-n1">
+            <div className="col-12 mt-5 ml-n3">
                 <h1 className="fw-700" style={{fontSize: "40px", fontFamily:"Poppins"}}>
                     {activeTitle}
                 </h1>
@@ -1047,7 +1065,7 @@ const Berita = () => {
                                 berita.berita.map ((el, i) => {
                                     return (
                                         <div 
-                                            className= "row mt-20 mb-3 pl-7"
+                                            className= "row mt-20 mb-3 pl-6"
                                             key={i}
                                         >
                                             <div className="col-4 col-sm-8 pr-md-8 pr-2 pl-lg-2">
@@ -1177,8 +1195,16 @@ const Berita = () => {
                                                 
                                                 <div className="row mb-3 mt-5 d-flex align-items-center ml-n7">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12">
-                                                        {moment(el.tanggal_publish).format("DD MMM")} | {el.dibaca} dibaca
+                                                    <div className="text-muted col-xl-3 col-12 d-flex justify-content-between">
+                                                        <div>
+                                                            {moment(el.tanggal_publish).format("DD MMM")}
+                                                        </div>
+                                                        <div>
+                                                            |
+                                                        </div>
+                                                        <div>
+                                                            {el.dibaca} dibaca
+                                                        </div>
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
@@ -1194,7 +1220,7 @@ const Berita = () => {
                                             </div>
 
                                             <div 
-                                                className="col-8 col-sm-4 position-relative img-fluid" 
+                                                className="col-8 col-sm-4 pl-6 pl-sm-0 position-relative img-fluid" 
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/berita/detail/${el.slug}`}>
@@ -1231,7 +1257,16 @@ const Berita = () => {
                                             className="font-weight-bolder mt-15 text-center fw-600" 
                                             style={{fontFamily:"Poppins", fontSize:"24px"}}
                                         >
-                                            Tidak ada berita terkait "{keyword}"
+                                            {
+                                                keyword ?
+                                                    `Tidak ada berita terkait "${keyword}"`
+                                                :
+                                                    category_academy ?
+                                                        `Tidak ada berita terkait "${category_academy}"`
+                                                    :
+                                                        `Tidak ada berita terkait.`
+                                            }
+                                            
                                         </h1>
                                 
                                         </div>

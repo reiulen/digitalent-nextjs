@@ -2,14 +2,15 @@ import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../../components/template/Footer.component";
 import styles from "./formLpj.module.css";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { getBerandaFooter } from "../../../../redux/actions/beranda/beranda.actions";
 import moment from "moment";
 import "moment/locale/id";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import axios from "axios";
-
+import { useRouter } from "next/router";
 const FormLPJ = ({ token }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const { dataPribadi } = useSelector((state) => state.getDataPribadi);
@@ -67,7 +68,10 @@ const FormLPJ = ({ token }) => {
 
     axios
       .post(link, setData, config)
-      .then((res) => SweatAlert("Berhasil", res.data.data.message, "success"))
+      .then((res) => {
+        router.push("/peserta/riwayat-pelatihan");
+        SweatAlert("Berhasil", res.data.data.message, "success");
+      })
       .catch((err) => SweatAlert("Gagal", err.response.data.message, "error"));
   };
 
@@ -172,12 +176,13 @@ const FormLPJ = ({ token }) => {
             </Row>
             <hr />
             <h1 className={styles.subTitle}>Pelaksanaan Kegiatan</h1>
+
             <table>
               <tr>
                 <td className={styles.tableLabel}>No</td>
                 <td
                   className={styles.tableLabel}
-                  style={{ textAlign: "center" }}
+                  style={{ textAlign: "center", width: "100%" }}
                 >
                   Uraian
                 </td>
@@ -189,7 +194,12 @@ const FormLPJ = ({ token }) => {
                     <>
                       <tr>
                         <td className={styles.numberTable}>{index + 1}</td>
-                        <td className={styles.contentTable}>{item.name}</td>
+                        <td
+                          className={styles.contentTable}
+                          style={{ paddingLeft: "40px" }}
+                        >
+                          {item.name}
+                        </td>
                         <td className={styles.checkbox}>
                           <input
                             type="checkbox"
@@ -201,6 +211,7 @@ const FormLPJ = ({ token }) => {
                   );
                 })}
             </table>
+
             <hr />
             <h1 className={styles.subTitle}>
               Saran/Rekomendasi Pelaksanaan Kegiatan

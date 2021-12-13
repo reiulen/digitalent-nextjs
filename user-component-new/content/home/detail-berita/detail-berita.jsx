@@ -228,8 +228,8 @@ const DetailBerita = () => {
               windowDimensions &&
               windowDimensions.width &&
               windowDimensions.width > 770
-                ? "col-12 col-lg-8 pr-11"
-                : "col-12 col-lg-8"
+                ? "col-12 col-lg-8 pr-11 "
+                : "col-12 col-lg-8 "
             }
           >
             {/* Image */}
@@ -280,19 +280,19 @@ const DetailBerita = () => {
               }
             >
               <div
-                className="row my-5 mx-5 text-justify "
-                style={{ width: "95%", wordBreak: "break-word" }}
+                className="row "
+                style={{wordBreak: "break-word" }}
               >
                 {detailContent ? (
                   resultText ? (
                     <div
                       dangerouslySetInnerHTML={{ __html: resultText }}
-                      className={`${styles.detailBerita}`}
+                      className={`${styles.detailBerita} my-5 mx-10 text-justify`}
                     />
                   ) : (
                     <div
                       dangerouslySetInnerHTML={{ __html: detailContent }}
-                      className={`${styles.detailBerita}`}
+                      className={`${styles.detailBerita} my-5 mx-10 text-justify`}
                     />
                   )
                 ) : null}

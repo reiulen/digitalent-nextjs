@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useDispatch, useSelector } from "react-redux";
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/client";
 
 import CardDashboard from "../../../CardDashboard";
 import PageWrapper from "../../../wrapper/page.wrapper";
@@ -22,8 +22,8 @@ import styles from "../../../../styles/pagination.module.css";
 
 import {
   IS_SHOW_PROFILE,
-  IS_OVERLAY_PROFILE
-} from "../../../../redux/types/utils/functionals.type"
+  IS_OVERLAY_PROFILE,
+} from "../../../../redux/types/utils/functionals.type";
 
 import { clearErrors } from "../../../../redux/actions/publikasi/dashboard-publikasi.actions";
 
@@ -34,7 +34,7 @@ const DashbardPublikasi = ({ token, user }) => {
 
   const { role_publikasi } = useSelector(
     (state) => state.allRoleAdminPublikasi
-  )
+  );
 
   const [totalPublishContent, setTotalPublishContent] = useState(null);
   const [totalUnpublishContent, setTotalUnpublishContent] = useState(null);
@@ -153,7 +153,7 @@ const DashbardPublikasi = ({ token, user }) => {
                       <div className="col-md-6">
                         <div className="col-md-12 mt-5">
                           <h4 className="font-weight-bolder text-primary">
-                            Halo {user.name}
+                            Halo {user?.name || "admin"}
                           </h4>
                         </div>
                         <div className="col-md-10 col-lg-12">

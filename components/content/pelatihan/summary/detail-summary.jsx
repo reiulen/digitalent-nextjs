@@ -432,6 +432,12 @@ const DetailSummary = ({ token }) => {
                         >
                           CSV
                         </a>
+                        <a
+                          className="dropdown-item"
+                          onClick={() => handleExportReport("xlsx")}
+                        >
+                          XLSX
+                        </a>
                       </div>
                     </div>
                   ) : (
@@ -478,6 +484,7 @@ const DetailSummary = ({ token }) => {
                                 {row.name}
                               </p>
                               <p className="my-0">{row.nik}</p>
+                              <p className="my-0">{row.nomor_registrasi}</p>
                             </td>
                             <td>{row.jumlah_pelatihan || "-"}</td>
                             <td>
@@ -512,14 +519,14 @@ const DetailSummary = ({ token }) => {
                                 {row.update_by}
                               </p>
                               <p className="my-0">
-                                {row.update_time !== null
+                                {row.update_time !== ""
                                   ? moment(row.update_time)
                                       .utc()
                                       .format("DD MMMM YYYY")
                                   : "-"}
                               </p>
                               <p className="my-0">
-                                {row.update_time !== null
+                                {row.update_time !== ""
                                   ? moment(row.update_time).format("LTS")
                                   : "-"}
                               </p>

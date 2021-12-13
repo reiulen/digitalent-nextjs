@@ -195,7 +195,7 @@ export const detailTriviaQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 

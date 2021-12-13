@@ -8,7 +8,7 @@ import {
 
 import axios from "axios";
 
-export const getAllRolePermission = (token, permission) =>
+export const getAllRolePermission = (token) =>
   async (dispatch) => {
     try {
       dispatch({ type: ROLE_PERMISSION_REQUEST });
@@ -16,7 +16,6 @@ export const getAllRolePermission = (token, permission) =>
       const config = {
         headers: {
           Authorization: 'Bearer ' + token,
-          "Permission": permission
         },
       };
 
@@ -30,7 +29,6 @@ export const getAllRolePermission = (token, permission) =>
       });
 
     } catch (error) {
-      console.log(error)
       dispatch({
         type: ROLE_PERMISSION_FAIL,
         payload: error.response.data.message,

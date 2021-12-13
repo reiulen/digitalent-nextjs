@@ -47,7 +47,6 @@ const Layout = dynamic(() =>
 
 export default function RiwayatPelatihanPage(props) {
   const session = props.session.user.user.data.user;
-
   return (
     <>
       <Layout title="Administrasi" session={session}>
@@ -62,7 +61,7 @@ export default function RiwayatPelatihanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 
@@ -92,7 +91,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           if (
             status.includes("seleksi akhir") ||
             status.includes("pelatihan") ||
-            status.includes("lpj")
+            status.includes("lpj") ||
+            status.includes("survey belum mengerjakan") ||
+            status.includes("survey") ||
+            data.data.survey
           ) {
             success = true;
           } else {
@@ -129,7 +131,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
               getAllRiwayatPelatihanPeserta(session?.user.user.data.user.token)
             );
             success = false;
-            const list = data.list.filter((item) => {
+            const list = data.list.filter(item => {
               return (
                 item.status.includes("seleksi akhir") ||
                 item.status.includes("pelatihan") ||

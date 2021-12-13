@@ -237,8 +237,6 @@ const ListSubstansi = ({ token, tokenPermission }) => {
             </h1>
 
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.substansi.manage"
             ) ? (
@@ -328,8 +326,6 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                         <th>Status</th>
 
                         {dataPermission &&
-                        dataPermission.roles.includes("Super Admin") &&
-                        dataPermission &&
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.substansi.manage"
                         ) ? (
@@ -409,8 +405,6 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.substansi.manage"
                                 ) ? (
@@ -540,6 +534,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                     <div className="row">
                       <div className="col-4 mr-0">
                         <select
+                          value={limit}
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
@@ -551,36 +546,11 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="30"
-                            selected={limit == "30" ? true : false}
-                          >
-                            30
-                          </option>
-                          <option
-                            value="40"
-                            selected={limit == "40" ? true : false}
-                          >
-                            40
-                          </option>
-                          <option
-                            value="50"
-                            selected={limit == "50" ? true : false}
-                          >
-                            50
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">

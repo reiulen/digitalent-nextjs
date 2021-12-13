@@ -341,7 +341,7 @@ const StepTwo = ({ token, tokenPermission }) => {
         break;
       case "triggered_question":
         answer_triggered.forEach((row, j) => {
-          if (row.option == "" && row.image == "") {
+          if (row.option == "" && row.image == "" && row.type !== "empty") {
             valid = false;
             Swal.fire({
               icon: "error",

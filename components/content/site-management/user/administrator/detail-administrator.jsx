@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import IconSearch from "../../../../assets/icon/Search";
+import {
+  getDetailAdminSite,
+  getListRoles,
+  getListUnitWorks,
+  getListAcademy,
+  getAllListPelatihan,
+} from "../../../../../redux/actions/site-management/user/admin-site.action";
 
 const DetailAdmin = ({ token }) => {
+  let dispatch = useDispatch();
 
   const detailAdminSite = useSelector((state) => state.detailAdminSite);
+  const [search, setSearch] = useState(null)
 
   return (
     <PageWrapper>
@@ -57,7 +66,7 @@ const DetailAdmin = ({ token }) => {
               </p>
             </div>
             <div className="form-group d-flex flex-column mt-4">
-              <p style={{ color: "#6C6C6C" }}>Status</p>
+              <p style={{ color: "#6C6C6C" }}>Role</p>
               <div className="d-flex ailgn-items-center">
                 {detailAdminSite.adminSite?.data.roles.map((items, index) => {
                   return (
@@ -121,18 +130,22 @@ const DetailAdmin = ({ token }) => {
                         <input
                           id="kt_datatable_search_query"
                           type="text"
+                          value={search}
                           className="form-control pl-10"
                           placeholder="Ketik disini untuk Pencarian..."
-                          // onChange={(e) =>
-                          //   handleChangeValueSearch(e.target.value)
-                          // }
+                          onChange={(e) =>
+                            setSearch(e.target.value)
+                          }
                         />
                         <button
-                          type="handleSubmit"
+                          type="button"
                           className="btn bg-blue-primary text-white right-center-absolute"
                           style={{
                             borderTopLeftRadius: "0",
                             borderBottomLeftRadius: "0",
+                          }}
+                          onClick={e => {
+                            dispatch(getAllListPelatihan(token, search))
                           }}
                         >
                           Cari
@@ -185,10 +198,10 @@ const DetailAdmin = ({ token }) => {
                                 {index + 1}
                               </td>
                               <td className="py-8 border-bottom">
-                                {items.training_id}
+                                {items.id}
                               </td>
                               <td className="py-8 border-bottom">
-                                Belom ada dari api
+                                {items.name}
                               </td>
                               <td className="text-center py-8 border-bottom">
                                 <label className="checkbox checkbox-disabled d-flex justify-content-center">

@@ -281,7 +281,6 @@ export const getProfilePekerjaan = (token) => async (dispatch) => {
     });
     return data;
   } catch (error) {
-    console.log(error, "ini error");
     dispatch({
       type: GET_PEKERJAAN_FAIL,
       payload: error.response.data.message,
@@ -318,7 +317,7 @@ export const updateProfilePekerjaan =
     }
   };
 
-export const getDataRefPekerjaan = (token) => async (dispatch) => {
+export const getDataRefPekerjaan = (token) => async (dispatch) => { 
   try {
     dispatch({ type: GET_REF_PEKERJAAN_REQUEST });
 

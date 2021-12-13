@@ -10,7 +10,7 @@ import ButtonAction from "../../../ButtonAction";
 import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Modal } from "react-bootstrap";
+import { Badge, Modal } from "react-bootstrap";
 import axios from "axios";
 import styles from "../trivia/edit/step.module.css";
 import { allReportSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
@@ -309,9 +309,38 @@ const ReportSurvey = ({ token }) => {
                               {/* Buat Tampilan  */}
 
                               <td className="align-middle">
-                                <span className="label label-inline label-light-success font-weight-bold">
-                                  Diterima
-                                </span>
+                                {row.status === 1 && row.finish === 1 ? (
+                                  <td className="align-middle">
+                                    {/* <span className="label label-inline label-light-success font-weight-bold">
+                                      Diterima
+                                    </span> */}
+                                    <Badge bg="success">Diterima</Badge>
+                                  </td>
+                                ) : !row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="warning">
+                                      Belum Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="success">
+                                      Sedang Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.finish == 1 && row.status == 0 ? (
+                                  <td className="align-middle">
+                                    <Badge bg="danger">Ditolak</Badge>
+                                  </td>
+                                ) : (
+                                  <td className="align-middle">
+                                    <span className="label label-inline label-light-danger font-weight-bold">
+                                      -
+                                    </span>
+                                  </td>
+                                )}
                               </td>
                             </tr>
                           );

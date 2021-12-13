@@ -34,14 +34,15 @@ export default function Template(props) {
   let dispatch = useDispatch();
 
   const optionsStatus = [
-    { value: "menunggu", label: "Menunggu" },
+    { value: "menunggu", label: "Seleksi Administrasi" },// => diubah menjadi Seleksi Administrasi
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
     { value: "tes substansi", label: "Tes Substansi" },
-    { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
-    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "tidak lulus tes subtansi", label: "Tidak Lulus Tes Substansi" },
+    { value: "lulus tes subtansi", label: "Seleksi Akhir" }, // => Seleksi Akhir
     { value: "ditolak", label: "Ditolak" },
     { value: "diterima", label: "Diterima" },
     { value: "pelatihan", label: "Pelatihan" },
+    { value: "administrasi akhir", label: "Administrasi Akhir" },
     { value: "lulus pelatihan", label: "Lulus Pelatihan" },
     { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
@@ -51,7 +52,7 @@ export default function Template(props) {
   };
 
   const onChangeSubject = (e) => {
-    setSubject(e.target.value);
+    setSubject(e.target.value)
   };
 
   const handleSubmit = (e) => {

@@ -39,12 +39,27 @@ const IndexInsert = ({ token }) => {
   const { training, loading, success, error } = useSelector(
     (state) => state.newTraining
   );
+  const { data: dataReferenceOption } = useSelector(
+    (state) => state.allDataReference
+  );
+  const [dataOptions, setDataOptions] = useState([]);
 
   useEffect(() => {
     if (error) {
       SweatAlert("Gagal", error, "error");
       dispatch(clearErrors());
     }
+    const dataOptionsArr = [];
+    if (dataReferenceOption) {
+      dataReferenceOption.list_reference.map((row, i) => {
+        let data = {
+          id: row.id,
+          value: row.name,
+        };
+        dataOptionsArr.push(data);
+      });
+    }
+    setDataOptions(dataOptionsArr);
   }, [error]);
 
   const stepView = () => {
@@ -61,6 +76,7 @@ const IndexInsert = ({ token }) => {
         return (
           <AddRegistrationStep2
             propsStep={(value) => setView(value)}
+            dataOptions={dataOptions}
             token={token}
           />
         );
