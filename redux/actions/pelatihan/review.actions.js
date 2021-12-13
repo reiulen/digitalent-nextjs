@@ -167,57 +167,61 @@ export const getReviewStep1Revisi = (token, id) => async (dispatch) => {
 	}
 };
 
-export const getReviewStep2Revisi = (token, id) => async (dispatch) => {
-	try {
-		let link =
-			process.env.END_POINT_API_PELATIHAN +
-			`api/v1/pelatihan/get-step-dua?pelatian_id=${id}`;
+export const getReviewStep2Revisi =
+	(token, id, token_permission) => async (dispatch) => {
+		try {
+			let link =
+				process.env.END_POINT_API_PELATIHAN +
+				`api/v1/pelatihan/get-step-dua?pelatian_id=${id}`;
 
-		const config = {
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		};
+			const config = {
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+				Permission: token_permission,
+			};
 
-		const { data } = await axios.get(link, config);
+			const { data } = await axios.get(link, config);
 
-		dispatch({
-			type: GET_REVIEW_STEP2_SUCCESS,
-			payload: data,
-		});
-	} catch (error) {
-		dispatch({
-			type: GET_REVIEW_STEP2_FAIL,
-			payload: error.response.data.message,
-		});
-	}
-};
+			dispatch({
+				type: GET_REVIEW_STEP2_SUCCESS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: GET_REVIEW_STEP2_FAIL,
+				payload: error.response.data.message,
+			});
+		}
+	};
 
-export const getReviewStep3Revisi = (token, id) => async (dispatch) => {
-	try {
-		let link =
-			process.env.END_POINT_API_PELATIHAN +
-			`api/v1/pelatihan/get-step-tiga?pelatian_id=${id}`;
+export const getReviewStep3Revisi =
+	(token, id, token_permission) => async (dispatch) => {
+		try {
+			let link =
+				process.env.END_POINT_API_PELATIHAN +
+				`api/v1/pelatihan/get-step-tiga?pelatian_id=${id}`;
 
-		const config = {
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		};
+			const config = {
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+				Permission: token_permission,
+			};
 
-		const { data } = await axios.get(link, config);
+			const { data } = await axios.get(link, config);
 
-		dispatch({
-			type: GET_REVIEW_STEP3_SUCCESS,
-			payload: data,
-		});
-	} catch (error) {
-		dispatch({
-			type: GET_REVIEW_STEP3_FAIL,
-			payload: error.response.data.message,
-		});
-	}
-};
+			dispatch({
+				type: GET_REVIEW_STEP3_SUCCESS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: GET_REVIEW_STEP3_FAIL,
+				payload: error.response.data.message,
+			});
+		}
+	};
 
 export const getReviewStep4Revisi = (token, id) => async (dispatch) => {
 	try {
