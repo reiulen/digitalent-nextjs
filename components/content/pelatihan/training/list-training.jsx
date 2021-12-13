@@ -47,13 +47,15 @@ const ListTraining = ({ token }) => {
   const router = useRouter();
   let { success } = router.query;
 
-  const { error: errorRevisi, revisi } = useSelector(state => state.listRevisi);
+  const { error: errorRevisi, revisi } = useSelector(
+    (state) => state.listRevisi
+  );
 
-  const { permission } = useSelector(state => state.adminPermission);
+  const { permission } = useSelector((state) => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
 
   useEffect(() => {
-    const filterPermission = permission.permissions.filter(item =>
+    const filterPermission = permission.permissions.filter((item) =>
       item.includes("pelatihan")
     );
     setListPermission(filterPermission);
@@ -63,14 +65,14 @@ const ListTraining = ({ token }) => {
     loading: allLoading,
     error: allError,
     training,
-  } = useSelector(state => state.allTraining);
+  } = useSelector((state) => state.allTraining);
 
   const { error: cardError, training: cardTraining } = useSelector(
-    state => state.cardTraining
+    (state) => state.cardTraining
   );
 
   const drowpdownTemabyAkademi = useSelector(
-    state => state.drowpdownTemabyAkademi
+    (state) => state.drowpdownTemabyAkademi
   );
 
   const {
@@ -78,23 +80,23 @@ const ListTraining = ({ token }) => {
     error: statusError,
     success: statusSuccess,
     status,
-  } = useSelector(state => state.updateStatus);
+  } = useSelector((state) => state.updateStatus);
 
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
-    state => state.drowpdownAkademi
+    (state) => state.drowpdownAkademi
   );
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
-    state => state.drowpdownTema
+    (state) => state.drowpdownTema
   );
   const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
-    useSelector(state => state.drowpdownPenyelenggara);
+    useSelector((state) => state.drowpdownPenyelenggara);
   const {
     loading: deleteLoading,
     error: deleteError,
     isDeleted,
-  } = useSelector(state => state.deleteTraining);
+  } = useSelector((state) => state.deleteTraining);
 
-  const cloneTraining = useSelector(state => state.cloneTraining);
+  const cloneTraining = useSelector((state) => state.cloneTraining);
 
   let loading = false;
   if (allLoading) {
@@ -185,7 +187,7 @@ const ListTraining = ({ token }) => {
     dispatch(dropdownTemabyAkademi(academy?.value, token));
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        result => {
+        (result) => {
           if (result.isConfirmed) {
             dispatch(
               getAllTraining(
@@ -211,7 +213,7 @@ const ListTraining = ({ token }) => {
     }
     if (cloneTraining.loading) {
       Swal.fire("Berhasil ", "Data berhasil diclone.", "success").then(
-        result => {
+        (result) => {
           if (result.isConfirmed) {
             dispatch(
               getAllTraining(
@@ -278,12 +280,12 @@ const ListTraining = ({ token }) => {
     academy?.value,
   ]);
 
-  const handlePagination = pageNumber => {
+  const handlePagination = (pageNumber) => {
     setPage(pageNumber);
-    let register = dateRegister.map(item => {
+    let register = dateRegister.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
-    let pelaksanaan = datePelaksanaan.map(item => {
+    let pelaksanaan = datePelaksanaan.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
     dispatch(
@@ -326,10 +328,10 @@ const ListTraining = ({ token }) => {
   const handleFilter = () => {
     setShowModal(false);
     setDateDisabled(true);
-    let register = dateRegister.map(item => {
+    let register = dateRegister.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
-    let pelaksanaan = datePelaksanaan.map(item => {
+    let pelaksanaan = datePelaksanaan.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
     setPage(1);
@@ -345,6 +347,7 @@ const ListTraining = ({ token }) => {
         penyelenggara != null ? penyelenggara.label : null,
         academy != null ? academy.label : null,
         theme != null ? theme.label : null,
+        statusPublish != null ? statusPublish.label : null,
         token,
         berjalan
       )
@@ -374,12 +377,13 @@ const ListTraining = ({ token }) => {
         null,
         null,
         null,
+        null,
         token
       )
     );
   };
 
-  const handleLimit = val => {
+  const handleLimit = (val) => {
     setLimit(val);
     setPage(1);
     dispatch(
@@ -387,6 +391,7 @@ const ListTraining = ({ token }) => {
         1,
         null,
         val,
+        null,
         null,
         null,
         null,
@@ -419,7 +424,7 @@ const ListTraining = ({ token }) => {
     router.replace("/pelatihan/pelatihan", undefined, { shallow: true });
   };
 
-  const handleDelete = id => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -429,14 +434,14 @@ const ListTraining = ({ token }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then(result => {
+    }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteTraining(id, token));
       }
     });
   };
 
-  const handleClone = id => {
+  const handleClone = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini akan di Clone !",
@@ -446,7 +451,7 @@ const ListTraining = ({ token }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then(result => {
+    }).then((result) => {
       if (result.isConfirmed) {
         dispatch(cloneTrainingAction(id, token));
       }
@@ -480,6 +485,7 @@ const ListTraining = ({ token }) => {
           null,
           null,
           null,
+          null,
           token
         )
       );
@@ -507,6 +513,7 @@ const ListTraining = ({ token }) => {
           null,
           null,
           null,
+          null,
           token
         )
       );
@@ -525,6 +532,7 @@ const ListTraining = ({ token }) => {
       dispatch(
         getAllTraining(
           1,
+          null,
           null,
           null,
           null,
@@ -561,6 +569,7 @@ const ListTraining = ({ token }) => {
           null,
           null,
           null,
+          null,
           token,
           val
         )
@@ -569,10 +578,10 @@ const ListTraining = ({ token }) => {
   };
 
   const handleExportReport = () => {
-    let register = dateRegister.map(item => {
+    let register = dateRegister.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
-    let pelaksanaan = datePelaksanaan.map(item => {
+    let pelaksanaan = datePelaksanaan.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
 
@@ -597,7 +606,7 @@ const ListTraining = ({ token }) => {
 
     let link = `${process.env.END_POINT_API_PELATIHAN}api/v1/pelatihan/export`;
 
-    axios.get(link, config).then(res => {
+    axios.get(link, config).then((res) => {
       window.open(res.data.data, "_blank");
     });
   };
@@ -608,7 +617,7 @@ const ListTraining = ({ token }) => {
     }
   };
 
-  const handleModalRevisi = id => {
+  const handleModalRevisi = (id) => {
     dispatch(getListRevisi(token, id));
     setShowModalRevisi(true);
   };
@@ -764,7 +773,7 @@ const ListTraining = ({ token }) => {
                       value={search}
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -889,7 +898,7 @@ const ListTraining = ({ token }) => {
                                   }`}
                                   key={i}
                                   value={row.status_publish}
-                                  onChange={e =>
+                                  onChange={(e) =>
                                     handleStatusPublish(row.id, e.target.value)
                                   }
                                   disabled={
@@ -925,7 +934,7 @@ const ListTraining = ({ token }) => {
                                   className="select-pelatihan select-pelatihan-success"
                                   key={i}
                                   value={row.status_pelatihan}
-                                  onChange={e =>
+                                  onChange={(e) =>
                                     handleStatusPelatihan(
                                       row.id,
                                       e.target.value
@@ -1167,8 +1176,8 @@ const ListTraining = ({ token }) => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                           value={limit}
                         >
                           <option value="5">5</option>
@@ -1217,7 +1226,7 @@ const ListTraining = ({ token }) => {
             <Select
               options={optionsPenyelenggara}
               defaultValue={penyelenggara}
-              onChange={e =>
+              onChange={(e) =>
                 setPenyelenggara({ value: e.value, label: e.label })
               }
             />
@@ -1227,7 +1236,7 @@ const ListTraining = ({ token }) => {
             <Select
               options={optionsAkademi}
               defaultValue={academy}
-              onChange={e => {
+              onChange={(e) => {
                 setAcademy({ value: e.value, label: e.label });
                 setTheme(null);
               }}
@@ -1239,7 +1248,7 @@ const ListTraining = ({ token }) => {
               options={drowpdownTemabyAkademi.data.data}
               defaultValue={theme}
               value={theme}
-              onChange={e => setTheme({ value: e.value, label: e.label })}
+              onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
           </div>
           <div className="form-group mb-5">
@@ -1247,7 +1256,7 @@ const ListTraining = ({ token }) => {
             <Select
               options={optionsStatusSubstansi}
               defaultValue={statusSubstansi}
-              onChange={e =>
+              onChange={(e) =>
                 setStatusSubstansi({ value: e.value, label: e.label })
               }
             />
@@ -1257,7 +1266,7 @@ const ListTraining = ({ token }) => {
             <Select
               options={optionsStatusPelatihan}
               defaultValue={statusPelatihan}
-              onChange={e =>
+              onChange={(e) =>
                 setStatusPelatihan({ value: e.value, label: e.label })
               }
             />
@@ -1281,7 +1290,7 @@ const ListTraining = ({ token }) => {
                 className="form-control"
                 name="start_date"
                 selectsRange={true}
-                onChange={date => {
+                onChange={(date) => {
                   setDateRegister(date);
                   setDateDisabled(false);
                 }}
@@ -1299,7 +1308,7 @@ const ListTraining = ({ token }) => {
                 className="form-control"
                 name="start_date"
                 selectsRange={true}
-                onChange={date => setDatePelaksanaan(date)}
+                onChange={(date) => setDatePelaksanaan(date)}
                 minDate={dateRegisterEnd || dateRegisterStart}
                 startDate={datePelaksanaanStart}
                 endDate={datePelaksanaanEnd}
