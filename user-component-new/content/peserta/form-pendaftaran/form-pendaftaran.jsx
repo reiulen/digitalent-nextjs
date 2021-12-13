@@ -9,21 +9,7 @@ import {
   newPendaftaranPelatihan,
   storeFormRegister,
 } from "../../../../redux/actions/pelatihan/register-training.actions";
-import {
-  getDropdownStatusMenikah,
-  dropdownStatusPekerjaan,
-  getDropdownHubungan,
-  dropdownLevelPelatihan,
-  dropdownAgama,
-  dropdownPenyelenggara,
-  dropdownProvinsi,
-  getDropdownKabupatenAll,
-  dropdownPendidikan,
-} from "../../../../redux/actions/pelatihan/function.actions";
-import {
-  getDataRefPekerjaan,
-  getDataAsalSekolah,
-} from "../../../../redux/actions/pelatihan/profile.actions";
+
 import RadioReference from "../../../../components/content/pelatihan/training/components/radio-reference.component";
 import OptionsReference from "../../../../components/content/pelatihan/training/components/option-reference.component";
 import CheckboxReference from "../../../../components/content/pelatihan/training/components/checkbox-reference.component";
@@ -40,6 +26,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const [dataPendaftaran, setDataPendaftaran] = useState(
     dataForm?.form_pendaftaran
   );
+
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
   );
@@ -74,6 +61,16 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const { data: dataUniversitas } = useSelector(
     (state) => state.getAsalSekolah
   );
+
+  useEffect(() => {
+    dataForm &&
+      dataForm.form_pendaftaran &&
+      dataForm.form_pendaftaran.map((row, i) => {
+        if (row.type === "checkbox") {
+          row.value = [];
+        }
+      });
+  }, []);
 
   const readerElementHandler = (row, i) => {
     switch (row.type) {
@@ -342,7 +339,22 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
 
   const onChangeInput = (index, value) => {
     let list = [...dataForm.form_pendaftaran];
-    list[index].value = value;
+    if (list[index].type === "checkbox") {
+      let valArr = list[index].value;
+      if (valArr.length > 0) {
+        valArr.map((row, i) => {
+          if (row === value) {
+            valArr.splice(i, 1);
+          } else {
+            valArr.push(value);
+          }
+        });
+      } else {
+        valArr.push(value);
+      }
+    } else {
+      list[index].value = value;
+    }
     if (list[index].type === "file_image" || list[index].type === "file_doc") {
       let type = [""];
       if (list[index].type === "file_image") {
@@ -371,16 +383,22 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
       }
     }
     setDataPendaftaran(list);
-    // funcForm(list);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (dataTraining?.komitmen == "1") {
       if (simpleValidator.current.allValid()) {
+        let list = [...dataPendaftaran];
+        list.map((row, i) => {
+          if (row.type === "checkbox") {
+            let val = row.value.join(",");
+            row.value = val;
+          }
+        });
         const data = {
           komitmen: dataForm.komitmen,
-          form_pendaftaran: dataPendaftaran,
+          form_pendaftaran: list,
         };
         dispatch(storeFormRegister(data));
         funcView(2);
@@ -394,13 +412,19 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         });
       }
     } else {
+      let list = [...dataPendaftaran];
+      list.map((row, i) => {
+        if (row.type === "checkbox") {
+          let val = row.value.join(",");
+          row.value = val;
+        }
+      });
       const data = {
         komitmen: `${dataForm.komitmen}`,
-        form_pendaftaran: dataPendaftaran,
+        form_pendaftaran: list,
         pelatian_id: +router.query.id,
       };
-      console.log(data);
-      // dispatch(newPendaftaranPelatihan(data, token));
+      dispatch(newPendaftaranPelatihan(data, token));
     }
   };
 

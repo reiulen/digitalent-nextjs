@@ -42,23 +42,24 @@ const IndexInsert = ({ token }) => {
   const { data: dataReferenceOption } = useSelector(
     (state) => state.allDataReference
   );
-
-  const dataOptions = [];
-  if (dataReferenceOption) {
-    dataReferenceOption.list_reference.map((row, i) => {
-      let data = {
-        id: row.id,
-        value: row.name,
-      };
-      dataOptions.push(data);
-    });
-  }
+  const [dataOptions, setDataOptions] = useState([]);
 
   useEffect(() => {
     if (error) {
       SweatAlert("Gagal", error, "error");
       dispatch(clearErrors());
     }
+    const dataOptionsArr = [];
+    if (dataReferenceOption) {
+      dataReferenceOption.list_reference.map((row, i) => {
+        let data = {
+          id: row.id,
+          value: row.name,
+        };
+        dataOptionsArr.push(data);
+      });
+    }
+    setDataOptions(dataOptionsArr);
   }, [error]);
 
   const stepView = () => {

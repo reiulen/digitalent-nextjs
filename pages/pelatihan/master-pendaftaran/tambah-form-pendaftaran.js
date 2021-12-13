@@ -28,6 +28,7 @@ import {
   dropdownKabupaten,
   dropdownPenyelenggara,
 } from "../../../redux/actions/pelatihan/function.actions";
+import { getAllDataReference } from "../../../redux/actions/site-management/data-reference.actions";
 
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
@@ -59,6 +60,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getRegistrationStep2());
+      await store.dispatch(
+        getAllDataReference(session.user.user.data.token, true)
+      );
 
       return {
         props: { session, title: "Tambah Pelatihan - Pelatihan" },
