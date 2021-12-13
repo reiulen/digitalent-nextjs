@@ -185,85 +185,91 @@ export const clearErrors = () => async (dispatch) => {
 	});
 };
 
-export const getSingleSertifikat = (id, token) => async (dispatch) => {
-	try {
-		dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
-		let link =
-			process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
+export const getSingleSertifikat =
+	(id, token, token_permission) => async (dispatch) => {
+		try {
+			dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
+			let link =
+				process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
 
-		const config = {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		};
+			const config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+				Permission: token_permission,
+			};
 
-		const { data } = await axios.get(link, config);
+			const { data } = await axios.get(link, config);
 
-		if (data) {
-			dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
-		}
-		return data;
-	} catch (error) {
-		dispatch({
-			type: SINGLE_SERTIFIKAT_FAIL,
-			// payload: error.message
-			payload: error?.response?.data?.message || error.message,
-		});
-	}
-};
-
-export const getPublishedSertifikat = (id, token) => async (dispatch) => {
-	try {
-		dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
-		let link =
-			process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
-		const config = {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		};
-
-		const { data } = await axios.get(link, config);
-		if (data) {
+			if (data) {
+				dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
+			}
+			return data;
+		} catch (error) {
 			dispatch({
-				type: PUBLISHED_SERTIFIKAT_SUCCESS,
-				payload: data,
+				type: SINGLE_SERTIFIKAT_FAIL,
+				// payload: error.message
+				payload: error?.response?.data?.message || error.message,
 			});
 		}
-		return data;
-	} catch (error) {
-		dispatch({
-			type: PUBLISHED_SERTIFIKAT_FAIL,
-			payload: error?.response?.data?.message || error.message,
-		});
-	}
-};
+	};
 
-export const updateSertifikat = (id, formData, token) => async (dispatch) => {
-	try {
-		dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
+export const getPublishedSertifikat =
+	(id, token, token_permission) => async (dispatch) => {
+		try {
+			dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
+			let link =
+				process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
+			const config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+				Permission: token_permission,
+			};
 
-		let link =
-			process.env.END_POINT_API_SERTIFIKAT +
-			`api/manage_certificates/update/${id}`;
-
-		const config = {
-			headers: {
-				Authorization: `Bearer ${token.token}`,
-			},
-		};
-
-		const { data } = await axios.post(link, formData, config);
-		if (data) {
-			dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
+			const { data } = await axios.get(link, config);
+			if (data) {
+				dispatch({
+					type: PUBLISHED_SERTIFIKAT_SUCCESS,
+					payload: data,
+				});
+			}
+			return data;
+		} catch (error) {
+			dispatch({
+				type: PUBLISHED_SERTIFIKAT_FAIL,
+				payload: error?.response?.data?.message || error.message,
+			});
 		}
-	} catch (error) {
-		dispatch({
-			type: UPDATE_SERTIFIKAT_FAIL,
-			payload: error?.response?.data?.message || error.message,
-		});
-	}
-};
+	};
+
+export const updateSertifikat =
+	(id, formData, token, token_permission) => async (dispatch) => {
+		try {
+			dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
+
+			let link =
+				process.env.END_POINT_API_SERTIFIKAT +
+				`api/manage_certificates/update/${id}`;
+
+			const config = {
+				headers: {
+					Authorization: `Bearer ${token.token}`,
+				},
+				Permission: token_permission,
+			};
+
+			const { data } = await axios.post(link, formData, config);
+			if (data) {
+				dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
+			}
+		} catch (error) {
+			dispatch({
+				type: UPDATE_SERTIFIKAT_FAIL,
+				payload: error?.response?.data?.message || error.message,
+			});
+		}
+	};
 
 export const getOptionsAcademy =
 	(token, token_permission) => async (dispatch) => {
