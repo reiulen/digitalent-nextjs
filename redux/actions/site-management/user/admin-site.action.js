@@ -21,6 +21,10 @@ import {
   DETAIL_ADMIN_SITE_SUCCESS,
   DETAIL_ADMIN_SITE_FAIL,
   DETAIL_ADMIN_SITE_RESET,
+  EDIT_ADMIN_SITE_REQUEST,
+  EDIT_ADMIN_SITE_SUCCESS,
+  EDIT_ADMIN_SITE_FAIL,
+  EDIT_ADMIN_SITE_RESET,
   DELETE_ADMIN_SITE_SUCCESS,
   DELETE_ADMIN_SITE_FAIL,
   DELETE_ADMIN_SITE_RESET,
@@ -291,6 +295,33 @@ export const getDetailAdminSite = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DETAIL_ADMIN_SITE_FAIL,
+    });
+  }
+};
+
+export const getEditAdminSite = (id, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: EDIT_ADMIN_SITE_REQUEST,
+    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/edit/${id}`;
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: EDIT_ADMIN_SITE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: EDIT_ADMIN_SITE_FAIL,
     });
   }
 };
