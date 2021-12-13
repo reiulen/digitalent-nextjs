@@ -131,6 +131,7 @@ const ListTraining = ({ token }) => {
   const [theme, setTheme] = useState(null);
   const [statusSubstansi, setStatusSubstansi] = useState(null);
   const [statusPelatihan, setStatusPelatihan] = useState(null);
+  const [statusPublish, setStatusPublish] = useState(null);
   const [berjalan, setBerjalan] = useState(null);
 
   const [dateRegister, setDateRegister] = useState([null, null]);
@@ -172,6 +173,12 @@ const ListTraining = ({ token }) => {
     { value: "revisi", label: "Revisi" },
     { value: "disetujui", label: "Disetujui" },
     { value: "ditolak", label: "Ditolak" },
+  ];
+
+  const optionsStatusPublish = [
+    { value: "0", label: "Unpublish" },
+    { value: "1", label: "Publish" },
+    { value: "2", label: "Unlisted" },
   ];
 
   useEffect(() => {
@@ -1252,6 +1259,16 @@ const ListTraining = ({ token }) => {
               defaultValue={statusPelatihan}
               onChange={e =>
                 setStatusPelatihan({ value: e.value, label: e.label })
+              }
+            />
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Status Publish</label>
+            <Select
+              options={optionsStatusPublish}
+              defaultValue={statusPublish}
+              onChange={(e) =>
+                setStatusPublish({ value: e.value, label: e.label })
               }
             />
           </div>

@@ -56,6 +56,7 @@ const IndexForm = ({ token, session }) => {
   useEffect(() => {
     if (error) {
       dispatch(clearErrors());
+      SweatAlert("Gagal", error, "error");
     }
 
     if (success) {
