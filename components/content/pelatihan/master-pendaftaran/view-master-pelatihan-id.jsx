@@ -3,8 +3,11 @@ import { useRouter } from "next/router";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useSelector } from "react-redux";
+import OptionsReference from "../training/components/option-reference.component";
+import CheckboxReference from "../training/components/checkbox-reference.component";
+import RadioReference from "../training/components/radio-reference.component";
 
-const ViewTrainingStep2 = () => {
+const ViewTrainingStep2 = ({ token }) => {
   const router = useRouter();
 
   const { form } = useSelector((state) => state.getDetailMasterPelatihan);
@@ -15,15 +18,13 @@ const ViewTrainingStep2 = () => {
       case "text":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <input
               type={row.element}
-              name=""
               className="form-control"
               required={row.required}
-              disabled
             />
           </div>
         );
@@ -31,49 +32,59 @@ const ViewTrainingStep2 = () => {
       case "select":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <select name="" className="form-control" required={row.required}>
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <option value={dat} key={i}>
-                      {dat}
-                    </option>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <option value={dat} key={i}>
+                    {dat}
+                  </option>
+                ))
+              ) : (
+                <OptionsReference id={row.dataOption} token={token} />
+              )}
             </select>
           </div>
         );
+        break;
       case "checkbox":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <div className="form-check pb-3" key={i}>
-                      <input
-                        type="checkbox"
-                        name="plotRegistration"
-                        className="form-check-input"
-                        required={row.required}
-                        value={dat}
-                        disabled
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <div className="form-check pb-3" key={i}>
+                    <input
+                      type="checkbox"
+                      name="plotRegistration"
+                      className="form-check-input"
+                      required={row.required}
+                      value={dat}
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <CheckboxReference
+                  id={row.dataOption}
+                  token={token}
+                  required={row.required}
+                  onChangeValue={(value) => {}}
+                />
+              )}
             </div>
           </div>
         );
+        break;
       case "textarea":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <textarea
@@ -85,43 +96,50 @@ const ViewTrainingStep2 = () => {
             />
           </div>
         );
+        break;
       case "radio":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <div className="form-check pb-3" key={i}>
-                      <input
-                        type="radio"
-                        name={row.name}
-                        className="form-check-input"
-                        value={dat}
-                        required={row.required}
-                        disabled
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <div className="form-check pb-3" key={i}>
+                    <input
+                      type="radio"
+                      name={row.name}
+                      className="form-check-input"
+                      value={dat}
+                      required={row.required}
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <RadioReference
+                  id={row.dataOption}
+                  token={token}
+                  required={row.required}
+                  onChangeValue={(value) => {}}
+                />
+              )}
             </div>
           </div>
         );
+        break;
       case "file_image":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <div className="custom-file">
               <input
-                disabled
                 type="file"
                 className="custom-file-input"
-                accept="image/png, image/jpeg, image/jpg"
+                accept="image/png, image/jpeg , image/jpg"
                 required={row.required}
               />
               <label className="custom-file-label" htmlFor="customFile">
@@ -130,10 +148,11 @@ const ViewTrainingStep2 = () => {
             </div>
           </div>
         );
+        break;
       case "file_doc":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <div className="custom-file">
@@ -142,7 +161,6 @@ const ViewTrainingStep2 = () => {
                 className="custom-file-input"
                 accept="application/pdf"
                 required={row.required}
-                disabled
               />
               <label className="custom-file-label" htmlFor="customFile">
                 Belum ada File
@@ -154,11 +172,10 @@ const ViewTrainingStep2 = () => {
       case "date":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label text-neutral-body fz-14">
               {row.name}
             </label>
             <input
-              disabled
               type={row.element}
               name=""
               className="form-control"
@@ -171,7 +188,6 @@ const ViewTrainingStep2 = () => {
         break;
     }
   };
-
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">

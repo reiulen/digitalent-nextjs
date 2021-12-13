@@ -6,6 +6,7 @@ import { middlewareAuthAdminSession } from "../../../../../utils/middleware/auth
 
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
+import { getAllDataReference } from "../../../../../redux/actions/site-management/data-reference.actions";
 
 const EditRegistration = dynamic(
   () =>
@@ -20,11 +21,12 @@ const EditRegistration = dynamic(
   }
 );
 
-export default function EditRegistrationPage() {
+export default function EditRegistrationPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditRegistration />
+        <EditRegistration token={session.token} />
       </div>
     </>
   );
@@ -44,6 +46,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getAllDataReference(session.user.user.data.token, true)
+      );
 
       return {
         props: { session, title: "Edit Registrasi - Pelatihan" },
