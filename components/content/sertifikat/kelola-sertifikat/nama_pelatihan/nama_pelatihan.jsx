@@ -402,7 +402,7 @@ export default function NamaPelatihanID({ token }) {
 																<td className="align-middle text-capitalize">
 																	{certificate.status_migrate_id == "1" ? (
 																		<span className="label label-inline label-light-success font-weight-bold">
-																			tersedia
+																			publish
 																		</span>
 																	) : certificate.status_migrate_id == "2" ? (
 																		<span className="label label-inline label-light-warning font-weight-bold">
@@ -410,7 +410,7 @@ export default function NamaPelatihanID({ token }) {
 																		</span>
 																	) : (
 																		<span className="label label-inline label-light-danger font-weight-bold">
-																			tidak tersedia
+																			belum tersedia
 																		</span>
 																	)}
 																</td>
