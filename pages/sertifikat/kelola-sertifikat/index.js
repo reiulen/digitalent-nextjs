@@ -39,7 +39,7 @@ export default function KelokaSertifikatPage(props) {
 
 // Function GETSERVERSIDE PROPS
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 
@@ -52,10 +52,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(getAllSertifikat(session.user.user.data.token));
-      await store.dispatch(getOptionsAcademy(session.user.user.data.token));
-      await store.dispatch(getOptionsTheme(session.user.user.data.token));
+      await store.dispatch(
+        getAllSertifikat(session.user.user.data.token, token_permission)
+      );
+      await store.dispatch(
+        getOptionsAcademy(session.user.user.data.token, token_permission)
+      );
+
+      const tes = await store.dispatch(
+        getOptionsTheme(session.user.user.data.token, token_permission)
+      );
 
       return {
         props: { session, title: "List Akademi - Sertifikat" },
