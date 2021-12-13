@@ -169,7 +169,7 @@ const ListTheme = ({ token }) => {
 		setAcademy(null);
 		setStatus(null);
 		setPage(1);
-		dispatch(getAllTheme(1, null, null, null, 5, token));
+		dispatch(getAllTheme(1, null, null, null, 5, token, token_permission));
 		setShowModal(false);
 	};
 

@@ -64,90 +64,96 @@ export const getAllTheme =
 		}
 	};
 
-export const getDetailTheme = (id, token) => async (dispatch) => {
-	try {
-		let link =
-			process.env.END_POINT_API_PELATIHAN + `api/v1/tema/detail?id=${id}`;
+export const getDetailTheme =
+	(id, token, token_permission) => async (dispatch) => {
+		try {
+			let link =
+				process.env.END_POINT_API_PELATIHAN + `api/v1/tema/detail?id=${id}`;
 
-		const config = {
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		};
+			const config = {
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+				Permission: token_permission,
+			};
 
-		const { data } = await axios.get(link, config);
+			const { data } = await axios.get(link, config);
 
-		dispatch({
-			type: DETAIL_THEME_SUCCESS,
-			payload: data.data,
-		});
-	} catch (error) {
-		dispatch({
-			type: DETAIL_THEME_FAIL,
-			payload: error.response.data.message,
-		});
-	}
-};
+			dispatch({
+				type: DETAIL_THEME_SUCCESS,
+				payload: data.data,
+			});
+		} catch (error) {
+			dispatch({
+				type: DETAIL_THEME_FAIL,
+				payload: error.response.data.message,
+			});
+		}
+	};
 
-export const newTheme = (themeData, token) => async (dispatch) => {
-	try {
-		dispatch({
-			type: NEW_THEME_REQUEST,
-		});
+export const newTheme =
+	(themeData, token, token_permission) => async (dispatch) => {
+		try {
+			dispatch({
+				type: NEW_THEME_REQUEST,
+			});
 
-		const config = {
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		};
+			const config = {
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+				Permission: token_permission,
+			};
 
-		const { data } = await axios.post(
-			process.env.END_POINT_API_PELATIHAN + "api/v1/tema/create",
-			themeData,
-			config
-		);
+			const { data } = await axios.post(
+				process.env.END_POINT_API_PELATIHAN + "api/v1/tema/create",
+				themeData,
+				config
+			);
 
-		dispatch({
-			type: NEW_THEME_SUCCESS,
-			payload: data,
-		});
-	} catch (error) {
-		dispatch({
-			type: NEW_THEME_FAIL,
-			payload: error.response.data.message,
-		});
-	}
-};
+			dispatch({
+				type: NEW_THEME_SUCCESS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: NEW_THEME_FAIL,
+				payload: error.response.data.message,
+			});
+		}
+	};
 
-export const updateTheme = (themeData, token) => async (dispatch) => {
-	try {
-		dispatch({
-			type: UPDATE_THEME_REQUEST,
-		});
+export const updateTheme =
+	(themeData, token, token_permission) => async (dispatch) => {
+		try {
+			dispatch({
+				type: UPDATE_THEME_REQUEST,
+			});
 
-		const config = {
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		};
+			const config = {
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+				Permission: token_permission,
+			};
 
-		const { data } = await axios.post(
-			process.env.END_POINT_API_PELATIHAN + `api/v1/tema/update`,
-			themeData,
-			config
-		);
+			const { data } = await axios.post(
+				process.env.END_POINT_API_PELATIHAN + `api/v1/tema/update`,
+				themeData,
+				config
+			);
 
-		dispatch({
-			type: UPDATE_THEME_SUCCESS,
-			payload: data.status,
-		});
-	} catch (error) {
-		dispatch({
-			type: UPDATE_THEME_FAIL,
-			payload: error.response.data.message,
-		});
-	}
-};
+			dispatch({
+				type: UPDATE_THEME_SUCCESS,
+				payload: data.status,
+			});
+		} catch (error) {
+			dispatch({
+				type: UPDATE_THEME_FAIL,
+				payload: error.response.data.message,
+			});
+		}
+	};
 
 export const deleteTheme =
 	(id, token, token_permission) => async (dispatch) => {
