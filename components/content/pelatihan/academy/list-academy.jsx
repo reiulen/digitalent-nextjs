@@ -22,11 +22,11 @@ const ListAcademy = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { permission } = useSelector((state) => state.adminPermission);
+  const { permission } = useSelector(state => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
 
   useEffect(() => {
-    const filterPermission = permission.permissions.filter((item) =>
+    const filterPermission = permission.permissions.filter(item =>
       item.includes("pelatihan")
     );
     setListPermission(filterPermission);
@@ -36,12 +36,12 @@ const ListAcademy = ({ token }) => {
     loading: allLoading,
     error: allError,
     academy,
-  } = useSelector((state) => state.allAcademy);
+  } = useSelector(state => state.allAcademy);
   const {
     loading: deleteLoading,
     error: deleteError,
     isDeleted,
-  } = useSelector((state) => state.deleteAcademy);
+  } = useSelector(state => state.deleteAcademy);
 
   let { success } = router.query;
 
@@ -78,7 +78,7 @@ const ListAcademy = ({ token }) => {
   useEffect(() => {
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
+        result => {
           if (result.isConfirmed) {
             dispatch(getAllAcademy(1, null, null, token));
           }
@@ -97,7 +97,7 @@ const ListAcademy = ({ token }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isDeleted, dispatch, token]);
 
-  const handlePagination = (pageNumber) => {
+  const handlePagination = pageNumber => {
     setPage(pageNumber);
     dispatch(getAllAcademy(pageNumber, search, limit, token));
   };
@@ -107,7 +107,7 @@ const ListAcademy = ({ token }) => {
     dispatch(getAllAcademy(1, search, limit, token));
   };
 
-  const handleLimit = (val) => {
+  const handleLimit = val => {
     setLimit(val);
     setPage(1);
     dispatch(getAllAcademy(1, search, val, token));
@@ -117,7 +117,7 @@ const ListAcademy = ({ token }) => {
     router.replace("/pelatihan/akademi", undefined, { shallow: true });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -127,7 +127,7 @@ const ListAcademy = ({ token }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         dispatch(deleteAcademy(id, token));
       }
@@ -200,14 +200,16 @@ const ListAcademy = ({ token }) => {
             >
               List Akademi
             </h1>
-            <div className="card-toolbar">
-              <Link href="/pelatihan/akademi/tambah-akademi">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-add-fill"></i>
-                  Tambah Akademi
-                </a>
-              </Link>
-            </div>
+            {listPermission.includes("pelatihan.akademi.manage") && (
+              <div className="card-toolbar">
+                <Link href="/pelatihan/akademi/tambah-akademi">
+                  <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
+                    <i className="ri-add-fill"></i>
+                    Tambah Akademi
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -223,7 +225,7 @@ const ListAcademy = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -382,8 +384,8 @@ const ListAcademy = ({ token }) => {
                             color: "#9E9E9E",
                           }}
                           value={limit}
-                          onChange={(e) => handleLimit(e.target.value)}
-                          onBlur={(e) => handleLimit(e.target.value)}
+                          onChange={e => handleLimit(e.target.value)}
+                          onBlur={e => handleLimit(e.target.value)}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>
