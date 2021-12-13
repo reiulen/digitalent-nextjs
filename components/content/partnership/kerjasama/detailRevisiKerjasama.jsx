@@ -5,6 +5,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const DetailRevisiKerjasama = ({ token }) => {
   const router = useRouter();
@@ -50,6 +51,7 @@ const DetailRevisiKerjasama = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -79,6 +81,7 @@ const DetailRevisiKerjasama = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
           },
         }
       );
