@@ -141,31 +141,33 @@ export const getListRevisi =
 		}
 	};
 
-export const getReviewStep1Revisi = (token, id) => async (dispatch) => {
-	try {
-		let link =
-			process.env.END_POINT_API_PELATIHAN +
-			`api/v1/pelatihan/get-step-satu?pelatian_id=${id}`;
+export const getReviewStep1Revisi =
+	(token, id, token_permission) => async (dispatch) => {
+		try {
+			let link =
+				process.env.END_POINT_API_PELATIHAN +
+				`api/v1/pelatihan/get-step-satu?pelatian_id=${id}`;
 
-		const config = {
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		};
+			const config = {
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+				Permission: token_permission,
+			};
 
-		const { data } = await axios.get(link, config);
+			const { data } = await axios.get(link, config);
 
-		dispatch({
-			type: GET_REVIEW_STEP1_SUCCESS,
-			payload: data,
-		});
-	} catch (error) {
-		dispatch({
-			type: GET_REVIEW_STEP1_FAIL,
-			payload: error.response.data.message,
-		});
-	}
-};
+			dispatch({
+				type: GET_REVIEW_STEP1_SUCCESS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: GET_REVIEW_STEP1_FAIL,
+				payload: error.response.data.message,
+			});
+		}
+	};
 
 export const getReviewStep2Revisi =
 	(token, id, token_permission) => async (dispatch) => {
@@ -223,27 +225,29 @@ export const getReviewStep3Revisi =
 		}
 	};
 
-export const getReviewStep4Revisi = (token, id) => async (dispatch) => {
-	try {
-		let link =
-			process.env.END_POINT_API_PELATIHAN +
-			`api/v1/pelatihan/pelatihan-parameter`;
+export const getReviewStep4Revisi =
+	(token, id, token_permission) => async (dispatch) => {
+		try {
+			let link =
+				process.env.END_POINT_API_PELATIHAN +
+				`api/v1/pelatihan/pelatihan-parameter`;
 
-		const config = {
-			params: {
-				pelatian_id: id,
-			},
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		};
-		const { data } = await axios.get(link, config);
-		dispatch({
-			type: GET_REVIEW_STEP4_SUCCESS,
-			payload: data,
-		});
-	} catch (error) {}
-};
+			const config = {
+				params: {
+					pelatian_id: id,
+				},
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+				Permission: token_permission,
+			};
+			const { data } = await axios.get(link, config);
+			dispatch({
+				type: GET_REVIEW_STEP4_SUCCESS,
+				payload: data,
+			});
+		} catch (error) {}
+	};
 
 export const revisiReviewPelatihan =
 	(dataRevisi, token, token_permission) => async (dispatch) => {
