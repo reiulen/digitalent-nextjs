@@ -14,6 +14,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import moment from "moment";
 import axios from "axios";
+import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import {
   dropdownKabupaten,
   dropdownProvinsiToDesa,
@@ -525,16 +526,16 @@ const TambahPage = ({ token }) => {
                     <div className="form-group">
                       <label>NIK</label>
                       <input
-                        type="number"
+                        type="text"
                         className="form-control"
-                        placeholder="1627152715145161218787"
+                        placeholder="Masukkan NIK"
                         maxLength={16}
                         value={nik}
                         onChange={(e) => {
-                          if (e.target.value.length === 16) {
-                            setNik(e.target.value.replace(e.target.value, ""));
+                          if (e.target.value.length === 17) {
+                            setNik(nik);
                           }else{
-                            setNik(e.target.value)
+                            setNik(e.target.value.replace(/[^0-9]/g, ""))
                           }
                         }}
                         onBlur={(e) => {
@@ -577,6 +578,7 @@ const TambahPage = ({ token }) => {
                       <label htmlFor="exampleSelect1">Jenis Kelamin</label>
                       <select
                         className="form-control"
+                        placeholder="Pilih Jenis Kelamin"
                         id="exampleSelect1"
                         value={jenisKelamin}
                         onChange={(e) => {
@@ -588,6 +590,7 @@ const TambahPage = ({ token }) => {
                           );
                         }}
                       >
+                        <option value="" disabled hidden>Pilih Jenis Kelamin</option>
                         <option value="Perempuan">Perempuan</option>
                         <option value="Laki - Laki">Laki-Laki</option>
                       </select>
@@ -602,12 +605,17 @@ const TambahPage = ({ token }) => {
                     <div className="form-group">
                       <label>Nomor Handphone</label>
                       <input
-                        type="number"
+                        type="text"
                         className="form-control"
                         placeholder="Masukkan Nomor Handphone"
                         value={nomorHandphone}
                         onChange={(e) => {
-                          setNomorHandphone(e.target.value);
+                          if (e.target.value.length === 15) {
+                            setNomorHandphone(nomorHandphone)
+                          }else{
+
+                            setNomorHandphone(e.target.value.replace(/[^0-9]/g, ""));
+                          }
                         }}
                         onBlur={(e) => {
                           simpleValidator.current.showMessageFor(
@@ -640,6 +648,7 @@ const TambahPage = ({ token }) => {
                             "tanggalLahir"
                           );
                         }}
+                        max={moment().subtract(1, "year").format("YYYY-MM-DD")}
                       />
                       {simpleValidator.current.message(
                         "tanggalLahir",
@@ -989,7 +998,7 @@ const TambahPage = ({ token }) => {
                       {simpleValidator.current.message(
                         "ktpName",
                         ktpName,
-                        "required",
+                        ktpName === "" ? "required" : "",
                         {
                           className: "text-danger",
                         }
@@ -1003,7 +1012,7 @@ const TambahPage = ({ token }) => {
                       </label>
                     </div>
                   </div>
-                  <p className="text-muted">*JPG/JPEG/PNG (Max.2 MB).</p>
+                  <p className="text-muted">*JPG/JPEG/PNG.</p>
                 </div>
                 <div className="form-group">
                   <label>Ijazah</label>
@@ -1024,7 +1033,7 @@ const TambahPage = ({ token }) => {
                       {simpleValidator.current.message(
                         "ijazahName",
                         ijazahName,
-                        "required",
+                        ijazahName === "" ? "required" : "",
                         {
                           className: "text-danger",
                         }
@@ -1038,7 +1047,7 @@ const TambahPage = ({ token }) => {
                       </label>
                     </div>
                   </div>
-                  <p className="text-muted">*JPG/JPEG/PNG (Max.5 MB).</p>
+                  <p className="text-muted">*JPG/JPEG/PNG.</p>
                 </div>
 
                 <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
