@@ -460,14 +460,6 @@ const Dashboard = ({ session, success }) => {
 											/>
 											<p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
 											<br />
-											<Link href="/" passHref>
-												<Button
-													variant="bg-primary"
-													className="font-weight-bolder text-white rounded-full mt-6"
-												>
-													Pilih Pelatihan
-												</Button>
-											</Link>
 										</div>
 									</Card.Body>
 								</Card>

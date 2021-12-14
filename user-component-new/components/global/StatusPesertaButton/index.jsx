@@ -117,7 +117,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 						disabled={!data?.survei}
 						click={() => {
 							router.push(
-								`/peserta/survey?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+								`/peserta/panduan-survey?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
 							);
 						}}
 					>
@@ -159,7 +159,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 					<CustomButton
 						click={() => {
 							router.push(
-								`/peserta/trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+								`/peserta/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
 							);
 						}}
 					>
@@ -184,7 +184,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 					<CustomButton
 						click={() => {
 							router.push(
-								`/peserta/trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+								`/peserta/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
 							);
 						}}
 					>
@@ -302,7 +302,14 @@ export default function ButtonStatusPeserta({ data, token }) {
 			) : data?.status === "lpj belum mengerjakan" ? (
 				<Fragment>
 					<CustomButton
-						disabled
+						outline
+						click={() => handleClick("download", data?.id_pendaftaran)}
+					>
+						<i className="ri-download-2-fill mr-2"></i>
+						Bukti Pendaftaran
+					</CustomButton>
+					<CustomButton
+						disabled={data?.lpj ? false : true}
 						outline
 						click={() => {
 							router.push(`/peserta/form-lpj`);

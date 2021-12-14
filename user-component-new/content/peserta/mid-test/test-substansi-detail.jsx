@@ -203,7 +203,7 @@ export default function SeleksiAdministrasi() {
 										<img
 											src={
 												data.gambar_mitra
-													? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
+													? `${process.env.END_POINT_API_IMAGE_PARTNERSHIP}${data.gambar_mitra}`
 													: "/assets/media/default-card.png"
 											}
 											width={58}
