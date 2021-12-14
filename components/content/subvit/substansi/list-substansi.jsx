@@ -17,7 +17,7 @@ import {
 } from "../../../../redux/actions/subvit/subtance.actions";
 import { DELETE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/subtance.type";
 
-const ListSubstansi = ({ token }) => {
+const ListSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -46,10 +46,12 @@ const ListSubstansi = ({ token }) => {
       dispatch({
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET,
       });
-      dispatch(getAllSubtanceQuestionBanks(1, "", limit, token));
+      dispatch(
+        getAllSubtanceQuestionBanks(1, "", limit, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [dispatch, isDeleted, limit, token]);
+  }, [dispatch, isDeleted, limit, token, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -157,7 +159,7 @@ const ListSubstansi = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionBanks(id, token));
+        dispatch(deleteSubtanceQuestionBanks(id, token, tokenPermission));
       }
     });
   };

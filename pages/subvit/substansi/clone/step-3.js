@@ -11,7 +11,7 @@ export default function CloneSoalSubtansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <StepTree token={session.token} />
+        <StepTree token={session.token} tokenPermission={props.permission} />
       </div>
     </>
   );
@@ -49,7 +49,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Clone Bank Soal Test Subtansi - Subvit" },
+        props: {
+          session,
+          title: "Clone Bank Soal Test Subtansi - Subvit",
+          permission,
+        },
       };
     }
 );

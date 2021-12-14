@@ -15,7 +15,10 @@ export default function EditSubstansiStep1Page(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditSubstansiStep1 token={session.token} />
+        <EditSubstansiStep1
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -65,7 +68,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Ubah Test Substansi Step 1 - Subvit" },
+        props: {
+          session,
+          title: "Ubah Test Substansi Step 1 - Subvit",
+          permission,
+        },
       };
     }
 );

@@ -9,9 +9,11 @@ import styles from "../listTraining.module.css";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const ViewTrainingStep1 = () => {
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { error: errorReview, review } = useSelector(
     (state) => state.getReviewStep1

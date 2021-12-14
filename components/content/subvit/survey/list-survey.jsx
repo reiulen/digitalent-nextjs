@@ -16,7 +16,7 @@ import {
 } from "../../../../redux/actions/subvit/survey-question.actions";
 import { DELETE_SURVEY_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/survey-question.type";
 
-const ListSurvey = ({ token }) => {
+const ListSurvey = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -45,10 +45,12 @@ const ListSurvey = ({ token }) => {
       dispatch({
         type: DELETE_SURVEY_QUESTION_BANKS_RESET,
       });
-      dispatch(getAllSurveyQuestionBanks(page, "", limit, token));
+      dispatch(
+        getAllSurveyQuestionBanks(page, "", limit, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, dispatch, page, limit, token]);
+  }, [isDeleted, dispatch, page, limit, token, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
@@ -93,7 +95,7 @@ const ListSurvey = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSurveyQuestionBanks(id, token));
+        dispatch(deleteSurveyQuestionBanks(id, token, tokenPermission));
       }
     });
   };

@@ -11,7 +11,10 @@ export default function EditSurveyStep2Page(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditSurveyStep2 token={session.token} />
+        <EditSurveyStep2
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -49,7 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Edit Test Survey - Step 2" },
+        props: { session, title: "Edit Test Survey - Step 2", permission },
       };
     }
 );

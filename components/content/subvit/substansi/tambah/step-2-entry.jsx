@@ -16,7 +16,7 @@ import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
@@ -259,7 +259,7 @@ const StepTwo = ({ token }) => {
         answer_key,
       };
 
-      dispatch(newSubtanceQuestionDetail(data, token));
+      dispatch(newSubtanceQuestionDetail(data, token, tokenPermission));
       handleResetForm();
     }
   };
@@ -328,7 +328,7 @@ const StepTwo = ({ token }) => {
         answer_key,
       };
 
-      dispatch(newSubtanceQuestionDetail(data, token));
+      dispatch(newSubtanceQuestionDetail(data, token, tokenPermission));
     }
   };
 

@@ -9,10 +9,12 @@ import { getRegistrationStep2 } from "../../../../redux/actions/pelatihan/functi
 import PageWrapper from "../../../wrapper/page.wrapper";
 import axios from "axios";
 import { SweatAlert } from "../../../../utils/middleware/helper";
+import Cookies from "js-cookie";
 
 const AddMasterPelatihan = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { registrationData } = useSelector((state) => state.registrationStep2);
   const { data: dataReferenceOption } = useSelector(
@@ -310,6 +312,7 @@ const AddMasterPelatihan = ({ token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        Permission: token_permission,
       };
       try {
         const result = await axios.post(

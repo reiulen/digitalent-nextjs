@@ -12,7 +12,10 @@ export default function EditSubstansiBankPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditSubstansiBank token={session.token} />
+        <EditSubstansiBank
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -65,7 +68,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Ubah Soal Substansi - Subvit" },
+        props: { session, title: "Ubah Soal Substansi - Subvit", permission },
       };
     }
 );
