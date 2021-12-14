@@ -49,6 +49,7 @@ export default function RiwayatPelatihanDetail({ session }) {
 		helperUserStatusColor(data?.status, setLabel);
 	}, []);
 	const [truncate, setTruncate] = useState(true);
+
 	return (
 		<PesertaWrapper>
 			<Col lg={12} className="px-0">
