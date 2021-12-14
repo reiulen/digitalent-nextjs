@@ -30,10 +30,7 @@ const Layout = dynamic(() =>
 );
 
 const BelumTersedia = dynamic(
-  () =>
-    import(
-      "../../../user-component-new/content/peserta/test-substansi/belum-tersedia.jsx"
-    ),
+  () => import("../../../user-component-new/content/peserta/empty-state/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

@@ -32,29 +32,29 @@ export default function MasterPelatihan({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { permission } = useSelector((state) => state.adminPermission);
+  const { permission } = useSelector(state => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
 
   useEffect(() => {
-    const filterPermission = permission?.permissions?.filter((item) =>
+    const filterPermission = permission?.permissions?.filter(item =>
       item.includes("pelatihan")
     );
     setListPermission(filterPermission);
   }, []);
 
   const { loading, error, list } = useSelector(
-    (state) => state.getAllMasterPelatihan
+    state => state.getAllMasterPelatihan
   );
 
   const { success, status: statusUpdate } = useSelector(
-    (state) => state.updateStatusMaster
+    state => state.updateStatusMaster
   );
 
   const AllMasterPendaftaran = useSelector(
-    (state) => state.getAllMasterPelatihan
+    state => state.getAllMasterPelatihan
   );
 
-  const deleted = useSelector((state) => state.deleteMasterPelatihan);
+  const deleted = useSelector(state => state.deleteMasterPelatihan);
 
   useEffect(() => {
     if (
@@ -77,24 +77,24 @@ export default function MasterPelatihan({ token }) {
 
   let selectRefAkademi = null;
 
-  const resetValueSort = (e) => {
+  const resetValueSort = e => {
     e.preventDefault();
     setStatus(null);
     dispatch({ type: RESET_STATUS_FILTER });
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = e => {
     e.preventDefault();
     dispatch(searchKeyword(search));
   };
 
   const [status, setStatus] = useState();
 
-  const handleSelectStatus = (e) => {
+  const handleSelectStatus = e => {
     setStatus(e);
   };
 
-  const handleFilter = (e) => {
+  const handleFilter = e => {
     e.preventDefault();
     dispatch(setValueStatus(status.value));
   };
@@ -119,7 +119,7 @@ export default function MasterPelatihan({ token }) {
     success,
   ]);
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -129,7 +129,7 @@ export default function MasterPelatihan({ token }) {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         dispatch(deleteMasterTraining(id, token));
       }
@@ -183,20 +183,22 @@ export default function MasterPelatihan({ token }) {
             >
               List Master Pendaftaran
             </h1>
-            <div className="card-toolbar">
-              <Link
-                href="/pelatihan/master-pendaftaran/tambah-form-pendaftaran"
-                passHref
-              >
-                <a
-                  href="#"
-                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
+            {listPermission.includes("pelatihan.master_pendaftaran.manage") && (
+              <div className="card-toolbar">
+                <Link
+                  href="/pelatihan/master-pendaftaran/tambah-form-pendaftaran"
+                  passHref
                 >
-                  <i className="ri-add-fill"></i>
-                  Form Pendaftaran
-                </a>
-              </Link>
-            </div>
+                  <a
+                    href="#"
+                    className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
+                  >
+                    <i className="ri-add-fill"></i>
+                    Form Pendaftaran
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -212,7 +214,7 @@ export default function MasterPelatihan({ token }) {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -220,7 +222,7 @@ export default function MasterPelatihan({ token }) {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={(e) => {
+                      onClick={e => {
                         handleSearch(e);
                       }}
                     >
@@ -284,7 +286,7 @@ export default function MasterPelatihan({ token }) {
                                   Status
                                 </label>
                                 <Select
-                                  ref={(ref) => (selectRefAkademi = ref)}
+                                  ref={ref => (selectRefAkademi = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
@@ -295,7 +297,7 @@ export default function MasterPelatihan({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   value={status || "-"}
-                                  onChange={(e) => {
+                                  onChange={e => {
                                     handleSelectStatus(e);
                                   }}
                                   options={dataStatus}
@@ -309,7 +311,7 @@ export default function MasterPelatihan({ token }) {
                                   type="button"
                                   data-dismiss="modal"
                                   aria-label="Close"
-                                  onClick={(e) => resetValueSort(e)}
+                                  onClick={e => resetValueSort(e)}
                                 >
                                   Reset
                                 </button>
@@ -318,7 +320,7 @@ export default function MasterPelatihan({ token }) {
                                   type="button"
                                   data-dismiss="modal"
                                   aria-label="Close"
-                                  onClick={(e) => handleFilter(e)}
+                                  onClick={e => handleFilter(e)}
                                 >
                                   Terapkan
                                 </button>
@@ -388,7 +390,7 @@ export default function MasterPelatihan({ token }) {
                                     }`}
                                     key={i}
                                     value={item.status}
-                                    onChange={(e) =>
+                                    onChange={e =>
                                       handleStatusPublish(
                                         e,
                                         item.id,
@@ -473,7 +475,7 @@ export default function MasterPelatihan({ token }) {
                         itemsCountPerPage={list?.perPage}
                         totalItemsCount={list?.total}
                         pageRangeDisplayed={3}
-                        onChange={(page) => dispatch(setValuePage(page))}
+                        onChange={page => dispatch(setValuePage(page))}
                         nextPageText={">"}
                         prevPageText={"<"}
                         firstPageText={"<<"}
@@ -495,7 +497,7 @@ export default function MasterPelatihan({ token }) {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={(e) =>
+                          onChange={e =>
                             dispatch(setValueLimit(e.target.value))
                           }
                         >

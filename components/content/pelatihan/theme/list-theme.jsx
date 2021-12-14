@@ -24,11 +24,11 @@ const ListTheme = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { permission } = useSelector((state) => state.adminPermission);
+  const { permission } = useSelector(state => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
 
   useEffect(() => {
-    const filterPermission = permission?.permissions?.filter((item) =>
+    const filterPermission = permission?.permissions?.filter(item =>
       item.includes("pelatihan")
     );
     setListPermission(filterPermission);
@@ -38,14 +38,14 @@ const ListTheme = ({ token }) => {
     loading: allLoading,
     error: allError,
     theme,
-  } = useSelector((state) => state.allTheme);
+  } = useSelector(state => state.allTheme);
   const {
     loading: deleteLoading,
     error: deleteError,
     isDeleted,
-  } = useSelector((state) => state.deleteTheme);
+  } = useSelector(state => state.deleteTheme);
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
-    (state) => state.drowpdownAkademi
+    state => state.drowpdownAkademi
   );
 
   let { success } = router.query;
@@ -92,7 +92,7 @@ const ListTheme = ({ token }) => {
   useEffect(() => {
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
+        result => {
           if (result.isConfirmed) {
             setPage(1);
             dispatch(getAllTheme(1, null, null, null, null, token));
@@ -112,7 +112,7 @@ const ListTheme = ({ token }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isDeleted, dispatch, token]);
 
-  const handlePagination = (pageNumber) => {
+  const handlePagination = pageNumber => {
     setPage(pageNumber);
     dispatch(
       getAllTheme(
@@ -166,7 +166,7 @@ const ListTheme = ({ token }) => {
     setShowModal(false);
   };
 
-  const handleLimit = (val) => {
+  const handleLimit = val => {
     setLimit(val);
     setPage(1);
     dispatch(
@@ -185,7 +185,7 @@ const ListTheme = ({ token }) => {
     router.replace("/pelatihan/tema", undefined, { shallow: true });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -195,7 +195,7 @@ const ListTheme = ({ token }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         dispatch(deleteTheme(id, token));
       }
@@ -267,14 +267,16 @@ const ListTheme = ({ token }) => {
             >
               List Tema
             </h1>
-            <div className="card-toolbar">
-              <Link href="/pelatihan/tema/tambah-tema">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-add-fill"></i>
-                  Tambah Tema
-                </a>
-              </Link>
-            </div>
+            {listPermission.includes("pelatihan.tema.manage") && (
+              <div className="card-toolbar">
+                <Link href="/pelatihan/tema/tambah-tema">
+                  <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
+                    <i className="ri-add-fill"></i>
+                    Tambah Tema
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -287,7 +289,7 @@ const ListTheme = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -447,8 +449,8 @@ const ListTheme = ({ token }) => {
                             color: "#9E9E9E",
                           }}
                           value={limit}
-                          onChange={(e) => handleLimit(e.target.value)}
-                          onBlur={(e) => handleLimit(e.target.value)}
+                          onChange={e => handleLimit(e.target.value)}
+                          onBlur={e => handleLimit(e.target.value)}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>
@@ -496,7 +498,7 @@ const ListTheme = ({ token }) => {
             <Select
               options={optionsAkademi}
               defaultValue={academy}
-              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+              onChange={e => setAcademy({ value: e.value, label: e.label })}
             />
           </div>
           <div className="form-group mb-0">
@@ -504,7 +506,7 @@ const ListTheme = ({ token }) => {
             <Select
               options={optionsStatus}
               defaultValue={status}
-              onChange={(e) => setStatus({ value: e.value, label: e.label })}
+              onChange={e => setStatus({ value: e.value, label: e.label })}
             />
           </div>
         </Modal.Body>

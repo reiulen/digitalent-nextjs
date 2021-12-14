@@ -26,40 +26,43 @@ import {
 
 import axios from "axios";
 
-export const getAllDataReference = (token) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: DATA_REFERENCE_REQUEST });
+export const getAllDataReference =
+  (token, paginate = null) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: DATA_REFERENCE_REQUEST });
 
-    let pageState = getState().allDataReference.page || 1;
-    let cariState = getState().allDataReference.cari || "";
-    let limitState = getState().allDataReference.limit || 5;
+      let pageState = getState().allDataReference.page || 1;
+      let cariState = getState().allDataReference.cari || "";
+      let limitState = getState().allDataReference.limit || 5;
 
-    const params = {
-      page: pageState,
-      cari: cariState,
-      limit: limitState,
-    };
+      const params = {
+        page: pageState,
+        cari: cariState,
+        limit: limitState,
+      };
 
-    const { data } = await axios.get(
-      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/list`,
-      {
+      let link =
+        process.env.END_POINT_API_SITE_MANAGEMENT + "api/reference/list";
+      if (paginate) link = link.concat("?paginate=false");
+
+      const { data } = await axios.get(link, {
         params,
         headers: {
           authorization: `Bearer ${token}`,
         },
-      }
-    );
+      });
 
-    dispatch({
-      type: DATA_REFERENCE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DATA_REFERENCE_FAIL,
-    });
-  }
-};
+      dispatch({
+        type: DATA_REFERENCE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DATA_REFERENCE_FAIL,
+      });
+    }
+  };
 
 // deelte tidak ada
 export const deleteDataReference = (id, token) => async (dispatch) => {

@@ -20,6 +20,7 @@ import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import { wrapper } from "../../../redux/store";
 import { getDetailMasterPelatihan } from "../../../redux/actions/pelatihan/master-pendaftaran.action";
+import { getAllDataReference } from "../../../redux/actions/site-management/data-reference.actions";
 
 export default function AddTrainingPage(props) {
   const session = props.session.user.user.data;
@@ -48,6 +49,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(
         getDetailMasterPelatihan(query.id, session.user.user.data.token)
+      );
+      await store.dispatch(
+        getAllDataReference(session.user.user.data.token, true)
       );
 
       return {
