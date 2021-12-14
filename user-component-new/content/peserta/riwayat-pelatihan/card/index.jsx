@@ -25,7 +25,6 @@ export default function CardTemplateOriginal({ data, session }) {
 	useEffect(() => {
 		helperUserStatusColor(data.status, setLabel);
 	}, [data.status]);
-	console.log(data);
 	return (
 		<Fragment>
 			<Card className="position-relative mb-8 rounded-lg">
@@ -49,6 +48,11 @@ export default function CardTemplateOriginal({ data, session }) {
 								return false;
 							if (data.status.includes("menunggu jadwal tes substansi")) {
 								return router.push(`/peserta/test-substansi?id=${data.id}`);
+							}
+							if (data?.trivia && !data?.midtest) {
+								return router.push(
+									`/peserta/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+								);
 							}
 							if (
 								data.status.includes("administrasi") &&
