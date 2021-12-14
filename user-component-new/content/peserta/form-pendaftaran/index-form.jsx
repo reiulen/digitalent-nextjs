@@ -32,7 +32,8 @@ const IndexForm = ({ token, session }) => {
 			return data;
 		} catch (e) {
 			if (!e.response.data.status) {
-				setView(3);
+				SweatAlert("Gagal", e.response.data.message || e.message, "error");
+				router.push("/peserta");
 			}
 		}
 	};
