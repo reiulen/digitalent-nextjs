@@ -25,7 +25,7 @@ const OptionsReference = ({ id, token }) => {
       {optionsReference &&
         optionsReference.length > 0 &&
         optionsReference.map((row, i) => (
-          <option value={row.value}>{row.value}</option>
+          <option key={i} value={row.value}>{row.value}</option>
         ))}
     </>
   );

@@ -240,6 +240,7 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
 
     const data = {
       judul_form: titleStore,
+      type_form: viewForm,
       formBuilder: formBuilderStore,
     };
     dispatch(storeRegistrationStep2(data));
