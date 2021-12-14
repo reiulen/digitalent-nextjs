@@ -14,6 +14,7 @@ import ReactCrop from "react-image-crop";
 const Tambah = ({ token }) => {
   const router = useRouter();
   const { successInputProfile } = router.query;
+  const selectInputRef = useRef();
   const defaultImage = "/public/assets/media/default.jpg"
 
   // diambil dari data user ketika pertama kali register (name)
@@ -29,6 +30,7 @@ const Tambah = ({ token }) => {
   const [pic_name, setPic_name] = useState("");
   const [pic_contact_number, setPic_contact_number] = useState("");
   const [pic_email, setPic_email] = useState("");
+  let selectRefKabupaten = null;
 
   const [error, setError] = useState({
     institution_name: "",
@@ -219,14 +221,39 @@ const Tambah = ({ token }) => {
   }
 
   const onChangeProvinces = (e) => {
+    setIndonesia_cities_id("")
+    setCitiesAll([])
+    selectInputRef.current.select.clearValue();
+    // console.log (selectInputRef.current.select.value)
+
     setIndonesia_provinces_id(e.id);
+    fetchAPICity(e.id)
   };
+
+  const onChangeCity = (e) => {
+    setIndonesia_cities_id(e?.id)
+  }
+
+  async function fetchAPICity(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${id}`
+      );
+      let dataNewCitites = data.data.map((items) => {
+        return { ...items, label: items.name, value: items.id };
+      });
+      setCitiesAll(dataNewCitites);
+    } catch (error) {
+      return;
+    }
+  }
 
   // pertama kali load provinces set kesini
   const [allProvinces, setAllProvinces] = useState([]);
 
   // ketika load cities state ini save data
   const [citiesAll, setCitiesAll] = useState([]);
+
   useEffect(() => {
     async function getDataProvinces(token) {
       try {
@@ -344,7 +371,7 @@ const Tambah = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 px-4">
             <h3 className="card-title text-dark fw-600 titles-1">
-              Profile Lembag
+              Profile Lembaga
             </h3>
           </div>
           <div className="card-body pt-0 px-4 px-sm-6">
@@ -575,7 +602,7 @@ const Tambah = ({ token }) => {
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder={`${
-                        indonesia_provinces_id !== ""
+                        indonesia_provinces_id !== "" 
                           ? indonesia_provinces_id.name
                           : "Pilih provinsi"
                       } `}
@@ -610,18 +637,20 @@ const Tambah = ({ token }) => {
                         className="basic-single"
                         classNamePrefix="select"
                         placeholder={`${
-                          indonesia_cities_id !== ""
-                            ? indonesia_cities_id.name
+                          indonesia_cities_id !== "" && indonesia_cities_id !== undefined
+                            ? indonesia_cities_id?.name
                             : "Pilih data Kab/Kota"
                         }`}
-                        isDisabled={false}
+                        isDisabled={indonesia_provinces_id ? false : true}
                         isLoading={false}
                         isClearable={false}
                         isRtl={false}
                         isSearchable={true}
                         name="color"
-                        onChange={(e) => setIndonesia_cities_id(e.id)}
+                        // onChange={(e) => setIndonesia_cities_id(e.id)}
+                        onChange={(e) => onChangeCity(e)}
                         options={citiesAll}
+                        ref={selectInputRef}
                       />
                     </div>
                     
