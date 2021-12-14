@@ -201,6 +201,7 @@ const ListTraining = ({ token }) => {
                 null,
                 null,
                 null,
+                null,
                 token
               )
             );
@@ -227,6 +228,7 @@ const ListTraining = ({ token }) => {
                 null,
                 null,
                 null,
+                null,
                 token
               )
             );
@@ -240,6 +242,7 @@ const ListTraining = ({ token }) => {
     if (statusSuccess) {
       dispatch(
         getAllTraining(
+          null,
           null,
           null,
           null,
@@ -300,6 +303,7 @@ const ListTraining = ({ token }) => {
         penyelenggara != null ? penyelenggara.label : null,
         academy !== null ? academy.label : null,
         theme !== null ? theme.label : null,
+        statusPublish != null ? statusPublish.label : null,
         token,
         berjalan
       )
@@ -312,6 +316,7 @@ const ListTraining = ({ token }) => {
       getAllTraining(
         1,
         search,
+        null,
         null,
         null,
         null,
@@ -598,6 +603,7 @@ const ListTraining = ({ token }) => {
         tema: theme !== null ? theme.label : "",
         WhereInPelatihan: berjalan,
         status_substansi: statusSubstansi !== null ? statusSubstansi.label : "",
+        status_publish: statusPublish != null ? statusPublish.label : null,
       },
       headers: {
         Authorization: "Bearer " + token,

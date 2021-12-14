@@ -41,7 +41,9 @@ module.exports = {
     END_POINT_API_PARTNERSHIP_MITRA: "http://dts-partnership-dev.majapahit.id/",
 
     END_POINT_API_IMAGE_PARTNERSHIP:
-      "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
+      "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
+    // END_POINT_API_IMAGE_PARTNERSHIP:
+    //   "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
 
     // site management
     END_POINT_API_SITE_MANAGEMENT: "http://api-dts-dev.majapahit.id/sso/",
@@ -53,7 +55,8 @@ module.exports = {
     END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
 
     //sertifikat
-    END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
+    END_POINT_API_SERTIFIKAT: "http://api-dts-dev.majapahit.id/sertifikat/",
+    // END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
     // END_POINT_API_SERTIFIKAT: "http://http://192.168.11.96:8000/",
 
     END_POINT_API_IMAGE_SERTIFIKAT:

@@ -8,20 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import DatePicker, { registerLocale } from "react-datepicker";
 import id from "date-fns/locale/id";
-import { GET_TRAINING_STEP1 } from "../../../../../redux/types/pelatihan/function.type";
 import {
   storeTrainingStep1,
   getTrainingStep1,
   dropdownKabupaten,
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
-import LoadingPage from "../../../../LoadingPage";
-import {
-  disablePlusMinusPeriod,
-  helperRemoveZeroFromIndex0,
-} from "../../../../../utils/middleware/helper";
-import { CustomNumberInput } from "../../../../formCustomComponent/input";
-import moment from "moment";
+import { helperRemoveZeroFromIndex0 } from "../../../../../utils/middleware/helper";
+import { useQuill } from "react-quilljs";
 
 const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
@@ -60,6 +54,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     editorRef.current || {};
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const { quill, quillRef } = useQuill();
   const [, forceUpdate] = useState();
 
   //data pelatihan
@@ -216,8 +211,14 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
     };
 
+    if (quill) {
+      quill.clipboard.dangerouslyPasteHTML(description);
+      quill.on("text-change", (delta, oldDelta, source) => {
+        setDescription(quill.root.innerHTML);
+      });
+    }
     setEditorLoaded(true);
-  }, [dispatch, token, academy.value, dataTema.data]);
+  }, [dispatch, token, academy.value, dataTema.data, quill]);
 
   const handleResetError = () => {
     if (error) {
@@ -654,7 +655,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </button>
             </div>
             <small className="text-muted">
-              Format Image (.png/.jpg), Rekomendasi 1024x1024. dan Max size 2MB
+              Format Image (.png/.jpg), Rekomendasi 1024x1024
             </small>
           </div>
 
@@ -684,7 +685,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </button>
             </div>
             <small className="text-muted">
-              Format Image (.png/.jpg), Rekomendasi 837 x 380. dan Max size 2MB
+              Format Image (.png/.jpg), Rekomendasi 837 x 380
             </small>
           </div>
 
@@ -962,20 +963,23 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <label className="col-form-label font-weight-bold">Deskripsi</label>
             <div className="ckeditor">
               {editorLoaded ? (
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={description}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setDescription(data);
-                  }}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("deskripsi")
-                  }
-                  config={{
-                    placeholder: "Silahkan Masukan Deskripsi Detail",
-                  }}
-                />
+                // <CKEditor
+                //   editor={ClassicEditor}
+                //   data={description}
+                //   onChange={(event, editor) => {
+                //     const data = editor.getData();
+                //     setDescription(data);
+                //   }}
+                //   onBlur={() =>
+                //     simpleValidator.current.showMessageFor("deskripsi")
+                //   }
+                //   config={{
+                //     placeholder: "Silahkan Masukan Deskripsi Detail",
+                //   }}
+                // />
+                <div style={{ width: "100%", height: "250px" }}>
+                  <div ref={quillRef} style={{ fontFamily: "Poppins" }} />
+                </div>
               ) : (
                 <p>Tunggu Sebentar</p>
               )}
@@ -988,7 +992,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             </div>
           </div>
 
-          <h3 className="font-weight-bolder pt-3">Kuota</h3>
+          <h3 className="font-weight-bolder style-quill-margin">Kuota</h3>
 
           <div className="form-group row mb-2">
             <div className="col-sm-12 col-md-6">
