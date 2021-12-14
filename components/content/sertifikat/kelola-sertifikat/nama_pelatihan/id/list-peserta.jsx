@@ -32,18 +32,14 @@ export default function ListPeserta() {
 		router.push(
 			`/sertifikat/kelola-sertifikat/${
 				query.tema_pelatihan_id
-			}/sertifikat-peserta?id=${
-				query.id ? query.id : Cookies.get("nama_pelatihan_id")
-			}&page=1&limit=${val}`
+			}/sertifikat-peserta?id=${query.id || ""}&page=1&limit=${val}`
 		);
 	};
 
 	const handleSearch = () => {
 		let link = `/sertifikat/kelola-sertifikat/${
 			query.tema_pelatihan_id
-		}/sertifikat-peserta?id=${
-			query.id ? query.id : Cookies.get("nama_pelatihan_id")
-		}&page=1&keyword=${search}`;
+		}/sertifikat-peserta?id=${query.id || ""}&page=1&keyword=${search}`;
 		if (limit) link = link.concat(`&limit=${limit}`);
 		router.push(link);
 	};
@@ -51,9 +47,7 @@ export default function ListPeserta() {
 	const handlePagination = (pageNumber) => {
 		let link = `/sertifikat/kelola-sertifikat/${
 			query.tema_pelatihan_id
-		}/sertifikat-peserta?id=${
-			query.id ? query.id : Cookies.get("nama_pelatihan_id")
-		}&page=${pageNumber}`;
+		}/sertifikat-peserta?id=${query.id || ""}&page=${pageNumber}`;
 		if (search) link = link.concat(`&keyword=${search}`);
 		if (limit) link = link.concat(`&limit=${limit}`);
 		router.push(link);
