@@ -99,7 +99,7 @@ const ViewReviewTraining = ({ token }) => {
     kuotaTargetPeserta: review.kuota_peserta,
     komitmenPeserta: review.komitmen === "1" ? "Iya" : "Tidak",
     lpjPeserta: review.lpj_peserta === "1" ? "Iya" : "Tidak",
-    infoSertifikasi: review.sertifikasi === "1" ? "Iya" : "Tidak",
+    infoSertifikasi: review.sertifikasi === "0" ? "Tidak" : review.sertifikasi,
     metodePelatihan: review.metode_pelatihan,
     statusKuota: review.status_kuota,
     alurPendaftaran: review.alur_pendaftaran,
@@ -537,7 +537,7 @@ const ViewReviewTraining = ({ token }) => {
                     {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
                   </p>
                 ) : (
-                  <p className="fz-16 text-primary">
+                  <p className="fz-16">
                     {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
                   </p>
                 )}

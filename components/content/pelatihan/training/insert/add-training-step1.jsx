@@ -210,15 +210,28 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
     };
+  }, [dispatch, token, academy.value, dataTema.data]);
 
+  useEffect(() => {
     if (quill) {
-      quill.clipboard.dangerouslyPasteHTML(description);
+      if (description) {
+        quill.clipboard.dangerouslyPasteHTML(description);
+      }
       quill.on("text-change", (delta, oldDelta, source) => {
         setDescription(quill.root.innerHTML);
+
+        const { ops } = delta;
+        let updatedOps;
+        if (ops.length === 1) {
+          updatedOps = [{ delete: ops[0].insert.length }];
+        } else {
+          updatedOps = [ops[0], { delete: ops[1].insert.length }];
+        }
+        quill.updateContents({ ops: updatedOps });
       });
     }
     setEditorLoaded(true);
-  }, [dispatch, token, academy.value, dataTema.data, quill]);
+  }, [quill]);
 
   const handleResetError = () => {
     if (error) {
@@ -230,20 +243,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 2000000) {
-          e.target.value = null;
-          Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setLogoBase(reader.result);
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-          setLogoFile(e.target.files[0]);
-          setLogoName(e.target.files[0].name);
-        }
+        // if (e.target.files[0].size > 2000000) {
+        //   e.target.value = null;
+        //   Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+        // } else {
+        // }
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setLogoBase(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setLogoFile(e.target.files[0]);
+        setLogoName(e.target.files[0].name);
       } else {
         e.target.value = null;
         Swal.fire(
@@ -259,20 +272,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 2000000) {
-          e.target.value = null;
-          Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setThumbnailBase(reader.result);
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-          setThumbnailFile(e.target.files[0]);
-          setThumbnailName(e.target.files[0].name);
-        }
+        // if (e.target.files[0].size > 2000000) {
+        //   e.target.value = null;
+        //   Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+        // } else {
+        // }
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setThumbnailBase(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setThumbnailFile(e.target.files[0]);
+        setThumbnailName(e.target.files[0].name);
       } else {
         e.target.value = null;
         Swal.fire(
@@ -289,17 +302,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       case "LOGO":
         setLogoFile("");
         setLogoName("Belum ada file");
+        setLogoBase("");
         document.getElementById("logoReference").value = null;
         break;
       case "THUMBNAIL":
         setThumbnailFile("");
         setThumbnailName("Belum ada file");
+        setThumbnailBase("");
         document.getElementById("uploadThumbnail").value = null;
 
         break;
       case "SILABUS":
         setSilabusFile("");
         setSilabusName("Belum ada file");
+        setSilabusBase("");
         document.getElementById("uploadSilabus").value = null;
         break;
       default:
@@ -311,20 +327,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     const type = ["application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 2000000) {
-          e.target.value = null;
-          Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setSilabusBase(reader.result);
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-          setSilabusFile(e.target.files[0]);
-          setSilabusName(e.target.files[0].name);
-        }
+        // if (e.target.files[0].size > 2000000) {
+        //   e.target.value = null;
+        //   Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+        // } else {
+        // }
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setSilabusBase(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setSilabusFile(e.target.files[0]);
+        setSilabusName(e.target.files[0].name);
       } else {
         e.target.value = null;
         Swal.fire(
@@ -338,6 +354,11 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (metodeTraining === "Online") {
+      simpleValidator.current.fields.alamat = true;
+      simpleValidator.current.fields.provinsi = true;
+      simpleValidator.current.fields["kota/kabupaten"] = true;
+    }
     if (simpleValidator.current.allValid()) {
       const data = {
         program_dts: program,
@@ -725,7 +746,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 <i className="ri-delete-bin-fill p-0 text-white"></i>
               </button>
             </div>
-            <small className="text-muted">Format File (.pdf) & Max 2 mb</small>
+            <small className="text-muted">Format File (.pdf)</small>
           </div>
 
           <div className="form-group row mb-0 pt-2">
@@ -1424,84 +1445,92 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             </div>
           </div>
 
-          <h3 className="font-weight-bolder pt-3">Lokasi Pelatihan</h3>
+          {metodeTraining !== "Online" && (
+            <>
+              <h3 className="font-weight-bolder pt-3">Lokasi Pelatihan</h3>
 
-          <div className="form-group mb-4">
-            <label className="col-form-label font-weight-bold">Alamat</label>
-            <textarea
-              value={address}
-              rows="6"
-              className="form-control"
-              onChange={(e) => setAddress(e.target.value)}
-              onBlur={() => simpleValidator.current.showMessageFor("alamat")}
-              placeholder="Silahkan Masukan Alamat Disini"
-            />
-            {simpleValidator.current.message(
-              "alamat",
-              address,
-              metodeTraining !== "Online" ? "required" : "",
-              {
-                className: "text-danger",
-              }
-            )}
-          </div>
-
-          <div className="form-group row mb-2">
-            <div className="col-sm-12 col-md-6">
-              <label className="col-form-label font-weight-bold">
-                Provinsi
-              </label>
-              <Select
-                placeholder="Silahkan Pilih Provinsi"
-                options={optionsProvinsi}
-                defaultValue={province}
-                onChange={(e) => {
-                  selectRefKabupaten.select.clearValue();
-                  setProvince({ label: e?.label, value: e?.value });
-                  dispatch(dropdownKabupaten(token, e.value));
-                }}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("provinsi")
-                }
-              />
-              {simpleValidator.current.message(
-                "provinsi",
-                province.value,
-                metodeTraining !== "Online" ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </div>
-            <div className="col-sm-12 col-md-6">
-              <label className="col-form-label font-weight-bold">
-                Kota / Kabupaten
-              </label>
-              <div className={!province ? "cursor-notallowed" : ""}>
-                <Select
-                  ref={(ref) => (selectRefKabupaten = ref)}
-                  placeholder="Silahkan Pilih Kota / Kabupaten"
-                  options={optionsKabupaten}
-                  defaultValue={city}
-                  onChange={(e) =>
-                    setCity({ value: e?.value, label: e?.label })
-                  }
+              <div className="form-group mb-4">
+                <label className="col-form-label font-weight-bold">
+                  Alamat
+                </label>
+                <textarea
+                  value={address}
+                  rows="6"
+                  className="form-control"
+                  onChange={(e) => setAddress(e.target.value)}
                   onBlur={() =>
-                    simpleValidator.current.showMessageFor("kota/kabupaten")
+                    simpleValidator.current.showMessageFor("alamat")
                   }
-                  isDisabled={province ? false : true}
+                  placeholder="Silahkan Masukan Alamat Disini"
                 />
+                {simpleValidator.current.message(
+                  "alamat",
+                  address,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </div>
-              {simpleValidator.current.message(
-                "kota/kabupaten",
-                city.value,
-                metodeTraining !== "Online" ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </div>
-          </div>
+
+              <div className="form-group row mb-2">
+                <div className="col-sm-12 col-md-6">
+                  <label className="col-form-label font-weight-bold">
+                    Provinsi
+                  </label>
+                  <Select
+                    placeholder="Silahkan Pilih Provinsi"
+                    options={optionsProvinsi}
+                    defaultValue={province}
+                    onChange={(e) => {
+                      selectRefKabupaten.select.clearValue();
+                      setProvince({ label: e?.label, value: e?.value });
+                      dispatch(dropdownKabupaten(token, e.value));
+                    }}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("provinsi")
+                    }
+                  />
+                  {simpleValidator.current.message(
+                    "provinsi",
+                    province.value,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </div>
+                <div className="col-sm-12 col-md-6">
+                  <label className="col-form-label font-weight-bold">
+                    Kota / Kabupaten
+                  </label>
+                  <div className={!province ? "cursor-notallowed" : ""}>
+                    <Select
+                      ref={(ref) => (selectRefKabupaten = ref)}
+                      placeholder="Silahkan Pilih Kota / Kabupaten"
+                      options={optionsKabupaten}
+                      defaultValue={city}
+                      onChange={(e) =>
+                        setCity({ value: e?.value, label: e?.label })
+                      }
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("kota/kabupaten")
+                      }
+                      isDisabled={province ? false : true}
+                    />
+                  </div>
+                  {simpleValidator.current.message(
+                    "kota/kabupaten",
+                    city.value,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="form-group row mb-0">
             <label className="col-form-label font-weight-bold col-sm-2">

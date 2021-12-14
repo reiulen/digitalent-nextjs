@@ -503,7 +503,8 @@ const DataParticipant = ({ token }) => {
                           peserta.list[0].status === "ditolak" ||
                           peserta.list[0].status === "diterima" ||
                           peserta.list[0].status === "pelatihan" ||
-                          peserta.list[0].status === "administrasi akhir"
+                          peserta.list[0].status === "administrasi akhir" ||
+                          peserta.list[0].status === "lulus pelatihan"
                         )
                           ? false
                           : true

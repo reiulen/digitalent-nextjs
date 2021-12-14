@@ -455,7 +455,8 @@ export const dropdownZonasi = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/zonasi/list`,
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/zonasi/list?paginate=false`,
       config
     );
     dispatch({

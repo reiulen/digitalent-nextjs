@@ -24,6 +24,7 @@ const AddMasterPelatihan = ({ token }) => {
   const [, forceUpdate] = useState();
   const [modalShow, setModalShow] = useState(false);
   const [dataOptions, setDataOptions] = useState([]);
+  const [limitProfile, setLimitProfile] = useState(false);
 
   const [element] = useState([
     {
@@ -348,6 +349,67 @@ const AddMasterPelatihan = ({ token }) => {
   return (
     <PageWrapper>
       <>
+        <div className="card card-custom mb-8">
+          <div className="card-body">
+            <h3 className="font-weight-bolder pb-5 pt-4">
+              Data Profil Peserta
+            </h3>
+            <div className="list-profile">
+              <div className="content-profile mb-5">
+                <p className="mb-2 fz-16 text-dark fw-600">Data Diri</p>
+                <p className="fz-16">
+                  Foto Profil, Nama Lengkap, Email, NIK, Jenis Kelamin, Nomor
+                  Handphone, Agama, Tempat dan Tanggal Lahir, Kontak Darurat
+                  (Nama Lengkap, Nomor Handphone, Hubungan), File KTP
+                </p>
+              </div>
+              {limitProfile ? (
+                <>
+                  <div className="content-profile mb-5">
+                    <p className="mb-2 fz-16 text-dark fw-600">Alamat KTP</p>
+                    <p className="fz-16">
+                      Alamat Lengkap, Provinsi, Kota/Kabupaten, Kecamatan,
+                      Desa/Kelurahan, Kode Pos
+                    </p>
+                  </div>
+                  <div className="content-profile mb-5">
+                    <p className="mb-2 fz-16 text-dark fw-600">
+                      Alamat Domisili
+                    </p>
+                    <p className="fz-16">
+                      Alamat Lengkap, Provinsi, Kota/Kabupaten, Kecamatan,
+                      Desa/Kelurahan, Kode Pos
+                    </p>
+                  </div>
+                  <div className="content-profile">
+                    <p className="mb-2 fz-16 text-dark fw-600">
+                      Pendidikan Terakhir
+                    </p>
+                    <p className="fz-16">
+                      Jenjang Pendidikan, Asal Sekolah/Perguruan Tinggi, IPK,
+                      Program Studi, Tahun Masuk, File Ijazah
+                    </p>
+                  </div>
+                  <p
+                    className="text-primary fz-16"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setLimitProfile(false)}
+                  >
+                    Lihat Sedikit
+                  </p>
+                </>
+              ) : (
+                <p
+                  className="text-primary fz-16"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setLimitProfile(true)}
+                >
+                  Lihat Semua
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
             <form onSubmit={submitHandler}>
