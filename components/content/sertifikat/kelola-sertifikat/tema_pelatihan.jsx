@@ -291,6 +291,7 @@ export default function NamaPelatihan({ token }) {
 																	className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
 																	type="button"
 																	onClick={(e) => handleFilter(e)}
+																	data-dismiss="modal"
 																>
 																	Terapkan
 																</button>

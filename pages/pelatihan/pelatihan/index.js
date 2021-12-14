@@ -52,7 +52,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 					},
 				};
 			}
-
 			const token_permission = req.cookies.token_permission;
 
 			await store.dispatch(
@@ -70,6 +69,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 				//   session.user.user.data.token
 				// )
 				getAllTraining(
+					null,
 					null,
 					null,
 					null,

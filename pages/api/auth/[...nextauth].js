@@ -18,7 +18,8 @@ export default NextAuth({
             throw new Error("Isi Email atau Password dengan benar");
           }
         try {
-          let link = "http://api-dts-dev.majapahit.id/sso/api/auth/login";
+          let link =
+            process.env.END_POINT_API_SITE_MANAGEMENT + "api/auth/login";
 
           let credential = {
             email,
@@ -28,7 +29,8 @@ export default NextAuth({
 
           if (role === "mitra") {
             link =
-              "http://dts-partnership-dev.majapahit.id/api/authentication/login";
+              process.env.END_POINT_API_PARTNERSHIP_MITRA +
+              "api/authentication/login";
           }
 
           if (role === "peserta") {

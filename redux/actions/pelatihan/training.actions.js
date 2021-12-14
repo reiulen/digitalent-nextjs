@@ -104,9 +104,10 @@ export const getAllTraining =
 		penyelenggara,
 		akademi,
 		tema,
+		status_publish,
 		token,
 		whereIn = null,
-		token_permission
+		token_permission = ""
 	) =>
 	async (dispatch) => {
 		try {
@@ -128,6 +129,8 @@ export const getAllTraining =
 			if (penyelenggara) link = link.concat(`&penyelenggara=${penyelenggara}`);
 			if (akademi) link = link.concat(`&akademi=${akademi}`);
 			if (tema) link = link.concat(`&tema=${tema}`);
+			if (status_publish)
+				link = link.concat(`&status_publish=${status_publish}`);
 			if (whereIn) link = link.concat(`&WhereInPelatihan=${whereIn}`);
 
 			const config = {
