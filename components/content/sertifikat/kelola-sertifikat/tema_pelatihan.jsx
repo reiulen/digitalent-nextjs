@@ -354,15 +354,15 @@ export default function NamaPelatihan({ token }) {
 																<Link
 																	href={`/sertifikat/kelola-sertifikat/${
 																		!certificate.name.includes("//")
-																			? certificate.name
-																					.split(" ")
-																					.join("-")
-																					.toLowerCase()
-																			: certificate.name
-																					.split("//")[1]
-																					.split(" ")
-																					.join("-")
-																					.toLowerCase()
+																			? certificate?.name
+																					?.split(" ")
+																					?.join("-")
+																					?.toLowerCase()
+																			: certificate?.name
+																					?.split("//")[1]
+																					?.split(" ")
+																					?.join("-")
+																					?.toLowerCase()
 																	}?id=${certificate.id}&page=1`}
 																	passHref
 																>
