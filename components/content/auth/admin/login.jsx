@@ -60,7 +60,7 @@ const LoginAdmin = () => {
         };
         axios
           .post(
-            process.env.END_POINT_API_SITE_MANAGEMENT + "/api/auth/login",
+            process.env.END_POINT_API_SITE_MANAGEMENT + "api/auth/login",
             setData
           )
           .then((res) => {
@@ -79,6 +79,10 @@ const LoginAdmin = () => {
                 router.push("/partnership/user/kerjasama");
               }
             }
+          })
+          .catch((err) => {
+            SweatAlert("Gagal", err.response, "error");
+            setLoading(false);
           });
       }
     } else {

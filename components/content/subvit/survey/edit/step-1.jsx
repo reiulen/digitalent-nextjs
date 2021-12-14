@@ -23,7 +23,7 @@ import axios from "axios";
 import SimpleReactValidator from "simple-react-validator";
 import { Form } from "react-bootstrap";
 
-const StepOne = ({ token }) => {
+const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -63,8 +63,8 @@ const StepOne = ({ token }) => {
   const [training_id, setTrainingId] = useState(survey && survey.training_id);
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     // if (error) {
     //     dispatch(clearErrors())
     // }
@@ -95,6 +95,7 @@ const StepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   // const saveAndContinue = () => {
@@ -111,15 +112,10 @@ const StepOne = ({ token }) => {
         _method: "put",
       };
 
-      dispatch(updateSurveyQuestionBanks(id, data, token));
+      dispatch(updateSurveyQuestionBanks(id, data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -134,15 +130,10 @@ const StepOne = ({ token }) => {
         _method: "put",
       };
 
-      dispatch(updateSurveyQuestionBanks(id, data, token));
+      dispatch(updateSurveyQuestionBanks(id, data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
   const { data } = useSelector((state) => state.drowpdownTemabyAkademi);

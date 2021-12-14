@@ -1,5 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
+
+import { useDispatch, useSelector } from "react-redux";
+
+import OptionsReference from "./option-reference.component";
+import CheckboxReference from "./checkbox-reference.component";
+import RadioReference from "./radio-reference.component";
 
 const ModalPreview = ({
   propsTitle,
@@ -7,6 +13,7 @@ const ModalPreview = ({
   propsModalShow,
   sendPropsFormBuilder,
   sendPropsModalShow,
+  propsToken,
 }) => {
   const [title] = useState(propsTitle);
   const [modalShow, setModalShow] = useState(propsModalShow);
@@ -50,15 +57,20 @@ const ModalPreview = ({
               {row.name}
             </label>
             <select name="" className="form-control" required={row.required}>
-              {modalShow === true
-                ? row.option === "manual"
-                  ? row.dataOption.map((dat, i) => (
-                      <option value={dat} key={i}>
-                        {dat}
-                      </option>
-                    ))
-                  : ""
-                : ""}
+              <option value="">--Pilih Data--</option>
+              {modalShow === true ? (
+                row.option === "manual" ? (
+                  row.dataOption.map((dat, i) => (
+                    <option value={dat} key={i}>
+                      {dat}
+                    </option>
+                  ))
+                ) : (
+                  <OptionsReference id={row.dataOption} token={propsToken} />
+                )
+              ) : (
+                ""
+              )}
             </select>
           </div>
         );
@@ -70,22 +82,30 @@ const ModalPreview = ({
               {row.name}
             </label>
             <div className="my-auto">
-              {modalShow === true
-                ? row.option === "manual"
-                  ? row.dataOption.map((dat, i) => (
-                      <div className="form-check pb-3" key={i}>
-                        <input
-                          type="checkbox"
-                          name="plotRegistration"
-                          className="form-check-input"
-                          required={row.required}
-                          value={dat}
-                        />
-                        <label className="form-check-label">{dat}</label>
-                      </div>
-                    ))
-                  : ""
-                : ""}
+              {modalShow === true ? (
+                row.option === "manual" ? (
+                  row.dataOption.map((dat, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        required={row.required}
+                        value={dat}
+                      />
+                      <label className="form-check-label">{dat}</label>
+                    </div>
+                  ))
+                ) : (
+                  <CheckboxReference
+                    id={row.dataOption}
+                    token={propsToken}
+                    required={row.required}
+                  />
+                )
+              ) : (
+                ""
+              )}
             </div>
           </div>
         );
@@ -113,22 +133,30 @@ const ModalPreview = ({
               {row.name}
             </label>
             <div className="my-auto">
-              {modalShow === true
-                ? row.option === "manual"
-                  ? row.dataOption.map((dat, i) => (
-                      <div className="form-check pb-3" key={i}>
-                        <input
-                          type="radio"
-                          name={row.name}
-                          className="form-check-input"
-                          value={dat}
-                          required={row.required}
-                        />
-                        <label className="form-check-label">{dat}</label>
-                      </div>
-                    ))
-                  : ""
-                : ""}
+              {modalShow === true ? (
+                row.option === "manual" ? (
+                  row.dataOption.map((dat, i) => (
+                    <div className="form-check pb-3" key={i}>
+                      <input
+                        type="radio"
+                        name={row.name}
+                        className="form-check-input"
+                        value={dat}
+                        required={row.required}
+                      />
+                      <label className="form-check-label">{dat}</label>
+                    </div>
+                  ))
+                ) : (
+                  <RadioReference
+                    id={row.dataOption}
+                    token={propsToken}
+                    required={row.required}
+                  />
+                )
+              ) : (
+                ""
+              )}
             </div>
           </div>
         );

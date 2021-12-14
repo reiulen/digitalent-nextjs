@@ -19,6 +19,7 @@ import IconAdd from "../../../assets/icon/Add";
 import AlertBar from "../components/BarAlert";
 
 import IconSearch from "../../../assets/icon/Search";
+import Cookies from "js-cookie"
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -37,6 +38,8 @@ const Table = ({ token }) => {
 
   const [successDelete, setSuccessDelete] = useState(false);
 
+  const cookiePermission = Cookies.get("token_permission")
+
   const cooperationDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
@@ -51,23 +54,23 @@ const Table = ({ token }) => {
       if (result.value) {
         let formData = new FormData();
         formData.append("_method", "put");
-        dispatch(deleteCooporation(token, formData, id));
+        dispatch(deleteCooporation(token, formData, id, cookiePermission));
         setSuccessDelete(true);
         router.replace(`/partnership/master-kategori-kerjasama`);
       }
     });
   };
-  useEffect(() => {
-    dispatch(fetchAllMKCooporation(token));
-  }, [
-    dispatch,
-    allMKCooporation.keyword,
-    allMKCooporation.limit,
-    allMKCooporation.page,
-    allMKCooporation.status_delete,
-    allMKCooporation.status_list,
-    token
-  ]);
+  // useEffect(() => {
+  //   dispatch(fetchAllMKCooporation(token));
+  // }, [
+  //   dispatch,
+  //   allMKCooporation.keyword,
+  //   allMKCooporation.limit,
+  //   allMKCooporation.page,
+  //   allMKCooporation.status_delete,
+  //   allMKCooporation.status_list,
+  //   token
+  // ]);
 
 
   const onNewReset = () => {
@@ -108,7 +111,7 @@ const Table = ({ token }) => {
 
             {
               permission ? 
-                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?
                   <div className="col-12 col-xl-6 d-flex justify-content-xl-end  mb-5">
                     <div className="card-toolbar mb-5">
                       <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
@@ -183,7 +186,7 @@ const Table = ({ token }) => {
                         <th className="text-left align-middle">Status</th>
                         {
                           permission ? 
-                            permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                            permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?
                               <th className="text-left align-middle">Aksi</th>
                             :
                               null
@@ -249,7 +252,7 @@ const Table = ({ token }) => {
 
                                 {
                                   permission ? 
-                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?
                                       <td className="text-left align-middle">
                                         <div className="d-flex align-items-center">
                                           <button

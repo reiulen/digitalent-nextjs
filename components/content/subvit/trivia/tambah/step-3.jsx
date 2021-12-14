@@ -22,7 +22,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import Select from "react-select";
 
-const StepThree = ({ token }) => {
+const StepThree = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -82,15 +82,12 @@ const StepThree = ({ token }) => {
           questions_to_share: jumlah_soal,
         };
 
-        dispatch(updateTriviaQuestionBanksPublish(data, id, token));
+        dispatch(
+          updateTriviaQuestionBanksPublish(data, id, token, tokenPermission)
+        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Isi data dengan benar !",
-        });
       }
     }
   };
@@ -127,15 +124,12 @@ const StepThree = ({ token }) => {
           questions_to_share: jumlah_soal,
         };
 
-        dispatch(updateTriviaQuestionBanksPublish(data, id, token));
+        dispatch(
+          updateTriviaQuestionBanksPublish(data, id, token, tokenPermission)
+        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Isi data dengan benar !",
-        });
       }
     }
   };

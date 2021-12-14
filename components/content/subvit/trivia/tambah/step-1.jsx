@@ -23,7 +23,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const TambahTriviaStepOne = ({ token }) => {
+const TambahTriviaStepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -51,8 +51,8 @@ const TambahTriviaStepOne = ({ token }) => {
   const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (success) {
       const id = trivia.id;
       if (typeSave === "lanjut") {
@@ -78,6 +78,7 @@ const TambahTriviaStepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
@@ -127,15 +128,10 @@ const TambahTriviaStepOne = ({ token }) => {
         training_id,
       };
 
-      dispatch(newTriviaQuestionBanks(data, token));
+      dispatch(newTriviaQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -159,15 +155,10 @@ const TambahTriviaStepOne = ({ token }) => {
         theme_id,
         training_id,
       };
-      dispatch(newTriviaQuestionBanks(data, token));
+      dispatch(newTriviaQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -251,6 +242,7 @@ const TambahTriviaStepOne = ({ token }) => {
                   Tema
                 </Form.Label>
                 <Select
+                  isDisabled={!academy_id}
                   placeholder={themeLabel || "Silahkan Pilih Tema"}
                   options={optionsTema}
                   value={themeLabel}
@@ -268,6 +260,7 @@ const TambahTriviaStepOne = ({ token }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
+                  isDisabled={!theme_id}
                   placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
                   value={trainingLabel}

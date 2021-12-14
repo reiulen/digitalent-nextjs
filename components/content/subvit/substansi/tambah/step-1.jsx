@@ -23,7 +23,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const StepOne = ({ token }) => {
+const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -52,8 +52,8 @@ const StepOne = ({ token }) => {
   const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (success) {
       const id = subtance.id;
       if (typeSave === "lanjut") {
@@ -78,6 +78,7 @@ const StepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   const saveDraft = () => {
@@ -98,7 +99,7 @@ const StepOne = ({ token }) => {
         category,
       };
 
-      dispatch(newSubtanceQuestionBanks(data, token));
+      dispatch(newSubtanceQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -130,15 +131,15 @@ const StepOne = ({ token }) => {
         category,
       };
 
-      dispatch(newSubtanceQuestionBanks(data, token));
+      dispatch(newSubtanceQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops...",
+      //   text: "Isi data dengan benar !",
+      // });
     }
   };
 
@@ -254,6 +255,7 @@ const StepOne = ({ token }) => {
                   Tema
                 </Form.Label>
                 <Select
+                  isDisabled={!academy_id}
                   placeholder={themeLabel || "Silahkan Pilih Tema"}
                   options={optionsTema}
                   value={themeLabel}
@@ -271,6 +273,7 @@ const StepOne = ({ token }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
+                  isDisabled={!theme_id}
                   placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
                   value={trainingLabel}
@@ -299,7 +302,18 @@ const StepOne = ({ token }) => {
                   options={optionsKategori}
                   className={styles.selectForm}
                   onChange={(e) => setCategory(e.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("kategori")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "kategori",
+                  category,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
             </Form>
 

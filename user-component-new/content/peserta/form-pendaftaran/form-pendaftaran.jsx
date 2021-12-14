@@ -10,6 +10,10 @@ import {
   storeFormRegister,
 } from "../../../../redux/actions/pelatihan/register-training.actions";
 
+import RadioReference from "../../../../components/content/pelatihan/training/components/radio-reference.component";
+import OptionsReference from "../../../../components/content/pelatihan/training/components/option-reference.component";
+import CheckboxReference from "../../../../components/content/pelatihan/training/components/checkbox-reference.component";
+
 const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -22,9 +26,51 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const [dataPendaftaran, setDataPendaftaran] = useState(
     dataForm?.form_pendaftaran
   );
+
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
   );
+  const { data: statusMenikah } = useSelector(
+    (state) => state.drowpdownStatusMenikah
+  );
+  const { data: dataPendidikan } = useSelector(
+    (state) => state.drowpdownPendidikan
+  );
+  const { data: statusPekerjaan } = useSelector(
+    (state) => state.drowpdownStatusPekerjaan
+  );
+  const { data: dataHubungan } = useSelector(
+    (state) => state.drowpdownHubungan
+  );
+  const { dataRefPekerjaan: dataBidangPekerjaan } = useSelector(
+    (state) => state.getRefPekerjaan
+  );
+  const { data: dataLevelPelatihan } = useSelector(
+    (state) => state.drowpdownLevelPelatihan
+  );
+  const { data: dataAgama } = useSelector((state) => state.drowpdownAgama);
+  const { data: dataPenyelenggara } = useSelector(
+    (state) => state.drowpdownPenyelenggara
+  );
+  const { data: dataProvinsi } = useSelector(
+    (state) => state.drowpdownProvinsi
+  );
+  const { data: dataKabupaten } = useSelector(
+    (state) => state.drowpdownKabupaten
+  );
+  const { data: dataUniversitas } = useSelector(
+    (state) => state.getAsalSekolah
+  );
+
+  useEffect(() => {
+    dataForm &&
+      dataForm.form_pendaftaran &&
+      dataForm.form_pendaftaran.map((row, i) => {
+        if (row.type === "checkbox") {
+          row.value = [];
+        }
+      });
+  }, []);
 
   const readerElementHandler = (row, i) => {
     switch (row.type) {
@@ -69,13 +115,15 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
               <option value="" disabled selected>
                 Silahkan Pilih {row.name}
               </option>
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, i) => (
-                    <option value={dat} key={i}>
-                      {dat}
-                    </option>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, i) => (
+                  <option value={dat} key={i}>
+                    {dat}
+                  </option>
+                ))
+              ) : (
+                <OptionsReference id={row.dataOption} token={token} />
+              )}
             </select>
             {simpleValidator.current.message(
               row.name,
@@ -95,23 +143,30 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, j) => (
-                    <div className="form-check pb-3" key={j}>
-                      <input
-                        type="checkbox"
-                        name="plotRegistration"
-                        className="form-check-input"
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor(row.name)
-                        }
-                        onChange={(e) => onChangeInput(i, dat)}
-                        value={dat}
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, j) => (
+                  <div className="form-check pb-3" key={j}>
+                    <input
+                      type="checkbox"
+                      name="plotRegistration"
+                      className="form-check-input"
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor(row.name)
+                      }
+                      onChange={(e) => onChangeInput(i, dat)}
+                      value={dat}
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <CheckboxReference
+                  id={row.dataOption}
+                  token={token}
+                  required={row.required}
+                  onChangeValue={(value) => onChangeInput(i, value)}
+                />
+              )}
             </div>
             {simpleValidator.current.message(
               row.name,
@@ -157,24 +212,31 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
               {row.name}
             </label>
             <div className="my-auto">
-              {row.option === "manual"
-                ? row.dataOption.split(";").map((dat, j) => (
-                    <div className="form-check pb-3" key={j}>
-                      <input
-                        type="radio"
-                        name={row.name}
-                        className="form-check-input"
-                        value={dat}
-                        onChange={(e) => onChangeInput(i, dat)}
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor(row.name)
-                        }
-                        value={row.value}
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                : ""}
+              {row.option === "manual" ? (
+                row.dataOption.split(";").map((dat, j) => (
+                  <div className="form-check pb-3" key={j}>
+                    <input
+                      type="radio"
+                      name={row.name}
+                      className="form-check-input"
+                      value={dat}
+                      onChange={(e) => onChangeInput(i, dat)}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor(row.name)
+                      }
+                      value={row.value}
+                    />
+                    <label className="form-check-label">{dat}</label>
+                  </div>
+                ))
+              ) : (
+                <RadioReference
+                  id={row.dataOption}
+                  token={token}
+                  required={row.required}
+                  onChangeValue={(value) => onChangeInput(i, value)}
+                />
+              )}
             </div>
             {simpleValidator.current.message(
               row.name,
@@ -277,7 +339,22 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
 
   const onChangeInput = (index, value) => {
     let list = [...dataForm.form_pendaftaran];
-    list[index].value = value;
+    if (list[index].type === "checkbox") {
+      let valArr = list[index].value;
+      if (valArr.length > 0) {
+        valArr.map((row, i) => {
+          if (row === value) {
+            valArr.splice(i, 1);
+          } else {
+            valArr.push(value);
+          }
+        });
+      } else {
+        valArr.push(value);
+      }
+    } else {
+      list[index].value = value;
+    }
     if (list[index].type === "file_image" || list[index].type === "file_doc") {
       let type = [""];
       if (list[index].type === "file_image") {
@@ -306,16 +383,22 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
       }
     }
     setDataPendaftaran(list);
-    // funcForm(list);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (dataTraining?.komitmen == "1") {
       if (simpleValidator.current.allValid()) {
+        let list = [...dataPendaftaran];
+        list.map((row, i) => {
+          if (row.type === "checkbox") {
+            let val = row.value.join(",");
+            row.value = val;
+          }
+        });
         const data = {
           komitmen: dataForm.komitmen,
-          form_pendaftaran: dataPendaftaran,
+          form_pendaftaran: list,
         };
         dispatch(storeFormRegister(data));
         funcView(2);
@@ -329,9 +412,16 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         });
       }
     } else {
+      let list = [...dataPendaftaran];
+      list.map((row, i) => {
+        if (row.type === "checkbox") {
+          let val = row.value.join(",");
+          row.value = val;
+        }
+      });
       const data = {
         komitmen: `${dataForm.komitmen}`,
-        form_pendaftaran: dataPendaftaran,
+        form_pendaftaran: list,
         pelatian_id: +router.query.id,
       };
       dispatch(newPendaftaranPelatihan(data, token));

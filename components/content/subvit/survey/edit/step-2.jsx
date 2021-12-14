@@ -20,7 +20,7 @@ import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -75,15 +75,12 @@ const StepTwo = ({ token }) => {
         status: 0,
         questions_to_share: jumlah_soal,
       };
-      dispatch(updateSurveyQuestionBanksPublish(data, id, token));
+      dispatch(
+        updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -124,15 +121,12 @@ const StepTwo = ({ token }) => {
           status: status,
           questions_to_share: jumlah_soal,
         };
-        dispatch(updateSurveyQuestionBanksPublish(data, id, token));
+        dispatch(
+          updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
+        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Isi data dengan benar !",
-        });
       }
     }
   };

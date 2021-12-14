@@ -22,9 +22,13 @@ const Done = () => {
     (state) => state.getPelatihan
   );
 
-  // const handleDone = () => {
-  //   router.push(`${router.pathname.slice(0, 8)}`);
-  // };
+  const dataRiwayatPelatihan = useSelector(
+    (state) => state.getAllRiwayatPelatihanPeserta
+  );
+
+  const handleDone = () => {
+    router.push("/peserta/form-lpj");
+  };
   return (
     <>
       <PesertaWrapper>
@@ -61,7 +65,16 @@ const Done = () => {
             <Button
               variant="primary"
               className={styles.btnNext}
-              // onClick={handlePageBack}
+              disabled={
+                dataRiwayatPelatihan?.listPelatihan?.list[0]?.lpj === false
+              }
+              onClick={handleDone}
+              style={{
+                cursor:
+                  dataRiwayatPelatihan?.listPelatihan?.list[0]?.lpj === false
+                    ? "not-allowed"
+                    : "pointer",
+              }}
             >
               <div className="d-flex flex-row">
                 <div className="p-1">Isi Form LPJ</div>

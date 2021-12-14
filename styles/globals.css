@@ -26,6 +26,10 @@ a {
   font-weight: 500 !important;
 }
 
+.cursor-notallowed {
+  cursor: not-allowed;
+}
+
 /* Pagination */
 .page-item {
   width: 33px;
@@ -258,6 +262,10 @@ a {
 
 .datepicker {
   width: 100%;
+}
+
+.cursor-not-allowed{
+  cursor: not-allowed !important;
 }
 
 .wrapper-chart-pie,

@@ -17,7 +17,7 @@ import {
 } from "../../../../redux/actions/subvit/subtance.actions";
 import { DELETE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/subtance.type";
 
-const ListSubstansi = ({ token }) => {
+const ListSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -46,10 +46,12 @@ const ListSubstansi = ({ token }) => {
       dispatch({
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET,
       });
-      dispatch(getAllSubtanceQuestionBanks(1, "", limit, token));
+      dispatch(
+        getAllSubtanceQuestionBanks(1, "", limit, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [dispatch, isDeleted, limit, token]);
+  }, [dispatch, isDeleted, limit, token, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -157,7 +159,7 @@ const ListSubstansi = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionBanks(id, token));
+        dispatch(deleteSubtanceQuestionBanks(id, token, tokenPermission));
       }
     });
   };
@@ -235,8 +237,6 @@ const ListSubstansi = ({ token }) => {
             </h1>
 
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.substansi.manage"
             ) ? (
@@ -326,8 +326,6 @@ const ListSubstansi = ({ token }) => {
                         <th>Status</th>
 
                         {dataPermission &&
-                        dataPermission.roles.includes("Super Admin") &&
-                        dataPermission &&
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.substansi.manage"
                         ) ? (
@@ -407,8 +405,6 @@ const ListSubstansi = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.substansi.manage"
                                 ) ? (
@@ -538,6 +534,7 @@ const ListSubstansi = ({ token }) => {
                     <div className="row">
                       <div className="col-4 mr-0">
                         <select
+                          value={limit}
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
@@ -549,36 +546,11 @@ const ListSubstansi = ({ token }) => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="30"
-                            selected={limit == "30" ? true : false}
-                          >
-                            30
-                          </option>
-                          <option
-                            value="40"
-                            selected={limit == "40" ? true : false}
-                          >
-                            40
-                          </option>
-                          <option
-                            value="50"
-                            selected={limit == "50" ? true : false}
-                          >
-                            50
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">

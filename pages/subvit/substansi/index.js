@@ -29,7 +29,10 @@ export default function Substansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListSubstansi token={session.token} />
+        <ListSubstansi
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -75,7 +78,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "List Test Substansi - Subvit" },
+        props: { session, title: "List Test Substansi - Subvit", permission },
       };
     }
 );

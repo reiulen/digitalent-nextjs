@@ -29,6 +29,8 @@ import LoadingTable from "../../../LoadingTable";
 
 import Swal from "sweetalert2";
 
+import Cookies from "js-cookie"
+
 const Table = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -38,6 +40,8 @@ const Table = ({ token }) => {
   const { permission } = useSelector ((state) => state.partnershipPermissions)
 
   const [keyWord, setKeyWord] = useState("");
+
+  const cookiePermission = Cookies.get("token_permission")
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,7 +64,7 @@ const Table = ({ token }) => {
         let formData = new FormData();
         formData.append("_method", "put");
         formData.append("status", e.target.value);
-        dispatch(changeStatusList(token, formData, id));
+        dispatch(changeStatusList(token, formData, id, cookiePermission));
         setSuccessDelete(false);
         setIsStatusBar(true);
         router.replace("/partnership/mitra", undefined, { shallow: true });
@@ -83,7 +87,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteMitra(token, id));
+        dispatch(deleteMitra(token, id, cookiePermission));
         setSuccessDelete(true);
         router.replace(`/partnership/mitra`);
       }
@@ -96,7 +100,7 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchMitra(token));
+    dispatch(fetchMitra(token, cookiePermission));
     dispatch(cancelChangeProvinces(token));
   }, [
     dispatch,
@@ -107,6 +111,7 @@ const Table = ({ token }) => {
     allMitra.card,
     update,
     token,
+    cookiePermission
   ]);
 
   return (
@@ -158,7 +163,7 @@ const Table = ({ token }) => {
             
             {
               permission ?
-                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
                   <div className="col-12 col-md-5 col-xl-3 ml-md-n6 ml-n10 mt-sm-0 mt-n5">
                     <Link href="/partnership/mitra/tambah">
                       <a className="btn btn-rounded-full bg-blue-primary text-white mt-4 d-flex justify-content-center">
@@ -241,7 +246,7 @@ const Table = ({ token }) => {
 
                     {
                       permission ? 
-                        permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                        permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
                           <th className="text-left align-middle">Aksi</th>
                         :
                           null
@@ -328,7 +333,7 @@ const Table = ({ token }) => {
                                   className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
                                   key={index}
                                   onChange={(e) =>
-                                    changeListStatus(token, e, item.id)
+                                    changeListStatus(token, e, item.id, )
                                   }
                                 >
                                   <option value="0">Tidak Aktif</option>
@@ -352,7 +357,7 @@ const Table = ({ token }) => {
                           </td>
                           {
                             permission ? 
-                              permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                              permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">
                                     <Link

@@ -49,8 +49,12 @@ import {
   ERROR_DROPDOWN_FORM_BUILDER,
   GET_DATA_PRIBADI_SUCCESS,
   GET_DATA_PRIBADI_FAIL,
+  GET_DROPDOWN_HUBUNGAN,
+  ERROR_DROPDOWN_HUBUNGAN,
+  GET_DROPDOWN_STATUS_MENIKAH,
+  ERROR_DROPDOWN_STATUS_MENIKAH,
   CLEAR_ERRORS,
-  GET_DROPDOWN_YEAR
+  GET_DROPDOWN_YEAR,
 } from "../../../types/pelatihan/function.type";
 
 export const getDataPribadiReducer = (state = { dataPribadi: {} }, action) => {
@@ -555,6 +559,49 @@ export const drowpdownPenyelenggaraReducers = (
         data: action.payload,
       };
     case ERROR_DROPDOWN_PENYELENGGARA:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownHubunganReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_HUBUNGAN:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_HUBUNGAN:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownStatusMenikahReducers = (
+  state = { data: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_DROPDOWN_STATUS_MENIKAH:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_STATUS_MENIKAH:
       return {
         error: action.payload,
       };

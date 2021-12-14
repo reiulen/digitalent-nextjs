@@ -10,6 +10,7 @@ import IconClose from "../../../assets/icon/Close";
 import Image from "next/image";
 import ReactCrop from "react-image-crop";
 import { Modal } from "react-bootstrap";
+import Cookies from "js-cookie"
 
 const TambahMitra = ({ token }) => {
   const router = useRouter();
@@ -118,6 +119,7 @@ const TambahMitra = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -210,6 +212,7 @@ const TambahMitra = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
@@ -235,6 +238,7 @@ const TambahMitra = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -393,6 +397,14 @@ const TambahMitra = ({ token }) => {
                   </div>
                 )}
 
+                {!agency_logo ? (
+                  <p className="error-text">
+                    {error.agency_logo}
+                  </p>
+                ) : (
+                  ""
+                )}
+
                 {agency_logo && imageview ? (
                   <button
                     className="btn btn-primary btn-sm my-3 mr-3"
@@ -513,7 +525,9 @@ const TambahMitra = ({ token }) => {
                 </div>
                 <div className="col-12 col-xl-6">
                   {/* ========================================= cities */}
-                  <div className="form-group">
+                  <div 
+                    className={indonesia_provinces_id ? "form-group" : "form-group cursor-not-allowed"}
+                  >
                     <label htmlFor="staticEmail" className=" col-form-label">
                       Kota / Kabupaten
                     </label>
@@ -521,11 +535,11 @@ const TambahMitra = ({ token }) => {
                       onFocus={() =>
                         setError({ ...error, indonesia_cities_id: "" })
                       }
-                      className="basic-single"
+                      className="basic-single cursor-not-allowed"
                       classNamePrefix="select"
                       placeholder="Pilih data Kab/Kota"
                       // defaultValue={citiesAll[0]}
-                      isDisabled={false}
+                      isDisabled={indonesia_provinces_id ? false : true}
                       isLoading={false}
                       isClearable={false}
                       isRtl={false}

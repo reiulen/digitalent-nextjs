@@ -12,19 +12,23 @@ import SimpleReactValidator from "simple-react-validator";
 import styles from "../../../../../styles/previewGaleri.module.css";
 import styles2 from "../../../../../styles/sitemanagement/userMitra.module.css";
 import { set } from "lodash";
+import { useSelector } from "react-redux";
 
 const GeneralPage = ({ token }) => {
   const router = useRouter();
+
+  const { data_general } = useSelector((state) => state.allDataGeneral);
 
   const [imageLogo, setImageLogo] = useState("");
   const [imageLogo2, setImageLogo2] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [imageLogoApi, setImageLogoApi] = useState("");
-  const [imageLogoApi2, setImageLogoApi2] = useState("");
+  const [imageLogoApi2, setImageLogoApi2] = useState(data_general.footer_logo);
   const [imageLogoApiOld, setImageLogoApiOld] = useState("");
   const [imageLogoApiOld2, setImageLogoApiOld2] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
+  const [update, setUpdate] = useState(false);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -60,13 +64,14 @@ const GeneralPage = ({ token }) => {
     setColor(_temp);
   };
 
-  const [formSocialMedia, setFormSocialMedia] = useState([
-    {
-      image_logo: "",
-      name: "",
-      link_social_media: "",
-    },
-  ]);
+  // const [formSocialMedia, setFormSocialMedia] = useState([
+  //   {
+  //     image_logo: "",
+  //     name: "",
+  //     link_social_media: "",
+  //   },
+  // ]);
+  const [formSocialMedia, setFormSocialMedia] = useState(data_general.social_media);
   const [formExternalLink, setFormExternalLink] = useState([
     {
       name: "",
@@ -364,6 +369,7 @@ const GeneralPage = ({ token }) => {
               setImageSocialTemp(e.target.result);
               _temp[index].image_logo = e.target.result;
               setFormSocialMedia(_temp);
+              setUpdate(true)
             };
           } else {
             Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
@@ -404,9 +410,9 @@ const GeneralPage = ({ token }) => {
           setColor(data.data.color);
           setFormExternalLink(data.data.external_link);
           setImageLogoApi(data.data.header_logo);
-          setImageLogoApi2(data.data.footer_logo);
+          // setImageLogoApi2(data.data.footer_logo);
           setDescription(data.data.logo_description);
-          setFormSocialMedia(data.data.social_media);
+          // setFormSocialMedia(data.data.social_media);
           setColorPrimary(data.data.color[0].color)
           setColorSecondary(data.data.color[1].color)
           setColorExtras(data.data.color[2].color)
@@ -451,6 +457,7 @@ const GeneralPage = ({ token }) => {
                               )
                               : imageLogoApi && (
                                 <Image
+                                  // src={imageLogo}
                                   src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
                                   layout="fill"
                                   objectFit="fill"
@@ -616,7 +623,7 @@ const GeneralPage = ({ token }) => {
                   </div>
 
                   {/* start social media */}
-                  <div className="mt-10">
+                  <div className="mt-10 position-relative">
                     <h4 className="fw-600 fz-20">Social Media</h4>
                     <label className="mb-6 mt-4" style={{ fontSize: "16px" }}>
                       Logo Social Media
@@ -640,14 +647,16 @@ const GeneralPage = ({ token }) => {
                                         alt="imageLogo"
                                       />
                                     )
-                                    : items.image_logo && (
+                                    : 
+                                    items.image_logo && (
                                       <Image
-                                        src={items.image_logo}
+                                        src={update === true ? items.image_logo : `/${items.image_logo}`}
                                         layout="fill"
                                         objectFit="fill"
                                         alt="imageLogo"
                                       />
-                                    )}
+                                    )
+                                  }
                                 </div>
 
                                 <label

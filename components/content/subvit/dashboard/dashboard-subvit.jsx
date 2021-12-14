@@ -668,6 +668,12 @@ const DashbardSubvit = ({ token }) => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={() => handleBackPagination()}
                       disabled={parseInt(router.query.page_substansi) === 1}
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_substansi) === 1
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-left-s-line"
@@ -692,6 +698,18 @@ const DashbardSubvit = ({ token }) => {
                             )
                           : true
                       }
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_substansi) ===
+                          Math.ceil(
+                            parseInt(
+                              dashboard_subvit &&
+                                dashboard_subvit.substansi.total
+                            ) / 5
+                          )
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-right-s-line"
@@ -777,6 +795,12 @@ const DashbardSubvit = ({ token }) => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={handleBackPaginationTrivia}
                       disabled={parseInt(router.query.page_trivia) === 1}
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_trivia) === 1
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-left-s-line"
@@ -801,6 +825,17 @@ const DashbardSubvit = ({ token }) => {
                             )
                           : true
                       }
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_trivia) ===
+                          Math.ceil(
+                            parseInt(
+                              dashboard_subvit && dashboard_subvit.trivia.total
+                            ) / 5
+                          )
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-right-s-line"
@@ -884,6 +919,12 @@ const DashbardSubvit = ({ token }) => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={handleBackPaginationSurvey}
                       disabled={parseInt(router.query.page_survey) === 1}
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_survey) === 1
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-left-s-line"
@@ -908,6 +949,17 @@ const DashbardSubvit = ({ token }) => {
                             )
                           : true
                       }
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_survey) ===
+                          Math.ceil(
+                            parseInt(
+                              dashboard_subvit && dashboard_subvit.survey.total
+                            ) / 5
+                          )
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-right-s-line"

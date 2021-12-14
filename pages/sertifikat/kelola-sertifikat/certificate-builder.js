@@ -10,59 +10,61 @@ import { getDetailSertifikat } from "../../../redux/actions/sertifikat/kelola-se
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 const AddSertifikat = dynamic(
-  () =>
-    import(
-      "../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/add-sertifikat"
-    ),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
+	() =>
+		import(
+			"../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/add-sertifikat"
+		),
+	{
+		loading: function loadingNow() {
+			return <LoadingSkeleton />;
+		},
+		ssr: false,
+	}
 );
 
 export default function AddSertifikatPage(props) {
-  const session = props.session.user.user.data;
+	const session = props.session.user.user.data;
 
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        <AddSertifikat token={session} />
-      </div>
-    </>
-  );
+	return (
+		<>
+			<div className="d-flex flex-column flex-root">
+				<AddSertifikat token={session} />
+			</div>
+		</>
+	);
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ query, req }) => {
-      const session = await getSession({ req });
+	(store) =>
+		async ({ query, req }) => {
+			const session = await getSession({ req });
 
-      // certificate builder pake theme id
-      const middleware = middlewareAuthAdminSession(session);
-      if (!middleware.status) {
-        return {
-          redirect: {
-            destination: middleware.redirect,
-            permanent: false,
-          },
-        };
-      }
+			// certificate builder pake theme id
+			const middleware = middlewareAuthAdminSession(session);
+			if (!middleware.status) {
+				return {
+					redirect: {
+						destination: middleware.redirect,
+						permanent: false,
+					},
+				};
+			}
+			const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(
-        getDetailSertifikat(
-          query.theme_id,
-          query.page,
-          query.keyword,
-          100,
-          query.status,
-          session.user.user.data.token
-        )
-      );
+			await store.dispatch(
+				getDetailSertifikat(
+					query.theme_id,
+					query.page,
+					query.keyword,
+					100,
+					query.status,
+					session.user.user.data.token,
+					token_permission
+				)
+			);
 
-      return {
-        props: { session, title: "Certificate Builder - Sertifikat" },
-      };
-    }
+			return {
+				props: { session, title: "Certificate Builder - Sertifikat" },
+			};
+		}
 );

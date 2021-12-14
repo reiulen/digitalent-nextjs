@@ -18,7 +18,7 @@ import MultipleChoiceComponent from "./step-2/multiple-choice-component";
 import TriggeredQuestionComponent from "./step-2/triggered-question-component";
 import styles from "../../trivia/edit/step.module.css";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -180,7 +180,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "multiple_choice":
@@ -206,7 +206,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "pertanyaan_terbuka":
@@ -217,7 +217,7 @@ const StepTwo = ({ token }) => {
             question_image,
             type: methodAdd,
           };
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "triggered_question":
@@ -242,7 +242,7 @@ const StepTwo = ({ token }) => {
             answer_key: null,
             type: methodAdd,
           };
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
           handleResetForm();
         }
       default:
@@ -298,7 +298,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "multiple_choice":
@@ -324,7 +324,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "pertanyaan_terbuka":
@@ -336,11 +336,10 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "triggered_question":
-        // console.log(answer_triggered.type);
         answer_triggered.forEach((row, j) => {
           if (row.option == "" && row.image == "" && row.type !== "empty") {
             valid = false;
@@ -363,7 +362,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
       default:
         break;

@@ -19,6 +19,7 @@ import Select from "react-select";
 
 import { Modal } from "react-bootstrap";
 import ReactCrop from "react-image-crop";
+import Cookies from "js-cookie"
 
 const EditMitra = ({ token }) => {
   const router = useRouter();
@@ -227,6 +228,7 @@ const EditMitra = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -258,6 +260,7 @@ const EditMitra = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -298,6 +301,7 @@ const EditMitra = ({ token }) => {
              {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
           );
@@ -628,7 +632,7 @@ const EditMitra = ({ token }) => {
                         onFocus={() =>
                           setError({ ...error, indonesia_provinces_id: "" })
                         }
-                        className="form-control mt-2"
+                        className="form-control mt-2 cursor-not-allowed"
                         disabled
                       >
                         <option value={indonesia_provinces_id}>
@@ -706,7 +710,7 @@ const EditMitra = ({ token }) => {
                       setError({ ...error, indonesia_cities_id: "" })
                     }
                     disabled
-                    className="form-control"
+                    className="form-control cursor-not-allowed"
                   >
                     <option value={indonesia_cities_id}>
                       {defaultValueCitie}
@@ -719,28 +723,32 @@ const EditMitra = ({ token }) => {
                   )}
                 </div>
               ) : (
-                <div className="form-group">
+                <div 
+                  className="form-group"
+                >
                   <label htmlFor="staticEmail" className="col-form-label">
                     Kota / Kabupaten
                   </label>
 
-                  <Select
-                    onFocus={() =>
-                      setError({ ...error, indonesia_cities_id: "" })
-                    }
-                    className="basic-single w-full"
-                    classNamePrefix="select"
-                    placeholder="Pilih data Kab/Kota"
-                    defaultValue={citiesAll[0]}
-                    isDisabled={false}
-                    isLoading={false}
-                    isClearable={false}
-                    isRtl={false}
-                    isSearchable={true}
-                    name="color"
-                    onChange={(e) => setIndonesia_cities_id(e.id)}
-                    options={citiesAll}
-                  />
+                  <div className={ indonesia_provinces_id ? "" : "cursor-not-allowed"}>
+                    <Select
+                      onFocus={() =>
+                        setError({ ...error, indonesia_cities_id: "" })
+                      }
+                      className="basic-single w-full"
+                      classNamePrefix="select"
+                      placeholder="Pilih data Kab/Kota"
+                      defaultValue={citiesAll[0]}
+                      isDisabled={indonesia_provinces_id ? false : true}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => setIndonesia_cities_id(e.id)}
+                      options={citiesAll}
+                    />
+                  </div>
 
                   {error.indonesia_cities_id ? (
                     <p className="error-text">{error.indonesia_cities_id}</p>

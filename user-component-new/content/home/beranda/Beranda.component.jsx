@@ -39,6 +39,7 @@ const Beranda = ({ session }) => {
   const [akademiId, setAkademiId] = useState(null);
 
   const [pelatihan, setPelatihan] = useState(null);
+  const [warna, setWarna] = useState("secondary");
 
   const [cardId, setCardId] = useState(null);
   const [cardImage, setCardImage] = useState(null);
@@ -368,6 +369,34 @@ const Beranda = ({ session }) => {
     }
   };
 
+  const getDataGeneral = async (token) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (data) {
+        localStorage.setItem("extras", data.data.color[2].color);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getDataGeneral();
+    if (localStorage.getItem("extras") == "1") {
+      setWarna("primary");
+    } else if (localStorage.getItem("extras") == "2") {
+      setWarna("secondary");
+    } else if (localStorage.getItem("extras") == "3") {
+      setWarna("extras");
+    }
+  }, []);
+
   return (
     <>
       <section className="image-carousel-new mt-10">
@@ -445,7 +474,7 @@ const Beranda = ({ session }) => {
                               href={`/detail/akademi/${akademiId}?tema_id=${row.id}`}
                               passHref
                             >
-                              <span>Lihat Semua {">"}</span>
+                              <span className={`color-extras-${warna}`}>Lihat Semua {">"}</span>
                             </Link>
                           </div>
                         </div>

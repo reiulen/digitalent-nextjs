@@ -13,60 +13,60 @@ import { getAllPermission } from "../../../../redux/actions/utils/utils.actions"
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const KelolaSertifikatNamaPelatihanID = dynamic(
-  () =>
-    import(
-      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/nama_pelatihan"
-    ),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
+	() =>
+		import(
+			"../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/nama_pelatihan"
+		),
+	{
+		loading: function loadingNow() {
+			return <LoadingSkeleton />;
+		},
+		ssr: false,
+	}
 );
 
 export default function KelokaSertifikatPage(props) {
-  const session = props.session.user.user.data;
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        <KelolaSertifikatNamaPelatihanID token={session.token} />
-      </div>
-    </>
-  );
+	const session = props.session.user.user.data;
+	return (
+		<>
+			<div className="d-flex flex-column flex-root">
+				<KelolaSertifikatNamaPelatihanID token={session.token} />
+			</div>
+		</>
+	);
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ query, req }) => {
-      const session = await getSession({ req });
+	(store) =>
+		async ({ query, req }) => {
+			const session = await getSession({ req });
 
-      const middleware = middlewareAuthAdminSession(session);
-      if (!middleware.status) {
-        return {
-          redirect: {
-            destination: middleware.redirect,
-            permanent: false,
-          },
-        };
-      }
+			const middleware = middlewareAuthAdminSession(session);
+			if (!middleware.status) {
+				return {
+					redirect: {
+						destination: middleware.redirect,
+						permanent: false,
+					},
+				};
+			}
+			const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(
-        getDetailSertifikat(
-          query.id ? query.id : req.cookies.tema_pelatihan_id,
-          query.page,
-          query.keyword,
-          query.limit,
-          query.status,
-          session.user.user.data.token
-        )
-      );
+			await store.dispatch(
+				getDetailSertifikat(
+					query.id ? query.id : req.cookies.tema_pelatihan_id,
+					query.page,
+					query.keyword,
+					query.limit,
+					query.status,
+					session.user.user.data.token,
+					token_permission
+				)
+			);
 
-      const data = await store.dispatch(
-        getAllPermission(session.user.user.data.token)
-      );
-      return {
-        props: { session, title: "List Nama Pelatihan - Sertifikat" },
-      };
-    }
+			await store.dispatch(getAllPermission(session.user.user.data.token));
+			return {
+				props: { session, title: "List Nama Pelatihan - Sertifikat" },
+			};
+		}
 );

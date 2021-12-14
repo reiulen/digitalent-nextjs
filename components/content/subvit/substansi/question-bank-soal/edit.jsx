@@ -17,7 +17,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 
-const EditSoalSubstansi = ({ token }) => {
+const EditSoalSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const importSwitch = () => import("bootstrap-switch-button-react");
@@ -236,7 +236,7 @@ const EditSoalSubstansi = ({ token }) => {
         question_type_id: question_type,
       };
 
-      dispatch(updateSubtanceQuestionDetail(id, data, token));
+      dispatch(updateSubtanceQuestionDetail(id, data, token, tokenPermission));
     }
   };
 

@@ -4,6 +4,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Cookies from "js-cookie"
 
 const Tambah = ({ token }) => {
   const [valueCreateCooporations, setValueCreateCooporations] = useState([""]);
@@ -65,6 +66,7 @@ const Tambah = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -117,7 +119,7 @@ const Tambah = ({ token }) => {
                   <div className="form-group" key={index}>
                     {index === 0 ? (
                       <label htmlFor="staticEmail" className="col-form-label">
-                        Form Kerjasama
+                        Judul Form Isian Kerjasama
                       </label>
                     ) : (
                       ""

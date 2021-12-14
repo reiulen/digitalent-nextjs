@@ -10,6 +10,7 @@ import Image from "next/image";
 import AlertBar from "../../components/BarAlert";
 import { Modal } from "react-bootstrap";
 import ReactCrop from "react-image-crop";
+import Cookies from 'js-cookie'
 
 const Tambah = ({ token }) => {
   const router = useRouter();
@@ -132,6 +133,7 @@ const Tambah = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -235,6 +237,7 @@ const Tambah = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
@@ -255,6 +258,7 @@ const Tambah = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
@@ -306,7 +310,7 @@ const Tambah = ({ token }) => {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${indonesia_provinces_id}`
+            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${indonesia_provinces_id.id}`
           );
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };
@@ -344,7 +348,7 @@ const Tambah = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 px-4">
             <h3 className="card-title text-dark fw-600 titles-1">
-              Profile Lembaga
+              Profile Lembag
             </h3>
           </div>
           <div className="card-body pt-0 px-4 px-sm-6">
@@ -602,26 +606,29 @@ const Tambah = ({ token }) => {
                     <label htmlFor="staticEmail" className=" col-form-label">
                       Kota / Kabupaten
                     </label>
-                    <Select
-                      onFocus={() =>
-                        setError({ ...error, indonesia_cities_id: "" })
-                      }
-                      className="basic-single"
-                      classNamePrefix="select"
-                      placeholder={`${
-                        indonesia_cities_id !== ""
-                          ? indonesia_cities_id.name
-                          : "Pilih data Kab/Kota"
-                      }`}
-                      isDisabled={false}
-                      isLoading={false}
-                      isClearable={false}
-                      isRtl={false}
-                      isSearchable={true}
-                      name="color"
-                      onChange={(e) => setIndonesia_cities_id(e.id)}
-                      options={citiesAll}
-                    />
+                    <div className={indonesia_provinces_id ? "" : "cursor-not-allowed"}>
+                      <Select
+                        onFocus={() =>
+                          setError({ ...error, indonesia_cities_id: "" })
+                        }
+                        className="basic-single"
+                        classNamePrefix="select"
+                        placeholder={`${
+                          indonesia_cities_id !== ""
+                            ? indonesia_cities_id.name
+                            : "Pilih data Kab/Kota"
+                        }`}
+                        isDisabled={false}
+                        isLoading={false}
+                        isClearable={false}
+                        isRtl={false}
+                        isSearchable={true}
+                        name="color"
+                        onChange={(e) => setIndonesia_cities_id(e.id)}
+                        options={citiesAll}
+                      />
+                    </div>
+                    
                     {error.indonesia_cities_id ? (
                       <p className="error-text">{error.indonesia_cities_id}</p>
                     ) : (

@@ -10,7 +10,7 @@ export default function TambahBankSoalTesSurveyStep2(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <StepTwo token={session.token} />
+        <StepTwo token={session.token} tokenPermission={props.permission} />
       </div>
     </>
   );
@@ -39,7 +39,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Tambah Bank Soal Tes Survey - Subvit" },
+        props: {
+          session,
+          title: "Tambah Bank Soal Tes Survey - Subvit",
+          permission,
+        },
       };
     }
 );

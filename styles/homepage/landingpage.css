@@ -348,15 +348,30 @@
 }
 
 .color-extras-primary {
-  background-color: #0100be;
+  color: #0100be;
 }
 
 .color-extras-secondary {
-  background-color: #2a62ed;
+  color: #2a62ed;
 }
 
 .color-extras-extras {
-  background-color: #5ec8f2;
+  color: #5ec8f2;
+}
+
+.module-rilis-media {
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  line-height: normal;
+}
+
+.media-card {
+  color: #1b283f;
+  font-weight: 600;
+  font-size: 18px;
 }
 
 @media (max-width: 395px) {
@@ -501,6 +516,21 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   line-height: 25px;
+}
+
+.module-rilis-media {
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  line-height: normal;
+}
+
+.media-card {
+  color: #1b283f;
+  font-weight: 600;
+  font-size: 18px;
 }
 
 .title-tahapan-new {

@@ -52,7 +52,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteTandaTangan(id,token));
+        dispatch(deleteTandaTangan(id,token,));
         setSuccessDelete(true);
         setIsStatusBar(false);
         router.replace(`/partnership/tanda-tangan`);
@@ -91,16 +91,16 @@ const Table = ({ token }) => {
     });
   };
 
-  useEffect(() => {
-    dispatch(fetchSignature(token));
-  }, [
-    dispatch,
-    allTandaTangan.keyword,
-    allTandaTangan.status_reload,
-    allTandaTangan.page,
-    allTandaTangan.limit,
-    token
-  ]);
+  // useEffect(() => {
+  //   dispatch(fetchSignature(token));
+  // }, [
+  //   dispatch,
+  //   allTandaTangan.keyword,
+  //   allTandaTangan.status_reload,
+  //   allTandaTangan.page,
+  //   allTandaTangan.limit,
+  //   token
+  // ]);
 
   return (
     <PageWrapper>
@@ -138,7 +138,7 @@ const Table = ({ token }) => {
 
             {
               permission ? 
-                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.tanda_tangan.manage") ?
                   <div className="col-12 col-xl-6 d-flex justify-content-xl-end mt-xl-n10">
                     <div className="card-toolbar">
                       <Link href="/partnership/tanda-tangan/tambah">
@@ -211,8 +211,11 @@ const Table = ({ token }) => {
                         <th className="text-left align-middle">Jabatan</th>
                         <th className="text-left align-middle">Status</th>
                         {
+                          console.log (permission)
+                        }
+                        {
                           permission ? 
-                            permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                            permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.tanda_tangan.manage") ?
                               <th className="text-left align-middle">Aksi</th>
                             :
                               null
@@ -266,7 +269,7 @@ const Table = ({ token }) => {
                                           }
                                           disabled={
                                             permission ? 
-                                              permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                              permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.tanda_tangan.manage") ?
                                                 false
                                               :
                                                 true
@@ -319,7 +322,7 @@ const Table = ({ token }) => {
 
                                 {
                                   permission ? 
-                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.tanda_tangan.manage") ?
                                       <td className="align-middle text-left">
                                         <div className="d-flex align-items-center">
                                           <BtnIcon
