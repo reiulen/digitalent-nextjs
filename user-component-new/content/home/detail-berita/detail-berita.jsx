@@ -232,64 +232,26 @@ const DetailBerita = () => {
                 : "col-12 col-lg-8"
             }
           >
-            {/* Image */}
-            <Image
-              // src="/assets/media/default-detail-image.png"
-              src={
-                process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                "publikasi/images/" +
-                detail.gambar
-              }
-              width={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 768 
-                // && windowDimensions.width <= 1242
-                ?
-                  837
-                :
-                  windowDimensions &&
-                  windowDimensions.width &&
-                  windowDimensions.width <= 768 &&
-                  windowDimensions.width > 540 ?
-                    704
-                  :
-                    361
-              }
-              height={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 768 ?
-                  640
-                :
-                  361
+            <div className={`${styles.image_thumbnail} rounded-lg`}>
+              {/* Image */}
+              <Image
+                // src="/assets/media/default-detail-image.png"
+                src={
+                  process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                  "publikasi/images/" +
+                  detail.gambar
                 }
-              // layout={
-              //   windowDimensions &&
-              //   windowDimensions.width &&
-              //   windowDimensions.width > 1242 ?
-              //     "fill"
-              //   :
-              //     null
-              // }
-              // layout="fill"
-              objectFit="cover"
-              alt="Detail Image"
-              className="rounded-lg img-fluid"
-              // className="rounded-lg img-fluid position-relative"
-              objectFit="cover"
-            />
+                layout="fill"
+                objectFit="cover"
+                alt="Detail Image"
+                className="rounded-lg img-fluid"
+              />
+            </div>
+            
 
             {/* Berita */}
             <div 
-              className={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 1242 ?
-                  "border rounded-lg mb-5 mt-15 mr-20"
-                :
-                  "border rounded-lg mb-5 mt-15"
-              }
+              className="border rounded-lg mb-5 mt-15"
             >
               <div
                 className="row "
