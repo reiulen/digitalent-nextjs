@@ -26,6 +26,7 @@ import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
 import axios from "axios";
 import styles from "../../trivia/edit/step.module.css";
+import Cookies from "js-cookie";
 
 const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
@@ -83,20 +84,56 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [limit, setLimit] = useState(null);
 
   useEffect(() => {
-    dispatch(getAllSurveyQuestionDetail(id, token));
+    dispatch(
+      getAllSurveyQuestionDetail(
+        id,
+        1,
+        null,
+        "",
+        token,
+        Cookies.get("token_permission")
+      )
+    );
     // if (error) {
     //   dispatch(clearErrors());
     // }
     if (successFile) {
-      dispatch(getAllSurveyQuestionDetail(id, token));
+      dispatch(
+        getAllSurveyQuestionDetail(
+          id,
+          1,
+          null,
+          "",
+          token,
+          Cookies.get("token_permission")
+        )
+      );
     }
 
     if (successImages) {
-      dispatch(getAllSurveyQuestionDetail(id, token));
+      dispatch(
+        getAllSurveyQuestionDetail(
+          id,
+          1,
+          null,
+          "",
+          token,
+          Cookies.get("token_permission")
+        )
+      );
     }
 
     if (isDeleted) {
-      dispatch(getAllSurveyQuestionDetail(id, token));
+      dispatch(
+        getAllSurveyQuestionDetail(
+          id,
+          1,
+          null,
+          "",
+          token,
+          Cookies.get("token_permission")
+        )
+      );
     }
   }, [dispatch, id, successFile, successImages, isDeleted, token]);
 

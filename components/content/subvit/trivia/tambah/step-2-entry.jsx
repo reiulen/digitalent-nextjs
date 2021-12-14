@@ -219,15 +219,6 @@ const StepTwo = ({ token }) => {
         }
         break;
       case "checkbox":
-        if (answer_key === "") {
-          valid = false;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Isi kunci jawaban dengan benar !",
-          });
-        }
-
         answer_checkbox.forEach((row, j) => {
           if (row.option == "" && row.image == "") {
             valid = false;
@@ -246,7 +237,7 @@ const StepTwo = ({ token }) => {
             question,
             answer: answers_check,
             question_image,
-            answer_key,
+
             duration,
             type: methodAdd,
           };
@@ -329,15 +320,6 @@ const StepTwo = ({ token }) => {
         }
         break;
       case "checkbox":
-        if (answer_key === "") {
-          valid = false;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Isi kunci jawaban dengan benar !",
-          });
-        }
-
         answer_checkbox.forEach((row, j) => {
           if (row.option == "" && row.image == "") {
             valid = false;
@@ -494,6 +476,7 @@ const StepTwo = ({ token }) => {
                       className="custom-file-input"
                       name="question_image"
                       onChange={(e) => handleSoalImage(e)}
+                      accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
                       {question_image_name}
@@ -576,7 +559,7 @@ const StepTwo = ({ token }) => {
                             onClick={saveDraft}
                             type="button"
                           >
-                            Simpan Draft
+                            Tambah Soal
                           </button>
                         </div>
                       </div>

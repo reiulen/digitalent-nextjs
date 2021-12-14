@@ -182,9 +182,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                     router.pathname === "/peserta/test-substansi" ||
                     router.pathname ===
                       "/peserta/test-substansi/panduan-substansi" ||
-                    router.pathname === "/peserta/done-substansi" ||
-                    router.pathname === "/peserta/mid-test" ||
-                    router.pathname === "/peserta/mid-test/panduan-mid-test"
+                    router.pathname === "/peserta/done-substansi"
                       ? styles.activeMenuItem
                       : styles.menuItem
                   } d-flex flex-row`}
@@ -195,9 +193,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                         router.pathname === "/peserta/test-substansi" ||
                         router.pathname ===
                           "/peserta/test-substansi/panduan-substansi" ||
-                        router.pathname === "/peserta/done-substansi" ||
-                        router.pathname === "/peserta/mid-test" ||
-                        router.pathname === "/peserta/mid-test/panduan-mid-test"
+                        router.pathname === "/peserta/done-substansi"
                           ? styles.activeIconMenu
                           : styles.iconMenu
                       } ri-article-line`}
@@ -267,6 +263,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                   className={`${
                     router.pathname === "/peserta/riwayat-pelatihan" ||
                     router.pathname === "/peserta/done-mid-tes" ||
+                    router.pathname === "/peserta/mid-test" ||
+                    router.pathname === "/peserta/mid-test/panduan-mid-test" ||
                     router.pathname.includes("riwayat-pelatihan")
                       ? styles.activeMenuItem
                       : styles.menuItem
@@ -275,7 +273,9 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                   <div className="p-2">
                     <div
                       className={`${
-                        router.pathname === "/peserta/riwayat-pelatihan"
+                        router.pathname === "/peserta/riwayat-pelatihan" ||
+                        router.pathname === "/peserta/mid-test" ||
+                        router.pathname === "/peserta/mid-test/panduan-mid-test"
                           ? styles.activeIconMenu
                           : styles.iconMenu
                       } ri-history-line`}

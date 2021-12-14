@@ -9,8 +9,7 @@ import styles from "./survey.module.css";
 
 const TestSubstansi = () => {
   const router = useRouter();
-  const temaId = Cookies.get("id_tema");
-  const pelatihanId = Cookies.get("id_pelatihan");
+
   const routerTraining = router.query.id_pelatihan;
   const routerTema = router.query.id_tema;
 
@@ -19,9 +18,7 @@ const TestSubstansi = () => {
 
   const handlePage = () => {
     router.push(
-      `/peserta/subvit/survey/1?theme_id=${routerTema || temaId}&training_id=${
-        routerTraining || pelatihanId
-      }`
+      `/peserta/subvit/survey/1?theme_id=${routerTema}&training_id=${routerTraining}`
     );
   };
 
@@ -29,15 +26,13 @@ const TestSubstansi = () => {
     axios
       .get(
         process.env.END_POINT_API_SUBVIT +
-          `api/survey-question-bank-details/info?training_id=${
-            routerTraining || pelatihanId
-          }&theme_id=${routerTema || temaId}`
+          `api/survey-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`
       )
       .then((res) => {
-        setQuestion(res.total_questions);
-        setTime(res.duration);
+        setQuestion(res.data.total_questions);
+        setTime(res.data.duration);
       });
-  }, [temaId, pelatihanId, routerTema, routerTraining]);
+  }, [routerTema, routerTraining]);
 
   const [show, setShow] = useState(false);
 
@@ -72,8 +67,7 @@ const TestSubstansi = () => {
                 <td>
                   {" "}
                   Peserta wajib menjawab seluruh survey yang berjumlah
-                  {question || 50}
-                  pertanyaan.
+                  {question || 50} pertanyaan.
                 </td>
               </tr>
               <tr>

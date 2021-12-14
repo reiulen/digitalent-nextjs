@@ -205,12 +205,10 @@ const StepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={
-                    subtance ? academyLabel : "Silahkan Pilih Akademi"
-                  }
+                  placeholder={"Silahkan Pilih Akademi"}
                   className={styles.selectForm}
                   options={dataAkademi.data}
-                  value={academyLabel}
+                  value={{ label: academyLabel }}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -231,9 +229,9 @@ const StepOne = ({ token }) => {
                   Tema
                 </Form.Label>
                 <Select
-                  placeholder={subtance ? themeLabel : "Silahkan Pilih Tema"}
+                  placeholder={"Silahkan Pilih Tema"}
                   options={optionsTema}
-                  value={themeLabel}
+                  value={{ label: themeLabel }}
                   className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
@@ -248,11 +246,9 @@ const StepOne = ({ token }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
-                  placeholder={
-                    subtance ? trainingLabel : "Silahkan Pilih Pelatihan"
-                  }
+                  placeholder={"Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
-                  value={trainingLabel}
+                  value={{ label: trainingLabel }}
                   className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>
@@ -274,11 +270,8 @@ const StepOne = ({ token }) => {
                   Kategori
                 </Form.Label>
                 <Select
-                  placeholder={
-                    subtance.category
-                      ? subtance.category
-                      : "Silahkan Pilih Kategori"
-                  }
+                  placeholder={"Silahkan Pilih Kategori"}
+                  value={{ label: category }}
                   options={optionsKategori}
                   onChange={(e) => setCategory(e.value)}
                   onBlur={() =>

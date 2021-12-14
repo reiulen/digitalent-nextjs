@@ -25,7 +25,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const StepOne = ({ token }) => {
+const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -36,6 +36,20 @@ const StepOne = ({ token }) => {
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
+
+  const { list_substance } = useSelector(
+    (state) => state?.allSubtanceQuestionBanks?.subtance
+  );
+
+  let optionsClone = [];
+
+  let uniqueArray = list_substance.filter((item, pos) => {
+    return list_substance.indexOf(item) === pos;
+  });
+
+  uniqueArray.map((item) => {
+    optionsClone.push({ label: item.academy.name, value: item.academy.id });
+  });
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -55,8 +69,8 @@ const StepOne = ({ token }) => {
     // if (error) {
     //     dispatch(clearErrors())
     // }
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (success) {
       const id = subtance.id;
       if (typeSave === "lanjut") {
@@ -81,6 +95,7 @@ const StepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   const handleChangePelatihan = (e) => {
@@ -223,10 +238,10 @@ const StepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  placeholder={"Silahkan Pilih Akademi"}
                   className={styles.selectForm}
-                  options={dataAkademi.data}
-                  value={academyLabel}
+                  options={optionsClone}
+                  value={{ label: academyLabel }}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -248,9 +263,9 @@ const StepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   isDisabled={!academy_id}
-                  placeholder={themeLabel || "Silahkan Pilih Tema"}
+                  placeholder={"Silahkan Pilih Tema"}
                   options={optionsTema}
-                  value={themeLabel}
+                  value={{ label: themeLabel }}
                   className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
@@ -266,9 +281,9 @@ const StepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   isDisabled={!theme_id}
-                  placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
+                  placeholder={"Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
-                  value={trainingLabel}
+                  value={{ label: trainingLabel }}
                   className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>

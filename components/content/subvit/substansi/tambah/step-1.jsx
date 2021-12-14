@@ -130,15 +130,20 @@ const StepOne = ({ token }) => {
         category,
       };
 
+      const setData = {
+        academy: academyLabel,
+        academy_id,
+        theme: themeLabel,
+        theme_id,
+        training: trainingLabel,
+        training_id,
+        category,
+      };
+      localStorage.setItem("step1", JSON.stringify(setData));
       dispatch(newSubtanceQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Oops...",
-      //   text: "Isi data dengan benar !",
-      // });
     }
   };
 
@@ -146,6 +151,10 @@ const StepOne = ({ token }) => {
 
   const { data: dataPelatihan2 } = useSelector(
     (state) => state.drowpdownPelatihanbyTema.data
+  );
+
+  const [dataBefore, setDataBefore] = useState(
+    JSON.parse(localStorage.getItem("step1"))
   );
 
   const handleChangePelatihan = (e) => {
@@ -230,10 +239,10 @@ const StepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  placeholder={"Silahkan Pilih Akademi"}
+                  value={{ label: academyLabel }}
                   className={styles.selectForm}
                   options={dataAkademi.data}
-                  value={academyLabel}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -255,9 +264,9 @@ const StepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   isDisabled={!academy_id}
-                  placeholder={themeLabel || "Silahkan Pilih Tema"}
+                  placeholder={"Silahkan Pilih Tema"}
                   options={optionsTema}
-                  value={themeLabel}
+                  value={{ label: themeLabel }}
                   className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
@@ -275,7 +284,7 @@ const StepOne = ({ token }) => {
                   isDisabled={!theme_id}
                   placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
-                  value={trainingLabel}
+                  value={{ label: trainingLabel }}
                   className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>

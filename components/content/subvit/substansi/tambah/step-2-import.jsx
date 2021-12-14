@@ -26,6 +26,7 @@ import StepInput from "/components/StepInput";
 import LoadingTable from "../../../../LoadingTable";
 import axios from "axios";
 import styles from "../../trivia/edit/step.module.css";
+import Cookies from "js-cookie";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -82,20 +83,28 @@ const StepTwo = ({ token }) => {
   const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
-    dispatch(getAllSubtanceQuestionDetail(id, token));
+    dispatch(
+      getAllSubtanceQuestionDetail(id, 1, null, null, "", "", "", token)
+    );
     // if (error) {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      dispatch(getAllSubtanceQuestionDetail(id, token));
+      dispatch(
+        getAllSubtanceQuestionDetail(id, 1, null, null, "", "", "", token)
+      );
     }
 
     if (successImages) {
-      dispatch(getAllSubtanceQuestionDetail(id, token));
+      dispatch(
+        getAllSubtanceQuestionDetail(id, 1, null, null, "", "", "", token)
+      );
     }
 
     if (isDeleted) {
-      dispatch(getAllSubtanceQuestionDetail(id, token));
+      dispatch(
+        getAllSubtanceQuestionDetail(id, 1, null, null, "", "", "", token)
+      );
     }
   }, [dispatch, id, successFile, successImages, isDeleted, token]);
 

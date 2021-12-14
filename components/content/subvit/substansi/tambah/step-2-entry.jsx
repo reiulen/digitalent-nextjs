@@ -332,6 +332,10 @@ const StepTwo = ({ token }) => {
     }
   };
 
+  const handleBack = () => {
+    router.push("/subvit/substansi/tambah-step-1");
+  };
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());

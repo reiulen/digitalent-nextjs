@@ -254,6 +254,14 @@ const DetailSubstansi = ({ token }) => {
     setKategori(e.target.value);
   };
 
+  const truncateString = (str, num) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -563,7 +571,7 @@ const DetailSubstansi = ({ token }) => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
+                <table className="table table-separate table-head-custom table-checkable ">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center">No</th>
@@ -600,7 +608,10 @@ const DetailSubstansi = ({ token }) => {
                               </td>
                               <td className="align-middle">CC{question.id}</td>
                               <td className="align-middle">
-                                {question && question.question}
+                                {truncateString(
+                                  question && question.question,
+                                  80
+                                )}
                               </td>
                               <td className="align-middle">
                                 {question.type && question.type.name}
@@ -644,6 +655,11 @@ const DetailSubstansi = ({ token }) => {
                                       onClick={() => handleDelete(question.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
+                                      disabled={i === 0}
+                                      style={{
+                                        cursor:
+                                          i === 0 ? "not-allowed" : "pointer",
+                                      }}
                                       title="Hapus"
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
