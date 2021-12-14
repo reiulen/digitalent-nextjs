@@ -228,8 +228,8 @@ const DetailBerita = () => {
               windowDimensions &&
               windowDimensions.width &&
               windowDimensions.width > 770
-                ? "col-12 col-lg-8 pr-11 "
-                : "col-12 col-lg-8 "
+                ? "col-12 col-lg-8 pr-11"
+                : "col-12 col-lg-8"
             }
           >
             {/* Image */}
@@ -243,7 +243,9 @@ const DetailBerita = () => {
               width={
                 windowDimensions &&
                 windowDimensions.width &&
-                windowDimensions.width > 768 ?
+                windowDimensions.width > 768 
+                // && windowDimensions.width <= 1242
+                ?
                   837
                 :
                   windowDimensions &&
@@ -262,9 +264,19 @@ const DetailBerita = () => {
                 :
                   361
                 }
+              // layout={
+              //   windowDimensions &&
+              //   windowDimensions.width &&
+              //   windowDimensions.width > 1242 ?
+              //     "fill"
+              //   :
+              //     null
+              // }
+              // layout="fill"
               objectFit="cover"
               alt="Detail Image"
               className="rounded-lg img-fluid"
+              // className="rounded-lg img-fluid position-relative"
               objectFit="cover"
             />
 
