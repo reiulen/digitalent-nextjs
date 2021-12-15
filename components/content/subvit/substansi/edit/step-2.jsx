@@ -163,6 +163,27 @@ const StepTwo = ({ token, tokenPermission }) => {
             <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
           <div className="card-body pt-0">
+            <h4 className="mt-2">
+              <b>{subtance?.training?.name}</b>
+            </h4>
+            <table>
+              <tr>
+                <td>Tanggal Pendaftaran &nbsp;</td>
+                <td>: &nbsp;</td>
+                <td>
+                  {subtance?.pendaftaran_mulai} &nbsp;s.d.&nbsp;
+                  {subtance?.pendaftaran_selesai}{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>Tanggal Pelatihan </td>
+                <td> : </td>{" "}
+                <td>
+                  {subtance?.pelatihan_mulai} &nbsp;s.d.&nbsp;{" "}
+                  {subtance?.pelatihan_selesai}{" "}
+                </td>
+              </tr>
+            </table>
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
