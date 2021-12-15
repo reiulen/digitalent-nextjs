@@ -324,6 +324,9 @@ const FormManual = ({
               )}
             </div>
           </div>
+          <div className="col-md-12">
+            <hr />
+          </div>
         </div>
       ))}
 
