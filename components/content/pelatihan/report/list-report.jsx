@@ -158,12 +158,12 @@ const ListReport = ({ token }) => {
             </td>
             <td>
               <p className="my-0">
-                {moment(item.pendaftaran_mulai).format("DD MMM YYYY")} -{" "}
-                {moment(item.pendaftaran_selesai).format("DD MMM YYYY")}{" "}
+                {moment(item.pendaftaran_mulai).utc().format("DD MMM YYYY")} -{" "}
+                {moment(item.pendaftaran_selesai).utc().format("DD MMM YYYY")}{" "}
               </p>
               <p className="my-0">
-                {moment(item.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
-                {moment(item.pelatihan_selesai).format("DD MMM YYYY")}
+                {moment(item.pelatihan_mulai).utc().format("DD MMM YYYY")} -{" "}
+                {moment(item.pelatihan_selesai).utc().format("DD MMM YYYY")}
               </p>
             </td>
             <td>

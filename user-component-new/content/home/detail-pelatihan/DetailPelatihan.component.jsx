@@ -264,10 +264,14 @@ const DetailPelatihan = ({ session }) => {
                 </div>
                 <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Alamat</p>
-                  <p className="fz-16">
-                    {pelatihan?.alamat},{pelatihan?.kabupaten},
-                    {pelatihan?.provinsi}
-                  </p>
+                  {pelatihan?.metode_pelatihan !== "Online" ? (
+                    <p className="fz-16">
+                      {pelatihan?.alamat}, {pelatihan?.kabupaten},{" "}
+                      {pelatihan?.provinsi}
+                    </p>
+                  ) : (
+                    <p className="fz-16">Online</p>
+                  )}
                 </div>
               </div>
               <div className="d-flex flex-wrap align-items-start mt-4">
@@ -328,7 +332,9 @@ const DetailPelatihan = ({ session }) => {
 
                 <div className="ml-5">
                   <p className="fw-600 fz-16 mb-2">{pelatihan?.mitra_nama}</p>
-                  <p style={{ color: "#6C6C6C" }}>{pelatihan?.provinsi}</p>
+                  <p style={{ color: "#6C6C6C" }}>
+                    {pelatihan?.mitra !== "" ? pelatihan?.provinsi : "-"}
+                  </p>
                 </div>
               </div>
             </div>

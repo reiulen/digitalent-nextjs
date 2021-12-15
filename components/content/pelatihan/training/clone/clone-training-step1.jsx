@@ -208,16 +208,15 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
       }
       quill.on("text-change", (delta, oldDelta, source) => {
         setDescription(quill.root.innerHTML);
-
-        const { ops } = delta;
-        let updatedOps;
-        if (ops.length === 1) {
-          updatedOps = [{ delete: ops[0].insert.length }];
-        } else {
-          updatedOps = [ops[0], { delete: ops[1].insert.length }];
-        }
-        quill.updateContents({ ops: updatedOps });
       });
+      // const { ops } = delta;
+      // let updatedOps;
+      // if (ops.length === 1) {
+      //   updatedOps = [{ delete: ops[0].insert.length }];
+      // } else {
+      //   updatedOps = [ops[0], { delete: ops[1].insert.length }];
+      // }
+      // quill.updateContents({ ops: updatedOps });
     }
     setEditorLoaded(true);
   }, [quill]);
@@ -835,7 +834,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
             />
             {simpleValidator.current.message(
               "mitra",
-              mitra.value,
+              mitra ? mitra.value : mitra,
               metodeImplementation === "Swakelola" ? "" : "required",
               {
                 className: "text-danger",
@@ -1391,7 +1390,12 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   className="form-check-input"
                   value="Offline"
                   checked={metodeTraining === "Offline"}
-                  onClick={() => setMetodeTraining("Offline")}
+                  onClick={() => {
+                    setMetodeTraining("Offline");
+                    setAddress("");
+                    setProvince("");
+                    setCity("");
+                  }}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("metode pelatihan")
                   }
@@ -1425,7 +1429,12 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   className="form-check-input"
                   value="Online dan Offline"
                   checked={metodeTraining === "Online dan Offline"}
-                  onClick={() => setMetodeTraining("Online dan Offline")}
+                  onClick={() => {
+                    setMetodeTraining("Online dan Offline");
+                    setAddress("");
+                    setProvince("");
+                    setCity("");
+                  }}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("metode pelatihan")
                   }
@@ -1542,7 +1551,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   type="checkbox"
                   name="plotRegistration"
                   className="form-check-input"
-                  checked={umum}
+                  defaultChecked={umum === "1"}
                   value={umum}
                   onClick={() => setUmum(!umum)}
                 />
@@ -1553,7 +1562,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   type="checkbox"
                   name="plotRegistration"
                   className="form-check-input"
-                  checked={tuna_netra}
+                  defaultChecked={tuna_netra === "1"}
                   value={tuna_netra}
                   onClick={() => setTunaNetra(!tuna_netra)}
                 />
@@ -1564,7 +1573,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   type="checkbox"
                   name="plotRegistration"
                   className="form-check-input"
-                  checked={tuna_rungu}
+                  defaultChecked={tuna_rungu === "1"}
                   value={tuna_rungu}
                   onClick={() => setTunaRungu(!tuna_rungu)}
                 />
@@ -1575,7 +1584,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   type="checkbox"
                   name="plotRegistration"
                   className="form-check-input"
-                  checked={tuna_daksa}
+                  defaultChecked={tuna_daksa === "1"}
                   value={tuna_daksa}
                   onClick={() => setTunaDaksa(!tuna_daksa)}
                 />

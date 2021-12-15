@@ -95,7 +95,7 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchSignature(token));
+    // dispatch(fetchSignature(token));
   }, [
     dispatch,
     allTandaTanganUser?.keyword,
