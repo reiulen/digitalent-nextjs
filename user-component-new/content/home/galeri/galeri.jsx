@@ -240,10 +240,11 @@ const Galeri = () => {
                     </div>
 
                     {/* Filter Button */}
+                    {/* Filter on Desktop */}
                     {
                         kategoriToShow ?
                             <div
-                                className="col-12 pl-0 ml-4 mt-10 mb-5"
+                                className="col-12 pl-0 ml-4 mt-10 mb-5 d-none d-lg-block"
                             >
                                 {
                                     showArrow === null ? <div className="col-12"><PulseLoaderRender /></div> :
@@ -281,7 +282,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                                                                    // style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori("")}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -293,7 +294,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                                                                    // style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori("")}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -311,7 +312,7 @@ const Galeri = () => {
                                                                         <SplideSlide>
                                                                             <div
                                                                                 className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                                                                                // style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
+                                                                                style={{ cursor: "pointer", height: "40px" }}
                                                                                 onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
@@ -324,7 +325,7 @@ const Galeri = () => {
                                                                         <SplideSlide>
                                                                             <div
                                                                                 className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                                                                                // style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
+                                                                                style={{ cursor: "pointer", height: "40px" }}
                                                                                 onClick={() => handleFilterKategori(el.toString())}
                                                                                 key={i}
                                                                             >
@@ -363,7 +364,7 @@ const Galeri = () => {
                                                         <SplideSlide>
                                                             <div
                                                                 className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                                                                // style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
+                                                                style={{ cursor: "pointer", height: "40px" }}
                                                                 onClick={() => handleFilterKategori("")}
                                                             >
                                                                 <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -375,7 +376,7 @@ const Galeri = () => {
                                                         <SplideSlide>
                                                             <div
                                                                 className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                                                                // style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
+                                                                style={{ cursor: "pointer", height: "40px" }}
                                                                 onClick={() => handleFilterKategori("")}
                                                             >
                                                                 <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -393,7 +394,7 @@ const Galeri = () => {
                                                                     <SplideSlide>
                                                                         <div
                                                                             className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                                                                            // style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
+                                                                            style={{ cursor: "pointer", height: "40px" }}
                                                                             onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
@@ -406,7 +407,7 @@ const Galeri = () => {
                                                                     <SplideSlide>
                                                                         <div
                                                                             className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                                                                            // style={{ cursor: "pointer", height: "40px", minWidth: "236px" }}
+                                                                            style={{ cursor: "pointer", height: "40px" }}
                                                                             onClick={() => handleFilterKategori(el.toString())}
                                                                             key={i}
                                                                         >
@@ -427,6 +428,211 @@ const Galeri = () => {
                             :
                             null
                     }
+
+                    {/* Filter on Tablet */}
+                    {
+                        kategoriToShow ? 
+                            <div className="col-12 pl-0 ml-4 mt-10 mb-5 d-none d-md-block d-lg-none">
+                                <div
+                                    style={{ marginLeft: '-17px' }}
+                                >
+                                    <Splide
+                                        options={{
+                                            arrows: true,
+                                            pagination: false,
+                                            gap: "1rem",
+                                            drag: "free",
+                                            perPage: 5,
+                                            autoWidth: true,
+                                            breakpoints: {
+                                                830: {
+                                                    perPage: 2,
+                                                },
+                                                576: {
+                                                    perPage: 1,
+                                                },
+                                                320: {
+                                                    perPage: 1,
+                                                },
+                                                280: {
+                                                    perPage: 1,
+                                                },
+                                            }
+                                        }}
+                                        className="pl-22 pr-15"
+                                    >
+                                        {
+                                            kategoriGaleri === "" ?
+                                                <SplideSlide>
+                                                    <div
+                                                        className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
+                                                        style={{ cursor: "pointer", height: "40px"}}
+                                                        onClick={() => handleFilterKategori("")}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                            SEMUA
+                                                        </div>
+                                                    </div>
+                                                </SplideSlide>
+                                                :
+                                                <SplideSlide>
+                                                    <div
+                                                        className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
+                                                        style={{ cursor: "pointer", height: "40px"}}
+                                                        onClick={() => handleFilterKategori("")}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                            SEMUA
+                                                        </div>
+                                                    </div>
+                                                </SplideSlide>
+
+                                        }
+                                        {
+                                            kategoriToShow ?
+                                                kategoriToShow.map((el, i) => {
+                                                    return (
+                                                        kategoriGaleri == el ?
+                                                            <SplideSlide>
+                                                                <div
+                                                                    className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
+                                                                    style={{ cursor: "pointer", height: "40px"}}
+                                                                    onClick={() => handleFilterKategori(el.toString())}
+                                                                    key={i}
+                                                                >
+                                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                                        {el.toString().toUpperCase()}
+                                                                    </div>
+                                                                </div>
+                                                            </SplideSlide>
+                                                            :
+                                                            <SplideSlide>
+                                                                <div
+                                                                    className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
+                                                                    style={{ cursor: "pointer", height: "40px"}}
+                                                                    onClick={() => handleFilterKategori(el.toString())}
+                                                                    key={i}
+                                                                >
+                                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                                        {el.toString().toUpperCase()}
+                                                                    </div>
+                                                                </div>
+                                                            </SplideSlide>
+                                                    )
+                                                })
+                                                :
+                                                null
+                                        }
+
+                                    </Splide>
+                                </div>
+                            </div>
+                        :
+                            null
+                    }
+
+                    {/* Filter on Mobile */}
+                    {
+                        kategoriToShow ? 
+                            <div className="col-12 pl-0 ml-4 mt-10 mb-5 d-block d-md-none">
+                                <div
+                                    style={{ marginLeft: '-17px' }}
+                                >
+                                    <Splide
+                                        options={{
+                                            arrows: true,
+                                            pagination: false,
+                                            gap: "1rem",
+                                            drag: "free",
+                                            perPage: 5,
+                                            autoWidth: true,
+                                            breakpoints: {
+                                                830: {
+                                                    perPage: 2,
+                                                },
+                                                576: {
+                                                    perPage: 1,
+                                                },
+                                                320: {
+                                                    perPage: 1,
+                                                },
+                                                280: {
+                                                    perPage: 1,
+                                                },
+                                            }
+                                        }}
+                                        className="pl-22 pr-15"
+                                    >
+                                        {
+                                            kategoriGaleri === "" ?
+                                                <SplideSlide>
+                                                    <div
+                                                        className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
+                                                        style={{ cursor: "pointer", height: "40px"}}
+                                                        onClick={() => handleFilterKategori("")}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                            SEMUA
+                                                        </div>
+                                                    </div>
+                                                </SplideSlide>
+                                                :
+                                                <SplideSlide>
+                                                    <div
+                                                        className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
+                                                        style={{ cursor: "pointer", height: "40px"}}
+                                                        onClick={() => handleFilterKategori("")}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                            SEMUA
+                                                        </div>
+                                                    </div>
+                                                </SplideSlide>
+
+                                        }
+                                        {
+                                            kategoriToShow ?
+                                                kategoriToShow.map((el, i) => {
+                                                    return (
+                                                        kategoriGaleri == el ?
+                                                            <SplideSlide>
+                                                                <div
+                                                                    className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
+                                                                    style={{ cursor: "pointer", height: "40px"}}
+                                                                    onClick={() => handleFilterKategori(el.toString())}
+                                                                    key={i}
+                                                                >
+                                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                                        {el.toString().toUpperCase()}
+                                                                    </div>
+                                                                </div>
+                                                            </SplideSlide>
+                                                            :
+                                                            <SplideSlide>
+                                                                <div
+                                                                    className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
+                                                                    style={{ cursor: "pointer", height: "40px"}}
+                                                                    onClick={() => handleFilterKategori(el.toString())}
+                                                                    key={i}
+                                                                >
+                                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                                        {el.toString().toUpperCase()}
+                                                                    </div>
+                                                                </div>
+                                                            </SplideSlide>
+                                                    )
+                                                })
+                                                :
+                                                null
+                                        }
+
+                                    </Splide>
+                                </div>
+                            </div>
+                        :
+                            null
+                    }
+
                 </div>
                 {/* End Filter Button */}
 

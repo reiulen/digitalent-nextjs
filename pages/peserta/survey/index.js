@@ -14,7 +14,10 @@ import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const SurveyPage = dynamic(
-  () => import("../../../user-component-new/content/peserta/survey"),
+  () =>
+    import(
+      "../../../user-component-new/components/global/Riwayat-pelatihan-detail/index"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
