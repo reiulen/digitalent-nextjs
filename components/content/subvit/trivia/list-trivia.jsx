@@ -9,6 +9,8 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import styles from "../../../../styles/subvit.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
+import Image from "next/dist/client/image";
+import { getAllTriviaQuestionDetail } from "../../../../redux/actions/subvit/trivia-question-detail.action";
 
 import {
   deleteTriviaQuestionBanks,
@@ -16,6 +18,7 @@ import {
   getAllTriviaQuestionBanks,
 } from "../../../../redux/actions/subvit/trivia-question.actions";
 import { DELETE_TRIVIA_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/trivia-question.type";
+import { Card, Col, Form, Modal, Row } from "react-bootstrap";
 
 const ListTrivia = ({ token }) => {
   const dispatch = useDispatch();
@@ -39,6 +42,7 @@ const ListTrivia = ({ token }) => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [viewSoal, setViewSoal] = useState(false);
 
   useEffect(() => {
     if (isDeleted) {
@@ -166,6 +170,24 @@ const ListTrivia = ({ token }) => {
       return "Selesai";
     }
   };
+
+  const handleModal = (id) => {
+    dispatch(
+      getAllTriviaQuestionDetail(
+        id,
+        1,
+        "",
+
+        100,
+        token
+      )
+    );
+    setViewSoal(true);
+  };
+
+  const { trivia_question_detail } = useSelector(
+    (state) => state.allTriviaQuestionDetail
+  );
 
   return (
     <PageWrapper>
@@ -394,6 +416,17 @@ const ListTrivia = ({ token }) => {
                                         <i className="ri-eye-fill p-0 text-white"></i>
                                       </a>
                                     </Link>
+                                    {row?.bank_soal !== 0 && (
+                                      <a
+                                        onClick={() => handleModal(row?.id)}
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Review Soal"
+                                      >
+                                        <i className="ri-file-text-fill p-0 text-white"></i>
+                                      </a>
+                                    )}
                                     <Link
                                       href={`/subvit/trivia/report?id=${row.id}`}
                                     >
@@ -527,6 +560,148 @@ const ListTrivia = ({ token }) => {
           </div>
         </div>
       </div>
+      <Modal
+        show={viewSoal}
+        onHide={() => setViewSoal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Review Soal</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setViewSoal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body style={{ overflowY: "scroll", height: "500px" }}>
+          <Row>
+            <Col ms={12}>
+              {trivia_question_detail?.list_questions && (
+                <>
+                  {trivia_question_detail?.list_questions?.map(
+                    (item, index) => {
+                      return (
+                        <>
+                          <Card
+                            style={{
+                              padding: "15px",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <h4>Soal {index + 1}</h4>
+                            <Card
+                              style={{
+                                marginTop: "10px",
+
+                                padding: "15px",
+                              }}
+                            >
+                              <div className="d-flex flex-row">
+                                <div className="mr-3">
+                                  {item.question_image ? (
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.question_image
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                <div>
+                                  {" "}
+                                  <h5>{item.question}</h5>
+                                </div>
+                              </div>
+
+                              {!item.answer.includes("TIPE JAWABAN") ? (
+                                JSON.parse(item?.answer).map((anw) => {
+                                  return (
+                                    <>
+                                      <div className="d-flex flex-row ">
+                                        <div className="mt-6">
+                                          {anw.image !== "" ? (
+                                            <Image
+                                              src={
+                                                process.env
+                                                  .END_POINT_API_IMAGE_SUBVIT +
+                                                anw.image
+                                              }
+                                              alt=""
+                                              width={40}
+                                              height={40}
+                                            />
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                        <div style={{ width: "100%" }}>
+                                          <Card
+                                            style={{
+                                              padding: "5px",
+                                              marginTop: "15px",
+                                              margin: "10px",
+                                            }}
+                                            className={
+                                              anw.value !== null
+                                                ? styles.answer
+                                                : ""
+                                            }
+                                          >
+                                            <p
+                                              style={{
+                                                padding: "5px",
+                                                marginTop: "5px",
+                                              }}
+                                            >
+                                              {anw.key} . {anw.option}
+                                            </p>
+                                          </Card>
+                                        </div>
+                                      </div>
+                                    </>
+                                  );
+                                })
+                              ) : (
+                                <Form>
+                                  <Form.Control
+                                    as="textarea"
+                                    style={{ marginTop: "10px" }}
+                                    rows={5}
+                                    placeholder="Jelaskan jawaban Anda di sini..."
+                                    className={styles.textArea}
+                                    disabled
+                                  />
+                                </Form>
+                              )}
+                            </Card>
+                          </Card>
+                        </>
+                      );
+                    }
+                  )}
+                </>
+              )}
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+            type="button"
+            onClick={() => setViewSoal(false)}
+          >
+            Kembali
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };

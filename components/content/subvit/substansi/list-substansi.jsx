@@ -194,9 +194,6 @@ const ListSubstansi = ({ token, tokenPermission }) => {
     (state) => state.allSubtanceQuestionDetail
   );
 
-  const handlePaginate = (id) => {
-    setNum(id);
-  };
   return (
     <PageWrapper>
       {error ? (
@@ -636,7 +633,6 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                 <>
                   {subtance_question_detail?.list_questions?.map(
                     (item, index) => {
-                      console.log(item);
                       return (
                         <>
                           <Card
@@ -676,29 +672,51 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                               </div>
 
                               {JSON.parse(item?.answer).map((anw) => {
+                                console.log(anw);
                                 return (
                                   <>
-                                    <Card
-                                      style={{
-                                        padding: "5px",
-                                        marginTop: "15px",
-                                        margin: "10px",
-                                      }}
-                                      className={
-                                        anw.key === item.answer_key
-                                          ? styles.answer
-                                          : ""
-                                      }
-                                    >
-                                      <p
-                                        style={{
-                                          padding: "5px",
-                                          marginTop: "5px",
-                                        }}
-                                      >
-                                        {anw.key} . {anw.option}
-                                      </p>
-                                    </Card>
+                                    <div className="d-flex flex-row ">
+                                      <div className="mt-6">
+                                        {anw.image !== "" ? (
+                                          <Image
+                                            src={
+                                              process.env
+                                                .END_POINT_API_IMAGE_SUBVIT +
+                                              anw.image
+                                            }
+                                            alt=""
+                                            width={40}
+                                            height={40}
+                                          />
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div style={{ width: "100%" }}>
+                                        <Card
+                                          onClick={() => setOpen(true)}
+                                          style={{
+                                            padding: "5px",
+                                            marginTop: "15px",
+                                            margin: "10px",
+                                          }}
+                                          className={
+                                            anw.key === item.answer_key
+                                              ? styles.answer
+                                              : ""
+                                          }
+                                        >
+                                          <p
+                                            style={{
+                                              padding: "5px",
+                                              marginTop: "5px",
+                                            }}
+                                          >
+                                            {anw.key} . {anw.option}
+                                          </p>
+                                        </Card>
+                                      </div>
+                                    </div>
                                   </>
                                 );
                               })}

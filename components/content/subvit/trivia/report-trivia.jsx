@@ -111,8 +111,8 @@ const ReportTrivia = ({ token }) => {
             value={trivia?.data?.total_peserta}
             titleValue=""
             title="Total Peserta"
-            publishedVal=""
-            routePublish={() => handlePublish("")}
+            publishedVal="total-peserta"
+            routePublish={() => handlePublish("total-peserta")}
           />
           <CardPage
             background="bg-secondary"
@@ -267,7 +267,7 @@ const ReportTrivia = ({ token }) => {
                                     {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">
-                                    {row.total_workmanship_time}
+                                    {row.total_workmanship_time} Menit
                                   </p>
                                 </div>
                               </td>

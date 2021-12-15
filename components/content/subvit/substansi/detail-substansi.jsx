@@ -37,6 +37,8 @@ const DetailSubstansi = ({ token }) => {
     (state) => state.allSubtanceQuestionType
   );
 
+  console.log(subtance_question_type);
+
   let { page = 1, id } = router.query;
   page = Number(page);
 

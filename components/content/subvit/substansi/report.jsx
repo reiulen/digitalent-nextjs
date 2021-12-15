@@ -195,8 +195,8 @@ const ListSubstansi = ({ token }) => {
             value={subtance ? subtance.data.total_peserta : 0}
             titleValue=""
             title="Total Peserta"
-            publishedVal={null}
-            routePublish={() => handlePublish("")}
+            publishedVal={"total-peserta"}
+            routePublish={() => handlePublish("total-peserta")}
           />
           <CardPage
             background="bg-secondary"
