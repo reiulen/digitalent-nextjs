@@ -93,7 +93,9 @@ const TambahPage = ({ token }) => {
   const [ktpName, setKtpName] = useState(allDetailPeserta.data.data.File_ktp);
   const [ktpBase, setKtpBase] = useState(allDetailPeserta.data.data.File_ktp);
   const [ijazahName, setIjazahName] = useState(
-    allDetailPeserta.data.data.ijasah === "" ? null : allDetailPeserta.data.data.ijasah
+    allDetailPeserta.data.data.ijasah === ""
+      ? null
+      : allDetailPeserta.data.data.ijasah
   );
   const [ijazahBase, setIjazahBase] = useState(
     allDetailPeserta.data.data.ijasah
@@ -960,10 +962,9 @@ const TambahPage = ({ token }) => {
                         placeholder="Masukkan Kode Pos Domisili"
                         value={kodePost}
                         onChange={(e) => {
-                          if(e.target.value.length === 6){
-                            setKodePost(kodePost)
-                          }else{
-
+                          if (e.target.value.length === 6) {
+                            setKodePost(kodePost);
+                          } else {
                             setKodePost(e.target.value);
                           }
                         }}
@@ -1011,7 +1012,7 @@ const TambahPage = ({ token }) => {
                 </h3>
                 <div className="form-group">
                   <label>KTP</label>
-                  <div className="input-group">
+                  <div className="d-flex">
                     <div className="custom-file">
                       <input
                         // onFocus={() => setError({ ...error, agency_logo: "" })}
@@ -1030,7 +1031,7 @@ const TambahPage = ({ token }) => {
                         ktpName,
                         "required",
                         {
-                          className: "text-danger",
+                          className: "text-danger mt-5",
                         }
                       )}
 
@@ -1046,35 +1047,32 @@ const TambahPage = ({ token }) => {
                 </div>
                 <div className="form-group">
                   <label>Ijazah</label>
-                  <div className="input-group">
+                  <div className="d-flex">
                     <div className="custom-file">
                       <input
-                        // onFocus={() => setError({ ...error, agency_logo: "" })}
-                        value={ijazahName}
                         onChange={(e) => onIjasahHandler(e)}
                         type="file"
                         name="logo"
-                        className="custom-file-input cursor-pointer"
-                        id="inputGroupFile04"
+                        className="custom-file-input"
                         accept="image/png,image/jpg"
                         onBlur={(e) => {
                           simpleValidator.current.showMessageFor("ijazahName");
                         }}
                       />
-                      {simpleValidator.current.message(
-                        "ijazahName",
-                        ijazahName,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
 
                       <label
                         className="custom-file-label"
                         htmlFor="inputGroupFile04"
                       >
                         {ijazahName}
+                      </label>
+                      <label style={{ marginTop: "15px" }}>
+                        {simpleValidator.current.message(
+                          "Ijasah",
+                          ijazahName,
+                          "required",
+                          { className: "text-danger" }
+                        )}
                       </label>
                     </div>
                   </div>
