@@ -141,7 +141,7 @@ const TambahPage = ({ token }) => {
 
     today = yyyy + "-" + mm + "-" + dd;
 
-    document.getElementById("setTodaysDate").setAttribute("max", today);
+    document.getElementById("setTodaysDate")?.setAttribute("max", today);
   };
 
   const optionKabupaten = dataKabupaten.data?.map((item) => {
@@ -372,10 +372,10 @@ const TambahPage = ({ token }) => {
     <PageWrapper>
       <div className="row">
         {!router.query.ubah_pelatihan_id && (
-          <div className="col-12 col-xl-3">
+          <div className="col-12 col-lg-3 col-xl-3">
             <div
               className="card card-custom card-stretch gutter-b px-10 py-12"
-              style={{ height: "470px" }}
+              style={{ height: "480px" }}
             >
               <div className="form-group" style={{ maxWidth: "19rem" }}>
                 <div>
@@ -488,7 +488,7 @@ const TambahPage = ({ token }) => {
         )}
 
         {sideBar && !router.query.ubah_pelatihan_id && (
-          <div className="col-12 col-xl-9">
+          <div className="col-12 col-lg-9 col-xl-9">
             <div className="card card-custom card-stretch gutter-b px-4 px-sm-8 py-4">
               <div className="card-header border-0">
                 <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
