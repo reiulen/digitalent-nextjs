@@ -29,9 +29,9 @@ const DetailDokumenKerjasama = ({ token }) => {
             },
           }
         );
-        setPdfFIle(data.data.document_file);
+        setPdfFIle(data?.data?.document_file);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error")
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
       }
     }
 
@@ -88,9 +88,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Tanggal
               </label>
               <p className="fz-16">
-                {allCooperationUser.cooperationById.length === 0
+                {allCooperationUser?.cooperationById.length === 0
                   ? ""
-                  : allCooperationUser.cooperationById.data.submission_date}
+                  : allCooperationUser?.cooperationById?.data?.submission_date}
               </p>
 
               <label
@@ -101,9 +101,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Judul kerjasama
               </label>
               <p className="fz-16">
-                {allCooperationUser.cooperationById.length === 0
+                {allCooperationUser?.cooperationById.length === 0
                   ? ""
-                  : allCooperationUser.cooperationById.data.title}
+                  : allCooperationUser?.cooperationById?.data?.title}
               </p>
 
               <label
@@ -114,9 +114,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Kategori kerjasama
               </label>
               <p className="fz-16">
-                {allCooperationUser.cooperationById.length === 0
+                {allCooperationUser?.cooperationById.length === 0
                   ? ""
-                  : allCooperationUser.cooperationById.data.cooperation_category
+                  : allCooperationUser?.cooperationById?.data?.cooperation_category
                       .name}
               </p>
 
@@ -128,20 +128,20 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Periode Kerjasama
               </label>
               <p className="fz-16">
-                {allCooperationUser.cooperationById.length === 0
+                {allCooperationUser?.cooperationById.length === 0
                   ? ""
-                  : allCooperationUser.cooperationById.data.period}
+                  : allCooperationUser?.cooperationById?.data?.period}
                 &nbsp; Tahun (
-                {allCooperationUser.cooperationById.length === 0
+                {allCooperationUser?.cooperationById?.length === 0
                   ? ""
                   : moment(
-                      allCooperationUser.cooperationById.data.period_date_start
+                      allCooperationUser?.cooperationById?.data?.period_date_start
                     ).format("DD MMMM YYYY")}
                 &nbsp;-&nbsp;
-                {allCooperationUser.cooperationById.length === 0
+                {allCooperationUser?.cooperationById.length === 0
                   ? ""
                   : moment(
-                      allCooperationUser.cooperationById.data.period_date_end
+                      allCooperationUser?.cooperationById?.data?.period_date_end
                     ).format("DD MMMM YYYY")}
                 )
               </p>
@@ -156,9 +156,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                     Nomor Perjanjian Lembaga
                   </label>
                   <p className="fz-16">
-                    {allCooperationUser.cooperationById.length === 0
+                    {allCooperationUser?.cooperationById.length === 0
                       ? ""
-                      : allCooperationUser.cooperationById.data
+                      : allCooperationUser?.cooperationById?.data
                           .agreement_number_partner}
                   </p>
                 </div>
@@ -171,9 +171,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                     Nomor Perjanjian KemKominfo
                   </label>
                   <p className="fz-16">
-                    {allCooperationUser.cooperationById.length === 0
+                    {allCooperationUser?.cooperationById.length === 0
                       ? ""
-                      : allCooperationUser.cooperationById.data
+                      : allCooperationUser?.cooperationById?.data
                           .agreement_number_kemkominfo}
                   </p>
                 </div>
@@ -187,9 +187,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Tanggal Penandatanganan
               </label>
               <p className="fz-16">
-                {allCooperationUser.cooperationById.length === 0
+                {allCooperationUser?.cooperationById.length === 0
                   ? ""
-                  : allCooperationUser.cooperationById.data.signing_date}
+                  : allCooperationUser?.cooperationById?.data?.signing_date}
               </p>
 
               <label
@@ -222,13 +222,13 @@ const DetailDokumenKerjasama = ({ token }) => {
 
               {/* start loop */}
 
-              {allCooperationUser.cooperationById.length === 0 ? (
+              {allCooperationUser?.cooperationById.length === 0 ? (
                 ""
-              ) : allCooperationUser.cooperationById.data.cooperation_category
-                  .data_content.cooperation_form === "-" ? (
+              ) : allCooperationUser?.cooperationById?.data?.cooperation_category
+                  .data_content?.cooperation_form === "-" ? (
                 <h1 className="my-4">Data kerja sama tidak ada</h1>
               ) : (
-                allCooperationUser.cooperationById.data.cooperation_category.data_content.map(
+                allCooperationUser?.cooperationById?.data?.cooperation_category?.data_content?.map(
                   (items, i) => {
                     return (
                       <div className="form-group" key={i}>

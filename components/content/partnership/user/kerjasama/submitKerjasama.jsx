@@ -51,7 +51,7 @@ const DetailDokumenKerjasama = ({ token }) => {
         AllCooperation: "Kerjasama form tidak boleh kosong",
       });
     } else {
-      let errorAllCooperation = AllCooperation.map((items) => {
+      let errorAllCooperation = AllCooperation?.map((items) => {
         if (!items.cooperation) {
           isError = true;
           return { ...items, error: `Harus isi ${items.cooperation_form}` };

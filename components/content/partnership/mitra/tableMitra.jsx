@@ -239,15 +239,24 @@ const Table = ({ token }) => {
               <div className="col-12 col-md-4 col-xl-8 ">
                 <div className="d-flex align-items-center justify-content-md-end justify-content-start mt-5  mt-md-2">
                   {/* disini sortir modal */}
-
-                  <button
-                    type="button"
-                    onClick={() => dispatch(exportFileCSV(token))}
-                    className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
-                    style={{ width: "max-content" }}
-                  >
-                    Export .xlsx
-                  </button>
+                  
+                  {
+                    permission ? 
+                      permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                        <button
+                          type="button"
+                          onClick={() => dispatch(exportFileCSV(token))}
+                          className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
+                          style={{ width: "max-content" }}
+                        >
+                          Export .xlsx
+                        </button>
+                      :
+                        null
+                    :
+                      null
+                  }
+                  
                 </div>
               </div>
             </div>
@@ -333,6 +342,12 @@ const Table = ({ token }) => {
                                   onChange={(e) =>
                                     changeListStatus(token, e, item.id)
                                   }
+                                  disabled={
+                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
+                                      false
+                                    :
+                                      true
+                                  }
                                 >
                                   <option value="1">Aktif</option>
                                   <option value="0">Tidak Aktif</option>
@@ -353,6 +368,12 @@ const Table = ({ token }) => {
                                   key={index}
                                   onChange={(e) =>
                                     changeListStatus(token, e, item.id)
+                                  }
+                                  disabled={
+                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
+                                      false
+                                    :
+                                      true
                                   }
                                 >
                                   <option value="0">Tidak Aktif</option>

@@ -565,6 +565,12 @@ const Table = ({ token }) => {
                                       className="form-control remove-icon-default dropdown-arrows-green"
                                       key={index}
                                       onChange={(e) => changeListStatus(e, items.id, items.status.name)}
+                                      disabled={
+                                        permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                          false
+                                        :
+                                          true
+                                      }
                                     >
                                       <option value="1">
                                         {/* {items.status.name} */}
@@ -582,6 +588,12 @@ const Table = ({ token }) => {
                                       className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
                                       key={index}
                                       onChange={(e) => changeListStatus(e, items.id, items.status.name)}
+                                      disabled={
+                                        permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                          false
+                                        :
+                                          true
+                                      }
                                     >
                                       <option value="2">Tidak Aktif</option>
                                       <option value="1">Aktif</option>
@@ -602,7 +614,19 @@ const Table = ({ token }) => {
                                   </div>
                                 ) : items.status.name === "pengajuan-pembahasan" ? (
                                   <div className="position-relative w-max-content">
-                                    <select name="" id="" className="form-control remove-icon-default dropdown-arrows-blue pr-10" key={index} onChange={(e) => changeListStatus(e, items.id)}>
+                                    <select 
+                                      name="" 
+                                      id="" 
+                                      className="form-control remove-icon-default dropdown-arrows-blue pr-10" 
+                                      key={index} 
+                                      onChange={(e) => changeListStatus(e, items.id)}
+                                      disabled={
+                                        permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                                          false
+                                        :
+                                          true
+                                      }
+                                    >
                                       <option value="5">Pengajuan-Pembahasan</option>
                                       <option value="6">Pengajuan-Selesai</option>
                                     </select>
