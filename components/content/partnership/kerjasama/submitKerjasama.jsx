@@ -122,29 +122,28 @@ const SubmitKerjasama = ({ token }) => {
 						formData.append(`cooperation_form_content[${i}]`, item);
 					});
 
-					try {
-						let { data } = await axios.post(
-							`${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal`,
-							formData,
-							{
-								headers: {
-									authorization: `Bearer ${token}`,
-									Permission: Cookies.get("token_permission"),
-								},
-							}
-						);
-						sessionStorage.removeItem("dataBefore");
-						router.push({
-							pathname: `/partnership/kerjasama/detail-kerjasama`,
-							query: { id: data.data.id, success: true },
-						});
-					} catch (error) {
-						Swal.fire("Gagal", `${error.response.data.message}`, "error");
-					}
-				}
-			});
-		}
-	};
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal`,
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            sessionStorage.removeItem("dataBefore");
+            router.push({
+              pathname: `/partnership/kerjasama/detail-kerjasama`,
+              query: { id: data?.data?.id, success: true },
+            });
+          } catch (error) {
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+          }
+        }
+      });
+    }
+  };
 
 	const [newDate, setNewDate] = useState("");
 
@@ -185,197 +184,195 @@ const SubmitKerjasama = ({ token }) => {
 	useEffect(() => {
 		let datas = JSON.parse(sessionStorage.getItem("dataBefore"));
 
-		setInstituion_name(datas[0].institution_name);
-		setDate(datas[0].date);
-		setTitle(datas[0].title);
-		setPeriod(datas[0].period);
-		setPeriodUnit(datas[0].periodUnit);
-		setCooperationC_id(datas[0].cooperationC_id);
-		setAllCooperation(datas[0].AllCooperation);
-		setPeriodValue(datas[0].period);
-		setPeriodUnitValue(datas[0].periodUnit);
-	}, []);
+    setInstituion_name(datas[0]?.institution_name);
+    setDate(datas[0]?.date);
+    setTitle(datas[0]?.title);
+    setPeriod(datas[0]?.period);
+    setPeriodUnit(datas[0]?.periodUnit);
+    setCooperationC_id(datas[0]?.cooperationC_id);
+    setAllCooperation(datas[0]?.AllCooperation);
+    setPeriodValue(datas[0]?.period);
+    setPeriodUnitValue(datas[0]?.periodUnit);
+  }, []);
 
-	return (
-		<PageWrapper>
-			<div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-				<div className="card card-custom card-stretch gutter-b">
-					<div className="card-header border-0">
-						<h3 className="card-title font-weight-bolder text-dark titles-1">
-							Dokumen Kerjasama
-						</h3>
-					</div>
-					<div className="card-body pt-0">
-						<form onSubmit={submit}>
-							<div className="form-group">
-								<label htmlFor="staticEmail" className="col-form-label">
-									Periode Kerjasama
-								</label>
-								<div className="row">
-									<div className="col-12 col-xl-6">
-										<div className="d-flex align-items-center position-relative datepicker-w mt-2">
-											<DatePicker
-												onFocus={() =>
-													setError({ ...error, period_date_start: "" })
-												}
-												className="form-search-date form-control cursor-pointer"
-												selected={startDate}
-												onChange={(date) => onChangePeriodeDateStart(date)}
-												selectsStart
-												value={period_date_start}
-												startDate={startDate}
-												endDate={endDate}
-												dateFormat="YYYY-MM-DD"
-												placeholderText="Mulai Tanggal"
-												// minDate={moment().toDate()}
-											/>
-											<IconCalender
-												className="right-center-absolute"
-												style={{ right: "10px" }}
-											/>
-										</div>
-										{error.period_date_start ? (
-											<p className="error-text">{error.period_date_start}</p>
-										) : (
-											""
-										)}
-									</div>
-									<div className="col-12 col-xl-6">
-										<div className="d-flex align-items-center position-relative datepicker-w mt-10 mt-xl-2 ">
-											<DatePicker
-												className="form-search-date form-control cursor-not-allowed"
-												selected={endDate}
-												onChange={(date) => setEndDate(date)}
-												disabled
-												selectsEnd
-												value={newDate}
-												startDate={startDate}
-												endDate={endDate}
-												minDate={moment().toDate()}
-												maxDate={addDays(startDate, 20)}
-												dateFormat="dd/MM/yyyy"
-												placeholderText="Sampai Tanggal"
-												isDisabled={true}
-											/>
-											<IconCalender
-												className="right-center-absolute"
-												style={{ right: "10px" }}
-											/>
-										</div>
-									</div>
-								</div>
-							</div>
+  return (
+    <PageWrapper>
+      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        <div className="card card-custom card-stretch gutter-b">
+          <div className="card-header border-0">
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
+              Dokumen Kerjasama
+            </h3>
+          </div>
+          <div className="card-body pt-0">
+            <form onSubmit={submit}>
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Periode Kerjasama
+                </label>
+                <div className="row">
+                  <div className="col-12 col-xl-6">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                      <DatePicker
+                        onFocus={() =>
+                          setError({ ...error, period_date_start: "" })
+                        }
+                        className="form-search-date form-control cursor-pointer"
+                        selected={startDate}
+                        onChange={(date) => onChangePeriodeDateStart(date)}
+                        selectsStart
+                        value={period_date_start}
+                        startDate={startDate}
+                        endDate={endDate}
+                        dateFormat="YYYY-MM-DD"
+                        placeholderText="Mulai Tanggal"
+                        // minDate={moment().toDate()}
+                      />
+                      <IconCalender
+                        className="right-center-absolute"
+                        style={{ right: "10px" }}
+                      />
+                    </div>
+                    {error?.period_date_start ? (
+                      <p className="error-text">{error?.period_date_start}</p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="col-12 col-xl-6">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-10 mt-xl-2 ">
+                      <DatePicker
+                        className="form-search-date form-control cursor-not-allowed"
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        disabled
+                        selectsEnd
+                        value={newDate}
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={moment().toDate()}
+                        maxDate={addDays(startDate, 20)}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Sampai Tanggal"
+                        isDisabled={true}
+                        
+                      />
+                      <IconCalender
+                        className="right-center-absolute"
+                        style={{ right: "10px" }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-							<div className="form-group">
-								<label htmlFor="staticEmail" className="col-form-label">
-									Nomor Perjanjian Lembaga
-								</label>
-								<input
-									onFocus={() =>
-										setError({ ...error, agreement_number_partner: "" })
-									}
-									onChange={(e) => setAgreement_number_partner(e.target.value)}
-									type="text"
-									className="form-control"
-									placeholder="Masukkan Nomor Perjanjian Lembaga"
-								/>
-								{error.agreement_number_partner ? (
-									<p className="error-text">{error.agreement_number_partner}</p>
-								) : (
-									""
-								)}
-							</div>
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Nomor Perjanjian Lembaga
+                </label>
+                <input
+                  onFocus={() =>
+                    setError({ ...error, agreement_number_partner: "" })
+                  }
+                  onChange={(e) => setAgreement_number_partner(e.target.value)}
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Nomor Perjanjian Lembaga"
+                />
+                {error?.agreement_number_partner ? (
+                  <p className="error-text">{error?.agreement_number_partner}</p>
+                ) : (
+                  ""
+                )}
+              </div>
 
-							<div className="form-group">
-								<label htmlFor="staticEmail" className="col-form-label">
-									Nomor Perjanjian Kemkominfo
-								</label>
-								<input
-									onFocus={() =>
-										setError({ ...error, agreement_number_kemkominfo: "" })
-									}
-									onChange={(e) =>
-										setAgreement_number_kemkominfo(e.target.value)
-									}
-									type="text"
-									className="form-control"
-									placeholder="Masukkan Nomor Perjanjian Kemkominfo"
-								/>
-								{error.agreement_number_kemkominfo ? (
-									<p className="error-text">
-										{error.agreement_number_kemkominfo}
-									</p>
-								) : (
-									""
-								)}
-							</div>
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Nomor Perjanjian Kemkominfo
+                </label>
+                <input
+                  onFocus={() =>
+                    setError({ ...error, agreement_number_kemkominfo: "" })
+                  }
+                  onChange={(e) =>
+                    setAgreement_number_kemkominfo(e.target.value)
+                  }
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Nomor Perjanjian Kemkominfo"
+                />
+                {error?.agreement_number_kemkominfo ? (
+                  <p className="error-text">
+                    {error?.agreement_number_kemkominfo}
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
 
-							<div className="form-group">
-								<label htmlFor="staticEmail" className="col-form-label">
-									Tanggal Tanda Tangan
-								</label>
-								<div
-									className="d-flex align-items-center position-relative datepicker-w w-100"
-									style={{ zIndex: "10" }}
-								>
-									<DatePicker
-										className="form-search-date form-control-sm form-control cursor-pointer"
-										selected={endDate}
-										onFocus={() => setError({ ...error, signing_date: "" })}
-										onChange={(date) =>
-											setSigning_date(moment(date).format("YYYY-MM-DD"))
-										}
-										value={signing_date}
-										selectsEnd
-										startDate={startDate}
-										endDate={endDate}
-										// minDate={moment().toDate()}
-										maxDate={addDays(startDate, 20)}
-										dateFormat="dd/MM/yyyy"
-										placeholderText="Pilih Tanggal"
-									/>
-									<IconCalender
-										className="right-center-absolute"
-										style={{ right: "10px" }}
-									/>
-								</div>
-								{error.signing_date ? (
-									<p className="error-text">{error.signing_date}</p>
-								) : (
-									""
-								)}
-							</div>
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Tanggal Tanda Tangan
+                </label>
+                <div className="d-flex align-items-center position-relative datepicker-w w-100" style={{zIndex:"10"}}>
+                  <DatePicker
+                    className="form-search-date form-control-sm form-control cursor-pointer"
+                    selected={endDate}
+                    onFocus={() => setError({ ...error, signing_date: "" })}
+                    onChange={(date) =>
+                      setSigning_date(moment(date).format("YYYY-MM-DD"))
+                    }
+                    value={signing_date}
+                    selectsEnd
+                    startDate={startDate}
+                    endDate={endDate}
+                    // minDate={moment().toDate()}
+                    maxDate={addDays(startDate, 20)}
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="Pilih Tanggal"
+                  />
+                  <IconCalender
+                    className="right-center-absolute"
+                    style={{ right: "10px" }}
+                  />
+                </div>
+                {error?.signing_date ? (
+                  <p className="error-text">{error?.signing_date}</p>
+                ) : (
+                  ""
+                )}
+              </div>
 
-							<div className="form-group">
-								<label htmlFor="staticEmail" className="col-form-label">
-									Unggah Dokumen Kerjasama
-								</label>
-								<div className="input-group">
-									<div className="custom-file">
-										<input
-											onFocus={() => setError({ ...error, document: "" })}
-											type="file"
-											name="gambar"
-											className="custom-file-input cursor-pointer"
-											id="inputGroupFile04"
-											accept=".pdf"
-											onChange={handlePdfFileChange}
-										/>
-										<label
-											className="custom-file-label text-muted"
-											htmlFor="inputGroupFile04"
-										>
-											{NamePDF ? NamePDF : "Belum ada file"}
-										</label>
-									</div>
-								</div>
-								{error.document ? (
-									<p className="error-text">{error.document}</p>
-								) : (
-									""
-								)}
-							</div>
-							{pdfFileError && <div>{pdfFileError}</div>}
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Unggah Dokumen Kerjasama
+                </label>
+                <div className="input-group">
+                  <div className="custom-file">
+                    <input
+                      onFocus={() => setError({ ...error, document: "" })}
+                      type="file"
+                      name="gambar"
+                      className="custom-file-input cursor-pointer"
+                      id="inputGroupFile04"
+                      accept=".pdf"
+                      onChange={handlePdfFileChange}
+                    />
+                    <label
+                      className="custom-file-label text-muted"
+                      htmlFor="inputGroupFile04"
+                    >
+                      {NamePDF ? NamePDF : "Belum ada file"}
+                    </label>
+                  </div>
+                </div>
+                {error?.document ? (
+                  <p className="error-text">{error?.document}</p>
+                ) : (
+                  ""
+                )}
+              </div>
+              {pdfFileError && <div>{pdfFileError}</div>}
 
 							<div
 								className={`${

@@ -57,7 +57,7 @@ const RevisiKerjasama = ({ token }) => {
             query: { successTerima: true },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error").then(
             () => {
               router.push("/partnership/kerjasama");
             }
@@ -96,7 +96,7 @@ const RevisiKerjasama = ({ token }) => {
             query: { successReject: true },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error").then(
             () => {
               router.push("/partnership/kerjasama");
             }
@@ -141,7 +141,7 @@ const RevisiKerjasama = ({ token }) => {
               query: { successMakeREvisi: true },
             });
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -160,14 +160,14 @@ const RevisiKerjasama = ({ token }) => {
             },
           }
         );
-        setPeriod_start(data.data.period_date_start);
-        setPeriod_end(data.data.period_date_end);
-        setNo_perjanjianLembaga(data.data.agreement_number_partner);
-        setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
-        setTgl_ttd(data.data.signing_date);
-        setDokument(data.data.document);
+        setPeriod_start(data?.data?.period_date_start);
+        setPeriod_end(data?.data?.period_date_end);
+        setNo_perjanjianLembaga(data?.data?.agreement_number_partner);
+        setNo_perjanjianKoninfo(data?.data?.agreement_number_kemkominfo);
+        setTgl_ttd(data?.data?.signing_date);
+        setDokument(data?.data?.document);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
       }
     }
     setDataSingle(router.query.id, token);
