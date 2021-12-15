@@ -86,7 +86,8 @@ const Sidebar = ({ session }) => {
     const replacedPath = pathRoute.substring(0, 0) + "" + pathRoute.substring(0 + 1);
     const arrPath = replacedPath.split('/');
 
-
+    console.log(arrPath);
+    
     if (menu) {
 
       menu.map((row, index) => {
@@ -100,7 +101,7 @@ const Sidebar = ({ session }) => {
           row.selected = true;
 
           if(session?.user?.user?.data?.user?.roles[0] !== "mitra") {
-
+              if(arrPath.length > 1){
                 row.child.map((rows, indexx) => {
 
                   const named = rows.href;
@@ -111,7 +112,7 @@ const Sidebar = ({ session }) => {
 
                       rows.selected = true;
                       
-                      if(rows.child.length > 0 && arrPath[2]){
+                      if(rows.child.length > 0 && arrPath.length > 2){
 
                         
                         rows.child.map((rowss, indexx) => {
@@ -128,6 +129,8 @@ const Sidebar = ({ session }) => {
 
                     }
                 });
+              }
+                
           }
         }
       
@@ -190,7 +193,7 @@ const Sidebar = ({ session }) => {
 
   const handleOpenMenu = (e, i, condition) => {
     const pathRoute = router.route;
-    
+
     const splitRouteToMakingActive = pathRoute.split("/");
     if (condition != null) {
       if (splitRouteToMakingActive[1]) {
