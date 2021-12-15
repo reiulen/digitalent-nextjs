@@ -496,7 +496,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         metode_pelatihan: metodeTraining,
         alamat: address,
         provinsi: province !== "" ? province.label.toString() : "",
-        kabupaten: city !== "" ? city.value.toString() : "",
+        kabupaten: city !== "" ? city.label.toString() : "",
         umum,
         tuna_netra,
         tuna_rungu,

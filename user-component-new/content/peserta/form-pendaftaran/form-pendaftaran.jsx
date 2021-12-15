@@ -431,6 +431,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   return (
     <>
       <Card.Body>
+        {console.log(dataPendaftaran)}
         <form onSubmit={onSubmit}>
           <h3 className="font-weight-bolder pb-5 pt-4">{title}</h3>
           <div className="row">

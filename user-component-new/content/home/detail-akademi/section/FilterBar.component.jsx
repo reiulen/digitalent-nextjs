@@ -135,7 +135,7 @@ const FilterBar = ({ session, funcSetPage }) => {
       akademi_id: akademiId !== null ? akademiId.value : id,
       tema_id: temaArr.join(","),
       kota: kota !== null ? kota.label : null,
-      tipe_pelatihan: tipePelatihan !== null ? tipePelatihan.value : null,
+      tipe_pelatihan: tipePelatihan !== null ? tipePelatihan.label : null,
     };
 
     if (data && data.akademi_id !== null) {
