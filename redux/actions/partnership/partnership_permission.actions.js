@@ -13,8 +13,8 @@ export const getPartnershipPermissions =
     try {
       const config = {
         headers: {
-          Authorization: "Bearer " + token,
-          Permission: permission,
+          Authorization: "Bearer " + token
+          // Permission: permission,
         },
       };
 
@@ -24,10 +24,10 @@ export const getPartnershipPermissions =
         payload: data,
       });
     } catch (error) {
-      dispatch({
-        type: FETCH_PARTNERSHIP_PERMISSION_FAIL,
-        payload: error.response.data.message,
-      });
+      // dispatch({
+      //   type: FETCH_PARTNERSHIP_PERMISSION_FAIL,
+      //   payload: error.response.data.message,
+      // });
     }
   };
 
