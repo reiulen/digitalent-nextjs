@@ -153,7 +153,7 @@ const Table = ({ token }) => {
                     <tbody>
                       {allRoles.data.list_role.length === 0 ? (
                         <td className="align-middle text-center" colSpan="5">
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         allRoles.data.list_role.map((items, index) => {
@@ -198,7 +198,11 @@ const Table = ({ token }) => {
                                     <Link
                                       href={`/site-management/role/ubah-role/${items.id}`}
                                     >
-                                      <a className={`btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3 ${items.type === 1 ? "" : "d-none"}`}>
+                                      <a
+                                        className={`btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3 ${
+                                          items.type === 1 ? "" : "d-none"
+                                        }`}
+                                      >
                                         <IconPencil width="16" height="16" />
                                         <div className="text-hover-show-hapus">
                                           Ubah
@@ -249,59 +253,61 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row px-4">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={allRoles.page}
-                    itemsCountPerPage={allRoles.data.perPage}
-                    totalItemsCount={allRoles.data.total}
-                    pageRangeDisplayed={2}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
+              {allRoles.data.total > 5 && (
+                <div className="row px-4">
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={allRoles.page}
+                      itemsCountPerPage={allRoles.data.perPage}
+                      totalItemsCount={allRoles.data.total}
+                      pageRangeDisplayed={2}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
 
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control cursor-pointer pr-2"
-                        id="exampleFormControlSelect2"
-                        defaultValue=""
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) =>
-                          dispatch(limitCooporation(e.target.value, token))
-                        }
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data {allRoles.data && allRoles.data.total} List
-                        Data
-                      </p>
+                  <div className="table-total ml-auto mr-4">
+                    <div className="row mt-4">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control cursor-pointer pr-2"
+                          id="exampleFormControlSelect2"
+                          defaultValue=""
+                          style={{
+                            width: "63px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) =>
+                            dispatch(limitCooporation(e.target.value, token))
+                          }
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data {allRoles.data && allRoles.data.total} List
+                          Data
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

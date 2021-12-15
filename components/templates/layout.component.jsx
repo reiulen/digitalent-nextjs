@@ -47,10 +47,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
   const [sideBar, setSidebar] = useState([])
   const handlerLogout = () => {
     signOut();
-    localStorage.removeItem("sidebar")
-    localStorage.removeItem("token-permission")
-    localStorage.removeItem("permissions")
-    localStorage.removeItem("trainings")
+    localStorage.clear();
     // {
     //   callbackUrl: `${window.location.origin}/login/admin`,
     // } LAGI DEVELOP JANGAN DIHAPUS

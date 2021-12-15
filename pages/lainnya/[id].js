@@ -11,6 +11,7 @@ import {
 
 import {getDetailPages} from '../../redux/actions/site-management/settings/page.actions'
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
+import {getBerandaFooter} from '../../redux/actions/beranda/beranda.actions'
 
 const Berita = dynamic(() =>
   import("../../user-component-new/content/home/lainnya/lainnya")
@@ -48,6 +49,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDetailPages(params.id)
       );
+
+      await store.dispatch(getBerandaFooter());
 
       return {
         props: {

@@ -334,8 +334,7 @@ const Table = ({ token }) => {
                   </table>
                 )}
               </div>
-
-              <div className="row px-4">
+{allAdminSite.data.total > 5 &&  <div className="row px-4">
                 <div className="table-pagination">
                   <Pagination
                     activePage={allAdminSite.page}
@@ -387,7 +386,8 @@ const Table = ({ token }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>}
+             
             </div>
           </div>
         </div>

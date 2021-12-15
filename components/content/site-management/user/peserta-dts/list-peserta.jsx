@@ -158,7 +158,7 @@ const Table = ({ token }) => {
                 </table>
               </div>
 
-              {allListPeserta?.data?.data?.total >= 5 && allListPeserta?.data?.data?.list?.length > 4 ? (
+              {allListPeserta?.data?.data?.total >= 5 ? (
                 <div className="row px-4">
                   <div
                     className="table-pagination table-pagination pagination-custom col-12 col-md-6"
