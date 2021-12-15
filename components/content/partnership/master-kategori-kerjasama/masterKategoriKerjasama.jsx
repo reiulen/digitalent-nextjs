@@ -61,11 +61,11 @@ const Table = ({ token }) => {
     dispatch(fetchAllMKCooporation(token));
   }, [
     dispatch,
-    allMKCooporation.keyword,
-    allMKCooporation.limit,
-    allMKCooporation.page,
-    allMKCooporation.status_delete,
-    allMKCooporation.status_list,
+    allMKCooporation?.keyword,
+    allMKCooporation?.limit,
+    allMKCooporation?.page,
+    allMKCooporation?.status_delete,
+    allMKCooporation?.status_list,
     token
   ]);
 
@@ -170,7 +170,7 @@ const Table = ({ token }) => {
             </div>
             <div className="table-page mt-10 mt-sm-5">
               <div className="table-responsive">
-                {allMKCooporation.status === "process" ? (
+                {allMKCooporation?.status === "process" ? (
                   <LoadingTable />
                 ) : (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -193,8 +193,8 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allMKCooporation.mk_cooporation.data &&
-                      allMKCooporation.mk_cooporation.data
+                      {allMKCooporation?.mk_cooporation?.data &&
+                      allMKCooporation?.mk_cooporation?.data
                         .list_cooperation_categories.length === 0 ? (
                         <tr>
                           <td colSpan="4" className="text-center">
@@ -202,23 +202,23 @@ const Table = ({ token }) => {
                           </td>
                         </tr>
                       ) : (
-                        allMKCooporation.mk_cooporation.data &&
-                        allMKCooporation.mk_cooporation.data.list_cooperation_categories.map(
+                        allMKCooporation?.mk_cooporation?.data &&
+                        allMKCooporation?.mk_cooporation?.data?.list_cooperation_categories?.map(
                           (cooperation_categorie, index) => {
                             return (
                               <tr key={index}>
                                 <td className="align-middle text-left">
-                                  {allMKCooporation.page === 1
+                                  {allMKCooporation?.page === 1
                                     ? index + 1
-                                    : (allMKCooporation.page - 1) *
-                                        allMKCooporation.limit +
+                                    : (allMKCooporation?.page - 1) *
+                                        allMKCooporation?.limit +
                                       (index + 1)}
                                 </td>
                                 <td className="align-middle text-left text-overflow-ens">
-                                  {cooperation_categorie.cooperation_categories}
+                                  {cooperation_categorie?.cooperation_categories}
                                 </td>
                                 <td className="align-middle text-left">
-                                  {allMKCooporation.mk_cooporation.length ===
+                                  {allMKCooporation?.mk_cooporation?.length ===
                                   0 ? (
                                     ""
                                   ) : (
@@ -229,7 +229,7 @@ const Table = ({ token }) => {
                                     >
                                       <p
                                         className={`my-auto ${
-                                          allMKCooporation.mk_cooporation.data
+                                          allMKCooporation?.mk_cooporation.data
                                             .list_cooperation_categories[index]
                                             .status === 0
                                             ? "status-div-red"
@@ -237,7 +237,7 @@ const Table = ({ token }) => {
                                         }`}
                                         style={{ width: "max-content" }}
                                       >
-                                        {allMKCooporation.mk_cooporation.data
+                                        {allMKCooporation?.mk_cooporation?.data
                                           .list_cooperation_categories[index]
                                           .status === 0
                                           ? "Tidak aktif"
@@ -256,7 +256,7 @@ const Table = ({ token }) => {
                                             className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
                                             onClick={() =>
                                               router.push(
-                                                `/partnership/master-kategori-kerjasama/${cooperation_categorie.id}`
+                                                `/partnership/master-kategori-kerjasama/${cooperation_categorie?.id}`
                                               )
                                             }
                                           >
@@ -300,7 +300,7 @@ const Table = ({ token }) => {
               <div className="row">
                 <div className="table-pagination paginate-cs col-12 col-md-8 overflow-auto">
                   <Pagination
-                    activePage={allMKCooporation.page}
+                    activePage={allMKCooporation?.page}
                     itemsCountPerPage={
                       allMKCooporation?.mk_cooporation?.data?.perPage
                     }

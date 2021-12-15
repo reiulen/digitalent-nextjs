@@ -134,7 +134,7 @@ const SubmitKerjasama = ({ token }) => {
             sessionStorage.removeItem("dataBefore");
             router.push({
               pathname: `/partnership/kerjasama/detail-kerjasama`,
-              query: { id: data.data.id, success: true },
+              query: { id: data?.data?.id, success: true },
             });
           } catch (error) {
             Swal.fire("Gagal", `${error.response.data.message}`, "error");
@@ -183,15 +183,15 @@ const SubmitKerjasama = ({ token }) => {
   useEffect(() => {
     let datas = JSON.parse(sessionStorage.getItem("dataBefore"));
 
-    setInstituion_name(datas[0].institution_name);
-    setDate(datas[0].date);
-    setTitle(datas[0].title);
-    setPeriod(datas[0].period);
-    setPeriodUnit(datas[0].periodUnit);
-    setCooperationC_id(datas[0].cooperationC_id);
-    setAllCooperation(datas[0].AllCooperation);
-    setPeriodValue(datas[0].period);
-    setPeriodUnitValue(datas[0].periodUnit);
+    setInstituion_name(datas[0]?.institution_name);
+    setDate(datas[0]?.date);
+    setTitle(datas[0]?.title);
+    setPeriod(datas[0]?.period);
+    setPeriodUnit(datas[0]?.periodUnit);
+    setCooperationC_id(datas[0]?.cooperationC_id);
+    setAllCooperation(datas[0]?.AllCooperation);
+    setPeriodValue(datas[0]?.period);
+    setPeriodUnitValue(datas[0]?.periodUnit);
   }, []);
 
   return (
@@ -232,8 +232,8 @@ const SubmitKerjasama = ({ token }) => {
                         style={{ right: "10px" }}
                       />
                     </div>
-                    {error.period_date_start ? (
-                      <p className="error-text">{error.period_date_start}</p>
+                    {error?.period_date_start ? (
+                      <p className="error-text">{error?.period_date_start}</p>
                     ) : (
                       ""
                     )}
@@ -278,8 +278,8 @@ const SubmitKerjasama = ({ token }) => {
                   className="form-control"
                   placeholder="Masukkan Nomor Perjanjian Lembaga"
                 />
-                {error.agreement_number_partner ? (
-                  <p className="error-text">{error.agreement_number_partner}</p>
+                {error?.agreement_number_partner ? (
+                  <p className="error-text">{error?.agreement_number_partner}</p>
                 ) : (
                   ""
                 )}
@@ -300,9 +300,9 @@ const SubmitKerjasama = ({ token }) => {
                   className="form-control"
                   placeholder="Masukkan Nomor Perjanjian Kemkominfo"
                 />
-                {error.agreement_number_kemkominfo ? (
+                {error?.agreement_number_kemkominfo ? (
                   <p className="error-text">
-                    {error.agreement_number_kemkominfo}
+                    {error?.agreement_number_kemkominfo}
                   </p>
                 ) : (
                   ""
@@ -335,8 +335,8 @@ const SubmitKerjasama = ({ token }) => {
                     style={{ right: "10px" }}
                   />
                 </div>
-                {error.signing_date ? (
-                  <p className="error-text">{error.signing_date}</p>
+                {error?.signing_date ? (
+                  <p className="error-text">{error?.signing_date}</p>
                 ) : (
                   ""
                 )}
@@ -365,8 +365,8 @@ const SubmitKerjasama = ({ token }) => {
                     </label>
                   </div>
                 </div>
-                {error.document ? (
-                  <p className="error-text">{error.document}</p>
+                {error?.document ? (
+                  <p className="error-text">{error?.document}</p>
                 ) : (
                   ""
                 )}

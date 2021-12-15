@@ -90,9 +90,9 @@ const RegisterMitra = () => {
   };
 
   useEffect(() => {
-    if (allAuthentication.status === "error") {
-      Swal.fire("Gagal", `${allAuthentication.errorRegister}`, "error");
-    } else if (allAuthentication.status === "success") {
+    if (allAuthentication?.status === "error") {
+      Swal.fire("Gagal", `${allAuthentication?.errorRegister}`, "error");
+    } else if (allAuthentication?.status === "success") {
       // jika sukses
       Swal.fire(
         "Berhasil Daftar",
@@ -112,8 +112,8 @@ const RegisterMitra = () => {
       });
     };
   }, [
-    allAuthentication.status,
-    allAuthentication.errorRegister,
+    allAuthentication?.status,
+    allAuthentication?.errorRegister,
     dispatch,
     router,
   ]);

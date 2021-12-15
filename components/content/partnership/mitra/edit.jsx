@@ -241,7 +241,7 @@ const EditMitra = ({ token }) => {
             );
             
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error")
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
           }
         }
       });
@@ -261,26 +261,26 @@ const EditMitra = ({ token }) => {
           },
         }
       );
-      setInstitution_name(data.data.institution_name);
+      setInstitution_name(data?.data?.institution_name);
 
-      setEmail(data.data.email);
+      setEmail(data?.data?.email);
       // tambah url logo
-      setImageview(data.data.agency_logo);
-      setWebsite(data.data.website);
-      setAddress(data.data.alamat);
+      setImageview(data?.data?.agency_logo);
+      setWebsite(data?.data?.website);
+      setAddress(data?.data?.alamat);
 
-      setIndonesia_provinces_id(data.data.province.id);
-      setDefaultValueProvince(data.data.province.name);
-      setDefaultValueProvinceID(data.data.province.id);
+      setIndonesia_provinces_id(data?.data?.province.id);
+      setDefaultValueProvince(data?.data?.province.name);
+      setDefaultValueProvinceID(data?.data?.province.id);
 
-      setIndonesia_cities_id(data.data.city.id);
-      setDefaultValueCitie(data.data.city.name);
-      setDefaultValueCitieID(data.data.city.id);
+      setIndonesia_cities_id(data?.data?.city.id);
+      setDefaultValueCitie(data?.data?.city.name);
+      setDefaultValueCitieID(data?.data?.city.id);
 
-      setPostal_code(data.data.postal_code);
-      setPic_name(data.data.pic_name);
-      setPic_contact_number(data.data.pic_contact_number);
-      setPic_email(data.data.pic_email);
+      setPostal_code(data?.data?.postal_code);
+      setPic_name(data?.data?.pic_name);
+      setPic_contact_number(data?.data?.pic_contact_number);
+      setPic_email(data?.data?.pic_email);
     } catch (error) {
       return;
     }
@@ -302,7 +302,7 @@ const EditMitra = ({ token }) => {
               }
           );
           let dataNewCitites = data.data.map((items) => {
-            return { ...items, label: items.name, value: items.id };
+            return { ...items, label: items?.name, value: items?.id };
           });
           dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
@@ -342,8 +342,8 @@ const EditMitra = ({ token }) => {
                   value={institution_name}
                   onChange={(e) => setInstitution_name(e.target.value)}
                 />
-                {error.institution_name ? (
-                  <p className="error-text">{error.institution_name}</p>
+                {error?.institution_name ? (
+                  <p className="error-text">{error?.institution_name}</p>
                 ) : (
                   ""
                 )}
@@ -398,64 +398,6 @@ const EditMitra = ({ token }) => {
                   Gambar Logo
                 </label>
                 {/* ketika ada upload gambar baru */}
-                {
-                  // !agency_logo ? (
-                  //   ""
-                  // ) : (
-                  //   <div
-                  //     data-toggle="modal"
-                  //     data-target="#exampleModalCenter"
-                  //     className="shadow-image-form cursor-pointer position-relative"
-                  //     style={{
-                  //       maxWidth: "168px",
-                  //       maxHeight: "168px",
-                  //       width: "168px",
-                  //       height: "168px",
-                  //     }}
-                  //   >
-                  //     <Image
-                  //       src={agency_logo}
-                  //       alt="Picture of the author"
-                  //       layout="fill"
-                  //       objectFit="fill"
-                  //     />
-                  //   </div>
-                  // )}
-                  
-                  // {/* read gambar yg ada from api */}
-                  // {agency_logo ? (
-                  //   ""
-                  // ) : !imageview ? (
-                  //   ""
-                  // ) : (
-                  //   <div
-                  //     data-toggle="modal"
-                  //     data-target="#exampleModalCenter"
-                  //     className="shadow-image-form cursor-pointer"
-                  //     style={{
-                  //       maxWidth: "168px",
-                  //       maxHeight: "168px",
-                  //       width: "168px",
-                  //       height: "168px",
-                  //     }}
-                  //   >
-                  //     <div
-                  //       className="w-100 h-100 position-relative"
-                  //       style={{ padding: "6px" }}
-                  //     >
-                  //       <Image
-                  //         src={
-                  //           process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
-                  //         }
-                  //         alt="images"
-                  //         layout="fill"
-                  //         objectFit="fill"
-                  //       />
-                  //     </div>
-                  //   </div>
-                  // )
-                }
-
                 {!agency_logo ? (
                   <div className="ml-4 row">
                     <figure
@@ -591,8 +533,8 @@ const EditMitra = ({ token }) => {
                   </div>
                 </div>
 
-                {error.agency_logo ? (
-                  <p className="error-text">{error.agency_logo}</p>
+                {error?.agency_logo ? (
+                  <p className="error-text">{error?.agency_logo}</p>
                 ) : (
                   ""
                 )}
@@ -610,8 +552,8 @@ const EditMitra = ({ token }) => {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                 />
-                {error.address ? (
-                  <p className="error-text">{error.address}</p>
+                {error?.address ? (
+                  <p className="error-text">{error?.address}</p>
                 ) : (
                   ""
                 )}
@@ -646,8 +588,8 @@ const EditMitra = ({ token }) => {
                       </button>
                     </div>
                   </div>
-                  {error.indonesia_provinces_id ? (
-                    <p className="error-text">{error.indonesia_provinces_id}</p>
+                  {error?.indonesia_provinces_id ? (
+                    <p className="error-text">{error?.indonesia_provinces_id}</p>
                   ) : (
                     ""
                   )}
@@ -689,8 +631,8 @@ const EditMitra = ({ token }) => {
                     </div>
                   </div>
 
-                  {error.indonesia_provinces_id ? (
-                    <p className="error-text">{error.indonesia_provinces_id}</p>
+                  {error?.indonesia_provinces_id ? (
+                    <p className="error-text">{error?.indonesia_provinces_id}</p>
                   ) : (
                     ""
                   )}
@@ -712,8 +654,8 @@ const EditMitra = ({ token }) => {
                       {defaultValueCitie}
                     </option>
                   </select>
-                  {error.indonesia_cities_id ? (
-                    <p className="error-text">{error.indonesia_cities_id}</p>
+                  {error?.indonesia_cities_id ? (
+                    <p className="error-text">{error?.indonesia_cities_id}</p>
                   ) : (
                     ""
                   )}
@@ -746,8 +688,8 @@ const EditMitra = ({ token }) => {
                     />
                   </div>
 
-                  {error.indonesia_cities_id ? (
-                    <p className="error-text">{error.indonesia_cities_id}</p>
+                  {error?.indonesia_cities_id ? (
+                    <p className="error-text">{error?.indonesia_cities_id}</p>
                   ) : (
                     ""
                   )}
@@ -766,8 +708,8 @@ const EditMitra = ({ token }) => {
                   value={postal_code}
                   onChange={(e) => setPostal_code(e.target.value)}
                 />
-                {error.postal_code ? (
-                  <p className="error-text">{error.postal_code}</p>
+                {error?.postal_code ? (
+                  <p className="error-text">{error?.postal_code}</p>
                 ) : (
                   ""
                 )}
@@ -806,8 +748,8 @@ const EditMitra = ({ token }) => {
                   value={pic_contact_number}
                   onChange={(e) => setPic_contact_number(e.target.value)}
                 />
-                {error.pic_contact_number ? (
-                  <p className="error-text">{error.pic_contact_number}</p>
+                {error?.pic_contact_number ? (
+                  <p className="error-text">{error?.pic_contact_number}</p>
                 ) : (
                   ""
                 )}

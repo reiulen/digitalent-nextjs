@@ -30,7 +30,7 @@ const DetailDokumenKerjasama = ({ token }) => {
         );
         setPdfFIle(data.data.document_file);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
       }
     }
 
@@ -82,9 +82,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Tanggal
               </label>
               <p className="fz-16">
-                {allMK.cooperationById.length === 0
+                {allMK?.cooperationById?.length === 0
                   ? ""
-                  : allMK.cooperationById.data.submission_date}
+                  : allMK?.cooperationById?.data?.submission_date}
               </p>
               <label
                 htmlFor="staticEmail"
@@ -94,9 +94,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Judul kerjasama
               </label>
               <p className="fz-16">
-                {allMK.cooperationById.length === 0
+                {allMK?.cooperationById?.length === 0
                   ? ""
-                  : allMK.cooperationById.data.title}
+                  : allMK?.cooperationById?.data?.title}
               </p>
 
               <label
@@ -107,9 +107,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Kategori kerjasama
               </label>
               <p className="fz-16">
-                {allMK.cooperationById.length === 0
+                {allMK?.cooperationById?.length === 0
                   ? ""
-                  : allMK.cooperationById.data.cooperation_category.name}
+                  : allMK?.cooperationById?.data?.cooperation_category?.name}
               </p>
 
               <label
@@ -120,19 +120,19 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Periode Kerjasama
               </label>
               <p className="fz-16">
-                {allMK.cooperationById.length === 0
+                {allMK?.cooperationById?.length === 0
                   ? ""
-                  : allMK.cooperationById.data.period}{" "}
+                  : allMK?.cooperationById?.data?.period}{" "}
                 Tahun (
-                {allMK.cooperationById.length === 0
+                {allMK?.cooperationById?.length === 0
                   ? ""
-                  : moment(allMK.cooperationById.data.period_date_start).format(
+                  : moment(allMK?.cooperationById?.data?.period_date_start).format(
                       "DD MMMM YYYY"
                     )}
                 &nbsp;-&nbsp;
-                {allMK.cooperationById.length === 0
+                {allMK?.cooperationById?.length === 0
                   ? ""
-                  : moment(allMK.cooperationById.data.period_date_end).format(
+                  : moment(allMK?.cooperationById?.data?.period_date_end).format(
                       "DD MMMM YYYY"
                     )}
                 )
@@ -148,9 +148,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                     Nomor Perjanjian Lembaga
                   </label>
                   <p className="fz-16">
-                    {allMK.cooperationById.length === 0
+                    {allMK?.cooperationById.length === 0
                       ? ""
-                      : allMK.cooperationById.data.agreement_number_partner}
+                      : allMK?.cooperationById?.data?.agreement_number_partner}
                   </p>
                 </div>
                 <div className="col-12 col-xl-6">
@@ -162,9 +162,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                     Nomor Perjanjian KemKominfo
                   </label>
                   <p className="fz-16">
-                    {allMK.cooperationById.length === 0
+                    {allMK?.cooperationById.length === 0
                       ? ""
-                      : allMK.cooperationById.data.agreement_number_kemkominfo}
+                      : allMK?.cooperationById?.data?.agreement_number_kemkominfo}
                   </p>
                 </div>
               </div>
@@ -177,9 +177,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Tanggal Penandatanganan
               </label>
               <p className="fz-16">
-                {allMK.cooperationById.length === 0
+                {allMK?.cooperationById.length === 0
                   ? ""
-                  : allMK.cooperationById.data.signing_date}
+                  : allMK?.cooperationById?.data?.signing_date}
               </p>
 
               <label
@@ -210,13 +210,13 @@ const DetailDokumenKerjasama = ({ token }) => {
                 </button>
               </div>
 
-              {allMK.cooperationById.length === 0 ? (
+              {allMK?.cooperationById.length === 0 ? (
                 ""
-              ) : allMK.cooperationById.data.cooperation_category.data_content
+              ) : allMK?.cooperationById?.data?.cooperation_category?.data_content
                   .cooperation_form === "-" ? (
                 <h1 className="my-4">Data kerja sama tidak ada</h1>
               ) : (
-                allMK.cooperationById.data.cooperation_category.data_content.map(
+                allMK?.cooperationById?.data?.cooperation_category?.data_content?.map(
                   (items, i) => {
                     return (
                       <div className="form-group" key={i}>

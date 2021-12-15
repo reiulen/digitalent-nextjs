@@ -105,7 +105,7 @@ const TambahTandaTangan = ({ token }) => {
               query: { success: true },
             });
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -135,7 +135,7 @@ const TambahTandaTangan = ({ token }) => {
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                 />
-                {error.nama ? <p className="error-text">{error.nama}</p> : ""}
+                {error?.nama ? <p className="error-text">{error?.nama}</p> : ""}
               </div>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -148,8 +148,8 @@ const TambahTandaTangan = ({ token }) => {
                   placeholder="Masukkan Jabatan"
                   onChange={(e) => setJabatan(e.target.value)}
                 />
-                {error.jabatan ? (
-                  <p className="error-text">{error.jabatan}</p>
+                {error?.jabatan ? (
+                  <p className="error-text">{error?.jabatan}</p>
                 ) : (
                   ""
                 )}
@@ -178,8 +178,8 @@ const TambahTandaTangan = ({ token }) => {
                       }
                     />
                   </div>
-                  {error.tandaTangan ? (
-                    <p className="error-text">{error.tandaTangan}</p>
+                  {error?.tandaTangan ? (
+                    <p className="error-text">{error?.tandaTangan}</p>
                   ) : (
                     ""
                   )}

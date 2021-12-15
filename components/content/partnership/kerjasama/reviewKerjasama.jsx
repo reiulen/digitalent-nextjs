@@ -81,7 +81,7 @@ const ReviewKerjasama = ({ token }) => {
             query: { successTerima: true },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error").then(
             () => {
               router.push({
                 pathname: `/partnership/kerjasama`,
@@ -124,7 +124,7 @@ const ReviewKerjasama = ({ token }) => {
             query: { successReject: true },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error").then(
             () => {
               router.push({
                 pathname: `/partnership/kerjasama`,
@@ -148,13 +148,13 @@ const ReviewKerjasama = ({ token }) => {
             },
           }
         );
-        setTitle(data.data.title);
-        setDate(data.data.submission_date);
-        setCooperationID(data.data.cooperation_category);
-        setPeriod(data.data.period);
-        setPeriodUnit(data.data.period_unit);
+        setTitle(data?.data?.title);
+        setDate(data?.data?.submission_date);
+        setCooperationID(data?.data?.cooperation_category);
+        setPeriod(data?.data?.period);
+        setPeriodUnit(data?.data?.period_unit);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error.response.data?.message}`, "error");
       }
     }
     setDataSingle(router.query.id, token);
@@ -169,16 +169,16 @@ const ReviewKerjasama = ({ token }) => {
             },
           }
         );
-        setTitleView(data.data.title);
-        setDateView(data.data.date);
-        setCooperationIDView(data.data.cooperation_category);
-        setPeriodView(data.data.period);
-        setPeriodUnitView(data.data.period_unit);
-        setAllCooperationView(data.data.cooperation_category.data_content);
-        setNoteView(data.data.note);
-        setMitra(data.data.mitra);
+        setTitleView(data?.data?.title);
+        setDateView(data?.data?.date);
+        setCooperationIDView(data?.data?.cooperation_category);
+        setPeriodView(data?.data?.period);
+        setPeriodUnitView(data?.data?.period_unit);
+        setAllCooperationView(data?.data?.cooperation_category.data_content);
+        setNoteView(data?.data?.note);
+        setMitra(data?.data?.mitra);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
       }
     }
 
@@ -263,7 +263,7 @@ const ReviewKerjasama = ({ token }) => {
 
                 {cooperationIDView === ""
                   ? ""
-                  : cooperationIDView.data_content.map((items, i) => {
+                  : cooperationIDView?.data_content?.map((items, i) => {
                       return (
                         <div className="row" key={i}>
                           <div className="col-12 col-sm-6">
@@ -273,11 +273,11 @@ const ReviewKerjasama = ({ token }) => {
                                 className="col-form-label"
                                 style={{color:"#6C6C6C"}}
                               >
-                                {items.cooperation_form}
+                                {items?.cooperation_form}
                               </label>
                               <textarea
                                 readOnly
-                                value={items.form_content}
+                                value={items?.form_content}
                                 name=""
                                 id={i}
                                 cols="30"
@@ -296,7 +296,7 @@ const ReviewKerjasama = ({ token }) => {
                               </label>
                               <textarea
                                 readOnly
-                                value={items.form_content_review}
+                                value={items?.form_content_review}
                                 name=""
                                 id={i}
                                 cols="30"

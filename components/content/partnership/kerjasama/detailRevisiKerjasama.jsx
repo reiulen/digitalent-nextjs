@@ -82,15 +82,15 @@ const DetailRevisiKerjasama = ({ token }) => {
           },
         }
       );
-      setTitle(data.data.title);
-      setDate(data.data.submission_date);
-      setAllCooperation(data.data.cooperation_category.data_content);
-      setCooperationID(data.data.cooperation_category);
-      setPeriod(data.data.period);
-      setPeriodUnit(data.data.period_unit);
-      setNote(data.data.note);
+      setTitle(data?.data?.title);
+      setDate(data?.data?.submission_date);
+      setAllCooperation(data?.data?.cooperation_category?.data_content);
+      setCooperationID(data?.data?.cooperation_category);
+      setPeriod(data?.data?.period);
+      setPeriodUnit(data?.data?.period_unit);
+      setNote(data?.data?.note);
     } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error")
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
     }
 
     }
@@ -144,7 +144,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                       style={{backgroundColor:"transparent"}}
                     >
                       <option value="">
-                        {cooperationID && cooperationID.name}
+                        {cooperationID && cooperationID?.name}
                       </option>
                     </select>
                   </div>
@@ -181,7 +181,7 @@ const DetailRevisiKerjasama = ({ token }) => {
 
               {!allCooperation.length
                 ? ""
-                : allCooperation.map((items, index) => {
+                : allCooperation?.map((items, index) => {
                     return (
                       <div className="row" key={index}>
                         <div className="col-12 col-xl-6">
@@ -190,7 +190,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                               htmlFor="staticEmail"
                               className="col-form-label text-muted"
                             >
-                              {items.cooperation_form}
+                              {items?.cooperation_form}
                             </label>
                             <div>
                               <textarea
@@ -199,7 +199,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                                 readOnly
                                 cols="30"
                                 rows="5"
-                                value={items.form_content}
+                                value={items?.form_content}
                                 className="form-control border-0 ml-n4"
                                 placeholder="Tuliskan Tujuan Kerjasama"
                               ></textarea>
@@ -217,7 +217,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                             <div>
                               <textarea
                                 onChange={(e) => handleChange(e, index)}
-                                value={items.form_content_review}
+                                value={items?.form_content_review}
                                 name="cooperation"
                                 id=""
                                 cols="30"

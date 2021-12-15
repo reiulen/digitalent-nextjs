@@ -213,13 +213,13 @@ const TambahMitra = ({ token }) => {
             },
           }
         );
-        let dataNewProvinces = data.data.map((items) => {
-          return { ...items, label: items.name, value: items.id };
+        let dataNewProvinces = data?.data?.map((items) => {
+          return { ...items, label: items?.name, value: items?.id };
         });
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error")
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
       }
     }
     getDataProvinces(token);
@@ -238,13 +238,13 @@ const TambahMitra = ({ token }) => {
               },
             }
           );
-          let dataNewCitites = data.data.map((items) => {
+          let dataNewCitites = data?.data?.map((items) => {
             return { ...items, label: items.name, value: items.id };
           });
           // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error")
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
         }
       }
       fetchAPI();
@@ -273,8 +273,8 @@ const TambahMitra = ({ token }) => {
                   placeholder="Masukkan Nama Lembaga"
                   onChange={(e) => setInstitution_name(e.target.value)}
                 />
-                {error.institution_name ? (
-                  <p className="error-text">{error.institution_name}</p>
+                {error?.institution_name ? (
+                  <p className="error-text">{error?.institution_name}</p>
                 ) : (
                   ""
                 )}
@@ -293,8 +293,8 @@ const TambahMitra = ({ token }) => {
                       placeholder="Masukkan Website"
                       onChange={(e) => setWesite(e.target.value)}
                     />
-                    {error.wesite ? (
-                      <p className="error-text">{error.wesite}</p>
+                    {error?.wesite ? (
+                      <p className="error-text">{error?.wesite}</p>
                     ) : (
                       ""
                     )}
@@ -312,8 +312,8 @@ const TambahMitra = ({ token }) => {
                       placeholder="Masukkan Email"
                       onChange={(e) => setEmail(e.target.value)}
                     />
-                    {error.email ? (
-                      <p className="error-text">{error.email}</p>
+                    {error?.email ? (
+                      <p className="error-text">{error?.email}</p>
                     ) : (
                       ""
                     )}
@@ -395,7 +395,7 @@ const TambahMitra = ({ token }) => {
 
                 {!agency_logo ? (
                   <p className="error-text">
-                    {error.agency_logo}
+                    {error?.agency_logo}
                   </p>
                 ) : (
                   ""
@@ -480,8 +480,8 @@ const TambahMitra = ({ token }) => {
                   placeholder="Masukkan Alamat"
                   onChange={(e) => setAddress(e.target.value)}
                 />
-                {error.address ? (
-                  <p className="error-text">{error.address}</p>
+                {error?.address ? (
+                  <p className="error-text">{error?.address}</p>
                 ) : (
                   ""
                 )}
@@ -510,9 +510,9 @@ const TambahMitra = ({ token }) => {
                       onChange={(e) => onChangeProvinces(e)}
                       options={allProvinces}
                     />
-                    {error.indonesia_provinces_id ? (
+                    {error?.indonesia_provinces_id ? (
                       <p className="error-text">
-                        {error.indonesia_provinces_id}
+                        {error?.indonesia_provinces_id}
                       </p>
                     ) : (
                       ""
@@ -544,8 +544,8 @@ const TambahMitra = ({ token }) => {
                       onChange={(e) => setIndonesia_cities_id(e.id)}
                       options={citiesAll}
                     />
-                    {error.indonesia_cities_id ? (
-                      <p className="error-text">{error.indonesia_cities_id}</p>
+                    {error?.indonesia_cities_id ? (
+                      <p className="error-text">{error?.indonesia_cities_id}</p>
                     ) : (
                       ""
                     )}
@@ -568,8 +568,8 @@ const TambahMitra = ({ token }) => {
                 <div className="box-hide-arrow"></div>
                 </div>
 
-                {error.postal_code ? (
-                  <p className="error-text">{error.postal_code}</p>
+                {error?.postal_code ? (
+                  <p className="error-text">{error?.postal_code}</p>
                 ) : (
                   ""
                 )}
@@ -589,8 +589,8 @@ const TambahMitra = ({ token }) => {
                       placeholder="Masukkan Nama"
                       onChange={(e) => setPic_name(e.target.value)}
                     />
-                    {error.pic_name ? (
-                      <p className="error-text">{error.pic_name}</p>
+                    {error?.pic_name ? (
+                      <p className="error-text">{error?.pic_name}</p>
                     ) : (
                       ""
                     )}
@@ -618,8 +618,8 @@ const TambahMitra = ({ token }) => {
                     />
                     <div className="box-hide-arrow"></div>
                 </div>
-                    {error.pic_contact_number ? (
-                      <p className="error-text">{error.pic_contact_number}</p>
+                    {error?.pic_contact_number ? (
+                      <p className="error-text">{error?.pic_contact_number}</p>
                     ) : (
                       ""
                     )}
