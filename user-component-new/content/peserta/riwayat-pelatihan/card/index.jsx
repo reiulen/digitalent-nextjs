@@ -158,10 +158,16 @@ export default function CardTemplateOriginal({ data, session }) {
 											""
 										)}
 										<p
-											style={{ borderRadius: "50px" }}
+											style={{
+												borderRadius: "50px",
+												paddingRight: "12px",
+												paddingLeft: "12px",
+												paddingTop: "4px",
+												paddingBottom: "4px",
+											}}
 											className={`label label-inline label-light-${
 												data.survei ? "primary" : label
-											} font-weight-bolder p-0 px-4 py-4 text-capitalize`}
+											} font-weight-bolder text-capitalize`}
 										>
 											{data.lpj
 												? "Isi LPJ"

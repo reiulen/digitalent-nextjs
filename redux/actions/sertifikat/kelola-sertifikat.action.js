@@ -121,7 +121,7 @@ export const getDetailSertifikat =
 		limit = 5,
 		status = null,
 		token,
-		token_permission
+		token_permission = ""
 	) =>
 	async (dispatch) => {
 		try {
@@ -152,7 +152,8 @@ export const getDetailSertifikat =
 	};
 
 export const newSertifikat =
-	(id, formData, token, token_permission) => async (dispatch) => {
+	(id, formData, token, token_permission = "") =>
+	async (dispatch) => {
 		try {
 			dispatch({ type: NEW_SERTIFIKAT_REQUEST });
 			let link =
@@ -186,7 +187,8 @@ export const clearErrors = () => async (dispatch) => {
 };
 
 export const getSingleSertifikat =
-	(id, token, token_permission) => async (dispatch) => {
+	(id, token, token_permission = "") =>
+	async (dispatch) => {
 		try {
 			dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
 			let link =
@@ -215,7 +217,8 @@ export const getSingleSertifikat =
 	};
 
 export const getPublishedSertifikat =
-	(id, token, token_permission) => async (dispatch) => {
+	(id, token, token_permission = "") =>
+	async (dispatch) => {
 		try {
 			dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
 			let link =
@@ -244,7 +247,8 @@ export const getPublishedSertifikat =
 	};
 
 export const updateSertifikat =
-	(id, formData, token, token_permission) => async (dispatch) => {
+	(id, formData, token, token_permission = "") =>
+	async (dispatch) => {
 		try {
 			dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
 
@@ -272,7 +276,8 @@ export const updateSertifikat =
 	};
 
 export const getOptionsAcademy =
-	(token, token_permission) => async (dispatch) => {
+	(token, token_permission = "") =>
+	async (dispatch) => {
 		try {
 			dispatch({ type: OPTIONS_ACADEMY_REQUEST });
 			let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/academy`;
@@ -298,7 +303,8 @@ export const getOptionsAcademy =
 	};
 
 export const getOptionsTheme =
-	(token, token_permission) => async (dispatch) => {
+	(token, token_permission = "") =>
+	async (dispatch) => {
 		try {
 			dispatch({ type: OPTIONS_THEME_REQUEST });
 			let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/theme`;
