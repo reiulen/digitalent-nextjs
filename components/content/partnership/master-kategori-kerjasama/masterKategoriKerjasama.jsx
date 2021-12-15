@@ -60,17 +60,17 @@ const Table = ({ token }) => {
       }
     });
   };
-  // useEffect(() => {
-  //   dispatch(fetchAllMKCooporation(token));
-  // }, [
-  //   dispatch,
-  //   allMKCooporation.keyword,
-  //   allMKCooporation.limit,
-  //   allMKCooporation.page,
-  //   allMKCooporation.status_delete,
-  //   allMKCooporation.status_list,
-  //   token
-  // ]);
+  useEffect(() => {
+    dispatch(fetchAllMKCooporation(token));
+  }, [
+    dispatch,
+    allMKCooporation.keyword,
+    allMKCooporation.limit,
+    allMKCooporation.page,
+    allMKCooporation.status_delete,
+    allMKCooporation.status_list,
+    token
+  ]);
 
 
   const onNewReset = () => {
@@ -184,6 +184,7 @@ const Table = ({ token }) => {
                           Kategori Kerjasama
                         </th>
                         <th className="text-left align-middle">Status</th>
+                        
                         {
                           permission ? 
                             permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.master_kategori_kerjasama.manage") ?

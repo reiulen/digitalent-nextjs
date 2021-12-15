@@ -239,9 +239,9 @@ const DetailDokumenKerjasama = ({ token }) => {
                           className="col-form-label fz-14"
                           style={{ color: "#6C6C6C" }}
                         >
-                          {items.cooperation_form}
+                          {items?.cooperation_form}
                         </label>
-                        <p className="fz-16">{items.form_content}</p>
+                        <p className="fz-16">{items?.form_content}</p>
                       </div>
                     );
                   }

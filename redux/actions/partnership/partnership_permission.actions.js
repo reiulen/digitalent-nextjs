@@ -18,12 +18,12 @@ export const getPartnershipPermissions =
 				},
 			};
 
-			const config = {
-				headers: {
-					Authorization: "Bearer " + token,
-					Permission: permission,
-				},
-			};
+			// const config = {
+			// 	headers: {
+			// 		Authorization: "Bearer " + token,
+			// 		Permission: permission,
+			// 	},
+			// };
 
 			const { data } = await axios.get(link, config);
 			dispatch({
@@ -31,10 +31,10 @@ export const getPartnershipPermissions =
 				payload: data,
 			});
 		} catch (error) {
-			dispatch({
-				type: FETCH_PARTNERSHIP_PERMISSION_FAIL,
-				payload: error.response.data.message,
-			});
+			// dispatch({
+			// 	type: FETCH_PARTNERSHIP_PERMISSION_FAIL,
+			// 	// payload: error?.response?.data?.message,
+			// });
 		}
 	};
 
