@@ -27,19 +27,19 @@ const ForgotPassword = () => {
   const handlerShowPassword = (value) => {
     setHidePassword(value);
     var input = document.getElementById("input-password");
-    if (input?.type === "password") {
-      input?.type = "text";
+    if (input.type === "password") {
+      input.type = "text";
     } else {
-      input?.type = "password";
+      input.type = "password";
     }
   };
   const handlerShowPasswordConfirm = (value) => {
     setHidePasswordConfirmConfirm(value);
     var input = document.getElementById("input-password-confirm");
-    if (input?.type === "password") {
-      input?.type = "text";
+    if (input.type === "password") {
+      input.type = "text";
     } else {
-      input?.type = "password";
+      input.type = "password";
     }
   };
 

@@ -64,7 +64,7 @@ export const getAllListReview =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: token_permission,
+          // Permission: token_permission,
         },
       };
 
@@ -84,37 +84,41 @@ export const getAllListReview =
 //END ALL LIST REVIEW
 
 //CARD REVIEW
-export const getCardReview = (token, token_permission) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/pelatihan/list-count-subtansi`;
+export const getCardReview =
+  (token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/pelatihan/list-count-subtansi`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-        Permission: token_permission,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: CARD_REVIEW_SUCCESS,
-      payload: data,
-    });
-    return data;
-  } catch (error) {
-    dispatch({
-      type: CARD_REVIEW_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: CARD_REVIEW_SUCCESS,
+        payload: data,
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: CARD_REVIEW_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 //END CARD REVIEW
 
 export const getListRevisi =
-  (token, id, token_permission) => async (dispatch) => {
+  (token, id, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +
@@ -142,7 +146,8 @@ export const getListRevisi =
   };
 
 export const getReviewStep1Revisi =
-  (token, id, token_permission) => async (dispatch) => {
+  (token, id, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +
@@ -170,7 +175,8 @@ export const getReviewStep1Revisi =
   };
 
 export const getReviewStep2Revisi =
-  (token, id, token_permission) => async (dispatch) => {
+  (token, id, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +
@@ -198,7 +204,8 @@ export const getReviewStep2Revisi =
   };
 
 export const getReviewStep3Revisi =
-  (token, id, token_permission) => async (dispatch) => {
+  (token, id, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +
@@ -226,7 +233,8 @@ export const getReviewStep3Revisi =
   };
 
 export const getReviewStep4Revisi =
-  (token, id, token_permission) => async (dispatch) => {
+  (token, id, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +
@@ -250,7 +258,8 @@ export const getReviewStep4Revisi =
   };
 
 export const revisiReviewPelatihan =
-  (dataRevisi, token, token_permission) => async (dispatch) => {
+  (dataRevisi, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({ type: REVISI_REVIEW_REQUEST });
 
@@ -280,7 +289,8 @@ export const revisiReviewPelatihan =
   };
 
 export const tolakReviewPelatihan =
-  (dataTolak, token, token_permission) => async (dispatch) => {
+  (dataTolak, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({ type: TOLAK_REVIEW_REQUEST });
 
