@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
+import { middlewareAuthMitraSession } from "../../../../utils/middleware/authMiddleware";
 // import {
 //   fetchListSelectStatus,
 //   fetchListSelectCooperation,
@@ -23,14 +24,24 @@ export default function IndexPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(() => async ({ req }) => {
   const session = await getSession({ req });
-  if (!session) {
+
+  const middleware = middlewareAuthMitraSession(session);
+  if (!middleware.status) {
     return {
       redirect: {
-        destination: "http://dts-dev.majapahit.id/login/mitra",
+        destination: middleware.redirect,
         permanent: false,
       },
     };
   }
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: "http://dts-dev.majapahit.id/login/mitra",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   // await store.dispatch(fetchListSelectStatus(session.user.user.data.token));
   // await store.dispatch(
