@@ -149,7 +149,7 @@ const TambahApi = ({ token }) => {
                 {simpleValidator.current.message(
                   "email",
                   email,
-                  "required",
+                  "required|email",
                   { className: "text-danger" }
                 )}
               </div>
@@ -189,7 +189,7 @@ const TambahApi = ({ token }) => {
                 <p className={`${styles.notes}`} style={{ color: "#b7b5cf" }}>
                   Min 8 Karakter,<br />
                   Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)<br />
-                  Min 1 Symbol/angka
+                  Min 1 Symbol & Angka
                 </p>
               </div>
 

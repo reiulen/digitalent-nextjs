@@ -23,7 +23,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const TambahSurveyStepOne = ({ token }) => {
+const TambahSurveyStepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -51,8 +51,8 @@ const TambahSurveyStepOne = ({ token }) => {
   const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (error) {
       dispatch(clearErrors());
     }
@@ -82,6 +82,7 @@ const TambahSurveyStepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
@@ -128,7 +129,7 @@ const TambahSurveyStepOne = ({ token }) => {
         training_id,
       };
 
-      dispatch(newSurveyQuestionBanks(data, token));
+      dispatch(newSurveyQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -154,7 +155,7 @@ const TambahSurveyStepOne = ({ token }) => {
         training_id,
       };
 
-      dispatch(newSurveyQuestionBanks(data, token));
+      dispatch(newSurveyQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -217,10 +218,10 @@ const TambahSurveyStepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  placeholder={"Silahkan Pilih Akademi"}
                   className={styles.selectForm}
                   options={dataAkademi.data}
-                  value={academyLabel}
+                  value={{ label: academyLabel }}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -244,7 +245,7 @@ const TambahSurveyStepOne = ({ token }) => {
                   isDisabled={!academy_id}
                   placeholder={themeLabel || "Silahkan Pilih Tema"}
                   options={optionsTema}
-                  value={themeLabel}
+                  value={{ label: themeLabel }}
                   className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
@@ -262,7 +263,7 @@ const TambahSurveyStepOne = ({ token }) => {
                   isDisabled={!theme_id}
                   placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
-                  value={trainingLabel}
+                  value={{ label: trainingLabel }}
                   className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>

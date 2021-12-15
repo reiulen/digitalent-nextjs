@@ -4,6 +4,7 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getDetailsExportData } from "../../../../redux/actions/site-management/export-data.actions";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const UbahRole = dynamic(
   () =>
@@ -33,10 +34,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req, query }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

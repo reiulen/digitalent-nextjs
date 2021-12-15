@@ -5,19 +5,24 @@ const StepInput = ({ step }) => {
   let stepBg1 = "bg-neutral";
   let stepBg2 = "bg-neutral";
   let stepBg3 = "bg-neutral";
+  let stepBg4 = "bg-neutral";
   let stepNumber1 = "text-white";
   let stepNumber2 = "text-white";
   let stepNumber3 = "text-white";
+  let stepNumber4 = "text-white";
   let textHeader1 = "text-neutral-shade";
   let textHeader2 = "text-neutral-shade";
   let textHeader3 = "text-neutral-shade";
+  let textHeader4 = "text-neutral-shade";
   let textDesc1 = "text-neutral-shade";
   let textDesc2 = "text-neutral-shade";
   let textDesc3 = "text-neutral-shade";
+  let textDesc4 = "text-neutral-shade";
 
   let responsiveStep1 = "d-none d-md-block";
   let responsiveStep2 = "d-none d-md-block";
   let responsiveStep3 = "d-none d-md-block";
+  let responsiveStep4 = "d-none d-md-block";
 
   if (step == 1) {
     stepBg1 = "bg-white";
@@ -37,12 +42,18 @@ const StepInput = ({ step }) => {
     textHeader3 = "text-primary";
     textDesc3 = "text-dark";
     responsiveStep3 = "d-block";
+  } else if (step == 4) {
+    stepBg4 = "bg-white";
+    stepNumber4 = "bg-secondary text-white";
+    textHeader4 = "text-primary";
+    textDesc4 = "text-dark";
+    responsiveStep4 = "d-block";
   }
 
   return (
     <div className="col-12">
       <div className="row row-eq-height bg-gray-shade">
-        <div className={`col-md-4 ${responsiveStep1}`}>
+        <div className={`col-md-3 ${responsiveStep1}`}>
           <div className="container-fluid py-0 pr-md-1 pr-0 pl-0">
             <div className="row row-eq-height h-100">
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg1}`}>
@@ -59,7 +70,7 @@ const StepInput = ({ step }) => {
             </div>
           </div>
         </div>
-        <div className={`col-md-4 ${responsiveStep2}`}>
+        <div className={`col-md-3 ${responsiveStep2}`}>
           <div className="container-fluid py-0 px-md-1 px-0">
             <div className="row row-eq-height h-100">
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg2}`}>
@@ -76,7 +87,7 @@ const StepInput = ({ step }) => {
             </div>
           </div>
         </div>
-        <div className={`col-md-4 ${responsiveStep3}`}>
+        <div className={`col-md-3 ${responsiveStep3}`}>
           <div className="container-fluid py-0 pr-0 pl-0 pl-md-1">
             <div className="row row-eq-height h-100">
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg3}`}>
@@ -86,8 +97,25 @@ const StepInput = ({ step }) => {
                   </h1>
                 </div>
                 <div className="my-5">
-                  <h5 className={`${textHeader3}`}>Publish</h5>
-                  <p className={`${textDesc3}`}>Tentukan Publishnya</p>
+                  <h5 className={`${textHeader3}`}>Pelatihan</h5>
+                  <p className={`${textDesc3}`}>Tentukan Pelatihan</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={`col-md-3 ${responsiveStep4}`}>
+          <div className="container-fluid py-0 pr-0 pl-0 pl-md-1">
+            <div className="row row-eq-height h-100">
+              <div className={`col-12 d-flex rounded-top h-100 ${stepBg4}`}>
+                <div className="my-5 mx-3">
+                  <h1 className={`badge badge-secondary h1 ${stepNumber4}`}>
+                    4
+                  </h1>
+                </div>
+                <div className="my-5">
+                  <h5 className={`${textHeader4}`}>Publish</h5>
+                  <p className={`${textDesc4}`}>Tentukan Publishnya</p>
                 </div>
               </div>
             </div>

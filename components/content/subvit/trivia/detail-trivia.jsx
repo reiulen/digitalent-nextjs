@@ -14,7 +14,7 @@ import {
   getAllTriviaQuestionDetail,
 } from "../../../../redux/actions/subvit/trivia-question-detail.action";
 
-const DetailTrivia = ({ token }) => {
+const DetailTrivia = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -39,10 +39,10 @@ const DetailTrivia = ({ token }) => {
 
   useEffect(() => {
     if (isDeleted) {
-      dispatch(getAllTriviaQuestionDetail(id, token));
+      dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, trivia, id, token, dispatch]);
+  }, [isDeleted, trivia, id, token, dispatch, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     router.push(
@@ -67,7 +67,7 @@ const DetailTrivia = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteTriviaQuestionDetail(id, token));
+        dispatch(deleteTriviaQuestionDetail(id, token, tokenPermission));
       }
     });
   };
@@ -98,7 +98,17 @@ const DetailTrivia = ({ token }) => {
   };
 
   const handleSearch = () => {
-    dispatch(getAllTriviaQuestionDetail(id, 1, search, 5, token));
+    dispatch(
+      getAllTriviaQuestionDetail(id, 1, search, 5, token, tokenPermission)
+    );
+  };
+
+  const truncateString = (str, num) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
   };
 
   return (
@@ -324,7 +334,10 @@ const DetailTrivia = ({ token }) => {
                               </td>
                               <td className="align-middle">CC{question.id}</td>
                               <td className="align-middle">
-                                {question.question}
+                                {truncateString(
+                                  question && question.question,
+                                  80
+                                )}
                               </td>
                               <td className="align-middle">
                                 {question.status ? (
@@ -363,6 +376,11 @@ const DetailTrivia = ({ token }) => {
                                       data-toggle="tooltip"
                                       data-placement="bottom"
                                       title="Hapus"
+                                      disabled={i === 0}
+                                      style={{
+                                        cursor:
+                                          i === 0 ? "not-allowed" : "pointer",
+                                      }}
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>

@@ -9,7 +9,10 @@ export default function TambahTipeSoalTestSubstansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <TambahTipeSoal token={session.token} />
+        <TambahTipeSoal
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -28,6 +31,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      const permission = req.cookies.token_permission;
+
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {
@@ -39,7 +44,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { session, title: "Tambah Tipe Soal Test Subtansi - Subvit" },
+        props: {
+          session,
+          title: "Tambah Tipe Soal Test Subtansi - Subvit",
+          permission,
+        },
       };
     }
 );

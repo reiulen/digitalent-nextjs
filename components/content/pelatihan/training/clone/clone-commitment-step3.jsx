@@ -108,7 +108,9 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
       data.pendaftaran_selesai = moment(data.pendaftaran_selesai).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      data.pelatihan_mulai = moment(data.pelatihan_mulai).format("YYYY-MM-DD HH:mm:ss");
+      data.pelatihan_mulai = moment(data.pelatihan_mulai).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
       data.pelatihan_selesai = moment(data.pelatihan_selesai).format(
         "YYYY-MM-DD HH:mm:ss"
       );
@@ -125,101 +127,107 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
   };
 
   return (
-    <div className="col-lg-12 order-1 px-0">
-      <div className="card card-custom card-stretch gutter-b">
-        <div className="card-body py-4">
-          <form onSubmit={submitHandler}>
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
-            <div className="form-group row mb-4">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Komitmen Peserta
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="commitment"
-                    className="form-check-input"
-                    value="1"
-                    checked={commitment === "1"}
-                    onClick={() => setCommitment("1")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("komitmen")
-                    }
-                  />
-                  <label className="form-check-label">Ya</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="commitment"
-                    value="0"
-                    className="form-check-input"
-                    checked={commitment === "0"}
-                    onClick={() => {
-                      setCommitment("0");
-                    }}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("komitmen")
-                    }
-                  />
-                  <label className="form-check-label">Tidak</label>
-                </div>
-                {simpleValidator.current.message(
-                  "komitmen",
-                  commitment,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-            {commitment === "1" ? (
-              <div className="form-group mb-4">
-                <label className="col-form-label font-weight-bold">
-                  Input Deskripsi
+    <>
+      {loading && <LoadingPage loading={loading} />}
+      <div className="col-lg-12 order-1 px-0">
+        <div className="card card-custom card-stretch gutter-b">
+          <div className="card-body py-4">
+            <form onSubmit={submitHandler}>
+              <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
+              <div className="form-group row mb-4">
+                <label className="col-form-label font-weight-bold col-sm-2">
+                  Komitmen Peserta
                 </label>
-                <div className="ckeditor">
-                  {editorLoaded ? (
-                    <CKEditor
-                      editor={ClassicEditor}
-                      data={description}
-                      onReady={(editor) => {
-                        // You can store the "editor" and use when it is needed.
-                      }}
-                      onChange={(event, editor) => {
-                        const data = editor.getData();
-                        setDescription(data);
-                      }}
-                      config={{
-                        placeholder: "Silahkan Masukan Deskripsi Detail",
-                      }}
+                <div className="col-sm-10 my-auto">
+                  <div className="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      name="commitment"
+                      className="form-check-input"
+                      value="1"
+                      checked={commitment === "1"}
+                      onClick={() => setCommitment("1")}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("komitmen")
+                      }
                     />
-                  ) : (
-                    <p>Tunggu Sebentar</p>
+                    <label className="form-check-label">Ya</label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      name="commitment"
+                      value="0"
+                      className="form-check-input"
+                      checked={commitment === "0"}
+                      onClick={() => {
+                        setCommitment("0");
+                      }}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("komitmen")
+                      }
+                    />
+                    <label className="form-check-label">Tidak</label>
+                  </div>
+                  {simpleValidator.current.message(
+                    "komitmen",
+                    commitment,
+                    "required",
+                    { className: "text-danger" }
                   )}
                 </div>
               </div>
-            ) : (
-              ""
-            )}
-            <div className="form-group">
-              <div className="text-right">
-                <button
-                  className="btn btn-light-ghost-rounded-full mr-2"
-                  type="button"
-                  onClick={() => propsStep(2)}
-                >
-                  Batal
-                </button>
-                <button className="btn btn-primary-rounded-full" type="submit">
-                  Simpan & Lanjut
-                </button>
+              {commitment === "1" ? (
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Input Deskripsi
+                  </label>
+                  <div className="ckeditor">
+                    {editorLoaded ? (
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={description}
+                        onReady={(editor) => {
+                          // You can store the "editor" and use when it is needed.
+                        }}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          setDescription(data);
+                        }}
+                        config={{
+                          placeholder: "Silahkan Masukan Deskripsi Detail",
+                        }}
+                      />
+                    ) : (
+                      <p>Tunggu Sebentar</p>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              <div className="form-group">
+                <div className="text-right">
+                  <button
+                    className="btn btn-light-ghost-rounded-full mr-2"
+                    type="button"
+                    onClick={() => propsStep(2)}
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn btn-primary-rounded-full"
+                    type="submit"
+                  >
+                    Simpan & Lanjut
+                  </button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

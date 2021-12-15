@@ -50,6 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 					},
 				};
 			}
+			const token_permission = req.cookies.token_permission;
 
 			await store.dispatch(
 				getDetailSertifikat(
@@ -58,7 +59,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
 					query.keyword,
 					100,
 					query.status,
-					session.user.user.data.token
+					session.user.user.data.token,
+					token_permission
 				)
 			);
 

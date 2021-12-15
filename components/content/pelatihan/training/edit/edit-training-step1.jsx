@@ -30,6 +30,7 @@ import {
   dropdownTemabyAkademi,
   dropdownKabupaten,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+import { useQuill } from "react-quilljs";
 
 const EditTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
@@ -41,6 +42,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
 
+  const { quill, quillRef } = useQuill();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
@@ -245,6 +247,16 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     }
   }, [dispatch, router.query.id, token, academy.value, isUpdated, error]);
 
+  useEffect(() => {
+    if (quill) {
+      quill.clipboard.dangerouslyPasteHTML(description);
+      quill.on("text-change", (delta, oldDelta, source) => {
+        setDescription(quill.root.innerHTML);
+      });
+    }
+    setEditorLoaded(true);
+  }, [quill]);
+
   const optionsLevelPelatihan = [];
   if (dataLevelPelatihan) {
     for (let index = 0; index < dataLevelPelatihan.data.length; index++) {
@@ -327,20 +339,20 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   const onLogoHandler = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 2000000) {
-        e.target.value = null;
-        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-      } else {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            setLogoBase(reader.result);
-          }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-        setLogoFile(e.target.files[0]);
-        setLogoName(e.target.files[0].name);
-      }
+      // if (e.target.files[0].size > 2000000) {
+      //   e.target.value = null;
+      //   Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+      // } else {
+      // }
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setLogoBase(reader.result);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setLogoFile(e.target.files[0]);
+      setLogoName(e.target.files[0].name);
     } else {
       e.target.value = null;
       Swal.fire(
@@ -354,20 +366,20 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   const onThumbnailHandler = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 2000000) {
-        e.target.value = null;
-        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-      } else {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            setThumbnailBase(reader.result);
-          }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-        setThumbnailFile(e.target.files[0]);
-        setThumbnailName(e.target.files[0].name);
-      }
+      // if (e.target.files[0].size > 2000000) {
+      //   e.target.value = null;
+      //   Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+      // } else {
+      // }
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setThumbnailBase(reader.result);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setThumbnailFile(e.target.files[0]);
+      setThumbnailName(e.target.files[0].name);
     } else {
       e.target.value = null;
       Swal.fire(
@@ -403,20 +415,20 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   const onSilabusHandler = (e) => {
     const type = ["application/pdf"];
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 2000000) {
-        e.target.value = null;
-        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-      } else {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            setSilabusBase(reader.result);
-          }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-        setSilabusFile(e.target.files[0]);
-        setSilabusName(e.target.files[0].name);
-      }
+      // if (e.target.files[0].size > 2000000) {
+      //   e.target.value = null;
+      //   Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+      // } else {
+      // }
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setSilabusBase(reader.result);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setSilabusFile(e.target.files[0]);
+      setSilabusName(e.target.files[0].name);
     } else {
       e.target.value = null;
       Swal.fire(
@@ -438,6 +450,11 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     // router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-registrasi");
+    if (metodeTraining === "Online") {
+      simpleValidator.current.fields.alamat = true;
+      simpleValidator.current.fields.provinsi = true;
+      simpleValidator.current.fields["kota/kabupaten"] = true;
+    }
     if (simpleValidator.current.allValid()) {
       const data = {
         program_dts: program,
@@ -478,8 +495,8 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         batch: batch.value.toString(),
         metode_pelatihan: metodeTraining,
         alamat: address,
-        provinsi: province.label.toString(),
-        kabupaten: city.value.toString(),
+        provinsi: province !== "" ? province.label.toString() : "",
+        kabupaten: city !== "" ? city.value.toString() : "",
         umum,
         tuna_netra,
         tuna_rungu,
@@ -511,6 +528,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
 
   return (
     <div className="col-lg-12 order-1 px-0">
+      {loading && <LoadingPage loading={loading} />}
       <div className="card card-custom card-stretch gutter-b">
         <div className="card-body py-4">
           <form onSubmit={submitHandler}>
@@ -692,8 +710,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 </button>
               </div>
               <small className="text-muted">
-                Format Image (.png/.jpg), Rekomendasi 1024x1024. dan Max size
-                2MB
+                Format Image (.png/.jpg), Rekomendasi 1024x1024
               </small>
             </div>
 
@@ -736,8 +753,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 </button>
               </div>
               <small className="text-muted">
-                Format Image (.png/.jpg), Rekomendasi 837 x 380. dan Max size
-                2MB
+                Format Image (.png/.jpg), Rekomendasi 837 x 380
               </small>
             </div>
 
@@ -772,9 +788,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   <i className="ri-delete-bin-fill p-0 text-white"></i>
                 </button>
               </div>
-              <small className="text-muted">
-                Format File (.pdf) & Max 2 mb
-              </small>
+              <small className="text-muted">Format File (.pdf)</small>
             </div>
 
             <div className="form-group row mb-0 pt-2">
@@ -987,23 +1001,26 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="ckeditor">
                 {editorLoaded ? (
-                  <CKEditor
-                    editor={ClassicEditor}
-                    data={description}
-                    onReady={(editor) => {
-                      // You can store the "editor" and use when it is needed.
-                    }}
-                    onChange={(event, editor) => {
-                      const data = editor.getData();
-                      setDescription(data);
-                    }}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("deskripsi")
-                    }
-                    config={{
-                      placeholder: "Silahkan Masukan Deskripsi Detail",
-                    }}
-                  />
+                  // <CKEditor
+                  //   editor={ClassicEditor}
+                  //   data={description}
+                  //   onReady={(editor) => {
+                  //     // You can store the "editor" and use when it is needed.
+                  //   }}
+                  //   onChange={(event, editor) => {
+                  //     const data = editor.getData();
+                  //     setDescription(data);
+                  //   }}
+                  //   onBlur={() =>
+                  //     simpleValidator.current.showMessageFor("deskripsi")
+                  //   }
+                  //   config={{
+                  //     placeholder: "Silahkan Masukan Deskripsi Detail",
+                  //   }}
+                  // />
+                  <div style={{ width: "100%", height: "250px" }}>
+                    <div ref={quillRef} style={{ fontFamily: "Poppins" }} />
+                  </div>
                 ) : (
                   <p>Tunggu Sebentar</p>
                 )}
@@ -1016,7 +1033,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
               </div>
             </div>
 
-            <h3 className="font-weight-bolder pt-3">Kuota</h3>
+            <h3 className="font-weight-bolder style-quill-margin">Kuota</h3>
 
             <div className="form-group row mb-2">
               <div className="col-sm-12 col-md-6">
@@ -1371,7 +1388,12 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     className="form-check-input"
                     value="Offline"
                     checked={metodeTraining === "Offline"}
-                    onClick={() => setMetodeTraining("Offline")}
+                    onClick={() => {
+                      setMetodeTraining("Offline");
+                      setAddress("");
+                      setProvince("");
+                      setCity("");
+                    }}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("metode pelatihan")
                     }
@@ -1399,7 +1421,12 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     className="form-check-input"
                     value="Online&Offline"
                     checked={metodeTraining === "Online dan Offline"}
-                    onClick={() => setMetodeTraining("Online dan Offline")}
+                    onClick={() => {
+                      setMetodeTraining("Online dan Offline");
+                      setAddress("");
+                      setProvince("");
+                      setCity("");
+                    }}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("metode pelatihan")
                     }
@@ -1417,80 +1444,88 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
               </div>
             </div>
 
-            <h3 className="font-weight-bolder pt-3">Lokasi Pelatihan</h3>
+            {metodeTraining !== "Online" && (
+              <>
+                <h3 className="font-weight-bolder pt-3">Lokasi Pelatihan</h3>
 
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">Alamat</label>
-              <textarea
-                value={address}
-                rows="6"
-                className="form-control"
-                onChange={(e) => setAddress(e.target.value)}
-                onBlur={() => simpleValidator.current.showMessageFor("alamat")}
-                placeholder="Silahkan Masukan Alamat Disini"
-              />
-              {simpleValidator.current.message(
-                "alamat",
-                address,
-                metodeTraining !== "Online" ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </div>
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Alamat
+                  </label>
+                  <textarea
+                    value={address}
+                    rows="6"
+                    className="form-control"
+                    onChange={(e) => setAddress(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("alamat")
+                    }
+                    placeholder="Silahkan Masukan Alamat Disini"
+                  />
+                  {simpleValidator.current.message(
+                    "alamat",
+                    address,
+                    metodeTraining !== "Online" ? "required" : "",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </div>
 
-            <div className="form-group row mb-2">
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Provinsi
-                </label>
-                <Select
-                  options={optionsProvinsi}
-                  defaultValue={province}
-                  onChange={(e) => {
-                    setProvince({ label: e?.label, value: e?.value });
-                    setCity(null);
-                    dispatch(dropdownKabupaten(token, e.value));
-                  }}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("provinsi")
-                  }
-                />
-                {simpleValidator.current.message(
-                  "provinsi",
-                  province,
-                  metodeTraining !== "Online" ? "required" : "",
-                  {
-                    className: "text-danger",
-                  }
-                )}
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Kota / Kabupaten
-                </label>
-                <Select
-                  ref={(ref) => (selectRefKabupaten = ref)}
-                  options={optionsKabupaten}
-                  defaultValue={city}
-                  value={city}
-                  onChange={(e) =>
-                    setCity({ value: e?.value, label: e?.label })
-                  }
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("kota/kabupaten")
-                  }
-                />
-                {simpleValidator.current.message(
-                  "kota/kabupaten",
-                  city,
-                  metodeTraining !== "Online" ? "required" : "",
-                  {
-                    className: "text-danger",
-                  }
-                )}
-              </div>
-            </div>
+                <div className="form-group row mb-2">
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Provinsi
+                    </label>
+                    <Select
+                      options={optionsProvinsi}
+                      defaultValue={province}
+                      onChange={(e) => {
+                        setProvince({ label: e?.label, value: e?.value });
+                        setCity(null);
+                        dispatch(dropdownKabupaten(token, e.value));
+                      }}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("provinsi")
+                      }
+                    />
+                    {simpleValidator.current.message(
+                      "provinsi",
+                      province,
+                      metodeTraining !== "Online" ? "required" : "",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Kota / Kabupaten
+                    </label>
+                    <Select
+                      ref={(ref) => (selectRefKabupaten = ref)}
+                      options={optionsKabupaten}
+                      defaultValue={city}
+                      value={city}
+                      onChange={(e) =>
+                        setCity({ value: e?.value, label: e?.label })
+                      }
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("kota/kabupaten")
+                      }
+                    />
+                    {simpleValidator.current.message(
+                      "kota/kabupaten",
+                      city,
+                      metodeTraining !== "Online" ? "required" : "",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
 
             <div className="form-group row mb-0">
               <label className="col-form-label font-weight-bold col-sm-2">

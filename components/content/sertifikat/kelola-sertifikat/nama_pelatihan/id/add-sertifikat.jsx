@@ -20,11 +20,13 @@ import {
 import * as moment from "moment";
 import { Modal } from "react-bootstrap";
 import { SweatAlert } from "../../../../../../utils/middleware/helper";
+import Cookies from "js-cookie";
 
 export default function TambahMasterSertifikat({ token }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const { query } = router;
+	const token_permission = Cookies.get("token_permission");
 
 	// #Div Reference Lembar 1
 	const divReference = useRef(null);
@@ -384,7 +386,7 @@ export default function TambahMasterSertifikat({ token }) {
 
 				formData.append("status_migrate_id", status);
 
-				dispatch(newSertifikat(id, formData, token));
+				dispatch(newSertifikat(id, formData, token, token_permission));
 			} else {
 				simpleValidator.current.showMessages();
 				forceUpdate(1);

@@ -21,7 +21,7 @@ import PollingComponent from "./edit-soal/polling-component";
 import CheckboxComponent from "./edit-soal/checkbox-component";
 import BlankComponent from "./edit-soal/blank-component";
 
-const EditSoalTrivia = ({ token }) => {
+const EditSoalTrivia = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const importSwitch = () => import("bootstrap-switch-button-react");
@@ -144,7 +144,9 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateTriviaQuestionDetail(id, data, token));
+          dispatch(
+            updateTriviaQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       case "checkbox":
@@ -160,7 +162,9 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateTriviaQuestionDetail(id, data, token));
+          dispatch(
+            updateTriviaQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       case "fill_in_the_blank":
@@ -176,7 +180,9 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateTriviaQuestionDetail(id, data, token));
+          dispatch(
+            updateTriviaQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       default:

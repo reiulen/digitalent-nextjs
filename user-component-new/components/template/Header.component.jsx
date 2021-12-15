@@ -13,10 +13,10 @@ const Header = () => {
   const router = useRouter();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
   const { error: errorPelatihan, pelatihan } = useSelector(
-    state => state.getPelatihan
+    (state) => state.getPelatihan
   );
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
@@ -61,7 +61,7 @@ const Header = () => {
     }, 1000);
   };
 
-  const set = e => {
+  const set = (e) => {
     e = e < 10 ? "0" + e : e;
     return e;
   };
@@ -72,7 +72,7 @@ const Header = () => {
     // localStorage.setItem("viewEdit", false);
   };
 
-  const handleProfile = e => {
+  const handleProfile = (e) => {
     localStorage.setItem("btn", 0);
   };
 
@@ -159,7 +159,7 @@ const Header = () => {
                           localStorage.getItem("btn") === "0" ? (
                           <>
                             <a
-                              onClick={event => handleProfile(event)}
+                              onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
                               Profil
@@ -192,7 +192,7 @@ const Header = () => {
                           localStorage.getItem("btn") === "1" ? (
                           <>
                             <a
-                              onClick={event => handleProfile(event)}
+                              onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
                               Profil
@@ -225,7 +225,7 @@ const Header = () => {
                           localStorage.getItem("btn") === "2" ? (
                           <>
                             <a
-                              onClick={event => handleProfile(event)}
+                              onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
                               Profil
@@ -258,7 +258,7 @@ const Header = () => {
                           localStorage.getItem("btn") === "3" ? (
                           <>
                             <a
-                              onClick={event => handleProfile(event)}
+                              onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
                               Profil
@@ -413,7 +413,8 @@ const Header = () => {
                             ></i>
                           </div>
                           <div className="p-1">
-                            {thisDay} , <span id="jam">{jam}</span>
+                            {thisDay} {moment().format("ll")} ,{" "}
+                            <span id="jam">{jam}</span>
                           </div>
                         </div>
                       </Col>

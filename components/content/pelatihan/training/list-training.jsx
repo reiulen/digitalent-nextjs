@@ -41,11 +41,13 @@ import {
 	dropdownTemabyAkademi,
 	dropdownKabupaten,
 } from "../../../../redux/actions/pelatihan/function.actions";
+import Cookies from "js-cookie";
 
 const ListTraining = ({ token }) => {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	let { success } = router.query;
+	const token_permission = Cookies.get("token_permission");
 
 	const { error: errorRevisi, revisi } = useSelector(
 		(state) => state.listRevisi
@@ -202,7 +204,10 @@ const ListTraining = ({ token }) => {
 								null,
 								null,
 								null,
-								token
+								null,
+								token,
+								null,
+								token_permission
 							)
 						);
 					}
@@ -228,7 +233,10 @@ const ListTraining = ({ token }) => {
 								null,
 								null,
 								null,
-								token
+								null,
+								token,
+								null,
+								token_permission
 							)
 						);
 					}
@@ -251,7 +259,10 @@ const ListTraining = ({ token }) => {
 					null,
 					null,
 					null,
-					token
+					null,
+					token,
+					null,
+					token_permission
 				)
 			);
 			dispatch({
@@ -301,8 +312,10 @@ const ListTraining = ({ token }) => {
 				penyelenggara != null ? penyelenggara.label : null,
 				academy !== null ? academy.label : null,
 				theme !== null ? theme.label : null,
+				statusPublish != null ? statusPublish.label : null,
 				token,
-				berjalan
+				berjalan,
+				token_permission
 			)
 		);
 	};
@@ -321,7 +334,10 @@ const ListTraining = ({ token }) => {
 				null,
 				null,
 				null,
-				token
+				null,
+				token,
+				null,
+				token_permission
 			)
 		);
 	};
@@ -350,7 +366,8 @@ const ListTraining = ({ token }) => {
 				theme != null ? theme.label : null,
 				statusPublish != null ? statusPublish.label : null,
 				token,
-				berjalan
+				berjalan,
+				token_permission
 			)
 		);
 	};
@@ -379,7 +396,9 @@ const ListTraining = ({ token }) => {
 				null,
 				null,
 				null,
-				token
+				token,
+				null,
+				token_permission
 			)
 		);
 	};
@@ -400,7 +419,9 @@ const ListTraining = ({ token }) => {
 				null,
 				null,
 				null,
-				token
+				token,
+				null,
+				token_permission
 			)
 		);
 	};
@@ -410,7 +431,7 @@ const ListTraining = ({ token }) => {
 			status_publish: val,
 			pelatian_id: id,
 		};
-		dispatch(updateStatusPublish(data, token));
+		dispatch(updateStatusPublish(data, token, token_permission));
 	};
 
 	const handleStatusPelatihan = (id, val) => {
@@ -418,7 +439,7 @@ const ListTraining = ({ token }) => {
 			status_pelatihan: val,
 			pelatian_id: id,
 		};
-		dispatch(updateStatusPelatihan(data, token));
+		dispatch(updateStatusPelatihan(data, token, token_permission));
 	};
 
 	const onNewReset = () => {
@@ -487,7 +508,9 @@ const ListTraining = ({ token }) => {
 					null,
 					null,
 					null,
-					token
+					token,
+					null,
+					token_permission
 				)
 			);
 		} else if (type === "status_substansi") {
@@ -515,7 +538,9 @@ const ListTraining = ({ token }) => {
 					null,
 					null,
 					null,
-					token
+					token,
+					null,
+					token_permission
 				)
 			);
 		} else if (type === "WhereInPelatihan") {
@@ -544,7 +569,8 @@ const ListTraining = ({ token }) => {
 					null,
 					null,
 					token,
-					val
+					val,
+					token_permission
 				)
 			);
 		} else {
@@ -572,7 +598,8 @@ const ListTraining = ({ token }) => {
 					null,
 					null,
 					token,
-					val
+					val,
+					token_permission
 				)
 			);
 		}
@@ -599,9 +626,11 @@ const ListTraining = ({ token }) => {
 				tema: theme !== null ? theme.label : "",
 				WhereInPelatihan: berjalan,
 				status_substansi: statusSubstansi !== null ? statusSubstansi.label : "",
+				status_publish: statusPublish != null ? statusPublish.label : null,
 			},
 			headers: {
 				Authorization: "Bearer " + token,
+				Permission: token_permission,
 			},
 		};
 

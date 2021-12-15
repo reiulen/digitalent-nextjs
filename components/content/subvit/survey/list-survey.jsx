@@ -7,6 +7,7 @@ import stylesPag from "../../../../styles/pagination.module.css";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import Image from "next/dist/client/image";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,8 +16,10 @@ import {
   getAllSurveyQuestionBanks,
 } from "../../../../redux/actions/subvit/survey-question.actions";
 import { DELETE_SURVEY_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/survey-question.type";
+import { getAllSurveyQuestionDetail } from "../../../../redux/actions/subvit/survey-question-detail.action";
+import { Card, Col, Collapse, Form, Modal, Row } from "react-bootstrap";
 
-const ListSurvey = ({ token }) => {
+const ListSurvey = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -39,16 +42,19 @@ const ListSurvey = ({ token }) => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
-
+  const [viewSoal, setViewSoal] = useState(false);
+  const [open, setOpen] = useState(true);
   useEffect(() => {
     if (isDeleted) {
       dispatch({
         type: DELETE_SURVEY_QUESTION_BANKS_RESET,
       });
-      dispatch(getAllSurveyQuestionBanks(page, "", limit, token));
+      dispatch(
+        getAllSurveyQuestionBanks(page, "", limit, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, dispatch, page, limit, token]);
+  }, [isDeleted, dispatch, page, limit, token, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
@@ -93,7 +99,7 @@ const ListSurvey = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSurveyQuestionBanks(id, token));
+        dispatch(deleteSurveyQuestionBanks(id, token, tokenPermission));
       }
     });
   };
@@ -173,6 +179,25 @@ const ListSurvey = ({ token }) => {
       return "Selesai";
     }
   };
+
+  const handleModal = (id) => {
+    dispatch(
+      getAllSurveyQuestionDetail(
+        id,
+        1,
+        100,
+
+        "",
+        token,
+        tokenPermission
+      )
+    );
+    setViewSoal(true);
+  };
+
+  const { survey_question_detail } = useSelector(
+    (state) => state.allSurveyQuestionDetail
+  );
 
   return (
     <PageWrapper>
@@ -398,6 +423,17 @@ const ListSurvey = ({ token }) => {
                                         <i className="ri-eye-fill p-0 text-white"></i>
                                       </a>
                                     </Link>
+                                    {row?.bank_soal !== 0 && (
+                                      <a
+                                        onClick={() => handleModal(row?.id)}
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Review Soal"
+                                      >
+                                        <i className="ri-file-text-fill p-0 text-white"></i>
+                                      </a>
+                                    )}
                                     <Link
                                       href={`/subvit/survey/report?id=${row.id}`}
                                     >
@@ -531,6 +567,215 @@ const ListSurvey = ({ token }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={viewSoal}
+        onHide={() => setViewSoal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Review Soal</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setViewSoal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body style={{ overflowY: "scroll", height: "500px" }}>
+          <Row>
+            <Col ms={12}>
+              {survey_question_detail?.list_questions && (
+                <>
+                  {survey_question_detail?.list_questions?.map(
+                    (item, index) => {
+                      return (
+                        <>
+                          <Card
+                            style={{
+                              padding: "15px",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <h4>Soal {index + 1}</h4>
+                            <Card
+                              style={{
+                                marginTop: "10px",
+
+                                padding: "15px",
+                              }}
+                            >
+                              <div className="d-flex flex-row">
+                                <div className="mr-3">
+                                  {item.question_image ? (
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.question_image
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                <div>
+                                  {" "}
+                                  <h5>{item.question}</h5>
+                                </div>
+                              </div>
+
+                              {item.answer !== null ? (
+                                JSON.parse(item?.answer).map((anw) => {
+                                  return (
+                                    <>
+                                      <div className="d-flex flex-row ">
+                                        <div className="mt-6">
+                                          {anw.image !== "" ? (
+                                            <Image
+                                              src={
+                                                process.env
+                                                  .END_POINT_API_IMAGE_SUBVIT +
+                                                anw.image
+                                              }
+                                              alt=""
+                                              width={40}
+                                              height={40}
+                                            />
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                        <div style={{ width: "100%" }}>
+                                          <Card
+                                            onClick={() => setOpen(true)}
+                                            style={{
+                                              padding: "5px",
+                                              marginTop: "15px",
+                                              margin: "10px",
+                                            }}
+                                            className={
+                                              anw.key === item.answer_key
+                                                ? styles.answer
+                                                : ""
+                                            }
+                                          >
+                                            <p
+                                              style={{
+                                                padding: "5px",
+                                                marginTop: "5px",
+                                              }}
+                                            >
+                                              {anw.key} . {anw.option}
+                                            </p>
+                                          </Card>
+                                        </div>
+                                      </div>
+
+                                      <Collapse
+                                        in={open}
+                                        dimension="width"
+                                        style={{ padding: "10px 20px" }}
+                                      >
+                                        <div id="example-collapse-text">
+                                          {anw?.sub?.map((s) => {
+                                            return (
+                                              <>
+                                                <div className="d-flex flex-row">
+                                                  <div className="mr-3">
+                                                    {s.image !== "" ? (
+                                                      <Image
+                                                        src={
+                                                          process.env
+                                                            .END_POINT_API_IMAGE_SUBVIT +
+                                                          s.image
+                                                        }
+                                                        alt=""
+                                                        width={70}
+                                                        height={70}
+                                                      />
+                                                    ) : (
+                                                      ""
+                                                    )}
+                                                  </div>
+                                                  <div>
+                                                    {" "}
+                                                    <h5>{s.question}</h5>
+                                                  </div>
+                                                </div>
+                                                {s.answer.map((sw) => {
+                                                  return (
+                                                    <>
+                                                      <Card
+                                                        style={{
+                                                          padding: "5px",
+                                                          marginTop: "15px",
+                                                          margin: "10px",
+                                                        }}
+                                                        className={
+                                                          sw.key ===
+                                                          item.answer_key
+                                                            ? styles.answer
+                                                            : ""
+                                                        }
+                                                      >
+                                                        <p
+                                                          style={{
+                                                            padding: "5px",
+                                                            marginTop: "5px",
+                                                          }}
+                                                        >
+                                                          {sw.key} . {sw.option}
+                                                        </p>
+                                                      </Card>
+                                                    </>
+                                                  );
+                                                })}
+                                              </>
+                                            );
+                                          })}
+                                        </div>
+                                      </Collapse>
+                                    </>
+                                  );
+                                })
+                              ) : (
+                                <Form>
+                                  <Form.Control
+                                    as="textarea"
+                                    style={{ marginTop: "10px" }}
+                                    rows={5}
+                                    placeholder="Jelaskan jawaban Anda di sini..."
+                                    className={styles.textArea}
+                                    disabled
+                                  />
+                                </Form>
+                              )}
+                            </Card>
+                          </Card>
+                        </>
+                      );
+                    }
+                  )}
+                </>
+              )}
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+            type="button"
+            onClick={() => setViewSoal(false)}
+          >
+            Kembali
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };

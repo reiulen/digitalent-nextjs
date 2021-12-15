@@ -43,6 +43,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const cookiePermission = req.cookies.token_permission
+
       // if (!session) {
       //   return {
       //     redirect: {
@@ -52,13 +55,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   };
       // }
 
-      await store.dispatch(fetchAllMK(session.user.user.data.token));
-      await store.dispatch(fetchListSelectMitra(session.user.user.data.token));
+      await store.dispatch(fetchAllMK(session.user.user.data.token, cookiePermission));
+      await store.dispatch(fetchListSelectMitra(session.user.user.data.token, cookiePermission));
       await store.dispatch(
-        fetchListSelectCooperation(session.user.user.data.token)
+        fetchListSelectCooperation(session.user.user.data.token, cookiePermission)
       );
-      await store.dispatch(fetchListSelectStatus(session.user.user.data.token));
-      await store.dispatch(getPartnershipPermissions(session.user.user.data.token))
+      await store.dispatch(fetchListSelectStatus(session.user.user.data.token, cookiePermission));
+      await store.dispatch(getPartnershipPermissions(session.user.user.data.token, cookiePermission))
         
       return {
         props: { session, title: "Kerjasama - Partnership" },
