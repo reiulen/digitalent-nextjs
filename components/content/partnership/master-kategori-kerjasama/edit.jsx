@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie"
 
 const Edit = ({ token }) => {
   const router = useRouter();
@@ -118,6 +119,7 @@ const Edit = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -131,7 +133,7 @@ const Edit = ({ token }) => {
               }
             );
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -148,27 +150,28 @@ const Edit = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
 
         let arr = [],
           arr_new = [];
-        data.data.cooperation_category_forms.forEach((item) => {
+        data?.data?.cooperation_category_forms?.forEach((item) => {
           item.isTipe = "old";
           arr.push(item);
         });
-        data.data.cooperation_category_forms.forEach((item) => {
+        data?.data?.cooperation_category_forms?.forEach((item) => {
           item.name = item.cooperation_form;
           item.isTipe = "old";
           arr_new.push(item);
         });
         setStateDataSingle(arr_new);
         setStateDataSingleOld(arr);
-        setCategoryCooporation(data.data.cooperation_categories);
-        setStatus(data.data.status);
+        setCategoryCooporation(data?.data?.cooperation_categories);
+        setStatus(data?.data?.status);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error")
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
       }
     }
     getSingleData(router.query.id, token);
@@ -283,7 +286,7 @@ const Edit = ({ token }) => {
                             name="cooperation_form"
                             className="form-control"
                             placeholder="Tujuan Kerjasama"
-                            value={item.cooperation_form}
+                            value={item?.cooperation_form}
                             onChange={(e) => handleChange(e, index)}
                           />
                         </div>

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Style from "../../../../styles/progressbar.module.css";
 import axios from "axios";
+import Cookies from "js-cookie"
 
 function Pembahasan({ token }) {
   const router = useRouter();
@@ -21,12 +22,13 @@ function Pembahasan({ token }) {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
-        setStatus(data.data.status_migrates_id.status);
+        setStatus(data?.data?.status_migrates_id?.status);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error")
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
       }
     }
     cekProgresStatus(router.query.id);
@@ -162,7 +164,6 @@ function Pembahasan({ token }) {
                     ) : (
                       ""
                     )}
-
                   </div>
                 </div>
               </div>

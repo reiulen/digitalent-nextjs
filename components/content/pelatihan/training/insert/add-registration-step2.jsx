@@ -22,10 +22,12 @@ import FormManual from "../components/step-registration/form-manual";
 import FormCopy from "../components/step-registration/form-copy";
 import FormCopyEdit from "../components/step-registration/form-copy-edit";
 import { getDetailMasterPelatihan } from "../../../../../redux/actions/pelatihan/master-pendaftaran.action";
+import Cookies from "js-cookie";
 
 const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { registrationData } = useSelector((state) => state.registrationStep2);
   const { data: dataForm, error: errorDropdownForm } = useSelector(
@@ -68,6 +70,10 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
     {
       value: "date",
       name: "Input Date",
+    },
+    {
+      value: "triggered",
+      name: "Triggered",
     },
   ]);
 
@@ -151,7 +157,7 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
     if (registrationData.type_form === "0") {
       setTitleCopy("");
       setFormBuilderCopy([]);
-      dispatch(getDetailMasterPelatihan(99999, token));
+      dispatch(getDetailMasterPelatihan(99999, token, token_permission));
       setTitleCopyEdit("");
       setFormBuilderCopyEdit([]);
     } else if (registrationData.type_form === "1") {

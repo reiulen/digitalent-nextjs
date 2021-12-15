@@ -214,7 +214,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                 <div
                   className={`${
                     router.pathname === "/peserta/survey" ||
-                    router.pathname === "/peserta/done-survey"
+                    router.pathname === "/peserta/done-survey" ||
+                    router.pathname.includes("survey")
                       ? styles.activeMenuItem
                       : styles.menuItem
                   } d-flex flex-row`}
@@ -223,7 +224,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                     <div
                       className={`${
                         router.pathname === "/peserta/survey" ||
-                        router.pathname === "/peserta/done-survey"
+                        router.pathname === "/peserta/done-survey" ||
+                        router.pathname.includes("survey")
                           ? styles.activeIconMenu
                           : styles.iconMenu
                       } ri-chat-smile-line`}
@@ -240,7 +242,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                 <div
                   className={`${
                     router.pathname === "/peserta/trivia" ||
-                    router.pathname === "/peserta/done-trivia"
+                    router.pathname === "/peserta/done-trivia" ||
+                    router.pathname.includes("trivia")
                       ? styles.activeMenuItem
                       : styles.menuItem
                   } d-flex flex-row`}
@@ -249,7 +252,8 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
                     <div
                       className={`${
                         router.pathname === "/peserta/trivia" ||
-                        router.pathname === "/peserta/done-trivia"
+                        router.pathname === "/peserta/done-trivia" ||
+                        router.pathname.includes("trivia")
                           ? styles.activeIconMenu
                           : styles.iconMenu
                       } ri-lightbulb-line`}

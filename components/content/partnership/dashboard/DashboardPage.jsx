@@ -26,26 +26,23 @@ export default function DashboardPage({ token }) {
   const colors = ["#215480", "#4299E1", "#357AB4"];
   const [dataPieChartStatusPengajuan, setDataPieChartStatusPengajuan] =
     useState([]);
+
   const [dataPieChartPengajuanDisetujui, setDataPieChartPengajuanDisetujui] =
     useState([]);
 
   const [errorGetData, setErrorGetData] = useState("");
+  const cookiePermission = Cookies.get("token_permission")
 
   useEffect(() => {
     // dispatch (fetchDashboard(token))
-
     async function fetchDashboards() {
-      // const cookiePermission = Cookies.get("token_permission")
-      
       try {
         let { data } = await axios.get(
           `${process.env.END_POINT_API_PARTNERSHIP}api/dashbord`,
           {
             headers: {
               authorization: `Bearer ${token}`,
-              // permissionToken: localStorage.getItem("token-permission")
-              // permissionToken: "U2FsdGVkX1/8bJA1yPuTitjBQIWEy1GEsyNFohOq7F2PIsPVfNgnmPPOWcJXAKFEgbMppK8Fyw0xReLhnj+Pmf6udk18GMKI1929EvT0DZafMFtuR/iRg3fz1L1ntUCC8J9DXy/FmNThOaTiYI7q8Q355IC5RgKGtHfkQxDRDLfS/XwQ8y1hnRRurzZgJAV9cTJs/7ZPQbI5r0E1ymvHbg6hzwCXeONeRcX3U7rsXaO6ouwfN6/ymcJUEGMxVNv/64NkXTk0ISzV06+jyuhoT/on/emeQ6prfLCjaPxzDDCdSlUKAD3kA/FYLAtJKdyUZVkQMx1T9d5UIuI1eO8WZfP0jV+R12qrzM12QCsr5jiTJTe2UiCGWhm3fLdJJKMKPxWJJyHyhGLE47qFGjK84iEVvqAvuSGyGOPCjN7g49ARR0H9vBC0qCtekN/58zGfyqGORFjcZFLSlKnsTQip1U2qgPvDTf6b6rot3gSsEYJRyhhG3ksp1uyFDxGmNR+qfo4C/iQ4qodADfQg+mFGOx2mVhMuj+8wcbRD6XW9v0vmAHiW/Zx+bN4/dOYsaLrGdnWssuoNi9yIRCVPkqYImGRgMI2A2BM7/ZpRrD8/HvI="
-              // permissionToken: cookiePermission
+              Permission: cookiePermission
             },
           }
         );
@@ -80,7 +77,7 @@ export default function DashboardPage({ token }) {
       setUser(session.user.user.data.user);
     });
 
-  }, [dispatch, token]);
+  }, [dispatch, token, cookiePermission]);
 
   return (
     <PageWrapper>
@@ -126,7 +123,7 @@ export default function DashboardPage({ token }) {
                     {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
 
                     <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
-                      {allDashboard.data_dashboard.data?.mitra}
+                      {allDashboard?.data_dashboard?.data?.mitra}
                     </h1>
                   </div>
 
@@ -170,7 +167,7 @@ export default function DashboardPage({ token }) {
                     />
 
                     <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
-                      {allDashboard.data_dashboard.data?.cooperation}
+                      {allDashboard?.data_dashboard?.data?.cooperation}
                     </h1>
                   </div>
 
@@ -211,16 +208,16 @@ export default function DashboardPage({ token }) {
               Berdasarkan Pengajuan Aktif & Tidak Aktif
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              {allDashboard.data_dashboard.data?.cooperation_active +
-                allDashboard.data_dashboard.data?.cooperation_approved}&nbsp;
+              {allDashboard?.data_dashboard?.data?.cooperation_active +
+                allDashboard?.data_dashboard?.data?.cooperation_approved}&nbsp;
               Total Aktif dan Tidak Aktif
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
-                {!allDashboard.data_dashboard.data?.cooperation_active
+                {!allDashboard.data_dashboard?.data?.cooperation_active
                   ? 0
-                  : allDashboard.data_dashboard.data?.cooperation_active +
-                    allDashboard.data_dashboard.data?.cooperation_approved}
+                  : allDashboard?.data_dashboard?.data?.cooperation_active +
+                    allDashboard?.data_dashboard?.data?.cooperation_approved}
               </span>
               
               <div className="col-12">
@@ -259,7 +256,7 @@ export default function DashboardPage({ token }) {
 
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
-                        {allDashboard.data_dashboard.data?.cooperation_active}
+                        {allDashboard?.data_dashboard?.data?.cooperation_active}
                       </p>
                     </div>
                   </div>
@@ -283,7 +280,7 @@ export default function DashboardPage({ token }) {
 
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
-                        {allDashboard.data_dashboard.data?.cooperation_non_active}
+                        {allDashboard?.data_dashboard?.data?.cooperation_non_active}
                       </p>
                     </div>
                   </div>
@@ -307,14 +304,14 @@ export default function DashboardPage({ token }) {
               Berdasarkan Pengajuan Akan Berakhir & Ditolak
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              {allDashboard.data_dashboard.data?.cooperation_will_expired +
-                allDashboard.data_dashboard.data?.cooperation_rejected}{" "}
+              {allDashboard?.data_dashboard?.data?.cooperation_will_expired +
+                allDashboard?.data_dashboard?.data?.cooperation_rejected}{" "}
               Total Akan Berakhir & Ditolak
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
-                {allDashboard.data_dashboard.data?.cooperation_will_expired +
-                  allDashboard.data_dashboard.data?.cooperation_rejected}
+                {allDashboard?.data_dashboard?.data?.cooperation_will_expired +
+                  allDashboard?.data_dashboard?.data?.cooperation_rejected}
               </span>
               
               <div className="col-12">
@@ -353,7 +350,7 @@ export default function DashboardPage({ token }) {
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
                         {
-                          allDashboard.data_dashboard.data
+                          allDashboard?.data_dashboard?.data
                             ?.cooperation_will_expired
                         }
                       </p>
@@ -380,7 +377,7 @@ export default function DashboardPage({ token }) {
 
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
-                        {allDashboard.data_dashboard.data?.cooperation_rejected}
+                        {allDashboard?.data_dashboard?.data?.cooperation_rejected}
                       </p>
                     </div>
                   </div>

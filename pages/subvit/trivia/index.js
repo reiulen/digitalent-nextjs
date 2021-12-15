@@ -22,7 +22,7 @@ export default function Trivia(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListTrivia token={session.token} />
+        <ListTrivia token={session.token} tokenPermission={props.permission} />
       </div>
     </>
   );
@@ -68,7 +68,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Trivia - Subvit" },
+        props: { session, title: "Trivia - Subvit", permission },
       };
     }
 );

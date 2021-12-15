@@ -29,6 +29,8 @@ import LoadingTable from "../../../LoadingTable";
 
 import Swal from "sweetalert2";
 
+import Cookies from "js-cookie"
+
 const Table = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -38,6 +40,8 @@ const Table = ({ token }) => {
   const { permission } = useSelector ((state) => state.partnershipPermissions)
 
   const [keyWord, setKeyWord] = useState("");
+
+  const cookiePermission = Cookies.get("token_permission")
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,7 +64,7 @@ const Table = ({ token }) => {
         let formData = new FormData();
         formData.append("_method", "put");
         formData.append("status", e.target.value);
-        dispatch(changeStatusList(token, formData, id));
+        dispatch(changeStatusList(token, formData, id, cookiePermission));
         setSuccessDelete(false);
         setIsStatusBar(true);
         router.replace("/partnership/mitra", undefined, { shallow: true });
@@ -83,7 +87,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteMitra(token, id));
+        dispatch(deleteMitra(token, id, cookiePermission));
         setSuccessDelete(true);
         router.replace(`/partnership/mitra`);
       }
@@ -96,22 +100,24 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
+    // dispatch(fetchMitra(token, cookiePermission));
     dispatch(fetchMitra(token));
     dispatch(cancelChangeProvinces(token));
   }, [
     dispatch,
-    allMitra.keyword,
-    allMitra.status_reload,
-    allMitra.page,
-    allMitra.limit,
-    allMitra.card,
+    allMitra?.keyword,
+    allMitra?.status_reload,
+    allMitra?.page,
+    allMitra?.limit,
+    allMitra?.card,
     update,
     token,
+    cookiePermission
   ]);
 
   return (
     <PageWrapper>
-      {success ? (
+      {success === "true" ? (
         <AlertBar
           text="Berhasil menyimpan data"
           className="alert-light-success"
@@ -120,7 +126,18 @@ const Table = ({ token }) => {
       ) : (
         ""
       )}
-      {update ? (
+
+      {success === "false" ? (
+        <AlertBar
+          text="Gagal menyimpan data"
+          className="alert-light-danger"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+
+      {update === "true"? (
         <AlertBar
           text="Berhasil mengubah data"
           className="alert-light-success"
@@ -129,6 +146,17 @@ const Table = ({ token }) => {
       ) : (
         ""
       )}
+
+      {update === "false"? (
+        <AlertBar
+          text="Gagal mengubah data"
+          className="alert-light-danger"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+
       {successDelete ? (
         <AlertBar
           text="Berhasil menghapus data"
@@ -138,6 +166,7 @@ const Table = ({ token }) => {
       ) : (
         ""
       )}
+
       {isStatusBar ? (
         <AlertBar
           text="Berhasil mengubah data"
@@ -147,6 +176,7 @@ const Table = ({ token }) => {
       ) : (
         ""
       )}
+      
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div 
@@ -215,15 +245,24 @@ const Table = ({ token }) => {
               <div className="col-12 col-md-4 col-xl-8 ">
                 <div className="d-flex align-items-center justify-content-md-end justify-content-start mt-5  mt-md-2">
                   {/* disini sortir modal */}
-
-                  <button
-                    type="button"
-                    onClick={() => dispatch(exportFileCSV(token))}
-                    className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
-                    style={{ width: "max-content" }}
-                  >
-                    Export .xlsx
-                  </button>
+                  
+                  {
+                    permission ? 
+                      permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                        <button
+                          type="button"
+                          onClick={() => dispatch(exportFileCSV(token))}
+                          className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
+                          style={{ width: "max-content" }}
+                        >
+                          Export .xlsx
+                        </button>
+                      :
+                        null
+                    :
+                      null
+                  }
+                  
                 </div>
               </div>
             </div>
@@ -251,28 +290,28 @@ const Table = ({ token }) => {
                   </tr>
                 }
                 tableBody={
-                  allMitra.status === "process" ? (
+                  allMitra?.status === "process" ? (
                     <tr>
                       <td colSpan="7" className="text-center">
                         <LoadingTable />
                       </td>
                     </tr>
-                  ) : allMitra.mitraAll.data &&
-                    allMitra.mitraAll.data.list_mitras.length === 0 ? (
+                  ) : allMitra?.mitraAll?.data &&
+                    allMitra?.mitraAll?.data?.list_mitras?.length === 0 ? (
                     <tr>
                       <td colSpan="6" className="text-center">
                         <h4>Data tidak ditemukan</h4>
                       </td>
                     </tr>
                   ) : (
-                    allMitra.mitraAll.data &&
-                    allMitra.mitraAll.data.list_mitras.map((item, index) => {
+                    allMitra?.mitraAll?.data &&
+                    allMitra?.mitraAll?.data?.list_mitras?.map((item, index) => {
                       return (
                         <tr key={index} style={{backgroundColor:item.visit == 0 ?"#f8f8ff":"inherit"}}>
                           <td className="text-left align-middle">
-                            {allMitra.page === 1
+                            {allMitra?.page === 1
                               ? index + 1
-                              : (allMitra.page - 1) * allMitra.limit +
+                              : (allMitra?.page - 1) * allMitra?.limit +
                                 (index + 1)}
                           </td>
                           <td className="align-middle text-left">
@@ -295,11 +334,11 @@ const Table = ({ token }) => {
                           </td>
                            
                           <td className="align-middle text-left text-overflow-ens">
-                            {item.user.name}
+                            {item?.user?.name}
                          
                           </td>
                           <td className="align-middle text-left ">
-                            {item.status == "1" ? (
+                            {item?.status == "1" ? (
                               <div className="position-relative w-max-content">
                                 <select
                                   name=""
@@ -308,6 +347,12 @@ const Table = ({ token }) => {
                                   key={index}
                                   onChange={(e) =>
                                     changeListStatus(token, e, item.id)
+                                  }
+                                  disabled={
+                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
+                                      false
+                                    :
+                                      true
                                   }
                                 >
                                   <option value="1">Aktif</option>
@@ -328,7 +373,13 @@ const Table = ({ token }) => {
                                   className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
                                   key={index}
                                   onChange={(e) =>
-                                    changeListStatus(token, e, item.id)
+                                    changeListStatus(token, e, item.id, )
+                                  }
+                                  disabled={
+                                    permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.mitra.manage") ?
+                                      false
+                                    :
+                                      true
                                   }
                                 >
                                   <option value="0">Tidak Aktif</option>
@@ -345,10 +396,10 @@ const Table = ({ token }) => {
                             )}
                           </td>
                           <td className="align-middle text-left text-overflow-ens">
-                            {item.website}
+                            {item?.website}
                           </td>
                           <td className="align-middle text-left text-overflow-ens">
-                            {item.cooperations_count} Kerjasama
+                            {item?.cooperations_count} Kerjasama
                           </td>
                           {
                             permission ? 
@@ -418,7 +469,7 @@ const Table = ({ token }) => {
                 }
                 pagination={
                   <Pagination
-                    activePage={allMitra.page}
+                    activePage={allMitra?.page}
                     itemsCountPerPage={allMitra?.mitraAll?.data?.perPage}
                     totalItemsCount={allMitra?.mitraAll?.data?.total}
                     pageRangeDisplayed={3}
@@ -432,7 +483,7 @@ const Table = ({ token }) => {
                   />
                 }
                 onChangeLimit={(e) => dispatch(setLimit(e.target.value))}
-                totalData={allMitra.totalDataMitra}
+                totalData={allMitra?.totalDataMitra}
               />
             }
           </div>

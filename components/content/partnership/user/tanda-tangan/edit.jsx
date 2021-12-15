@@ -9,6 +9,7 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import Image from "next/image";
+import Cookies from "js-cookie"
 
 const EditTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
@@ -96,16 +97,17 @@ const EditTandaTangan = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get ("token_permission")
                 },
               }
             );
 
             router.push({
-              pathname: `/partnership/tanda-tangan`,
+              pathname: `/partnership/user/tanda-tangan-digital`,
               query: { update: true },
             });
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -135,6 +137,7 @@ const EditTandaTangan = ({ token }) => {
                 {
                   headers: {
                     authorization: `Bearer ${token}`,
+                    Permission: Cookies.get ("token_permission")
                   },
                 }
               );
@@ -144,7 +147,7 @@ const EditTandaTangan = ({ token }) => {
                 query: { update: true },
               });
             } catch (error) {
-              Swal.fire("Gagal", `${error.response.data.message}`, "error");
+              Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
             }
           }
         });
@@ -166,15 +169,16 @@ const EditTandaTangan = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get ("token_permission")
             },
           }
         );
 
-        setNama(data.data.name);
-        setJabatan(data.data.position);
-        setTandaTangan(data.data.signature_image);
+        setNama(data?.data?.name);
+        setJabatan(data?.data?.position);
+        setTandaTangan(data?.data?.signature_image);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
       }
     }
     setDataSingle(router.query.id);
@@ -207,7 +211,7 @@ const EditTandaTangan = ({ token }) => {
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                 />
-                {error.nama ? <p className="error-text">{error.nama}</p> : ""}
+                {error?.nama ? <p className="error-text">{error?.nama}</p> : ""}
               </div>
               <div className="form-group">
                 <label
@@ -225,8 +229,8 @@ const EditTandaTangan = ({ token }) => {
                   value={jabatan}
                   onChange={(e) => setJabatan(e.target.value)}
                 />
-                {error.jabatan ? (
-                  <p className="error-text">{error.jabatan}</p>
+                {error?.jabatan ? (
+                  <p className="error-text">{error?.jabatan}</p>
                 ) : (
                   ""
                 )}

@@ -5,6 +5,7 @@ import { middlewareAuthAdminSession } from "../../../../../utils/middleware/auth
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
 import { getDetailLog } from "../../../../../redux/actions/site-management/settings/api.actions";
+
 const TambahApi = dynamic(
   () =>
     import(

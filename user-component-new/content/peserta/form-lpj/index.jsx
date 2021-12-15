@@ -66,13 +66,31 @@ const FormLPJ = ({ token }) => {
       }),
     };
 
-    axios
-      .post(link, setData, config)
-      .then((res) => {
-        router.push("/peserta/riwayat-pelatihan");
-        SweatAlert("Berhasil", res.data.data.message, "success");
-      })
-      .catch((err) => SweatAlert("Gagal", err.response.data.message, "error"));
+    Swal.fire({
+      title: "Apakah Anda Yakin ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Iya",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post(link, setData, config)
+          .then((res) => {
+            SweatAlert("Berhasil", res.data.data.message, "success");
+            router.push("/peserta/riwayat-pelatihan");
+          })
+          .catch((err) =>
+            SweatAlert("Gagal", err.response.data.message, "error")
+          );
+      }
+    });
+  };
+
+  const handleBack = () => {
+    router.push("/peserta/riwayat-pelatihan");
   };
 
   return (
@@ -242,13 +260,23 @@ const FormLPJ = ({ token }) => {
               </table>
             </p>
             <div style={{ textAlign: "right" }}>
-              <Button className={styles.btnBack} variant="link">
+              <Button
+                className={styles.btnBack}
+                variant="link"
+                onClick={handleBack}
+              >
                 Kembali
               </Button>
               <Button
                 className={styles.btnSend}
                 onClick={handlePost}
                 disabled={konfirmasi !== "1" || saran === ""}
+                style={{
+                  cursor:
+                    konfirmasi !== "1" || saran === ""
+                      ? "not-allowed"
+                      : "pointer",
+                }}
               >
                 Kirim
               </Button>

@@ -16,7 +16,7 @@ import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
@@ -260,6 +260,8 @@ const StepTwo = ({ token }) => {
       };
 
       dispatch(newSubtanceQuestionDetail(data, token));
+      localStorage.removeItem("method");
+      localStorage.removeItem("step2");
       handleResetForm();
     }
   };
@@ -327,7 +329,9 @@ const StepTwo = ({ token }) => {
         question_type_id,
         answer_key,
       };
-
+      // console.log(data);
+      localStorage.setItem("step2", JSON.stringify(data));
+      localStorage.setItem("method", metode);
       dispatch(newSubtanceQuestionDetail(data, token));
     }
   };
@@ -562,7 +566,17 @@ const StepTwo = ({ token }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push("/subvit/substansi/tambah-step-1");
+                    }}
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
@@ -575,7 +589,7 @@ const StepTwo = ({ token }) => {
                     onClick={saveDraft}
                     type="button"
                   >
-                    Simpan Draft
+                    Tambah Soal
                   </button>
                 </div>
               </div>

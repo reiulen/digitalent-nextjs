@@ -8,6 +8,7 @@ import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
+import Cookies from 'js-cookie'
 
 const EditTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
@@ -77,6 +78,7 @@ const EditTandaTangan = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get ("token_permission")
                 },
               }
             );
@@ -86,7 +88,7 @@ const EditTandaTangan = ({ token }) => {
               query: { update: true },
             });
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -118,6 +120,7 @@ const EditTandaTangan = ({ token }) => {
                 {
                   headers: {
                     authorization: `Bearer ${token}`,
+                    Permission: Cookies.get ("token_permission")
                   },
                 }
               );
@@ -127,7 +130,7 @@ const EditTandaTangan = ({ token }) => {
                 query: { update: true },
               });
             } catch (error) {
-              Swal.fire("Gagal", `${error.response.data.message}`, "error");
+              Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
             }
           }
         });
@@ -152,15 +155,16 @@ const EditTandaTangan = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: Cookies.get ("token_permission")
           },
         }
       );
 
-      setNama(data.data.name);
-      setJabatan(data.data.position);
-      setTandaTangan(data.data.signature_image);
+      setNama(data?.data?.name);
+      setJabatan(data?.data?.position);
+      setTandaTangan(data?.data?.signature_image);
     } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
     }
   };
 

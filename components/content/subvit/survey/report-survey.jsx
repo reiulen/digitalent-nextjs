@@ -126,8 +126,8 @@ const ReportSurvey = ({ token }) => {
             value={survey && survey.data.total_peserta}
             titleValue=""
             title="Total Peserta"
-            publishedVal=""
-            routePublish={() => handlePublish(null)}
+            publishedVal="total-peserta"
+            routePublish={() => handlePublish("total-peserta")}
           />
           <CardPage
             background="bg-secondary"

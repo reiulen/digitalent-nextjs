@@ -48,7 +48,8 @@ export const getAllSummary =
     penyelenggara,
     akademi,
     tema,
-    token
+    token,
+    token_permission = ""
   ) =>
   async (dispatch) => {
     try {
@@ -75,6 +76,7 @@ export const getAllSummary =
         headers: {
           Authorization: "Bearer " + token,
         },
+        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -110,6 +112,7 @@ export const getAkademiByPelatihan = (token, id) => async (dispatch) => {
       type: GET_AKADEMI_BY_PELATIHAN_SUCCESS,
       payload: data,
     });
+    return data;
   } catch (error) {
     dispatch({
       type: GET_AKADEMI_BY_PELATIHAN_FAIL,
@@ -127,7 +130,8 @@ export const getPendaftaranPeserta =
     page = 1,
     administrasi = "",
     pelatihan = "",
-    subtansi = ""
+    subtansi = "",
+    token_permission = ""
   ) =>
   async (dispatch) => {
     try {
@@ -147,6 +151,7 @@ export const getPendaftaranPeserta =
         headers: {
           Authorization: "Bearer " + token,
         },
+        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -155,6 +160,7 @@ export const getPendaftaranPeserta =
         type: GET_REKAP_PENDAFTARAN_PESERTA_SUCCESS,
         payload: data,
       });
+      return data;
     } catch (error) {
       dispatch({
         type: GET_REKAP_PENDAFTARAN_PESERTA_FAIL,
@@ -181,6 +187,7 @@ export const getStatusPendaftar = (token, id) => async (dispatch) => {
       type: GET_STATUS_PENDAFTAR_SUCCESS,
       payload: data,
     });
+    return data;
   } catch (error) {
     dispatch({
       type: GET_STATUS_PENDAFTAR_FAIL,
@@ -189,57 +196,61 @@ export const getStatusPendaftar = (token, id) => async (dispatch) => {
   }
 };
 
-export const getReminderBerkas = (token, index) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/formPendaftaran/get-reminder?id=${index}`;
+export const getReminderBerkas =
+  (token, index, token_permission) => async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/get-reminder?id=${index}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        Permission: token_permission,
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_REMINDER_BERKAS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_REMINDER_BERKAS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_REMINDER_BERKAS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_REMINDER_BERKAS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getDataPribadi = (token, index) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/formPendaftaran/get-data-pribadi?id=${index}`;
+export const getDataPribadi =
+  (token, index, token_permission) => async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/get-data-pribadi?id=${index}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        Permission: token_permission,
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_DATA_PRIBADI_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_DATA_PRIBADI_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_DATA_PRIBADI_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_DATA_PRIBADI_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getRiwayatPelatihan = (token, index) => async (dispatch) => {
   try {

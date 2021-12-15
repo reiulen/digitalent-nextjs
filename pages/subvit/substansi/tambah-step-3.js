@@ -7,7 +7,7 @@ export default function TambahBankSoalTesSubstansiStep3(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <StepThree token={session.token} />
+        <StepThree token={session.token} tokenPermission={props.permission} />
       </div>
     </>
   );
@@ -24,6 +24,8 @@ export async function getServerSideProps(context) {
     };
   }
 
+  const permission = context.req.cookies.token_permission;
+
   const middleware = middlewareAuthAdminSession(session);
   if (!middleware.status) {
     return {
@@ -35,6 +37,10 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session, title: "Tambah Bank Soal Test Substansi - Subvit" },
+    props: {
+      session,
+      title: "Tambah Bank Soal Test Substansi - Subvit",
+      permission,
+    },
   };
 }

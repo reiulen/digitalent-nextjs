@@ -8,11 +8,13 @@ import styles from "./testSubstansi.module.css";
 
 const TestSubstansi = () => {
   const router = useRouter();
-  const temaId = Cookies.get("id_tema");
-  const pelatihanId = Cookies.get("id_pelatihan");
+
+  const routerTraining = router.query.id_pelatihan;
+  const routerTema = router.query.id_tema;
+
   const handlePage = () => {
     router.push(
-      `/peserta/subvit/mid-test/1?theme_id=${temaId}&training_id=${pelatihanId}&category=Mid Test`
+      `/peserta/subvit/mid-test/1?theme_id=${routerTema}&training_id=${routerTraining}&category=Mid Test`
     );
   };
 

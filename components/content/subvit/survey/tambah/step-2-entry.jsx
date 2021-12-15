@@ -18,7 +18,7 @@ import MultipleChoiceComponent from "./step-2/multiple-choice-component";
 import TriggeredQuestionComponent from "./step-2/triggered-question-component";
 import styles from "../../trivia/edit/step.module.css";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -180,7 +180,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "multiple_choice":
@@ -206,7 +206,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "pertanyaan_terbuka":
@@ -217,7 +217,7 @@ const StepTwo = ({ token }) => {
             question_image,
             type: methodAdd,
           };
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "triggered_question":
@@ -242,7 +242,7 @@ const StepTwo = ({ token }) => {
             answer_key: null,
             type: methodAdd,
           };
-          dispatch(newSurveyQuestionDetail(data, token));
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
           handleResetForm();
         }
       default:
@@ -297,8 +297,9 @@ const StepTwo = ({ token }) => {
             answer_key: null,
             type: methodAdd,
           };
-
-          dispatch(newSurveyQuestionDetail(data, token));
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "multiple_choice":
@@ -323,8 +324,9 @@ const StepTwo = ({ token }) => {
             answer_key: null,
             type: methodAdd,
           };
-
-          dispatch(newSurveyQuestionDetail(data, token));
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "pertanyaan_terbuka":
@@ -335,8 +337,9 @@ const StepTwo = ({ token }) => {
             question_image,
             type: methodAdd,
           };
-
-          dispatch(newSurveyQuestionDetail(data, token));
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "triggered_question":
@@ -361,8 +364,9 @@ const StepTwo = ({ token }) => {
             answer_key: null,
             type: methodAdd,
           };
-
-          dispatch(newSurveyQuestionDetail(data, token));
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
+          dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
       default:
         break;
@@ -611,7 +615,18 @@ const StepTwo = ({ token }) => {
               {handleMethodeInput()}
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  {" "}
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push("/subvit/substansi/tambah-step-1");
+                    }}
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
@@ -624,7 +639,7 @@ const StepTwo = ({ token }) => {
                     onClick={saveDraft}
                     type="button"
                   >
-                    Simpan Draft
+                    Tambah Soal
                   </button>
                 </div>
               </div>

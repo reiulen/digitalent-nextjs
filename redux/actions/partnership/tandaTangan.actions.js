@@ -24,7 +24,7 @@ import {
   ttdAdd,
 } from "../partnership/api/tanda-tangan";
 
-export const fetchSignature = (token) => {
+export const fetchSignature = (token, permission) => {
   return async (dispatch, getState) => {
     dispatch({ type: TANDA_TANGAN_REQUEST });
     let keywordState = getState().allTandaTangan.keyword || "";
@@ -37,7 +37,7 @@ export const fetchSignature = (token) => {
       page: pageState,
     };
     try {
-      let { data } = await fetchSignatureApi(params, token);
+      let { data } = await fetchSignatureApi(params, token, permission);
       dispatch(successFetchSignature(data));
     } catch (error) {
       dispatch({

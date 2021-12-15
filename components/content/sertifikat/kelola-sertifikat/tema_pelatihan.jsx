@@ -31,6 +31,7 @@ import Cookies from "js-cookie";
 export default function NamaPelatihan({ token }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const token_permission = Cookies.get("token_permission");
 
 	const { loading, error, certificate, academyOptions, themeOptions } =
 		useSelector((state) => state.allCertificates);
@@ -102,7 +103,7 @@ export default function NamaPelatihan({ token }) {
 	};
 
 	useEffect(() => {
-		dispatch(getAllSertifikat(token));
+		dispatch(getAllSertifikat(token, token_permission));
 	}, [
 		dispatch,
 		token,
@@ -111,6 +112,7 @@ export default function NamaPelatihan({ token }) {
 		allCertificates.theme,
 		allCertificates.academy,
 		allCertificates.limit,
+		token_permission,
 	]);
 
 	return (
@@ -352,12 +354,18 @@ export default function NamaPelatihan({ token }) {
 															</td>
 															<td className="align-middle d-flex">
 																<Link
-																	href={`/sertifikat/kelola-sertifikat/${certificate.name
-																		.split(" ")
-																		.join("-")
-																		.toLowerCase()}?id=${
-																		certificate.id
-																	}&page=1`}
+																	href={`/sertifikat/kelola-sertifikat/${
+																		!certificate.name.includes("//")
+																			? certificate?.name
+																					?.split(" ")
+																					?.join("-")
+																					?.toLowerCase()
+																			: certificate?.name
+																					?.split("//")[1]
+																					?.split(" ")
+																					?.join("-")
+																					?.toLowerCase()
+																	}?id=${certificate.id}&page=1`}
 																	passHref
 																>
 																	<a
@@ -365,12 +373,6 @@ export default function NamaPelatihan({ token }) {
 																		data-toggle="tooltip"
 																		data-placement="bottom"
 																		title="Detail"
-																		onClick={() => {
-																			Cookies.set(
-																				"tema_pelatihan_id",
-																				certificate.id
-																			);
-																		}}
 																	>
 																		<i className="ri-eye-fill p-0 text-white"></i>
 																	</a>

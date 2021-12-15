@@ -14,6 +14,7 @@ import {
 
 import axios from "axios";
 import AlertBar from "../components/BarAlert";
+import Cookies from 'js-cookie'
 
 function ReviewKerjasama({ token }) {
   const router = useRouter();
@@ -60,37 +61,38 @@ function ReviewKerjasama({ token }) {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              // Permission: Cookies.get("token_permission")
             },
           }
         );
 
-        if (data.data.status_migrates_id.status === "pengajuan-revisi") {
+        if (data?.data?.status_migrates_id?.status === "pengajuan-revisi") {
           router.push({
             pathname: "/partnership/user/kerjasama/review-list-kerjasama",
             query: { id: router.query.id },
           });
         }
         if (
-          data.data.status_migrates_id.status === "pengajuan-selesai" ||
-          data.data.status_migrates_id.status === "pengajuan-pembahasan"
+          data?.data?.status_migrates_id?.status === "pengajuan-selesai" ||
+          data?.data?.status_migrates_id?.status === "pengajuan-pembahasan"
         ) {
           router.push({
             pathname: "/partnership/user/kerjasama/pembahasan",
             query: { id: router.query.id },
           });
         }
-        if (data.data.status_migrates_id.status === "dibatalkan") {
+        if (data?.data?.status_migrates_id?.status === "dibatalkan") {
           router.push({
             pathname: "/partnership/user/kerjasama/hasil",
             query: {
               id: router.query.id,
-              statusKerjasama: data.data.status_migrates_id.status,
+              statusKerjasama: data?.data?.status_migrates_id?.status,
             },
           });
         }
-        setStatus(data.data.status_migrates_id.status);
+        setStatus(data?.data?.status_migrates_id?.status);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error")
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
       }
     }
 

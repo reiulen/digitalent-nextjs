@@ -11,7 +11,10 @@ export default function EditTipeSoalTestSubstansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditTipeSoal token={session.token} />
+        <EditTipeSoal
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -50,7 +53,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Ubah Tipe Soal Test Subtansi - Subvit" },
+        props: {
+          session,
+          title: "Ubah Tipe Soal Test Subtansi - Subvit",
+          permission,
+        },
       };
     }
 );

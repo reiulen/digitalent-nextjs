@@ -52,7 +52,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteTandaTangan(id,token));
+        dispatch(deleteTandaTangan(id,token,));
         setSuccessDelete(true);
         setIsStatusBar(false);
         router.replace(`/partnership/tanda-tangan`);
@@ -91,16 +91,16 @@ const Table = ({ token }) => {
     });
   };
 
-  useEffect(() => {
-    dispatch(fetchSignature(token));
-  }, [
-    dispatch,
-    allTandaTangan.keyword,
-    allTandaTangan.status_reload,
-    allTandaTangan.page,
-    allTandaTangan.limit,
-    token
-  ]);
+  // useEffect(() => {
+  //   dispatch(fetchSignature(token));
+  // }, [
+  //   dispatch,
+  //   allTandaTangan.keyword,
+  //   allTandaTangan.status_reload,
+  //   allTandaTangan.page,
+  //   allTandaTangan.limit,
+  //   token
+  // ]);
 
   return (
     <PageWrapper>
@@ -211,9 +211,6 @@ const Table = ({ token }) => {
                         <th className="text-left align-middle">Jabatan</th>
                         <th className="text-left align-middle">Status</th>
                         {
-                          console.log (permission)
-                        }
-                        {
                           permission ? 
                             permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.tanda_tangan.manage") ?
                               <th className="text-left align-middle">Aksi</th>
@@ -225,8 +222,8 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allTandaTangan.tanda_tangan.data &&
-                      allTandaTangan.tanda_tangan.data.list_signatures
+                      {allTandaTangan?.tanda_tangan?.data &&
+                      allTandaTangan?.tanda_tangan?.data?.list_signatures
                         .length === 0 ? (
                         <tr>
                           <td colSpan="4" className="text-center">
@@ -234,26 +231,26 @@ const Table = ({ token }) => {
                           </td>
                         </tr>
                       ) : (
-                        allTandaTangan.tanda_tangan.data &&
-                        allTandaTangan.tanda_tangan.data.list_signatures.map(
+                        allTandaTangan?.tanda_tangan?.data &&
+                        allTandaTangan?.tanda_tangan?.data?.list_signatures?.map(
                           (items, index) => {
                             return (
                               <tr key={index}>
                                 <td className="align-middle text-left">
-                                  {allTandaTangan.page === 1
+                                  {allTandaTangan?.page === 1
                                     ? index + 1
-                                    : (allTandaTangan.page - 1) *
-                                        allTandaTangan.limit +
+                                    : (allTandaTangan?.page - 1) *
+                                        allTandaTangan?.limit +
                                       (index + 1)}
                                 </td>
                                 <td className="align-middle text-left text-overflow-ens">
-                                  {items.name}
+                                  {items?.name}
                                 </td>
                                 <td className="align-middle text-left text-overflow-ens">
-                                  {items.position}
+                                  {items?.position}
                                 </td>
                                 <td className="align-middle text-left">
-                                  {items.status == "1" ? 
+                                  {items?.status == "1" ? 
                                     <div className="position-relative w-max-content">
                                         <select
                                           name=""
@@ -329,7 +326,7 @@ const Table = ({ token }) => {
                                             className="bg-blue-secondary mr-3"
                                             onClick={() =>
                                               router.push(
-                                                `/partnership/tanda-tangan/${items.id}`
+                                                `/partnership/tanda-tangan/${items?.id}`
                                               )
                                             }
                                           >
@@ -340,7 +337,7 @@ const Table = ({ token }) => {
                                           </BtnIcon>
                                           <BtnIcon
                                             className="bg-blue-secondary"
-                                            onClick={() => handleDelete(items.id,token)}
+                                            onClick={() => handleDelete(items?.id,token)}
                                           >
                                             <IconDelete width="16" height="16" />
                                             <div className="text-hover-show-hapus">
@@ -368,7 +365,7 @@ const Table = ({ token }) => {
               <div className="row">
                 <div className="table-pagination col-12 col-md-8 overflow-auto">
                   <Pagination
-                    activePage={allTandaTangan.page}
+                    activePage={allTandaTangan?.page}
                     itemsCountPerPage={
                       allTandaTangan?.tanda_tangan?.data?.perPage
                     }
@@ -412,8 +409,8 @@ const Table = ({ token }) => {
                         style={{ color: "#B5B5C3" }}
                       >
                         Total Data{" "}
-                        {allTandaTangan.tanda_tangan.data &&
-                          allTandaTangan.tanda_tangan.data.total}
+                        {allTandaTangan?.tanda_tangan?.data &&
+                          allTandaTangan?.tanda_tangan?.data?.total}
                       </p>
                     </div>
                   </div>

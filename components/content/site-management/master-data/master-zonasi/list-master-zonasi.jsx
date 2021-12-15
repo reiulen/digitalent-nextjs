@@ -258,7 +258,7 @@ const Table = ({ token }) => {
                     </>
                   )}
 
-                {allZonasi ? (
+                {allZonasi?.data?.total > 5 ? (
                   <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
                       <div className="col-4 mr-0">

@@ -617,7 +617,7 @@ const GeneralPage = ({ token }) => {
                     {simpleValidator.current.message(
                       "description",
                       description,
-                      "required",
+                      "required|min:10|max:500",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -955,7 +955,7 @@ const GeneralPage = ({ token }) => {
                       {simpleValidator.current.message(
                         "alamat",
                         address,
-                        "required",
+                        "required|min:5|max:255",
                         { className: "text-danger" }
                       )}
                     </div>

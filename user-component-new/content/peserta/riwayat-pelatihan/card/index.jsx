@@ -25,7 +25,6 @@ export default function CardTemplateOriginal({ data, session }) {
 	useEffect(() => {
 		helperUserStatusColor(data.status, setLabel);
 	}, [data.status]);
-
 	return (
 		<Fragment>
 			<Card className="position-relative mb-8 rounded-lg">
@@ -48,9 +47,12 @@ export default function CardTemplateOriginal({ data, session }) {
 							)
 								return false;
 							if (data.status.includes("menunggu jadwal tes substansi")) {
-								Cookies.set("id_pelatihan", data.id);
-								Cookies.set("id_tema", data.tema_id);
 								return router.push(`/peserta/test-substansi?id=${data.id}`);
+							}
+							if (data?.trivia && !data?.midtest) {
+								return router.push(
+									`/peserta/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+								);
 							}
 							if (
 								data.status.includes("administrasi") &&
@@ -58,8 +60,6 @@ export default function CardTemplateOriginal({ data, session }) {
 							)
 								return router.push(`/peserta/administrasi?id=${data.id}`);
 							if (data.status.includes("seleksi akhir")) {
-								Cookies.set("id_pelatihan", data.id);
-								Cookies.set("id_tema", data.tema_id);
 								return router.push(
 									`/peserta/riwayat-pelatihan/${data.name
 										.split(" ")
@@ -68,12 +68,8 @@ export default function CardTemplateOriginal({ data, session }) {
 								);
 							}
 							if (data.status.includes("tes substansi")) {
-								Cookies.set("id_pelatihan", data.id);
-								Cookies.set("id_tema", data.tema_id);
 								return router.push(`/peserta/test-substansi?id=${data.id}`);
 							} else {
-								Cookies.set("id_pelatihan", data.id);
-								Cookies.set("id_tema", data.tema_id);
 								return router.push(
 									`/peserta/riwayat-pelatihan/${data.name
 										.split(" ")
@@ -162,10 +158,16 @@ export default function CardTemplateOriginal({ data, session }) {
 											""
 										)}
 										<p
-											style={{ borderRadius: "50px" }}
+											style={{
+												borderRadius: "50px",
+												paddingRight: "12px",
+												paddingLeft: "12px",
+												paddingTop: "4px",
+												paddingBottom: "4px",
+											}}
 											className={`label label-inline label-light-${
 												data.survei ? "primary" : label
-											} font-weight-bolder p-0 px-4 py-4 text-capitalize`}
+											} font-weight-bolder text-capitalize`}
 										>
 											{data.lpj
 												? "Isi LPJ"

@@ -10,10 +10,12 @@ import Image from "next/image";
 import AlertBar from "../../components/BarAlert";
 import { Modal } from "react-bootstrap";
 import ReactCrop from "react-image-crop";
+import Cookies from 'js-cookie'
 
 const Tambah = ({ token }) => {
   const router = useRouter();
   const { successInputProfile } = router.query;
+  const selectInputRef = useRef();
   const defaultImage = "/public/assets/media/default.jpg"
 
   // diambil dari data user ketika pertama kali register (name)
@@ -29,6 +31,7 @@ const Tambah = ({ token }) => {
   const [pic_name, setPic_name] = useState("");
   const [pic_contact_number, setPic_contact_number] = useState("");
   const [pic_email, setPic_email] = useState("");
+  let selectRefKabupaten = null;
 
   const [error, setError] = useState({
     institution_name: "",
@@ -132,6 +135,7 @@ const Tambah = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -219,14 +223,39 @@ const Tambah = ({ token }) => {
   }
 
   const onChangeProvinces = (e) => {
+    setIndonesia_cities_id("")
+    setCitiesAll([])
+    selectInputRef.current.select.clearValue();
+    // console.log (selectInputRef.current.select.value)
+
     setIndonesia_provinces_id(e.id);
+    fetchAPICity(e.id)
   };
+
+  const onChangeCity = (e) => {
+    setIndonesia_cities_id(e?.id)
+  }
+
+  async function fetchAPICity(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${id}`
+      );
+      let dataNewCitites = data?.data?.map((items) => {
+        return { ...items, label: items?.name, value: items?.id };
+      });
+      setCitiesAll(dataNewCitites);
+    } catch (error) {
+      return;
+    }
+  }
 
   // pertama kali load provinces set kesini
   const [allProvinces, setAllProvinces] = useState([]);
 
   // ketika load cities state ini save data
   const [citiesAll, setCitiesAll] = useState([]);
+
   useEffect(() => {
     async function getDataProvinces(token) {
       try {
@@ -235,11 +264,12 @@ const Tambah = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
-        let dataNewProvinces = data.data.map((items) => {
-          return { ...items, label: items.name, value: items.id };
+        let dataNewProvinces = data?.data?.map((items) => {
+          return { ...items, label: items?.name, value: items?.id };
         });
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
@@ -255,29 +285,30 @@ const Tambah = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
 
         if (data) {
-          setImageview(data.data.agency_logo);
-          setAddress(data.data.address === "-" ? "" : data.data.address);
+          setImageview(data?.data?.agency_logo);
+          setAddress(data?.data?.address === "-" ? "" : data?.data?.address);
           setPostal_code(
-            data.data.postal_code === "-" ? "" : data.data.postal_code
+            data?.data?.postal_code === "-" ? "" : data?.data?.postal_code
           );
-          setPic_name(data.data.pic_name === "-" ? "" : data.data.pic_name);
+          setPic_name(data?.data?.pic_name === "-" ? "" : data?.data?.pic_name);
           setPic_contact_number(
-            data.data.pic_contact_number === "-"
+            data?.data?.pic_contact_number === "-"
               ? ""
-              : data.data.pic_contact_number
+              : data?.data?.pic_contact_number
           );
-          setPic_email(data.data.pic_email === "-" ? "" : data.data.pic_email);
-          setWesite(data.data.website === null ? "" : data.data.website);
-          setEmail(data.data.email === "-" ? "" : data.data.email);
+          setPic_email(data?.data?.pic_email === "-" ? "" : data?.data?.pic_email);
+          setWesite(data?.data?.website === null ? "" : data?.data?.website);
+          setEmail(data?.data?.email === "-" ? "" : data?.data?.email);
           setInstitution_name(
-            data.data.institution_name === "-" ? "" : data.data.institution_name
+            data?.data?.institution_name === "-" ? "" : data?.data?.institution_name
           );
-          if (data.data.city.id !== "-" && data.data.province.id !== "-") {
+          if (data?.data?.city.id !== "-" && data?.data?.province.id !== "-") {
             let citiesss = {
               ...data.data.city,
               label: data.data.city.name,
@@ -344,7 +375,7 @@ const Tambah = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 px-4">
             <h3 className="card-title text-dark fw-600 titles-1">
-              Profile Lembag
+              Profile Lembaga
             </h3>
           </div>
           <div className="card-body pt-0 px-4 px-sm-6">
@@ -361,8 +392,8 @@ const Tambah = ({ token }) => {
                   value={institution_name}
                   style={{ backgroundColor: "transparent" }}
                 />
-                {error.institution_name ? (
-                  <p className="error-text">{error.institution_name}</p>
+                {error?.institution_name ? (
+                  <p className="error-text">{error?.institution_name}</p>
                 ) : (
                   ""
                 )}
@@ -383,8 +414,8 @@ const Tambah = ({ token }) => {
                       onChange={(e) => setWesite(e.target.value)}
                       value={wesite && wesite}
                     />
-                    {error.wesite ? (
-                      <p className="error-text">{error.wesite}</p>
+                    {error?.wesite ? (
+                      <p className="error-text">{error?.wesite}</p>
                     ) : (
                       ""
                     )}
@@ -404,8 +435,8 @@ const Tambah = ({ token }) => {
                       value={email}
                       style={{ backgroundColor: "transparent" }}
                     />
-                    {error.email ? (
-                      <p className="error-text">{error.email}</p>
+                    {error?.email ? (
+                      <p className="error-text">{error?.email}</p>
                     ) : (
                       ""
                     )}
@@ -555,8 +586,8 @@ const Tambah = ({ token }) => {
                   onChange={(e) => setAddress(e.target.value)}
                   value={address && address}
                 />
-                {error.address ? (
-                  <p className="error-text">{error.address}</p>
+                {error?.address ? (
+                  <p className="error-text">{error?.address}</p>
                 ) : (
                   ""
                 )}
@@ -575,8 +606,8 @@ const Tambah = ({ token }) => {
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder={`${
-                        indonesia_provinces_id !== ""
-                          ? indonesia_provinces_id.name
+                        indonesia_provinces_id !== "" 
+                          ? indonesia_provinces_id?.name
                           : "Pilih provinsi"
                       } `}
                       isDisabled={false}
@@ -588,9 +619,9 @@ const Tambah = ({ token }) => {
                       onChange={(e) => onChangeProvinces(e)}
                       options={allProvinces}
                     />
-                    {error.indonesia_provinces_id ? (
+                    {error?.indonesia_provinces_id ? (
                       <p className="error-text">
-                        {error.indonesia_provinces_id}
+                        {error?.indonesia_provinces_id}
                       </p>
                     ) : (
                       ""
@@ -610,23 +641,25 @@ const Tambah = ({ token }) => {
                         className="basic-single"
                         classNamePrefix="select"
                         placeholder={`${
-                          indonesia_cities_id !== ""
-                            ? indonesia_cities_id.name
+                          indonesia_cities_id !== "" && indonesia_cities_id !== undefined
+                            ? indonesia_cities_id?.name
                             : "Pilih data Kab/Kota"
                         }`}
-                        isDisabled={false}
+                        isDisabled={indonesia_provinces_id ? false : true}
                         isLoading={false}
                         isClearable={false}
                         isRtl={false}
                         isSearchable={true}
                         name="color"
-                        onChange={(e) => setIndonesia_cities_id(e.id)}
+                        // onChange={(e) => setIndonesia_cities_id(e.id)}
+                        onChange={(e) => onChangeCity(e)}
                         options={citiesAll}
+                        ref={selectInputRef}
                       />
                     </div>
                     
-                    {error.indonesia_cities_id ? (
-                      <p className="error-text">{error.indonesia_cities_id}</p>
+                    {error?.indonesia_cities_id ? (
+                      <p className="error-text">{error?.indonesia_cities_id}</p>
                     ) : (
                       ""
                     )}
@@ -650,8 +683,8 @@ const Tambah = ({ token }) => {
                   />
                   <div className="box-hide-arrow"></div>
                 </div>
-                {error.postal_code ? (
-                  <p className="error-text">{error.postal_code}</p>
+                {error?.postal_code ? (
+                  <p className="error-text">{error?.postal_code}</p>
                 ) : (
                   ""
                 )}
@@ -671,8 +704,8 @@ const Tambah = ({ token }) => {
                       placeholder="Masukkan Nama"
                       onChange={(e) => setPic_name(e.target.value)}
                     />
-                    {error.pic_name ? (
-                      <p className="error-text">{error.pic_name}</p>
+                    {error?.pic_name ? (
+                      <p className="error-text">{error?.pic_name}</p>
                     ) : (
                       ""
                     )}
@@ -719,8 +752,8 @@ const Tambah = ({ token }) => {
                   onChange={(e) => setPic_email(e.target.value)}
                   value={pic_email && pic_email}
                 />
-                {error.pic_email ? (
-                  <p className="error-text">{error.pic_email}</p>
+                {error?.pic_email ? (
+                  <p className="error-text">{error?.pic_email}</p>
                 ) : (
                   ""
                 )}

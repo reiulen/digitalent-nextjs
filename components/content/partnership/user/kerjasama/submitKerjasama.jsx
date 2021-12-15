@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { fetchListCooperationSelect, changeCooperationSelectByID, fetchListCooperationSelectById } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 import axios from "axios";
 import AlertBar from "../../components/BarAlert";
+import Cookies from "js-cookie"
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -51,10 +52,10 @@ const DetailDokumenKerjasama = ({ token }) => {
         AllCooperation: "Kerjasama form tidak boleh kosong",
       });
     } else {
-      let errorAllCooperation = AllCooperation.map((items) => {
+      let errorAllCooperation = AllCooperation?.map((items) => {
         if (!items.cooperation) {
           isError = true;
-          return { ...items, error: `Harus isi ${items.cooperation_form}` };
+          return { ...items, error: `Harus isi ${items?.cooperation_form}` };
         } else {
           return { ...items };
         }
@@ -111,7 +112,7 @@ const DetailDokumenKerjasama = ({ token }) => {
           formData.append("period_unit", periodUnit);
 
           let parseAllCooperation = AllCooperation;
-          let dataee = parseAllCooperation.map((items, i) => {
+          let dataee = parseAllCooperation?.map((items, i) => {
             return items.cooperation;
           });
           dataee.forEach((item, i) => {
@@ -122,6 +123,7 @@ const DetailDokumenKerjasama = ({ token }) => {
             let { data } = await axios.post(`${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal`, formData, {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             });
             router.push({
@@ -253,7 +255,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                   <input placeholder="Pilih Tanggal" readOnly value={date} type="date" className="form-control mb-3 mb-lg-0 border-0" style={{ backgroundColor: "transparent" }} />
                   <div className="box-hide-arrow"></div>
                 </div>
-                {error.date ? <p className="error-text">{error.date}</p> : ""}
+                {error?.date ? <p className="error-text">{error?.date}</p> : ""}
               </div>
 
               <div className="row">
@@ -267,7 +269,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                       placeholder="Masukkan Judul Kerjasama"
                       onChange={(e) => setTitle(e.target.value)}
                     />
-                    {error.title ? <p className="error-text">{error.title}</p> : ""}
+                    {error?.title ? <p className="error-text">{error?.title}</p> : ""}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -275,17 +277,17 @@ const DetailDokumenKerjasama = ({ token }) => {
                     <label className="required mb-2">Kategori Kerjasama</label>
                     <select className="form-control" onFocus={() => setError({ ...error, cooperationC_id: "" })} onChange={(e) => changeSetCooperationC_id(e.target.value)}>
                       <option value="">Pilih Kategori Kerjasama</option>
-                      {allCooperationUser.cooperationActiveSelect.length === 0
+                      {allCooperationUser?.cooperationActiveSelect.length === 0
                         ? ""
-                        : allCooperationUser.cooperationActiveSelect.data.map((items, index) => {
+                        : allCooperationUser?.cooperationActiveSelect?.data?.map((items, index) => {
                             return (
                               <option key={index} value={items.id}>
-                                {items.cooperation_categories}
+                                {items?.cooperation_categories}
                               </option>
                             );
                           })}
                     </select>
-                    {error.cooperationC_id ? <p className="error-text">{error.cooperationC_id}</p> : ""}
+                    {error?.cooperationC_id ? <p className="error-text">{error?.cooperationC_id}</p> : ""}
                   </div>
                 </div>
               </div>
@@ -312,15 +314,15 @@ const DetailDokumenKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-              {error.period ? <p className="error-text">{error.period}</p> : ""}
+              {error?.period ? <p className="error-text">{error?.period}</p> : ""}
               {/* looping */}
-              {allCooperationUser.singleCooporationSelect.length === 0
+              {allCooperationUser?.singleCooporationSelect.length === 0
                 ? ""
-                : allCooperationUser.singleCooporationSelect.data.option.map((items, index) => {
+                : allCooperationUser?.singleCooporationSelect?.data?.option?.map((items, index) => {
                     return (
                       <div className="form-group" key={index}>
                         <label htmlFor="staticEmail" className="col-form-label">
-                          {items.cooperation_form}
+                          {items?.cooperation_form}
                         </label>
                         <div>
                           <textarea
@@ -331,7 +333,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                             cols="30"
                             rows="5"
                             className="form-control"
-                            placeholder={`Masukkan ${items.cooperation_form}`}
+                            placeholder={`Masukkan ${items?.cooperation_form}`}
                           ></textarea>
                           {AllCooperation[index]?.error ? <p className="error-text">{AllCooperation[index]?.error}</p> : ""}
                         </div>
@@ -340,7 +342,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                   })}
 
               {/* end loopingg */}
-              {error.AllCooperation ? <p className="error-text">{error.AllCooperation}</p> : ""}
+              {error?.AllCooperation ? <p className="error-text">{error?.AllCooperation}</p> : ""}
 
               <div className="form-group">
                 <div className="d-flex justify-content-end flex-column flex-md-row">

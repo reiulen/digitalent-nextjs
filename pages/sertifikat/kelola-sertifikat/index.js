@@ -6,59 +6,67 @@ import { useRouter } from "next/router";
 import { getSession } from "next-auth/client";
 import Pagination from "react-js-pagination";
 import {
-  getAllSertifikat,
-  getOptionsAcademy,
-  getOptionsTheme,
+	getAllSertifikat,
+	getOptionsAcademy,
+	getOptionsTheme,
 } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { wrapper } from "../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 const KelolaSertifikat = dynamic(
-  () =>
-    import(
-      "../../../components/content/sertifikat/kelola-sertifikat/tema_pelatihan.jsx"
-    ),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
+	() =>
+		import(
+			"../../../components/content/sertifikat/kelola-sertifikat/tema_pelatihan.jsx"
+		),
+	{
+		loading: function loadingNow() {
+			return <LoadingSkeleton />;
+		},
+		ssr: false,
+	}
 );
 
 export default function KelokaSertifikatPage(props) {
-  const session = props.session.user.user.data;
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        <KelolaSertifikat token={session.token} />
-      </div>
-    </>
-  );
+	const session = props.session.user.user.data;
+	return (
+		<>
+			<div className="d-flex flex-column flex-root">
+				<KelolaSertifikat token={session.token} />
+			</div>
+		</>
+	);
 }
 
 // Function GETSERVERSIDE PROPS
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ query, req }) => {
-      const session = await getSession({ req });
+	(store) =>
+		async ({ query, req }) => {
+			const session = await getSession({ req });
 
-      const middleware = middlewareAuthAdminSession(session);
-      if (!middleware.status) {
-        return {
-          redirect: {
-            destination: middleware.redirect,
-            permanent: false,
-          },
-        };
-      }
+			const middleware = middlewareAuthAdminSession(session);
+			if (!middleware.status) {
+				return {
+					redirect: {
+						destination: middleware.redirect,
+						permanent: false,
+					},
+				};
+			}
+			const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(getAllSertifikat(session.user.user.data.token));
-      await store.dispatch(getOptionsAcademy(session.user.user.data.token));
-      await store.dispatch(getOptionsTheme(session.user.user.data.token));
+			await store.dispatch(
+				getAllSertifikat(session.user.user.data.token, token_permission)
+			);
+			await store.dispatch(
+				getOptionsAcademy(session.user.user.data.token, token_permission)
+			);
 
-      return {
-        props: { session, title: "List Akademi - Sertifikat" },
-      };
-    }
+			await store.dispatch(
+				getOptionsTheme(session.user.user.data.token, token_permission)
+			);
+
+			return {
+				props: { session, title: "List Akademi - Sertifikat" },
+			};
+		}
 );

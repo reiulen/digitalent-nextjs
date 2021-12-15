@@ -78,6 +78,7 @@ const Table = ({ token }) => {
       shallow: true,
     });
   };
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -158,7 +159,7 @@ const Table = ({ token }) => {
                 </table>
               </div>
 
-              {allListPeserta?.data?.data?.total >= 5 && allListPeserta?.data?.data?.list?.length > 4 ? (
+              {allListPeserta?.data?.data?.total >= 5 ? (
                 <div className="row px-4">
                   <div
                     className="table-pagination table-pagination pagination-custom col-12 col-md-6"
@@ -218,7 +219,7 @@ const Table = ({ token }) => {
                         <p
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                          >
+                        >
                           Total Data {allListPeserta?.data?.data?.total}
                         </p>
                       </div>
