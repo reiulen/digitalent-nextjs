@@ -36,6 +36,9 @@ export default function TambahMasterSertifikat({ token }) {
 	const [confirmModal, setConfirmModal] = useState(false);
 
 	const [date, setDate] = useState(new Date());
+	const { pelatihan: pelatihanDetail } = useSelector(
+		(state) => state.detailPelatihan
+	);
 
 	// #Redux state
 	const { certificate } = useSelector((state) => state.detailCertificates);
@@ -294,10 +297,13 @@ export default function TambahMasterSertifikat({ token }) {
 				(el) => el.id == query.id
 			);
 			const id = {
-				training_id: currentData[0].training_id,
-				theme_id: currentData[0].theme_id,
-				academy_id: currentData[0].academy_id,
+				training_id: pelatihanDetail?.id,
+				theme_id: pelatihanDetail?.tema_id,
+				academy_id: pelatihanDetail?.akademi_id,
 			};
+			//  currentData[0].training_id,
+			// currentData[0].theme_id,
+			//  currentData[0].academy_id,
 			e.preventDefault();
 			if (certificate_type == "1 lembar") {
 				simpleValidator.current.fields.Jabatan = true;
@@ -545,7 +551,7 @@ export default function TambahMasterSertifikat({ token }) {
 												className="text-center font-weight-bolder w-100 "
 												style={{ fontSize: "125%" }}
 											>
-												{pelatihan?.training || "Nama Pelatihan"}
+												{pelatihanDetail?.name || "Nama Pelatihan"}
 											</div>
 											<div className="mt-2 w-100">
 												<span className="w-100">
@@ -559,11 +565,11 @@ export default function TambahMasterSertifikat({ token }) {
 													className="px-2 border-2 w-100 font-weight-boldest"
 													style={{ width: "19px" }}
 												>
-													{moment(pelatihan?.pelatihan_mulai)
+													{moment(pelatihanDetail?.pelatihan_mulai)
 														.utc()
 														.format("DD/MM/YYYY")}{" "}
 													-{" "}
-													{moment(pelatihan?.pelatihan_selesai)
+													{moment(pelatihanDetail?.pelatihan_selesai)
 														.utc()
 														.format("DD/MM/YYYY")}
 												</span>
@@ -574,7 +580,7 @@ export default function TambahMasterSertifikat({ token }) {
 													className="px-2 border-2 font-weight-boldest"
 													style={{ width: "19px" }}
 												>
-													{moment(pelatihan?.pelatihan_mulai)
+													{moment(pelatihanDetail?.pelatihan_mulai)
 														.utc()
 														.format("YYYY")}
 												</span>
