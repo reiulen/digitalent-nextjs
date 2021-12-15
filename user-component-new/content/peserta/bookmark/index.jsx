@@ -63,7 +63,10 @@ export default function Bookmark({ session }) {
 								className={`col-12 col-md-4 mb-15 px-8 order-${i + 1}`}
 								key={i}
 							>
-								<Card className="h-100 shadow-sm">
+								<Card
+									className="h-100 shadow-sm"
+									style={{ borderRadius: "12px" }}
+								>
 									<div className="whishlist align-self-end position-absolute m-4 zindex-5">
 										<Button
 											variant="light"
@@ -107,12 +110,14 @@ export default function Bookmark({ session }) {
 										onClick={() => {
 											router.push(`/detail/pelatihan/${el.id}`);
 										}}
+										style={{ borderRadius: "12px" }}
 									>
 										<div
 											style={{
 												width: "100%",
 												height: "180px",
 												position: "relative",
+												borderRadius: "12px",
 											}}
 										>
 											<Image
