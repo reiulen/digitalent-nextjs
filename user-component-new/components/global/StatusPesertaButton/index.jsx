@@ -83,6 +83,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 			}
 		}
 	};
+
 	return (
 		<Fragment>
 			{data?.lpj ? (
@@ -117,7 +118,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 						disabled={!data?.survei}
 						click={() => {
 							router.push(
-								`/peserta/panduan-survey?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+								`/peserta/survey/panduan-survey?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
 							);
 						}}
 					>
@@ -159,7 +160,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 					<CustomButton
 						click={() => {
 							router.push(
-								`/peserta/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+								`/peserta/trivia/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
 							);
 						}}
 					>
@@ -184,7 +185,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 					<CustomButton
 						click={() => {
 							router.push(
-								`/peserta/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+								`/peserta/trivia/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
 							);
 						}}
 					>
