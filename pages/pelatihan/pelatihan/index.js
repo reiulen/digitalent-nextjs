@@ -78,6 +78,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           null,
           null,
           null,
+          null,
           session.user.user.data.token
         )
       );

@@ -211,9 +211,6 @@ const Table = ({ token }) => {
                         <th className="text-left align-middle">Jabatan</th>
                         <th className="text-left align-middle">Status</th>
                         {
-                          console.log (permission)
-                        }
-                        {
                           permission ? 
                             permission?.roles?.includes("Super Admin") || permission?.permissions?.includes("partnership.tanda_tangan.manage") ?
                               <th className="text-left align-middle">Aksi</th>
