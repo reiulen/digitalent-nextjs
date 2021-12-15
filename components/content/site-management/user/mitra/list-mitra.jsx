@@ -212,7 +212,7 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                {allMitraSite.data.total > 5 && (
+                {allMitraSite.data?.total > 5 && (
                   <>
                     <div className={`${stylesPag.pagination} table-pagination`}>
                       <Pagination
