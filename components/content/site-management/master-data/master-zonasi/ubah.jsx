@@ -142,21 +142,6 @@ const Tambah = ({ token }) => {
     setFormInput(_temp)
   };
 
-  const customSyles = { multiValueRemove: (e) => ({ ...e, display: 'none' }) }
-
-  // const stylesRemove = {
-  //   multiValueRemove: (base, state) => {
-  //     return state.data.isFixed ? { ...base, display: 'none' } : base
-  //   }
-  // }
-
-  // const MultiValueRemove = (props) => {
-  //   if (props.data.isFixed) {
-  //     return null;
-  //   }
-  //   return <components.MultiValueRemove {...props} />;
-  // };
-
   const submit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
@@ -356,11 +341,9 @@ const Tambah = ({ token }) => {
                                   isDisabled={valueSend[index].provinsi === ""}
                                   isLoading={false}
                                   isClearable={false}
-                                  // isClearable={items.kabupaten.some(v => !v.isFixed)}
                                   isRtl={false}
                                   defaultValue={items.kabupaten}
                                   isSearchable={true}
-                                  // styles={customSyles}
                                   name="color"
                                   onChange={(e) => changeListKabupaten(e, index)}
                                   options={items.kabupaten}

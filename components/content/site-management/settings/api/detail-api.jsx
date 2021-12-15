@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 import LoadingTable from "../../../../LoadingTable";
 import IconEye from "../../../../assets/icon/Eye";
 import IconPencil from "../../../../assets/icon/Pencil";
@@ -44,7 +45,7 @@ const DetailApi = ({ token }) => {
               </div>
               <div className="form-group d-flex flex-column mt-4">
                 <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Masa Berlaku</p>
-                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>22 Maret 2021 sd 25 Mei 2021 </p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>{moment(detailApi.apies.data.from_date).format('LL')} sd {moment(detailApi.apies.data.to_date).format('LL')} </p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
                 <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>URL</p>
