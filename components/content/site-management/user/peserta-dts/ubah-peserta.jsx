@@ -93,7 +93,7 @@ const TambahPage = ({ token }) => {
   const [ktpName, setKtpName] = useState(allDetailPeserta.data.data.File_ktp);
   const [ktpBase, setKtpBase] = useState(allDetailPeserta.data.data.File_ktp);
   const [ijazahName, setIjazahName] = useState(
-    allDetailPeserta.data.data.ijasah
+    allDetailPeserta.data.data.ijasah === "" ? null : allDetailPeserta.data.data.ijasah
   );
   const [ijazahBase, setIjazahBase] = useState(
     allDetailPeserta.data.data.ijasah
@@ -338,7 +338,7 @@ const TambahPage = ({ token }) => {
     }
   };
 
-  const formatDate = (date) =>  {
+  const formatDate = (date) => {
     var d = new Date(date),
       month = "" + (d.getMonth() + 1),
       day = "" + d.getDate(),
@@ -348,7 +348,7 @@ const TambahPage = ({ token }) => {
     if (day.length < 2) day = "0" + day;
 
     return [year, month, day].join("-");
-  }
+  };
 
   const colorText = {
     color: "#6C6C6C",
@@ -546,8 +546,8 @@ const TambahPage = ({ token }) => {
                         onChange={(e) => {
                           if (e.target.value.length === 17) {
                             setNik(nik);
-                          }else{
-                            setNik(e.target.value.replace(/[^0-9]/g, ""))
+                          } else {
+                            setNik(e.target.value.replace(/[^0-9]/g, ""));
                           }
                         }}
                         onBlur={(e) => {
@@ -602,7 +602,9 @@ const TambahPage = ({ token }) => {
                           );
                         }}
                       >
-                        <option value="" disabled hidden>Pilih Jenis Kelamin</option>
+                        <option value="" disabled hidden>
+                          Pilih Jenis Kelamin
+                        </option>
                         <option value="Perempuan">Perempuan</option>
                         <option value="Laki - Laki">Laki-Laki</option>
                       </select>
@@ -623,10 +625,11 @@ const TambahPage = ({ token }) => {
                         value={nomorHandphone}
                         onChange={(e) => {
                           if (e.target.value.length === 15) {
-                            setNomorHandphone(nomorHandphone)
-                          }else{
-
-                            setNomorHandphone(e.target.value.replace(/[^0-9]/g, ""));
+                            setNomorHandphone(nomorHandphone);
+                          } else {
+                            setNomorHandphone(
+                              e.target.value.replace(/[^0-9]/g, "")
+                            );
                           }
                         }}
                         onBlur={(e) => {
@@ -793,12 +796,16 @@ const TambahPage = ({ token }) => {
                     <div className="form-group">
                       <label>Kode Pos</label>
                       <input
-                        type="number"
+                        type="text"
                         className="form-control"
                         placeholder="Masukkan Kode Pos KTP"
                         value={kodePostKtp}
                         onChange={(e) => {
-                          setKodePostKtp(e.target.value);
+                          if (e.target.value.length === 6) {
+                            setKodePostKtp(kodePostKtp);
+                          } else {
+                            setKodePostKtp(e.target.value);
+                          }
                         }}
                         onBlur={(e) => {
                           simpleValidator.current.showMessageFor("kodePostKtp");
@@ -948,12 +955,17 @@ const TambahPage = ({ token }) => {
                     <div className="form-group">
                       <label>Kode Pos</label>
                       <input
-                        type="number"
+                        type="text"
                         className="form-control"
                         placeholder="Masukkan Kode Pos Domisili"
                         value={kodePost}
                         onChange={(e) => {
-                          setKodePost(e.target.value);
+                          if(e.target.value.length === 6){
+                            setKodePost(kodePost)
+                          }else{
+
+                            setKodePost(e.target.value);
+                          }
                         }}
                         onBlur={(e) => {
                           simpleValidator.current.showMessageFor("kodePost");
@@ -1016,7 +1028,7 @@ const TambahPage = ({ token }) => {
                       {simpleValidator.current.message(
                         "ktpName",
                         ktpName,
-                        ktpName === "" ? "required" : "",
+                        "required",
                         {
                           className: "text-danger",
                         }
@@ -1038,6 +1050,7 @@ const TambahPage = ({ token }) => {
                     <div className="custom-file">
                       <input
                         // onFocus={() => setError({ ...error, agency_logo: "" })}
+                        value={ijazahName}
                         onChange={(e) => onIjasahHandler(e)}
                         type="file"
                         name="logo"
@@ -1051,7 +1064,7 @@ const TambahPage = ({ token }) => {
                       {simpleValidator.current.message(
                         "ijazahName",
                         ijazahName,
-                        ijazahName === "" ? "required" : "",
+                        "required",
                         {
                           className: "text-danger",
                         }

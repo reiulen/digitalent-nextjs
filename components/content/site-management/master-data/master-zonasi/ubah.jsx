@@ -49,6 +49,7 @@ const Tambah = ({ token }) => {
         kabupaten: items.kota_kabupaten,
         value: items.kota_kabupaten,
         id: items.id_provinsi,
+        prov: items.provinsi,
       };
     })
   );
@@ -58,10 +59,11 @@ const Tambah = ({ token }) => {
       return { ...items, provinsi_old: items.provinsi };
     })
   );
+  
 
   let province = provincesOption.filter((item) => {
     return !formInput.some((filter) => {
-      return item.label === filter.provinsi;
+      return item.label === filter.prov;
     });
   });
 
