@@ -37,20 +37,6 @@ const StepOne = ({ token, tokenPermission }) => {
     (state) => state.drowpdownAkademi
   );
 
-  const { list_substance } = useSelector(
-    (state) => state?.allSubtanceQuestionBanks?.subtance
-  );
-
-  let optionsClone = [];
-
-  let uniqueArray = list_substance.filter((item, pos) => {
-    return list_substance.indexOf(item) === pos;
-  });
-
-  uniqueArray.map((item) => {
-    optionsClone.push({ label: item.academy.name, value: item.academy.id });
-  });
-
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
@@ -259,7 +245,7 @@ const StepOne = ({ token, tokenPermission }) => {
                 <Select
                   placeholder={"Silahkan Pilih Akademi"}
                   className={styles.selectForm}
-                  options={optionsClone}
+                  options={dataAkademi.data}
                   value={{ label: academyLabel }}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
