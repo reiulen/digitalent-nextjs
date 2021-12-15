@@ -29,6 +29,7 @@ const Tambah = ({ token }) => {
   const [status, setStatus] = useState(detailZonasi.data.data.status);
   const [defaultValueKabputen, setDefaultValueKabputen] = useState([]);
   const [defaultValueProvinces, setDefaultValueProvinces] = useState([]);
+  const [prov, setProv] = useState(false);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -140,6 +141,21 @@ const Tambah = ({ token }) => {
     _temp[index]['value'] = e
     setFormInput(_temp)
   };
+
+  const customSyles = { multiValueRemove: (e) => ({ ...e, display: 'none' }) }
+
+  // const stylesRemove = {
+  //   multiValueRemove: (base, state) => {
+  //     return state.data.isFixed ? { ...base, display: 'none' } : base
+  //   }
+  // }
+
+  // const MultiValueRemove = (props) => {
+  //   if (props.data.isFixed) {
+  //     return null;
+  //   }
+  //   return <components.MultiValueRemove {...props} />;
+  // };
 
   const submit = (e) => {
     e.preventDefault();
@@ -333,16 +349,18 @@ const Tambah = ({ token }) => {
                                 <Select
                                   // ref={(ref) => (selectRefKabupaten = ref)}
                                   value={items.value}
-                                  className="basic-single"
+                                  className="basic-multi-select"
                                   classNamePrefix="select"
                                   placeholder="Pilih kota/kabupaten"
                                   isMulti={true}
                                   isDisabled={valueSend[index].provinsi === ""}
                                   isLoading={false}
                                   isClearable={false}
+                                  // isClearable={items.kabupaten.some(v => !v.isFixed)}
                                   isRtl={false}
                                   defaultValue={items.kabupaten}
                                   isSearchable={true}
+                                  // styles={customSyles}
                                   name="color"
                                   onChange={(e) => changeListKabupaten(e, index)}
                                   options={items.kabupaten}

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useSelector } from "react-redux";
@@ -23,6 +24,15 @@ const TambahApi = ({ token, id }) => {
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
+  const [agency_logo, setAgencyLogo] = useState(
+    process.env.END_POINT_API_IMAGE_PARTNERSHIP + mitaSite.agency_logo
+  );
+
+  const [gambarPreview, setGambarPreview] = useState(
+    process.env.END_POINT_API_IMAGE_PARTNERSHIP + mitaSite.agency_logo
+  );
+
+  const [gambarName, setGambarName] = useState(mitaSite.agency_logo.split("/")[3]);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -47,6 +57,34 @@ const TambahApi = ({ token, id }) => {
     }
   };
 
+  const onChangeGambar = e => {
+    const type = ["image/jpg", "image/png", "image/jpeg"];
+
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > '2000000') {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setAgencyLogo(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setGambarName(e.target.files[0].name);
+      }
+    } else {
+      e.target.value = null;
+      Swal.fire(
+        "Oops !",
+        "Data yang bisa dimasukkan hanya berupa data gambar.",
+        "error"
+      );
+    }
+  };
+
   const submit = async (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
@@ -60,16 +98,6 @@ const TambahApi = ({ token, id }) => {
       } else if (email === "") {
         Swal.fire("Gagal simpan", "Form Email tidak boleh kosong", "error");
       }
-      // else if (password === "") {
-      //   Swal.fire("Gagal simpan", "Form Password tidak boleh kosong", "error");
-      // } 
-      // else if (confirmPassword === "") {
-      //   Swal.fire(
-      //     "Gagal simpan",
-      //     "Form Konfirmasi Password tidak boleh kosong",
-      //     "error"
-      //   );
-      // } 
       else if (status === "") {
         Swal.fire("Gagal simpan", "Form Status tidak boleh kosong", "error");
       } else {
@@ -83,7 +111,7 @@ const TambahApi = ({ token, id }) => {
           formData.append("password_confirmation", confirmPassword);
         }
 
-
+        formData.append("agency_logo", agency_logo);
         formData.append("status", status);
         formData.append("_method", "put");
         try {
@@ -163,6 +191,54 @@ const TambahApi = ({ token, id }) => {
                   { className: "text-danger" }
                 )}
               </div>
+
+              <div className={`${styles.selectKategori} form-group`}>
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-4 col-form-label"
+                  style={{ marginLeft: '-10px' }}
+                >
+                  Gambar Logo (Optional)
+                </label>
+                <div className="ml-0 mt-2 row">
+                  <figure
+                    className="avatar item-rtl position-relative"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                  >
+                    <Image
+                      src={gambarPreview}
+                      alt="image"
+                      width={160}
+                      height={160}
+                      objectFit="cover"
+                    />
+                  </figure>
+                  <div className="position-relative">
+                    <label className="circle-top" htmlFor="inputGroupFile04">
+                      <i className="ri-add-line text-dark"></i>
+                    </label>
+                    <input
+                      type="file"
+                      name="gambar"
+                      className="custom-file-input"
+                      id="inputGroupFile04"
+                      onChange={onChangeGambar}
+                      accept="image/*"
+                      style={{ display: "none" }}
+                    />
+                  </div>
+                </div>
+                <div
+                  className={`${styles.resolusiTambah} col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}
+                  style={{marginLeft:'-11px'}}
+                >
+                  <p>
+                   Maksimal ukuran gambar 2 MB
+                  </p>
+                </div>
+              </div>
+
               <div className="form-group">
                 <label>Password</label>
                 <div className="position-relative">
@@ -197,7 +273,7 @@ const TambahApi = ({ token, id }) => {
                 <p className={`${styles.notes}`} style={{ color: "#b7b5cf" }}>
                   Min 8 Karakter,<br />
                   Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)<br />
-                  Min 1 Symbol/angka
+                  Min 1 Simbol dan angka
                 </p>
               </div>
               <div className="form-group">

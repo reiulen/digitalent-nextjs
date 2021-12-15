@@ -21,12 +21,14 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allPage = useSelector((state) => state.allPage);
+  const [status, setStatus] = useState("")
 
   const firstPush = () => {
     let _temp = [...array];
     _temp.push({
       name: "",
       page_id: "",
+      status: ""
     });
     setArray(_temp);
   };
@@ -41,6 +43,8 @@ const Table = ({ token }) => {
     let _temp = [...array];
     if (e.target.name === "inputName") {
       _temp[i].name = e.target.value;
+    } else if (e.target.name === "status") {
+      _temp[i].status = e.target.value;
     } else {
       _temp[i].id = e.target.value;
     }
@@ -56,7 +60,8 @@ const Table = ({ token }) => {
       let dataPage = datar.map((row, i) => {
         return {
           name: row.name,
-          page_id: row.id
+          page_id: row.id,
+          status: parseInt(row.status)
         }
       })
 
@@ -117,7 +122,7 @@ const Table = ({ token }) => {
 
         setArray(data.data.map((row, i) => {
           return {
-            ...row, id: row.page_id
+            ...row, id: row.page_id, status: row.status
           }
         }));
         sessionStorage.setItem("array2", JSON.stringify(data.data));
@@ -154,7 +159,7 @@ const Table = ({ token }) => {
                   <div key={i}>
                     <div>
                       <div className="row">
-                        <div className="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                        <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                           <div className="form-group">
                             <label>Menu {i + 1}</label>
                             <input
@@ -175,7 +180,7 @@ const Table = ({ token }) => {
                           </div>
 
                         </div>
-                        <div className="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                        <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                           <div className="form-group">
                             <label>Halaman {i + 1}</label>
                             <select
@@ -212,6 +217,22 @@ const Table = ({ token }) => {
                               "required",
                               { className: "text-danger" }
                             )}
+                          </div>
+                        </div>
+                        <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                          <div className="form-group">
+                            <label>Status</label>
+                            <select
+                              className="form-control"
+                              name="status"
+                              key={i}
+                              defaultValue={parrent.status}
+                              onChange={(e) => handleChangeInput(e, i)}
+                            >
+                              <option value="" disabled>Pilih Status</option>
+                              <option value="1">Aktif</option>
+                              <option value="0">Tidak Aktif</option>
+                            </select>
                           </div>
                         </div>
                         <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
