@@ -45,9 +45,9 @@ function RevisiList({ token }) {
             },
           }
         );
-        setListCardREvisi(data.data);
+        setListCardREvisi(data?.data);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
       }
     }
     getCardREviewList(router.query.id);
@@ -159,8 +159,8 @@ function RevisiList({ token }) {
                                     "/partnership/user/kerjasama/revisi",
                                   query: {
                                     id: router.query.id,
-                                    version: items.version,
-                                    information2: items.information2,
+                                    version: items?.version,
+                                    information2: items?.information2,
                                     index: index,
                                   },
                                 }}
@@ -179,14 +179,14 @@ function RevisiList({ token }) {
                                     "/partnership/user/kerjasama/revisi",
                                   query: {
                                     id: router.query.id,
-                                    version: items.version,
-                                    information2: items.information2,
+                                    version: items?.version,
+                                    information2: items?.information2,
                                     index: index,
                                   },
                                 }}
                               >
                                 <a className="mt-10 mt-sm-0" style={labelStyle}>
-                                  {items.information2}
+                                  {items?.information2}
                                 </a>
                               </Link>
                             )}

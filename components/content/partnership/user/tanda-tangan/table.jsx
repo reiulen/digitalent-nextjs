@@ -98,10 +98,10 @@ const Table = ({ token }) => {
     dispatch(fetchSignature(token));
   }, [
     dispatch,
-    allTandaTanganUser.keyword,
-    allTandaTanganUser.status_reload,
-    allTandaTanganUser.page,
-    allTandaTanganUser.limit,
+    allTandaTanganUser?.keyword,
+    allTandaTanganUser?.status_reload,
+    allTandaTanganUser?.page,
+    allTandaTanganUser?.limit,
     token,
   ]);
 
@@ -211,8 +211,8 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allTandaTanganUser.tanda_tangan.data &&
-                      allTandaTanganUser.tanda_tangan.data.list_signatures
+                      {allTandaTanganUser?.tanda_tangan?.data &&
+                      allTandaTanganUser?.tanda_tangan?.data?.list_signatures
                         .length === 0 ? (
                           keyWord ?
                               <tr>
@@ -227,26 +227,26 @@ const Table = ({ token }) => {
                                 </td>
                               </tr>
                       ) : (
-                        allTandaTanganUser.tanda_tangan.data &&
-                        allTandaTanganUser.tanda_tangan.data.list_signatures.map(
+                        allTandaTanganUser?.tanda_tangan?.data &&
+                        allTandaTanganUser?.tanda_tangan?.data?.list_signatures.map(
                           (items, index) => {
                             return (
                               <tr key={index}>
                                 <td className="align-middle text-left">
-                                  {allTandaTanganUser.page === 1
+                                  {allTandaTanganUser?.page === 1
                                     ? index + 1
-                                    : (allTandaTanganUser.page - 1) *
-                                        allTandaTanganUser.limit +
+                                    : (allTandaTanganUser?.page - 1) *
+                                        allTandaTanganUser?.limit +
                                       (index + 1)}
                                 </td>
                                 <td className="align-middle text-left text-overflow-ens">
-                                  {items.name}
+                                  {items?.name}
                                 </td>
                                 <td className="align-middle text-left text-overflow-ens">
-                                  {items.position}
+                                  {items?.position}
                                 </td>
                                 <td className="align-middle text-left">
-                                  {items.status == "1" ? (
+                                  {items?.status == "1" ? (
                                     <div className="position-relative w-max-content">
                                       <select
                                         name=""
@@ -332,7 +332,7 @@ const Table = ({ token }) => {
               <div className="row">
                 <div className="table-pagination col-12 col-md-8">
                   <Pagination
-                    activePage={allTandaTanganUser.page}
+                    activePage={allTandaTanganUser?.page}
                     itemsCountPerPage={
                       allTandaTanganUser?.tanda_tangan?.data?.perPage
                     }
@@ -378,8 +378,8 @@ const Table = ({ token }) => {
                         style={{ color: "#B5B5C3" }}
                       >
                         Total Data{" "}
-                        {allTandaTanganUser.tanda_tangan.data &&
-                          allTandaTanganUser.tanda_tangan.data.total}
+                        {allTandaTanganUser?.tanda_tangan?.data &&
+                          allTandaTanganUser?.tanda_tangan?.data?.total}
                       </p>
                     </div>
                   </div>

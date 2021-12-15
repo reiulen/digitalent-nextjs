@@ -26,9 +26,9 @@ function Pembahasan({ token }) {
             },
           }
         );
-        setStatus(data.data.status_migrates_id.status);
+        setStatus(data?.data?.status_migrates_id?.status);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error")
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
       }
     }
     cekProgresStatus(router.query.id);
@@ -36,9 +36,6 @@ function Pembahasan({ token }) {
 
   return (
     <PageWrapper>
-      {
-        console.log (status)
-      }
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
