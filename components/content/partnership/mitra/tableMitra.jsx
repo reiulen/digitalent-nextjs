@@ -111,7 +111,7 @@ const Table = ({ token }) => {
 
   return (
     <PageWrapper>
-      {success ? (
+      {success === "true" ? (
         <AlertBar
           text="Berhasil menyimpan data"
           className="alert-light-success"
@@ -120,7 +120,18 @@ const Table = ({ token }) => {
       ) : (
         ""
       )}
-      {update ? (
+
+      {success === "false" ? (
+        <AlertBar
+          text="Gagal menyimpan data"
+          className="alert-light-danger"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+
+      {update === "true"? (
         <AlertBar
           text="Berhasil mengubah data"
           className="alert-light-success"
@@ -129,6 +140,17 @@ const Table = ({ token }) => {
       ) : (
         ""
       )}
+
+      {update === "false"? (
+        <AlertBar
+          text="Gagal mengubah data"
+          className="alert-light-danger"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+
       {successDelete ? (
         <AlertBar
           text="Berhasil menghapus data"
@@ -138,6 +160,7 @@ const Table = ({ token }) => {
       ) : (
         ""
       )}
+
       {isStatusBar ? (
         <AlertBar
           text="Berhasil mengubah data"
@@ -147,6 +170,7 @@ const Table = ({ token }) => {
       ) : (
         ""
       )}
+      
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div 

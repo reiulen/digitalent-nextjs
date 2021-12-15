@@ -222,6 +222,7 @@ const DetailArtikel = () => {
         <div className="row mt-10">
           {/* Left Side */}
           <div
+          // className="image-thumbnail-detail"
             className={
               windowDimensions &&
               windowDimensions.width &&
@@ -230,102 +231,77 @@ const DetailArtikel = () => {
                 : "col-12 col-lg-8 "
             }
           >
+            
             {/* Image */}
-            <Image
-              src={
-                process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                "publikasi/images/" +
-                detail.gambar
-              }
-              width={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 768 ?
-                  837
-                :
-                  windowDimensions &&
-                  windowDimensions.width &&
-                  windowDimensions.width <= 768 &&
-                  windowDimensions.width > 540 ?
-                    704
-                  :
-                    361
-              }
-              height={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 768 ?
-                  640
-                :
-                  361
+            <div className={`${styles.image_thumbnail} rounded-lg`}>
+              <Image
+                src={
+                  process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                  "publikasi/images/" +
+                  detail.gambar
                 }
-              // layout="fill"
-              objectFit="cover"
-              alt="Detail Image"
-              className="rounded-lg img-fluid"
-            />
+                layout="fill"
+                objectFit="cover"
+                alt="Detail Image"
+                className={`rounded-lg img-fluid `}
+              />
+            </div>
+            
 
-            {/* Artikel */}
-            <div 
-              className={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 1242 ?
-                  "border rounded-lg mb-5 mt-15 mr-20"
-                :
-                  "border rounded-lg mb-5 mt-15"
-              }
-            >
-              <div
-                className="row"
-                style={{wordBreak: "break-word" }}
+              {/* Artikel */}
+              <div 
+                className="border rounded-lg mb-5 mt-15"
               >
-                {detailContent ? (
-                  resultText ? (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: resultText }}
-                      className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
-                    />
-                  ) : (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: detailContent }}
-                      className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
-                    />
-                  )
-                ) : null}
-              </div>
-
-              <div className="row m-3 d-flex justify-content-between pb-5">
-                <div className="row d-flex justify-content-between ml-1">
-                  {detail && detail.tag && detail.tag.length !== 0
-                    ? detail.tag.map((el, i) => {
-                        return (
-                          <div
-                            className="mr-3 border p-3 rounded mb-3"
-                            key={i}
-                            style={{ height: "38px" }}
-                          >
-                            #{el.toString().toUpperCase()}
-                          </div>
-                        );
-                      })
-                    : null}
+                <div
+                  className="row"
+                  style={{wordBreak: "break-word" }}
+                >
+                  {detailContent ? (
+                    resultText ? (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: resultText }}
+                        className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
+                      />
+                    ) : (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: detailContent }}
+                        className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
+                      />
+                    )
+                  ) : null}
                 </div>
 
-                <div className="row ml-1">
-                  <div className="mr-3">
-                    <ShareOverlay
-                      url={`http://dts-dev.majapahit.id/artikel/detail/${id}`}
-                      quote={detail.judul}
-                    >
-                      <button className="btn btn-sm btn-outline-light rounded-circle">
-                        <i className="ri-share-line px-0 py-1"></i>
-                      </button>
-                    </ShareOverlay>
+                <div className="row m-3 d-flex justify-content-between pb-5">
+                  <div className="row d-flex justify-content-between ml-1">
+                    {detail && detail.tag && detail.tag.length !== 0
+                      ? detail.tag.map((el, i) => {
+                          return (
+                            <div
+                              className="mr-3 border p-3 rounded mb-3"
+                              key={i}
+                              style={{ height: "38px" }}
+                            >
+                              #{el.toString().toUpperCase()}
+                            </div>
+                          );
+                        })
+                      : null}
+                  </div>
+
+                  <div className="row ml-1">
+                    <div className="mr-3">
+                      <ShareOverlay
+                        url={`http://dts-dev.majapahit.id/artikel/detail/${id}`}
+                        quote={detail.judul}
+                      >
+                        <button className="btn btn-sm btn-outline-light rounded-circle">
+                          <i className="ri-share-line px-0 py-1"></i>
+                        </button>
+                      </ShareOverlay>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
           {/* End of Left Side */}
 
