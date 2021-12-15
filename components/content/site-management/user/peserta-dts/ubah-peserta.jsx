@@ -338,6 +338,18 @@ const TambahPage = ({ token }) => {
     }
   };
 
+  const formatDate = (date) =>  {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
+
   const colorText = {
     color: "#6C6C6C",
   };
@@ -641,7 +653,13 @@ const TambahPage = ({ token }) => {
                         placeholder="Masukkan Tanggal Lahir"
                         value={tanggalLahir}
                         onChange={(e) => {
-                          setTanggalLahir(e.target.value);
+                          if (
+                            e.target.value < formatDate(new Date(Date.now()))
+                          ) {
+                            setTanggalLahir(e.target.value);
+                          } else if (e.target.value) {
+                            setTanggalLahir(formatDate(new Date(Date.now())));
+                          }
                         }}
                         onBlur={(e) => {
                           simpleValidator.current.showMessageFor(
