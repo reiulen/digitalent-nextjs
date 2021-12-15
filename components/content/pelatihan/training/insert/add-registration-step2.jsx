@@ -71,10 +71,14 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
       value: "date",
       name: "Input Date",
     },
-    {
-      value: "triggered",
-      name: "Triggered",
-    },
+    // {
+    //   value: "triggered",
+    //   name: "Triggered",
+    // },
+    // {
+    //   value: "upload_document",
+    //   name: "Upload Document",
+    // },
   ]);
 
   const [size] = useState([
