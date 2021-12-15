@@ -1,6 +1,4 @@
 import dynamic from "next/dynamic";
-
-import dynamic from "next/dynamic";
 // import Preview from "../../../../components/content/publikasi/artikel-peserta/preview";
 import Footer from "../../../../components/templates/footer.component";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
