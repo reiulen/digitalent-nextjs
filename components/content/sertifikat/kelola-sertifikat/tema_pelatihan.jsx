@@ -352,12 +352,18 @@ export default function NamaPelatihan({ token }) {
 															</td>
 															<td className="align-middle d-flex">
 																<Link
-																	href={`/sertifikat/kelola-sertifikat/${certificate.name
-																		.split(" ")
-																		.join("-")
-																		.toLowerCase()}?id=${
-																		certificate.id
-																	}&page=1`}
+																	href={`/sertifikat/kelola-sertifikat/${
+																		!certificate.name.includes("//")
+																			? certificate?.name
+																					?.split(" ")
+																					?.join("-")
+																					?.toLowerCase()
+																			: certificate?.name
+																					?.split("//")[1]
+																					?.split(" ")
+																					?.join("-")
+																					?.toLowerCase()
+																	}?id=${certificate.id}&page=1`}
 																	passHref
 																>
 																	<a
@@ -365,12 +371,6 @@ export default function NamaPelatihan({ token }) {
 																		data-toggle="tooltip"
 																		data-placement="bottom"
 																		title="Detail"
-																		onClick={() => {
-																			Cookies.set(
-																				"tema_pelatihan_id",
-																				certificate.id
-																			);
-																		}}
 																	>
 																		<i className="ri-eye-fill p-0 text-white"></i>
 																	</a>
