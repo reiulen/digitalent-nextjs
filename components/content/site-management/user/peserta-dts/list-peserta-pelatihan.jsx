@@ -65,6 +65,7 @@ const Table = ({ token }) => {
                 </p>
               </div>
             </td>
+            <td className="align-middle text-left">{item.pindahan ? "Pindahan" : "Register"}</td>
             <td className="align-middle text-left">
               <div className="d-flex align-items-center">
                 <button
@@ -167,6 +168,7 @@ const Table = ({ token }) => {
                       <th className="text-left align-middle">Nama Pelatihan</th>
                       <th className="text-left align-middle">ID Pelatihan</th>
                       <th className="text-left align-middle">Status</th>
+                      <th className="text-left align-middle">Status Pindahan</th>
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
                   </thead>
