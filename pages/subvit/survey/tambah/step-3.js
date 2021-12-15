@@ -27,7 +27,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      const permission = req.cookies.token_permission;
+      const permission = req?.cookies.token_permission;
 
       return {
         props: {
