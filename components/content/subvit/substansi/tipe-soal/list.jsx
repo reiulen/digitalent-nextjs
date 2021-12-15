@@ -17,7 +17,7 @@ import {
 } from "../../../../../redux/actions/subvit/subtance-question-type.actions";
 import { DELETE_SUBTANCE_QUESTION_TYPE_RESET } from "../../../../../redux/types/subvit/subtance-question-type.type";
 
-const ListTipeSoal = ({ token }) => {
+const ListTipeSoal = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -110,7 +110,7 @@ const ListTipeSoal = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionBanksType(id, token));
+        dispatch(deleteSubtanceQuestionBanksType(id, token, tokenPermission));
       }
     });
   };

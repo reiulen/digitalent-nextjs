@@ -51,7 +51,7 @@ const ViewTrainingStep1 = () => {
     kuotaTargetPeserta: review.kuota_peserta,
     komitmenPeserta: review.komitmen === "1" ? "Iya" : "Tidak",
     lpjPeserta: review.lpj_peserta === "1" ? "Iya" : "Tidak",
-    infoSertifikasi: review.sertifikasi === "1" ? "Iya" : "Tidak",
+    infoSertifikasi: review.sertifikasi === "0" ? "Tidak" : review.sertifikasi,
     metodePelatihan: review.metode_pelatihan,
     statusKuota: review.status_kuota,
     alurPendaftaran: review.alur_pendaftaran,
@@ -145,8 +145,8 @@ const ViewTrainingStep1 = () => {
               <div className="col-md-6">
                 <p className="text-neutral-body mb-2 fz-14">Thumbnail</p>
                 <div className="">
-                  {dataPelatihan.logoReference.includes("default") && <p>-</p>}
-                  {dataPelatihan.logoReference.includes("https") && (
+                  {dataPelatihan.thumbnail.includes("default") && <p>-</p>}
+                  {dataPelatihan.thumbnail.includes("https") && (
                     <figure
                       className="avatar item-rtl"
                       data-toggle="modal"
@@ -168,7 +168,7 @@ const ViewTrainingStep1 = () => {
             <div className="row mt-3">
               <div className="col-md-6">
                 <p className="text-neutral-body mb-2 fz-14">Silabus</p>
-                <p
+                <a
                   className="fz-16 text-primary"
                   style={{ cursor: "pointer" }}
                   onClick={() =>
@@ -176,7 +176,7 @@ const ViewTrainingStep1 = () => {
                   }
                 >
                   {dataPelatihan.silabus.split("/")[2]}
-                </p>
+                </a>
               </div>
               <div className="col-md-6">
                 <p className="text-neutral-body mb-2 fz-14">Metode Pelatihan</p>
@@ -372,21 +372,29 @@ const ViewTrainingStep1 = () => {
                 </p>
               </div>
               <div className="col-md-12">
-                <p className="text-neutral-body mb-2 fz-14">
-                  Link Detail Pelatihan
-                </p>
-                <p
-                  className="fz-16 text-primary"
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    window.open(
-                      `http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`,
-                      "_blank"
-                    )
-                  }
-                >
-                  {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
-                </p>
+                {review.status_publish !== "0" ? (
+                  <>
+                    <p className="text-neutral-body mb-2 fz-14">
+                      Link Detail Pelatihan
+                    </p>
+                    <a
+                      className={`text-primary fz-16 `}
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        window.open(
+                          `http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`,
+                          "_blank"
+                        )
+                      }
+                    >
+                      {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
+                    </a>
+                  </>
+                ) : (
+                  <p className="fz-16">
+                    {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
+                  </p>
+                )}
               </div>
             </div>
 

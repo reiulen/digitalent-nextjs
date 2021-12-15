@@ -28,7 +28,7 @@ import axios from "axios";
 import styles from "../../trivia/edit/step.module.css";
 import Cookies from "js-cookie";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -83,30 +83,30 @@ const StepTwo = ({ token }) => {
   const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
-    dispatch(
-      getAllSubtanceQuestionDetail(id, 1, null, null, "", "", "", token)
-    );
+    dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
     // if (error) {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      dispatch(
-        getAllSubtanceQuestionDetail(id, 1, null, null, "", "", "", token)
-      );
+      dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
     }
 
     if (successImages) {
-      dispatch(
-        getAllSubtanceQuestionDetail(id, 1, null, null, "", "", "", token)
-      );
+      dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
     }
 
     if (isDeleted) {
-      dispatch(
-        getAllSubtanceQuestionDetail(id, 1, null, null, "", "", "", token)
-      );
+      dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
     }
-  }, [dispatch, id, successFile, successImages, isDeleted, token]);
+  }, [
+    dispatch,
+    id,
+    successFile,
+    successImages,
+    isDeleted,
+    token,
+    tokenPermission,
+  ]);
 
   const saveDraft = () => {
     let valid = true;
@@ -187,7 +187,9 @@ const StepTwo = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(importFileSubtanceQuestionDetail(data, token));
+        dispatch(
+          importFileSubtanceQuestionDetail(data, token, tokenPermission)
+        );
       }
     });
   };
@@ -197,17 +199,19 @@ const StepTwo = ({ token }) => {
     // data.append("subtance_question_bank_id", id);
     data.append("image_file", image_file, image_file.name);
 
-    dispatch(importImagesSubtanceQuestionDetail(data, token));
+    dispatch(importImagesSubtanceQuestionDetail(data, token, tokenPermission));
   };
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllSubtanceQuestionDetail(id, pageNumber, token));
+    dispatch(
+      getAllSubtanceQuestionDetail(id, pageNumber, token, tokenPermission)
+    );
   };
 
   const handleLimit = (val) => {
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllSubtanceQuestionDetail(id, 1, val, token));
+    dispatch(getAllSubtanceQuestionDetail(id, 1, val, token, tokenPermission));
   };
 
   const handleDelete = (id) => {
@@ -222,7 +226,7 @@ const StepTwo = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionDetail(id, token));
+        dispatch(deleteSubtanceQuestionDetail(id, token, tokenPermission));
       }
     });
   };

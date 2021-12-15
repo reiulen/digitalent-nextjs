@@ -15,7 +15,7 @@ import {
   getAllSubtanceQuestionDetail,
 } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
-const DetailSubstansi = ({ token }) => {
+const DetailSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -44,10 +44,10 @@ const DetailSubstansi = ({ token }) => {
 
   useEffect(() => {
     if (isDeleted) {
-      dispatch(getAllSubtanceQuestionDetail(id, token));
+      dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, dispatch, id, token]);
+  }, [isDeleted, dispatch, id, token, tokenPermission]);
 
   const [status, setStatus] = useState("");
   const [kategori, setKategori] = useState(null);
@@ -81,7 +81,7 @@ const DetailSubstansi = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionDetail(id, token));
+        dispatch(deleteSubtanceQuestionDetail(id, token, tokenPermission));
       }
     });
   };
@@ -121,7 +121,8 @@ const DetailSubstansi = ({ token }) => {
         status,
         kategori,
         pelatihan,
-        token
+        token,
+        tokenPermission
       )
     );
     setShowModal(false);
@@ -137,7 +138,8 @@ const DetailSubstansi = ({ token }) => {
         status,
         kategori,
         pelatihan,
-        token
+        token,
+        tokenPermission
       )
     );
   };

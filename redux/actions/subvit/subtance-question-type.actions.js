@@ -83,7 +83,7 @@ export const getDetailSubtanceQuestionBanksType =
   };
 
 export const newSubtanceQuestionBanksType =
-  (substanceQuestionTypeData, token) => async (dispatch) => {
+  (substanceQuestionTypeData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_SUBTANCE_QUESTION_TYPE_REQUEST,
@@ -92,6 +92,7 @@ export const newSubtanceQuestionBanksType =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -114,7 +115,8 @@ export const newSubtanceQuestionBanksType =
   };
 
 export const updatewSubtanceQuestionBanksType =
-  (id, substanceQuestionTypeData, token) => async (dispatch) => {
+  (id, substanceQuestionTypeData, token, tokenPermission) =>
+  async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_TYPE_REQUEST,
@@ -123,6 +125,7 @@ export const updatewSubtanceQuestionBanksType =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -145,13 +148,14 @@ export const updatewSubtanceQuestionBanksType =
   };
 
 export const deleteSubtanceQuestionBanksType =
-  (id, token) => async (dispatch) => {
+  (id, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({ type: DELETE_SUBTANCE_QUESTION_TYPE_REQUEST });
 
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 

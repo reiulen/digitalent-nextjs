@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
+
 function RevisiList({ token }) {
   const router = useRouter();
 
@@ -33,6 +35,7 @@ function RevisiList({ token }) {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );

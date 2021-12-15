@@ -18,7 +18,7 @@ import CheckboxComponent from "./step-2/checkbox-component";
 import BlankComponent from "./step-2/blank-component";
 import styles from "../edit/step.module.css";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -215,7 +215,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "checkbox":
@@ -241,7 +241,7 @@ const StepTwo = ({ token }) => {
             duration,
             type: methodAdd,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "fill_in_the_blank":
@@ -257,7 +257,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
             answer_key: null,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       default:
@@ -316,7 +316,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "checkbox":
@@ -342,7 +342,7 @@ const StepTwo = ({ token }) => {
             duration,
             type: methodAdd,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "fill_in_the_blank":
@@ -358,7 +358,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
             answer_key: null,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       default:

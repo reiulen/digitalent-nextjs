@@ -49,10 +49,12 @@ const ListSurvey = ({ token, tokenPermission }) => {
       dispatch({
         type: DELETE_SURVEY_QUESTION_BANKS_RESET,
       });
-      dispatch(getAllSurveyQuestionBanks(page, "", limit, token));
+      dispatch(
+        getAllSurveyQuestionBanks(page, "", limit, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, dispatch, page, limit, token]);
+  }, [isDeleted, dispatch, page, limit, token, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
@@ -97,7 +99,7 @@ const ListSurvey = ({ token, tokenPermission }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSurveyQuestionBanks(id, token));
+        dispatch(deleteSurveyQuestionBanks(id, token, tokenPermission));
       }
     });
   };

@@ -20,7 +20,7 @@ import {
 import { DELETE_TRIVIA_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/trivia-question.type";
 import { Card, Col, Form, Modal, Row } from "react-bootstrap";
 
-const ListTrivia = ({ token }) => {
+const ListTrivia = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { loading, error, trivia } = useSelector(
@@ -49,10 +49,12 @@ const ListTrivia = ({ token }) => {
       dispatch({
         type: DELETE_TRIVIA_QUESTION_BANKS_RESET,
       });
-      dispatch(getAllTriviaQuestionBanks(page, "", limit, token));
+      dispatch(
+        getAllTriviaQuestionBanks(page, "", limit, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [dispatch, isDeleted, token, page, limit]);
+  }, [dispatch, isDeleted, token, page, limit, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -90,7 +92,7 @@ const ListTrivia = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteTriviaQuestionBanks(id, token));
+        dispatch(deleteTriviaQuestionBanks(id, token, tokenPermission));
       }
     });
   };

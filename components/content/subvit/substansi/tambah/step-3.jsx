@@ -22,7 +22,7 @@ import {
   helperTextLimitMax,
 } from "../../../../../utils/middleware/helper";
 
-const StepThree = ({ token }) => {
+const StepThree = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -110,7 +110,9 @@ const StepThree = ({ token }) => {
           questions_to_share: jumlah_soal,
         };
 
-        dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
+        dispatch(
+          updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
+        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);

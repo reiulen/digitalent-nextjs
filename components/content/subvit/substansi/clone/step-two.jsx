@@ -22,7 +22,7 @@ import StepInput from "/components/StepInputClone";
 import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -156,7 +156,7 @@ const StepTwo = ({ token }) => {
     const data = {
       list_soal: checkedDelete,
     };
-    dispatch(deleteCloneSubtanceQuestionBanks(data, token));
+    dispatch(deleteCloneSubtanceQuestionBanks(data, token, tokenPermission));
   };
 
   const handleModal = () => {

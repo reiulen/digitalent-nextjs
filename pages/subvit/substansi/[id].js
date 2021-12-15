@@ -16,7 +16,10 @@ export default function DetailSubstansiPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DetailSubstansi token={session.token} />
+        <DetailSubstansi
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -82,7 +85,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Detail Substansi - Subvit" },
+        props: { session, title: "Detail Substansi - Subvit", permission },
       };
     }
 );

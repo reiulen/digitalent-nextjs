@@ -19,7 +19,7 @@ import {
   getAllSurveyQuestionDetail,
 } from "../../../../redux/actions/subvit/survey-question-detail.action";
 
-const DetailSurvey = ({ token }) => {
+const DetailSurvey = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -40,10 +40,10 @@ const DetailSurvey = ({ token }) => {
 
   useEffect(() => {
     if (isDeleted) {
-      dispatch(getAllSurveyQuestionDetail(id, token));
+      dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, id, token, dispatch]);
+  }, [isDeleted, id, token, dispatch, tokenPermission]);
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -75,7 +75,7 @@ const DetailSurvey = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSurveyQuestionDetail(id, token));
+        dispatch(deleteSurveyQuestionDetail(id, token, tokenPermission));
       }
     });
   };
@@ -106,7 +106,9 @@ const DetailSurvey = ({ token }) => {
   };
 
   const handleSearch = () => {
-    dispatch(getAllSurveyQuestionDetail(id, 1, 5, search, token));
+    dispatch(
+      getAllSurveyQuestionDetail(id, 1, 5, search, token, tokenPermission)
+    );
   };
 
   const handleTextSearch = (e) => {

@@ -20,7 +20,7 @@ import StepInput from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
 import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -102,7 +102,9 @@ const StepTwo = ({ token }) => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
+      dispatch(
+        updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

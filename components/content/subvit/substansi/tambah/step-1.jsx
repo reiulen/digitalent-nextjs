@@ -23,7 +23,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const StepOne = ({ token }) => {
+const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -60,8 +60,8 @@ const StepOne = ({ token }) => {
   const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (success) {
       const id = subtance.id;
       if (typeSave === "lanjut") {
@@ -86,6 +86,7 @@ const StepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   const saveDraft = () => {
@@ -143,7 +144,7 @@ const StepOne = ({ token }) => {
         training_id,
         category,
       };
-      console.log(setData);
+
       localStorage.setItem("step1", JSON.stringify(setData));
       dispatch(newSubtanceQuestionBanks(data, token));
     } else {

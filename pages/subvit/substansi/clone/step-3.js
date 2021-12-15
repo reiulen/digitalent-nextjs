@@ -11,7 +11,11 @@ export default function CloneSoalSubtansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
+<<<<<<< HEAD
         <StepFour token={session.token} tokenPermission={props.permission} />
+=======
+        <StepTree token={session.token} tokenPermission={props.permission} />
+>>>>>>> fb9bc4204f29d6f73e8385f01ddb6cea68e4adf7
       </div>
     </>
   );
