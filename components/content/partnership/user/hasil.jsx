@@ -103,7 +103,7 @@ function Hasil({ token }) {
                       Selamat, Pengajuan Diterima!
                     </h1>
                     <p className="mt-5 fz-16">
-                      Selamat kepada {user.name} pengajuan kerjasamanya telah diterima. </p>
+                      Selamat kepada {user?.name} pengajuan kerjasamanya telah diterima. </p>
                   </div>
 
                   <div className="form-group row">
@@ -137,7 +137,7 @@ function Hasil({ token }) {
                       Kerjasama Berakhir!
                     </h1>
                     <p className="mt-5 fz-16">
-                      Periode kerjasama {user.name} telah berakhir. Silahkan ajukan kembali untuk memperpanjang periode kerjasama.
+                      Periode kerjasama {user?.name} telah berakhir. Silahkan ajukan kembali untuk memperpanjang periode kerjasama.
                     </p>
                   </div>
 
@@ -168,7 +168,7 @@ function Hasil({ token }) {
                       Maaf, Pengajuan Ditolak
                     </h1>
                     <p className="mt-5 fz-16">
-                      Mohon maaf pengajuan kerjasama {user.name} ditolak. Anda dapat mengajukan kerjasama lagi di lain waktu.
+                      Mohon maaf pengajuan kerjasama {user?.name} ditolak. Anda dapat mengajukan kerjasama lagi di lain waktu.
                     </p>
                   </div>
 

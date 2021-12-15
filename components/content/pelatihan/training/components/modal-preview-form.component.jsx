@@ -216,6 +216,7 @@ const ModalPreview = ({
           </div>
         );
         break;
+      case "triggered":
       default:
         break;
     }

@@ -15,15 +15,149 @@ const FormManual = ({
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const inputChangeHandler = (e, alfa, beta, gamma, delta) => {
+  const inputChangeHandler = (
+    e,
+    alfa,
+    beta = null,
+    gamma = null,
+    delta = null
+  ) => {
     const { value, name, checked } = e.target;
-    const list = [...formBuilder];
-    list[alfa][name] = value;
-    if (name === "required") {
-      let check = checked === true ? "1" : "0";
-      list[alfa]["required"] = check;
+    if (alfa !== null && beta === null && gamma === null && delta === null) {
+      const list = [...formBuilder];
+      list[alfa][name] = value;
+      if (name === "required") {
+        let check = checked === true ? "1" : "0";
+        list[alfa]["required"] = check;
+      }
+      if (name === "triggered") {
+        let check = checked === true ? "1" : "0";
+        if (checked) {
+          list.map((row, i) => {
+            if (row.option === "manual") {
+              if (row.dataOption !== "") {
+                let dataOption = row.dataOption.split(";");
+                dataOption.map((triggeredOption, index) => {
+                  let val = {
+                    key: index + 1,
+                    name: triggeredOption,
+                    element: "",
+                    size: "",
+                    option: "",
+                    dataOption: "",
+                    triggered: "0",
+                    triggered_children: [],
+                  };
+                  list[alfa].triggered_parent.push(val);
+                });
+              }
+            }
+          });
+        } else {
+          list[alfa].triggered_parent = [];
+        }
+        list[alfa]["triggered"] = check;
+      }
+      funcFormBuilder(list);
     }
-    funcFormBuilder(list);
+
+    if (alfa !== null && beta !== null && gamma === null && delta === null) {
+      const list = [...formBuilder];
+      list[alfa].triggered_parent[beta][name] = value;
+      if (name === "required") {
+        let check = checked === true ? "1" : "0";
+        list[alfa].triggered_parent[beta]["required"] = check;
+      }
+      if (name === "triggered") {
+        let check = checked === true ? "1" : "0";
+        list[alfa].triggered_parent[beta]["triggered"] = check;
+        if (checked) {
+          list[alfa].triggered_parent.map((row, i) => {
+            if (row.option === "manual") {
+              if (row.dataOption !== "") {
+                let dataOption = row.dataOption.split(";");
+                dataOption.map((triggeredOption, index) => {
+                  let val = {
+                    key: index + 1,
+                    name: triggeredOption,
+                    element: "",
+                    size: "",
+                    option: "",
+                    dataOption: "",
+                    triggered: "0",
+                    triggered_index: [],
+                  };
+                  list[alfa].triggered_parent[beta].triggered_children.push(
+                    val
+                  );
+                });
+              }
+            }
+          });
+        } else {
+          list[alfa].triggered_parent[beta].triggered_children = [];
+        }
+      }
+      funcFormBuilder(list);
+    }
+
+    if (alfa !== null && beta !== null && gamma !== null && delta === null) {
+      const list = [...formBuilder];
+      list[alfa].triggered_parent[beta].triggered_children[gamma][name] = value;
+      if (name === "required") {
+        let check = checked === true ? "1" : "0";
+        list[alfa].triggered_parent[beta].triggered_children[gamma][
+          "required"
+        ] = check;
+      }
+      if (name === "triggered") {
+        let check = checked === true ? "1" : "0";
+        list[alfa].triggered_parent[beta].triggered_children[gamma][
+          "triggered"
+        ] = check;
+        if (checked) {
+          list[alfa].triggered_parent[beta].triggered_children.map((row, i) => {
+            if (row.option === "manual") {
+              if (row.dataOption !== "") {
+                let dataOption = row.dataOption.split(";");
+                dataOption.map((triggeredOption, index) => {
+                  let val = {
+                    key: index + 1,
+                    name: triggeredOption,
+                    element: "",
+                    size: "",
+                    option: "",
+                    dataOption: "",
+                  };
+                  list[alfa].triggered_parent[beta].triggered_children[
+                    gamma
+                  ].triggered_index.push(val);
+                });
+              }
+            }
+          });
+        } else {
+          list[alfa].triggered_parent[beta].triggered_children[
+            gamma
+          ].triggered_index = [];
+        }
+      }
+      funcFormBuilder(list);
+    }
+
+    if (alfa !== null && beta !== null && gamma !== null && delta !== null) {
+      const list = [...formBuilder];
+      list[alfa].triggered_parent[beta].triggered_children[
+        gamma
+      ].triggered_index[delta][name] = value;
+      if (name === "required") {
+        let check = checked === true ? "1" : "0";
+        list[alfa].triggered_parent[beta].triggered_children[
+          gamma
+        ].triggered_index[delta]["required"] = check;
+      }
+      funcFormBuilder(list);
+    }
   };
 
   const removeFieldHandler = (
@@ -165,6 +299,52 @@ const FormManual = ({
           {renderDataOptionHandler(row, i, j, k, l)}
         </>
       );
+    } else if (row.element === "triggered") {
+      return (
+        <>
+          <div className="col-sm-12 col-md-2">
+            <div className="form-group mb-2">
+              <label className="col-form-label font-weight-bold">Option</label>
+              <select
+                className="form-control"
+                name="option"
+                value={row.option}
+                onChange={(e) => inputChangeHandler(e, i, j, k, l)}
+              >
+                <option value="" disabled selected>
+                  -- PILIH --
+                </option>
+                {options.map(
+                  (opt, i) =>
+                    opt.value !== "select_reference" && (
+                      <option key={i} value={opt.value}>
+                        {opt.name}
+                      </option>
+                    )
+                )}
+              </select>
+            </div>
+          </div>
+          <div className="col-sm-12 col-md-2">
+            <div className="form-group mb-2">
+              <label className="col-form-label font-weight-bold">
+                Data Option
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="dataOption"
+                value={row.dataOption}
+                placeholder="data1;data2"
+                autoComplete="off"
+                onChange={(e) => inputChangeHandler(e, i, j, k, l)}
+                required
+                disabled={row.triggered === "1" ? true : false}
+              />
+            </div>
+          </div>
+        </>
+      );
     } else {
       return (
         <>
@@ -241,6 +421,7 @@ const FormManual = ({
         option: "",
         dataOption: "",
         required: "0",
+        triggered: "0",
         triggered_parent: [],
       },
     ]);
@@ -302,6 +483,7 @@ const FormManual = ({
                 value={row.element}
                 onChange={(e) => inputChangeHandler(e, i)}
                 required
+                disabled={row.triggered === "1" ? true : false}
               >
                 <option value="" disabled selected>
                   -- PILIH --
@@ -339,9 +521,11 @@ const FormManual = ({
           {renderMultipleHandler(row, i)}
           <div className="col-sm-6 col-md-2">
             <label className="col-form-label font-weight-bold ">Req</label>
-            <label className="col-form-label font-weight-bold ml-3">
-              Triggered
-            </label>
+            {row.element === "triggered" && (
+              <label className="col-form-label font-weight-bold ml-3">
+                Triggered
+              </label>
+            )}
             <div className="d-flex align-items-end justify-content-between">
               <div className="form-group ">
                 <div className="form-check mb-4">
@@ -354,31 +538,25 @@ const FormManual = ({
                   />
                 </div>
               </div>
-              <div className="">
-                <label className="switches">
-                  <input
-                    // required
-                    className="checkbox"
-                    // checked={publish}
-                    type="checkbox"
-                    // onChange={(e) => handleChangePublish(e)}
-                  />
-                  <span
-                    className={`sliders round pl-2
-                              `}
-                  ></span>
-                  {/* <span
-                              className={`sliders round ${
-                                publish ? "text-white" : "pl-2"
-                              }`}
-                            ></span> */}
-                </label>
-              </div>
+              {row.element === "triggered" && (
+                <div className="">
+                  <label className="switches">
+                    <input
+                      className="checkbox"
+                      name="triggered"
+                      checked={row.triggered === "1" ? true : false}
+                      type="checkbox"
+                      onChange={(e) => inputChangeHandler(e, i)}
+                    />
+                    <span className={`sliders round pl-2`}></span>
+                  </label>
+                </div>
+              )}
               {formBuilder.length !== 1 && row.key !== 1 ? (
                 <button
                   className="btn btn-link-action bg-danger text-white mb-3 "
                   type="button"
-                  onClick={() => removeFieldHandler(i)}
+                  onClick={() => removeFieldHandler(i, j)}
                 >
                   <i className="ri-delete-bin-fill p-0 text-white"></i>
                 </button>
@@ -398,7 +576,7 @@ const FormManual = ({
             row.triggered_parent.length > 0 &&
             row.triggered_parent.map((rowParent, j) => (
               <div className="container pl-15" key={j}>
-                <div className="row justify-content-start" >
+                <div className="row justify-content-start">
                   <div className="col-sm-12 col-md-2">
                     <div className="form-group mb-2">
                       <label className="col-form-label font-weight-bold">
@@ -411,7 +589,7 @@ const FormManual = ({
                         value={rowParent.name}
                         placeholder="Field"
                         autoComplete="off"
-                        onChange={(e) => inputChangeHandler(e, i)}
+                        onChange={(e) => inputChangeHandler(e, i, j)}
                         required
                       />
                     </div>
@@ -425,8 +603,9 @@ const FormManual = ({
                         className="form-control"
                         name="element"
                         value={rowParent.element}
-                        onChange={(e) => inputChangeHandler(e, i)}
+                        onChange={(e) => inputChangeHandler(e, i, j)}
                         required
+                        disabled={rowParent.triggered === "1" ? true : false}
                       >
                         <option value="" disabled selected>
                           -- PILIH --
@@ -447,8 +626,8 @@ const FormManual = ({
                       <select
                         className="form-control"
                         name="size"
-                        value={row.size}
-                        onChange={(e) => inputChangeHandler(e, i)}
+                        value={rowParent.size}
+                        onChange={(e) => inputChangeHandler(e, i, j)}
                         required
                       >
                         <option value="" disabled selected>
@@ -463,14 +642,16 @@ const FormManual = ({
                     </div>
                   </div>
 
-                  {renderMultipleHandler(rowParent, j)}
+                  {renderMultipleHandler(rowParent, i, j)}
                   <div className="col-sm-6 col-md-2">
                     <label className="col-form-label font-weight-bold ">
                       Req
                     </label>
-                    <label className="col-form-label font-weight-bold ml-3">
-                      Triggered
-                    </label>
+                    {rowParent.element === "triggered" && (
+                      <label className="col-form-label font-weight-bold ml-3">
+                        Triggered
+                      </label>
+                    )}
                     <div className="d-flex align-items-end justify-content-between">
                       <div className="form-group ">
                         <div className="form-check mb-4">
@@ -479,30 +660,26 @@ const FormManual = ({
                             name="required"
                             checked={rowParent.required === "1" ? true : false}
                             className="form-check-input"
-                            onChange={(e) => inputChangeHandler(e, i)}
+                            onChange={(e) => inputChangeHandler(e, i, j)}
                           />
                         </div>
                       </div>
-                      <div className="">
-                        <label className="switches">
-                          <input
-                            // required
-                            className="checkbox"
-                            // checked={publish}
-                            type="checkbox"
-                            // onChange={(e) => handleChangePublish(e)}
-                          />
-                          <span
-                            className={`sliders round pl-2
-                              `}
-                          ></span>
-                          {/* <span
-                              className={`sliders round ${
-                                publish ? "text-white" : "pl-2"
-                              }`}
-                            ></span> */}
-                        </label>
-                      </div>
+                      {rowParent.element === "triggered" && (
+                        <div className="">
+                          <label className="switches">
+                            <input
+                              className="checkbox"
+                              name="triggered"
+                              checked={
+                                rowParent.triggered === "1" ? true : false
+                              }
+                              type="checkbox"
+                              onChange={(e) => inputChangeHandler(e, i, j)}
+                            />
+                            <span className={`sliders round pl-2`}></span>
+                          </label>
+                        </div>
+                      )}
                       <button
                         className="btn btn-link-action bg-danger text-white mb-3 "
                         type="button"
@@ -510,16 +687,6 @@ const FormManual = ({
                       >
                         <i className="ri-delete-bin-fill p-0 text-white"></i>
                       </button>
-                      {/* {formBuilder.length !== 1 && row.key !== 1 ? (
-                      ) : (
-                        <button
-                          className="btn btn-link-action bg-danger text-white mb-3  invisible"
-                          type="button"
-                          onClick={() => removeFieldHandler(i)}
-                        >
-                          <i className="ri-delete-bin-fill p-0 text-white"></i>
-                        </button>
-                      )} */}
                     </div>
                   </div>
 
@@ -540,7 +707,7 @@ const FormManual = ({
                                 value={rowChildren.name}
                                 placeholder="Field"
                                 autoComplete="off"
-                                onChange={(e) => inputChangeHandler(e, i)}
+                                onChange={(e) => inputChangeHandler(e, i, j, k)}
                                 required
                               />
                             </div>
@@ -554,8 +721,11 @@ const FormManual = ({
                                 className="form-control"
                                 name="element"
                                 value={rowChildren.element}
-                                onChange={(e) => inputChangeHandler(e, i)}
+                                onChange={(e) => inputChangeHandler(e, i, j, k)}
                                 required
+                                disabled={
+                                  rowChildren.triggered === "1" ? true : false
+                                }
                               >
                                 <option value="" disabled selected>
                                   -- PILIH --
@@ -577,7 +747,7 @@ const FormManual = ({
                                 className="form-control"
                                 name="size"
                                 value={rowChildren.size}
-                                onChange={(e) => inputChangeHandler(e, i)}
+                                onChange={(e) => inputChangeHandler(e, i, j, k)}
                                 required
                               >
                                 <option value="" disabled selected>
@@ -592,14 +762,16 @@ const FormManual = ({
                             </div>
                           </div>
 
-                          {renderMultipleHandler(rowChildren, k)}
+                          {renderMultipleHandler(rowChildren, i, j, k)}
                           <div className="col-sm-6 col-md-2">
                             <label className="col-form-label font-weight-bold ">
                               Req
                             </label>
-                            <label className="col-form-label font-weight-bold ml-3">
-                              Triggered
-                            </label>
+                            {rowChildren.element === "triggered" && (
+                              <label className="col-form-label font-weight-bold ml-3">
+                                Triggered
+                              </label>
+                            )}
                             <div className="d-flex align-items-end justify-content-between">
                               <div className="form-group ">
                                 <div className="form-check mb-4">
@@ -612,30 +784,34 @@ const FormManual = ({
                                         : false
                                     }
                                     className="form-check-input"
-                                    onChange={(e) => inputChangeHandler(e, i)}
+                                    onChange={(e) =>
+                                      inputChangeHandler(e, i, j, k)
+                                    }
                                   />
                                 </div>
                               </div>
-                              <div className="">
-                                <label className="switches">
-                                  <input
-                                    // required
-                                    className="checkbox"
-                                    // checked={publish}
-                                    type="checkbox"
-                                    // onChange={(e) => handleChangePublish(e)}
-                                  />
-                                  <span
-                                    className={`sliders round pl-2
-                              `}
-                                  ></span>
-                                  {/* <span
-                              className={`sliders round ${
-                                publish ? "text-white" : "pl-2"
-                              }`}
-                            ></span> */}
-                                </label>
-                              </div>
+                              {rowChildren.element === "triggered" && (
+                                <div className="">
+                                  <label className="switches">
+                                    <input
+                                      className="checkbox"
+                                      name="triggered"
+                                      checked={
+                                        rowChildren.triggered === "1"
+                                          ? true
+                                          : false
+                                      }
+                                      type="checkbox"
+                                      onChange={(e) =>
+                                        inputChangeHandler(e, i, j, k)
+                                      }
+                                    />
+                                    <span
+                                      className={`sliders round pl-2`}
+                                    ></span>
+                                  </label>
+                                </div>
+                              )}
                               <button
                                 className="btn btn-link-action bg-danger text-white mb-3 "
                                 type="button"
@@ -643,16 +819,6 @@ const FormManual = ({
                               >
                                 <i className="ri-delete-bin-fill p-0 text-white"></i>
                               </button>
-                              {/* {formBuilder.length !== 1 && row.key !== 1 ? (
-                      ) : (
-                        <button
-                          className="btn btn-link-action bg-danger text-white mb-3  invisible"
-                          type="button"
-                          onClick={() => removeFieldHandler(i)}
-                        >
-                          <i className="ri-delete-bin-fill p-0 text-white"></i>
-                        </button>
-                      )} */}
                             </div>
                           </div>
 
@@ -674,7 +840,7 @@ const FormManual = ({
                                         placeholder="Field"
                                         autoComplete="off"
                                         onChange={(e) =>
-                                          inputChangeHandler(e, i)
+                                          inputChangeHandler(e, i, j, k, l)
                                         }
                                         required
                                       />
@@ -690,9 +856,14 @@ const FormManual = ({
                                         name="element"
                                         value={rowIndex.element}
                                         onChange={(e) =>
-                                          inputChangeHandler(e, i)
+                                          inputChangeHandler(e, i, j, k, l)
                                         }
                                         required
+                                        disabled={
+                                          rowIndex.triggered === "1"
+                                            ? true
+                                            : false
+                                        }
                                       >
                                         <option value="" disabled selected>
                                           -- PILIH --
@@ -715,7 +886,7 @@ const FormManual = ({
                                         name="size"
                                         value={rowIndex.size}
                                         onChange={(e) =>
-                                          inputChangeHandler(e, i)
+                                          inputChangeHandler(e, i, j, k, l)
                                         }
                                         required
                                       >
@@ -731,7 +902,7 @@ const FormManual = ({
                                     </div>
                                   </div>
 
-                                  {renderMultipleHandler(rowIndex, l)}
+                                  {renderMultipleHandler(rowIndex, i, j, k, l)}
                                   <div className="col-sm-6 col-md-2">
                                     <label className="col-form-label font-weight-bold ml-md-10">
                                       Req
@@ -749,7 +920,7 @@ const FormManual = ({
                                             }
                                             className="form-check-input"
                                             onChange={(e) =>
-                                              inputChangeHandler(e, i)
+                                              inputChangeHandler(e, i, j, k, l)
                                             }
                                           />
                                         </div>

@@ -90,9 +90,9 @@ const ForgotPassword = () => {
       setEmailCode(router.query.email);
       setPasswordCode(router.query.code);
     }
-    if (allAuthentication.status === "error") {
-      Swal.fire("Gagal", `${allAuthentication.errorReset}`, "error");
-    } else if (allAuthentication.status === "success") {
+    if (allAuthentication?.status === "error") {
+      Swal.fire("Gagal", `${allAuthentication?.errorReset}`, "error");
+    } else if (allAuthentication?.status === "success") {
       // jika sukses
       Swal.fire("Berhasil", "Password berhasil di reset", "success").then(
         () => {
@@ -111,8 +111,8 @@ const ForgotPassword = () => {
     router.query.code,
     router.query.email,
     router,
-    allAuthentication.status,
-    allAuthentication.errorReset,
+    allAuthentication?.status,
+    allAuthentication?.errorReset,
     dispatch,
   ]);
   return (

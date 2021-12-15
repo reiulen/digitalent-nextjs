@@ -37,11 +37,23 @@ export const fetchSignature = (token) => async (dispatch, getState) => {
     limit: limitState,
     page: pageState,
   };
+
+  
   try {
-    let { data } = await fetchSignatureApi(params, token);
+
+    const {data} = await axios.get(
+      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures`,
+      {
+        params,
+        headers: {
+          authorization: `Bearer ${token}`,
+          // Permission: Cookies.get ("token_permission")
+        },
+      }
+    );
     dispatch(successFetchSignature(data));
   } catch (error) {
-    notify(error.response.data.message);
+    //console.log(error.response.data.message);
   }
 };
 
@@ -61,19 +73,21 @@ export const reloadTable = () => {
     type: RELOAD_TABLE,
   };
 };
-// =============================================
+
 export const setPage = (page) => {
   return {
     type: SET_PAGE_M_TD,
     page,
   };
-};
+}
+
 export const setLimit = (value) => {
   return {
     type: SET_LIMIT_TD,
     value,
   };
 };
+
 export const deleteTandaTangan = (id, token) => {
   return async (dispatch, getState) => {
     try {
@@ -88,7 +102,7 @@ export const deleteTandaTangan = (id, token) => {
       );
       dispatch({ type: SUCESS_DELETE_TD });
     } catch (error) {
-      notify(error.response.data.message);
+      // //console.log(error.response.data.message);
     }
   };
 };
@@ -115,7 +129,7 @@ export const changeStatusList = (formData, id, token) => {
       );
       dispatch(successChangeStatusList());
     } catch (error) {
-      notify(error.response.data.message);
+      console.log(error);
     }
   };
 };
