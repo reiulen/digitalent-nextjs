@@ -170,7 +170,7 @@ const ProfileUser = ({ profile }) => {
                     <p className="text-dark">{profile.kecamatan || "-"}</p>
                   </div>
                   <div className="col-md-6">
-                    <p className="text-neutral-body my-0">Pendidikan</p>
+                    <p className="text-neutral-body my-0">Kode Pos</p>
                     <p className="text-dark">{profile.kode_pos || "-"}</p>
                   </div>
                 </div>

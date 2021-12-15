@@ -12,7 +12,10 @@ export default function EditTriviaBankPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditTriviaBank token={session.token} />
+        <EditTriviaBank
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -51,7 +54,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Edit Trivia - Subvit" },
+        props: { session, title: "Edit Trivia - Subvit", permission },
       };
     }
 );

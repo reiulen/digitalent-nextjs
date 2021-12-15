@@ -264,7 +264,7 @@ a {
   width: 100%;
 }
 
-.cursor-not-allowed{
+.cursor-not-allowed {
   cursor: not-allowed !important;
 }
 
@@ -363,9 +363,19 @@ p > img {
   margin-left: 55px;
 }
 
+.style-quill-margin {
+  margin-top: 150px;
+}
+
 @media screen and (max-width: 576px) {
   .responsive-columns {
     justify-content: center !important;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .style-quill-margin {
+    margin-top: 70px !important;
   }
 }
 
