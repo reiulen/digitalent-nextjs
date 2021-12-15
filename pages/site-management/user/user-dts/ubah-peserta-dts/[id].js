@@ -8,6 +8,7 @@ import {
   getPelatihanWithPagination
 } from "../../../../../redux/actions/site-management/user/peserta-dts";
 import {dropdownProvinsi} from '../../../../../redux/actions/pelatihan/function.actions'
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 const PageUbah = dynamic(
   () =>
@@ -32,10 +33,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, query }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

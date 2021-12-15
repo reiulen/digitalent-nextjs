@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import { getAllPermission } from '../../../../redux/actions/site-management/role.actions'
 import { wrapper } from "../../../../redux/store";
 import LoadingPage from "../../../../components/LoadingPage";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const TambahRole = dynamic(
   () =>
@@ -30,10 +31,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
