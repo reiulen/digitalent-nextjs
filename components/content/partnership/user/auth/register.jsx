@@ -89,34 +89,34 @@ const RegisterMitra = () => {
 		}
 	};
 
-	useEffect(() => {
-		if (allAuthentication.status === "error") {
-			Swal.fire("Gagal", `${allAuthentication.errorRegister}`, "error");
-		} else if (allAuthentication.status === "success") {
-			// jika sukses
-			Swal.fire(
-				"Berhasil Daftar",
-				"Silakan tunggu aktivasi dari admin dan mohon cek email anda secara berkala",
-				"success"
-			).then(() => {
-				// router.push("/partnership/user/auth/login")
-				router.push("/login/mitra");
-			});
-		} else {
-			("");
-		}
+  useEffect(() => {
+    if (allAuthentication?.status === "error") {
+      Swal.fire("Gagal", `${allAuthentication?.errorRegister}`, "error");
+    } else if (allAuthentication?.status === "success") {
+      // jika sukses
+      Swal.fire(
+        "Berhasil Daftar",
+        "Silakan tunggu aktivasi dari admin dan mohon cek email anda secara berkala",
+        "success"
+      ).then(() => {
+        // router.push("/partnership/user/auth/login")
+        router.push("/login/mitra");
+      });
+    } else {
+      ("");
+    }
 
-		return () => {
-			dispatch({
-				type: RESET_STATUS,
-			});
-		};
-	}, [
-		allAuthentication.status,
-		allAuthentication.errorRegister,
-		dispatch,
-		router,
-	]);
+    return () => {
+      dispatch({
+        type: RESET_STATUS,
+      });
+    };
+  }, [
+    allAuthentication?.status,
+    allAuthentication?.errorRegister,
+    dispatch,
+    router,
+  ]);
 
 	return (
 		<>

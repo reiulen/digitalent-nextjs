@@ -48,6 +48,7 @@ const Vidio = ({ token }) => {
     const [idVideo, setIdVideo] = useState(null)
     const [disableEndDate, setDisableEndDate] = useState(true)
     const [judul_video, setJudulVideo] = useState(null)
+    const [total_views, setTotalViews] = useState(null)
     const [tanggal_publish, setTanggalPublish] = useState(null)
     const [kategori, setKategori] = useState(null)
     const [isiVideo, setIsiVideo] = useState(null)
@@ -318,12 +319,13 @@ const Vidio = ({ token }) => {
 
     }
 
-    const handlePreview = (url, id, judul_video, tanggal_publish, kategori, isi_video, tag) => {
+    const handlePreview = (url, id, judul_video, tanggal_publish, total_views, kategori, isi_video, tag) => {
         setIdVideo(id)
         setVideoPlaying(true)
         setUrlVideo(url)
         setJudulVideo(judul_video)
         setTanggalPublish(tanggal_publish)
+        setTotalViews(total_views)
         setKategori(kategori)
         setIsiVideo(isi_video)
         setTag(tag)
@@ -721,9 +723,8 @@ const Vidio = ({ token }) => {
                                                             {
                                                                 role_permission.permissions.includes("publikasi.video.manage") || role_permission.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex">
-
                                                                         <button
-                                                                            onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori, row.isi_video, row.tag)}
+                                                                            onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.total_views, row.kategori, row.isi_video, row.tag)}
                                                                             className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
                                                                             data-target="#videoPlayerModal"
                                                                             data-toggle="modal"
@@ -914,7 +915,7 @@ const Vidio = ({ token }) => {
                             <div className="col-12 col-md-4 col-lg-4 text-muted">
                                 {
                                     tanggal_publish !== null ?
-                                        `${moment(tanggal_publish).format("MMMM DD")} | 120 Ditonton`
+                                        `${moment(tanggal_publish).format("MMMM DD")} | ${total_views} Ditonton`
                                         :
                                         ""
                                 }

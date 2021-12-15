@@ -64,7 +64,7 @@ const RevisiSubmit = ({token}) => {
           
 
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error")
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
         }
       }
     });

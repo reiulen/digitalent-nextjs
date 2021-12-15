@@ -9,7 +9,7 @@ import {
   LIST_PELATIHAN_BY_PESERTA_SUCCESS,
   LIST_PELATIHAN_PAGINATION_REQUEST,
   LIST_PELATIHAN_PAGINATION_SUCCESS,
-  LIST_PELATIHAN_PAGINATION_FAIL
+  LIST_PELATIHAN_PAGINATION_FAIL,
 } from "../../../types/site-management/user/peserta-dts.type";
 import axios from 'axios'
 
@@ -104,8 +104,6 @@ export const getAllListsPeserta =
       });
     }
   };
-
-
 
   export const getPelatihanByPeserta =
   (token, id) =>

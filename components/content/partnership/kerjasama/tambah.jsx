@@ -53,7 +53,7 @@ const Tambah = ({ token }) => {
 
   const [AllCooperation, setAllCooperation] = useState("");
   const changeFormCooporation = (index, e) => {
-    let dataaa = [...allMK.singleCooporationSelect.data.option];
+    let dataaa = [...allMK?.singleCooporationSelect?.data?.option];
     dataaa[index].cooperation = e.target.value;
     setAllCooperation(dataaa);
   };
@@ -72,7 +72,7 @@ const Tambah = ({ token }) => {
       let errorAllCooperation = AllCooperation.map((items) => {
         if (!items.cooperation) {
           isError = true;
-          return { ...items, error: `Harus isi ${items.cooperation_form}` };
+          return { ...items, error: `Harus isi ${items?.cooperation_form}` };
         } else {
           return { ...items };
         }
@@ -224,10 +224,10 @@ const Tambah = ({ token }) => {
                       </label>
                       <Select
                         placeholder="Silahkan Pilih Lembaga"
-                        options={allMK?.stateListMitra.map((item, index) => {
+                        options={allMK?.stateListMitra?.map((item, index) => {
                           return {
-                            label: item.label,
-                            value: item.label,
+                            label: item?.label,
+                            value: item?.label,
                           };
                         })}
                         onChange={(e) => changeInstitusi(e.label)}
@@ -247,7 +247,7 @@ const Tambah = ({ token }) => {
                       <input
                         disabled
                         type="text"
-                        value={allMK.email}
+                        value={allMK?.email}
                         name="text_input"
                         className="form-control mb-3 mb-lg-0 border-0"
                         style={{ backgroundColor: "transparent" }}
@@ -321,9 +321,9 @@ const Tambah = ({ token }) => {
                       className="form-control"
                     >
                       <option value="">Pilih Kategory Kerjasama</option>
-                      {allMK.cooperationActiveSelect.length === 0
+                      {allMK?.cooperationActiveSelect.length === 0
                         ? ""
-                        : allMK.cooperationActiveSelect.data.map(
+                        : allMK?.cooperationActiveSelect?.data?.map(
                             (items, index) => {
                               return (
                                 <option key={index} value={items.id}>
@@ -352,7 +352,7 @@ const Tambah = ({ token }) => {
                               htmlFor="staticEmail"
                               className="col-form-label"
                             >
-                              {items.cooperation_form}
+                              {items?.cooperation_form}
                             </label>
                             <div>
                               <textarea
@@ -367,7 +367,7 @@ const Tambah = ({ token }) => {
                                 cols="30"
                                 rows="5"
                                 className="form-control"
-                                placeholder={`Masukan ${items.cooperation_form}`}
+                                placeholder={`Masukan ${items?.cooperation_form}`}
                               ></textarea>
                               {AllCooperation[index]?.error ? (
                                 <p className="error-text">

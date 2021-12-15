@@ -74,6 +74,9 @@ const StepThree = ({ token, tokenPermission }) => {
       dispatch(
         updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
       );
+      localStorage.removeItem("method");
+      localStorage.removeItem("step1");
+      localStorage.removeItem("step2");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -366,7 +369,19 @@ const StepThree = ({ token, tokenPermission }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    onClick={() => {
+                      router.push(
+                        `/subvit/survey/tambah/step-2-entry?id=${router.query.id}`
+                      );
+                    }}
+                    type="button"
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
