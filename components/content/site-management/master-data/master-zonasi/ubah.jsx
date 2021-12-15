@@ -51,7 +51,6 @@ const Tambah = ({ token }) => {
       };
     })
   );
-  const [provName, setProvName] = useState(null);
   // value to send api
   const [valueSend, setValueSend] = useState(
     detailZonasi.data.data.data.map((items) => {
@@ -82,6 +81,7 @@ const Tambah = ({ token }) => {
     setValueSend(_tempValue);
   };
 
+
   const handleDelete = (index) => {
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
@@ -107,6 +107,7 @@ const Tambah = ({ token }) => {
 
     _temp[index].value = [];
     _temp[index].kabupaten = [];
+    _temp[index].id = null;
     _tempValue[index].kota_kabupaten = [];
 
     try {
@@ -119,9 +120,10 @@ const Tambah = ({ token }) => {
         }
       );
       let optionProvinsiKab = data.data.map((items) => {
-        return { ...items, label: items.value };
+        return { ...items, label: items.value, id: e.id };
       });
       _temp[index].kabupaten = optionProvinsiKab;
+      _temp[index].id = e.id;
       _tempValue[index].provinsi = e.label;
       setFormInput(_temp);
       setValueSend(_tempValue);
@@ -129,6 +131,7 @@ const Tambah = ({ token }) => {
       notify(error.response.data.message);
     }
   };
+  
 
   const changeListKabupaten = (e, index) => {
     let _tempValue = [...valueSend];
@@ -248,7 +251,8 @@ const Tambah = ({ token }) => {
       );
       let opt = data.data;
       return opt;
-    } catch (error) {}
+    } catch (error) {
+    }
   };
 
   return (
@@ -375,7 +379,7 @@ const Tambah = ({ token }) => {
                                   onChange={(e) =>
                                     changeListKabupaten(e, index)
                                   }
-                                  options={items.kabupaten.map(item => {
+                                  options={items?.kabupaten?.map(item => {
                                     return {
                                       value: item.id,
                                       label: item.value
@@ -384,13 +388,14 @@ const Tambah = ({ token }) => {
                                     return !items.value.some((filter) => {
                                       return item.label === filter.label;
                                     });
-                                  })}
+                                  }) || items.kabupaten}
                                   onBlur={() =>
                                     simpleValidator.current.showMessageFor(
                                       "kabupaten"
                                     )
                                   }
                                 />
+                                {console.log(items.value)}
                               </div>
                             </div>
 
