@@ -8,6 +8,7 @@ import axios from "axios";
 import { getSingleCooperation } from "../../../../redux/actions/partnership/managementCooporation.actions";
 import Image from "next/image";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const DetailDokumenKerjasama = ({ token }) => {
 
   const [pdfFIle, setPdfFIle] = useState("");
 
+  const cookiePermission = Cookies.get("token_permission")
+
   useEffect(() => {
     async function getSingleValue(id) {
       try {
@@ -25,6 +28,7 @@ const DetailDokumenKerjasama = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: cookiePermission
             },
           }
         );
@@ -35,8 +39,8 @@ const DetailDokumenKerjasama = ({ token }) => {
     }
 
     getSingleValue(router.query.id);
-    dispatch(getSingleCooperation(token, router.query.id));
-  }, [dispatch, router.query.id, token]);
+    dispatch(getSingleCooperation(token, router.query.id, cookiePermission));
+  }, [dispatch, router.query.id, token, cookiePermission]);
 
   return (
     <PageWrapper>

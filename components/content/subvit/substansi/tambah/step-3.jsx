@@ -22,7 +22,7 @@ import {
   helperTextLimitMax,
 } from "../../../../../utils/middleware/helper";
 
-const StepThree = ({ token }) => {
+const StepThree = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -73,6 +73,9 @@ const StepThree = ({ token }) => {
       };
 
       dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
+      localStorage.removeItem("method");
+      localStorage.removeItem("step1");
+      localStorage.removeItem("step2");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -107,7 +110,9 @@ const StepThree = ({ token }) => {
           questions_to_share: jumlah_soal,
         };
 
-        dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
+        dispatch(
+          updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
+        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -399,7 +404,21 @@ const StepThree = ({ token }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    onClick={() => {
+                      router.push(
+                        `/subvit/substansi/tambah-step-2-entry?id=${
+                          router.query.id
+                        }&metode=${localStorage.getItem("method")}`
+                      );
+                    }}
+                    type="button"
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

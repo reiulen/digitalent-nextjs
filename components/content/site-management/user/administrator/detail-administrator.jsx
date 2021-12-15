@@ -90,26 +90,20 @@ const DetailAdmin = ({ token }) => {
                 Satuan Kerja
               </p>
               <div className="d-flex ailgn-items-center">
-                <span
+                {detailAdminSite.adminSite?.data.unit_works.map((item, index) => {
+                  return  <span
                   className="label label-lg label-inline"
                   style={{
                     width: "max-content",
                     backgroundColor: "#F2F7FC",
                     color: "#ADB5BD",
                   }}
+                  key={index}
                 >
-                  Admin UPT
+                  {item.name}
                 </span>
-                <span
-                  className="label label-lg label-inline ml-3"
-                  style={{
-                    width: "max-content",
-                    backgroundColor: "#F2F7FC",
-                    color: "#ADB5BD",
-                  }}
-                >
-                  Admin UPT
-                </span>
+                })}
+               
               </div>
             </div>
 

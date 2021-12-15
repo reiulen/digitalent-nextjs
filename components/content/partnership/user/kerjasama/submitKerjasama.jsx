@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { fetchListCooperationSelect, changeCooperationSelectByID, fetchListCooperationSelectById } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 import axios from "axios";
 import AlertBar from "../../components/BarAlert";
+import Cookies from "js-cookie"
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -122,6 +123,7 @@ const DetailDokumenKerjasama = ({ token }) => {
             let { data } = await axios.post(`${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal`, formData, {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             });
             router.push({

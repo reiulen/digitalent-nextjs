@@ -9,6 +9,7 @@ import moment from "moment";
 import axios from "axios";
 
 import IconCalender from "../../../assets/icon/Calender";
+import Cookies from "js-cookie";
 
 const RevisiKerjasama = ({ token }) => {
   const router = useRouter();
@@ -47,6 +48,7 @@ const RevisiKerjasama = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -85,6 +87,7 @@ const RevisiKerjasama = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -129,6 +132,7 @@ const RevisiKerjasama = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -152,6 +156,7 @@ const RevisiKerjasama = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );

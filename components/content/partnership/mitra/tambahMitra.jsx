@@ -10,6 +10,7 @@ import IconClose from "../../../assets/icon/Close";
 import Image from "next/image";
 import ReactCrop from "react-image-crop";
 import { Modal } from "react-bootstrap";
+import Cookies from "js-cookie"
 
 const TambahMitra = ({ token }) => {
   const router = useRouter();
@@ -118,6 +119,7 @@ const TambahMitra = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -210,6 +212,7 @@ const TambahMitra = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
@@ -235,6 +238,7 @@ const TambahMitra = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );

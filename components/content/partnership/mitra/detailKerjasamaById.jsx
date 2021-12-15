@@ -17,6 +17,8 @@ import Swal from "sweetalert2";
 
 import Image from "next/image";
 
+import Cookies from "js-cookie";
+
 const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -57,6 +59,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );

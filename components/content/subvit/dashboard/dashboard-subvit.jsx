@@ -55,7 +55,6 @@ const DashbardSubvit = ({ token }) => {
     router.push(
       `${router.pathname}?page_substansi=${page}&page_trivia=${router.query.page_trivia}&page_survey=${router.query.page_survey}`
     );
-    dispatch(getDashboardSubvit(token));
   };
 
   const handleBackPagination = () => {
@@ -154,8 +153,6 @@ const DashbardSubvit = ({ token }) => {
           </div>
         </div>
         {dataPermission &&
-        dataPermission.roles.includes("Super Admin") &&
-        dataPermission &&
         dataPermission.permissions.includes(
           "subvit.manage" && "subvit.dashboard.manage"
         ) ? (

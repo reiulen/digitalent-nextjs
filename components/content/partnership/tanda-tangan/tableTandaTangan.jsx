@@ -52,7 +52,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteTandaTangan(id,token));
+        dispatch(deleteTandaTangan(id,token,));
         setSuccessDelete(true);
         setIsStatusBar(false);
         router.replace(`/partnership/tanda-tangan`);
@@ -91,16 +91,16 @@ const Table = ({ token }) => {
     });
   };
 
-  useEffect(() => {
-    dispatch(fetchSignature(token));
-  }, [
-    dispatch,
-    allTandaTangan?.keyword,
-    allTandaTangan?.status_reload,
-    allTandaTangan?.page,
-    allTandaTangan?.limit,
-    token
-  ]);
+  // useEffect(() => {
+  //   dispatch(fetchSignature(token));
+  // }, [
+  //   dispatch,
+  //   allTandaTangan.keyword,
+  //   allTandaTangan.status_reload,
+  //   allTandaTangan.page,
+  //   allTandaTangan.limit,
+  //   token
+  // ]);
 
   return (
     <PageWrapper>

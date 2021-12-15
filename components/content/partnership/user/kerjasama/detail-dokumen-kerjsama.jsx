@@ -9,6 +9,7 @@ import { getSingleCooperation } from "../../../../../redux/actions/partnership/u
 import moment from "moment";
 import Image from "next/image";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie"
 
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const DetailDokumenKerjasama = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );

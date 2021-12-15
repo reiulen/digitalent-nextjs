@@ -103,6 +103,7 @@ const UbahRole = ({ token }) => {
                           filter.view === true || filter.view === 1
                         );
                       }
+                      setForce(!force);
                       return filter;
                     });
                   }}
@@ -460,6 +461,7 @@ const UbahRole = ({ token }) => {
       dispatch(updateRoles(data, token));
     } else {
       simpleValidator.current.showMessages();
+      forceUpdate(1)
       Swal.fire({
         icon: "error",
         title: "Oops...",

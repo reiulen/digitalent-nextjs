@@ -532,7 +532,7 @@ const Navigationbar = ({ session }) => {
                           >
                             <NavDropdown.Item
                               className={`navdropdown-child ${
-                                el.url === "-" ? "d-none" : ""
+                                el.status === 0 ? "d-none" : ""
                               }`}
                             >
                               {el.slug ? el.slug : el.name ? el.name : el}
@@ -951,7 +951,7 @@ const Navigationbar = ({ session }) => {
                                   onClick={() => {
                                     router.push("/lainnya/" + item.url);
                                   }}
-                                  className="p-4 fz-12"
+                                  className={`p-4 fz-12 ${item.status === 1 ? "" : "d-none"}`}
                                 >
                                   {item.name}
                                 </div>
