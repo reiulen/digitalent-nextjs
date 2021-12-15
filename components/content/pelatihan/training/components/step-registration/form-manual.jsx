@@ -397,8 +397,8 @@ const FormManual = ({
           {row.triggered_parent &&
             row.triggered_parent.length > 0 &&
             row.triggered_parent.map((rowParent, j) => (
-              <div className="container pl-15">
-                <div className="row justify-content-start">
+              <div className="container pl-15" key={j}>
+                <div className="row justify-content-start" >
                   <div className="col-sm-12 col-md-2">
                     <div className="form-group mb-2">
                       <label className="col-form-label font-weight-bold">
@@ -526,7 +526,7 @@ const FormManual = ({
                   {rowParent.triggered_children &&
                     rowParent.triggered_children.length > 0 &&
                     rowParent.triggered_children.map((rowChildren, k) => (
-                      <div className="container pl-15">
+                      <div className="container pl-15" key={k}>
                         <div className="row justify-content-start">
                           <div className="col-sm-12 col-md-2">
                             <div className="form-group mb-2">
@@ -659,7 +659,7 @@ const FormManual = ({
                           {rowChildren.triggered_index &&
                             rowChildren.triggered_index.length > 0 &&
                             rowChildren.triggered_index.map((rowIndex, l) => (
-                              <div className="container pl-20">
+                              <div className="container pl-20" key={l}>
                                 <div className="row justify-content-start">
                                   <div className="col-sm-12 col-md-2">
                                     <div className="form-group mb-2">
