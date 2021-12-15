@@ -216,6 +216,8 @@ const StepTwo = ({ token, tokenPermission }) => {
           };
 
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
+          localStorage.removeItem("method");
+          localStorage.removeItem("step2");
         }
         break;
       case "checkbox":
@@ -242,6 +244,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
           };
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
+          localStorage.removeItem("method");
+          localStorage.removeItem("step2");
         }
         break;
       case "fill_in_the_blank":
@@ -258,6 +262,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             answer_key: null,
           };
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
+          localStorage.removeItem("method");
+          localStorage.removeItem("step2");
         }
         break;
       default:
@@ -315,7 +321,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             answer_key: null,
             type: methodAdd,
           };
-
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -342,6 +349,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             duration,
             type: methodAdd,
           };
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -358,6 +367,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
             answer_key: null,
           };
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -539,7 +550,17 @@ const StepTwo = ({ token, tokenPermission }) => {
                 <div className="col-sm-12">
                   <hr />
                   <div className="row">
-                    <div className="col-md-5 col-lg-5 col-xl-7"></div>
+                    <div className="col-md-5 col-lg-5 col-xl-7">
+                      <button
+                        className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                        type="button"
+                        onClick={() => {
+                          router.push("/subvit/substansi/tambah-step-1");
+                        }}
+                      >
+                        Kembali
+                      </button>
+                    </div>
                     {/* <div className="col-sm-12 col-md-6 col-lg-6 col-xl-5 buttoon float-right row justify-content-between" style={{border:'1px solid black'}}> */}
                     <div
                       className={`${styles.btnSave} col-12 col-sm-12 col-md-7 col-lg-7 col-xl-5 buttoon float-right justify-content-between`}

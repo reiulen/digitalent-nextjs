@@ -374,9 +374,7 @@ const StepThree = ({ token, tokenPermission }) => {
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     onClick={() => {
                       router.push(
-                        `/subvit/substansi/tambah-step-2-entry?id=${
-                          router.query.id
-                        }&metode=${localStorage.getItem("method")}`
+                        `/subvit/survey/tambah/step-2-entry?id=${router.query.id}`
                       );
                     }}
                     type="button"

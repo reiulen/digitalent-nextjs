@@ -8,7 +8,7 @@ export default function TambahBankSoalTesSurveyStep3(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <StepThree token={session.token} tokenPermission={permission} />
+        <StepThree token={session.token} tokenPermission={props.permission} />
       </div>
     </>
   );
