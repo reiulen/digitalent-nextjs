@@ -101,7 +101,7 @@ const EditTandaTangan = ({ token }) => {
             );
 
             router.push({
-              pathname: `/partnership/tanda-tangan`,
+              pathname: `/partnership/user/tanda-tangan-digital`,
               query: { update: true },
             });
           } catch (error) {
