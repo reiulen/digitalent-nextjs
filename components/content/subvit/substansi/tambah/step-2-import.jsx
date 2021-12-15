@@ -129,6 +129,8 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     if (valid) {
+      localStorage.removeItem("method");
+      localStorage.removeItem("step2");
       dispatch({
         type: IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_RESET,
       });
@@ -164,6 +166,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     if (valid) {
+      localStorage.setItem("method", router.query.metode);
       router.push({
         pathname: `/subvit/substansi/tambah-step-3`,
         query: { id },
@@ -607,6 +610,15 @@ const StepTwo = ({ token, tokenPermission }) => {
 
               <div className="row">
                 <div className="col-sm-12 mt-3">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push("/subvit/substansi/tambah-step-1");
+                    }}
+                  >
+                    Kembali
+                  </button>
                   <div className="float-right">
                     <button
                       className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

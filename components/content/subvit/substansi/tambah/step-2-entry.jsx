@@ -329,7 +329,7 @@ const StepTwo = ({ token, tokenPermission }) => {
         question_type_id,
         answer_key,
       };
-      // console.log(data);
+
       localStorage.setItem("step2", JSON.stringify(data));
       localStorage.setItem("method", metode);
       dispatch(newSubtanceQuestionDetail(data, token));
