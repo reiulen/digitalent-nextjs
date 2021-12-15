@@ -1,18 +1,23 @@
 import dynamic from "next/dynamic";
-
 import Preview from "../../../../components/content/publikasi/artikel/preview";
 import Footer from "../../../../components/templates/footer.component";
 
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
-
 import { getDetailArtikel } from "../../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../redux/store";
 import { getTagBerandaArtikel } from "../../../../redux/actions/beranda/artikel.actions"
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const Layout = dynamic(
-  () => import("../../../../user-component-new/components/template/Layout.component")
-)
+  () => import("../../../../user-component-new/components/template/Layout.component",
+    {
+      loading: function loadingNow() {
+        return <LoadingSkeleton />;
+      },
+      ssr: false,
+    }
+  ))
 
 export default function PreviewArtikel(props) {
   const session = props.session.user.user.data;

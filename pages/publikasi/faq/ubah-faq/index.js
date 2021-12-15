@@ -1,22 +1,18 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
-
-// import Layout from "../../../components/templates/layout.component";
-// import EditFaq from "../../../components/content/publikasi/faq/edit";
-
 import { getDetailFaq } from "../../../../redux/actions/publikasi/faq.actions";
 import { getAllKategoriInput } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action"
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const EditFaq = dynamic(
   () => import("../../../../components/content/publikasi/faq/edit"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

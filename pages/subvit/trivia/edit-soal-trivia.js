@@ -1,10 +1,22 @@
-import EditTriviaBank from "../../../components/content/subvit/trivia/question-bank-soal/edit";
+import dynamic from "next/dynamic";
+// import EditTriviaBank from "../../../components/content/subvit/trivia/question-bank-soal/edit";
 import Layout from "../../../components/templates/layout.component";
 
 import { detailTriviaQuestionDetail } from "../../../redux/actions/subvit/trivia-question-detail.action";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const EditTriviaBank = dynamic(
+  () => import("../../../components/content/subvit/trivia/question-bank-soal/edit"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditTriviaBankPage(props) {
   const session = props.session.user.user.data;

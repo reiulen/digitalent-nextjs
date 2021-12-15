@@ -1,4 +1,5 @@
-import DetailTrivia from "../../../components/content/subvit/trivia/detail-trivia";
+import dynamic from "next/dynamic";
+// import DetailTrivia from "../../../components/content/subvit/trivia/detail-trivia";
 
 import { getAllTriviaQuestionDetail } from "../../../redux/actions/subvit/trivia-question-detail.action";
 import { getDetailTriviaQuestionBanks } from "../../../redux/actions/subvit/trivia-question.actions";
@@ -6,6 +7,17 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.actions";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const DetailTrivia = dynamic(
+  () => import("../../../components/content/subvit/trivia/detail-trivia"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function DetailTriviaPage(props) {
   const session = props.session.user.user.data;

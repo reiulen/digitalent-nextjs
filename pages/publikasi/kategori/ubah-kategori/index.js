@@ -7,13 +7,13 @@ import Layout from "../../../../components/templates/layout.component";
 import { getDetailKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const EditKategori = dynamic(
   () => import("../../../../components/content/publikasi/kategori/edit"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

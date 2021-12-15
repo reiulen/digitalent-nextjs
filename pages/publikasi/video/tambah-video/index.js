@@ -5,7 +5,7 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action"
 
@@ -13,7 +13,7 @@ const Tambah = dynamic(
   () => import("../../../../components/content/publikasi/vidio/tambah"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

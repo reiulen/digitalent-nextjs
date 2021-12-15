@@ -9,9 +9,16 @@ import { getTagBerandaBerita } from "../../../../redux/actions/beranda/berita.ac
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const Layout = dynamic(
-  () => import("../../../../user-component-new/components/template/Layout.component")
+  () => import("../../../../user-component-new/components/template/Layout.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
 )
 
 export default function PreviewBerita(props) {

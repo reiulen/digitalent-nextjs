@@ -4,7 +4,7 @@ import { getSession } from "next-auth/client";
 import { getAllKategori } from "/redux/actions/publikasi/kategori.actions";
 import { wrapper } from "/redux/store";
 
-import LoadingPage from "/components/LoadingPage";
+import LoadingSkeleton from "/components/LoadingSkeleton";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const Tambah = dynamic(
@@ -14,7 +14,7 @@ const Tambah = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

@@ -1,10 +1,22 @@
+import dynamic from "next/dynamic";
 import Layout from "/components/templates/layout.component";
-import StepFour from "../../../../components/content/subvit/substansi/clone/step-four";
+// import StepFour from "../../../../components/content/subvit/substansi/clone/step-four";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import { getAllSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const StepFour = dynamic(
+  () => import("../../../../components/content/subvit/substansi/clone/step-four"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function CloneSoalSubtansi(props) {
   const session = props.session.user.user.data;

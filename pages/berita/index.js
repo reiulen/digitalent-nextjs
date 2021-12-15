@@ -9,9 +9,16 @@ import {
   getTagBerandaBerita,
 } from "../../redux/actions/beranda/berita.actions";
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
+import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const Berita = dynamic(() =>
-  import("../../user-component-new/content/home/berita/berita")
+  import("../../user-component-new/content/home/berita/berita"),
+  {
+    loading: function loadingNow() {
+      return <LoadingDetailAkademi />;
+    },
+    ssr: false,
+  }
 );
 
 const Layout = dynamic(() =>

@@ -1,10 +1,22 @@
+import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import EditSubstansiStep2 from "../../../../components/content/subvit/substansi/edit/step-2";
+// import EditSubstansiStep2 from "../../../../components/content/subvit/substansi/edit/step-2";
 import Layout from "../../../../components/templates/layout.component";
 
 import { getDetailSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const EditSubstansiStep2 = dynamic(
+  () => import("../../../../components/content/subvit/substansi/edit/step-2"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditSubstansiStep2Page(props) {
   const session = props.session.user.user.data;

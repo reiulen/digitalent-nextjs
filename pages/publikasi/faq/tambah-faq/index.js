@@ -5,14 +5,14 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 import { getAllKategoriInput } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action"
 
 const Tambah = dynamic(
   () => import("../../../../components/content/publikasi/faq/tambah"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
