@@ -36,41 +36,6 @@ export default function DashboardPage({ token }) {
 
   useEffect(() => {
     // dispatch (fetchDashboard(token))
-    async function fetchDashboards() {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/dashbord`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: cookiePermission
-            },
-          }
-        );
-        setDataPieChartPengajuanDisetujui([
-          {
-            name: "Akan Berakhir",
-            value: data?.data?.cooperation_will_expired,
-          },
-          {
-            name: "Ditolak",
-            value: data?.data?.cooperation_rejected,
-          },
-        ]);
-        setDataPieChartStatusPengajuan([
-          {
-            name: "Aktif",
-            value: data?.data?.cooperation_active,
-          },
-          {
-            name: "Tidak Aktif",
-            value: data?.data?.cooperation_non_active,
-          },
-        ]);
-      } catch (error) {
-        setErrorGetData(error);
-      }
-    }
 
     fetchDashboards();
 
@@ -79,6 +44,42 @@ export default function DashboardPage({ token }) {
     });
 
   }, [dispatch, token, cookiePermission]);
+
+  async function fetchDashboards() {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/dashbord`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: cookiePermission
+          },
+        }
+      );
+      setDataPieChartPengajuanDisetujui([
+        {
+          name: "Akan Berakhir",
+          value: data?.data?.cooperation_will_expired,
+        },
+        {
+          name: "Ditolak",
+          value: data?.data?.cooperation_rejected,
+        },
+      ]);
+      setDataPieChartStatusPengajuan([
+        {
+          name: "Aktif",
+          value: data?.data?.cooperation_active,
+        },
+        {
+          name: "Tidak Aktif",
+          value: data?.data?.cooperation_non_active,
+        },
+      ]);
+    } catch (error) {
+      setErrorGetData(error);
+    }
+  }
 
   return (
     <PageWrapper>

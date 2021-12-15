@@ -16,7 +16,7 @@ export const getPartnershipPermissions =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: permission,
+          // Permission: permission,
         },
       };
 
@@ -30,7 +30,6 @@ export const getPartnershipPermissions =
     } catch (error) {
       dispatch({
         type: FETCH_PARTNERSHIP_PERMISSION_FAIL,
-        // payload: JSON.stringify(error)
         payload: error.response.data.message,
       });
     }
