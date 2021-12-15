@@ -33,6 +33,7 @@ export const getDetailPelatihan =
 				type: DETAIL_PELATIHAN_SUCCESS,
 				payload: data,
 			});
+			return data;
 		} catch (error) {
 			dispatch({
 				type: DETAIL_PELATIHAN_FAIL,
