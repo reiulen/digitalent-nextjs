@@ -39,13 +39,19 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
 
-  const [academy_id, setAcademyId] = useState("");
-  const [theme_id, setThemeId] = useState("");
-  const [training_id, setTrainingId] = useState("");
-  const [academyLabel, setAcademyLabel] = useState("Silahkan Pilih Akademi");
-  const [themeLabel, setThemeLabel] = useState("Silahkan Pilih Tema");
+  let save = JSON.parse(localStorage.getItem("step1"));
+
+  const [academy_id, setAcademyId] = useState(save?.academy_id);
+  const [theme_id, setThemeId] = useState(save?.theme_id);
+  const [training_id, setTrainingId] = useState(save?.training_id);
+  const [academyLabel, setAcademyLabel] = useState(
+    save ? save.academy : "Silahkan Pilih Akademi"
+  );
+  const [themeLabel, setThemeLabel] = useState(
+    save ? save.theme : "Silahkan Pilih Tema"
+  );
   const [trainingLabel, setTrainingLabel] = useState(
-    "Silahkan Pilih Pelatihan"
+    save ? save.training : "Silahkan Pilih Pelatihan"
   );
 
   const [metode, setMetode] = useState("entry");
@@ -129,6 +135,7 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
       };
 
       dispatch(newTriviaQuestionBanks(data, token, tokenPermission));
+      localStorage.removeItem("step1");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -151,10 +158,20 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
     }
     if (simpleValidator.current.allValid()) {
       const data = {
+        academy_id: save ? save.academy_id : academy_id,
+        theme_id: save ? save.theme_id : theme_id,
+        training_id: save ? save.training_id : training_id,
+      };
+      const setData = {
+        academy: academyLabel,
         academy_id,
+        theme: themeLabel,
         theme_id,
+        training: trainingLabel,
         training_id,
       };
+
+      localStorage.setItem("step1", JSON.stringify(setData));
       dispatch(newTriviaQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
@@ -229,7 +246,7 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
                 />
                 {simpleValidator.current.message(
                   "akademi",
-                  academy_id,
+                  academy_id || save?.academy,
                   "required",
                   {
                     className: "text-danger",
@@ -250,9 +267,14 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
                 />
-                {simpleValidator.current.message("tema", theme_id, "required", {
-                  className: "text-danger",
-                })}
+                {simpleValidator.current.message(
+                  "tema",
+                  theme_id || save?.theme,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -272,7 +294,7 @@ const TambahTriviaStepOne = ({ token, tokenPermission }) => {
                 />
                 {simpleValidator.current.message(
                   "pelatihan",
-                  training_id,
+                  training_id || save?.training,
                   "required",
                   {
                     className: "text-danger",

@@ -1097,7 +1097,7 @@ const Berita = () => {
                             </div>
                         :
                             berita && berita.berita && berita.berita.length !== 0 ?
-                                berita.berita.map ((el, i) => {
+                                berita?.beritas?.map ((el, i) => { // edit here
                                     return (
                                         <div 
                                             className= "row mt-20 mb-3 pl-6"

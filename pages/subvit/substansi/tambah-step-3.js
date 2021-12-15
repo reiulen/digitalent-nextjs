@@ -2,6 +2,9 @@ import dynamic from "next/dynamic";
 // import StepThree from "../../../components/content/subvit/substansi/tambah/step-3.jsx";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware.js";
+import { storeCommitmentStep3 } from "../../../redux/actions/pelatihan/function.actions.js";
+import { getOneSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions.js";
+import { wrapper } from "../../../redux/store";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const StepThree = dynamic(
@@ -25,34 +28,36 @@ export default function TambahBankSoalTesSubstansiStep3(props) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession({ req: context.req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "http://dts-dev.majapahit.id/login/admin",
-        permanent: false,
-      },
-    };
-  }
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query, req }) => {
+      const session = await getSession({ req });
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
+            permanent: false,
+          },
+        };
+      }
 
-  const permission = req.cookies.token_permission;
+      const permission = req.cookies.token_permission;
 
-  const middleware = middlewareAuthAdminSession(session);
-  if (!middleware.status) {
-    return {
-      redirect: {
-        destination: middleware.redirect,
-        permanent: false,
-      },
-    };
-  }
+      await store.dispatch(
+        getOneSubtanceQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
+      );
 
-  return {
-    props: {
-      session,
-      title: "Tambah Bank Soal Test Substansi - Subvit",
-      permission,
-    },
-  };
-}
+      return {
+        props: {
+          session,
+          title: "Tambah Bank Soal Test Substansi - Subvit",
+          permission,
+        },
+      };
+    }
+);

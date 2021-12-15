@@ -49,7 +49,7 @@ export const getAllSummary =
     akademi,
     tema,
     token,
-    token_permission
+    token_permission = ""
   ) =>
   async (dispatch) => {
     try {
@@ -131,7 +131,7 @@ export const getPendaftaranPeserta =
     administrasi = "",
     pelatihan = "",
     subtansi = "",
-    token_permission
+    token_permission = ""
   ) =>
   async (dispatch) => {
     try {

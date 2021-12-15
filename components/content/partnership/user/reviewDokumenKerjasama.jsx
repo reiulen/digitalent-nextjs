@@ -90,7 +90,7 @@ function ReviewDokumenKerjasama({ token }) {
 						query: { revisiDone: true, id: router.query.id },
 					});
 				} catch (error) {
-					Swal.fire("Gagal", `${error.response.data.message}`, "error");
+					Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
 				}
 			}
 		});
@@ -119,25 +119,25 @@ function ReviewDokumenKerjasama({ token }) {
 						}
 					);
 
-					setPeriod_start(data.data.period_date_start);
-					setPeriod_end(data.data.period_date_end);
-					setNo_perjanjianLembaga(data.data.agreement_number_partner);
-					setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
-					setTgl_ttd(data.data.signing_date);
-					setDokument(data.data.document);
-					setCatatanREvisi(data.data.note);
-					setNote(data.data.note);
+					setPeriod_start(data?.data?.period_date_start);
+					setPeriod_end(data?.data?.period_date_end);
+					setNo_perjanjianLembaga(data?.data?.agreement_number_partner);
+					setNo_perjanjianKoninfo(data?.data?.agreement_number_kemkominfo);
+					setTgl_ttd(data?.data?.signing_date);
+					setDokument(data?.data?.document);
+					setCatatanREvisi(data?.data?.note);
+					setNote(data?.data?.note);
 
 					if (
-						data.data.status_migrates_id.status === "aktif" ||
-						data.data.status_migrates_id.status === "dibatalkan"
+						data?.data?.status_migrates_id.status === "aktif" ||
+						data?.data?.status_migrates_id.status === "dibatalkan"
 					) {
 						router.push({
 							pathname: "/partnership/user/kerjasama/hasil",
 							query: {
 								id: router.query.id,
 								// id:idQuery,
-								statusKerjasama: data.data.status_migrates_id.status,
+								statusKerjasama: data?.data?.status_migrates_id?.status,
 							},
 						});
 					}
@@ -152,7 +152,7 @@ function ReviewDokumenKerjasama({ token }) {
 						});
 					}
 				} catch (error) {
-					Swal.fire("Gagal", `${error.response.data.message}`, "error");
+					Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
 				}
 			}
 

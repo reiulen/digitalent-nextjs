@@ -107,7 +107,7 @@ const EditTandaTangan = ({ token }) => {
               query: { update: true },
             });
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -147,7 +147,7 @@ const EditTandaTangan = ({ token }) => {
                 query: { update: true },
               });
             } catch (error) {
-              Swal.fire("Gagal", `${error.response.data.message}`, "error");
+              Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
             }
           }
         });
@@ -174,11 +174,11 @@ const EditTandaTangan = ({ token }) => {
           }
         );
 
-        setNama(data.data.name);
-        setJabatan(data.data.position);
-        setTandaTangan(data.data.signature_image);
+        setNama(data?.data?.name);
+        setJabatan(data?.data?.position);
+        setTandaTangan(data?.data?.signature_image);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
       }
     }
     setDataSingle(router.query.id);
@@ -211,7 +211,7 @@ const EditTandaTangan = ({ token }) => {
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                 />
-                {error.nama ? <p className="error-text">{error.nama}</p> : ""}
+                {error?.nama ? <p className="error-text">{error?.nama}</p> : ""}
               </div>
               <div className="form-group">
                 <label
@@ -229,8 +229,8 @@ const EditTandaTangan = ({ token }) => {
                   value={jabatan}
                   onChange={(e) => setJabatan(e.target.value)}
                 />
-                {error.jabatan ? (
-                  <p className="error-text">{error.jabatan}</p>
+                {error?.jabatan ? (
+                  <p className="error-text">{error?.jabatan}</p>
                 ) : (
                   ""
                 )}

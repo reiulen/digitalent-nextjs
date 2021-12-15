@@ -3,6 +3,7 @@ import Layout from "../../../../components/templates/layout.component";
 // import StepThree from "../../../../components/content/subvit/survey/tambah/step-3";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
+import { getOneSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const StepThree = dynamic(
@@ -20,15 +21,15 @@ export default function TambahBankSoalTesSurveyStep3(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <StepThree token={session.token} tokenPermission={permission} />
+        <StepThree token={session.token} tokenPermission={props.permission} />
       </div>
     </>
   );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  () =>
-    async ({ req }) => {
+  (store) =>
+    async ({ req, query }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -39,7 +40,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      const permission = req.cookies.token_permission;
+      const permission = req?.cookies.token_permission;
+
+      await store.dispatch(
+        getOneSurveyQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
+      );
 
       return {
         props: {

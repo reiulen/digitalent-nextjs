@@ -397,7 +397,7 @@ export const newCloneSubtanceQuestionBanks =
     } catch (error) {
       dispatch({
         type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
-        payload: error.response.data.status,
+        payload: error.response.data.message,
       });
     }
   };

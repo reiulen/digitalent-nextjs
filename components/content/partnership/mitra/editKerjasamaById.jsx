@@ -169,7 +169,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
             query: { id: idDetail, update: true },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error");
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
         }
       }
     });
@@ -227,21 +227,21 @@ const EditDokumentKerjasamaById = ({ token }) => {
             },
           }
         );
-        setIsntitusiName(data.data.institution_name);
-        setTitle(data.data.title);
-        setDate(data.data.submission_date);
-        setCooperationID(data.data.cooperation_category);
-        setPeriod(data.data.period);
-        setPeriodUnit(data.data.period_unit);
-        setPeriodDateStart(data.data.period_date_start);
-        setPeriodDateEnd(data.data.period_date_end);
-        setAggrementNumber(data.data.agreement_number_partner);
-        setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
-        setSigninDate(data.data.signing_date);
-        setDocument(data.data.document_file);
-        setEmail(data.data.email);
+        setIsntitusiName(data?.data?.institution_name);
+        setTitle(data?.data?.title);
+        setDate(data?.data?.submission_date);
+        setCooperationID(data?.data?.cooperation_category);
+        setPeriod(data?.data?.period);
+        setPeriodUnit(data?.data?.period_unit);
+        setPeriodDateStart(data?.data?.period_date_start);
+        setPeriodDateEnd(data?.data?.period_date_end);
+        setAggrementNumber(data?.data?.agreement_number_partner);
+        setAggrementNumberInfo(data?.data?.agreement_number_kemkominfo);
+        setSigninDate(data?.data?.signing_date);
+        setDocument(data?.data?.document_file);
+        setEmail(data?.data?.email);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
       }
     }
     setDataSingle(router.query.id, token);
@@ -251,11 +251,11 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
   useEffect(() => {
     dispatch(fetchListCooperationSelectById(token, cooperationC_id));
-  }, [dispatch, allMK.idCooporationSelect, cooperationC_id, token]);
+  }, [dispatch, allMK?.idCooporationSelect, cooperationC_id, token]);
 
   useEffect(() => {
     dispatch(fetchDataEmail(token));
-  }, [dispatch, allMK.institution_name, allMK.stateListMitra, token]);
+  }, [dispatch, allMK?.institution_name, allMK?.stateListMitra, token]);
 
   useEffect(() => {
     function periodCheck(date) {
@@ -331,9 +331,9 @@ const EditDokumentKerjasamaById = ({ token }) => {
                         id=""
                         className="form-control mt-2"
                         disabled
-                        value={cooperationID.id}
+                        value={cooperationID?.id}
                       >
-                        <option>{cooperationID.name}</option>
+                        <option>{cooperationID?.name}</option>
                       </select>
                     </div>
                     <div className="col-12 col-sm-3">
@@ -364,13 +364,13 @@ const EditDokumentKerjasamaById = ({ token }) => {
                         className="form-control mt-2"
                       >
                         <option value="">Pilih Kategory Kerjasama</option>
-                        {allMK.cooperationActiveSelect.length === 0
+                        {allMK?.cooperationActiveSelect.length === 0
                           ? ""
-                          : allMK.cooperationActiveSelect.data.map(
+                          : allMK?.cooperationActiveSelect?.data?.map(
                               (items, i) => {
                                 return (
                                   <option key={i} value={items.id}>
-                                    {items.cooperation_categories}
+                                    {items?.cooperation_categories}
                                   </option>
                                 );
                               }
@@ -642,22 +642,22 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
               {cooperationID === ""
                 ? ""
-                : cooperationID.data_content.map((items, i) => {
+                : cooperationID?.data_content?.map((items, i) => {
                     return (
                       <div
                         key={i}
                         className={`form-group ${
-                          allMK.cooperationActiveSelect.length !== 0
+                          allMK?.cooperationActiveSelect.length !== 0
                             ? "d-none"
                             : ""
                         }`}
                       >
                         <label htmlFor="staticEmail" className="col-form-label">
-                          {items.cooperation_form}
+                          {items?.cooperation_form}
                         </label>
                         <textarea
                           onChange={e => changeDataContentDefault(e, i)}
-                          value={items.form_content}
+                          value={items?.form_content}
                           name=""
                           id={i}
                           cols="30"
@@ -671,15 +671,15 @@ const EditDokumentKerjasamaById = ({ token }) => {
               {/* loop first end loop*/}
 
               {/* looping second */}
-              {allMK.singleCooporationSelect.length === 0
+              {allMK?.singleCooporationSelect?.length === 0
                 ? ""
-                : allMK.singleCooporationSelect.data.option.map(
+                : allMK?.singleCooporationSelect?.data?.option?.map(
                     (items, index) => {
                       return (
                         <div
                           key={index}
                           className={`form-group ${
-                            allMK.cooperationActiveSelect.length === 0
+                            allMK?.cooperationActiveSelect.length === 0
                               ? "d-none"
                               : ""
                           }`}

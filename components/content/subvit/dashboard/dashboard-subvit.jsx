@@ -189,15 +189,30 @@ const DashbardSubvit = ({ token }) => {
                                 Buat Soal
                               </Dropdown.Toggle>
                               <Dropdown.Menu style={{ width: "195px" }}>
-                                <Dropdown.Item href="subvit/substansi/tambah-step-1">
-                                  Tambah Test Substansi
-                                </Dropdown.Item>
-                                <Dropdown.Item href="subvit/survey/tambah">
-                                  Tambah Survey
-                                </Dropdown.Item>
-                                <Dropdown.Item href="subvit/trivia/tambah">
-                                  Tambah TRIVIA
-                                </Dropdown.Item>
+                                {dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.manage" && "subvit.substansi.manage"
+                                  ) && (
+                                    <Dropdown.Item href="subvit/substansi/tambah-step-1">
+                                      Tambah Test Substansi
+                                    </Dropdown.Item>
+                                  )}
+                                {dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.manage" && "subvit.survey.manage"
+                                  ) && (
+                                    <Dropdown.Item href="subvit/survey/tambah">
+                                      Tambah Survey
+                                    </Dropdown.Item>
+                                  )}
+                                {dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.manage" && "subvit.substansi.manage"
+                                  ) && (
+                                    <Dropdown.Item href="subvit/trivia/tambah">
+                                      Tambah TRIVIA
+                                    </Dropdown.Item>
+                                  )}
                               </Dropdown.Menu>
                             </Dropdown>
                           </center>
@@ -215,7 +230,14 @@ const DashbardSubvit = ({ token }) => {
                     className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4  col-xxl-4 order-1 order-xxl-2`}
                   >
                     <CardDashboardMini
-                      link="/subvit/substansi"
+                      link={
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.substansi.manage"
+                        )
+                          ? "/subvit/substansi"
+                          : "#"
+                      }
                       background="bg-white"
                       icon="book-white.svg"
                       title="Test Substansi"
@@ -225,7 +247,14 @@ const DashbardSubvit = ({ token }) => {
                     className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
                   >
                     <CardDashboardMini
-                      link="/subvit/survey"
+                      link={
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.survey.manage"
+                        )
+                          ? "/subvit/survey"
+                          : "#"
+                      }
                       background="bg-white"
                       icon="blok4-secondary.svg"
                       title="Survey"
@@ -235,7 +264,14 @@ const DashbardSubvit = ({ token }) => {
                     className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
                   >
                     <CardDashboardMini
-                      link="/subvit/trivia"
+                      link={
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.trivia.manage"
+                        )
+                          ? "/subvit/trivia"
+                          : "#"
+                      }
                       background="bg-white"
                       icon="movie-secondary.svg"
                       title="Trivia"

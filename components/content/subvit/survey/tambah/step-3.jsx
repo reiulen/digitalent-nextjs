@@ -31,6 +31,9 @@ const StepThree = ({ token, tokenPermission }) => {
   const { loading, error, success } = useSelector(
     (state) => state.updateSurveyQuestionBanksPublish
   );
+
+  const { survey } = useSelector((state) => state.detailSurveyQuestionBanks);
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
@@ -74,6 +77,9 @@ const StepThree = ({ token, tokenPermission }) => {
       dispatch(
         updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
       );
+      localStorage.removeItem("method");
+      localStorage.removeItem("step1");
+      localStorage.removeItem("step2");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -115,6 +121,9 @@ const StepThree = ({ token, tokenPermission }) => {
         dispatch(
           updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
         );
+        localStorage.removeItem("method");
+        localStorage.removeItem("step1");
+        localStorage.removeItem("step2");
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -168,6 +177,27 @@ const StepThree = ({ token, tokenPermission }) => {
             <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
           <div className="card-body pt-0">
+            <h4 className="mt-2">
+              <b>{survey?.training?.name}</b>
+            </h4>
+            <table>
+              <tr>
+                <td>Tanggal Pendaftaran &nbsp;</td>
+                <td>: &nbsp;</td>
+                <td>
+                  {moment(survey?.pendaftaran_mulai).format("ll")} -{" "}
+                  {moment(survey?.pendaftaran_selesai).format("ll")}{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>Tanggal Pelatihan </td>
+                <td> : </td>{" "}
+                <td>
+                  {moment(survey?.pelatihan_mulai).format("ll")} -{" "}
+                  {moment(survey?.pelatihan_selesai).format("ll")}{" "}
+                </td>
+              </tr>
+            </table>
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
@@ -366,7 +396,27 @@ const StepThree = ({ token, tokenPermission }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    onClick={() => {
+                      localStorage.getItem("method") === "entry"
+                        ? router.push(
+                            `/subvit/survey/tambah/step-2-entry?id=${
+                              router.query.id
+                            }&metode=${localStorage.getItem("method")}`
+                          )
+                        : router.push(
+                            `/subvit/survey/tambah/step-2-import?id=${
+                              router.query.id
+                            }&metode=${localStorage.getItem("method")}`
+                          );
+                    }}
+                    type="button"
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

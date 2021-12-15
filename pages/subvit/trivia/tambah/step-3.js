@@ -4,6 +4,7 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { getOneTriviaQuestionBanks } from "../../../../redux/actions/subvit/trivia-question.actions";
 
 const StepThree = dynamic(
   () => import("/components/content/subvit/trivia/tambah/step-3"),
@@ -28,7 +29,7 @@ export default function TambahBankSoalTriviaStep3(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }) => {
+    async ({ req, query }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -50,6 +51,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getOneTriviaQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
+      );
+
       return {
         props: { session, title: "Step 3 - Subvit", permission },
       };
