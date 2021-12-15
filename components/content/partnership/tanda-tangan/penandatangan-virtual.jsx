@@ -154,12 +154,12 @@ export default function PenandatanganVirtual({ token }) {
                       <label>Pihak 1 Admin</label>
                       <select className="form-control form-control-lg" onChange={(e) => choiceTtdAdmin(e)}>
                         <option>Pilih tanda tangan</option>
-                        {allTandaTangan.optionTtdAdmin.length === 0
+                        {allTandaTangan?.optionTtdAdmin.length === 0
                           ? ""
-                          : allTandaTangan.optionTtdAdmin.data.map((items, index) => {
+                          : allTandaTangan?.optionTtdAdmin?.data?.map((items, index) => {
                               return (
-                                <option value={items.signature_image} key={index}>
-                                  {items.name}
+                                <option value={items?.signature_image} key={index}>
+                                  {items?.name}
                                 </option>
                               );
                             })}
@@ -185,15 +185,15 @@ export default function PenandatanganVirtual({ token }) {
                     <div className="form-group">
                       <label>Pihak 2 Mitra</label>
 
-                      {allTandaTangan.ttdPartner.length === 0 || allTandaTangan.ttdPartner.data.length === 0 ? (
+                      {allTandaTangan?.ttdPartner.length === 0 || allTandaTangan?.ttdPartner?.data?.length === 0 ? (
                         <p className="fw-700">Belom ada data ttd mitra !</p>
                       ) : (
                         <select className="form-control form-control-lg" onChange={(e) => choiceTtdMitra(e)}>
                           <option>Pilih tanda tangan</option>
-                          {allTandaTangan.ttdPartner.data.map((items, index) => {
+                          {allTandaTangan?.ttdPartner?.data?.map((items, index) => {
                             return (
-                              <option value={items.signature_image} key={index}>
-                                {items.name}
+                              <option value={items?.signature_image} key={index}>
+                                {items?.name}
                               </option>
                             );
                           })}

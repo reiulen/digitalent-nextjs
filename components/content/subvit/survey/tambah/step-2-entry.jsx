@@ -297,7 +297,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             answer_key: null,
             type: methodAdd,
           };
-
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
           dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -323,7 +324,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             answer_key: null,
             type: methodAdd,
           };
-
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
           dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -335,7 +337,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             question_image,
             type: methodAdd,
           };
-
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
           dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -361,7 +364,8 @@ const StepTwo = ({ token, tokenPermission }) => {
             answer_key: null,
             type: methodAdd,
           };
-
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", metode);
           dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
       default:
@@ -611,7 +615,18 @@ const StepTwo = ({ token, tokenPermission }) => {
               {handleMethodeInput()}
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  {" "}
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push("/subvit/substansi/tambah-step-1");
+                    }}
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

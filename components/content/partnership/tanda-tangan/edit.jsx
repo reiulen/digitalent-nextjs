@@ -88,7 +88,7 @@ const EditTandaTangan = ({ token }) => {
               query: { update: true },
             });
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -130,7 +130,7 @@ const EditTandaTangan = ({ token }) => {
                 query: { update: true },
               });
             } catch (error) {
-              Swal.fire("Gagal", `${error.response.data.message}`, "error");
+              Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
             }
           }
         });
@@ -160,11 +160,11 @@ const EditTandaTangan = ({ token }) => {
         }
       );
 
-      setNama(data.data.name);
-      setJabatan(data.data.position);
-      setTandaTangan(data.data.signature_image);
+      setNama(data?.data?.name);
+      setJabatan(data?.data?.position);
+      setTandaTangan(data?.data?.signature_image);
     } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
     }
   };
 

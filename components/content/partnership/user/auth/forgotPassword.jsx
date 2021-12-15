@@ -27,19 +27,19 @@ const ForgotPassword = () => {
   const handlerShowPassword = (value) => {
     setHidePassword(value);
     var input = document.getElementById("input-password");
-    if (input.type === "password") {
-      input.type = "text";
+    if (input?.type === "password") {
+      input?.type = "text";
     } else {
-      input.type = "password";
+      input?.type = "password";
     }
   };
   const handlerShowPasswordConfirm = (value) => {
     setHidePasswordConfirmConfirm(value);
     var input = document.getElementById("input-password-confirm");
-    if (input.type === "password") {
-      input.type = "text";
+    if (input?.type === "password") {
+      input?.type = "text";
     } else {
-      input.type = "password";
+      input?.type = "password";
     }
   };
 
@@ -90,9 +90,9 @@ const ForgotPassword = () => {
       setEmailCode(router.query.email);
       setPasswordCode(router.query.code);
     }
-    if (allAuthentication.status === "error") {
-      Swal.fire("Gagal", `${allAuthentication.errorReset}`, "error");
-    } else if (allAuthentication.status === "success") {
+    if (allAuthentication?.status === "error") {
+      Swal.fire("Gagal", `${allAuthentication?.errorReset}`, "error");
+    } else if (allAuthentication?.status === "success") {
       // jika sukses
       Swal.fire("Berhasil", "Password berhasil di reset", "success").then(
         () => {
@@ -111,8 +111,8 @@ const ForgotPassword = () => {
     router.query.code,
     router.query.email,
     router,
-    allAuthentication.status,
-    allAuthentication.errorReset,
+    allAuthentication?.status,
+    allAuthentication?.errorReset,
     dispatch,
   ]);
   return (

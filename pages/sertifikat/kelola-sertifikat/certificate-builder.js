@@ -8,6 +8,7 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getDetailPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
 
 const AddSertifikat = dynamic(
 	() =>
@@ -61,6 +62,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
 					session.user.user.data.token,
 					token_permission
 				)
+			);
+
+			const data = await store.dispatch(
+				getDetailPelatihan(query.id, session?.token, "sertifikat")
 			);
 
 			return {

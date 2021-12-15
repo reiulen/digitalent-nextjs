@@ -42,7 +42,7 @@ function RevisiList({ token }) {
 
         setListCardREvisi(data.data);
       } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
       }
     }
     getCardREviewList(router.query.id, token);
@@ -62,7 +62,7 @@ function RevisiList({ token }) {
             <ul style={styleList}>
               {listCardREvisi.length === 0
                 ? ""
-                : listCardREvisi.map((items, index) => {
+                : listCardREvisi?.map((items, index) => {
                     return (
                       <li key={index} className="mt-5">
                         <div className="row  cardContainer">
@@ -71,19 +71,19 @@ function RevisiList({ token }) {
                               className="fw-500 titles-1"
                               style={{ color: "#6C6C6C" }}
                             >
-                              {items.title}
+                              {items?.title}
                             </h1>
                             <p className="mt-4" style={{ color: "#ADB5BD" }}>
-                              {items.information1}
+                              {items?.information1}
                             </p>
                             <p style={{ color: "red" }}>
-                              Versi.{items.version}
+                              Versi.{items?.version}
                             </p>
                           </div>
                           <div className="col-12 col-sm-6 d-flex justify-content-sm-end justify-content-start">
-                            {items.information2 === "Menunggu Mitra" ? (
+                            {items?.information2 === "Menunggu Mitra" ? (
                               <a className="mt-3 mb-3 mt-sm-10" style={labelStyle}>
-                                {items.information2}
+                                {items?.information2}
                               </a>
                             ) : (
                               <Link
@@ -92,13 +92,13 @@ function RevisiList({ token }) {
                                     "/partnership/kerjasama/review-kerjasama",
                                   query: {
                                     id: router.query.id,
-                                    version: items.version,
-                                    statusInfo: items.information2,
+                                    version: items?.version,
+                                    statusInfo: items?.information2,
                                   },
                                 }}
                               >
                                 <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-3 mb-3 mt-sm-10">
-                                  {items.information2}
+                                  {items?.information2}
                                 </a>
                               </Link>
                             )}
