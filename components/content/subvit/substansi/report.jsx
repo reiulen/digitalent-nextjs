@@ -17,7 +17,7 @@ import { Badge, Modal } from "react-bootstrap";
 import { clearErrors } from "/redux/actions/subvit/subtance.actions";
 import { allReportSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 
-const ListSubstansi = ({ token }) => {
+const ListSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -73,6 +73,7 @@ const ListSubstansi = ({ token }) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
@@ -195,8 +196,8 @@ const ListSubstansi = ({ token }) => {
             value={subtance ? subtance.data.total_peserta : 0}
             titleValue=""
             title="Total Peserta"
-            publishedVal={null}
-            routePublish={() => handlePublish("")}
+            publishedVal={"total-peserta"}
+            routePublish={() => handlePublish("total-peserta")}
           />
           <CardPage
             background="bg-secondary"

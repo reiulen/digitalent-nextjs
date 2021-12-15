@@ -57,17 +57,17 @@ const TambahApi = ({ token }) => {
   //     return { ...items }
   //   }
   // })
+  
+  const [valueProvinsi, setValueProvinsi] = useState(optionTempProv);
+  const [nameUnitWork, setNameUnitWork] = useState(detailUnitWork.unitWork.name);
+  const [status, setStatus] = useState(detailUnitWork.unitWork.status);
+  
 
   let province = optionTempProvList.filter(item => {
-    return !optionTempProv.some(filter => {
+    return !valueProvinsi.some(filter => {
       return item.label === filter.provinsi
     })
   })
-
-  const [valueProvinsi, setValueProvinsi] = useState([]);
-  const [nameUnitWork, setNameUnitWork] = useState(detailUnitWork.unitWork.name);
-  const [status, setStatus] = useState(detailUnitWork.unitWork.status);
-
   // filter data just region show
   const changeListProvinsi = (e) => {
     let data = e.map((items) => {
@@ -200,7 +200,6 @@ const TambahApi = ({ token }) => {
                   { className: "text-danger" }
                 )}
               </div>
-
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Provinsi</label>
                 <Select

@@ -11,7 +11,10 @@ export default function EditSurveyBankPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditSurveyBank token={session.token} />
+        <EditSurveyBank
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -50,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Edit Soal Survey - Subvit" },
+        props: { session, title: "Edit Soal Survey - Subvit", permission },
       };
     }
 );

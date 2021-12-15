@@ -179,7 +179,7 @@ const TambahApi = ({ token }) => {
                 {simpleValidator.current.message(
                   "email",
                   email,
-                  "required",
+                  "required|email",
                   { className: "text-danger" }
                 )}
               </div>

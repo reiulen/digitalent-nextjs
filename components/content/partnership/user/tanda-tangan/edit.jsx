@@ -9,6 +9,7 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import Image from "next/image";
+import Cookies from "js-cookie"
 
 const EditTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
@@ -96,6 +97,7 @@ const EditTandaTangan = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get ("token_permission")
                 },
               }
             );
@@ -135,6 +137,7 @@ const EditTandaTangan = ({ token }) => {
                 {
                   headers: {
                     authorization: `Bearer ${token}`,
+                    Permission: Cookies.get ("token_permission")
                   },
                 }
               );
@@ -166,6 +169,7 @@ const EditTandaTangan = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get ("token_permission")
             },
           }
         );

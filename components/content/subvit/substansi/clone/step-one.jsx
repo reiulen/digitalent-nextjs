@@ -25,7 +25,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const StepOne = ({ token }) => {
+const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -37,26 +37,48 @@ const StepOne = ({ token }) => {
     (state) => state.drowpdownAkademi
   );
 
+  const { list_substance } = useSelector(
+    (state) => state?.allSubtanceQuestionBanks?.subtance
+  );
+
+  let optionsClone = [];
+
+  let uniqueArray = list_substance.filter((item, pos) => {
+    return list_substance.indexOf(item) === pos;
+  });
+
+  uniqueArray.map((item) => {
+    optionsClone.push({ label: item.academy.name, value: item.academy.id });
+  });
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
 
-  const [academy_id, setAcademyId] = useState("");
-  const [theme_id, setThemeId] = useState("");
-  const [training_id, setTrainingId] = useState("");
-  const [academyLabel, setAcademyLabel] = useState("Silahkan Pilih Akademi");
-  const [themeLabel, setThemeLabel] = useState("Silahkan Pilih Tema");
-  const [trainingLabel, setTrainingLabel] = useState(
-    "Silahkan Pilih Pelatihan"
+  let save = JSON.parse(localStorage.getItem("clone1"));
+
+  const [academy_id, setAcademyId] = useState(save?.academy_id);
+  const [theme_id, setThemeId] = useState(save?.theme_id);
+  const [training_id, setTrainingId] = useState(save?.training_id);
+  const [academyLabel, setAcademyLabel] = useState(
+    save ? save.academy : "Silahkan Pilih Akademi"
   );
-  const [category, setCategory] = useState("");
+  const [themeLabel, setThemeLabel] = useState(
+    save ? save.theme : "Silahkan Pilih Tema"
+  );
+  const [trainingLabel, setTrainingLabel] = useState(
+    save ? save.training : "Silahkan Pilih Pelatihan"
+  );
+  const [category, setCategory] = useState(
+    save ? save.category : "Silahkan Pilih Kategori"
+  );
 
   useEffect(() => {
     // if (error) {
     //     dispatch(clearErrors())
     // }
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (success) {
       const id = subtance.id;
       if (typeSave === "lanjut") {
@@ -81,6 +103,7 @@ const StepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   const handleChangePelatihan = (e) => {
@@ -123,6 +146,7 @@ const StepOne = ({ token }) => {
       };
 
       dispatch(newCloneSubtanceQuestionBanks(data, token));
+      localStorage.removeItem("clone1");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -143,12 +167,22 @@ const StepOne = ({ token }) => {
     }
     if (simpleValidator.current.allValid()) {
       const data = {
+        academy_id: save ? save.academy_id : academy_id,
+        theme_id: save ? save.theme_id : theme_id,
+        training_id: save ? save.training_id : training_id,
+        category: save ? save.category : category,
+      };
+
+      const setData = {
+        academy: academyLabel,
         academy_id,
+        theme: themeLabel,
         theme_id,
+        training: trainingLabel,
         training_id,
         category,
       };
-
+      localStorage.setItem("clone1", JSON.stringify(setData));
       dispatch(newCloneSubtanceQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -223,10 +257,10 @@ const StepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  placeholder={"Silahkan Pilih Akademi"}
                   className={styles.selectForm}
-                  options={dataAkademi.data}
-                  value={academyLabel}
+                  options={optionsClone}
+                  value={{ label: academyLabel }}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -234,7 +268,7 @@ const StepOne = ({ token }) => {
                 />
                 {simpleValidator.current.message(
                   "akademi",
-                  academy_id,
+                  academy_id || save?.academy,
                   "required",
                   {
                     className: "text-danger",
@@ -248,16 +282,21 @@ const StepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   isDisabled={!academy_id}
-                  placeholder={themeLabel || "Silahkan Pilih Tema"}
+                  placeholder={"Silahkan Pilih Tema"}
                   options={optionsTema}
-                  value={themeLabel}
+                  value={{ label: themeLabel }}
                   className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
                 />
-                {simpleValidator.current.message("tema", theme_id, "required", {
-                  className: "text-danger",
-                })}
+                {simpleValidator.current.message(
+                  "tema",
+                  theme_id || save?.theme,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -266,9 +305,9 @@ const StepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   isDisabled={!theme_id}
-                  placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
+                  placeholder={"Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
-                  value={trainingLabel}
+                  value={{ label: trainingLabel }}
                   className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>
@@ -277,7 +316,7 @@ const StepOne = ({ token }) => {
                 />
                 {simpleValidator.current.message(
                   "pelatihan",
-                  training_id,
+                  training_id || save?.training,
                   "required",
                   {
                     className: "text-danger",

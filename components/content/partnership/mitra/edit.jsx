@@ -19,6 +19,7 @@ import Select from "react-select";
 
 import { Modal } from "react-bootstrap";
 import ReactCrop from "react-image-crop";
+import Cookies from "js-cookie"
 
 const EditMitra = ({ token }) => {
   const router = useRouter();
@@ -227,6 +228,7 @@ const EditMitra = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -258,6 +260,7 @@ const EditMitra = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -298,6 +301,7 @@ const EditMitra = ({ token }) => {
              {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
           );

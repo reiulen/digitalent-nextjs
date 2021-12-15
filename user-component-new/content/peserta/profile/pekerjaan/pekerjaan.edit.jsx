@@ -53,6 +53,21 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   );
 
+  const optionsAsalSekolah = [];
+
+  dataAsalSekolah &&
+    dataAsalSekolah.map((item) => {
+      optionsAsalSekolah.push({
+        value: item.id,
+        label: item.label,
+      });
+    });
+
+  optionsAsalSekolah.push({
+    value: "",
+    label: "Nama Institusi Lainnya..",
+  });
+
   const [pekerjaanNama, setPekerjaan] = useState(
     (pekerjaan && pekerjaan.pekerjaan) || ""
   );
@@ -341,22 +356,24 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Sekolah / Perguruan Tinggi</Form.Label>
-                    <input
-                      list="data"
-                      type="text" /*  */
-                      className="form-control"
-                      value={sekolah}
+                    <Select
+                      // list="data"
+                      placeholder={"Pilih Sekolah"}
+                      options={optionsAsalSekolah}
+                      // className="form-control"
+
+                      value={{ label: sekolah }}
                       onChange={(e) => {
-                        setSekolah(e.target.value);
+                        setSekolah(e.label);
                       }}
                     />
-                    <datalist id="data">
+                    {/* <datalist id="data">
                       {dataAsalSekolah === undefined
                         ? "kosong"
                         : dataAsalSekolah.map((item, index) => {
                             return <option value={item.label} key={index} />;
                           })}
-                    </datalist>
+                    </datalist> */}
                     {simpleValidator.current.message(
                       "sekolah",
                       sekolah,

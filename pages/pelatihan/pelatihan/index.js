@@ -52,6 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const token_permission = req.cookies.token_permission;
 
       await store.dispatch(
         // getAllTraining(
@@ -79,14 +80,24 @@ export const getServerSideProps = wrapper.getServerSideProps(
           null,
           null,
           null,
-          session.user.user.data.token
+          session.user.user.data.token,
+          null,
+          token_permission
         )
       );
 
-      await store.dispatch(getCardTraining(session.user.user.data.token));
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
-      await store.dispatch(dropdownTema(session.user.user.data.token));
-      await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
+      await store.dispatch(
+        getCardTraining(session.user.user.data.token, token_permission)
+      );
+      await store.dispatch(
+        dropdownAkademi(session.user.user.data.token, token_permission)
+      );
+      await store.dispatch(
+        dropdownTema(session.user.user.data.token, token_permission)
+      );
+      await store.dispatch(
+        dropdownPenyelenggara(session.user.user.data.token, token_permission)
+      );
 
       await store.dispatch(getAllPermission(session.user.user.data.token));
 

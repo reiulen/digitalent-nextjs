@@ -58,7 +58,7 @@ export default function TestSubstansiPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);
@@ -117,7 +117,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
               getAllRiwayatPelatihanPeserta(session?.user.user.data.user.token)
             );
             success = false;
-            const list = data.list.filter(item => {
+            const list = data.list.filter((item) => {
               return item.status.includes("substansi");
             });
 

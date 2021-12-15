@@ -102,6 +102,7 @@ const PollingComponent = ({ props_answer }) => {
                     className="custom-file-input"
                     name="image"
                     onChange={(e) => handleInputChange(e, i)}
+                    accept="image/png, image/gif, image/jpeg , image/jpg"
                   />
                   <label className="custom-file-label" htmlFor="customFile">
                     {x.imageName}

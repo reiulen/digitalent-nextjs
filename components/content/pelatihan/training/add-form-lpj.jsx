@@ -72,17 +72,17 @@ const AddFormLpj = ({ token }) => {
       data: form,
     };
 
-    if (simpleValidator.current.allValid()) {
-      dispatch(postLpj(token, data));
-    } else {
-      simpleValidator.current.showMessages();
-      forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
-    }
+    dispatch(postLpj(token, data));
+    // if (simpleValidator.current.allValid()) {
+    // } else {
+    //   simpleValidator.current.showMessages();
+    //   forceUpdate(1);
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: "Isi data dengan benar !",
+    //   });
+    // }
   };
 
   return (
@@ -120,13 +120,8 @@ const AddFormLpj = ({ token }) => {
                       value={row.name}
                       onChange={(e) => handleInputForm(e.target.value, i)}
                       maxLength={749}
+                      required
                     />
-                    {simpleValidator.current.message(
-                      `nama field ${i + 1}`,
-                      row.name,
-                      "required",
-                      { className: "text-danger" }
-                    )}
                   </div>
                   <div className="">
                     <button

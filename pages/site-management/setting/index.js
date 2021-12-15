@@ -1,6 +1,7 @@
 import DashboardSetting from "../../../components/content/site-management/dashboard/dashboard-setting";
 // import Layout from "../../components/templates/layout.component";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 export default function Dashboard() {
   return (
@@ -14,14 +15,15 @@ export default function Dashboard() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "http://dts-dev.majapahit.id/login/admin",
-        permanent: false,
-      },
-    };
-  }
+  const middleware = middlewareAuthAdminSession(session);
+    if (!middleware.status) {
+      return {
+        redirect: {
+          destination: middleware.redirect,
+          permanent: false,
+        },
+      };
+    }
 
   return {
     props: { session, title: "Dashboard - Setting" },
