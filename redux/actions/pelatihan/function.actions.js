@@ -187,29 +187,31 @@ export const storeCommitmentStep3 = (data) => async (dispatch) => {
   });
 };
 
-export const dropdownAkademi = (token, tokenPermission) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-        // permissionToken: tokenPermission,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/dropdown`,
-      config
-    );
-    dispatch({
-      type: GET_DROPDOWN_AKADEMI,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ERROR_DROPDOWN_AKADEMI,
-      payload: error.response.data.message,
-    });
-  }
-};
+export const dropdownAkademi =
+  (token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/dropdown`,
+        config
+      );
+      dispatch({
+        type: GET_DROPDOWN_AKADEMI,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ERROR_DROPDOWN_AKADEMI,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const drowpdownFormBuilder = (token) => async (dispatch) => {
   try {
@@ -234,29 +236,31 @@ export const drowpdownFormBuilder = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownTema = (token, tokenPermission) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-        // permissionToken: tokenPermission,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_PELATIHAN + `api/v1/tema/dropdown`,
-      config
-    );
-    dispatch({
-      type: GET_DROPDOWN_TEMA,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ERROR_DROPDOWN_TEMA,
-      payload: error.response.data.message,
-    });
-  }
-};
+export const dropdownTema =
+  (token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_PELATIHAN + `api/v1/tema/dropdown`,
+        config
+      );
+      dispatch({
+        type: GET_DROPDOWN_TEMA,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ERROR_DROPDOWN_TEMA,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const dropdownTemabyAkademi =
   (id, token, tokenPermission) => async (dispatch) => {
@@ -622,28 +626,31 @@ export const dropdownTempatLahir = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownPenyelenggara = (token) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/organizer`,
-      config
-    );
-    dispatch({
-      type: GET_DROPDOWN_PENYELENGGARA,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ERROR_DROPDOWN_PENYELENGGARA,
-      payload: error.response.data.message,
-    });
-  }
-};
+export const dropdownPenyelenggara =
+  (token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/organizer`,
+        config
+      );
+      dispatch({
+        type: GET_DROPDOWN_PENYELENGGARA,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ERROR_DROPDOWN_PENYELENGGARA,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getDropdownYear = (token) => async (dispatch) => {
   try {

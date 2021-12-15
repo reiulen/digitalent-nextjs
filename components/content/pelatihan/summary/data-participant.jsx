@@ -552,11 +552,7 @@ const DataParticipant = ({ token }) => {
                           value: e.value,
                         })
                       }
-                      isDisabled={
-                        peserta.list[0].status !== "seleksi akhir"
-                          ? true
-                          : false
-                      }
+                      isDisabled
                     />
                   </div>
                   <div className="col-sm-12 col-md-6">
