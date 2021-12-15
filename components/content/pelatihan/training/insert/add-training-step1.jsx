@@ -219,15 +219,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       }
       quill.on("text-change", (delta, oldDelta, source) => {
         setDescription(quill.root.innerHTML);
-
-        const { ops } = delta;
-        let updatedOps;
-        if (ops.length === 1) {
-          updatedOps = [{ delete: ops[0].insert.length }];
-        } else {
-          updatedOps = [ops[0], { delete: ops[1].insert.length }];
-        }
-        quill.updateContents({ ops: updatedOps });
       });
     }
     setEditorLoaded(true);

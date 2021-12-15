@@ -1,4 +1,7 @@
 import Swal from "sweetalert2";
+import OptionsReference from "../../../components/content/pelatihan/training/components/option-reference.component";
+import RadioReference from "../../../components/content/pelatihan/training/components/radio-reference.component";
+import CheckboxReference from "../../../components/content/pelatihan/training/components/checkbox-reference.component";
 
 export const disablePlusMinusPeriod = (e) => {
   if (e.code == "Minus") {
@@ -130,4 +133,551 @@ export const helperUserStatusColor = (status, setLabel) => {
   )
     return setLabel("primary");
   else return setLabel("primary");
+};
+
+export const helperElementRenderIndex = (row, propsToken) => {
+  switch (row.element) {
+    case "text":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <input
+            type={row.element}
+            name=""
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "select":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <select name="" className="form-control" required={row.required}>
+            <option value="">--Pilih Data--</option>
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <option value={dat} key={i}>
+                  {dat}
+                </option>
+              ))
+            ) : (
+              <OptionsReference id={row.dataOption} token={propsToken} />
+            )}
+          </select>
+        </div>
+      );
+      break;
+    case "checkbox":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="my-auto">
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <div className="form-check pb-3" key={i}>
+                  <input
+                    type="checkbox"
+                    name="plotRegistration"
+                    className="form-check-input"
+                    required={row.required}
+                    value={dat}
+                  />
+                  <label className="form-check-label">{dat}</label>
+                </div>
+              ))
+            ) : (
+              <CheckboxReference
+                id={row.dataOption}
+                token={propsToken}
+                required={row.required}
+              />
+            )}
+          </div>
+        </div>
+      );
+      break;
+    case "textarea":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <textarea
+            name=""
+            cols="30"
+            rows="5"
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "radio":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="my-auto">
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <div className="form-check pb-3" key={i}>
+                  <input
+                    type="radio"
+                    name={row.name}
+                    className="form-check-input"
+                    value={dat}
+                    required={row.required}
+                  />
+                  <label className="form-check-label">{dat}</label>
+                </div>
+              ))
+            ) : (
+              <RadioReference
+                id={row.dataOption}
+                token={propsToken}
+                required={row.required}
+              />
+            )}
+          </div>
+        </div>
+      );
+      break;
+    case "file_image":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              accept="image/png, image/jpeg , image/jpg"
+              required={row.required}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              Belum ada File
+            </label>
+          </div>
+        </div>
+      );
+      break;
+    case "file_doc":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              accept="application/pdf"
+              required={row.required}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              Belum ada File
+            </label>
+          </div>
+        </div>
+      );
+      break;
+    case "date":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <input
+            type={row.element}
+            name=""
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "triggered":
+      return (
+        <>
+          <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+            <label className="col-form-label font-weight-bold">
+              {row.name}
+            </label>
+            <select name="" className="form-control" required={row.required}>
+              <option value="">--Pilih Data--</option>
+              {row.option === "manual" &&
+                row.dataOption.split(";").map((dat, i) => (
+                  <option value={dat} key={i}>
+                    {dat}
+                  </option>
+                ))}
+            </select>
+          </div>
+        </>
+      );
+      break;
+    default:
+      break;
+  }
+};
+
+export const helperElementRenderChildren = (row, propsToken) => {
+  switch (row.element) {
+    case "text":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <input
+            type={row.element}
+            name=""
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "select":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <select name="" className="form-control" required={row.required}>
+            <option value="">--Pilih Data--</option>
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <option value={dat} key={i}>
+                  {dat}
+                </option>
+              ))
+            ) : (
+              <OptionsReference id={row.dataOption} token={propsToken} />
+            )}
+          </select>
+        </div>
+      );
+      break;
+    case "checkbox":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="my-auto">
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <div className="form-check pb-3" key={i}>
+                  <input
+                    type="checkbox"
+                    name="plotRegistration"
+                    className="form-check-input"
+                    required={row.required}
+                    value={dat}
+                  />
+                  <label className="form-check-label">{dat}</label>
+                </div>
+              ))
+            ) : (
+              <CheckboxReference
+                id={row.dataOption}
+                token={propsToken}
+                required={row.required}
+              />
+            )}
+          </div>
+        </div>
+      );
+      break;
+    case "textarea":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <textarea
+            name=""
+            cols="30"
+            rows="5"
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "radio":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="my-auto">
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <div className="form-check pb-3" key={i}>
+                  <input
+                    type="radio"
+                    name={row.name}
+                    className="form-check-input"
+                    value={dat}
+                    required={row.required}
+                  />
+                  <label className="form-check-label">{dat}</label>
+                </div>
+              ))
+            ) : (
+              <RadioReference
+                id={row.dataOption}
+                token={propsToken}
+                required={row.required}
+              />
+            )}
+          </div>
+        </div>
+      );
+      break;
+    case "file_image":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              accept="image/png, image/jpeg , image/jpg"
+              required={row.required}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              Belum ada File
+            </label>
+          </div>
+        </div>
+      );
+      break;
+    case "file_doc":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              accept="application/pdf"
+              required={row.required}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              Belum ada File
+            </label>
+          </div>
+        </div>
+      );
+      break;
+    case "date":
+      return (
+        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <input
+            type={row.element}
+            name=""
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "triggered":
+      return (
+        <>
+          <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+            <label className="col-form-label font-weight-bold">
+              {row.name}
+            </label>
+            <select name="" className="form-control" required={row.required}>
+              <option value="">--Pilih Data--</option>
+              {row.option === "manual" &&
+                row.dataOption.split(";").map((dat, i) => (
+                  <option value={dat} key={i}>
+                    {dat}
+                  </option>
+                ))}
+            </select>
+          </div>
+          {row.triggered_index.map((rowIndex, k) => (
+            <>{helperElementRenderIndex(rowIndex, propsToken)}</>
+          ))}
+        </>
+      );
+      break;
+    default:
+      break;
+  }
+};
+
+export const helperElementRenderParent = (row, propsToken) => {
+  switch (row.element) {
+    case "text":
+      return (
+        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <input
+            type={row.element}
+            name=""
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "select":
+      return (
+        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <select name="" className="form-control" required={row.required}>
+            <option value="">--Pilih Data--</option>
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <option value={dat} key={i}>
+                  {dat}
+                </option>
+              ))
+            ) : (
+              <OptionsReference id={row.dataOption} token={propsToken} />
+            )}
+          </select>
+        </div>
+      );
+      break;
+    case "checkbox":
+      return (
+        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="my-auto">
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <div className="form-check pb-3" key={i}>
+                  <input
+                    type="checkbox"
+                    name="plotRegistration"
+                    className="form-check-input"
+                    required={row.required}
+                    value={dat}
+                  />
+                  <label className="form-check-label">{dat}</label>
+                </div>
+              ))
+            ) : (
+              <CheckboxReference
+                id={row.dataOption}
+                token={propsToken}
+                required={row.required}
+              />
+            )}
+          </div>
+        </div>
+      );
+      break;
+    case "textarea":
+      return (
+        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <textarea
+            name=""
+            cols="30"
+            rows="5"
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "radio":
+      return (
+        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="my-auto">
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <div className="form-check pb-3" key={i}>
+                  <input
+                    type="radio"
+                    name={row.name}
+                    className="form-check-input"
+                    value={dat}
+                    required={row.required}
+                  />
+                  <label className="form-check-label">{dat}</label>
+                </div>
+              ))
+            ) : (
+              <RadioReference
+                id={row.dataOption}
+                token={propsToken}
+                required={row.required}
+              />
+            )}
+          </div>
+        </div>
+      );
+      break;
+    case "file_image":
+      return (
+        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              accept="image/png, image/jpeg , image/jpg"
+              required={row.required}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              Belum ada File
+            </label>
+          </div>
+        </div>
+      );
+      break;
+    case "file_doc":
+      return (
+        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              accept="application/pdf"
+              required={row.required}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              Belum ada File
+            </label>
+          </div>
+        </div>
+      );
+      break;
+    case "date":
+      return (
+        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <input
+            type={row.element}
+            name=""
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "triggered":
+      return (
+        <>
+          <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+            <label className="col-form-label font-weight-bold">
+              {row.name}
+            </label>
+            {console.log(row)}
+            <select name="" className="form-control" required={row.required}>
+              <option value="">--Pilih Data--</option>
+              {row.option === "manual" &&
+                row.dataOption.split(";").map((dat, i) => (
+                  <option value={dat} key={i}>
+                    {dat}
+                  </option>
+                ))}
+            </select>
+          </div>
+          {row.triggered_children.map((rowChildren, k) => (
+            <>{helperElementRenderChildren(rowChildren, propsToken)}</>
+          ))}
+        </>
+      );
+      break;
+    default:
+      break;
+  }
 };
