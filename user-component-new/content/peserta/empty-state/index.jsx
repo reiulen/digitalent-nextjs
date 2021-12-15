@@ -34,7 +34,7 @@ export default function SeleksiAdministrasi() {
 			return setJudul("Anda Tidak Memiliki Survey");
 		}
 		if (router.pathname.includes("trivia")) {
-			setDeskripsi("Survey belum tersedia, silahkan cek secara berkala");
+			setDeskripsi("Trivia belum tersedia, silahkan cek secara berkala");
 			return setJudul("Anda Tidak Memiliki Trivia");
 		}
 	}, []);

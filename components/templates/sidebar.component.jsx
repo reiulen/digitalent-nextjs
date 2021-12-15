@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import IconArrow2 from "../../components/assets/icon/Arrow2";
+// import IconArrow2 from "../../components/assets/icon/Arrow2";
 import { useDispatch, useSelector } from "react-redux";
-import { useSession } from "next-auth/client";
-import { getSidebar } from "../../redux/actions/site-management/role.actions";
+// import { useSession } from "next-auth/client";
+// import { getSidebar } from "../../redux/actions/site-management/role.actions";
 import axios from "axios";
 import LoadingTable from "../LoadingTable";
 import Cookies from "js-cookie";
@@ -85,8 +85,6 @@ const Sidebar = ({ session }) => {
     let pathRoute = router.route;
     const replacedPath = pathRoute.substring(0, 0) + "" + pathRoute.substring(0 + 1);
     const arrPath = replacedPath.split('/');
-
-    console.log(arrPath);
     
     if (menu) {
 
@@ -139,10 +137,6 @@ const Sidebar = ({ session }) => {
     if (menu) {
       let _temp = [...menu];
       setMenu(_temp);
-
-      return () => {
-        localStorage.removeItem("submenuActive");
-      };
     }
   }, []);
 
