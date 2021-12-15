@@ -40,6 +40,7 @@ export const getAllSurveyQuestionDetail =
         headers: {
           Authorization: "Bearer " + token,
           Permission: tokenPermission || "",
+          apikey: "I8aylVChtrUB15Sp5v8TsjDOvb8kGcML",
         },
       };
       let link =
@@ -50,6 +51,7 @@ export const getAllSurveyQuestionDetail =
       if (keyword) link = link.concat(`&keyword=${keyword}`);
 
       const { data } = await axios.get(link, config);
+      console.log(data);
       dispatch({
         type: SURVEY_QUESTION_DETAIL_SUCCESS,
         payload: data,
@@ -124,7 +126,7 @@ export const postResultSurvey = (resultData, token) => async (dispatch) => {
 };
 
 export const newSurveyQuestionDetail =
-  (triviaDetailData, token) => async (dispatch) => {
+  (triviaDetailData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_SURVEY_QUESTION_DETAIL_REQUEST,
@@ -132,6 +134,7 @@ export const newSurveyQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -153,31 +156,33 @@ export const newSurveyQuestionDetail =
     }
   };
 
-export const deleteSurveyQuestionDetail = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_SURVEY_QUESTION_DETAIL_REQUEST });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_SUBVIT +
-        `api/survey-question-bank-details/${id}`,
-      config
-    );
+export const deleteSurveyQuestionDetail =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_SURVEY_QUESTION_DETAIL_REQUEST });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
+      const { data } = await axios.delete(
+        process.env.END_POINT_API_SUBVIT +
+          `api/survey-question-bank-details/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DELETE_SURVEY_QUESTION_DETAIL_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_SURVEY_QUESTION_DETAIL_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DELETE_SURVEY_QUESTION_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_SURVEY_QUESTION_DETAIL_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const detailSurveyQuestionDetail =
   (id, token, tokenPermission) => async (dispatch) => {
@@ -208,12 +213,13 @@ export const detailSurveyQuestionDetail =
   };
 
 export const updateSurveyQuestionDetail =
-  (id, dataBankSoal, token) => async (dispatch) => {
+  (id, dataBankSoal, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({ type: UPDATE_SURVEY_QUESTION_DETAIL_REQUEST });
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.post(
@@ -236,7 +242,7 @@ export const updateSurveyQuestionDetail =
   };
 
 export const importFileSurveyQuestionDetail =
-  (triviaDetailFile, token) => async (dispatch) => {
+  (triviaDetailFile, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: IMPORT_FILE_SURVEY_QUESTION_DETAIL_REQUEST,
@@ -244,6 +250,7 @@ export const importFileSurveyQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -267,7 +274,7 @@ export const importFileSurveyQuestionDetail =
   };
 
 export const importImagesSurveyQuestionDetail =
-  (triviaDetailImages, token) => async (dispatch) => {
+  (triviaDetailImages, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_REQUEST,
@@ -275,6 +282,7 @@ export const importImagesSurveyQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 

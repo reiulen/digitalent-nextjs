@@ -10,7 +10,10 @@ export default function TambahSurveyStep1Page(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <TambahSurveyStep1 token={session.token} />
+        <TambahSurveyStep1
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -37,7 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Tambah Survey - Subvit" },
+        props: { session, title: "Tambah Survey - Subvit", permission },
       };
     }
 );

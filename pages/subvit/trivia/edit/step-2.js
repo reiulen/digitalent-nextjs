@@ -11,7 +11,10 @@ export default function EditTriviaStep2Page(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditTriviaStep2 token={session.token} />
+        <EditTriviaStep2
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -49,7 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       return {
-        props: { session, title: "Ubah Triva Step 2 - Subvit" },
+        props: { session, title: "Ubah Triva Step 2 - Subvit", permission },
       };
     }
 );

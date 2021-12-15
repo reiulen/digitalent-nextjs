@@ -503,7 +503,8 @@ const DataParticipant = ({ token }) => {
                           peserta.list[0].status === "ditolak" ||
                           peserta.list[0].status === "diterima" ||
                           peserta.list[0].status === "pelatihan" ||
-                          peserta.list[0].status === "administrasi akhir"
+                          peserta.list[0].status === "administrasi akhir" ||
+                          peserta.list[0].status === "lulus pelatihan"
                         )
                           ? false
                           : true
@@ -551,11 +552,7 @@ const DataParticipant = ({ token }) => {
                           value: e.value,
                         })
                       }
-                      isDisabled={
-                        peserta.list[0].status !== "seleksi akhir"
-                          ? true
-                          : false
-                      }
+                      isDisabled
                     />
                   </div>
                   <div className="col-sm-12 col-md-6">

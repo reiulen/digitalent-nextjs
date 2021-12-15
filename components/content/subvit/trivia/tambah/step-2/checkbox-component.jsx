@@ -158,6 +158,7 @@ const CheckboxComponent = ({
                       className="custom-file-input pb-0 my-0"
                       name="image"
                       onChange={(e) => handleInputChange(e, i)}
+                      accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
                       {x.imageName}
@@ -209,21 +210,6 @@ const CheckboxComponent = ({
                           <i className="ri-delete-bin-fill p-0 text-white"></i>
                         </button>
                       )}
-                    </div>
-                    <div
-                      className={`${styles.btnSwitch} col-3 col-md-4 col-lg-4 col-xl-5`}
-                    >
-                      <SwitchButton
-                        checked={x.is_right}
-                        onlabel=" "
-                        onstyle="primary"
-                        offlabel=" "
-                        offstyle="secondary"
-                        size="sm"
-                        width={20}
-                        height={10}
-                        onChange={(checked) => handleAnswer(checked, i)}
-                      />
                     </div>
                   </div>
                 </div>

@@ -15,6 +15,7 @@ import CardPage from "../../../../CardPage";
 import IconTodoLine from "../../../../assets/icon/TodoLine";
 import axios from "axios";
 import moment from "moment";
+import Cookies from "js-cookie"
 
 import {
   reqCooperationUser,
@@ -104,6 +105,7 @@ const Table = ({ token }) => {
       let { data } = await axios.get(`${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`, {
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission")
         },
       });
       if (data.data.pic_email === "-") {
@@ -122,6 +124,7 @@ const Table = ({ token }) => {
       let { data } = await axios.get(`${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`, {
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission")
         },
       });
       setSumWillExpire(data.data.total);

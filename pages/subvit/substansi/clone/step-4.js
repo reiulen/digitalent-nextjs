@@ -1,24 +1,17 @@
-import EditSubstansiStep1 from "../../../../components/content/subvit/substansi/edit/step-1";
-import { getSession } from "next-auth/client";
+import Layout from "/components/templates/layout.component";
+import StepTree from "../../../../components/content/subvit/substansi/clone/step-tree";
 
 import { getDetailSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../../redux/store";
-import {
-  dropdownAkademi,
-  dropdownPelatihan,
-  dropdownTema,
-} from "../../../../redux/actions/pelatihan/function.actions";
+import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
-export default function EditSubstansiStep1Page(props) {
+export default function CloneSoalSubtansi(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditSubstansiStep1
-          token={session.token}
-          tokenPermission={props.permission}
-        />
+        <StepTree token={session.token} />
       </div>
     </>
   );
@@ -36,7 +29,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {
@@ -50,29 +42,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const permission = req.cookies.token_permission;
 
       await store.dispatch(
-        dropdownAkademi(session.user.user.data.token, permission)
-      );
-      await store.dispatch(
-        dropdownTema(session.user.user.data.token, permission)
-      );
-      await store.dispatch(
-        dropdownPelatihan(session.user.user.data.token, permission)
-      );
-
-      await store.dispatch(
         getDetailSubtanceQuestionBanks(
           query.id,
           session.user.user.data.token,
           permission
         )
       );
-
       return {
-        props: {
-          session,
-          title: "Ubah Test Substansi Step 1 - Subvit",
-          permission,
-        },
+        props: { session, title: "Clone Bank Soal Test Subtansi - Subvit" },
       };
     }
 );

@@ -22,7 +22,7 @@ import StepInput from "/components/StepInputClone";
 import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -156,7 +156,7 @@ const StepTwo = ({ token }) => {
     const data = {
       list_soal: checkedDelete,
     };
-    dispatch(deleteCloneSubtanceQuestionBanks(data, token));
+    dispatch(deleteCloneSubtanceQuestionBanks(data, token, tokenPermission));
   };
 
   const handleModal = () => {
@@ -435,6 +435,15 @@ const StepTwo = ({ token }) => {
               </div>
               <div className="row mt-7">
                 <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
+                  <button
+                    className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push("/subvit/substansi/clone");
+                    }}
+                  >
+                    Kembali
+                  </button>
                   <div className="float-right ">
                     <div className={styles.foldResponsive}>
                       <button
@@ -452,6 +461,7 @@ const StepTwo = ({ token }) => {
                         Simpan Draft
                       </button>
                     </div>
+
                     <div className={`${styles.normalBtn} row`}>
                       <div className="col-xs-6">
                         <button
@@ -468,7 +478,7 @@ const StepTwo = ({ token }) => {
                           onClick={saveDraft}
                           type="button"
                         >
-                          Simpan Draft
+                          Tambah Soal
                         </button>
                       </div>
                     </div>

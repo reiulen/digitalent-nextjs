@@ -80,25 +80,60 @@ const Sidebar = ({ session }) => {
       : []
   );
 
-  const pathRoute = router.route;
-  const splitRouteToMakingActive = pathRoute.split("/");
-
   useEffect(() => {
-    if (menu) {
-      menu.map((row, index) => {
-        if (splitRouteToMakingActive[1] == row.name.toLowerCase()) {
-          menu[index].selected = true;
 
-          if (
-            session &&
-            session?.user?.user?.data?.user?.roles[0] !== "mitra"
-          ) {
-            if (splitRouteToMakingActive[1] !== "dashboard") {
-              const idSubmenuActive = localStorage.getItem("submenuActive");
-              menu[index].child[idSubmenuActive].selected = true;
-            }
+    let pathRoute = router.route;
+    const replacedPath = pathRoute.substring(0, 0) + "" + pathRoute.substring(0 + 1);
+    const arrPath = replacedPath.split('/');
+
+    console.log(arrPath);
+    
+    if (menu) {
+
+      menu.map((row, index) => {
+
+        const named = row.href;
+        const replacedIndexOne = named.substring(0, 0) + "" + named.substring(0 + 1);
+        const arrNamed = replacedIndexOne.split('/');
+        
+        if(arrNamed[0] === arrPath[0]){
+
+          row.selected = true;
+
+          if(session?.user?.user?.data?.user?.roles[0] !== "mitra") {
+              if(arrPath.length > 1){
+                row.child.map((rows, indexx) => {
+
+                  const named = rows.href;
+                  const replacedIndexOne = named.substring(0, 0) + "" + named.substring(0 + 1);
+                  const arrNamed = replacedIndexOne.split('/');
+
+                    if(arrNamed[1] === arrPath[1]){
+
+                      rows.selected = true;
+                      
+                      if(rows.child.length > 0 && arrPath.length > 2){
+
+                        
+                        rows.child.map((rowss, indexx) => {
+
+                          const named = rowss.href;
+                          const replacedIndexOne = named.substring(0, 0) + "" + named.substring(0 + 1);
+                          const arrNamed = replacedIndexOne.split('/');
+
+                          if(arrNamed[2] === arrPath[2]){
+                            rowss.selected = true;
+                          }
+                        })
+                      }
+
+                    }
+                });
+              }
+                
           }
         }
+      
       });
     }
     if (menu) {
@@ -112,12 +147,16 @@ const Sidebar = ({ session }) => {
   }, []);
 
   useEffect(() => {
+
     if (!JSON.parse(localStorage.getItem("sidebar")) && session) {
+
       const config = {
         headers: {
           Authorization: "Bearer " + session.user.user.data.token,
         },
       };
+
+
       if (!session?.user?.user?.data?.user?.mitra_profile) {
         axios
           .get(
@@ -146,16 +185,16 @@ const Sidebar = ({ session }) => {
           });
       }
     }
-
     if (!menu) {
       setMenu(JSON.parse(localStorage.getItem("sidebar")));
     }
+
   }, [session]);
 
   const handleOpenMenu = (e, i, condition) => {
     const pathRoute = router.route;
-    const splitRouteToMakingActive = pathRoute.split("/");
 
+    const splitRouteToMakingActive = pathRoute.split("/");
     if (condition != null) {
       if (splitRouteToMakingActive[1]) {
         menu.map((data, index) => {
@@ -172,75 +211,30 @@ const Sidebar = ({ session }) => {
     setMenu(_temp);
   };
 
-  const handleOpenMenuSubMenu = (e, iMenu, iSubMenu) => {
-    let _temp = [...menu];
-    _temp.map((items, index) => {
-      if (index === iMenu) {
-        _temp[iMenu] = { ...items, selected: true };
-        _temp[iMenu].child[iSubMenu] = {
-          ..._temp[iMenu].child[iSubMenu],
-          selected: _temp[iMenu].child[iSubMenu].selected ? false : true,
-        };
+  const handleActiveSubmenu = (e, iMenu, iSubMenu, status, condition, iSubSubMenu) => {
+
+    let _temp = [
+      ...JSON.parse(localStorage.getItem("sidebar"))
+    ];
+
+    if(status === "parent"){
+
+      _temp[iMenu].selected = true;
+      if(iSubSubMenu === null){
+        _temp[iMenu].child[iSubMenu].selected = !condition;
+      }else{
+        _temp[iMenu].child[iSubMenu].selected =  true;
+        _temp[iMenu].child[iSubMenu].child[iSubSubMenu].selected = !condition;
       }
-    });
-
-    setMenu(_temp);
-    e.stopPropagation();
-  };
-
-  const handleActiveSubmenu = (e, iMenu, iSubMenu) => {
-    let _temp = [...menu];
-    _temp.map((items, index) => {
-      if (index === iMenu) {
-        _temp[iMenu] = { ...items, selected: true };
-        items.child.map((itemsp, indxx) => {
-          if (indxx === iSubMenu) {
-            localStorage.setItem("submenuActive", indxx);
-            _temp[iMenu].child[indxx] = {
-              ...itemsp,
-              selected: itemsp.selected ? false : true,
-            };
-          } else {
-            _temp[iMenu].child[indxx] = { ...itemsp, selected: false };
-          }
-        });
-      } else {
-      }
-    });
-    setMenu(_temp);
-    e.stopPropagation();
-  };
-
-  const handleActiveSubSubmenu = (e, iMenu, iSubMenu, iSubSubMenu) => {
-    let _temp = [...menu];
-    _temp.map((items, index) => {
-      if (index === iMenu) {
-        _temp[iMenu] = { ...items, selected: true };
-        items.child.map((itemsp, indxx) => {
-          if (indxx === iSubMenu) {
-            _temp[iMenu].child[indxx] = {
-              ...itemsp,
-              selected: true,
-            };
-
-            itemsp.child.map((itemsz, indxz) => {
-              if (indxz === iSubSubMenu) {
-                _temp[iMenu].child[indxx].child[indxz] = {
-                  ...itemsz,
-                  selected: itemsz.selected ? false : true,
-                };
-              } else {
-                _temp[iMenu].child[indxx].child[indxz] = {
-                  ...itemsz,
-                  selected: false,
-                };
-              }
-            });
-          }
-        });
-      }
-    });
-    setMenu(_temp);
+      
+    }else{
+      _temp[iMenu].selected = true;
+      _temp[iMenu].child[iSubMenu].selected = !_temp[iMenu].child[iSubMenu].selected;
+    }
+ 
+    setMenu(
+      _temp
+    );
     e.stopPropagation();
   };
 
@@ -252,8 +246,7 @@ const Sidebar = ({ session }) => {
           : ""
       } `}
       id="kt_aside"
-      style={{ overflow: "scroll" }}
-    >
+      style={{ overflow: "scroll" }}>
       <div className="brand flex-column-auto" id="kt_brand">
         <a className="brand-logo">
           <Image
@@ -267,14 +260,12 @@ const Sidebar = ({ session }) => {
       <div
         className="aside-menu-wrapper flex-column-fluid"
         id="kt_aside_menu_wrapper"
-        style={{ zIndex: "999999999" }}
-      >
+        style={{ zIndex: "999999999" }}>
         <div
           id="kt_aside_menu"
           className="aside-menu my-4"
           data-menu-vertical="1"
-          data-menu-scroll="1"
-        >
+          data-menu-scroll="1">
           {!session ? (
             ""
           ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
@@ -286,8 +277,7 @@ const Sidebar = ({ session }) => {
                 }`}
                 onClick={() => activeMenuPartnershipMitra()}
                 aria-haspopup="true"
-                data-menu-toggle="hover"
-              >
+                data-menu-toggle="hover">
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
                   <ul className="menu-subnav">
@@ -350,8 +340,7 @@ const Sidebar = ({ session }) => {
                       id="main-menu"
                       onClick={(e) => {
                         handleOpenMenu(e, index, items.selected);
-                      }}
-                    >
+                      }}>
                       <a className="menu-link menu-toggle">
                         <span className="svg-icon menu-icon d-flex align-items-center">
                           <Image
@@ -366,28 +355,28 @@ const Sidebar = ({ session }) => {
                         <i className="menu-arrow"></i>
                       </a>
 
-                      {items.child.map((child, i) => {
+                      {items?.child.map((item, i) => {
                         return (
                           <div className="menu-submenu" key={i}>
                             <i className="menu-arrow"></i>
                             <ul className="menu-subnav">
-                              {child.child.length === 0 ? (
+                              {item.child?.length < 1 ? (
                                 <li
                                   className={`menu-item ${
-                                    child.selected ? "menu-item-active" : ""
+                                    item.selected ? "menu-item-active" : ""
                                   }`}
                                   aria-haspopup="true"
                                   onClick={(e) =>
-                                    handleActiveSubmenu(e, index, i)
+                                    handleActiveSubmenu(e, index, i, "single",  null , null)
                                   }
                                 >
-                                  <Link href={child.href} passHref>
+                                  <Link href={item.href} passHref>
                                     <a
                                       className="menu-link"
                                       style={{ paddingLeft: "5.5rem" }}
                                     >
                                       <span className="menu-text">
-                                        {child.name}
+                                        {item.name}
                                       </span>
                                     </a>
                                   </Link>
@@ -395,40 +384,40 @@ const Sidebar = ({ session }) => {
                               ) : (
                                 <li
                                   className={`menu-item menu-item-submenu ${
-                                    child.selected ? "menu-item-open" : ""
+                                    item.selected ? "menu-item-open" : ""
                                   }`}
                                   aria-haspopup="true"
                                   data-menu-toggle="hover"
                                   id="sub-menu"
                                   onClick={(e) =>
-                                    handleOpenMenuSubMenu(e, index, i)
-                                  }
-                                >
+                                    handleActiveSubmenu(e, index, i, "parent", item.selected , null)
+                                  }>
                                   <a
                                     className="menu-link menu-toggle"
-                                    style={{ paddingLeft: "5.5rem" }}
-                                  >
+                                    style={{ paddingLeft: "5.5rem" }}>
                                     <span className="menu-text">
-                                      {child.name}
+                                      {item.name}
                                     </span>
                                     <i className="menu-arrow"></i>
                                   </a>
                                   <div className="menu-submenu">
                                     <i className="menu-arrow"></i>
                                     <ul className="menu-subnav">
-                                      {child.child.map((child2, idx) => {
+                                      {item?.child?.map((child2, idx) => {
+
                                         return (
                                           <li
-                                            className={`menu-item ${
-                                              child2.selected &&
-                                              "menu-item-active"
+                                            className={`menu-item menu-item-submenu ${
+                                              child2.selected ? "menu-item-open" : ""
                                             }`}
                                             aria-haspopup="true"
                                             onClick={(e) =>
-                                              handleActiveSubSubmenu(
+                                              handleActiveSubmenu(
                                                 e,
                                                 index,
                                                 i,
+                                                "parent",
+                                                child2.selected,
                                                 idx
                                               )
                                             }

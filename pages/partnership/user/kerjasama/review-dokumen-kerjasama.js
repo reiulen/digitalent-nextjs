@@ -24,7 +24,7 @@ export default function RevisiListPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  () =>
+  (store) =>
     async ({ req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthMitraSession(session);
