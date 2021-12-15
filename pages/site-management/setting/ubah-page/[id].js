@@ -3,6 +3,8 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getDetailPages } from "../../../../redux/actions/site-management/settings/page.actions";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+
 const UbahPage = dynamic(
   () =>
     import(
@@ -31,10 +33,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

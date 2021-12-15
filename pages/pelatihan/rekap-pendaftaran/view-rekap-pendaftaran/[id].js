@@ -10,48 +10,53 @@ import { getSession } from "next-auth/client";
 import { getReviewStep1Revisi } from "../../../../redux/actions/pelatihan/review.actions";
 
 const ViewTraining = dynamic(
-  () =>
-    import(
-      "../../../../components/content/pelatihan/summary/view/view-training-step1"
-    ),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
+	() =>
+		import(
+			"../../../../components/content/pelatihan/summary/view/view-training-step1"
+		),
+	{
+		loading: function loadingNow() {
+			return <LoadingSkeleton />;
+		},
+		ssr: false,
+	}
 );
 
 export default function ViewTrainingPage() {
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        <ViewTraining />
-      </div>
-    </>
-  );
+	return (
+		<>
+			<div className="d-flex flex-column flex-root">
+				<ViewTraining />
+			</div>
+		</>
+	);
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ query, req, params }) => {
-      const session = await getSession({ req });
-      const middleware = middlewareAuthAdminSession(session);
-      if (!middleware.status) {
-        return {
-          redirect: {
-            destination: middleware.redirect,
-            permanent: false,
-          },
-        };
-      }
+	(store) =>
+		async ({ query, req, params }) => {
+			const session = await getSession({ req });
+			const middleware = middlewareAuthAdminSession(session);
+			if (!middleware.status) {
+				return {
+					redirect: {
+						destination: middleware.redirect,
+						permanent: false,
+					},
+				};
+			}
+			const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(
-        getReviewStep1Revisi(session.user.user.data.token, params.id)
-      );
+			await store.dispatch(
+				getReviewStep1Revisi(
+					session.user.user.data.token,
+					params.id,
+					token_permission
+				)
+			);
 
-      return {
-        props: { session, title: "View Data Pelatihan - Rekap Pendaftaran" },
-      };
-    }
+			return {
+				props: { session, title: "View Data Pelatihan - Rekap Pendaftaran" },
+			};
+		}
 );

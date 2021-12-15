@@ -13,7 +13,10 @@ export default function DetailTriviaPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DetailTrivia token={session.token} />
+        <DetailTrivia
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -65,7 +68,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getPermissionSubvit(session.user.user.data.token, permission)
       );
       return {
-        props: { session, title: "Detail Trivia - Subvit" },
+        props: { session, title: "Detail Trivia - Subvit", permission },
       };
     }
 );

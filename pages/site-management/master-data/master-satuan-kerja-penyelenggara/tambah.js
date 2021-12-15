@@ -5,6 +5,7 @@ import { getAllKategori } from "/redux/actions/publikasi/kategori.actions";
 import { wrapper } from "/redux/store";
 
 import LoadingPage from "/components/LoadingPage";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const Tambah = dynamic(
   () =>
@@ -37,10 +38,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

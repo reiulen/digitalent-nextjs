@@ -12,7 +12,10 @@ export default function TipeSoal(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListTipeSoal token={session.token} />
+        <ListTipeSoal
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -57,7 +60,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Tipe Soal Substansi - Subvit" },
+        props: { session, title: "Tipe Soal Substansi - Subvit", permission },
       };
     }
 );

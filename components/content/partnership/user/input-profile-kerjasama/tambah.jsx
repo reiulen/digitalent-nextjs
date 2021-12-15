@@ -10,6 +10,7 @@ import Image from "next/image";
 import AlertBar from "../../components/BarAlert";
 import { Modal } from "react-bootstrap";
 import ReactCrop from "react-image-crop";
+import Cookies from 'js-cookie'
 
 const Tambah = ({ token }) => {
   const router = useRouter();
@@ -134,6 +135,7 @@ const Tambah = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -262,6 +264,7 @@ const Tambah = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );
@@ -282,6 +285,7 @@ const Tambah = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );

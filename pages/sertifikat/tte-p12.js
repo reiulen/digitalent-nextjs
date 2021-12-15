@@ -44,12 +44,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(getTTEP12(session.user.user.data.token));
-
-      const data = await store.dispatch(
-        getAllPermission(session.user.user.data.token)
+      await store.dispatch(
+        getTTEP12(session.user.user.data.token, token_permission)
       );
+
+      await store.dispatch(getAllPermission(session.user.user.data.token));
       return {
         props: { session, title: "List Akademi - Sertifikat" },
       };

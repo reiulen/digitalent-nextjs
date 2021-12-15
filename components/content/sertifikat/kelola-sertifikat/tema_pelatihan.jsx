@@ -31,6 +31,7 @@ import Cookies from "js-cookie";
 export default function NamaPelatihan({ token }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const token_permission = Cookies.get("token_permission");
 
 	const { loading, error, certificate, academyOptions, themeOptions } =
 		useSelector((state) => state.allCertificates);
@@ -102,7 +103,7 @@ export default function NamaPelatihan({ token }) {
 	};
 
 	useEffect(() => {
-		dispatch(getAllSertifikat(token));
+		dispatch(getAllSertifikat(token, token_permission));
 	}, [
 		dispatch,
 		token,
@@ -111,6 +112,7 @@ export default function NamaPelatihan({ token }) {
 		allCertificates.theme,
 		allCertificates.academy,
 		allCertificates.limit,
+		token_permission,
 	]);
 
 	return (

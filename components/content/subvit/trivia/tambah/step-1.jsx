@@ -23,7 +23,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const TambahTriviaStepOne = ({ token }) => {
+const TambahTriviaStepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -51,8 +51,8 @@ const TambahTriviaStepOne = ({ token }) => {
   const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (success) {
       const id = trivia.id;
       if (typeSave === "lanjut") {
@@ -78,6 +78,7 @@ const TambahTriviaStepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
@@ -127,7 +128,7 @@ const TambahTriviaStepOne = ({ token }) => {
         training_id,
       };
 
-      dispatch(newTriviaQuestionBanks(data, token));
+      dispatch(newTriviaQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -154,7 +155,7 @@ const TambahTriviaStepOne = ({ token }) => {
         theme_id,
         training_id,
       };
-      dispatch(newTriviaQuestionBanks(data, token));
+      dispatch(newTriviaQuestionBanks(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -217,10 +218,10 @@ const TambahTriviaStepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  placeholder={"Silahkan Pilih Akademi"}
                   className={styles.selectForm}
                   options={dataAkademi.data}
-                  value={academyLabel}
+                  value={{ label: academyLabel }}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -242,9 +243,9 @@ const TambahTriviaStepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   isDisabled={!academy_id}
-                  placeholder={themeLabel || "Silahkan Pilih Tema"}
+                  placeholder={"Silahkan Pilih Tema"}
                   options={optionsTema}
-                  value={themeLabel}
+                  value={{ label: themeLabel }}
                   className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
@@ -260,9 +261,9 @@ const TambahTriviaStepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   isDisabled={!theme_id}
-                  placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
+                  placeholder={"Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
-                  value={trainingLabel}
+                  value={{ label: trainingLabel }}
                   className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>

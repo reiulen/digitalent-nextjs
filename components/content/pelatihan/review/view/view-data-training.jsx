@@ -19,10 +19,12 @@ import {
   TOLAK_REVIEW_RESET,
 } from "../../../../../redux/types/pelatihan/review.type";
 import { route } from "next/dist/server/router";
+import Cookies from "js-cookie";
 
 const ViewReviewTraining = ({ token }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const token_permission = Cookies.get("token_permission");
 
   const [note, setNote] = useState("");
   const [noteSend, setNoteSend] = useState("");
@@ -99,7 +101,7 @@ const ViewReviewTraining = ({ token }) => {
     kuotaTargetPeserta: review.kuota_peserta,
     komitmenPeserta: review.komitmen === "1" ? "Iya" : "Tidak",
     lpjPeserta: review.lpj_peserta === "1" ? "Iya" : "Tidak",
-    infoSertifikasi: review.sertifikasi === "1" ? "Iya" : "Tidak",
+    infoSertifikasi: review.sertifikasi === "0" ? "Tidak" : review.sertifikasi,
     metodePelatihan: review.metode_pelatihan,
     statusKuota: review.status_kuota,
     alurPendaftaran: review.alur_pendaftaran,
@@ -153,7 +155,7 @@ const ViewReviewTraining = ({ token }) => {
       pelatian_id: parseInt(id),
       revisi: noteSend,
     };
-    dispatch(revisiReviewPelatihan(data, token));
+    dispatch(revisiReviewPelatihan(data, token, token_permission));
   };
 
   const handleTolak = () => {
@@ -161,7 +163,7 @@ const ViewReviewTraining = ({ token }) => {
       pelatian_id: parseInt(id),
       status: "ditolak",
     };
-    dispatch(tolakReviewPelatihan(data, token));
+    dispatch(tolakReviewPelatihan(data, token, token_permission));
   };
 
   const handleSetuju = () => {
@@ -169,7 +171,7 @@ const ViewReviewTraining = ({ token }) => {
       pelatian_id: parseInt(id),
       status: "disetujui",
     };
-    dispatch(tolakReviewPelatihan(data, token));
+    dispatch(tolakReviewPelatihan(data, token, token_permission));
   };
 
   const handleResetError = () => {
@@ -537,7 +539,7 @@ const ViewReviewTraining = ({ token }) => {
                     {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
                   </p>
                 ) : (
-                  <p className="fz-16 text-primary">
+                  <p className="fz-16">
                     {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
                   </p>
                 )}

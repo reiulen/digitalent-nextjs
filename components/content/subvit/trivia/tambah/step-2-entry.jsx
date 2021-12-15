@@ -18,7 +18,7 @@ import CheckboxComponent from "./step-2/checkbox-component";
 import BlankComponent from "./step-2/blank-component";
 import styles from "../edit/step.module.css";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -215,19 +215,10 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "checkbox":
-        if (answer_key === "") {
-          valid = false;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Isi kunci jawaban dengan benar !",
-          });
-        }
-
         answer_checkbox.forEach((row, j) => {
           if (row.option == "" && row.image == "") {
             valid = false;
@@ -246,11 +237,11 @@ const StepTwo = ({ token }) => {
             question,
             answer: answers_check,
             question_image,
-            answer_key,
+
             duration,
             type: methodAdd,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "fill_in_the_blank":
@@ -266,7 +257,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
             answer_key: null,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       default:
@@ -325,19 +316,10 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "checkbox":
-        if (answer_key === "") {
-          valid = false;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Isi kunci jawaban dengan benar !",
-          });
-        }
-
         answer_checkbox.forEach((row, j) => {
           if (row.option == "" && row.image == "") {
             valid = false;
@@ -360,7 +342,7 @@ const StepTwo = ({ token }) => {
             duration,
             type: methodAdd,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "fill_in_the_blank":
@@ -376,7 +358,7 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
             answer_key: null,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       default:
@@ -494,6 +476,7 @@ const StepTwo = ({ token }) => {
                       className="custom-file-input"
                       name="question_image"
                       onChange={(e) => handleSoalImage(e)}
+                      accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
                       {question_image_name}
@@ -576,7 +559,7 @@ const StepTwo = ({ token }) => {
                             onClick={saveDraft}
                             type="button"
                           >
-                            Simpan Draft
+                            Tambah Soal
                           </button>
                         </div>
                       </div>

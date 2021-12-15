@@ -2,6 +2,8 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+
 const SiteManagementDashboard = dynamic(
   () =>
     import(
@@ -24,14 +26,15 @@ export default function DashboardSiteManagement(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   () => async ({ req }) => {
     const session = await getSession({ req });
-    if (!session) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
+    const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
+            permanent: false,
+          },
+        };
+      }
 
     return {
       props: { session, title: "Dashboard - Site Management" },
