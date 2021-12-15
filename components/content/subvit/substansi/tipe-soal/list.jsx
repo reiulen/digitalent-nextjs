@@ -212,8 +212,6 @@ const ListTipeSoal = ({ token, tokenPermission }) => {
               Tipe Soal Test Substansi
             </h1>
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.substansi.manage"
             ) ? (
@@ -234,20 +232,6 @@ const ListTipeSoal = ({ token, tokenPermission }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-7 col-xl-7 col-sm-9">
-                  {/* <div className="input-icon">
-                    <input
-                      style={{ background: "#F3F6F9", border: "none" }}
-                      type="text"
-                      className="form-control"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      autoComplete="off"
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
-                  </div> */}
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -272,15 +256,6 @@ const ListTipeSoal = ({ token, tokenPermission }) => {
                   </div>
                 </div>
 
-                {/* <div className="col-lg-2 col-xl-2 col-sm-3">
-                  <button
-                    className="btn btn-light-primary font-weight-bold"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div> */}
-
                 <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto"></div>
               </div>
             </div>
@@ -299,8 +274,6 @@ const ListTipeSoal = ({ token, tokenPermission }) => {
                         <th>Bobot Nilai</th>
                         <th>Status</th>
                         {dataPermission &&
-                        dataPermission.roles.includes("Super Admin") &&
-                        dataPermission &&
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.substansi.manage"
                         ) ? (
@@ -349,8 +322,6 @@ const ListTipeSoal = ({ token, tokenPermission }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.substansi.manage"
                                 ) ? (

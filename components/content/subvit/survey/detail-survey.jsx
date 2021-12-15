@@ -121,6 +121,14 @@ const DetailSurvey = ({ token, tokenPermission }) => {
     }
   };
 
+  const truncateString = (str, num) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -335,7 +343,10 @@ const DetailSurvey = ({ token, tokenPermission }) => {
                                 CC{question.id}
                               </td>
                               <td className="align-middle">
-                                {question.question}
+                                {truncateString(
+                                  question && question.question,
+                                  80
+                                )}
                               </td>
                               <td className="align-middle">
                                 {question.status === 1 ? (
@@ -375,6 +386,11 @@ const DetailSurvey = ({ token, tokenPermission }) => {
                                       data-toggle="tooltip"
                                       data-placement="bottom"
                                       title="Hapus"
+                                      disabled={i === 0}
+                                      style={{
+                                        cursor:
+                                          i === 0 ? "not-allowed" : "pointer",
+                                      }}
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>

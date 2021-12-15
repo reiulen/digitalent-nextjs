@@ -218,10 +218,10 @@ const StepOne = ({ token, tokenPermission }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={survey ? academyLabel : "Silahkan Pilih Akademi"}
+                  placeholder={"Silahkan Pilih Akademi"}
                   className={styles.selectForm}
                   options={dataAkademi.data}
-                  value={academyLabel}
+                  value={{ label: academyLabel }}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -242,9 +242,9 @@ const StepOne = ({ token, tokenPermission }) => {
                   Tema
                 </Form.Label>
                 <Select
-                  placeholder={survey ? themeLabel : "Silahkan Pilih Tema"}
+                  placeholder={"Silahkan Pilih Tema"}
                   options={optionsTema}
-                  value={themeLabel}
+                  value={{ label: themeLabel }}
                   className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
@@ -259,11 +259,9 @@ const StepOne = ({ token, tokenPermission }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
-                  placeholder={
-                    survey ? trainingLabel : "Silahkan Pilih Pelatihan"
-                  }
+                  placeholder={"Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
-                  value={trainingLabel}
+                  value={{ label: trainingLabel }}
                   className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>

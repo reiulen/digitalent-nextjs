@@ -435,6 +435,15 @@ const StepTwo = ({ token, tokenPermission }) => {
               </div>
               <div className="row mt-7">
                 <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
+                  <button
+                    className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push("/subvit/substansi/clone");
+                    }}
+                  >
+                    Kembali
+                  </button>
                   <div className="float-right ">
                     <div className={styles.foldResponsive}>
                       <button
@@ -452,6 +461,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                         Simpan Draft
                       </button>
                     </div>
+
                     <div className={`${styles.normalBtn} row`}>
                       <div className="col-xs-6">
                         <button
@@ -468,7 +478,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                           onClick={saveDraft}
                           type="button"
                         >
-                          Simpan Draft
+                          Tambah Soal
                         </button>
                       </div>
                     </div>

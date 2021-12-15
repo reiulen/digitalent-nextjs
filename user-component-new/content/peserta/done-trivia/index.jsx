@@ -15,7 +15,7 @@ const Done = () => {
   const router = useRouter();
 
   const handlePageBack = () => {
-    router.push("/peserta/trivia");
+    router.push("/peserta");
   };
 
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(

@@ -8,6 +8,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import styles from "./listSubstansi.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
+import Image from "next/dist/client/image";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,6 +17,8 @@ import {
   getAllSubtanceQuestionBanks,
 } from "../../../../redux/actions/subvit/subtance.actions";
 import { DELETE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/subtance.type";
+import { Card, Col, Modal, Row } from "react-bootstrap";
+import { getAllSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
 const ListSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
@@ -40,6 +43,8 @@ const ListSubstansi = ({ token, tokenPermission }) => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(5);
+  const [viewSoal, setViewSoal] = useState(false);
+  const [num, setNum] = useState(0);
 
   useEffect(() => {
     if (isDeleted) {
@@ -170,6 +175,27 @@ const ListSubstansi = ({ token, tokenPermission }) => {
     }
   };
 
+  const handleModal = (id) => {
+    dispatch(
+      getAllSubtanceQuestionDetail(
+        id,
+        1,
+        null,
+        100,
+        "",
+        "",
+        "",
+        token,
+        tokenPermission
+      )
+    );
+    setViewSoal(true);
+  };
+
+  const { subtance_question_detail } = useSelector(
+    (state) => state.allSubtanceQuestionDetail
+  );
+
   return (
     <PageWrapper>
       {error ? (
@@ -267,7 +293,10 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                 "subvit.view" && "subvit.substansi.view"
               ) ? (
               <Link href="/subvit/substansi/tipe-soal">
-                <a className="text-white btn btn-primary-rounded-full  font-weight-bolder px-5 py-6 mt-2 mr-1">
+                <a
+                  className="text-white btn btn-primary-rounded-full  font-weight-bolder  mt-4 py-3 px-4"
+                  style={{ height: "40px" }}
+                >
                   <i className="ri-book-read-fill"></i>
                   Tipe Soal
                 </a>
@@ -433,6 +462,20 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                                         <i className="ri-eye-fill p-0 text-white"></i>
                                       </a>
                                     </Link>
+                                    {subtance?.bank_soal !== 0 && (
+                                      <a
+                                        onClick={() =>
+                                          handleModal(subtance?.id)
+                                        }
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Review Soal"
+                                      >
+                                        <i className="ri-file-text-fill p-0 text-white"></i>
+                                      </a>
+                                    )}
+
                                     <Link
                                       href={`/subvit/substansi/report?id=${subtance.id}`}
                                     >
@@ -571,6 +614,138 @@ const ListSubstansi = ({ token, tokenPermission }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={viewSoal}
+        onHide={() => setViewSoal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Review Soal</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setViewSoal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body style={{ overflowY: "scroll", height: "500px" }}>
+          <Row>
+            <Col ms={12}>
+              {subtance_question_detail?.list_questions && (
+                <>
+                  {subtance_question_detail?.list_questions?.map(
+                    (item, index) => {
+                      return (
+                        <>
+                          <Card
+                            style={{
+                              padding: "15px",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <h4>Soal {index + 1}</h4>
+                            <Card
+                              style={{
+                                marginTop: "10px",
+
+                                padding: "15px",
+                              }}
+                            >
+                              <div className="d-flex flex-row">
+                                <div className="mr-3">
+                                  {item.question_image ? (
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.question_image
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                <div>
+                                  {" "}
+                                  <h5>{item.question}</h5>
+                                </div>
+                              </div>
+
+                              {JSON.parse(item?.answer).map((anw) => {
+                                console.log(anw);
+                                return (
+                                  <>
+                                    <div className="d-flex flex-row ">
+                                      <div className="mt-6">
+                                        {anw.image !== "" ? (
+                                          <Image
+                                            src={
+                                              process.env
+                                                .END_POINT_API_IMAGE_SUBVIT +
+                                              anw.image
+                                            }
+                                            alt=""
+                                            width={40}
+                                            height={40}
+                                          />
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div style={{ width: "100%" }}>
+                                        <Card
+                                          onClick={() => setOpen(true)}
+                                          style={{
+                                            padding: "5px",
+                                            marginTop: "15px",
+                                            margin: "10px",
+                                          }}
+                                          className={
+                                            anw.key === item.answer_key
+                                              ? styles.answer
+                                              : ""
+                                          }
+                                        >
+                                          <p
+                                            style={{
+                                              padding: "5px",
+                                              marginTop: "5px",
+                                            }}
+                                          >
+                                            {anw.key} . {anw.option}
+                                          </p>
+                                        </Card>
+                                      </div>
+                                    </div>
+                                  </>
+                                );
+                              })}
+                            </Card>
+                          </Card>
+                        </>
+                      );
+                    }
+                  )}
+                </>
+              )}
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+            type="button"
+            onClick={() => setViewSoal(false)}
+          >
+            Kembali
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };

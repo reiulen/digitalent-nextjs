@@ -624,7 +624,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                     onClick={saveDraft}
                     type="button"
                   >
-                    Simpan Draft
+                    Tambah Soal
                   </button>
                 </div>
               </div>

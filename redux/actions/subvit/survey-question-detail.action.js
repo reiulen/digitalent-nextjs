@@ -40,6 +40,7 @@ export const getAllSurveyQuestionDetail =
         headers: {
           Authorization: "Bearer " + token,
           Permission: tokenPermission || "",
+          apikey: "I8aylVChtrUB15Sp5v8TsjDOvb8kGcML",
         },
       };
       let link =
@@ -50,6 +51,7 @@ export const getAllSurveyQuestionDetail =
       if (keyword) link = link.concat(`&keyword=${keyword}`);
 
       const { data } = await axios.get(link, config);
+      console.log(data);
       dispatch({
         type: SURVEY_QUESTION_DETAIL_SUCCESS,
         payload: data,

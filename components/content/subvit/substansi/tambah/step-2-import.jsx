@@ -26,6 +26,7 @@ import StepInput from "/components/StepInput";
 import LoadingTable from "../../../../LoadingTable";
 import axios from "axios";
 import styles from "../../trivia/edit/step.module.css";
+import Cookies from "js-cookie";
 
 const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();

@@ -37,6 +37,8 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
     (state) => state.allSubtanceQuestionType
   );
 
+  console.log(subtance_question_type);
+
   let { page = 1, id } = router.query;
   page = Number(page);
 
@@ -254,6 +256,14 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
   };
   const handleKategori = (e) => {
     setKategori(e.target.value);
+  };
+
+  const truncateString = (str, num) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
   };
 
   return (
@@ -565,7 +575,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
+                <table className="table table-separate table-head-custom table-checkable ">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center">No</th>
@@ -602,7 +612,10 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                               </td>
                               <td className="align-middle">CC{question.id}</td>
                               <td className="align-middle">
-                                {question && question.question}
+                                {truncateString(
+                                  question && question.question,
+                                  80
+                                )}
                               </td>
                               <td className="align-middle">
                                 {question.type && question.type.name}
@@ -646,6 +659,11 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                                       onClick={() => handleDelete(question.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
+                                      disabled={i === 0}
+                                      style={{
+                                        cursor:
+                                          i === 0 ? "not-allowed" : "pointer",
+                                      }}
                                       title="Hapus"
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
