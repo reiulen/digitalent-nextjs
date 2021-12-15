@@ -9,7 +9,7 @@ const Tambah = dynamic(
     import(
       "../../../components/content/partnership/user/input-profile-kerjasama/tambah"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function TambahPage(props) {

@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 
-import Preview from "../../../../components/content/publikasi/artikel-peserta/preview";
+import dynamic from "next/dynamic";
+// import Preview from "../../../../components/content/publikasi/artikel-peserta/preview";
 import Footer from "../../../../components/templates/footer.component";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
@@ -10,14 +11,18 @@ import { getSession } from "next-auth/client";
 import { getTagBerandaArtikel } from "../../../../redux/actions/beranda/artikel.actions"
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
-const Layout = dynamic(
-  () => import("../../../../user-component-new/components/template/Layout.component"),
+const Preview = dynamic(
+  () => import("../../../../components/content/publikasi/artikel-peserta/preview"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
     },
     ssr: false,
   }
+);
+
+const Layout = dynamic(
+  () => import("../../../../user-component-new/components/template/Layout.component")
 )
 
 export default function PreviewArtikel(props) {
