@@ -45,7 +45,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getAllSubtanceQuestionBanks(
           query.page,
           query.keyword,
-          (query.limit = 500),
+          (query.limit = 100),
           session.user.user.data.token,
           permission
         )

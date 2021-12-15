@@ -3,19 +3,22 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  newSubtanceQuestionBanks,
-  clearErrors,
-} from "../../../../../redux/actions/subvit/subtance.actions";
-import { NEW_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/subtance.type";
-
-import PageWrapper from "/components/wrapper/page.wrapper";
-import StepInput from "/components/StepInput";
-import LoadingPage from "../../../../LoadingPage";
-import styles from "../../trivia/edit/step.module.css";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
+import styleBtn from "../../trivia/edit/step.module.css";
+import styles from "../../../../../styles/stepInput.module.css";
 import Select from "react-select";
+
+import {
+  newCloneSubtanceQuestionBanks,
+  clearErrors,
+  updatewSubtanceQuestionBanks,
+} from "../../../../../redux/actions/subvit/subtance.actions";
+import { NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/subtance.type";
+
+import PageWrapper from "/components/wrapper/page.wrapper";
+import StepInput from "/components/StepInputClone";
+import LoadingPage from "../../../../LoadingPage";
 
 import {
   dropdownPelatihanbyTema,
@@ -23,23 +26,39 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const StepOne = ({ token }) => {
+const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { loading, error, success, subtance } = useSelector(
-    (state) => state.newSubtanceQuestionBanks
+    (state) => state.newCloneSubtanceQuestionBanks
   );
 
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
 
+  const { isUpdated } = useSelector((state) => state.updateSubtanceQuestion);
+
+  const { list_substance } = useSelector(
+    (state) => state?.allSubtanceQuestionBanks?.subtance
+  );
+
+  let optionsClone = [];
+
+  let uniqueArray = list_substance.filter((item, pos) => {
+    return list_substance.indexOf(item) === pos;
+  });
+
+  uniqueArray.map((item) => {
+    optionsClone.push({ label: item.academy.name, value: item.academy.id });
+  });
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
 
-  let save = JSON.parse(localStorage.getItem("step1"));
+  let save = JSON.parse(localStorage.getItem("clone3"));
 
   const [academy_id, setAcademyId] = useState(save?.academy_id);
   const [theme_id, setThemeId] = useState(save?.theme_id);
@@ -53,21 +72,22 @@ const StepOne = ({ token }) => {
   const [trainingLabel, setTrainingLabel] = useState(
     save ? save.training : "Silahkan Pilih Pelatihan"
   );
-
   const [category, setCategory] = useState(
     save ? save.category : "Silahkan Pilih Kategori"
   );
-  const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
-    if (success) {
-      const id = subtance.id;
+    // if (error) {
+    //     dispatch(clearErrors())
+    // }
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
+    if (isUpdated) {
+      const id = router.query.id;
       if (typeSave === "lanjut") {
         router.push({
-          pathname: `/subvit/substansi/tambah-step-2-${metode}`,
-          query: { id, metode },
+          pathname: `/subvit/substansi/clone/step-4`,
+          query: { id },
         });
       } else if (typeSave === "draft") {
         router.push({
@@ -78,89 +98,17 @@ const StepOne = ({ token }) => {
     }
   }, [
     dispatch,
+    error,
     success,
     typeSave,
-    metode,
-    subtance,
     router,
+    subtance,
     academy_id,
     token,
     theme_id,
+    isUpdated,
+    tokenPermission,
   ]);
-
-  const saveDraft = () => {
-    setTypeSave("draft");
-    if (error) {
-      dispatch(clearErrors());
-    }
-    if (success) {
-      dispatch({
-        type: NEW_SUBTANCE_QUESTION_BANKS_RESET,
-      });
-    }
-    if (simpleValidator.current.allValid()) {
-      const data = {
-        academy_id: save ? save.academy_id : academy_id,
-        theme_id: save ? save.theme_id : theme_id,
-        training_id: save ? save.training_id : training_id,
-        category: save ? save.category : category,
-      };
-
-      dispatch(newSubtanceQuestionBanks(data, token));
-      localStorage.removeItem("step1");
-    } else {
-      simpleValidator.current.showMessages();
-      forceUpdate(1);
-    }
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setTypeSave("lanjut");
-
-    if (error) {
-      dispatch(clearErrors());
-    }
-    if (success) {
-      dispatch({
-        type: NEW_SUBTANCE_QUESTION_BANKS_RESET,
-      });
-    }
-    if (simpleValidator.current.allValid()) {
-      const data = {
-        academy_id: save ? save.academy_id : academy_id,
-        theme_id: save ? save.theme_id : theme_id,
-        training_id: save ? save.training_id : training_id,
-        category: save ? save.category : category,
-      };
-
-      const setData = {
-        academy: academyLabel,
-        academy_id,
-        theme: themeLabel,
-        theme_id,
-        training: trainingLabel,
-        training_id,
-        category,
-      };
-      console.log(setData);
-      localStorage.setItem("step1", JSON.stringify(setData));
-      dispatch(newSubtanceQuestionBanks(data, token));
-    } else {
-      simpleValidator.current.showMessages();
-      forceUpdate(1);
-    }
-  };
-
-  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
-
-  const { data: dataPelatihan2 } = useSelector(
-    (state) => state.drowpdownPelatihanbyTema.data
-  );
-
-  const [dataBefore, setDataBefore] = useState(
-    JSON.parse(localStorage.getItem("step1"))
-  );
 
   const handleChangePelatihan = (e) => {
     setThemeId(e.value);
@@ -182,6 +130,78 @@ const StepOne = ({ token }) => {
     setTrainingId(parseInt(e.value));
     setTrainingLabel(e.label);
   };
+
+  const saveDraft = () => {
+    setTypeSave("draft");
+    if (error) {
+      dispatch(clearErrors());
+    }
+    if (success) {
+      dispatch({
+        type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+      });
+    }
+    if (simpleValidator.current.allValid()) {
+      const data = {
+        academy_id,
+        theme_id,
+        training_id,
+        category,
+      };
+
+      dispatch(newCloneSubtanceQuestionBanks(data, token));
+      localStorage.removeItem("clone3");
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setTypeSave("lanjut");
+
+    if (error) {
+      dispatch(clearErrors());
+    }
+    if (success) {
+      dispatch({
+        type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+      });
+    }
+    if (simpleValidator.current.allValid()) {
+      const data = {
+        academy_id: save ? save.academy_id : academy_id,
+        theme_id: save ? save.theme_id : theme_id,
+        training_id: save ? save.training_id : training_id,
+        category: save ? save.category : category,
+        _method: "put",
+      };
+
+      const setData = {
+        academy: academyLabel,
+        academy_id,
+        theme: themeLabel,
+        theme_id,
+        training: trainingLabel,
+        training_id,
+        category,
+      };
+
+      localStorage.setItem("clone3", JSON.stringify(setData));
+
+      dispatch(updatewSubtanceQuestionBanks(router.query.id, data, token));
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+    }
+  };
+
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { data: dataPelatihan2 } = useSelector(
+    (state) => state.drowpdownPelatihanbyTema.data
+  );
 
   const handleResetError = () => {
     if (error) {
@@ -233,9 +253,9 @@ const StepOne = ({ token }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="1"></StepInput>
+          <StepInput step="3"></StepInput>
           <div className="card-header border-0">
-            <h2 className="card-title text-dark h2">Tambah Test Subtansi</h2>
+            <h2 className="card-title h2 text-dark">Pilih Pelatihan</h2>
           </div>
           <div className="card-body pt-0">
             <Form>
@@ -245,9 +265,9 @@ const StepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   placeholder={"Silahkan Pilih Akademi"}
-                  value={{ label: academyLabel }}
                   className={styles.selectForm}
                   options={dataAkademi.data}
+                  value={{ label: academyLabel }}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -292,7 +312,7 @@ const StepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   isDisabled={!theme_id}
-                  placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
+                  placeholder={"Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
                   value={{ label: trainingLabel }}
                   className={styles.selectForm}
@@ -319,7 +339,6 @@ const StepOne = ({ token }) => {
                   placeholder={"Silahkan Pilih Kategori"}
                   options={optionsKategori}
                   className={styles.selectForm}
-                  value={{ label: category }}
                   onChange={(e) => setCategory(e.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("kategori")
@@ -327,8 +346,7 @@ const StepOne = ({ token }) => {
                 />
                 {simpleValidator.current.message(
                   "kategori",
-                  category || save?.category,
-
+                  category,
                   "required",
                   {
                     className: "text-danger",
@@ -336,56 +354,57 @@ const StepOne = ({ token }) => {
                 )}
               </Form.Group>
             </Form>
-
-            <div className="form-group ">
-              <label
-                htmlFor="staticEmail"
-                className=" col-form-label font-weight-bold"
-              >
-                Metode
-              </label>
-              <div className="">
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="method"
-                    value="entry"
-                    checked={metode === "entry"}
-                    onClick={() => setMetode("entry")}
-                  />
-                  <label className="form-check-label">Entry Soal</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="method"
-                    value="import"
-                    checked={metode === "import"}
-                    onClick={() => setMetode("import")}
-                  />
-                  <label className="form-check-label">Import .csv/.xls</label>
-                </div>
-              </div>
-            </div>
-
-            <div className="form-group mt-10">
-              <div className=""></div>
-              <div className=" text-right">
+            <div className="row mt-7">
+              <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
                 <button
-                  className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                  onClick={onSubmit}
-                >
-                  Simpan & Lanjut
-                </button>
-                <button
-                  className="btn btn-primary-rounded-full"
-                  onClick={saveDraft}
+                  className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                   type="button"
+                  onClick={() => {
+                    router.push(
+                      `/subvit/substansi/clone/step-2?id=${router.query.id}`
+                    );
+                  }}
                 >
-                  Simpan Draft
+                  Kembali
                 </button>
+                <div className="float-right ">
+                  <div className={styles.foldResponsive}>
+                    <button
+                      className={`${styles.btnNextFold} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={onSubmit}
+                    >
+                      Simpan & Lanjut
+                    </button>
+                    <button
+                      className={`${styles.btnDraftFold} btn btn-primary-rounded-full`}
+                      onClick={saveDraft}
+                      type="button"
+                    >
+                      Simpan Draft
+                    </button>
+                  </div>
+                  <div className={`${styles.normalBtn} row`}>
+                    <div className="col-xs-6">
+                      <button
+                        className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                        type="button"
+                        onClick={onSubmit}
+                      >
+                        Simpan & Lanjut
+                      </button>
+                    </div>
+                    <div className="col-xs-6">
+                      <button
+                        className={` btn btn-primary-rounded-full`}
+                        onClick={saveDraft}
+                        type="button"
+                      >
+                        Simpan Draft
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

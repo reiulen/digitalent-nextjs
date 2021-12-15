@@ -291,7 +291,10 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                 "subvit.view" && "subvit.substansi.view"
               ) ? (
               <Link href="/subvit/substansi/tipe-soal">
-                <a className="text-white btn btn-primary-rounded-full  font-weight-bolder px-5 py-6 mt-2 mr-1">
+                <a
+                  className="text-white btn btn-primary-rounded-full  font-weight-bolder  mt-4 py-3 px-4"
+                  style={{ height: "40px" }}
+                >
                   <i className="ri-book-read-fill"></i>
                   Tipe Soal
                 </a>
