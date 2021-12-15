@@ -24,11 +24,13 @@ const TambahTipeSoal = ({ token, tokenPermission }) => {
   const { loading, error, success } = useSelector(
     (state) => state.newSubtanceQuestionType
   );
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
     // if (error) {
-    //     dispatch(clearErrors())
+    //   // dispatch(clearErrors())
+    //   alert();
     // }
 
     if (success) {
@@ -73,7 +75,7 @@ const TambahTipeSoal = ({ token, tokenPermission }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (error) {
-      dispatch(clearErrors());
+      // dispatch(clearErrors());
     }
     if (simpleValidator.current.allValid()) {
       const data = {
