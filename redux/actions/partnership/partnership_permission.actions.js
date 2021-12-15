@@ -11,10 +11,11 @@ import Cookies from "js-cookie";
 export const getPartnershipPermissions =
   (token, permission) => async (dispatch) => {
     try {
+      let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/permissions`;
       const config = {
         headers: {
-          Authorization: "Bearer " + token
-          // Permission: permission,
+          Authorization: "Bearer " + token,
+          Permission: permission,
         },
       };
 
@@ -24,10 +25,10 @@ export const getPartnershipPermissions =
         payload: data,
       });
     } catch (error) {
-      // dispatch({
-      //   type: FETCH_PARTNERSHIP_PERMISSION_FAIL,
-      //   payload: error.response.data.message,
-      // });
+      dispatch({
+        type: FETCH_PARTNERSHIP_PERMISSION_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 
