@@ -109,7 +109,7 @@ export const newSubtanceQuestionBanksType =
     } catch (error) {
       dispatch({
         type: NEW_SUBTANCE_QUESTION_TYPE_FAIL,
-        payload: error.response.data.message.status[0],
+        payload: error.response.data.message,
       });
     }
   };

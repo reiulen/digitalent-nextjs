@@ -677,7 +677,6 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                               </div>
 
                               {JSON.parse(item?.answer).map((anw) => {
-                                console.log(anw);
                                 return (
                                   <>
                                     <div className="d-flex flex-row ">

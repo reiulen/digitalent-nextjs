@@ -2,6 +2,7 @@ import Layout from "../../../../components/templates/layout.component";
 import StepThree from "../../../../components/content/subvit/survey/tambah/step-3";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
+import { getOneSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
 
 export default function TambahBankSoalTesSurveyStep3(props) {
   const session = props.session.user.user.data;
@@ -15,8 +16,8 @@ export default function TambahBankSoalTesSurveyStep3(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  () =>
-    async ({ req }) => {
+  (store) =>
+    async ({ req, query }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -28,6 +29,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       const permission = req?.cookies.token_permission;
+
+      await store.dispatch(
+        getOneSurveyQuestionBanks(
+          query.id,
+          session.user.user.data.token,
+          permission
+        )
+      );
 
       return {
         props: {

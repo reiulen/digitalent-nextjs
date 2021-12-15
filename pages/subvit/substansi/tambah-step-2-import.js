@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const permission = req.cookies.token_permission;
+  const permission = context?.req?.cookies?.token_permission;
 
   const middleware = middlewareAuthAdminSession(session);
   if (!middleware.status) {
