@@ -388,10 +388,30 @@ const AddMasterPelatihan = ({ token }) => {
                     <p className="mb-2 fz-16 text-dark fw-600">
                       Pendidikan Terakhir
                     </p>
-                    <p className="fz-16">
-                      Jenjang Pendidikan, Asal Sekolah/Perguruan Tinggi, IPK,
-                      Program Studi, Tahun Masuk, File Ijazah
-                    </p>
+                    <p className="fz-16 mb-2">Jenjang Pendidikan :</p>
+                    <ul className="fz-16">
+                      <li>
+                        TK, SD, SMP, SMA : Asal Sekolah, Tahun Masuk, File
+                        Ijazah
+                      </li>
+                      <li>
+                        D3, S1, S2, S3 : Asal Perguruan Tinggi, Program Studi,
+                        IPK, Tahun Masuk, File Ijazah
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="content-profile">
+                    <p className="mb-2 fz-16 text-dark fw-600">Pekerjaan</p>
+                    <p className="fz-16 mb-2">Status Pekerjaan :</p>
+                    <ul className="fz-16">
+                      <li>
+                        Bekerja : Pekerjaan, Perusahaan/Institut Tempat Bekerja,
+                        Penghasilan Tidak Bekerja
+                      </li>
+                      <li>
+                        Pelajar/Mahasiswa: Sekolah/Perguruan Tinggi, Tahun Masuk
+                      </li>
+                    </ul>
                   </div>
                   <p
                     className="text-primary fz-16"
@@ -413,7 +433,7 @@ const AddMasterPelatihan = ({ token }) => {
             </div>
           </div>
         </div>
-        <div className="card card-custom card-stretch gutter-b">
+        <div className="card card-custom gutter-b">
           <div className="card-body py-4">
             <form onSubmit={submitHandler}>
               <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>

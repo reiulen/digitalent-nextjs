@@ -15,28 +15,75 @@ const FormManual = ({
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const inputChangeHandler = (e, index) => {
+  const inputChangeHandler = (e, alfa, beta, gamma, delta) => {
     const { value, name, checked } = e.target;
     const list = [...formBuilder];
-    list[index][name] = value;
+    list[alfa][name] = value;
     if (name === "required") {
       let check = checked === true ? "1" : "0";
-      list[index]["required"] = check;
+      list[alfa]["required"] = check;
     }
     funcFormBuilder(list);
   };
 
-  const removeFieldHandler = (index) => {
-    const list = [...formBuilder];
-    list.splice(index, 1);
-    list.forEach((row, i) => {
-      let key = i + 1;
-      list[i]["key"] = key;
-    });
-    funcFormBuilder(list);
+  const removeFieldHandler = (
+    alfa,
+    beta = null,
+    gamma = null,
+    delta = null
+  ) => {
+    if (alfa && beta === null && gamma === null && delta === null) {
+      const list = [...formBuilder];
+      list.splice(alfa, 1);
+      list.forEach((row, i) => {
+        let key = i + 1;
+        list[i]["key"] = key;
+      });
+      funcFormBuilder(list);
+    }
+
+    if (alfa !== null && beta !== null && gamma === null && delta === null) {
+      const list = [...formBuilder];
+      let listAlfa = list[alfa];
+      listAlfa.triggered_parent.splice(beta, 1);
+      if (listAlfa.triggered_parent.length > 0) {
+        listAlfa.triggered_parent.map((row, i) => {
+          let key = i + 1;
+          listAlfa.triggered_parent[i].key = key;
+        });
+      }
+      funcFormBuilder(list);
+    }
+
+    if (alfa !== null && beta !== null && gamma !== null && delta === null) {
+      const list = [...formBuilder];
+      const listBeta = list[alfa].triggered_parent[beta];
+      listBeta.triggered_children.splice(gamma, 1);
+      if (listBeta.triggered_children.length > 0) {
+        listBeta.triggered_children.map((row, i) => {
+          let key = i + 1;
+          listBeta.triggered_children[i].key = key;
+        });
+      }
+      funcFormBuilder(list);
+    }
+
+    if (alfa !== null && beta !== null && gamma !== null && delta !== null) {
+      const list = [...formBuilder];
+      const listGamma =
+        list[alfa].triggered_parent[beta].triggered_children[gamma];
+      listGamma.triggered_index.splice(delta, 1);
+      if (listGamma.triggered_index.length > 0) {
+        listGamma.triggered_index.map((row, i) => {
+          let key = i + 1;
+          listGamma.triggered_index[i].key = key;
+        });
+      }
+      funcFormBuilder(list);
+    }
   };
 
-  const renderDataOptionHandler = (row, i) => {
+  const renderDataOptionHandler = (row, i, j = null, k = null, l = null) => {
     if (row.option === "select_reference") {
       return (
         <div className="col-sm-12 col-md-2">
@@ -48,7 +95,7 @@ const FormManual = ({
               className="form-control"
               name="dataOption"
               value={row.dataOption}
-              onChange={(e) => inputChangeHandler(e, i)}
+              onChange={(e) => inputChangeHandler(e, i, j, k, l)}
               required
             >
               <option value="" disabled selected>
@@ -77,7 +124,7 @@ const FormManual = ({
               value={row.dataOption}
               placeholder="data1;data2"
               autoComplete="off"
-              onChange={(e) => inputChangeHandler(e, i)}
+              onChange={(e) => inputChangeHandler(e, i, j, k, l)}
               required
             />
           </div>
@@ -86,7 +133,7 @@ const FormManual = ({
     }
   };
 
-  const renderMultipleHandler = (row, i) => {
+  const renderMultipleHandler = (row, i, j = null, k = null, l = null) => {
     if (
       row.element === "select" ||
       row.element === "checkbox" ||
@@ -101,7 +148,7 @@ const FormManual = ({
                 className="form-control"
                 name="option"
                 value={row.option}
-                onChange={(e) => inputChangeHandler(e, i)}
+                onChange={(e) => inputChangeHandler(e, i, j, k, l)}
                 required
               >
                 <option value="" disabled selected>
@@ -115,7 +162,7 @@ const FormManual = ({
               </select>
             </div>
           </div>
-          {renderDataOptionHandler(row, i)}
+          {renderDataOptionHandler(row, i, j, k, l)}
         </>
       );
     } else {
@@ -128,7 +175,7 @@ const FormManual = ({
                 className="form-control"
                 name="option"
                 value={row.option}
-                onChange={(e) => inputChangeHandler(e, i)}
+                onChange={(e) => inputChangeHandler(e, i, j, k, l)}
                 disabled
               >
                 <option value="" disabled selected>
@@ -151,7 +198,7 @@ const FormManual = ({
                 className="form-control"
                 name="dataOption"
                 value={row.dataOption}
-                onChange={(e) => inputChangeHandler(e, i)}
+                onChange={(e) => inputChangeHandler(e, i, j, k, l)}
                 disabled
               >
                 <option value="" disabled selected>
@@ -194,6 +241,7 @@ const FormManual = ({
         option: "",
         dataOption: "",
         required: "0",
+        triggered_parent: [],
       },
     ]);
   };
@@ -290,12 +338,13 @@ const FormManual = ({
 
           {renderMultipleHandler(row, i)}
           <div className="col-sm-6 col-md-2">
-            <label className="col-form-label font-weight-bold ml-md-10">
-              Required
+            <label className="col-form-label font-weight-bold ">Req</label>
+            <label className="col-form-label font-weight-bold ml-3">
+              Triggered
             </label>
             <div className="d-flex align-items-end justify-content-between">
-              <div className="form-group ml-md-10">
-                <div className="form-check form-check-inline">
+              <div className="form-group ">
+                <div className="form-check mb-4">
                   <input
                     type="checkbox"
                     name="required"
@@ -304,6 +353,26 @@ const FormManual = ({
                     onChange={(e) => inputChangeHandler(e, i)}
                   />
                 </div>
+              </div>
+              <div className="">
+                <label className="switches">
+                  <input
+                    // required
+                    className="checkbox"
+                    // checked={publish}
+                    type="checkbox"
+                    // onChange={(e) => handleChangePublish(e)}
+                  />
+                  <span
+                    className={`sliders round pl-2
+                              `}
+                  ></span>
+                  {/* <span
+                              className={`sliders round ${
+                                publish ? "text-white" : "pl-2"
+                              }`}
+                            ></span> */}
+                </label>
               </div>
               {formBuilder.length !== 1 && row.key !== 1 ? (
                 <button
@@ -324,6 +393,387 @@ const FormManual = ({
               )}
             </div>
           </div>
+
+          {row.triggered_parent &&
+            row.triggered_parent.length > 0 &&
+            row.triggered_parent.map((rowParent, j) => (
+              <div className="container pl-15">
+                <div className="row justify-content-start">
+                  <div className="col-sm-12 col-md-2">
+                    <div className="form-group mb-2">
+                      <label className="col-form-label font-weight-bold">
+                        Opsi : {j + 1}
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="name"
+                        value={rowParent.name}
+                        placeholder="Field"
+                        autoComplete="off"
+                        onChange={(e) => inputChangeHandler(e, i)}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="col-sm-12 col-md-2">
+                    <div className="form-group mb-2">
+                      <label className="col-form-label font-weight-bold">
+                        Pilih Element
+                      </label>
+                      <select
+                        className="form-control"
+                        name="element"
+                        value={rowParent.element}
+                        onChange={(e) => inputChangeHandler(e, i)}
+                        required
+                      >
+                        <option value="" disabled selected>
+                          -- PILIH --
+                        </option>
+                        {element.map((el, i) => (
+                          <option key={i} value={el.value}>
+                            {el.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-sm-12 col-md-2">
+                    <div className="form-group mb-2">
+                      <label className="col-form-label font-weight-bold">
+                        Size
+                      </label>
+                      <select
+                        className="form-control"
+                        name="size"
+                        value={row.size}
+                        onChange={(e) => inputChangeHandler(e, i)}
+                        required
+                      >
+                        <option value="" disabled selected>
+                          -- PILIH --
+                        </option>
+                        {size.map((siz, i) => (
+                          <option key={i} value={siz.value}>
+                            {siz.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {renderMultipleHandler(rowParent, j)}
+                  <div className="col-sm-6 col-md-2">
+                    <label className="col-form-label font-weight-bold ">
+                      Req
+                    </label>
+                    <label className="col-form-label font-weight-bold ml-3">
+                      Triggered
+                    </label>
+                    <div className="d-flex align-items-end justify-content-between">
+                      <div className="form-group ">
+                        <div className="form-check mb-4">
+                          <input
+                            type="checkbox"
+                            name="required"
+                            checked={rowParent.required === "1" ? true : false}
+                            className="form-check-input"
+                            onChange={(e) => inputChangeHandler(e, i)}
+                          />
+                        </div>
+                      </div>
+                      <div className="">
+                        <label className="switches">
+                          <input
+                            // required
+                            className="checkbox"
+                            // checked={publish}
+                            type="checkbox"
+                            // onChange={(e) => handleChangePublish(e)}
+                          />
+                          <span
+                            className={`sliders round pl-2
+                              `}
+                          ></span>
+                          {/* <span
+                              className={`sliders round ${
+                                publish ? "text-white" : "pl-2"
+                              }`}
+                            ></span> */}
+                        </label>
+                      </div>
+                      <button
+                        className="btn btn-link-action bg-danger text-white mb-3 "
+                        type="button"
+                        onClick={() => removeFieldHandler(i, j)}
+                      >
+                        <i className="ri-delete-bin-fill p-0 text-white"></i>
+                      </button>
+                      {/* {formBuilder.length !== 1 && row.key !== 1 ? (
+                      ) : (
+                        <button
+                          className="btn btn-link-action bg-danger text-white mb-3  invisible"
+                          type="button"
+                          onClick={() => removeFieldHandler(i)}
+                        >
+                          <i className="ri-delete-bin-fill p-0 text-white"></i>
+                        </button>
+                      )} */}
+                    </div>
+                  </div>
+
+                  {rowParent.triggered_children &&
+                    rowParent.triggered_children.length > 0 &&
+                    rowParent.triggered_children.map((rowChildren, k) => (
+                      <div className="container pl-15">
+                        <div className="row justify-content-start">
+                          <div className="col-sm-12 col-md-2">
+                            <div className="form-group mb-2">
+                              <label className="col-form-label font-weight-bold">
+                                Opsi : {k + 1}
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                name="name"
+                                value={rowChildren.name}
+                                placeholder="Field"
+                                autoComplete="off"
+                                onChange={(e) => inputChangeHandler(e, i)}
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div className="col-sm-12 col-md-2">
+                            <div className="form-group mb-2">
+                              <label className="col-form-label font-weight-bold">
+                                Pilih Element
+                              </label>
+                              <select
+                                className="form-control"
+                                name="element"
+                                value={rowChildren.element}
+                                onChange={(e) => inputChangeHandler(e, i)}
+                                required
+                              >
+                                <option value="" disabled selected>
+                                  -- PILIH --
+                                </option>
+                                {element.map((el, i) => (
+                                  <option key={i} value={el.value}>
+                                    {el.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-sm-12 col-md-2">
+                            <div className="form-group mb-2">
+                              <label className="col-form-label font-weight-bold">
+                                Size
+                              </label>
+                              <select
+                                className="form-control"
+                                name="size"
+                                value={rowChildren.size}
+                                onChange={(e) => inputChangeHandler(e, i)}
+                                required
+                              >
+                                <option value="" disabled selected>
+                                  -- PILIH --
+                                </option>
+                                {size.map((siz, i) => (
+                                  <option key={i} value={siz.value}>
+                                    {siz.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+
+                          {renderMultipleHandler(rowChildren, k)}
+                          <div className="col-sm-6 col-md-2">
+                            <label className="col-form-label font-weight-bold ">
+                              Req
+                            </label>
+                            <label className="col-form-label font-weight-bold ml-3">
+                              Triggered
+                            </label>
+                            <div className="d-flex align-items-end justify-content-between">
+                              <div className="form-group ">
+                                <div className="form-check mb-4">
+                                  <input
+                                    type="checkbox"
+                                    name="required"
+                                    checked={
+                                      rowChildren.required === "1"
+                                        ? true
+                                        : false
+                                    }
+                                    className="form-check-input"
+                                    onChange={(e) => inputChangeHandler(e, i)}
+                                  />
+                                </div>
+                              </div>
+                              <div className="">
+                                <label className="switches">
+                                  <input
+                                    // required
+                                    className="checkbox"
+                                    // checked={publish}
+                                    type="checkbox"
+                                    // onChange={(e) => handleChangePublish(e)}
+                                  />
+                                  <span
+                                    className={`sliders round pl-2
+                              `}
+                                  ></span>
+                                  {/* <span
+                              className={`sliders round ${
+                                publish ? "text-white" : "pl-2"
+                              }`}
+                            ></span> */}
+                                </label>
+                              </div>
+                              <button
+                                className="btn btn-link-action bg-danger text-white mb-3 "
+                                type="button"
+                                onClick={() => removeFieldHandler(i, j, k)}
+                              >
+                                <i className="ri-delete-bin-fill p-0 text-white"></i>
+                              </button>
+                              {/* {formBuilder.length !== 1 && row.key !== 1 ? (
+                      ) : (
+                        <button
+                          className="btn btn-link-action bg-danger text-white mb-3  invisible"
+                          type="button"
+                          onClick={() => removeFieldHandler(i)}
+                        >
+                          <i className="ri-delete-bin-fill p-0 text-white"></i>
+                        </button>
+                      )} */}
+                            </div>
+                          </div>
+
+                          {rowChildren.triggered_index &&
+                            rowChildren.triggered_index.length > 0 &&
+                            rowChildren.triggered_index.map((rowIndex, l) => (
+                              <div className="container pl-20">
+                                <div className="row justify-content-start">
+                                  <div className="col-sm-12 col-md-2">
+                                    <div className="form-group mb-2">
+                                      <label className="col-form-label font-weight-bold">
+                                        Opsi : {l + 1}
+                                      </label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        name="name"
+                                        value={rowIndex.name}
+                                        placeholder="Field"
+                                        autoComplete="off"
+                                        onChange={(e) =>
+                                          inputChangeHandler(e, i)
+                                        }
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="col-sm-12 col-md-2">
+                                    <div className="form-group mb-2">
+                                      <label className="col-form-label font-weight-bold">
+                                        Pilih Element
+                                      </label>
+                                      <select
+                                        className="form-control"
+                                        name="element"
+                                        value={rowIndex.element}
+                                        onChange={(e) =>
+                                          inputChangeHandler(e, i)
+                                        }
+                                        required
+                                      >
+                                        <option value="" disabled selected>
+                                          -- PILIH --
+                                        </option>
+                                        {element.map((el, i) => (
+                                          <option key={i} value={el.value}>
+                                            {el.name}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className="col-sm-12 col-md-2">
+                                    <div className="form-group mb-2">
+                                      <label className="col-form-label font-weight-bold">
+                                        Size
+                                      </label>
+                                      <select
+                                        className="form-control"
+                                        name="size"
+                                        value={rowIndex.size}
+                                        onChange={(e) =>
+                                          inputChangeHandler(e, i)
+                                        }
+                                        required
+                                      >
+                                        <option value="" disabled selected>
+                                          -- PILIH --
+                                        </option>
+                                        {size.map((siz, i) => (
+                                          <option key={i} value={siz.value}>
+                                            {siz.name}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                  </div>
+
+                                  {renderMultipleHandler(rowIndex, l)}
+                                  <div className="col-sm-6 col-md-2">
+                                    <label className="col-form-label font-weight-bold ml-md-10">
+                                      Req
+                                    </label>
+                                    <div className="d-flex align-items-end justify-content-between">
+                                      <div className="form-group ml-md-10">
+                                        <div className="form-check form-check-inline">
+                                          <input
+                                            type="checkbox"
+                                            name="required"
+                                            checked={
+                                              rowIndex.required === "1"
+                                                ? true
+                                                : false
+                                            }
+                                            className="form-check-input"
+                                            onChange={(e) =>
+                                              inputChangeHandler(e, i)
+                                            }
+                                          />
+                                        </div>
+                                      </div>
+                                      <button
+                                        className="btn btn-link-action bg-danger text-white mb-3 "
+                                        type="button"
+                                        onClick={() =>
+                                          removeFieldHandler(i, j, k, l)
+                                        }
+                                      >
+                                        <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ))}
           <div className="col-md-12">
             <hr />
           </div>
