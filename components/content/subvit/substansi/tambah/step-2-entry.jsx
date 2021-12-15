@@ -259,7 +259,9 @@ const StepTwo = ({ token, tokenPermission }) => {
         answer_key,
       };
 
-      dispatch(newSubtanceQuestionDetail(data, token, tokenPermission));
+      dispatch(newSubtanceQuestionDetail(data, token));
+      localStorage.removeItem("method");
+      localStorage.removeItem("step2");
       handleResetForm();
     }
   };
@@ -327,8 +329,10 @@ const StepTwo = ({ token, tokenPermission }) => {
         question_type_id,
         answer_key,
       };
-
-      dispatch(newSubtanceQuestionDetail(data, token, tokenPermission));
+      // console.log(data);
+      localStorage.setItem("step2", JSON.stringify(data));
+      localStorage.setItem("method", metode);
+      dispatch(newSubtanceQuestionDetail(data, token));
     }
   };
 
@@ -562,7 +566,17 @@ const StepTwo = ({ token, tokenPermission }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push("/subvit/substansi/tambah-step-1");
+                    }}
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
@@ -575,7 +589,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                     onClick={saveDraft}
                     type="button"
                   >
-                    Simpan Draft
+                    Tambah Soal
                   </button>
                 </div>
               </div>

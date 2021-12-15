@@ -4,6 +4,7 @@ import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import { getAllSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 
 export default function CloneSoalSubtansi(props) {
   const session = props.session.user.user.data;
@@ -17,7 +18,7 @@ export default function CloneSoalSubtansi(props) {
 }
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }) => {
+    async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -39,6 +40,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       const permission = req.cookies.token_permission;
+
+      await store.dispatch(
+        getAllSubtanceQuestionBanks(
+          query.page,
+          query.keyword,
+          (query.limit = 100),
+          session.user.user.data.token,
+          permission
+        )
+      );
 
       await store.dispatch(
         dropdownAkademi(session.user.user.data.token, permission)

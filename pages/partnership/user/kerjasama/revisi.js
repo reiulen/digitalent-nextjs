@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
+import { middlewareAuthMitraSession } from "../../../../utils/middleware/authMiddleware";
 
 const RevisiSubmit = dynamic(
   () => import("../../../../components/content/partnership/user/revisiSubmit"),
@@ -23,10 +24,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   () =>
     async ({ req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthMitraSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/mitra",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

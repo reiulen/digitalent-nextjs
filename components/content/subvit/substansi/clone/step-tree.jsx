@@ -50,15 +50,15 @@ const StepTwo = ({ token, tokenPermission }) => {
   }, [dispatch, error, success, router]);
 
   const [startDate, setStartDate] = useState(
-    subtance.start_at ? new Date(subtance.start_at) : new Date(Date.now())
+    subtance?.start_at ? new Date(subtance.start_at) : new Date(Date.now())
   );
   const [endDate, setEndDate] = useState(
-    subtance.end_at ? new Date(subtance.end_at) : new Date(Date.now())
+    subtance?.end_at ? new Date(subtance.end_at) : new Date(Date.now())
   );
-  const [duration, setDuration] = useState(subtance.duration);
-  const [jumlah_soal, setJumlahSoal] = useState(subtance.questions_to_share);
-  const [passing_grade, setPassingGrade] = useState(subtance.passing_grade);
-  const [status, setStatus] = useState(subtance.status || false);
+  const [duration, setDuration] = useState(subtance?.duration);
+  const [jumlah_soal, setJumlahSoal] = useState(subtance?.questions_to_share);
+  const [passing_grade, setPassingGrade] = useState(subtance?.passing_grade);
+  const [status, setStatus] = useState(subtance?.status || false);
   const [, forceUpdate] = useState();
 
   const saveDraft = () => {
@@ -76,9 +76,9 @@ const StepTwo = ({ token, tokenPermission }) => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(
-        updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
-      );
+      dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
+      localStorage.removeItem("clone1");
+      localStorage.removeItem("clone3");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -166,7 +166,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="3"></StepInput>
+          <StepInput step="4"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Publish Soal Cloning</h2>
           </div>
@@ -388,6 +388,17 @@ const StepTwo = ({ token, tokenPermission }) => {
 
               <div className="row">
                 <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
+                  <button
+                    className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push(
+                        `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                      );
+                    }}
+                  >
+                    Kembali
+                  </button>
                   <div className="float-right ">
                     <div className={styles.foldResponsive}>
                       <button

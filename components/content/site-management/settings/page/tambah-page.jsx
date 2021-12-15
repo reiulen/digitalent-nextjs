@@ -339,6 +339,7 @@ const TambahPage = ({ token }) => {
                         />
                       </div>
                     </div>
+                      <p className="text-muted">Format image (.png/.jpg), Max size 5MB</p>
 
                     <div className="ml-4"></div>
                   </div>
@@ -615,6 +616,7 @@ const TambahPage = ({ token }) => {
                         />
                       </div>
                     </div>
+                    <p className="text-muted">Format image (.png/.jpg), Max size 5MB</p>
 
                     <div className="ml-4"></div>
                   </div>

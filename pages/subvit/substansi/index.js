@@ -1,10 +1,7 @@
 import React from "react";
 
 import dynamic from "next/dynamic";
-// import Layout from "../../../components/templates/layout.component";
-// import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-// import ListSubstansi from "../../../components/content/subvit/substansi/list-substansi";
 
 import {
   getAllSubtanceQuestionBanks,

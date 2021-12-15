@@ -1,6 +1,7 @@
 .mainContainer {
   position: absolute;
-  top: 300px;
+  top: 310px;
+  left: 0;
 }
 .title {
   font-family: Poppins;

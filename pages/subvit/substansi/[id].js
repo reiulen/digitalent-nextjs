@@ -72,6 +72,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
       await store.dispatch(
         getAllSubtanceQuestionBanksType(
+          0,
+          "",
+          "",
           session.user.user.data.token,
           permission
         )

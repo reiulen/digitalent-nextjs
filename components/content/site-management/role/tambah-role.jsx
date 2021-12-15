@@ -26,6 +26,7 @@ const TambahRole = ({ token }) => {
   const [editTable, setEditTable] = useState("");
   const [nameRole, setNameRole] = useState("");
   const [allCheck, setAllCheck] = useState(false);
+  const [, forceUpdate] = useState()
   const [force, setForce] = useState(false)
 
   const allPermission = useSelector((state) => state.allPermission);
@@ -437,6 +438,7 @@ const TambahRole = ({ token }) => {
       dispatch(postRoles(data, token));
     } else {
       simpleValidator.current.showMessages();
+      forceUpdate(1)
       Swal.fire({
         icon: "error",
         title: "Oops...",

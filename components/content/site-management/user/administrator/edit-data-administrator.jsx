@@ -426,7 +426,7 @@ const TambahApi = ({ token }) => {
                 <br />
                 Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
                 <br />
-                Min 1 Symbol/angka
+                Min 1 Simbol dan Angka
               </p>
               </div>
               
@@ -474,8 +474,12 @@ const TambahApi = ({ token }) => {
                   onChange={(e) => {
                     handleChangeRole(e);
                   }}
-                  options={allRolesList?.data?.list_role?.map((items) => {
-                    return { ...items, label: items.name, value: items.name };
+                  options={allRolesList?.data?.list_role?.filter((items) => {
+                    if (items.status === 1) {
+                      return { ...items, label: items.name, value: items.name };
+                    }
+                  }).map(item => {
+                    return { ...item, label: item.name, value: item.name };
                   })}
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("roleOption");

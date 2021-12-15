@@ -4,6 +4,7 @@ import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 import {getDetailPesertaManage} from '../../../../../redux/actions/site-management/user/peserta-dts'
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 const ListUser = dynamic(
   () =>
@@ -33,10 +34,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
