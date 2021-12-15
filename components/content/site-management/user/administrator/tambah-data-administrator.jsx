@@ -353,7 +353,7 @@ const TambahApi = ({ token }) => {
                   <br />
                   Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
                   <br />
-                  Min 1 Symbol dan Angka
+                  Min 1 Simbol dan Angka
                 </p>
               </div>
               <div className="form-group mb-2">
