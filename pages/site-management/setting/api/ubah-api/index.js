@@ -6,6 +6,8 @@ import {
   getDetailApi,
   getListApi,
 } from "../../../../../redux/actions/site-management/settings/api.actions";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
+
 const UbahApi = dynamic(
   () =>
     import(
@@ -34,10 +36,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req, query }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

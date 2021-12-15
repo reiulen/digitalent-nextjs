@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import { getDetailZonasi } from "../../../../../redux/actions/site-management/zonasi.actions";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 const DetailRole = dynamic(
   () =>
@@ -32,10 +33,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
