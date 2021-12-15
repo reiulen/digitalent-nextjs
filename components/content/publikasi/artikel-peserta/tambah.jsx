@@ -362,8 +362,8 @@ const TambahArtikel = () => {
                         <option value="">Data kosong</option>
                       ) : (
                         kategori &&
-                        kategori.kategori &&
-                        kategori.kategori.map((row) => {
+                        kategori?.kategori &&
+                        kategori?.kategori?.map((row) => {
                           return (
                             row.jenis_kategori == "Artikel" ?
                               <option key={row.id} value={row.id}>

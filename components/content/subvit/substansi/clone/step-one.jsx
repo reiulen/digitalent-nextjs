@@ -209,8 +209,8 @@ const StepOne = ({ token, tokenPermission }) => {
 
   let optionsTema = [];
 
-  data.data &&
-    data.data.map((item) => {
+  data?.data &&
+    data?.data?.map((item) => {
       return optionsTema.push({ label: item.label, value: item.value });
     });
 

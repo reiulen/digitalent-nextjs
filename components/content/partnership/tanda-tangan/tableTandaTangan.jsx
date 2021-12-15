@@ -91,16 +91,16 @@ const Table = ({ token }) => {
     });
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchSignature(token));
-  // }, [
-  //   dispatch,
-  //   allTandaTangan.keyword,
-  //   allTandaTangan.status_reload,
-  //   allTandaTangan.page,
-  //   allTandaTangan.limit,
-  //   token
-  // ]);
+  useEffect(() => {
+    dispatch(fetchSignature(token));
+  }, [
+    dispatch,
+    allTandaTangan?.keyword,
+    allTandaTangan?.status_reload,
+    allTandaTangan?.page,
+    allTandaTangan?.limit,
+    token
+  ]);
 
   return (
     <PageWrapper>

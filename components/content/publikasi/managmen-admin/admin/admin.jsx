@@ -113,16 +113,16 @@ const Admin = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.artikel.length === 0 ?
+                                                artikel && artikel?.artikel.length === 0 ?
                                                     '' :
-                                                    artikel && artikel.artikel.map((artikel) => {
+                                                    artikel && artikel?.artikel?.map((artikel) => {
                                                         return <tr key={artikel.id}>
 
-                                                            <td className='align-middle text-center'>{artikel.kategori_id}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
-                                                            <td className='align-middle'>{artikel.created_at}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
+                                                            <td className='align-middle text-center'>{artikel?.kategori_id}</td>
+                                                            <td className='align-middle'>{artikel?.judul_artikel}</td>
+                                                            <td className='align-middle'>{artikel?.judul_artikel}</td>
+                                                            <td className='align-middle'>{artikel?.created_at}</td>
+                                                            <td className='align-middle'>{artikel?.judul_artikel}</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='write.svg' />
                                                                 <ButtonAction icon='trash.svg' />
@@ -137,12 +137,12 @@ const Admin = () => {
                             </div>
 
                             <div className="row">
-                                {artikel && artikel.perPage < artikel.total &&
+                                {artikel && artikel?.perPage < artikel?.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={artikel.perPage}
-                                            totalItemsCount={artikel.total}
+                                            itemsCountPerPage={artikel?.perPage}
+                                            totalItemsCount={artikel?.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}

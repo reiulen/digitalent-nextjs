@@ -123,21 +123,21 @@ const EditGaleri = ({ token }) => {
         }
     }, [dispatch, error, success, files, router, galeri.gambar]);
 
-    const [id, setId] = useState(galeri.id_gallery);
-    const [judul, setJudulGaleri] = useState(galeri.judul);
-    const [isi_galleri, setIsiGaleri] = useState(galeri.isi_galeri);
-    const [gambar, setGambar] = useState(galeri.gambar);
+    const [id, setId] = useState(galeri?.id_gallery);
+    const [judul, setJudulGaleri] = useState(galeri?.judul);
+    const [isi_galleri, setIsiGaleri] = useState(galeri?.isi_galeri);
+    const [gambar, setGambar] = useState(galeri?.gambar);
     //   const [gambarPreview, setGambarPreview] = useState(
     //     "/assets/media/default.jpg"
     //   ); //belum
-    const [kategori_id, setKategoriId] = useState(galeri.kategori_id); //belum
-    const [users_id, setUserId] = useState(galeri.users_id);
-    const [tag, setTag] = useState(galeri.tag);
+    const [kategori_id, setKategoriId] = useState(galeri?.kategori_id); //belum
+    const [users_id, setUserId] = useState(galeri?.users_id);
+    const [tag, setTag] = useState(galeri?.tag);
     // const [publish, setPublish] = useState(galeri.publish === 1 ? true : false);
-    const [publish, setPublish] = useState(galeri.publish);
+    const [publish, setPublish] = useState(galeri?.publish);
     const [_method, setMethod] = useState("put");
-    const [publishDate, setPublishDate] = useState(galeri.tanggal_publish ? new Date(galeri.tanggal_publish) : null);
-    const [disablePublishDate, setDisablePublishDate] = useState(galeri.publish === 0 ? true : false)
+    const [publishDate, setPublishDate] = useState(galeri?.tanggal_publish ? new Date(galeri?.tanggal_publish) : null);
+    const [disablePublishDate, setDisablePublishDate] = useState(galeri?.publish === 0 ? true : false)
     const [image, setImage] = useState(null)
     const [totalImage, setTotalImage] = useState(1)
     const [disableTag, setDisableTag] = useState(false)
@@ -533,7 +533,7 @@ const EditGaleri = ({ token }) => {
                                         {!kategori || (kategori && kategori.length === 0) ? (
                                             <option value="">Data Tidak Ditemukan</option>
                                         ) : (
-                                            kategori && kategori.kategori && kategori.kategori.map((row) => {
+                                            kategori && kategori?.kategori && kategori?.kategori.map((row) => {
                                                 return (
                                                     row.jenis_kategori == "Galeri" ?
                                                         <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>

@@ -253,70 +253,73 @@ const EditMitra = ({ token }) => {
  
 
   useEffect(() => {
-    async function setDataSingle (id,token){
-      try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/partners/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-            Permission: Cookies.get("token_permission")
-          },
-        }
-      );
-      setInstitution_name(data?.data?.institution_name);
-
-      setEmail(data?.data?.email);
-      // tambah url logo
-      setImageview(data?.data?.agency_logo);
-      setWebsite(data?.data?.website);
-      setAddress(data?.data?.alamat);
-
-      setIndonesia_provinces_id(data?.data?.province.id);
-      setDefaultValueProvince(data?.data?.province.name);
-      setDefaultValueProvinceID(data?.data?.province.id);
-
-      setIndonesia_cities_id(data?.data?.city.id);
-      setDefaultValueCitie(data?.data?.city.name);
-      setDefaultValueCitieID(data?.data?.city.id);
-
-      setPostal_code(data?.data?.postal_code);
-      setPic_name(data?.data?.pic_name);
-      setPic_contact_number(data?.data?.pic_contact_number);
-      setPic_email(data?.data?.pic_email);
-    } catch (error) {
-      return;
-    }
-
-    } 
     setDataSingle(router.query.name,token);
   }, [router.query.name,token]);
 
+  async function setDataSingle (id,token){
+    try {
+    let { data } = await axios.get(
+      `${process.env.END_POINT_API_PARTNERSHIP}api/partners/${id}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission")
+        },
+      }
+    );
+    setInstitution_name(data?.data?.institution_name);
+
+    setEmail(data?.data?.email);
+    // tambah url logo
+    setImageview(data?.data?.agency_logo);
+    setWebsite(data?.data?.website);
+    setAddress(data?.data?.alamat);
+
+    setIndonesia_provinces_id(data?.data?.province.id);
+    setDefaultValueProvince(data?.data?.province.name);
+    setDefaultValueProvinceID(data?.data?.province.id);
+
+    setIndonesia_cities_id(data?.data?.city.id);
+    setDefaultValueCitie(data?.data?.city.name);
+    setDefaultValueCitieID(data?.data?.city.id);
+
+    setPostal_code(data?.data?.postal_code);
+    setPic_name(data?.data?.pic_name);
+    setPic_contact_number(data?.data?.pic_contact_number);
+    setPic_email(data?.data?.pic_email);
+  } catch (error) {
+    return;
+  }
+
+  } 
+
   useEffect(() => {
     if (indonesia_provinces_id !== "") {
-      async function fetchAPI() {
-        try {
-          let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
-             {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                  Permission: Cookies.get("token_permission")
-                },
-              }
-          );
-          let dataNewCitites = data.data.map((items) => {
-            return { ...items, label: items?.name, value: items?.id };
-          });
-          dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
-          setCitiesAll(dataNewCitites);
-        } catch (error) {
-          return;
-        }
-      }
+      
       fetchAPI();
     }
   }, [indonesia_provinces_id,token]);
+
+  async function fetchAPI() {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
+         {
+            headers: {
+              authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
+            },
+          }
+      );
+      let dataNewCitites = data.data.map((items) => {
+        return { ...items, label: items?.name, value: items?.id };
+      });
+      dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
+      setCitiesAll(dataNewCitites);
+    } catch (error) {
+      return;
+    }
+  }
 
   return (
     <PageWrapper>

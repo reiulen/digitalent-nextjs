@@ -21,6 +21,7 @@ import axios from "axios";
 export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
+  const { permission } = useSelector ((state) => state.partnershipPermissions)
   const [user, setUser] = useState("");
 
   const colors = ["#215480", "#4299E1", "#357AB4"];
@@ -106,95 +107,180 @@ export default function DashboardPage({ token }) {
 
         {/* Card Total Mitra */}
         <div className="col-12 col-xl-6 my-3">
-          <Link href="/partnership/mitra" passHref>
+          {
+            permission?.permissions?.includes("partnership.dashboard.manage") && 
+            permission?.permissions?.includes("partnership.mitra.manage") ?
+              <Link href="/partnership/mitra" passHref>
+                <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2 cursor-pointer">
+                  <div className="d-flex justify-content-between align-items-center position-relative">
+                    <div>
+                      <div className="d-flex align-items-center">
 
-            <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2 cursor-pointer">
-              <div className="d-flex justify-content-between align-items-center position-relative">
-                <div>
-                  <div className="d-flex align-items-center">
+                        <Image
+                          src="/assets/icon/add-user-white.svg"
+                          width={50}
+                          height={50}
+                          alt="add-user"
+                        />
 
-                    <Image
-                      src="/assets/icon/add-user-white.svg"
-                      width={50}
-                      height={50}
-                      alt="add-user"
+                        {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
+
+                        <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
+                          {allDashboard?.data_dashboard?.data?.mitra}
+                        </h1>
+                      </div>
+
+                      <div>
+                        <h5 className="fw-500 fz-14">Total Mitra</h5>
+                      </div>
+                    </div>
+
+                    <i 
+                      className="ri-user-add-fill ri-7x" 
+                      style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.25rem"}}
                     />
-
-                    {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
-
-                    <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
-                      {allDashboard?.data_dashboard?.data?.mitra}
-                    </h1>
-                  </div>
-
-                  <div>
-                    <h5 className="fw-500 fz-14">Total Mitra</h5>
+                      {/* <Image 
+                          src="/assets/icon/add-user-shade-primary.svg"
+                          width={100}
+                          height={100}
+                          className="border border-dark mt-0 position-absolute right-0"
+                          style={{marginTop:"-5%"}}
+                        /> */}
                   </div>
                 </div>
+              </Link>
+            :
+              <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2">
+                <div className="d-flex justify-content-between align-items-center position-relative">
+                  <div>
+                    <div className="d-flex align-items-center">
 
-                <i 
-                  className="ri-user-add-fill ri-7x" 
-                  style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.25rem"}}
-                />
-                  {/* <Image 
-                      src="/assets/icon/add-user-shade-primary.svg"
-                      width={100}
-                      height={100}
-                      className="border border-dark mt-0 position-absolute right-0"
-                      style={{marginTop:"-5%"}}
-                    /> */}
-              </div>
-            </div>
-          </Link>
+                      <Image
+                        src="/assets/icon/add-user-white.svg"
+                        width={50}
+                        height={50}
+                        alt="add-user"
+                      />
+
+                      {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
+
+                      <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
+                        {allDashboard?.data_dashboard?.data?.mitra}
+                      </h1>
+                    </div>
+
+                    <div>
+                      <h5 className="fw-500 fz-14">Total Mitra</h5>
+                    </div>
+                  </div>
+
+                  <i 
+                    className="ri-user-add-fill ri-7x" 
+                    style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.25rem"}}
+                  />
+                    {/* <Image 
+                        src="/assets/icon/add-user-shade-primary.svg"
+                        width={100}
+                        height={100}
+                        className="border border-dark mt-0 position-absolute right-0"
+                        style={{marginTop:"-5%"}}
+                      /> */}
+                </div>
+              </div> 
+          }
+          
         </div>
 
         {/* Card Total Kerjasama */}
         <div className="col-12 col-xl-6 my-3">
-          <Link href="/partnership/kerjasama" passHref>
+          {
+              permission?.permissions?.includes("partnership.dashboard.manage") && 
+              permission?.permissions?.includes("partnership.kerjasama.manage") ?
+                <Link href="/partnership/kerjasama" passHref>
 
-            <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2 cursor-pointer">
-              <div className="d-flex justify-content-between align-items-center position-relative">
-                <div>
-                  <div className="d-flex align-items-center">
+                  <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2 cursor-pointer">
+                    <div className="d-flex justify-content-between align-items-center position-relative">
+                      <div>
+                        <div className="d-flex align-items-center">
+      
+                          {/* <i className="ri-clipboard-fill ri-4x text-white" /> */}
+      
+                          <Image
+                            src="/assets/icon/clipboard-list-white.svg"
+                            width={50}
+                            height={50}
+                            alt="clipboard"
+                          />
+      
+                          <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
+                            {allDashboard?.data_dashboard?.data?.cooperation}
+                          </h1>
+                        </div>
+      
+                        <div>
+                          <h5 className="fw-500 fz-14">Total Kerjasama</h5>
+                        </div>
+                      </div>
+      
+                      {/* <i 
+                        className="ri-clipboard-fill ri-7x" 
+                        style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.75rem"}}
+                      /> */}
+      
+                      <Image 
+                        src="/assets/icon/clipboard-list-primary-shade.svg"
+                        width={100}
+                        height={100}
+                        className="mr-0"
+                        style={{marginTop:"-2rem", marginRight:"-3rem"}}
+                        alt="clipboard"
+                      />
+                    </div>
+                  </div>
+                </Link>
+              :
+                <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2">
+                  <div className="d-flex justify-content-between align-items-center position-relative">
+                    <div>
+                      <div className="d-flex align-items-center">
 
-                    {/* <i className="ri-clipboard-fill ri-4x text-white" /> */}
+                        {/* <i className="ri-clipboard-fill ri-4x text-white" /> */}
 
-                    <Image
-                      src="/assets/icon/clipboard-list-white.svg"
-                      width={50}
-                      height={50}
+                        <Image
+                          src="/assets/icon/clipboard-list-white.svg"
+                          width={50}
+                          height={50}
+                          alt="clipboard"
+                        />
+
+                        <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
+                          {allDashboard?.data_dashboard?.data?.cooperation}
+                        </h1>
+                      </div>
+
+                      <div>
+                        <h5 className="fw-500 fz-14">Total Kerjasama</h5>
+                      </div>
+                    </div>
+
+                    {/* <i 
+                      className="ri-clipboard-fill ri-7x" 
+                      style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.75rem"}}
+                    /> */}
+
+                    <Image 
+                      src="/assets/icon/clipboard-list-primary-shade.svg"
+                      width={100}
+                      height={100}
+                      className="mr-0"
+                      style={{marginTop:"-2rem", marginRight:"-3rem"}}
                       alt="clipboard"
                     />
-
-                    <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
-                      {allDashboard?.data_dashboard?.data?.cooperation}
-                    </h1>
                   </div>
-
-                  <div>
-                    <h5 className="fw-500 fz-14">Total Kerjasama</h5>
-                  </div>
-                </div>
-
-                {/* <i 
-                  className="ri-clipboard-fill ri-7x" 
-                  style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.75rem"}}
-                /> */}
-
-                <Image 
-                  src="/assets/icon/clipboard-list-primary-shade.svg"
-                  width={100}
-                  height={100}
-                  className="mr-0"
-                  style={{marginTop:"-2rem", marginRight:"-3rem"}}
-                  alt="clipboard"
-                />
-              </div>
-            </div>
-          </Link>
+                </div>    
+          }
+          
         </div>
-
-
       </div>
 
       
@@ -233,7 +319,7 @@ export default function DashboardPage({ token }) {
                       cornerRadius={30} 
                     >
                       {dataPieChartStatusPengajuan &&
-                        dataPieChartStatusPengajuan.map((el, i) => {
+                        dataPieChartStatusPengajuan?.map((el, i) => {
                           return <Cell key={i} fill={colors[i]} />;
                         })}
                     </Pie>

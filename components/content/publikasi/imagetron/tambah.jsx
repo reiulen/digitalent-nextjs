@@ -256,8 +256,8 @@ const TambahImagetron = ({ token, id }) => {
                       <option value="">Data Kosong</option>
                     ) : (
                       kategori &&
-                      kategori.kategori &&
-                      kategori.kategori.map((row) => {
+                      kategori?.kategori &&
+                      kategori?.kategori?.map((row) => {
                         return row.jenis_kategori == "Imagetron" ? (
                           <option key={row.id} value={row.id}>
                             {row.nama_kategori}

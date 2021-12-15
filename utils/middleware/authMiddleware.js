@@ -71,10 +71,18 @@ export const middlewareAuthMitraSession = (session) => {
   }
   const auth = session.user.user.data.user;
   
-  if (auth.roles[0] !== "mitra") {
+  if (auth.roles[0] === "admin") {
     data = {
       status: false,
-      redirect: process.env.PATH_URL + "/login/mitra",
+      redirect: process.env.PATH_URL + "/dashboard",
+    };
+    return data;
+  }
+
+  if (auth.roles[0] === "user") {
+    data = {
+      status: false,
+      redirect: process.env.PATH_URL + "/login",
     };
     return data;
   }

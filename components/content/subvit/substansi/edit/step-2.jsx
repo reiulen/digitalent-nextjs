@@ -50,10 +50,10 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [endDate, setEndDate] = useState(
     subtance.end_at ? new Date(subtance.end_at) : null
   );
-  const [duration, setDuration] = useState(subtance.duration);
-  const [jumlah_soal, setJumlahSoal] = useState(subtance.questions_to_share);
-  const [passing_grade, setPassingGrade] = useState(subtance.passing_grade);
-  const [status, setStatus] = useState(subtance.status);
+  const [duration, setDuration] = useState(subtance?.duration);
+  const [jumlah_soal, setJumlahSoal] = useState(subtance?.questions_to_share);
+  const [passing_grade, setPassingGrade] = useState(subtance?.passing_grade);
+  const [status, setStatus] = useState(subtance?.status);
   const [, forceUpdate] = useState();
 
   const saveDraft = () => {

@@ -11,6 +11,8 @@ import Cookies from "js-cookie";
 export const getPartnershipPermissions =
   (token, permission) => async (dispatch) => {
     try {
+      let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/permissions` ;
+      
       const config = {
         headers: {
           Authorization: "Bearer " + token,
@@ -19,13 +21,16 @@ export const getPartnershipPermissions =
       };
 
       const { data } = await axios.get(link, config);
+
       dispatch({
         type: FETCH_PARTNERSHIP_PERMISSION_SUCCESS,
         payload: data,
       });
+
     } catch (error) {
       dispatch({
         type: FETCH_PARTNERSHIP_PERMISSION_FAIL,
+        // payload: JSON.stringify(error)
         payload: error.response.data.message,
       });
     }
