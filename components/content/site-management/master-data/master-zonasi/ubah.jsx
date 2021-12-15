@@ -29,6 +29,7 @@ const Tambah = ({ token }) => {
   const [status, setStatus] = useState(detailZonasi.data.data.status);
   const [defaultValueKabputen, setDefaultValueKabputen] = useState([]);
   const [defaultValueProvinces, setDefaultValueProvinces] = useState([]);
+  const [prov, setProv] = useState(false);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -395,7 +396,6 @@ const Tambah = ({ token }) => {
                                     )
                                   }
                                 />
-                                {console.log(items.value)}
                               </div>
                             </div>
 
