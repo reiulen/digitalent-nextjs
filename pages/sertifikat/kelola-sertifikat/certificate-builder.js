@@ -8,61 +8,68 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getDetailPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
 
 const AddSertifikat = dynamic(
-  () =>
-    import(
-      "../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/add-sertifikat"
-    ),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
+	() =>
+		import(
+			"../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/add-sertifikat"
+		),
+	{
+		loading: function loadingNow() {
+			return <LoadingSkeleton />;
+		},
+		ssr: false,
+	}
 );
 
 export default function AddSertifikatPage(props) {
-  const session = props.session.user.user.data;
+	const session = props.session.user.user.data;
 
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        <AddSertifikat token={session} />
-      </div>
-    </>
-  );
+	return (
+		<>
+			<div className="d-flex flex-column flex-root">
+				<AddSertifikat token={session} />
+			</div>
+		</>
+	);
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ query, req }) => {
-      const session = await getSession({ req });
+	(store) =>
+		async ({ query, req }) => {
+			const session = await getSession({ req });
 
-      // certificate builder pake theme id
-      const middleware = middlewareAuthAdminSession(session);
-      if (!middleware.status) {
-        return {
-          redirect: {
-            destination: middleware.redirect,
-            permanent: false,
-          },
-        };
-      }
+			// certificate builder pake theme id
+			const middleware = middlewareAuthAdminSession(session);
+			if (!middleware.status) {
+				return {
+					redirect: {
+						destination: middleware.redirect,
+						permanent: false,
+					},
+				};
+			}
 
-      await store.dispatch(
-        getDetailSertifikat(
-          query.theme_id,
-          query.page,
-          query.keyword,
-          100,
-          query.status,
-          session.user.user.data.token
-        )
-      );
+			await store.dispatch(
+				getDetailSertifikat(
+					query.theme_id,
+					query.page,
+					query.keyword,
+					100,
+					query.status,
+					session.user.user.data.token
+				)
+			);
 
-      return {
-        props: { session, title: "Certificate Builder - Sertifikat" },
-      };
-    }
+			const data = await store.dispatch(
+				getDetailPelatihan(query.id, session?.token, "sertifikat")
+			);
+
+			console.log(data);
+
+			return {
+				props: { session, title: "Certificate Builder - Sertifikat" },
+			};
+		}
 );
