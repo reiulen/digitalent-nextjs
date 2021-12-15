@@ -240,6 +240,41 @@ const Artikel = () => {
         }
     }
 
+    const handleTotalReader = (num) => {
+        let result = ""
+        let temp = ""
+
+        if (num >= 1000 && num < 10000){
+            temp += num / 1000
+            result += `${temp[0]},${temp[2]} K`
+
+        } else if (num >= 10000 && num < 100000){
+            temp += num / 1000
+            result += `${temp[0]}${temp[1]},${temp[2]} K`
+
+        } else if (num >= 100000 && num < 1000000){
+            temp += num / 1000
+            result += `${temp[0]}${temp[1]}${temp[2]},${temp[3]} K`
+        
+        } else if (num >= 1000000 && num < 10000000){
+            temp += num / 1000000
+            result += `${temp[0]},${temp[2]} M`
+
+        } else if (num >= 10000000 && num < 100000000){
+            temp += num / 1000000
+            result += `${temp[0]}${temp[1]},${temp[2]} M`
+
+        } else if (num >= 100000000 && num < 1000000000){
+            temp += num / 1000000
+            result += `${temp[0]}${temp[1]}${temp[2]},${temp[3]} M`
+    
+        } else {
+            result += num
+        }
+
+        return result
+    }
+
     // Style Select Filter
     const customStyle = {
         control: (styles) => ({
@@ -1029,7 +1064,7 @@ const Artikel = () => {
                                             className= "row mt-20 mb-3 pl-6"
                                             key={i}
                                         >
-                                            <div className="col-4 col-sm-8 pr-md-8 pr-2 pl-lg-2">
+                                            <div className="col-5 col-sm-9 pr-md-8 pr-2 pl-lg-2">
                                                 <div className="row justify-content-between align-items-center">
                                                     <div className=" d-flex align-self-center mb-2">
                                                         <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
@@ -1053,7 +1088,7 @@ const Artikel = () => {
                                                         </span>
                                                     </div>
 
-                                                    <div className="mr-2 mb-3">
+                                                    <div className="mr-2 mb-3 d-flex align-content-center">
                                                         <div className="badge badge-pill badge-light mr-0 mr-sm-2">
                                                             <div 
                                                                 className="text-primary p-1 text-truncate d-inline-block"
@@ -1070,7 +1105,7 @@ const Artikel = () => {
                                                         </div>
                                                         {
                                                             windowDimensions && windowDimensions.width && windowDimensions.width > 500 ?
-                                                                <span className="font-weight-bolder">
+                                                                <span className="font-weight-bolder mt-2">
                                                                     {/* Insert Akademi Here */}
                                                                     | {el.kategori_akademi}
                                                                 </span>
@@ -1157,15 +1192,15 @@ const Artikel = () => {
                                                 
                                                 <div className="row mb-3 mt-5 d-flex align-items-center ml-n7 ">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-3 col-12 d-flex justify-content-between">
-                                                        <div>
+                                                    <div className="text-muted col-md-4 col-lg-3 col-12 d-flex flex-row justify-content-between">
+                                                        <div className="text-truncate">
                                                             {moment(el.tanggal_publish).format("DD MMM")}
                                                         </div>
                                                         <div>
                                                             |
                                                         </div>
-                                                        <div>
-                                                            {el.dibaca} dibaca
+                                                        <div className="text-truncate">
+                                                            {handleTotalReader(el.dibaca)} dibaca
                                                         </div>
                                                     </div>
 
@@ -1182,7 +1217,8 @@ const Artikel = () => {
                                             </div>
 
                                             <div 
-                                                className="col-8 col-sm-4 pl-6 pl-sm-0 position-relative img-fluid" 
+                                                // className="col-7 col-sm-4 pl-6 pl-sm-0 position-relative img-fluid" 
+                                                className="col-7 col-sm-3 d-flex justify-content-end position-relative img-fluid"
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/artikel/detail/${el.slug}`}>
@@ -1192,8 +1228,24 @@ const Artikel = () => {
                                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                 "publikasi/images/" + el.gambar
                                                             }
-                                                            width={300}
-                                                            height={250}
+                                                            // width={300}
+                                                            // height={250}
+                                                            width={
+                                                                windowDimensions &&
+                                                                windowDimensions.width &&
+                                                                windowDimensions.width > 768 ?
+                                                                300
+                                                                :
+                                                                144
+                                                            }
+                                                            height={
+                                                                windowDimensions &&
+                                                                windowDimensions.width &&
+                                                                windowDimensions.width > 768 ?
+                                                                250
+                                                                :
+                                                                120
+                                                            }
                                                             alt="Card Image"
                                                             className="rounded-lg img-fluid"
                                                             objectFit="cover"
