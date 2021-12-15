@@ -55,22 +55,27 @@ export default function RiwayatPelatihanDetail({ session }) {
 			<Col lg={12} className="px-0">
 				<Card className="card-custom card-stretch gutter-b p-0">
 					<Row className="p-10 m-0">
-						<Col md={9} className="d-flex align-items-start">
+						<Col md={8} className="d-flex align-items-start">
 							<h1
 								className="font-weight-bolder my-0 max-w-sm-100 max-w-200px mb-5 mb-md-0"
-								style={{ fontSize: "32px" }}
+								style={{ fontSize: "32px", color: "#1f1f1f" }}
 							>
 								{data?.name || "-"}
 							</h1>
-							<div className="text-muted "></div>
 						</Col>
 						<Col
-							md={3}
+							md={4}
 							className="d-flex justify-content-md-end justify-content-start"
 						>
 							<span
-								className={`label label-inline label-light-${label}  text-center font-weight-bold text-capitalize`}
-								style={{ borderRadius: "25px" }}
+								className={`label label-inline label-light-${label} fz-12 text-center font-weight-bolder text-capitalize`}
+								style={{
+									borderRadius: "25px",
+									paddingRight: "12px",
+									paddingLeft: "12px",
+									paddingTop: "4px",
+									paddingBottom: "4px",
+								}}
 							>
 								{data?.lpj
 									? "Isi LPJ"
@@ -90,25 +95,33 @@ export default function RiwayatPelatihanDetail({ session }) {
 						</Col>
 						<Col lg={12} className="my-5">
 							<span
-								className="p-0 font-weight-bolder"
-								style={{ fontSize: "18px", color: "#6C6C6C" }}
+								className="p-0 font-weight-bolder text-neutral-body"
+								style={{ fontSize: "18px", color: "#1f1f1f" }}
 							>
 								{data?.akademi || "-"}
 							</span>
 						</Col>
 						<Col lg={12} className="mt-12">
-							<p style={{ fontSize: "14px" }}>Lokasi Pelatihan</p>
-							<p style={{ fontSize: "16px" }}>{data?.alamat || "-"}</p>
+							<p style={{ fontSize: "14px" }} className="text-neutral-body">
+								Lokasi Pelatihan
+							</p>
+							<p style={{ fontSize: "16px", color: "#1f1f1f" }}>
+								{data?.alamat || "-"}
+							</p>
 						</Col>
 						<Col lg={6}>
-							<p style={{ fontSize: "14px" }}>Jadwal Pelatihan</p>
-							<p style={{ fontSize: "16px" }}>
+							<p style={{ fontSize: "14px" }} className="text-neutral-body">
+								Jadwal Pelatihan
+							</p>
+							<p style={{ fontSize: "16px", color: "#1f1f1f" }}>
 								{dateFrom} - {dateTo}
 							</p>
 						</Col>
 						<Col lg={6}>
-							<p style={{ fontSize: "14px" }}>Kuota</p>
-							<p style={{ fontSize: "16px" }}>
+							<p style={{ fontSize: "14px" }} className="text-neutral-body">
+								Kuota
+							</p>
+							<p style={{ fontSize: "16px", color: "#1f1f1f" }}>
 								{data?.kuota_peserta || "-"} Peserta
 							</p>
 						</Col>
@@ -133,7 +146,10 @@ export default function RiwayatPelatihanDetail({ session }) {
 								alt="pictures1"
 							/>
 							<Card className="my-12">
-								<Card.Body style={{ fontSize: "14px" }} className="p-7">
+								<Card.Body
+									style={{ fontSize: "14px", color: "#1f1f1f" }}
+									className="p-7"
+								>
 									<div
 										dangerouslySetInnerHTML={{ __html: finalDescription }}
 									></div>
