@@ -9,6 +9,7 @@ import {
   getListAcademy,
   getAllListPelatihan,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 const ListUser = dynamic(
   () =>
     import(
@@ -37,10 +38,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

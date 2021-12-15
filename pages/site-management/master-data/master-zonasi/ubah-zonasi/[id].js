@@ -6,6 +6,7 @@ import LoadingPage from "../../../../../components/LoadingPage";
 
 import { getAllOptionProvinces } from "../../../../../redux/actions/site-management/option/option-provinces.actions";
 import { getDetailZonasi } from "../../../../../redux/actions/site-management/zonasi.actions";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 const DetailRole = dynamic(
   () =>
     import(
@@ -34,10 +35,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

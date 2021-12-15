@@ -2,8 +2,8 @@ import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
-// import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
-import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import { middlewareAuthMitraSession } from "../../../../utils/middleware/authMiddleware";
+
 const ReviewDokumenKerjasama = dynamic(
   () =>
     import(
@@ -27,8 +27,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }) => {
       const session = await getSession({ req });
-
-      const middleware = middlewareAuthAdminSession(session);
+      const middleware = middlewareAuthMitraSession(session);
       if (!middleware.status) {
         return {
           redirect: {
@@ -37,15 +36,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      // if (!session) {
-      //   return {
-      //     redirect: {
-      //       destination: "http://dts-dev.majapahit.id/login/mitra",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
-
+      
       return {
         props: { session, title: "Review Kerjasama - Partnership" },
       };
