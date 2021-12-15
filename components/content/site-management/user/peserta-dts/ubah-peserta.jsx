@@ -1031,7 +1031,7 @@ const TambahPage = ({ token }) => {
                         ktpName,
                         "required",
                         {
-                          className: "text-danger mt-5",
+                          className: "text-danger mt-6",
                         }
                       )}
 
