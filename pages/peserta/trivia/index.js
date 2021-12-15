@@ -14,7 +14,10 @@ import {
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
 const TriviaPage = dynamic(
-	() => import("../../../user-component-new/content/peserta/trivia"),
+	() =>
+		import(
+			"../../../user-component-new/components/global/Riwayat-pelatihan-detail/index"
+		),
 	{
 		loading: function loadingNow() {
 			return <LoadingSkeleton />;
