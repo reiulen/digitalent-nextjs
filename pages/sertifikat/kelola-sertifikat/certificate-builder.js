@@ -66,8 +66,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 				getDetailPelatihan(query.id, session?.token, "sertifikat")
 			);
 
-			console.log(data);
-
 			return {
 				props: { session, title: "Certificate Builder - Sertifikat" },
 			};
