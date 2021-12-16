@@ -28,121 +28,119 @@ const Dashboard = ({ session, success }) => {
   const deleteArtikel = useSelector((state) => state.deleteArtikel);
   const cekLulus = useSelector((state) => state.cekLulusPelatihan);
 
-  const [listPeserta, setPeserta] = useState(
-    allArtikelsPeserta.artikel?.artikel.length > 0 ? (
-      allArtikelsPeserta.artikel.artikel.map((item, index) => {
-        return (
-          <tr key={index}>
-            <td className="text-center align-middle">{index + 1}</td>
-            <td className="align-middle">
-              <Image
-                unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                loader={
-                  process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                  "publikasi/images/" +
-                  item.gambar
-                }
-                src={
-                  process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                  "publikasi/images/" +
-                  item.gambar
-                }
-                width="111"
-                height="52"
-                objectFit="cover"
-                alt={"Ini Gambar"}
-              />
-            </td>
-            <td className="align-middle">{item.kategori_akademi}</td>
-            <td
-              className="align-middle"
-              style={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                maxWidth: "11rem",
-              }}
-            >
-              {item.judul}
-            </td>
-            <td className="align-middle">
-              {moment(item.created_at).format("DD MMMM YYYY")}
-            </td>
-            <td className="align-middle">
-              {" "}
-              <span
-                className={`label label-inline label-light-${
-                  item.publish === 1 ? "success" : "danger"
-                } font-weight-bold`}
-              >
-                {item.publish === 1 ? "Publish" : "Unpublish"}
-              </span>
-            </td>
-            <td className="align-middle">
-              <div className="d-flex">
-                <Link href={`/peserta/artikel/preview/${item.id}`}>
-                  <a
-                    className="btn btn-link-action btn-primary text-white mr-2"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="Detail"
-                  >
-                    <i className="ri-search-eye-fill text-white p-0"></i>
-                  </a>
-                </Link>
-                <Link href={`/peserta/artikel/edit/${item.id}`}>
-                  <a
-                    className="btn btn-link-action btn-warning text-white mr-2"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="Edit"
-                  >
-                    <i className="ri-pencil-fill text-white p-0"></i>
-                  </a>
-                </Link>
-                <button
-                  className="btn btn-link-action btn-danger text-white"
-                  data-toggle="tooltip"
-                  data-placement="bottom"
-                  title="Delete"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    Swal.fire({
-                      title: "Apakah anda yakin ?",
-                      text: "Data ini tidak bisa dikembalikan !",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "#3085d6",
-                      cancelButtonColor: "#d33",
-                      confirmButtonText: "Ya !",
-                      cancelButtonText: "Batal",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        dispatch(deleteArtikelPeserta(item.id, session.token));
-                      }
-                    });
-                  }}
-                >
-                  <i className="ri-delete-bin-6-fill text-white p-0"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-        );
-      })
-    ) : (
-      <td className="align-middle text-center" colSpan={8}>
-        Data Kosong
-      </td>
-    )
-  );
-
   const [keyword, setKeyword] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [dateRegister, setDateRegister] = useState([null, null]);
   const [dateRegisterStart, dateRegisterEnd] = dateRegister;
   const [showModal, setShowModal] = useState(false);
+
+  const listPeserta = allArtikelsPeserta.artikel?.artikel.length > 0 ? (
+    allArtikelsPeserta.artikel.artikel.map((item, index) => {
+      return (
+        <tr key={index}>
+          <td className="text-center align-middle">{index + 1}</td>
+          <td className="align-middle">
+            <Image
+              unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+              loader={
+                process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                "publikasi/images/" +
+                item.gambar
+              }
+              src={
+                process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                "publikasi/images/" +
+                item.gambar
+              }
+              width="111"
+              height="52"
+              objectFit="cover"
+              alt={"Ini Gambar"}
+            />
+          </td>
+          <td className="align-middle">{item.kategori_akademi}</td>
+          <td
+            className="align-middle"
+            style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              maxWidth: "11rem",
+            }}
+          >
+            {item.judul}
+          </td>
+          <td className="align-middle">
+            {moment(item.created_at).format("DD MMMM YYYY")}
+          </td>
+          <td className="align-middle">
+            {" "}
+            <span
+              className={`label label-inline label-light-${
+                item.publish === 1 ? "success" : "danger"
+              } font-weight-bold`}
+            >
+              {item.publish === 1 ? "Publish" : "Unpublish"}
+            </span>
+          </td>
+          <td className="align-middle">
+            <div className="d-flex">
+              <Link href={`/peserta/artikel/preview/${item.id}`}>
+                <a
+                  className="btn btn-link-action btn-primary text-white mr-2"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Detail"
+                >
+                  <i className="ri-search-eye-fill text-white p-0"></i>
+                </a>
+              </Link>
+              <Link href={`/peserta/artikel/edit/${item.id}`}>
+                <a
+                  className="btn btn-link-action btn-warning text-white mr-2"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Edit"
+                >
+                  <i className="ri-pencil-fill text-white p-0"></i>
+                </a>
+              </Link>
+              <button
+                className="btn btn-link-action btn-danger text-white"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Delete"
+                onClick={(e) => {
+                  e.preventDefault();
+                  Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini tidak bisa dikembalikan !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      dispatch(deleteArtikelPeserta(item.id, session.token));
+                    }
+                  });
+                }}
+              >
+                <i className="ri-delete-bin-6-fill text-white p-0"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      );
+    })
+  ) : (
+    <td className="align-middle text-center" colSpan={8}>
+      Data Kosong
+    </td>
+  )
 
   useEffect(() => {
     if (deleteArtikel.loading) {
@@ -486,6 +484,8 @@ const Dashboard = ({ session, success }) => {
                 <DatePicker
                   wrapperClassName="datepicker"
                   className="form-control"
+                  placeholder="Filter Tanggal"
+                  value={dateRegister}
                   name="start_date"
                   selectsRange={true}
                   onChange={(date) => setDateRegister(date)}
@@ -502,6 +502,17 @@ const Dashboard = ({ session, success }) => {
                 type="button"
                 onClick={(e) => {
                   setDateRegister([null, null]);
+                  setShowModal(false);
+                  dispatch(
+                    getAllArtikelsPeserta(
+                      session.token,
+                      1,
+                      limit,
+                      keyword,
+                      null,
+                      null
+                    )
+                  );
                 }}
               >
                 Reset
@@ -511,7 +522,6 @@ const Dashboard = ({ session, success }) => {
                 type="button"
                 onClick={() => {
                   setPage(1);
-                  setDateRegister([null, null]);
                   setShowModal(false);
                   dispatch(
                     getAllArtikelsPeserta(
@@ -520,8 +530,8 @@ const Dashboard = ({ session, success }) => {
                       limit,
                       keyword,
                       null,
-                      moment(dateRegister[0]).format("YYYY-MM-DD"),
-                      moment(dateRegister[1]).format("YYYY-MM-DD")
+                      dateRegister[0] !== null ? moment(dateRegister[0]).format("YYYY-MM-DD") : null,
+                      dateRegister[1] !== null ? moment(dateRegister[1]).format("YYYY-MM-DD") : null
                     )
                   );
                 }}

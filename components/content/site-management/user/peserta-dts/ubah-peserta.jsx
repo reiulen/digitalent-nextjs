@@ -491,7 +491,7 @@ const TambahPage = ({ token }) => {
           <div className="col-12 col-lg-9 col-xl-9">
             <div className="card card-custom card-stretch gutter-b">
               <div className="">
-                <h3 className="card-title font-weight-bolder text-dark w-100 px-5 pt-5 mb-5 mt-5 titles-1">
+                <h3 className="card-title font-weight-bolder text-dark w-100 pl-7 pt-5 mb-5 mt-5 titles-1">
                   Data Pribadi
                 </h3>
 
