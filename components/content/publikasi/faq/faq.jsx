@@ -419,7 +419,7 @@ const Faq = ({ token }) => {
                     <div className="card-header row border-0">
                         <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>FAQ</h3>
                         {
-                            role_permission.permissions.includes("publikasi.faq.manage") || role_permission.roles.includes("Super Admin") ?
+                            role_permission?.permissions.includes("publikasi.faq.manage") || role_permission?.roles.includes("Super Admin") ?
                                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                                     <Link href='/publikasi/faq/tambah-faq'>
                                         <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
@@ -614,7 +614,7 @@ const Faq = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions.includes("publikasi.faq.manage") || role_permission.roles.includes("Super Admin") ?
+                                                    role_permission?.permissions.includes("publikasi.faq.manage") || role_permission?.roles.includes("Super Admin") ?
                                                         <th style={{ width: '8vw' }}>Aksi</th>
                                                         : null
                                                 }
@@ -623,9 +623,9 @@ const Faq = ({ token }) => {
 
                                         <tbody>
                                             {
-                                                !faq || faq && faq.faq.length === 0 ?
+                                                !faq || faq && faq?.faq.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
-                                                    faq && faq.faq.map((row, i) => {
+                                                    faq && faq?.faq?.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -692,7 +692,7 @@ const Faq = ({ token }) => {
                                                                 {row.role[0].name}
                                                             </td>
                                                             {
-                                                                role_permission.permissions.includes("publikasi.faq.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                role_permission?.permissions.includes("publikasi.faq.manage") || role_permission?.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex justify-content-center">
 
                                                                         <Link
@@ -728,13 +728,13 @@ const Faq = ({ token }) => {
                             </div>
 
                             <div className="row">
-                                {faq && faq.perPage < faq.total &&
+                                {faq && faq?.perPage < faq?.total &&
                                     <>
                                         <div className={`${stylesPag.pagination} table-pagination`}>
                                             <Pagination
                                                 activePage={page}
-                                                itemsCountPerPage={faq.perPage}
-                                                totalItemsCount={faq.total}
+                                                itemsCountPerPage={faq?.perPage}
+                                                totalItemsCount={faq?.total}
                                                 pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={'>'}

@@ -58,38 +58,38 @@ const DashbardPublikasi = ({ token, user }) => {
   const [dataBarChart, setDataBarChart] = useState([
     {
       name: "Artikel",
-      publish: dashboard_publikasi.artikel.total_publish,
-      "belum dipublish": dashboard_publikasi.artikel.total_unpublish,
+      publish: dashboard_publikasi?.artikel?.total_publish,
+      "belum dipublish": dashboard_publikasi?.artikel?.total_unpublish,
     },
 
     {
       name: "Berita",
-      publish: dashboard_publikasi.berita.total_publish,
-      "belum dipublish": dashboard_publikasi.berita.total_unpublish,
+      publish: dashboard_publikasi?.berita?.total_publish,
+      "belum dipublish": dashboard_publikasi?.berita?.total_unpublish,
     },
 
     {
       name: "Video",
-      publish: dashboard_publikasi.video.total_publish,
-      "belum dipublish": dashboard_publikasi.video.total_unpublish,
+      publish: dashboard_publikasi?.video?.total_publish,
+      "belum dipublish": dashboard_publikasi?.video?.total_unpublish,
     },
 
     {
       name: "Galeri",
-      publish: dashboard_publikasi.gallery.total_publish,
-      "belum dipublish": dashboard_publikasi.gallery.total_unpublish,
+      publish: dashboard_publikasi?.gallery?.total_publish,
+      "belum dipublish": dashboard_publikasi?.gallery?.total_unpublish,
     },
 
     {
       name: "Imagetron",
-      publish: dashboard_publikasi.imagetron.total_publish,
-      "belum dipublish": dashboard_publikasi.imagetron.total_unpublish,
+      publish: dashboard_publikasi?.imagetron?.total_publish,
+      "belum dipublish": dashboard_publikasi?.imagetron?.total_unpublish,
     },
 
     {
       name: "FAQ",
-      publish: dashboard_publikasi.faq.total_publish,
-      "belum dipublish": dashboard_publikasi.faq.total_unpublish,
+      publish: dashboard_publikasi?.faq?.total_publish,
+      "belum dipublish": dashboard_publikasi?.faq?.total_unpublish,
     },
   ]);
 
@@ -294,7 +294,7 @@ const DashbardPublikasi = ({ token, user }) => {
                   style={{ marginTop: "-200px" }}
                 >
                   <h1 className="font-weight-bolder display-2">
-                    {role_publikasi.total}
+                    {role_publikasi?.total}
                   </h1>
                 </div>
               </div>
@@ -310,7 +310,7 @@ const DashbardPublikasi = ({ token, user }) => {
                       />
                       <div className=" ml-3 my-2">
                         <h3 className="font-weight-bold">
-                          {role_publikasi.total_admin_author}
+                          {role_publikasi?.total_admin_author}
                         </h3>
 
                         <div className="text-muted">Author</div>
@@ -340,7 +340,7 @@ const DashbardPublikasi = ({ token, user }) => {
           <div className="col-lg-12 col-xxl-12"></div>
 
           <div className={`${styles.topBerita} col-lg-6 col-xxl-6`}>
-            {dataDashboardBerita.top_berita ? (
+            {dataDashboardBerita?.top_berita ? (
               <div className="card card-custom card-stretch gutter-b">
                 <div className="card-header border-0">
                   <h3 className="card-title font-weight-bolder text-dark">
@@ -348,7 +348,7 @@ const DashbardPublikasi = ({ token, user }) => {
                   </h3>
                 </div>
                 <div className="card-body pt-2">
-                  {dataDashboardBerita.top_berita.map((el, i) => {
+                  {dataDashboardBerita?.top_berita?.map((el, i) => {
                     return (
                       <div className="d-flex align-items-center mb-10" key={i}>
                         <div className="symbol symbol-40 symbol-light-success mr-5">
@@ -402,7 +402,7 @@ const DashbardPublikasi = ({ token, user }) => {
           <div
             className={`${styles.topArtikel} col-lg-6 col-xxl-6 order-1 order-xxl-2`}
           >
-            {dataDashboardArtikel.top_artikel ? (
+            {dataDashboardArtikel?.top_artikel ? (
               <div className="card card-custom card-stretch gutter-b">
                 <div className="card-header border-0">
                   <h3 className="card-title font-weight-bolder text-dark">
@@ -410,7 +410,7 @@ const DashbardPublikasi = ({ token, user }) => {
                   </h3>
                 </div>
                 <div className="card-body pt-2">
-                  {dataDashboardArtikel.top_artikel.map((el, i) => {
+                  {dataDashboardArtikel?.top_artikel?.map((el, i) => {
                     return (
                       <div className="d-flex align-items-center mb-10" key={i}>
                         <div className="symbol symbol-40 symbol-light-success mr-5">
@@ -464,7 +464,7 @@ const DashbardPublikasi = ({ token, user }) => {
           <div
             className={`${styles.topGaleri} col-lg-6 col-xxl-6 order-1 order-xxl-2`}
           >
-            {dataDashboardGallery.top_gallery ? (
+            {dataDashboardGallery?.top_gallery ? (
               <div className="card card-custom card-stretch gutter-b">
                 <div className="card-header border-0">
                   <h3 className="card-title font-weight-bolder text-dark">
@@ -472,7 +472,7 @@ const DashbardPublikasi = ({ token, user }) => {
                   </h3>
                 </div>
                 <div className="card-body pt-2">
-                  {dataDashboardGallery.top_gallery.map((el, i) => {
+                  {dataDashboardGallery?.top_gallery.map((el, i) => {
                     return (
                       <div className="d-flex align-items-center mb-10" key={i}>
                         <div
@@ -528,7 +528,7 @@ const DashbardPublikasi = ({ token, user }) => {
           <div
             className={`${styles.topVideo} col-lg-6 col-xxl-6 order-1 order-xxl-2`}
           >
-            {dataDashboardVideo.top_video ? (
+            {dataDashboardVideo?.top_video ? (
               <div className="card card-custom card-stretch gutter-b">
                 <div className="card-header border-0">
                   <h3 className="card-title font-weight-bolder text-dark">
@@ -536,7 +536,7 @@ const DashbardPublikasi = ({ token, user }) => {
                   </h3>
                 </div>
                 <div className="card-body pt-2">
-                  {dataDashboardVideo.top_video.map((el, i) => {
+                  {dataDashboardVideo?.top_video?.map((el, i) => {
                     return (
                       <div className="d-flex align-items-center mb-10" key={i}>
                         <div className="symbol symbol-40 symbol-light-success mr-5">

@@ -56,9 +56,9 @@ const EditImagetron = ({ token, idUser }) => {
         }
     }, [dispatch, error, success, simpleValidator, router]);
 
-    const [id, setId] = useState(imagetron.id);
-    const [kategori_id, setKategoriId] = useState(imagetron.kategori_id)
-    const [judul, setJudulImagetron] = useState(imagetron.judul)
+    const [id, setId] = useState(imagetron?.id);
+    const [kategori_id, setKategoriId] = useState(imagetron?.kategori_id)
+    const [judul, setJudulImagetron] = useState(imagetron?.judul)
     const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
     // const [gambar, setGambar] = useState('/assets/media/default.jpg')
     // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
@@ -67,13 +67,13 @@ const EditImagetron = ({ token, idUser }) => {
     );
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
     const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
-    const [gambarName, setGambarName] = useState(imagetron.gambar)
-    const [url_link, setUrlRedirect] = useState(imagetron.url_link)
-    const [publish, setPublish] = useState(imagetron.publish)
+    const [gambarName, setGambarName] = useState(imagetron?.gambar)
+    const [url_link, setUrlRedirect] = useState(imagetron?.url_link)
+    const [publish, setPublish] = useState(imagetron?.publish)
     const [users_id, setUserId] = useState(idUser)
     const [_method, setMethod] = useState("put");
-    const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date(imagetron.tanggal_publish) : null);
-    const [disablePublishDate, setDisablePublishDate] = useState(imagetron.publish === 0 ? true : false)
+    const [publishDate, setPublishDate] = useState(imagetron?.tanggal_publish ? new Date(imagetron?.tanggal_publish) : null);
+    const [disablePublishDate, setDisablePublishDate] = useState(imagetron?.publish === 0 ? true : false)
 
     const onChangeGambar = (e) => {
         if (e.target.name === 'gambar') {
@@ -313,8 +313,8 @@ const EditImagetron = ({ token, idUser }) => {
                                             <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori &&
-                                            kategori.kategori &&
-                                            kategori.kategori.map((row) => {
+                                            kategori?.kategori &&
+                                            kategori?.kategori.map((row) => {
                                                 return (
                                                     row.jenis_kategori == "Imagetron" ?
                                                         <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
@@ -435,7 +435,7 @@ const EditImagetron = ({ token, idUser }) => {
                             </div>
 
                             {
-                                role_permission.roles.includes("Super Admin") ?
+                                role_permission?.roles.includes("Super Admin") ?
                                     <div className="form-group row">
                                         <label
                                             htmlFor="staticEmail"
@@ -466,7 +466,7 @@ const EditImagetron = ({ token, idUser }) => {
                             }
 
                             {
-                                role_permission.roles.includes("Super Admin") ?
+                                role_permission?.roles.includes("Super Admin") ?
                                     disablePublishDate === false ?
                                         <div className="form-group">
                                             <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>

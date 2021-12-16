@@ -40,21 +40,21 @@ const StepOne = ({ token, tokenPermission }) => {
   );
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
-  const [academy_id, setAcademyId] = useState(subtance.academy_id);
+  const [academy_id, setAcademyId] = useState(subtance?.academy_id);
   const [academyLabel, setAcademyLabel] = useState(
-    (subtance.academy && subtance.academy.name) || "Silahkan Pilih Akademi"
+    (subtance?.academy && subtance?.academy.name) || "Silahkan Pilih Akademi"
   );
   const [themeLabel, setThemeLabel] = useState(
-    (subtance.theme && subtance.theme.name) || "Silahkan Pilih Tema"
+    (subtance?.theme && subtance?.theme.name) || "Silahkan Pilih Tema"
   );
   const [trainingLabel, setTrainingLabel] = useState(
-    (subtance.training && subtance.training.name) || "Silahkan Pilih Pelatihan"
+    (subtance?.training && subtance?.training?.name) || "Silahkan Pilih Pelatihan"
   );
-  const [theme_id, setThemeId] = useState(subtance && subtance.theme_id);
+  const [theme_id, setThemeId] = useState(subtance && subtance?.theme_id);
   const [training_id, setTrainingId] = useState(
-    subtance && subtance.training_id
+    subtance && subtance?.training_id
   );
-  const [category, setCategory] = useState(subtance && subtance.category);
+  const [category, setCategory] = useState(subtance && subtance?.category);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -160,8 +160,8 @@ const StepOne = ({ token, tokenPermission }) => {
 
   let optionsTema = [];
 
-  data.data &&
-    data.data.map((item) => {
+  data?.data &&
+    data?.data?.map((item) => {
       return optionsTema.push({ label: item.label, value: item.value });
     });
 
