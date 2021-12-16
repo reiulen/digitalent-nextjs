@@ -881,7 +881,7 @@ const GeneralPage = ({ token }) => {
 
                                 {simpleValidator.current.message(
                                   "namaExternalLinks",
-                                  items.name,
+                                  items.name[index],
                                   "required",
                                   { className: "text-danger" }
                                 )}
@@ -945,7 +945,7 @@ const GeneralPage = ({ token }) => {
                                 {simpleValidator.current.message(
                                   "linkExternalLinks",
                                   items.link,
-                                  "required|url",
+                                  items.link.includes("http") ? "" : "required|url",
                                   { className: "text-danger" }
                                 )}
                               </div>

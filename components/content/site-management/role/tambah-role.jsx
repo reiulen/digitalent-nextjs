@@ -96,7 +96,7 @@ const TambahRole = ({ token }) => {
                   type="checkbox"
                   name="Checkboxes1"
                   checked={item.view === true || item.view === 1}
-                  onClick={() => {
+                  onChange={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
                         filter.view = !(
@@ -129,7 +129,7 @@ const TambahRole = ({ token }) => {
                   type="checkbox"
                   name="Checkboxes1"
                   checked={item.manage === true || item.manage === 1}
-                  onClick={() => {
+                  onChange={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
                         filter.manage = !(
@@ -189,7 +189,7 @@ const TambahRole = ({ token }) => {
                         <input
                           type="checkbox"
                           name="Checkboxes1"
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -213,7 +213,7 @@ const TambahRole = ({ token }) => {
                         <input
                           type="checkbox"
                           name="Checkboxes1"
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -237,7 +237,7 @@ const TambahRole = ({ token }) => {
                         <input
                           type="checkbox"
                           name="Checkboxes1"
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -261,7 +261,7 @@ const TambahRole = ({ token }) => {
                         <input
                           type="checkbox"
                           name="Checkboxes1"
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -285,7 +285,7 @@ const TambahRole = ({ token }) => {
                         <input
                           type="checkbox"
                           name="Checkboxes1"
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -309,7 +309,7 @@ const TambahRole = ({ token }) => {
                         <input
                           type="checkbox"
                           name="Checkboxes1"
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -339,7 +339,7 @@ const TambahRole = ({ token }) => {
                         type="checkbox"
                         name="Checkboxes1"
                         checked={sub.view === true || sub.view === 1}
-                        onClick={() => {
+                        onChange={() => {
                           permission.filter((filter) => {
                             if (sub.id === filter.id) {
                               filter.view = !(
@@ -366,7 +366,7 @@ const TambahRole = ({ token }) => {
                         type="checkbox"
                         name="Checkboxes1"
                         checked={sub.manage === true || sub.manage === 1}
-                        onClick={() => {
+                        onChange={() => {
                           permission.filter((filter) => {
                             if (sub.id === filter.id) {
                               filter.manage = !(
@@ -420,7 +420,7 @@ const TambahRole = ({ token }) => {
                             type="checkbox"
                             name="Checkboxes1"
                             checked={child.view === true || child.view === 1}
-                            onClick={() => {
+                            onChange={() => {
                               permission.filter((filter) => {
                                 if (child.id === filter.id) {
                                   filter.view = !(
@@ -452,7 +452,7 @@ const TambahRole = ({ token }) => {
                             checked={
                               child.manage === true || child.manage === 1
                             }
-                            onClick={() => {
+                            onChange={() => {
                               permission.filter((filter) => {
                                 if (child.id === filter.id) {
                                   filter.manage = !(
@@ -508,7 +508,7 @@ const TambahRole = ({ token }) => {
                 type="checkbox"
                 name="Checkboxes1"
                 checked={item.view === true || item.view === 1}
-                onClick={() => {
+                onChange={() => {
                   permission.filter((filter) => {
                     if (item.id === filter.id) {
                       filter.view = !(
@@ -531,7 +531,7 @@ const TambahRole = ({ token }) => {
               <input
                 type="checkbox"
                 name="Checkboxes1"
-                onClick={() => {
+                onChange={() => {
                   permission.filter((filter) => {
                     if (item.id === filter.id) {
                       filter.manage = !(
