@@ -51,7 +51,7 @@ export default function Bookmark({ session }) {
 	useEffect(() => {
 		dispatch(getAllBookmark(session?.token));
 	}, [dispatch, allBookmark.page]);
-	console.log(allBookmark);
+
 	return (
 		<PesertaWrapper>
 			<Row className="my-n10 my-md-0">
@@ -83,7 +83,7 @@ export default function Bookmark({ session }) {
 											></i>
 										</Button>
 										<ShareOverlay
-											url={`http://dts-dev.majapahit.id/detail/pelatihan/${el.id}?akademiId=`}
+											url={`http://dts-dev.majapahit.id/detail/pelatihan/${el.id}?akademiId=${el.akademi_id}`}
 											quote={el.name}
 										>
 											<Button
@@ -108,7 +108,9 @@ export default function Bookmark({ session }) {
 												: `${style.btn_disabled_tema} p-0 mb-0 `
 										}
 										onClick={() => {
-											router.push(`/detail/pelatihan/${el.id}`);
+											router.push(
+												`/detail/pelatihan/${el.id}?akademiId=${el.akademi_id}`
+											);
 										}}
 										style={{ borderRadius: "12px" }}
 									>
