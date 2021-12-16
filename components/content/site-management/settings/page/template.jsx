@@ -34,7 +34,7 @@ export default function Template(props) {
   let dispatch = useDispatch();
 
   const optionsStatus = [
-    { value: "menunggu", label: "Seleksi Administrasi" },// => diubah menjadi Seleksi Administrasi
+    { value: "menunggu", label: "Seleksi Administrasi" }, // => diubah menjadi Seleksi Administrasi
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
     { value: "tes substansi", label: "Tes Substansi" },
     { value: "tidak lulus tes subtansi", label: "Tidak Lulus Tes Substansi" },
@@ -52,13 +52,15 @@ export default function Template(props) {
   };
 
   const onChangeSubject = (e) => {
-    setSubject(e.target.value)
+    setSubject(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      dispatch(postTemplate(props.token, subject, body, status.value.toLowerCase()));
+      dispatch(
+        postTemplate(props.token, subject, body, status.value.toLowerCase())
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -90,7 +92,7 @@ export default function Template(props) {
       .then((items) => {
         setSubject(items.data.data.training_rules.subject);
         setBody(items.data.data.training_rules.body);
-      })
+      });
   }, [props.token, status]);
 
   return (
@@ -103,7 +105,10 @@ export default function Template(props) {
             </div>
             <div className="form-group">
               <label>Status</label>
-              <div className="mr-4" style={{ zIndex: '99', position: 'relative' }}>
+              <div
+                className="mr-4"
+                style={{ zIndex: "99", position: "relative" }}
+              >
                 <Select
                   placeholder="Pilih Status"
                   options={optionsStatus}
@@ -114,12 +119,9 @@ export default function Template(props) {
                   }}
                 />
               </div>
-              {simpleValidator.current.message(
-                "status",
-                status,
-                "required",
-                { className: "text-danger" }
-              )}
+              {simpleValidator.current.message("status", status, "required", {
+                className: "text-danger",
+              })}
             </div>
             <div className="form-group mr-4">
               <label>Subject</label>
@@ -135,12 +137,9 @@ export default function Template(props) {
                   simpleValidator.current.showMessageFor("subject");
                 }}
               />
-              {simpleValidator.current.message(
-                "subject",
-                subject,
-                "required",
-                { className: "text-danger" }
-              )}
+              {simpleValidator.current.message("subject", subject, "required", {
+                className: "text-danger",
+              })}
             </div>
             <div className="form-group mr-4">
               <div className="ckeditor">
@@ -159,34 +158,35 @@ export default function Template(props) {
                 ) : (
                   <p>Tunggu Sebentar</p>
                 )}
-                {simpleValidator.current.message(
-                  "data",
-                  body,
-                  "required",
-                  { className: "text-danger" }
-                )}
+                {simpleValidator.current.message("data", body, "required", {
+                  className: "text-danger",
+                })}
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-end mb-5 mr-4">
-            <button
-              type="reset"
-              className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
-              onClick={(e) => {
-                setStatus("")
-                setSubject("")
-                setBody("")
-              }}
-            >
-              Reset
-            </button>
-            <button
-              type="submit"
-              className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-            >
-              Kirim
-            </button>
-          </div>
+          {localStorage
+            .getItem("permissions")
+            .includes("site_management.setting.pelatihan.manage") && (
+            <div className="d-flex justify-content-end mb-5 mr-4">
+              <button
+                type="reset"
+                className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                onClick={(e) => {
+                  setStatus("");
+                  setSubject("");
+                  setBody("");
+                }}
+              >
+                Reset
+              </button>
+              <button
+                type="submit"
+                className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+              >
+                Kirim
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>
