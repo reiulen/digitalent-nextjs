@@ -1,12 +1,12 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 const EditMitra = dynamic(
   () => import("../../../components/content/partnership/mitra/edit"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function EditMitraPage(props) {

@@ -9,7 +9,7 @@ import { getDetailBerita } from "../../../../redux/actions/publikasi/berita.acti
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
 import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action"
@@ -18,7 +18,7 @@ const EditBerita = dynamic(
   () => import("../../../../components/content/publikasi/berita/edit"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

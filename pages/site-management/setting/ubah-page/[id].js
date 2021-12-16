@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getDetailPages } from "../../../../redux/actions/site-management/settings/page.actions";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
@@ -12,7 +12,7 @@ const UbahPage = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

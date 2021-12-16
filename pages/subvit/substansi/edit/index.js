@@ -1,4 +1,5 @@
-import EditSubstansiStep1 from "../../../../components/content/subvit/substansi/edit/step-1";
+import dynamic from "next/dynamic";
+// import EditSubstansiStep1 from "../../../../components/content/subvit/substansi/edit/step-1";
 import { getSession } from "next-auth/client";
 
 import { getDetailSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
@@ -9,6 +10,17 @@ import {
   dropdownTema,
 } from "../../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const EditSubstansiStep1 = dynamic(
+  () => import("../../../../components/content/subvit/substansi/edit/step-1"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditSubstansiStep1Page(props) {
   const session = props.session.user.user.data;

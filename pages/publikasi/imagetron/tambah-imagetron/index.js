@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
@@ -12,7 +12,7 @@ const Tambah = dynamic(
   () => import("../../../../components/content/publikasi/imagetron/tambah"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

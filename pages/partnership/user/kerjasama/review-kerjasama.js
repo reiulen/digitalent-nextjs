@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
 import { middlewareAuthMitraSession } from "../../../../utils/middleware/authMiddleware";
@@ -7,7 +7,7 @@ import { middlewareAuthMitraSession } from "../../../../utils/middleware/authMid
 const ReviewKerjasama = dynamic(
   () =>
     import("../../../../components/content/partnership/user/reviewKerjasama"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function ReviewKerjasamaPage(props) {

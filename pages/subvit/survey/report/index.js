@@ -1,10 +1,22 @@
+import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import ReportSurvey from "../../../../components/content/subvit/survey/report-survey";
+// import ReportSurvey from "../../../../components/content/subvit/survey/report-survey";
 import Layout from "../../../../components/templates/layout.component";
 
 import { allReportSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
 import { wrapper } from "../../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const ReportSurvey = dynamic(
+  () => import("../../../../components/content/subvit/survey/report-survey"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ReportSurveyPage(props) {
   const session = props.session.user.user.data;

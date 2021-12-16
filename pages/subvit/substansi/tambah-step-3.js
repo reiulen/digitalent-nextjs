@@ -1,9 +1,21 @@
-import StepThree from "../../../components/content/subvit/substansi/tambah/step-3.jsx";
+import dynamic from "next/dynamic";
+// import StepThree from "../../../components/content/subvit/substansi/tambah/step-3.jsx";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware.js";
 import { storeCommitmentStep3 } from "../../../redux/actions/pelatihan/function.actions.js";
 import { getOneSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions.js";
 import { wrapper } from "../../../redux/store";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const StepThree = dynamic(
+  () => import("../../../components/content/subvit/substansi/tambah/step-3.jsx"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function TambahBankSoalTesSubstansiStep3(props) {
   const session = props.session.user.user.data;
