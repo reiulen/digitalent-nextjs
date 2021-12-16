@@ -169,6 +169,7 @@ export const postViaFilter = (
       )
       .then((response) => {
         if(response.data.status){
+          window.open(response.data.data, "_blank")
           Swal.fire("Berhasil", response.data.message, "success").then(() => {
             router.push("/partnership/user/auth/login");
           });
@@ -231,6 +232,7 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
         }
       )
       .then((response) => {
+        window.open(response.data.data, "_blank")
         if(response.data.status){
           Swal.fire("Berhasil", response.data.message, "success").then(() => {
             router.push("/partnership/user/auth/login");

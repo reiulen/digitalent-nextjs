@@ -187,7 +187,6 @@ const Navigationbar = ({ session }) => {
 
 	useEffect(() => {
 		getMenu();
-		getDataGeneral();
 
 		if (!localStorage.getItem("navbar")) {
 			getDataGeneral();
@@ -793,7 +792,7 @@ const Navigationbar = ({ session }) => {
 								{/* Button Masuk dan Daftar */}
 								<Link href="/login">
 									<a className="mx-4 mx-md-2">
-										<button className="btn btn-sm btn-block btn-login-peserta btn-outline-primary-new my-2 justify-content-center py-3">
+										<button className={`btn btn-sm btn-block btn-login-peserta btn-outline-primary-new my-2 justify-content-center py-3 color-hover-${warna}`}>
 											{/* <IconLogin className="mr-2 icon-login" /> */}
 											<i className="ri-login-box-line mr-2"></i>
 											Masuk

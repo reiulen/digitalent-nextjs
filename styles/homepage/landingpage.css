@@ -293,6 +293,21 @@
   color: #1f1f1f;
 }
 
+.color-hover-primary:hover {
+  background-color: #0100be;
+  border-color: #0100be;
+}
+
+.color-hover-secondary:hover {
+  background-color: #2a62ed;
+  border-color: #2a62ed;
+}
+
+.color-hover-extras:hover {
+  background-color: #5ec8f2;
+  border-color: #5ec8f2;
+}
+
 .color-primary-primary {
   background-color: #0100be;
   border: #0100be;
@@ -307,6 +322,8 @@
   background-color: #5ec8f2;
   border: #5ec8f2;
 }
+
+
 
 .color-primary-primary:hover {
   background-color: #0100be;
