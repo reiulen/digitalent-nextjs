@@ -156,8 +156,8 @@ export const getAllListsPeserta =
 
 
     } catch (error) {
-      Swal.fire("Ooopss  !", JSON.stringify(error.message), "error").then(() => {
-      });
+      // Swal.fire("Ooopss  !", JSON.stringify(error.message), "error").then(() => {
+      // });
     }
   };
 
@@ -185,7 +185,7 @@ export const getAllListsPeserta =
 
 
     } catch (error) {
-      Swal.fire("Ooopss  !", JSON.stringify(error.message), "error").then(() => {
-      });
+      // Swal.fire("Ooopss  !", JSON.stringify(error.message), "error").then(() => {
+      // });
     }
   };
