@@ -88,6 +88,16 @@
   border-radius: 40px;
 }
 
+.badge-card-pelatihan-new-close {
+  background-color: #e6f2ff;
+  color: #0063cc;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  border-radius: 40px;
+  filter: saturate(0);
+}
+
 .wishlist-card-new {
   border-radius: 50% !important;
   font-size: 20px;
@@ -99,6 +109,13 @@
   width: 100%;
   height: 180px;
   position: relative;
+}
+
+.parent-image-pelatihan-new-close {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  filter: saturate(0);
 }
 
 .parent-image-pelatihan-new-hover {
@@ -118,6 +135,12 @@
   border-radius: 50%;
   border: 4px solid #ffffff !important;
   padding: 0;
+}
+.mitra-pelatihan-image-new-close {
+  border-radius: 50%;
+  border: 4px solid #ffffff !important;
+  padding: 0;
+  filter: saturate(0);
 }
 
 .text-mitra-new {

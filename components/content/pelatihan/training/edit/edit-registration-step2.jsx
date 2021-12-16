@@ -11,6 +11,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 import ModalPreview from "../components/modal-preview-form.component";
+import ModalProfile from "../components/modal-profile-peserta";
 import { putTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
 
 import FormManual from "../components/step-registration/form-manual";
@@ -42,10 +43,10 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
 
   //  FORM BUILDER
   const [formBuilderManual, setFormBuilderManual] = useState(
-    getEditTraining2.FormBuilder
+    getEditTraining2.FormBuilder || []
   );
   const [formBuilderCopy, setFormBuilderCopy] = useState(
-    getEditTraining2.FormBuilder
+    getEditTraining2.FormBuilder || []
   );
   // END FORM BUILDER
 
@@ -252,10 +253,26 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   return (
     <div className="col-lg-12 order-1 px-0">
       <div className="card card-custom card-stretch gutter-b">
+        <div className="card-header border-0">
+          <h1
+            className="font-weight-bolder card-title"
+            style={{ fontSize: "20px" }}
+          >
+            Form Pendaftaran
+          </h1>
+          <div className="card-toolbar justify-content-between d-flex">
+            <button
+              className="btn btn-outline-primary px-6 font-weight-bolder"
+              data-toggle="modal"
+              data-target="#modalProfile"
+              type="button"
+            >
+              Data Profile Peserta
+            </button>
+          </div>
+        </div>
         <div className="card-body py-4">
           <form onSubmit={submitHandler}>
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
-
             <div className="form-group mb-4">
               <label className="col-form-label font-weight-bold">
                 Tambah Form
@@ -347,6 +364,17 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
           propsToken={token}
         />
       </Modal>
+
+      <div
+        className="modal fade"
+        id="modalProfile"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="modalProfile"
+        aria-hidden="true"
+      >
+        <ModalProfile />
+      </div>
     </div>
   );
 };

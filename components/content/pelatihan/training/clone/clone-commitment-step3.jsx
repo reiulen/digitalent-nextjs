@@ -208,13 +208,13 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
               )}
               <div className="form-group">
                 <div className="text-right">
-                  <button
+                  {/* <button
                     className="btn btn-light-ghost-rounded-full mr-2"
                     type="button"
                     onClick={() => propsStep(2)}
                   >
-                    Batal
-                  </button>
+                    Kembali
+                  </button> */}
                   <button
                     className="btn btn-primary-rounded-full"
                     type="submit"

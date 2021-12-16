@@ -8,7 +8,7 @@ const CheckboxReference = ({ id, token, onChangeValue }) => {
     axios
       .get(
         process.env.END_POINT_API_SITE_MANAGEMENT +
-          `api/reference/detail/${id}`,
+          `api/option/reference-choose/${id}?paginate=false`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -16,7 +16,7 @@ const CheckboxReference = ({ id, token, onChangeValue }) => {
         }
       )
       .then((res) => {
-        setOptionsReference(res.data.data.value_reference);
+        setOptionsReference(res.data.data);
       });
   }, []);
 
@@ -26,15 +26,15 @@ const CheckboxReference = ({ id, token, onChangeValue }) => {
         optionsReference.length > 0 &&
         optionsReference.map((row, i) => (
           <>
-            <div className="form-check pb-3" key={row.value}>
+            <div className="form-check pb-3" key={row.label}>
               <input
                 type="checkbox"
                 name="checkboxRegister"
                 className="form-check-input"
-                value={row.value}
-                onChange={(e) => onChangeValue(row.value)}
+                value={row.label}
+                onChange={(e) => onChangeValue(row.label)}
               />
-              <label className="form-check-label">{row.value}</label>
+              <label className="form-check-label">{row.label}</label>
             </div>
           </>
         ))}
