@@ -4800,6 +4800,13 @@ fieldset:disabled a.btn {
   border-radius: 30px;
 }
 
+.btn-outline-primary{
+  color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: none;
+  border-radius: 50px;
+}
+
 .btn-warning-rounded-full {
   color: #ffffff !important;
   background-color: var(--warning);
