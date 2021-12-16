@@ -251,7 +251,6 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 	}, [dataAsalSekolah]);
 
 	useEffect(() => {
-		console.log(inputSekolah);
 		if (inputSekolah.length > 3) {
 			setTimeout(() => {
 				dispatch(getDataAsalSekolah(token, inputSekolah));
