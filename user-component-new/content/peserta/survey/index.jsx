@@ -66,7 +66,7 @@ const TestSubstansi = () => {
                 <td>&nbsp;</td>
                 <td>
                   {" "}
-                  Peserta wajib menjawab seluruh survey yang berjumlah
+                  Peserta wajib menjawab seluruh survey yang berjumlah &nbsp;
                   {question || 50} pertanyaan.
                 </td>
               </tr>

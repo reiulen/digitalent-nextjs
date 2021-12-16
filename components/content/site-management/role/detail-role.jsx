@@ -99,6 +99,7 @@ const DetailRole = ({ token }) => {
 
           {item.list_sub_menu.map((sub) => {
             return (
+              <>
               <tr className="" key={sub.id}>
                 <td className="text-left">
                   <div className="d-flex align-items-center ml-6">
@@ -251,6 +252,63 @@ const DetailRole = ({ token }) => {
                   </label>
                 </td>
               </tr>
+              {sub.list_sub_menu.map((child) => {
+                  return (
+                    <tr key={child.id}>
+                      <td className="text-left">
+                        <div className="d-flex align-items-center ml-6">
+                          <div
+                            style={btnMin}
+                            className="cursor-pointer mr-3 ml-6"
+                          >
+                            <Image
+                              src={IconMinus}
+                              width={12}
+                              height={12}
+                              alt="plus-icon"
+                            />
+                          </div>
+                          <p className="mb-0">{child.name}</p>
+                        </div>
+                      </td>
+                      <td
+                        className="text-right child-permission align-middle"
+                        style={{ width: "10rem" }}
+                      ></td>
+                      <td
+                        className="text-right child-permission align-middle"
+                        style={{ width: "10rem" }}
+                      >
+                        <label className="checkbox">
+                          <input
+                            type="checkbox"
+                            name="Checkboxes1"
+                            checked={child.view === true || child.view === 1}
+                            disabled
+                          />
+                          <span></span>
+                        </label>
+                      </td>
+                      <td
+                        className="text-right child-permission align-middle"
+                        style={{ width: "0" }}
+                      >
+                        <label className="checkbox">
+                          <input
+                            type="checkbox"
+                            name="Checkboxes1"
+                            checked={
+                              child.manage === true || child.manage === 1
+                            }
+                            disabled
+                          />
+                          <span></span>
+                        </label>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </>
             );
           })}
         </>

@@ -23,7 +23,7 @@ export const loadDataPrompt = (token) => {
         payload: data,
       });
     } catch (error) {
-      Swal.fire("Oops...", "Isi data dengan benar !", "error");
+      // Swal.fire("Oops...", "Isi data dengan benar !", "error");
     }
   };
 };
@@ -49,7 +49,7 @@ export const postTemplate = (token, subject, body, status) => {
         });
       })
       .catch((error) => {
-        Swal.fire("Oops...", error.response.data.message, "error");
+        // Swal.fire("Oops...", error.response.data.message, "error");
       });
   };
 };
@@ -82,7 +82,7 @@ export const putDataPrompt = (token, notification, email) => {
         router.push("/partnership/user/auth/login");
       });
     } catch (error) {
-      Swal.fire("Oops...", "Isi data dengan benar !", "error");
+      // Swal.fire("Oops...", "Isi data dengan benar !", "error");
     }
   };
 };
@@ -118,7 +118,7 @@ export const postKetentuan = (
         });
       })
       .catch((error) => {
-        Swal.fire("Oops...", "Isi data dengan benar !", "error");
+        // Swal.fire("Oops...", "Isi data dengan benar !", "error");
       });
   };
 };
@@ -180,7 +180,7 @@ export const postViaFilter = (
         }
       })
       .catch((error) => {
-        Swal.fire("Oops...", error.message, "error");
+        // Swal.fire("Oops...", error.message, "error");
 
       });
   };
@@ -243,7 +243,7 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
         }
       })
       .catch((error) => {
-        Swal.fire("Oops...", "Isi data dengan benar !", "error");
+        // Swal.fire("Oops...", "Isi data dengan benar !", "error");
       });
   };
 };
@@ -280,7 +280,7 @@ export const postFileSize = (
         });
       })
       .catch((error) => {
-        Swal.fire("Oops...", "Isi data dengan benar !", "error");
+        // Swal.fire("Oops...", "Isi data dengan benar !", "error");
       });
   };
 };
