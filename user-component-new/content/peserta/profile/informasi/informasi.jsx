@@ -101,7 +101,7 @@ const Informasi = ({ funcViewEdit, token }) => {
 									setShowModalKtp(true);
 								}}
 							>
-								{dataPribadi.File_ktp.split("/ktp/")}
+								Lihat KTP
 							</a>
 						) : (
 							<p>-</p>
