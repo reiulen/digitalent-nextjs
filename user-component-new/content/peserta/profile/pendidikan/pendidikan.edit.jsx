@@ -181,6 +181,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		let data = {};
+		if (
+			!asalSekolah.includes("Lainnya") ||
+			jengjangPendidikan.label != "SMA/Sederajat"
+		) {
+			simpleValidator.current.fields["sekolah lainnya"] = true;
+		}
+
 		if (simpleValidator.current.allValid()) {
 			if (jengjangPendidikan.label === "Tidak Sekolah") {
 				data = {
@@ -207,15 +214,27 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 					ijasah: ijazah,
 				};
 			} else if (jengjangPendidikan.label === "SMA/Sederajat") {
-				data = {
-					jenjang: jengjangPendidikan.label,
-					asal_pendidikan: asalSekolah,
-					lainya: "-",
-					program_studi: "0",
-					ipk: "0",
-					tahun_masuk: parseInt(tahunMasuk),
-					ijasah: ijazah,
-				};
+				if (!sekolahLainnya) {
+					data = {
+						jenjang: jengjangPendidikan.label,
+						asal_pendidikan: asalSekolah,
+						lainya: "-",
+						program_studi: "0",
+						ipk: "0",
+						tahun_masuk: parseInt(tahunMasuk),
+						ijasah: ijazah,
+					};
+				} else {
+					data = {
+						jenjang: jengjangPendidikan.label,
+						asal_pendidikan: sekolahLainnya,
+						lainya: "-",
+						program_studi: "0",
+						ipk: "0",
+						tahun_masuk: parseInt(tahunMasuk),
+						ijasah: ijazah,
+					};
+				}
 			} else if (
 				jengjangPendidikan.label === "D3" ||
 				jengjangPendidikan.label === "D4" ||
@@ -321,7 +340,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 	}, [dataAsalSekolah]);
 
 	useEffect(() => {
-		console.log(inputSekolah);
 		if (inputSekolah.length > 3) {
 			setTimeout(() => {
 				dispatch(getDataAsalSekolah(token, inputSekolah));
@@ -363,52 +381,62 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 					</Form.Group>
 					{jengjangPendidikan.value === 19 && <div className=""></div>}
 					{jengjangPendidikan.label === "SMA/Sederajat" && (
-						<Form.Group className="mb-3" controlId="formGridAdress1">
-							<Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-							<div className="position-relative" style={{ zIndex: "4" }}>
-								<Select
-									// list="data"
-									placeholder={asalSekolah || "Pilih Sekolah"}
-									options={optionsAsalSekolah}
-									// className="form-control"
-									defaultValue={asalSekolah}
-									onChange={(e) => {
-										setAsalSekolah(e.label);
-									}}
-								/>
-							</div>
-							{simpleValidator.current.message(
-								"asal sekolah",
-								asalSekolah,
-								asalSekolah === null ? "required" : "",
-								{
-									className: "text-danger",
-								}
-							)}
-							<Col md={6}>
-								<Form.Group className="mb-3" controlId="formGridAddress1">
-									<Form.Label>Nama Institusi Pendidikan</Form.Label>
-									<Form.Control
-										placeholder="Silahkan Masukkan Nama Institusi"
-										onChange={(e) => {
-											setSekolahLainnya(e.target.value);
-										}}
-										onBlur={() =>
-											simpleValidator.current.showMessageFor("tahun masuk")
-										}
-										type="text"
-									/>
+						<Row>
+							<Col>
+								<Form.Group className="mb-3" controlId="formGridAdress1">
+									<Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+									<div className="position-relative" style={{ zIndex: "4" }}>
+										<Select
+											// list="data"
+											placeholder={asalSekolah || "Pilih Sekolah"}
+											options={optionsAsalSekolah}
+											onInputChange={(e) => {
+												setInputSekolah(e);
+											}}
+											// className="form-control"
+
+											defaultValue={asalSekolah}
+											onChange={(e) => {
+												setAsalSekolah(e.label);
+											}}
+										/>
+									</div>
 									{simpleValidator.current.message(
-										"sekolah lainnya",
-										sekolahLainnya,
-										"required",
+										"asal sekolah",
+										asalSekolah,
+										asalSekolah === null ? "required" : "",
 										{
 											className: "text-danger",
 										}
 									)}
 								</Form.Group>
 							</Col>
-						</Form.Group>
+							{lainnya && (
+								<Col md={6}>
+									<Form.Group className="mb-3" controlId="formGridAddress1">
+										<Form.Label>Nama Institusi Pendidikan</Form.Label>
+										<Form.Control
+											placeholder="Silahkan Masukkan Nama Institusi"
+											onChange={(e) => {
+												setSekolahLainnya(e.target.value);
+											}}
+											onBlur={() =>
+												simpleValidator.current.showMessageFor("tahun masuk")
+											}
+											type="text"
+										/>
+										{simpleValidator.current.message(
+											"sekolah lainnya",
+											sekolahLainnya,
+											"required",
+											{
+												className: "text-danger",
+											}
+										)}
+									</Form.Group>
+								</Col>
+							)}
+						</Row>
 					)}
 
 					{jengjangPendidikan.label === "D3" && showInputCollegeName === false && (
@@ -424,6 +452,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -482,6 +513,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -539,6 +573,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -596,6 +633,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -653,6 +693,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -710,6 +753,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -767,6 +813,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -824,6 +873,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -881,6 +933,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -938,6 +993,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);

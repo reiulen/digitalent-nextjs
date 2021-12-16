@@ -4,6 +4,7 @@ import CustomButton from "../../../content/peserta/riwayat-pelatihan/card/Button
 import axios from "axios";
 import { Col, Row, Card, Button, Modal } from "react-bootstrap";
 import Cookies from "js-cookie";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 export default function ButtonStatusPeserta({ data, token }) {
 	const router = useRouter();
 
@@ -17,7 +18,6 @@ export default function ButtonStatusPeserta({ data, token }) {
 		},
 	};
 	const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
-
 	// upload sertifikasi
 	const uploadSertifikasi = async (sertifikasi, id) => {
 		try {
@@ -30,10 +30,10 @@ export default function ButtonStatusPeserta({ data, token }) {
 
 			const { data } = await axios.post(link, body, config);
 			if (data) {
-				Swal.fire(data?.message, "Berhasil upload sertifikasi", "success");
+				SweatAlert("Berhasil", "Berhasil upload sertifikasi", "success");
 			}
 		} catch (error) {
-			Swal.fire("Gagal", `${error.response.data?.message}`, "error");
+			SweatAlert("Gagal", `${error.response.data?.message}`, "error");
 		}
 	};
 
@@ -215,7 +215,11 @@ export default function ButtonStatusPeserta({ data, token }) {
 			  data?.status == "Lulus Pelatihan" ? (
 				<Fragment>
 					{data?.sertifikasi != "0" && (
-						<CustomButton outline click={() => setShowModalSertifikasi(true)}>
+						<CustomButton
+							outline
+							click={() => setShowModalSertifikasi(true)}
+							disabled={data?.upload_sertifikasi ? true : false}
+						>
 							<i className="ri-upload-2-fill mr-2"></i>
 							Unggah Sertifikasi
 						</CustomButton>
@@ -257,7 +261,11 @@ export default function ButtonStatusPeserta({ data, token }) {
 			) : data?.status == "diterima" ? (
 				<Fragment>
 					{data?.sertifikasi != "0" && (
-						<CustomButton outline click={() => setShowModalSertifikasi(true)}>
+						<CustomButton
+							outline
+							click={() => setShowModalSertifikasi(true)}
+							disabled={data?.upload_sertifikasi ? true : false}
+						>
 							<i className="ri-upload-2-fill mr-2"></i>
 							Unggah Sertifikasi
 						</CustomButton>
@@ -341,7 +349,9 @@ export default function ButtonStatusPeserta({ data, token }) {
 				size="lg"
 			>
 				<Modal.Header>
-					<Modal.Title>Tambah Sertifikasi</Modal.Title>
+					<Modal.Title className="text-capitalize">
+						Tambah Sertifikasi {data?.sertifikasi}
+					</Modal.Title>
 					<button
 						type="button"
 						className="close"
