@@ -34,7 +34,7 @@ export const loadDataZonasi = (token, type, page) => {
 				page,
 			});
 		} catch (error) {
-			notify(error.response.data.message);
+			// notify(error.response.data.message);
 		}
 	};
 };
@@ -75,7 +75,7 @@ export const loadDataPeserta = (token, type, page) => {
 				});
 			}
 		} catch (error) {
-			notify(error.response.data.message);
+			// notify(error.response.data.message);
 		}
 	};
 };
@@ -102,7 +102,7 @@ export const loadDataZonasiNext = (token, type, page) => {
 				payload: data.data.list_zonasi,
 			});
 		} catch (error) {
-			notify(error.response.data.message);
+			// notify(error.response.data.message);
 		}
 	};
 };
