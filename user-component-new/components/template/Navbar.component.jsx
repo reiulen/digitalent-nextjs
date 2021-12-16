@@ -112,10 +112,7 @@ const Navigationbar = ({ session }) => {
       let res = JSON.parse(e.data);
       if (session && res?.To == session?.id) {
         GetNotifikasi();
-        // console.log("notifikasi masuk");
       }
-      // console.log(res);
-      // console.log("notif untuk semua");
     };
 
     ws.onclose = (e) => {
