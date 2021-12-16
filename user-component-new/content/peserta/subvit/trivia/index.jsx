@@ -120,7 +120,6 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-
       router.push(`/peserta/done-trivia`);
     }
   }, [count, router, error]);
@@ -272,37 +271,14 @@ const SubtansiUser = ({ token }) => {
 
   let multi = [];
 
-  const handleAnswerCheckbox = (e, idx) => {
-    sessionStorage.setItem(router.query.id, e.key);
-    // if (multi.includes(e.key)) {
-    //   multi.splice(multi.indexOf(e.key), 1);
-    //   sessionStorage.setItem(router.query.id, JSON.stringify(multi));
-    // } else {
-    //   multi.push(e.key);
-    //   sessionStorage.setItem(router.query.id, JSON.stringify(multi));
-    // }
-    // if (e.key.includes(localStorage.getItem(idx + "a"))) {
-    //   localStorage.removeItem(idx + "a", e.key);
-    // } else {
-    //   localStorage.setItem(idx + "a", e.key);
-    // }
-    // let answerData = JSON.parse(
-    //   data.list_questions[parseInt(router.query.id) - 1].answer
-    // ).map((item) => {
-    //   if (
-    //     JSON.parse(sessionStorage.getItem(router.query.id)).includes(item.key)
-    //   ) {
-    //     return { ...item, color: true };
-    //   } else {
-    //     return { ...item, color: false };
-    //   }
-    // });
-    // let dataTemp = data.list_questions.map((item) => {
-    //   return { ...item, answer: JSON.stringify(answerData) };
-    // });
-    // data.list_questions = dataTemp;
-    // // let initial = [...data];
-    // setData(data);
+  const handleAnswerCheckbox = (e) => {
+    if (multi.includes(e.key)) {
+      multi.splice(multi.indexOf(e.key), 1);
+      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+    } else {
+      multi.push(e.key);
+      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+    }
   };
 
   const handlePageNext = () => {
@@ -632,51 +608,42 @@ const SubtansiUser = ({ token }) => {
                             className="p-4"
                             style={{ width: "100%", height: "100%" }}
                           >
-                            <Card
-                              className={
-                                JSON.parse(
-                                  sessionStorage.getItem(router.query.id)
-                                )
-                                  ? styles.answer
-                                  : styles.boxAnswer
-                              }
-                              key={index}
-                              onClick={() => {
-                                handleAnswer(item);
-                                setType("checkbox");
-                              }}
-                            >
-                              <table>
-                                <tr>
-                                  <td style={{ width: "5px" }}>{item.key}</td>
-                                  <td style={{ width: "15px" }}>.</td>
-                                  <td>{item.option}</td>
-                                </tr>
-                              </table>
-                            </Card>
+                            <div className="quiz_card_area">
+                              <input
+                                className="quiz_checkbox"
+                                type="checkbox"
+                              />
+                              <div
+                                className="single_quiz_card"
+                                onClick={() => handleAnswerCheckbox(item)}
+                              >
+                                <div className="quiz_card_content">
+                                  <div className="quiz_card_title">
+                                    <p>
+                                      {item.key}.{item.option}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       ) : (
-                        <Card
-                          className={
-                            JSON.parse(sessionStorage.getItem(router.query.id))
-                              ? styles.answer
-                              : styles.boxAnswer
-                          }
-                          key={index}
-                          onClick={() => {
-                            handleAnswer(item);
-                            setType("checkbox");
-                          }}
+                        <div
+                          className="quiz_card_area"
+                          onClick={() => handleAnswerCheckbox(item)}
                         >
-                          <table>
-                            <tr>
-                              <td style={{ width: "5px" }}>{item.key}</td>
-                              <td style={{ width: "15px" }}>.</td>
-                              <td>{item.option}</td>
-                            </tr>
-                          </table>
-                        </Card>
+                          <input className="quiz_checkbox" type="checkbox" />
+                          <div className="single_quiz_card">
+                            <div className="quiz_card_content">
+                              <div className="quiz_card_title">
+                                <p>
+                                  {item.key}.{item.option}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       )}
                     </>
                   );
