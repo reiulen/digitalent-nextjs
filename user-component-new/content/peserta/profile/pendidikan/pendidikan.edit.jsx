@@ -187,7 +187,16 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 		) {
 			simpleValidator.current.fields["sekolah lainnya"] = true;
 		}
-
+		// if(asalSekolah.includes(''))
+		if (jengjangPendidikan.label.includes("Tidak Sekolah")) {
+			simpleValidator.current.fields["asal sekolah"] = true;
+			simpleValidator.current.fields["ijazah"] = true;
+			simpleValidator.current.fields["ipk"] = true;
+			simpleValidator.current.fields["lainya"] = true;
+			simpleValidator.current.fields["program studi"] = true;
+			simpleValidator.current.fields["sekolah lainnya"] = true;
+			simpleValidator.current.fields["tahun masuk"] = true;
+		}
 		if (simpleValidator.current.allValid()) {
 			if (jengjangPendidikan.label === "Tidak Sekolah") {
 				data = {
@@ -420,9 +429,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 											onChange={(e) => {
 												setSekolahLainnya(e.target.value);
 											}}
-											onBlur={() =>
-												simpleValidator.current.showMessageFor("tahun masuk")
-											}
 											type="text"
 										/>
 										{simpleValidator.current.message(

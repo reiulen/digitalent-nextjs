@@ -63,20 +63,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllKotaPeserta());
       await store.dispatch(getAllPenyeleggaraPeserta());
 
-      await store.dispatch(
-        getAllPelatihanByAkademi(
-          params.id,
-          query.tema_id,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          sessionToken
-        )
-      );
+      // await store.dispatch(
+      //   getAllPelatihanByAkademi(
+      //     params.id,
+      //     query.tema_id,
+      //     null,
+      //     null,
+      //     null,
+      //     null,
+      //     null,
+      //     null,
+      //     1,
+      //     sessionToken
+      //   )
+      // );
 
       return {
         props: {

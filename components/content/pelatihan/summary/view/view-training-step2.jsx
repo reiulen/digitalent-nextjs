@@ -259,9 +259,12 @@ const ViewTrainingStep2 = ({ token }) => {
             <h3 className="text-neutral-bodyer pb-5 pt-4">{titleForm}</h3>
 
             <div className="row">
-              {formBuilder.map((row, i) => (
-                <>{readerElementHandler(row, i)}</>
-              ))}
+              {formBuilder &&
+                formBuilder !== null &&
+                formBuilder.length > 0 &&
+                formBuilder.map((row, i) => (
+                  <>{readerElementHandler(row, i)}</>
+                ))}
             </div>
 
             <div className="button my-5">
