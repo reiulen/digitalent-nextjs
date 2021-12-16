@@ -112,7 +112,7 @@ const UbahRole = ({ token }) => {
                           if (cek.list_sub_menu.length > 0) {
                             cek.list_sub_menu.filter((check) => {
                               check.view =
-                                filter.manage === true || filter.manage === 1;
+                                filter.view === true || filter.view === 1;
                             });
                           }
                         });
@@ -370,6 +370,12 @@ const UbahRole = ({ token }) => {
                               if (item.view !== 1) {
                                 item.view = 1;
                               }
+                              if (sub.list_sub_menu.length > 0) {
+                                sub.list_sub_menu.filter((check) => {
+                                  check.view =
+                                    filter.view === true || filter.view === 1;
+                                });
+                              }
                             }
                             setForce(!force);
                             return filter;
@@ -400,6 +406,15 @@ const UbahRole = ({ token }) => {
                                 item.view = 1;
                                 item.manage = 1;
                               }
+                              if (sub.list_sub_menu.length > 0) {
+                                sub.list_sub_menu.filter((check) => {
+                                  check.view =
+                                    filter.manage === true || filter.manage === 1;
+                                    check.manage =
+                                    filter.manage === true || filter.manage === 1;
+                                });
+                              }
+                              
                             }
                             setForce(!force);
                             return filter;
@@ -454,6 +469,7 @@ const UbahRole = ({ token }) => {
                                   if (sub.view !== 1) {
                                     sub.view = 1;
                                   }
+                                 
                                 }
                                 setForce(!force);
                                 return filter;
@@ -563,7 +579,6 @@ const UbahRole = ({ token }) => {
                       filter.view =
                         filter.manage === true || filter.manage === 1;
                     }
-
                     setForce(!force);
                     return filter;
                   });
