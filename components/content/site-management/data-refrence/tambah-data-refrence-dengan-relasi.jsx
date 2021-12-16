@@ -173,7 +173,7 @@ const Tambah = ({ token }) => {
         });
         setOptionReference(resultOptionReference);
       } catch (error) {
-        notify(error.response.data.message);
+        // notify(error.response.data.message);
       }
     }
 
@@ -195,7 +195,7 @@ const Tambah = ({ token }) => {
           });
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
-          notify(error.response.data.message);
+          // notify(error.response.data.message);
         }
       }
 
