@@ -18,7 +18,6 @@ export default function ButtonStatusPeserta({ data, token }) {
 		},
 	};
 	const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
-	console.log(data);
 	// upload sertifikasi
 	const uploadSertifikasi = async (sertifikasi, id) => {
 		try {
