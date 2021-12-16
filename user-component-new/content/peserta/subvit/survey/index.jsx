@@ -8,6 +8,7 @@ import {
   Button,
   ModalBody,
   Collapse,
+  CarouselItem,
 } from "react-bootstrap";
 import styles from "./content.module.css";
 
@@ -196,6 +197,9 @@ const SubtansiUser = ({ token }) => {
 
   const [listAnswer, setListAnswer] = useState();
   const [numberPage, setNumberPage] = useState("");
+  const [imageClick, setImageClick] = useState("");
+  const [imageClickTr, setImageClickTr] = useState("");
+  const [imageClickTrJawab, setImageClickTrJawab] = useState("");
 
   const [zoom, setZoom] = useState(false);
   const [zoomJawab, setZoomJawab] = useState(false);
@@ -550,7 +554,10 @@ const SubtansiUser = ({ token }) => {
                                   }
                                   alt=""
                                   width={70}
-                                  onClick={() => setZoomJawab(true)}
+                                  onClick={() => {
+                                    setZoomJawab(true);
+                                    setImageClick(item.image);
+                                  }}
                                   height={70}
                                 />
                               </div>
@@ -561,7 +568,7 @@ const SubtansiUser = ({ token }) => {
                                 <Image
                                   src={
                                     process.env.END_POINT_API_IMAGE_SUBVIT +
-                                      item.image || defaultImage
+                                      imageClick || defaultImage
                                   }
                                   alt=""
                                   width={500}
@@ -647,11 +654,14 @@ const SubtansiUser = ({ token }) => {
                               <Image
                                 src={
                                   process.env.END_POINT_API_IMAGE_SUBVIT +
-                                    sub?.sub[0]?.image || defaultImage
+                                    sub?.sub?.image || defaultImage
                                 }
                                 alt=""
                                 width={150}
-                                onClick={() => setZoomTr(true)}
+                                onClick={() => {
+                                  setZoomTr(true);
+                                  setImageClickTr(item.image);
+                                }}
                                 height={150}
                               />
                             </div>
@@ -662,7 +672,7 @@ const SubtansiUser = ({ token }) => {
                               <Image
                                 src={
                                   process.env.END_POINT_API_IMAGE_SUBVIT +
-                                    sub?.sub[0]?.image || defaultImage
+                                    imageClickTr || defaultImage
                                 }
                                 alt=""
                                 width={500}
@@ -695,7 +705,10 @@ const SubtansiUser = ({ token }) => {
                                       }
                                       alt=""
                                       width={70}
-                                      onClick={() => setZoomTrJawab(true)}
+                                      onClick={() => {
+                                        setZoomTrJawab(true);
+                                        setImageClickTrJawab(item.image);
+                                      }}
                                       height={70}
                                     />
                                   </div>
@@ -706,7 +719,7 @@ const SubtansiUser = ({ token }) => {
                                     <Image
                                       src={
                                         process.env.END_POINT_API_IMAGE_SUBVIT +
-                                          item.image || defaultImage
+                                          imageClickTrJawab || defaultImage
                                       }
                                       alt=""
                                       width={500}
@@ -845,7 +858,10 @@ const SubtansiUser = ({ token }) => {
                                     alt=""
                                     width={70}
                                     height={70}
-                                    onClick={() => setZoomJawab(true)}
+                                    onClick={() => {
+                                      setZoomJawab(true);
+                                      setImageClick(item.image);
+                                    }}
                                   />
                                 </div>
                                 <Modal
@@ -855,7 +871,7 @@ const SubtansiUser = ({ token }) => {
                                   <Image
                                     src={
                                       process.env.END_POINT_API_IMAGE_SUBVIT +
-                                        item.image || defaultImage
+                                        imageClick || defaultImage
                                     }
                                     alt=""
                                     width={500}
@@ -1000,7 +1016,10 @@ const SubtansiUser = ({ token }) => {
                                     alt=""
                                     width={70}
                                     height={70}
-                                    onClick={() => setZoomJawab(true)}
+                                    onClick={() => {
+                                      setZoomJawab(true);
+                                      setImageClick(item.image);
+                                    }}
                                   />
                                 </div>
                                 <Modal
@@ -1010,7 +1029,7 @@ const SubtansiUser = ({ token }) => {
                                   <Image
                                     src={
                                       process.env.END_POINT_API_IMAGE_SUBVIT +
-                                        item.image || defaultImage
+                                        imageClick || defaultImage
                                     }
                                     alt=""
                                     width={500}
@@ -1096,7 +1115,7 @@ const SubtansiUser = ({ token }) => {
                               alt=""
                               width={150}
                               height={150}
-                              onClick={() => setZoom(false)}
+                              onClick={() => setZoom(true)}
                             />
                           </div>
                           <Modal show={zoom} onHide={() => setZoom(false)}>
