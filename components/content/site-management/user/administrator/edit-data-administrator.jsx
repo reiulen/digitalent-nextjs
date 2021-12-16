@@ -285,7 +285,7 @@ const TambahApi = ({ token }) => {
                 password: password,
                 password_confirmation: confirmPassword,
                 role: role,
-                unit_work_id: unitWork,
+                unit_work_ids: unitWork,
                 type_access: typeAccess,
                 training_access: trainings,
                 status: 1,
