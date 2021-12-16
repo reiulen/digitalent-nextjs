@@ -508,9 +508,9 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
         </Modal>
 
         <div
-          class="modal fade"
+          className="modal fade"
           id="modalProfile"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="modalProfile"
           aria-hidden="true"
