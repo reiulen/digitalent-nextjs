@@ -59,10 +59,16 @@ const TambahRole = ({ token }) => {
     if (allPermission.data.data[i].list_sub_menu.length > 0) {
       allPermission.data.data[i].list_sub_menu.forEach((item) => {
         permission.push(item);
-        console.log(item)
+        if (item.list_sub_menu.length > 0) {
+          item.list_sub_menu.forEach(sub => {
+            permission.push(sub)
+          })
+        }
       });
     }
   }
+
+  console.log(permission)
 
   const menu = list.map((item, index) => {
     if (item.list_sub_menu.length > 0) {
@@ -322,8 +328,7 @@ const TambahRole = ({ token }) => {
                               filter.view === true || filter.view === 1
                             );
                             if (item.view !== 1) {
-                              item.view =
-                                1
+                              item.view = 1;
                             }
                           }
                           setForce(!force);
@@ -352,10 +357,8 @@ const TambahRole = ({ token }) => {
                             filter.view =
                               filter.manage === true || filter.manage === 1;
                             if (item.manage !== 1 || item.view !== 1) {
-                              item.view =
-                                1
-                              item.manage =
-                               1
+                              item.view = 1;
+                              item.manage = 1;
                             }
                           }
                           setForce(!force);
@@ -367,8 +370,10 @@ const TambahRole = ({ token }) => {
                   </label>
                 </td>
               </tr>
+              
             );
           })}
+      
         </>
       );
     } else {
