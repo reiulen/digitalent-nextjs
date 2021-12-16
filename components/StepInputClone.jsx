@@ -62,9 +62,9 @@ const StepInput = ({ step }) => {
                     1
                   </h1>
                 </div>
-                <div className="my-5">
+                <div className="my-8">
                   <h5 className={`${textHeader1}`}>Buat Soal</h5>
-                  <p className={`${textDesc1}`}>Masukan Informasi Soal</p>
+                  <p className={`${textDesc1}`}>Soal yang ingin diclone</p>
                 </div>
               </div>
             </div>
@@ -79,7 +79,7 @@ const StepInput = ({ step }) => {
                     2
                   </h1>
                 </div>
-                <div className={`${styles.topHeader} my-5`}>
+                <div className={`${styles.topHeader} my-8`}>
                   <h5 className={`${textHeader2}`}>Bank Soal</h5>
                   <p className={`${textDesc2}`}>Verifikasi Bank Soal</p>
                 </div>
@@ -98,7 +98,9 @@ const StepInput = ({ step }) => {
                 </div>
                 <div className="my-5">
                   <h5 className={`${textHeader3}`}>Pelatihan</h5>
-                  <p className={`${textDesc3}`}>Tentukan Pelatihan</p>
+                  <p className={`${textDesc3}`}>
+                    Clone soal ini ditunjukan untuk pelatihan
+                  </p>
                 </div>
               </div>
             </div>
@@ -113,7 +115,7 @@ const StepInput = ({ step }) => {
                     4
                   </h1>
                 </div>
-                <div className="my-5">
+                <div className="my-8  ">
                   <h5 className={`${textHeader4}`}>Publish</h5>
                   <p className={`${textDesc4}`}>Tentukan Publishnya</p>
                 </div>

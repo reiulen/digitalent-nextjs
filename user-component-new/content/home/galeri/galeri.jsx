@@ -90,7 +90,7 @@ const Galeri = () => {
 
         for (let i = 0; i < arr.length; i++) {
             arr[i] = false
-            
+
             if (i == index) {
                 arr[i] = true
             }
@@ -431,7 +431,7 @@ const Galeri = () => {
 
                     {/* Filter on Tablet */}
                     {
-                        kategoriToShow ? 
+                        kategoriToShow ?
                             <div className="col-12 pl-0 ml-4 mt-10 mb-5 d-none d-md-block d-lg-none">
                                 <div
                                     style={{ marginLeft: '-17px' }}
@@ -466,7 +466,7 @@ const Galeri = () => {
                                                 <SplideSlide>
                                                     <div
                                                         className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                                                        style={{ cursor: "pointer", height: "40px"}}
+                                                        style={{ cursor: "pointer", height: "40px" }}
                                                         onClick={() => handleFilterKategori("")}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -478,7 +478,7 @@ const Galeri = () => {
                                                 <SplideSlide>
                                                     <div
                                                         className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                                                        style={{ cursor: "pointer", height: "40px"}}
+                                                        style={{ cursor: "pointer", height: "40px" }}
                                                         onClick={() => handleFilterKategori("")}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -496,7 +496,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                                                                    style={{ cursor: "pointer", height: "40px"}}
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori(el.toString())}
                                                                     key={i}
                                                                 >
@@ -509,7 +509,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                                                                    style={{ cursor: "pointer", height: "40px"}}
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori(el.toString())}
                                                                     key={i}
                                                                 >
@@ -527,13 +527,13 @@ const Galeri = () => {
                                     </Splide>
                                 </div>
                             </div>
-                        :
+                            :
                             null
                     }
 
                     {/* Filter on Mobile */}
                     {
-                        kategoriToShow ? 
+                        kategoriToShow ?
                             <div className="col-12 pl-0 ml-4 mt-10 mb-5 d-block d-md-none">
                                 <div
                                     style={{ marginLeft: '-17px' }}
@@ -568,7 +568,7 @@ const Galeri = () => {
                                                 <SplideSlide>
                                                     <div
                                                         className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                                                        style={{ cursor: "pointer", height: "40px"}}
+                                                        style={{ cursor: "pointer", height: "40px" }}
                                                         onClick={() => handleFilterKategori("")}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -580,7 +580,7 @@ const Galeri = () => {
                                                 <SplideSlide>
                                                     <div
                                                         className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                                                        style={{ cursor: "pointer", height: "40px"}}
+                                                        style={{ cursor: "pointer", height: "40px" }}
                                                         onClick={() => handleFilterKategori("")}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -598,7 +598,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5`}
-                                                                    style={{ cursor: "pointer", height: "40px"}}
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori(el.toString())}
                                                                     key={i}
                                                                 >
@@ -611,7 +611,7 @@ const Galeri = () => {
                                                             <SplideSlide>
                                                                 <div
                                                                     className={`${styles.kategoriGaleri} d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5`}
-                                                                    style={{ cursor: "pointer", height: "40px"}}
+                                                                    style={{ cursor: "pointer", height: "40px" }}
                                                                     onClick={() => handleFilterKategori(el.toString())}
                                                                     key={i}
                                                                 >
@@ -629,7 +629,7 @@ const Galeri = () => {
                                     </Splide>
                                 </div>
                             </div>
-                        :
+                            :
                             null
                     }
 
@@ -689,7 +689,7 @@ const Galeri = () => {
                                                                     height={500}
                                                                     className="rounded-lg"
                                                                     objectFit="cover"
-                                                                   
+
                                                                 />
                                                             </div>
                                                             :
@@ -711,7 +711,7 @@ const Galeri = () => {
                                                                         height={500}
                                                                         className="rounded-lg"
                                                                         objectFit="cover"
-                                                                        
+
                                                                     />
                                                                 </div>
 
@@ -724,7 +724,7 @@ const Galeri = () => {
                                                                         background: "linear-gradient(to bottom, transparent 0%, black 100%)",
                                                                         borderRadius: "10px"
                                                                     }}
-                                                                    
+
                                                                 >
                                                                     <div className="d-flex flex-column">
                                                                         <div>
@@ -886,7 +886,7 @@ const Galeri = () => {
                                             {
                                                 windowDimensions && windowDimensions.width && windowDimensions.width > 768 ?
                                                     detail.dibaca === undefined ?
-                                                        <span className="mb-1 ml-6 p-0 d-flex align-items-center d-none d-lg-block">
+                                                        <span className="mb-1 ml-6 p-0 d-flex align-items-center">
                                                             <div className="">
                                                                 <i className="ri-eye-line"></i>
                                                             </div>
@@ -895,7 +895,7 @@ const Galeri = () => {
                                                             </span>
                                                         </span>
                                                         :
-                                                        <span className="mb-1 ml-5 p-0 d-flex align-items-center d-none d-lg-block">
+                                                        <span className="mb-1 ml-5 p-0 d-flex align-items-center">
                                                             <div className="">
                                                                 <i className="ri-eye-line"></i>
                                                             </div>
@@ -904,8 +904,9 @@ const Galeri = () => {
                                                             </span>
                                                         </span>
                                                     :
-                                                        <div className="ml-4 my-1">
-                                                            {
+                                                    <div className="ml-4 my-1">
+                                                        {
+                                                            windowDimensions && windowDimensions.width && windowDimensions.width > 768 ?
                                                                 kategori.map((element, index) => {
                                                                     return (
                                                                         detail.kategori_id == element.id ?
@@ -918,12 +919,13 @@ const Galeri = () => {
                                                                             null
                                                                     )
                                                                 })
-                                                            }
-                                                        </div>
-                                                        
-                                                    
+                                                                : null
+                                                        }
+                                                    </div>
+
+
                                             }
-                                            
+
 
                                         </div>
 
@@ -982,13 +984,13 @@ const Galeri = () => {
                                                         <div className="text-justify ml-1 mr-5">
                                                             <span
                                                                 style={{
-                                                                    fontSize:'14px',
-                                                                    display:"-webkit-box", 
-                                                                    overflow: 'hidden', 
-                                                                    textOverflow: 'ellipsis', 
+                                                                    fontSize: '14px',
+                                                                    display: "-webkit-box",
+                                                                    overflow: 'hidden',
+                                                                    textOverflow: 'ellipsis',
                                                                     WebkitLineClamp: "2",
-                                                                    WebkitBoxOrient:"vertical"
-                                                                  }}
+                                                                    WebkitBoxOrient: "vertical"
+                                                                }}
                                                             >
                                                                 {detail.isi_galeri}
                                                                 {/* {handleDescToTrim(detail.isi_galeri)} */}
@@ -1008,7 +1010,7 @@ const Galeri = () => {
 
                                                                 {
                                                                     windowDimensions && windowDimensions.width && windowDimensions.width > 768 ?
-                                                                        <div className= "row mb-5 mt-3">
+                                                                        <div className="row mb-5 mt-3">
                                                                             <div className="col-9 d-flex flex-row flex-wrap">
                                                                                 {
                                                                                     detail.tag ?
@@ -1041,7 +1043,7 @@ const Galeri = () => {
                                                                                 </ShareOverlay>
                                                                             </div>
                                                                         </div>
-                                                                    :
+                                                                        :
                                                                         null
                                                                 }
                                                             </p>
@@ -1066,7 +1068,7 @@ const Galeri = () => {
                             <Modal.Footer
                                 className="d-block d-lg-none"
                             >
-                                <div className= "row my-n2">
+                                <div className="row my-n2">
                                     <div className="col-9 d-flex flex-row flex-wrap">
                                         {
                                             detail.tag ?
@@ -1100,7 +1102,7 @@ const Galeri = () => {
                                     </div>
                                 </div>
                             </Modal.Footer>
-                      
+
                             {/* </div> */}
                         </Modal>
                         :
@@ -1140,7 +1142,7 @@ const Galeri = () => {
 
                 {/* Pagination */}
                 {
-                    galeri && galeri.total < 9 ?
+                    galeri && galeri.total >= 9 ?
                         <div className="row my-5 d-flex justify-content-center">
                             <div className="table-pagination">
                                 <Pagination
