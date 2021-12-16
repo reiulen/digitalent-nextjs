@@ -434,12 +434,7 @@ const Dashboard = ({ session, success }) => {
 					{dataDashboard &&
 						dataDashboard?.pelatihan.pelatihan_selesi.length === 0 && (
 							<Col md={6} className="mb-4 px-2">
-								<Card
-									className="rounded-xl h-100"
-									onClick={() => {
-										router.push(`/`);
-									}}
-								>
+								<Card className="rounded-xl h-100">
 									<Card.Body>
 										<Card.Title>
 											<p className={style.card_title}>Pelatihan Sebelumnya</p>
