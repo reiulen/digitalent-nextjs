@@ -196,6 +196,7 @@ const SubtansiUser = ({ token }) => {
   const [d, setD] = useState("");
 
   const [listAnswer, setListAnswer] = useState();
+  const [listAnswer2, setListAnswer2] = useState();
   const [numberPage, setNumberPage] = useState("");
   const [imageClick, setImageClick] = useState("");
   const [imageClickTr, setImageClickTr] = useState("");
@@ -366,6 +367,11 @@ const SubtansiUser = ({ token }) => {
   const handleTriggered = (e) => {
     sessionStorage.setItem(`${router.query.id}tr`, e.key);
     setListAnswer(sessionStorage.getItem(`${router.query.id}tr`));
+  };
+
+  const handleTriggered2 = (e) => {
+    sessionStorage.setItem(`${router.query.id}td`, e.key);
+    setListAnswer2(sessionStorage.getItem(`${router.query.id}td`));
   };
 
   const handleObject = (e) => {
@@ -644,141 +650,162 @@ const SubtansiUser = ({ token }) => {
 
                   <Collapse in={open} dimension="width">
                     <div id="example-collapse-text">
-                      <h1 className={styles.soal}>
-                        {sub &&
-                        sub?.sub[0]?.image !== null &&
-                        sub?.sub[0]?.image !== "" ? (
-                          <div className="d-flex flex-row">
-                            <div className="p-2">
-                              {" "}
-                              <Image
-                                src={
-                                  process.env.END_POINT_API_IMAGE_SUBVIT +
-                                    sub?.sub?.image || defaultImage
-                                }
-                                alt=""
-                                width={150}
-                                onClick={() => {
-                                  setZoomTr(true);
-                                  setImageClickTr(item.image);
-                                }}
-                                height={150}
-                              />
-                            </div>
-                            <Modal
-                              show={zoomTr}
-                              onHide={() => setZoomTr(false)}
-                            >
-                              <Image
-                                src={
-                                  process.env.END_POINT_API_IMAGE_SUBVIT +
-                                    imageClickTr || defaultImage
-                                }
-                                alt=""
-                                width={500}
-                                height={800}
-                              />
-                            </Modal>
-                            <div className="p-5">
-                              {sub && sub?.sub[0]?.question}
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="p-2">
-                            {sub && sub?.sub[0]?.question}
-                          </div>
-                        )}
-                      </h1>
-                      <hr />
-                      {sub &&
-                        sub?.sub[0]?.answer !== null &&
-                        sub?.sub[0]?.answer.map((item, index) => {
-                          return (
-                            <>
-                              {item.image !== null && item.image !== "" ? (
-                                <div className="d-flex flex-row">
-                                  <div className="p-2">
-                                    <Image
-                                      src={
-                                        process.env.END_POINT_API_IMAGE_SUBVIT +
-                                          item.image || defaultImage
-                                      }
-                                      alt=""
-                                      width={70}
-                                      onClick={() => {
-                                        setZoomTrJawab(true);
-                                        setImageClickTrJawab(item.image);
-                                      }}
-                                      height={70}
-                                    />
-                                  </div>
-                                  <Modal
-                                    show={zoomTrJawab}
-                                    onHide={() => setZoomTrJawab(false)}
-                                  >
-                                    <Image
-                                      src={
-                                        process.env.END_POINT_API_IMAGE_SUBVIT +
-                                          imageClickTrJawab || defaultImage
-                                      }
-                                      alt=""
-                                      width={500}
-                                      height={800}
-                                    />
-                                  </Modal>
-                                  <div
-                                    className="p-4"
-                                    style={{ width: "100%", height: "100%" }}
-                                  >
-                                    <Card
-                                      className={
-                                        listAnswer === item.key
-                                          ? styles.answer
-                                          : styles.boxAnswer
-                                      }
-                                      key={index}
-                                      onClick={() => {
-                                        handleTriggered(item, index);
-                                      }}
+                      {sub?.sub?.map((a) => {
+                        console.log(a);
+                        return (
+                          <>
+                            {a.image !== null && a.image !== "" ? (
+                              <>
+                                <h1 className={styles.soal}>
+                                  <div className="d-flex flex-row">
+                                    <div className="p-2">
+                                      {" "}
+                                      <Image
+                                        src={
+                                          process.env
+                                            .END_POINT_API_IMAGE_SUBVIT +
+                                            a.image || defaultImage
+                                        }
+                                        alt=""
+                                        width={150}
+                                        onClick={() => {
+                                          setZoomTr(true);
+                                          setImageClickTr(a.image);
+                                        }}
+                                        height={150}
+                                      />
+                                    </div>
+                                    <Modal
+                                      show={zoomTr}
+                                      onHide={() => setZoomTr(false)}
                                     >
-                                      <table>
-                                        <tr>
-                                          <td style={{ width: "5px" }}>
-                                            {item.key}
-                                          </td>
-                                          <td style={{ width: "15px" }}>.</td>
-                                          <td>{item.option}</td>
-                                        </tr>
-                                      </table>
-                                    </Card>
+                                      <Image
+                                        src={
+                                          process.env
+                                            .END_POINT_API_IMAGE_SUBVIT +
+                                            imageClickTr || defaultImage
+                                        }
+                                        alt=""
+                                        width={500}
+                                        height={800}
+                                      />
+                                    </Modal>
+                                    <div className="p-5">{a.question}</div>
                                   </div>
-                                </div>
-                              ) : (
-                                <Card
-                                  className={
-                                    listAnswer === item.key
-                                      ? styles.answer
-                                      : styles.boxAnswer
-                                  }
-                                  key={index}
-                                  onClick={() => {
-                                    handleTriggered(item, index);
-                                  }}
-                                >
-                                  <table>
-                                    <tr>
-                                      <td style={{ width: "5px" }}>
-                                        {item.key}
-                                      </td>
-                                      <td style={{ width: "15px" }}>.</td>
-                                      <td>{item.option} </td>
-                                    </tr>
-                                  </table>
-                                </Card>
-                              )}
-                            </>
-                          );
-                        })}
+                                </h1>
+                                <hr />
+                                {a.answer.map((ans, index) => {
+                                  return (
+                                    <>
+                                      <div className="d-flex flex-row">
+                                        <div className="p-2">
+                                          <Image
+                                            src={
+                                              process.env
+                                                .END_POINT_API_IMAGE_SUBVIT +
+                                                ans.image || defaultImage
+                                            }
+                                            alt=""
+                                            width={70}
+                                            onClick={() => {
+                                              setZoomTrJawab(true);
+                                              setImageClickTrJawab(ans.image);
+                                            }}
+                                            height={70}
+                                          />
+                                        </div>
+                                        <Modal
+                                          show={zoomTrJawab}
+                                          onHide={() => setZoomTrJawab(false)}
+                                        >
+                                          <Image
+                                            src={
+                                              process.env
+                                                .END_POINT_API_IMAGE_SUBVIT +
+                                                imageClickTrJawab ||
+                                              defaultImage
+                                            }
+                                            alt=""
+                                            width={500}
+                                            height={800}
+                                          />
+                                        </Modal>
+                                        <div
+                                          className="p-4"
+                                          style={{
+                                            width: "100%",
+                                            height: "100%",
+                                          }}
+                                        >
+                                          <Card
+                                            className={
+                                              listAnswer === ans.key
+                                                ? styles.answer
+                                                : styles.boxAnswer
+                                            }
+                                            key={index}
+                                            onClick={() => {
+                                              handleTriggered(ans, index);
+                                            }}
+                                          >
+                                            <table>
+                                              <tr>
+                                                <td style={{ width: "5px" }}>
+                                                  {ans.key}
+                                                </td>
+                                                <td style={{ width: "15px" }}>
+                                                  .
+                                                </td>
+                                                <td>{ans.option}</td>
+                                              </tr>
+                                            </table>
+                                          </Card>
+                                        </div>
+                                      </div>
+                                    </>
+                                  );
+                                })}
+                              </>
+                            ) : (
+                              <>
+                                <h1 className={styles.soal}>
+                                  {" "}
+                                  <div className="p-2">{a.question}</div>{" "}
+                                </h1>
+                                <hr />
+                                {a.answer.map((ans, index) => {
+                                  return (
+                                    <>
+                                      {" "}
+                                      <Card
+                                        className={
+                                          listAnswer2 === ans.key
+                                            ? styles.answer
+                                            : styles.boxAnswer
+                                        }
+                                        key={index}
+                                        onClick={() => {
+                                          handleTriggered2(ans, index);
+                                        }}
+                                      >
+                                        <table>
+                                          <tr>
+                                            <td style={{ width: "5px" }}>
+                                              {ans.key}
+                                            </td>
+                                            <td style={{ width: "15px" }}>.</td>
+                                            <td>{ans.option} </td>
+                                          </tr>
+                                        </table>
+                                      </Card>
+                                    </>
+                                  );
+                                })}
+                              </>
+                            )}
+                          </>
+                        );
+                      })}
                     </div>
                   </Collapse>
                 </>
