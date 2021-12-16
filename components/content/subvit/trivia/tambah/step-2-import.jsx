@@ -198,7 +198,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(importFileTriviaQuestionDetail(data, token, tokenPermission));
+        dispatch(importFileTriviaQuestionDetail(data, token));
       }
     });
   };
