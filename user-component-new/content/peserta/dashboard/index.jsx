@@ -471,7 +471,6 @@ const Dashboard = ({ session, success }) => {
 										<Card.Title>
 											<p className={style.card_title}>Pelatihan Sebelumnya</p>
 										</Card.Title>
-										{console.log(dataDashboard.pelatihan.pelatihan_selesi)}
 										<Card className="shadow rounded-md mt-4">
 											<Image
 												className={`${style.image_dashboard}`}
@@ -533,7 +532,9 @@ const Dashboard = ({ session, success }) => {
 													style={{ top: "-15px" }}
 												>
 													<p className={`pl-20 my-0 ${style.text_mitra}`}>
-														{dataDashboard?.pelatihan.pelatihan_selesi.mitra ||
+														{dataDashboard?.pelatihan?.pelatihan_selesi.mitra ||
+															dataDashboard?.pelatihan?.pelatihan_selesi
+																.penyelenggara ||
 															"-"}
 													</p>
 												</div>

@@ -176,7 +176,7 @@ const EditAcademy = ({ token }) => {
         logo: logoFile,
         brosur:
           browsurName === "Belum ada file" && browsurFile === ""
-            ? "Dihapus"
+            ? "dihapus"
             : browsurFile,
         status: status.value,
         id: idInt,

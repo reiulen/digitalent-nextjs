@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios'
+import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
-import { putDataPrompt } from '../../../../../redux/actions/site-management/settings/pelatihan.actions'
+import { putDataPrompt } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 import styles from "../../../../../styles/previewGaleri.module.css";
 
 export default function Prompt(props) {
+  const allPrompt = useSelector((state) => state.allPrompt);
 
-  const allPrompt = useSelector(state => state.allPrompt)
+  const [notification, setNotification] = useState(
+    allPrompt.notification.training_rules.notification[0]?.status
+  );
+  const [email, setEmail] = useState(
+    allPrompt.notification.training_rules.email[0]?.status
+  );
 
-  const [notification, setNotification] = useState(allPrompt.notification.training_rules.notification[0]?.status);
-  const [email, setEmail] = useState(allPrompt.notification.training_rules.email[0]?.status);
-
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(putDataPrompt(props.token, notification === "1" || notification === true ? "1" : "0", email === "1" || email === true ? "1" : "0"))
+    e.preventDefault();
+    dispatch(
+      putDataPrompt(
+        props.token,
+        notification === "1" || notification === true ? "1" : "0",
+        email === "1" || email === true ? "1" : "0"
+      )
+    );
   };
 
   return (
@@ -37,13 +46,17 @@ export default function Prompt(props) {
                   name="notification"
                   value={notification}
                   defaultChecked={notification === "1"}
-                  onClick={e => {
-                    setNotification(e.target.checked)
+                  onClick={(e) => {
+                    setNotification(e.target.checked);
                   }}
                 />
                 <span className="email-check"></span>
               </label>
-              <span className="isAktif">{notification === "1" || notification === true ? "Aktif" : "Tidak Aktif"}</span>
+              <span className="isAktif">
+                {notification === "1" || notification === true
+                  ? "Aktif"
+                  : "Tidak Aktif"}
+              </span>
             </span>
           </div>
           <div className="email">
@@ -58,25 +71,31 @@ export default function Prompt(props) {
                   id="email-check"
                   value={email}
                   defaultChecked={email === "1"}
-                  onClick={e => {
-                    setEmail(e.target.checked)
+                  onClick={(e) => {
+                    setEmail(e.target.checked);
                   }}
                 />
                 <span></span>
               </label>
-              <span className="isAktif">{email === "1" || email === true ? "Aktif" : "Tidak Aktif"}</span>
+              <span className="isAktif">
+                {email === "1" || email === true ? "Aktif" : "Tidak Aktif"}
+              </span>
             </span>
           </div>
-          <div className="button-submit-notif mb-5">
-            <div className="d-flex justify-content-end">
-              <button
-                type="submit"
-                className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-              >
-                Simpan
-              </button>
+          {localStorage
+            .getItem("permissions")
+            .includes("site_management.setting.pelatihan.manage") && (
+            <div className="button-submit-notif mb-5">
+              <div className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+                >
+                  Simpan
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </form>
       </div>
     </div>

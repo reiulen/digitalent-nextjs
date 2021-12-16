@@ -35,15 +35,15 @@ const ViewTrainingStep1 = () => {
     silabus: review.silabus,
     metodePelatihan: review.metode_pelatihan,
     penyelenggara: review.penyelenggara,
-    mitra: review.mitra_nama,
+    mitra: review.mitra_nama || "-",
     tanggalPendaftaran:
-      moment(review.pendaftaran_mulai).format("DD MMMM YYYY") +
+      moment(review.pendaftaran_mulai).utc().format("DD MMMM YYYY") +
       " sd " +
-      moment(review.pendaftaran_selesai).format("DD MMMM YYYY"),
+      moment(review.pendaftaran_selesai).utc().format("DD MMMM YYYY"),
     tanggalPelatihan:
-      moment(review.pelatihan_mulai).format("DD MMMM YYYY") +
+      moment(review.pelatihan_mulai).utc().format("DD MMMM YYYY") +
       " sd " +
-      moment(review.pelatihan_selesai).format("DD MMMM YYYY"),
+      moment(review.pelatihan_selesai).utc().format("DD MMMM YYYY"),
     deskripsi: review.deskripsi,
   });
   const [kuotaPelatihan, setKuotaPelatihan] = useState({
