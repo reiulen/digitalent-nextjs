@@ -13,7 +13,6 @@ import styles from "../../../../../styles/previewGaleri.module.css";
 import styles2 from "../../../../../styles/sitemanagement/userMitra.module.css";
 import { set } from "lodash";
 import { useSelector } from "react-redux";
-
 const GeneralPage = ({ token }) => {
   const router = useRouter();
 
@@ -448,22 +447,22 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi === ""
                               ? imageLogo && (
-                                  <Image
-                                    src={imageLogo}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )
+                                <Image
+                                  src={imageLogo}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )
                               : imageLogoApi && (
-                                  <Image
-                                    // src={imageLogo}
-                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )}
+                                <Image
+                                  // src={imageLogo}
+                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )}
                           </div>
                           {localStorage
                             .getItem("permissions")
@@ -530,21 +529,21 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi2 === ""
                               ? imageLogo2 && (
-                                  <Image
-                                    src={imageLogo2}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )
+                                <Image
+                                  src={imageLogo2}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )
                               : imageLogoApi2 && (
-                                  <Image
-                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )}
+                                <Image
+                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )}
                           </div>
                           {localStorage
                             .getItem("permissions")
@@ -642,29 +641,29 @@ const GeneralPage = ({ token }) => {
                               <div className="image-input image-input-outline">
                                 <div className="image-input-wrapper">
                                   {isUpdate &&
-                                  /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
-                                    items.image_logo
-                                  )
+                                    /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
+                                      items.image_logo
+                                    )
                                     ? items.image_logo && (
-                                        <Image
-                                          src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
-                                          layout="fill"
-                                          objectFit="fill"
-                                          alt="imageLogo"
-                                        />
-                                      )
+                                      <Image
+                                        src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
+                                        layout="fill"
+                                        objectFit="fill"
+                                        alt="imageLogo"
+                                      />
+                                    )
                                     : items.image_logo && (
-                                        <Image
-                                          src={
-                                            update === true
-                                              ? items.image_logo
-                                              : `/${items.image_logo}`
-                                          }
-                                          layout="fill"
-                                          objectFit="fill"
-                                          alt="imageLogo"
-                                        />
-                                      )}
+                                      <Image
+                                        src={
+                                          update === true
+                                            ? items.image_logo
+                                            : `/${items.image_logo}`
+                                        }
+                                        layout="fill"
+                                        objectFit="fill"
+                                        alt="imageLogo"
+                                      />
+                                    )}
                                 </div>
                                 {localStorage
                                   .getItem("permissions")
