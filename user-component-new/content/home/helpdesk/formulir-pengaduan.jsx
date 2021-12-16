@@ -44,7 +44,6 @@ export default function FormPengaduan() {
 				platform,
 				deskripsi,
 			};
-			console.log(data);
 		} else {
 			simpleValidator.current.showMessages();
 			forceUpdate(1);

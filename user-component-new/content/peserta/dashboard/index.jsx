@@ -471,7 +471,6 @@ const Dashboard = ({ session, success }) => {
 										<Card.Title>
 											<p className={style.card_title}>Pelatihan Sebelumnya</p>
 										</Card.Title>
-										{console.log(dataDashboard.pelatihan.pelatihan_selesi)}
 										<Card className="shadow rounded-md mt-4">
 											<Image
 												className={`${style.image_dashboard}`}
