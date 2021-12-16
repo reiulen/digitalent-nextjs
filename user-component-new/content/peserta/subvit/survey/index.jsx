@@ -651,7 +651,6 @@ const SubtansiUser = ({ token }) => {
                   <Collapse in={open} dimension="width">
                     <div id="example-collapse-text">
                       {sub?.sub?.map((a) => {
-                        console.log(a);
                         return (
                           <>
                             {a.image !== null && a.image !== "" ? (
