@@ -17,6 +17,7 @@ import {
   uploadSertifikat,
 } from "../../../../redux/actions/pelatihan/report-training.actions";
 import axios from "axios";
+import { PDFReader } from "react-read-pdf";
 
 const DetailReport = ({ token }) => {
   const dispatch = useDispatch();
@@ -31,8 +32,10 @@ const DetailReport = ({ token }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(5);
   const [showModal, setShowModal] = useState(false);
+
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [showModalPreview, setShowModalPreview] = useState(false);
+  const [filePreviewPdf, setFilePreviewPdf] = useState("");
 
   const [publishValue, setPublishValue] = useState(null);
   const [sertifikasi, setSertifikasi] = useState(null);
@@ -281,6 +284,11 @@ const DetailReport = ({ token }) => {
                   data-placement="bottom"
                   title="Preview Sertifikasi"
                   onClick={() => {
+                    setFilePreviewPdf(
+                      item.file_sertifikat !== ""
+                        ? item.file_path + item.file_sertifikat
+                        : ""
+                    );
                     setShowModalPreview(true);
                     setId(item.id);
                   }}
@@ -717,7 +725,11 @@ const DetailReport = ({ token }) => {
             <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
           </button>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
+        <Modal.Body>
+          <div style={{ overflow: "scroll", height: 600 }}>
+            {filePreviewPdf !== "" && <PDFReader url={filePreviewPdf} />}
+          </div>
+        </Modal.Body>
       </Modal>
     </PageWrapper>
   );
