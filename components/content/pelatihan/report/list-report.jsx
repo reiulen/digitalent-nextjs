@@ -608,7 +608,7 @@ const ListReport = ({ token }) => {
                   pelaksanaan[0] === "Invalid date"
                     ? ""
                     : pelaksanaan.join(","),
-                  statusPelatihan.label
+                  statusPelatihan ? statusPelatihan.label : ""
                 )
               );
             }}
