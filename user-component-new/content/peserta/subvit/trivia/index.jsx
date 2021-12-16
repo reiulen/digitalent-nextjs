@@ -31,42 +31,41 @@ const SubtansiUser = ({ token }) => {
   const router = useRouter();
 
   const initialData = {
-    training: "Leader Tim IT",
-    academy: "Digital Leadersip Academy",
-    theme: "Pelatihan Leader Tim",
-    total_questions: 2,
-    time_left: 37336,
+    training: "Postgre",
+    academy: "Digital Entrepreneurship Academy",
+    theme: "Wirasusaha Digital",
+    total_questions: 3,
+    time_left: 30000,
     list_questions: [
       {
-        id: 172,
-        trivia_question_bank_id: 66,
-        question: "Polling dulu ga sih",
-        type: "polling",
+        id: 23,
+        trivia_question_bank_id: 12,
+        question: "fill in the blnk",
+        type: "fill_in_the_blank",
         question_image: "",
         answer:
-          '[{"key":"A","type":"","value":"","option":"Close the door!","image":"trivia\\/images\\/79a97af8-6bc7-4290-ad0b-88f2c7890951.jpeg"},{"key":"B","type":"","value":"","option":"SUUUU","image":"trivia\\/images\\/3a045a49-56a6-423d-8236-f899c8d97895.jpeg"},{"key":"C","type":"","value":"","option":"WWE","image":"trivia\\/images\\/e7a8db31-ea64-437f-acf4-409c3a04e74e.jpeg"},{"key":"D","type":"","value":"","option":"Pelaut","image":"trivia\\/images\\/85d92034-f1e0-43d9-9c7f-3d8e03bca473.jpeg"}]',
-        duration: 30000,
+          '[{"key":"A","type":"Percis","value":"5","option":"fill in the blank","image":"","color":false},{"key":"B","type":"Mengandung","value":"3","option":"fill","image":"","color":false},{"key":"C","type":"Sama Dengan","value":"1","option":"fill in the blank","image":"","color":false}]',
+        duration: 1000,
       },
       {
-        id: 174,
-        trivia_question_bank_id: 66,
-        question: "1 + 1",
+        id: 22,
+        trivia_question_bank_id: 12,
+        question: "chcbx",
         type: "checkbox",
         question_image: "",
         answer:
-          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
-        duration: 20000,
+          '[{"key":"A","type":"","value":"5","option":"a","image":"","color":false},{"key":"B","type":"","value":"4","option":"b","image":"","color":false},{"key":"C","type":"","value":"3","option":"c","image":"","color":false},{"key":"D","type":"","value":"2","option":"d","image":"","color":false}]',
+        duration: 1000,
       },
       {
-        id: 173,
-        trivia_question_bank_id: 66,
-        question: "Polling lg",
+        id: 21,
+        trivia_question_bank_id: 12,
+        question: "polling",
         type: "polling",
-        question_image:
-          "trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg",
+        question_image: "",
         answer:
-          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
-        duration: 1,
+          '[{"key":"A","type":"","value":"","option":"a","image":"","color":false},{"key":"B","type":"","value":"","option":"b","image":"","color":false},{"key":"C","type":"","value":"","option":"c","image":"","color":false},{"key":"D","type":"","value":"","option":"d","image":"","color":false}]',
+        duration: 1000,
       },
     ],
   };
@@ -79,8 +78,22 @@ const SubtansiUser = ({ token }) => {
   const [modalNext, setModalNext] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
   const [count, setCount] = useState(random_trivia && random_trivia.time_left);
+
+  const millisToMinutesAndSeconds = (millis) => {
+    let minutes = Math.floor(millis / 60000);
+
+    let seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  };
+
+  let dataDuration = millisToMinutesAndSeconds(
+    data?.list_questions[parseInt(router.query.id) - 1]?.duration
+  );
+
+  const [times, setTimes] = useState(dataDuration);
   const [modalDone, setModalDone] = useState(false);
   const [open, setOpen] = useState(false);
+  const [type, setType] = useState("");
 
   const [zoom, setZoom] = useState(false);
   const [zoomJawab, setZoomJawab] = useState(false);
@@ -89,45 +102,10 @@ const SubtansiUser = ({ token }) => {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
 
-  function startTimer(duration, display) {
-    let timer = duration,
-      minutes,
-      seconds;
-    setInterval(function () {
-      minutes = parseInt(timer / 60, 10);
-      seconds = parseInt(timer % 60, 10);
-
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      if (display) {
-        display.textContent = minutes + ":" + seconds;
-      }
-
-      if (--timer <= 5) {
-        if (parseInt(router.query.id) === data?.total_questions) {
-          handlePage();
-        } else {
-          handlePageNext();
-        }
-      } else {
-        router.push(`/peserta/done-trivia`);
-      }
-    }, 1000);
-  }
-
-  window.onload = function () {
-    let fiveMinutes =
-        data &&
-        (data.list_questions[parseInt(router.query.id) - 1].duration / 60000) *
-          60,
-      display = document.querySelector("#time2");
-    startTimer(fiveMinutes, display);
-  };
-
   useEffect(() => {
     // Handle Error akan langsung ke done
     if (error) {
-      router.push(`/peserta/done-trivia`);
+      // router.push(`/peserta/done-trivia`);
     }
 
     // Hitung Waktu Mundur
@@ -143,13 +121,32 @@ const SubtansiUser = ({ token }) => {
     } else {
       localStorage.clear();
 
-      router.push(`/peserta/done-trivia`);
+      // router.push(`/peserta/done-trivia`);
     }
-  }, [count, router]);
+  }, [count, router, error]);
 
   useEffect(() => {
-    setData(random_trivia);
-  }, [data, random_trivia]);
+    // Hitung Waktu Mundur
+    if (times >= 0) {
+      const secondsLeft = setInterval(() => {
+        setTimes((c) => c - 1);
+        let timeLeftVar = ToTime(times);
+        setHour(timeLeftVar.h);
+        setMinute(timeLeftVar.m);
+        setSecond(timeLeftVar.s);
+      }, 1000);
+      return () => clearInterval(secondsLeft);
+    } else {
+      localStorage.clear();
+
+      // router.push(`/peserta/done-trivia`);
+    }
+  }, [times, router]);
+
+  useEffect(() => {
+    // setData(random_trivia);
+    setData(initialData);
+  }, []);
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -204,17 +201,41 @@ const SubtansiUser = ({ token }) => {
     };
   };
 
+  const ToTime = (secs) => {
+    let hours = Math.floor(secs / (60 * 60));
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
+    return {
+      h: hours,
+      m: minutes,
+      s: seconds,
+    };
+  };
+
   let list = [];
 
   const handleAnswer = (e) => {
-    setAnswer(e.key);
+    if (type === "checkbox") {
+      if (multi.includes(e.key)) {
+        multi.splice(multi.indexOf(e.key), 1);
+        sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+      } else {
+        multi.push(e.key);
+        sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+      }
+      console.log(sessionStorage.getItem(router.query.id));
+    } else {
+      setAnswer(e.key);
 
-    sessionStorage.setItem(`${router.query.id}`, e.key);
+      sessionStorage.setItem(`${router.query.id}`, e.key);
 
-    for (let i = 0; i < sessionStorage.length; i++) {
-      const key = sessionStorage.key(i);
-      list.push(key);
-      setListAnswer(key);
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        list.push(key);
+        setListAnswer(key);
+      }
     }
   };
 
@@ -253,40 +274,36 @@ const SubtansiUser = ({ token }) => {
   let multi = [];
 
   const handleAnswerCheckbox = (e, idx) => {
-    if (multi.includes(e.key)) {
-      multi.splice(multi.indexOf(e.key), 1);
-      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
-    } else {
-      multi.push(e.key);
-      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
-    }
-
-    if (e.key.includes(localStorage.getItem(idx + "a"))) {
-      localStorage.removeItem(idx + "a", e.key);
-    } else {
-      localStorage.setItem(idx + "a", e.key);
-    }
-
-    let answerData = JSON.parse(
-      data.list_questions[parseInt(router.query.id) - 1].answer
-    ).map((item) => {
-      if (
-        JSON.parse(sessionStorage.getItem(router.query.id)).includes(item.key)
-      ) {
-        return { ...item, color: true };
-      } else {
-        return { ...item, color: false };
-      }
-    });
-
-    let dataTemp = data.list_questions.map((item) => {
-      return { ...item, answer: JSON.stringify(answerData) };
-    });
-
-    data.list_questions = dataTemp;
-
-    // let initial = [...data];
-    setData(data);
+    sessionStorage.setItem(router.query.id, e.key);
+    // if (multi.includes(e.key)) {
+    //   multi.splice(multi.indexOf(e.key), 1);
+    //   sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+    // } else {
+    //   multi.push(e.key);
+    //   sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+    // }
+    // if (e.key.includes(localStorage.getItem(idx + "a"))) {
+    //   localStorage.removeItem(idx + "a", e.key);
+    // } else {
+    //   localStorage.setItem(idx + "a", e.key);
+    // }
+    // let answerData = JSON.parse(
+    //   data.list_questions[parseInt(router.query.id) - 1].answer
+    // ).map((item) => {
+    //   if (
+    //     JSON.parse(sessionStorage.getItem(router.query.id)).includes(item.key)
+    //   ) {
+    //     return { ...item, color: true };
+    //   } else {
+    //     return { ...item, color: false };
+    //   }
+    // });
+    // let dataTemp = data.list_questions.map((item) => {
+    //   return { ...item, answer: JSON.stringify(answerData) };
+    // });
+    // data.list_questions = dataTemp;
+    // // let initial = [...data];
+    // setData(data);
   };
 
   const handlePageNext = () => {
@@ -319,13 +336,6 @@ const SubtansiUser = ({ token }) => {
     }
   };
   let listCheckbox = [];
-
-  const millisToMinutesAndSeconds = (millis) => {
-    let minutes = Math.floor(millis / 60000);
-
-    let seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-  };
 
   return (
     <>
@@ -399,11 +409,9 @@ const SubtansiUser = ({ token }) => {
                     data.list_questions[parseInt(router.query.id) - 1].type ===
                       "fill_in_the_blank") ? (
                     <p className={styles.totalSoal2} id="time2">
-                      {millisToMinutesAndSeconds(
-                        data &&
-                          data.list_questions[parseInt(router.query.id) - 1]
-                            .duration
-                      )}
+                      {hour < 9 ? "0" + hour : hour}:
+                      {minute < 9 ? "0" + minute : minute}:
+                      {second < 9 ? "0" + second : second}
                     </p>
                   ) : (
                     ""
@@ -590,6 +598,7 @@ const SubtansiUser = ({ token }) => {
                     const key = localStorage.key(index);
                     listCheckbox.push(key);
                   }
+
                   return (
                     <>
                       {item.image !== null && item.image !== "" ? (
@@ -626,12 +635,17 @@ const SubtansiUser = ({ token }) => {
                           >
                             <Card
                               className={
-                                listCheckbox.includes(index + "a")
+                                JSON.parse(
+                                  sessionStorage.getItem(router.query.id)
+                                )
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
                               key={index}
-                              onClick={() => handleAnswerCheckbox(item, index)}
+                              onClick={() => {
+                                handleAnswer(item);
+                                setType("checkbox");
+                              }}
                             >
                               <table>
                                 <tr>
@@ -646,12 +660,15 @@ const SubtansiUser = ({ token }) => {
                       ) : (
                         <Card
                           className={
-                            listCheckbox.includes(index + "a")
+                            JSON.parse(sessionStorage.getItem(router.query.id))
                               ? styles.answer
                               : styles.boxAnswer
                           }
                           key={index}
-                          onClick={() => handleAnswerCheckbox(item, index)}
+                          onClick={() => {
+                            handleAnswer(item);
+                            setType("checkbox");
+                          }}
                         >
                           <table>
                             <tr>
