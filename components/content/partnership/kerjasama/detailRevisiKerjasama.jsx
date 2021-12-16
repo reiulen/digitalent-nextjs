@@ -74,8 +74,11 @@ const DetailRevisiKerjasama = ({ token }) => {
     setAllCooperation(dataaa);
   };
   useEffect(() => {
-    async function setDataSingle(id){
-      try {
+    setDataSingle(router.query.id);
+  }, [router.query.id,token]);
+
+  async function setDataSingle(id){
+    try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
         {
@@ -96,9 +99,7 @@ const DetailRevisiKerjasama = ({ token }) => {
       Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
     }
 
-    }
-    setDataSingle(router.query.id);
-  }, [router.query.id,token]);
+  }
 
   return (
     <PageWrapper>

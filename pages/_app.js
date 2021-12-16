@@ -33,71 +33,71 @@ import { allSidebarReducer } from "../redux/reducers/site-management/role.reduce
 import { signOut } from "next-auth/client";
 
 function MyApp({ Component, pageProps }) {
-	const allSidebar = useSelector((state) => state.allSidebar);
+  const allSidebar = useSelector((state) => state.allSidebar);
 
-	SimpleReactValidator.addLocale("id", {
-		accepted: ":attribute harus diterima.",
-		after: ":attribute harus lebih dari :date.",
-		after_or_equal: ":attribute harus lebih dari atau sama dengan :date.",
-		alpha: ":attribute hanya boleh berisikan teks.",
-		alpha_space: ":attribute hanya boleh berisikan teks dan spasi.",
-		alpha_num: ":attribute hanya boleh berisikan teks dan angka.",
-		alpha_num_space: ":attribute hanya boleh berisikan teks, angka, dan spasi.",
-		alpha_num_dash:
-			":attribute hanya boleh berisikan teks, angka, dan garis datar.",
-		alpha_num_dash_space:
-			":attribute hanya boleh berisikan teks, angka, garis datar dan spasi.",
-		array: ":attribute harus berupa array.",
-		before: ":attribute harus kurang dari :date.",
-		before_or_equal: ":attribute harus kurang dari atau sama dengan :date.",
-		between: ":attribute harus diantara :min dan :max:type.",
-		boolean: ":attribute harus berupa boolean.",
-		card_exp:
-			":attribute harus berupa tanggal expire yang valid valid expiration date.",
-		card_num: ":attribute harus berupa nomor kartu kredit.",
-		currency: ":attribute harus berupa mata uang yang valid.",
-		date: ":attribute harus berupa tanggal.",
-		date_equals: ":attribute harus sama dengan :date.",
-		email: ":attribute harus berupa alamat email yang valid.",
-		in: ":attribute terpilih harus :values.",
-		integer: ":attribute harus berupa angka.",
-		max: ":attribute harus kurang dari :max:type.",
-		min: ":attribute harus lebih dari :min:type.",
-		not_in: ":attribute terpilih tidak boleh sama dengan :values.",
-		not_regex: ":attribute tidak boleh cocok dengan pola yang ditentukan.",
-		numeric: ":attribute harus berupa angka.",
-		phone: ":attribute harus berupa nomor ponsel yang valid.",
-		regex: ":attribute harus cocok dengan pola yang ditentukan.",
-		required: ":attribute tidak boleh kosong.",
-		size: ":attribute harus :size:type.",
-		string: ":attribute harus berupa string.",
-		typeof: ":attribute tidak cocok dengan tipe :type.",
-		url: "Harus :attribute yang valid.",
-		// url: ":attribute harus berupa url.",
-	});
+  SimpleReactValidator.addLocale("id", {
+    accepted: ":attribute harus diterima.",
+    after: ":attribute harus lebih dari :date.",
+    after_or_equal: ":attribute harus lebih dari atau sama dengan :date.",
+    alpha: ":attribute hanya boleh berisikan teks.",
+    alpha_space: ":attribute hanya boleh berisikan teks dan spasi.",
+    alpha_num: ":attribute hanya boleh berisikan teks dan angka.",
+    alpha_num_space: ":attribute hanya boleh berisikan teks, angka, dan spasi.",
+    alpha_num_dash:
+      ":attribute hanya boleh berisikan teks, angka, dan garis datar.",
+    alpha_num_dash_space:
+      ":attribute hanya boleh berisikan teks, angka, garis datar dan spasi.",
+    array: ":attribute harus berupa array.",
+    before: ":attribute harus kurang dari :date.",
+    before_or_equal: ":attribute harus kurang dari atau sama dengan :date.",
+    between: ":attribute harus diantara :min dan :max:type.",
+    boolean: ":attribute harus berupa boolean.",
+    card_exp:
+      ":attribute harus berupa tanggal expire yang valid valid expiration date.",
+    card_num: ":attribute harus berupa nomor kartu kredit.",
+    currency: ":attribute harus berupa mata uang yang valid.",
+    date: ":attribute harus berupa tanggal.",
+    date_equals: ":attribute harus sama dengan :date.",
+    email: ":attribute harus berupa alamat email yang valid.",
+    in: ":attribute terpilih harus :values.",
+    integer: ":attribute harus berupa angka.",
+    max: ":attribute harus kurang dari :max:type.",
+    min: ":attribute harus lebih dari :min:type.",
+    not_in: ":attribute terpilih tidak boleh sama dengan :values.",
+    not_regex: ":attribute tidak boleh cocok dengan pola yang ditentukan.",
+    numeric: ":attribute harus berupa angka.",
+    phone: ":attribute harus berupa nomor ponsel yang valid.",
+    regex: ":attribute harus cocok dengan pola yang ditentukan.",
+    required: ":attribute tidak boleh kosong.",
+    size: ":attribute harus :size:type.",
+    string: ":attribute harus berupa string.",
+    typeof: ":attribute tidak cocok dengan tipe :type.",
+    url: "Harus :attribute yang valid.",
+    // url: ":attribute harus berupa url.",
+  });
 
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	useEffect(() => {
-		if (pageProps?.session?.user?.user?.data?.token) {
-			if (!localStorage.getItem("sidebar")) {
-				dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
-			}
-		}
-	}, [dispatch, pageProps?.session?.user?.user?.data?.token]);
-	moment.locale("id");
+  useEffect(() => {
+    if (pageProps?.session?.user?.user?.data?.token) {
+      if (!localStorage.getItem("sidebar")) {
+        dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
+      }
+    }
+  }, [dispatch, pageProps?.session?.user?.user?.data?.token]);
+  moment.locale("id");
 
-	return (
-		<>
-			{pageProps.data !== "auth" ? (
-				<Layout title={pageProps.title}>
-					<Component {...pageProps} />
-				</Layout>
-			) : (
-				<Component {...pageProps} />
-			)}
-		</>
-	);
+  return (
+    <>
+      {pageProps.data !== "auth" && pageProps.session ? (
+        <Layout title={pageProps.title}>
+          <Component {...pageProps} />
+        </Layout>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </>
+  );
 }
 
 export default wrapper.withRedux(MyApp);

@@ -125,7 +125,9 @@ const AddFormLpj = ({ token }) => {
                   </div>
                   <div className="">
                     <button
-                      className="btn btn-link-action bg-danger text-white"
+                      className={`btn btn-link-action bg-danger text-white ${
+                        i === 0 && `invisible`
+                      }`}
                       type="button"
                       onClick={() => handleDeleteForm(i)}
                     >

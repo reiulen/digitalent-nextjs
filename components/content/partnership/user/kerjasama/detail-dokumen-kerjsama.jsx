@@ -20,26 +20,27 @@ const DetailDokumenKerjasama = ({ token }) => {
   const [pdfFIle, setPdfFIle] = useState("");
 
   useEffect(() => {
-    async function getSingleValue(id) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-        setPdfFIle(data?.data?.document_file);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
-      }
-    }
-
     getSingleValue(router.query.id);
     dispatch(getSingleCooperation(router.query.id, token));
   }, [dispatch, router.query.id, token]);
+
+  async function getSingleValue(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      setPdfFIle(data?.data?.document_file);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+    }
+  }
+
 
   return (
     <PageWrapper>

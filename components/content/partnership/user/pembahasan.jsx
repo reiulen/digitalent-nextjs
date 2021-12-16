@@ -14,25 +14,27 @@ function Pembahasan({ token }) {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    // api cek progress
-    async function cekProgresStatus(id) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-        setStatus(data?.data?.status_migrates_id?.status);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
-      }
-    }
+    
     cekProgresStatus(router.query.id);
   }, [router.query.id, token]);
+
+  // api cek progress
+  async function cekProgresStatus(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      setStatus(data?.data?.status_migrates_id?.status);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+    }
+  }
 
   return (
     <PageWrapper>

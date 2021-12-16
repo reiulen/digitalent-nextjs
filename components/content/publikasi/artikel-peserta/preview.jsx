@@ -20,14 +20,14 @@ const Preview = () => {
 
     const { artikel_peserta } = useSelector(state => state.detailArtikelPeserta)
 
-    const [judul_artikel, setJudulArtikel] = useState(artikel_peserta.judul_artikel)
-    const [jenis_kategori, setJenisKategori] = useState(artikel_peserta.jenis_kategori)
-    const [created_at, setCreatedAt] = useState(new Date(artikel_peserta.created_at).toLocaleDateString("en-IN"))
-    const [nama, setNamaKategori] = useState(artikel_peserta.nama)
-    const [gambar, setGambar] = useState(artikel_peserta.gambar)
-    const [user, setUser] = useState(artikel_peserta.dibuat)
-    const [isi_artikel, setIsiArtikel] = useState(artikel_peserta.isi_artikel)
-    const [tag, setTag] = useState(artikel_peserta.tag)
+    const [judul_artikel, setJudulArtikel] = useState(artikel_peserta?.judul_artikel)
+    const [jenis_kategori, setJenisKategori] = useState(artikel_peserta?.jenis_kategori)
+    const [created_at, setCreatedAt] = useState(new Date(artikel_peserta?.created_at).toLocaleDateString("en-IN"))
+    const [nama, setNamaKategori] = useState(artikel_peserta?.nama)
+    const [gambar, setGambar] = useState(artikel_peserta?.gambar)
+    const [user, setUser] = useState(artikel_peserta?.dibuat)
+    const [isi_artikel, setIsiArtikel] = useState(artikel_peserta?.isi_artikel)
+    const [tag, setTag] = useState(artikel_peserta?.tag)
 
     const dispatch = useDispatch();
     const router = useRouter();
@@ -278,8 +278,8 @@ const Preview = () => {
                                             Temukan Lebih Banyak Artikel Yang Sesuai:
                                         </h3>
                                         <div className=" d-flex flex-wrap flex-row">
-                                            {tags && tags.tag && tags.tag.length !== 0 ? (
-                                                tags.tag.map((el, i) => {
+                                            {tags && tags?.tag && tags?.tag.length !== 0 ? (
+                                                tags?.tag?.map((el, i) => {
                                                     return (
                                                         <div
                                                             className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center"

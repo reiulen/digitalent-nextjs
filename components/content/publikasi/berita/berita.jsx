@@ -362,7 +362,7 @@ const Berita = ({ token }) => {
                         background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        value={berita && berita.publish != "" ? berita.publish : 0}
+                        value={berita && berita?.publish != "" ? berita?.publish : 0}
                         titleValue='Berita'
                         title='Total Publish'
                         publishedVal="1"
@@ -382,7 +382,7 @@ const Berita = ({ token }) => {
                         background='bg-light-success'
                         icon='user-white.svg'
                         color='#ffffff'
-                        value={berita && berita.total_pembaca !== null ? berita.total_pembaca : 0} 
+                        value={berita && berita?.total_pembaca !== null ? berita?.total_pembaca : 0} 
                         titleValue='Orang'
                         title='Total Pembaca'
                         publishedVal=""
@@ -392,7 +392,7 @@ const Berita = ({ token }) => {
                         background='bg-light-danger'
                         icon="Library.svg"
                         color='#ffffff'
-                        value={berita && berita.unpublish != "" ? berita.unpublish : 0}
+                        value={berita && berita?.unpublish != "" ? berita?.unpublish : 0}
                         titleValue='Berita'
                         title='Total Belum Dipublish'
                         publishedVal="0"
@@ -407,7 +407,7 @@ const Berita = ({ token }) => {
                     <div className="card-header row border-0">
                         <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Berita</h3>
                         {
-                            role_permission.permissions.includes("publikasi.berita.manage") || role_permission.roles.includes("Super Admin") ?
+                            role_permission?.permissions.includes("publikasi.berita.manage") || role_permission?.roles.includes("Super Admin") ?
                                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                                     <Link href='/publikasi/berita/tambah-berita'>
                                         <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
@@ -601,7 +601,7 @@ const Berita = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions.includes("publikasi.berita.manage") || role_permission.roles.includes("Super Admin") ?
+                                                    role_permission?.permissions.includes("publikasi.berita.manage") || role_permission?.roles.includes("Super Admin") ?
                                                         <th style={{ width: '9.7vw' }}>Aksi</th>
                                                         : null
                                                 }
@@ -611,7 +611,7 @@ const Berita = ({ token }) => {
                                             {
                                                 !berita || berita && berita.berita.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
-                                                    berita && berita.berita.map((row, i) => {
+                                                    berita && berita?.berita?.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -668,7 +668,7 @@ const Berita = ({ token }) => {
                                                                 {row.role[0].name}
                                                             </td>
                                                             {
-                                                                role_permission.permissions.includes("publikasi.berita.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                role_permission?.permissions.includes("publikasi.berita.manage") || role_permission?.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex">
 
                                                                         <Link
@@ -715,13 +715,13 @@ const Berita = ({ token }) => {
                             </div>
 
                             <div className="row">
-                                {berita && berita.perPage < berita.total &&
+                                {berita && berita?.perPage < berita?.total &&
                                     <>
                                         <div className={`${stylesPag.pagination} table-pagination`}>
                                             <Pagination
                                                 activePage={page}
-                                                itemsCountPerPage={berita.perPage}
-                                                totalItemsCount={berita.total}
+                                                itemsCountPerPage={berita?.perPage}
+                                                totalItemsCount={berita?.total}
                                                 pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={'>'}
@@ -758,7 +758,7 @@ const Berita = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {berita.total} List Data</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {berita?.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''

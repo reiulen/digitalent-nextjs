@@ -283,8 +283,8 @@ const TambahFaq = ({ token, id }) => {
                                             <option value="">Data Kosong</option>
                                         ) : (
                                             kategori &&
-                                            kategori.kategori &&
-                                            kategori.kategori.map((row) => {
+                                            kategori?.kategori &&
+                                            kategori?.kategori?.map((row) => {
                                                 return (
                                                     row.jenis_kategori === "Faq" ?
                                                         <option key={row.id} value={row.id}>
@@ -301,7 +301,7 @@ const TambahFaq = ({ token, id }) => {
                             </div>
 
                             {
-                                role_permission.roles.includes("Super Admin") ?
+                                role_permission?.roles.includes("Super Admin") ?
                                     <div className="form-group row font-weight-bolder font-weight-bolder">
                                         <label
                                             htmlFor="staticEmail"

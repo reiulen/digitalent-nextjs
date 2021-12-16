@@ -143,37 +143,7 @@ const Edit = ({ token }) => {
 
 
   useEffect(() => {
-    async function getSingleData(id, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-
-        let arr = [],
-          arr_new = [];
-        data?.data?.cooperation_category_forms?.forEach((item) => {
-          item.isTipe = "old";
-          arr.push(item);
-        });
-        data?.data?.cooperation_category_forms?.forEach((item) => {
-          item.name = item.cooperation_form;
-          item.isTipe = "old";
-          arr_new.push(item);
-        });
-        setStateDataSingle(arr_new);
-        setStateDataSingleOld(arr);
-        setCategoryCooporation(data?.data?.cooperation_categories);
-        setStatus(data?.data?.status);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
-      }
-    }
+    
     getSingleData(router.query.id, token);
     if (allMKCooporation.status === "success") {
       router.push({
@@ -182,6 +152,38 @@ const Edit = ({ token }) => {
       });
     }
   }, [router.query.id, allMKCooporation.status, router, token]);
+
+  async function getSingleData(id, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+
+      let arr = [],
+        arr_new = [];
+      data?.data?.cooperation_category_forms?.forEach((item) => {
+        item.isTipe = "old";
+        arr.push(item);
+      });
+      data?.data?.cooperation_category_forms?.forEach((item) => {
+        item.name = item.cooperation_form;
+        item.isTipe = "old";
+        arr_new.push(item);
+      });
+      setStateDataSingle(arr_new);
+      setStateDataSingleOld(arr);
+      setCategoryCooporation(data?.data?.cooperation_categories);
+      setStatus(data?.data?.status);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+    }
+  }
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
