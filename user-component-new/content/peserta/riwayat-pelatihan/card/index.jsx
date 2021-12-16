@@ -26,7 +26,6 @@ export default function CardTemplateOriginal({ data, session }) {
 		helperUserStatusColor(data.status, setLabel);
 	}, [data.status]);
 	// console.log(data);
-	console.log(data);
 	return (
 		<Fragment>
 			<Card className="position-relative mb-8 rounded-lg">
