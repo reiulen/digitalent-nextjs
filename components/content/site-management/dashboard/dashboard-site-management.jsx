@@ -75,6 +75,8 @@ const DashboardSiteManagement = ({ token, user }) => {
 		shallowEqual
 	);
 
+	const allListPeserta = useSelector((state) => state.allListPeserta);
+
 	function capitalize(s) {
 		let a = s.split(" ");
 		let result = [];
@@ -138,7 +140,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 								background="bg-light-success "
 								icon="User.svg"
 								color="#ffffff"
-								titleValue={allDataPeserta[0].totalPeserta}
+								titleValue={allListPeserta?.data?.data?.total}
 								title="Total User DTS"
 								publishedVal="1"
 							/>
@@ -265,10 +267,10 @@ const DashboardSiteManagement = ({ token, user }) => {
 								<div className="d-flex ml-6 justify-content-between align-items-center pagination-button">
 									<p className="pt-5">
 										Total:{" "}
-										{allDataPeserta &&
+										{/* {allDataPeserta &&
 											allDataPeserta.length > 0 &&
-											allDataPeserta[0].totalPeserta}{" "}
-										User
+											allDataPeserta[0].totalPeserta}{" "} */}
+											{allListPeserta?.data?.data?.total} User
 									</p>
 									<div className="ml-auto mx-7 my-4">
 										<button

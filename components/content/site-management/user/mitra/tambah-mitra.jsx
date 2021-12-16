@@ -300,7 +300,7 @@ const TambahApi = ({ token }) => {
 
 
                 ) : (
-                  <div className="ml-4 row">
+                  <div className="ml-0 row">
                     <figure
                       className="avatar item-rtl position-relative shadow-sm rounded-circle"
                       data-toggle="modal"
