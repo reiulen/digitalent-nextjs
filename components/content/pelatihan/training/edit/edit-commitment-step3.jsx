@@ -105,6 +105,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
                     checked={commitment === "0"}
                     onClick={() => {
                       setCommitment("0");
+                      setDescription("");
                     }}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("komitmen")
