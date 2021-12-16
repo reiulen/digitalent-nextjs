@@ -11,8 +11,7 @@ import Cookies from "js-cookie";
 export const getPartnershipPermissions =
   (token, permission) => async (dispatch) => {
     try {
-      let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/permissions` ;
-      
+      let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/permissions`;
       const config = {
         headers: {
           Authorization: "Bearer " + token,
