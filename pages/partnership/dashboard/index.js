@@ -4,6 +4,7 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import { fetchDashboard } from "../../../redux/actions/partnership/dashboard.action";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getPartnershipPermissions } from "../../../redux/actions/partnership/partnership_permission.actions"
 const Dashboard = dynamic(
   () =>
     import("../../../components/content/partnership/dashboard/DashboardPage"),
@@ -46,7 +47,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // }
 
       await store.dispatch(fetchDashboard(session.user.user.data.token, cookiePermission));
-
+      await store.dispatch(getPartnershipPermissions(session.user.user.data.token, cookiePermission))
       return {
         props: { session, title: "Dashboard - Partnership" },
       };

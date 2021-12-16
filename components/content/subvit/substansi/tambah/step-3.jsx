@@ -30,6 +30,11 @@ const StepThree = ({ token, tokenPermission }) => {
   const { loading, error, success } = useSelector(
     (state) => state.updateSubtanceQuestionBanksPublish
   );
+
+  const { subtance } = useSelector(
+    (state) => state.detailSubtanceQuestionBanks
+  );
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
@@ -113,6 +118,9 @@ const StepThree = ({ token, tokenPermission }) => {
         dispatch(
           updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
         );
+        localStorage.removeItem("method");
+        localStorage.removeItem("step1");
+        localStorage.removeItem("step2");
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -183,7 +191,30 @@ const StepThree = ({ token, tokenPermission }) => {
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
+          <div></div>
           <div className="card-body pt-0">
+            <h4 className="mt-2">
+              <b>{subtance?.training?.name}</b>
+            </h4>
+            <table>
+              <tr>
+                <td>Tanggal Pendaftaran &nbsp;</td>
+                <td>: &nbsp;</td>
+                <td>
+                  {subtance?.pendaftaran_mulai} &nbsp;s.d.&nbsp;
+                  {subtance?.pendaftaran_selesai}{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>Tanggal Pelatihan </td>
+                <td> : </td>{" "}
+                <td>
+                  {subtance?.pelatihan_mulai} &nbsp;s.d.&nbsp;{" "}
+                  {subtance?.pelatihan_selesai}{" "}
+                </td>
+              </tr>
+            </table>
+
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
@@ -408,11 +439,17 @@ const StepThree = ({ token, tokenPermission }) => {
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     onClick={() => {
-                      router.push(
-                        `/subvit/substansi/tambah-step-2-entry?id=${
-                          router.query.id
-                        }&metode=${localStorage.getItem("method")}`
-                      );
+                      localStorage.getItem("method") === "entry"
+                        ? router.push(
+                            `/subvit/substansi/tambah-step-2-entry?id=${
+                              router.query.id
+                            }&metode=${localStorage.getItem("method")}`
+                          )
+                        : router.push(
+                            `/subvit/substansi/tambah-step-2-import?id=${
+                              router.query.id
+                            }&metode=${localStorage.getItem("method")}`
+                          );
                     }}
                     type="button"
                   >

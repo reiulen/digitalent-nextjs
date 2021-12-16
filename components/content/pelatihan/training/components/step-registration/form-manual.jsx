@@ -25,11 +25,43 @@ const FormManual = ({
     const { value, name, checked } = e.target;
     if (alfa !== null && beta === null && gamma === null && delta === null) {
       const list = [...formBuilder];
+      if (name === "upload-document") {
+        const type = [
+          "image/jpg",
+          "image/png",
+          "image/jpeg",
+          "application/pdf",
+        ];
+        if (e.target.files[0]) {
+          if (type.includes(e.target.files[0].type)) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              if (reader.readyState === 2) {
+                list[alfa].dataOption = reader.result;
+              }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+            list[alfa].fileName = e.target.files[0].name;
+          } else {
+            e.target.value = null;
+            Swal.fire(
+              "Oops !",
+              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
+              "error"
+            );
+          }
+        }
+      }
+      if (name === "element" && value === "triggered") {
+        list[alfa].option = "manual";
+        list[alfa].size = "col-md-12";
+      }
       list[alfa][name] = value;
       if (name === "required") {
         let check = checked === true ? "1" : "0";
         list[alfa]["required"] = check;
       }
+
       if (name === "triggered") {
         let check = checked === true ? "1" : "0";
         if (checked) {
@@ -45,6 +77,7 @@ const FormManual = ({
                     size: "",
                     option: "",
                     dataOption: "",
+                    fileName: "Belum ada file",
                     triggered: "0",
                     triggered_children: [],
                   };
@@ -63,6 +96,37 @@ const FormManual = ({
 
     if (alfa !== null && beta !== null && gamma === null && delta === null) {
       const list = [...formBuilder];
+      if (name === "upload-document") {
+        const type = [
+          "image/jpg",
+          "image/png",
+          "image/jpeg",
+          "application/pdf",
+        ];
+        if (e.target.files[0]) {
+          if (type.includes(e.target.files[0].type)) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              if (reader.readyState === 2) {
+                list[alfa].triggered_parent[beta].dataOption = reader.result;
+              }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+            list[alfa].triggered_parent[beta].fileName = e.target.files[0].name;
+          } else {
+            e.target.value = null;
+            Swal.fire(
+              "Oops !",
+              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
+              "error"
+            );
+          }
+        }
+      }
+      if (name === "element" && value === "triggered") {
+        list[alfa].triggered_parent[beta].option = "manual";
+        list[alfa].triggered_parent[beta].size = "col-md-12";
+      }
       list[alfa].triggered_parent[beta][name] = value;
       if (name === "required") {
         let check = checked === true ? "1" : "0";
@@ -84,6 +148,7 @@ const FormManual = ({
                     size: "",
                     option: "",
                     dataOption: "",
+                    fileName: "Belum ada file",
                     triggered: "0",
                     triggered_index: [],
                   };
@@ -103,6 +168,43 @@ const FormManual = ({
 
     if (alfa !== null && beta !== null && gamma !== null && delta === null) {
       const list = [...formBuilder];
+      if (name === "upload-document") {
+        const type = [
+          "image/jpg",
+          "image/png",
+          "image/jpeg",
+          "application/pdf",
+        ];
+        if (e.target.files[0]) {
+          if (type.includes(e.target.files[0].type)) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              if (reader.readyState === 2) {
+                list[alfa].triggered_parent[beta].triggered_children[
+                  gamma
+                ].dataOption = reader.result;
+              }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+            list[alfa].triggered_parent[beta].triggered_children[
+              gamma
+            ].fileName = e.target.files[0].name;
+          } else {
+            e.target.value = null;
+            Swal.fire(
+              "Oops !",
+              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
+              "error"
+            );
+          }
+        }
+      }
+      if (name === "element" && value === "triggered") {
+        list[alfa].triggered_parent[beta].triggered_children[gamma].option =
+          "manual";
+        list[alfa].triggered_parent[beta].triggered_children[gamma].size =
+          "col-md-12";
+      }
       list[alfa].triggered_parent[beta].triggered_children[gamma][name] = value;
       if (name === "required") {
         let check = checked === true ? "1" : "0";
@@ -128,6 +230,7 @@ const FormManual = ({
                     size: "",
                     option: "",
                     dataOption: "",
+                    fileName: "Belum ada file",
                   };
                   list[alfa].triggered_parent[beta].triggered_children[
                     gamma
@@ -147,6 +250,45 @@ const FormManual = ({
 
     if (alfa !== null && beta !== null && gamma !== null && delta !== null) {
       const list = [...formBuilder];
+      if (name === "upload-document") {
+        const type = [
+          "image/jpg",
+          "image/png",
+          "image/jpeg",
+          "application/pdf",
+        ];
+        if (e.target.files[0]) {
+          if (type.includes(e.target.files[0].type)) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              if (reader.readyState === 2) {
+                list[alfa].triggered_parent[beta].triggered_children[
+                  gamma
+                ].triggered_index[delta].dataOption = reader.result;
+              }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+            list[alfa].triggered_parent[beta].triggered_children[
+              gamma
+            ].triggered_index[delta].fileName = e.target.files[0].name;
+          } else {
+            e.target.value = null;
+            Swal.fire(
+              "Oops !",
+              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
+              "error"
+            );
+          }
+        }
+      }
+      if (name === "element" && value === "triggered") {
+        list[alfa].triggered_parent[beta].triggered_children[
+          gamma
+        ].triggered_index[delta].option = "manual";
+        list[alfa].triggered_parent[beta].triggered_children[
+          gamma
+        ].triggered_index[delta].size = "col-md-12";
+      }
       list[alfa].triggered_parent[beta].triggered_children[
         gamma
       ].triggered_index[delta][name] = value;
@@ -345,6 +487,29 @@ const FormManual = ({
           </div>
         </>
       );
+    } else if (row.element === "upload_document") {
+      return (
+        <div className="col-sm-12 col-md-4">
+          <div className="form-group mb-2">
+            <label className="col-form-label font-weight-bold">
+              Upload Document
+            </label>
+            <div className="custom-file">
+              <input
+                type="file"
+                className="custom-file-input"
+                name="upload-document"
+                accept="image/png, image/jpeg , image/jpg, application/pdf"
+                id="uploadThumbnail"
+                onChange={(e) => inputChangeHandler(e, i, j, k, l)}
+              />
+              <label className="custom-file-label" htmlFor="customFile">
+                {row.fileName}
+              </label>
+            </div>
+          </div>
+        </div>
+      );
     } else {
       return (
         <>
@@ -399,12 +564,12 @@ const FormManual = ({
 
   const showPreviewHandler = () => {
     let list = [...formBuilder];
-    list.forEach((row, i) => {
-      if (row.option === "manual") {
-        let dataOption = row.dataOption.split(";");
-        row.dataOption = dataOption;
-      }
-    });
+    // list.forEach((row, i) => {
+    //   if (row.option === "manual") {
+    //     let dataOption = row.dataOption.split(";");
+    //     row.dataOption = dataOption;
+    //   }
+    // });
     funcFormBuilder(list);
     funcModalShow(true);
   };
@@ -420,6 +585,7 @@ const FormManual = ({
         size: "",
         option: "",
         dataOption: "",
+        fileName: "Belum ada file",
         required: "0",
         triggered: "0",
         triggered_parent: [],
@@ -505,6 +671,7 @@ const FormManual = ({
                 value={row.size}
                 onChange={(e) => inputChangeHandler(e, i)}
                 required
+                disabled={row.element === "triggered" ? true : false}
               >
                 <option value="" disabled selected>
                   -- PILIH --
@@ -556,7 +723,7 @@ const FormManual = ({
                 <button
                   className="btn btn-link-action bg-danger text-white mb-3 "
                   type="button"
-                  onClick={() => removeFieldHandler(i, j)}
+                  onClick={() => removeFieldHandler(i)}
                 >
                   <i className="ri-delete-bin-fill p-0 text-white"></i>
                 </button>
@@ -629,6 +796,9 @@ const FormManual = ({
                         value={rowParent.size}
                         onChange={(e) => inputChangeHandler(e, i, j)}
                         required
+                        disabled={
+                          rowParent.element === "triggered" ? true : false
+                        }
                       >
                         <option value="" disabled selected>
                           -- PILIH --
@@ -749,6 +919,11 @@ const FormManual = ({
                                 value={rowChildren.size}
                                 onChange={(e) => inputChangeHandler(e, i, j, k)}
                                 required
+                                disabled={
+                                  rowChildren.element === "triggered"
+                                    ? true
+                                    : false
+                                }
                               >
                                 <option value="" disabled selected>
                                   -- PILIH --
@@ -868,11 +1043,14 @@ const FormManual = ({
                                         <option value="" disabled selected>
                                           -- PILIH --
                                         </option>
-                                        {element.map((el, i) => (
-                                          <option key={i} value={el.value}>
-                                            {el.name}
-                                          </option>
-                                        ))}
+                                        {element.map(
+                                          (el, i) =>
+                                            el.value !== "triggered" && (
+                                              <option key={i} value={el.value}>
+                                                {el.name}
+                                              </option>
+                                            )
+                                        )}
                                       </select>
                                     </div>
                                   </div>
@@ -889,6 +1067,11 @@ const FormManual = ({
                                           inputChangeHandler(e, i, j, k, l)
                                         }
                                         required
+                                        disabled={
+                                          rowIndex.element === "triggered"
+                                            ? true
+                                            : false
+                                        }
                                       >
                                         <option value="" disabled selected>
                                           -- PILIH --

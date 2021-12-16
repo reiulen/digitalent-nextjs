@@ -109,7 +109,7 @@ const Table = ({ token }) => {
         (result) => {
           if (result.isConfirmed) {
             dispatch(getAllAdminSite(token));
-            window.location.reload()
+            window.location.reload();
           }
         }
       );
@@ -334,60 +334,62 @@ const Table = ({ token }) => {
                   </table>
                 )}
               </div>
-{allAdminSite.data.total > 5 &&  <div className="row px-4">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={allAdminSite.page}
-                    itemsCountPerPage={allAdminSite.data.perPage}
-                    totalItemsCount={allAdminSite.data.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
+              {allAdminSite?.data?.total > 5 && (
+                <div className="row px-4">
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={allAdminSite.page}
+                      itemsCountPerPage={allAdminSite.data.perPage}
+                      totalItemsCount={allAdminSite.data.total}
+                      pageRangeDisplayed={3}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
 
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control pr-2 cursor-pointer"
-                        id="exampleFormControlSelect2"
-                        defaultValue=""
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) =>
-                          dispatch(limitCooporation(e.target.value, token))
-                        }
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data{" "}
-                        {allAdminSite.data && allAdminSite.data.total} List Data
-                      </p>
+                  <div className="table-total ml-auto mr-4">
+                    <div className="row mt-4">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control pr-2 cursor-pointer"
+                          id="exampleFormControlSelect2"
+                          defaultValue=""
+                          style={{
+                            width: "63px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) =>
+                            dispatch(limitCooporation(e.target.value, token))
+                          }
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data{" "}
+                          {allAdminSite.data && allAdminSite.data.total} List
+                          Data
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>}
-             
+              )}
             </div>
           </div>
         </div>

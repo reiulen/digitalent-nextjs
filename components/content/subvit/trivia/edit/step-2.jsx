@@ -154,6 +154,27 @@ const StepTwo = ({ token, tokenPermission }) => {
             <h2 className="card-title h2 text-dark">Publish Soal </h2>
           </div>
           <div className="card-body pt-0">
+            <h4 className="mt-2">
+              <b>{trivia?.training?.name}</b>
+            </h4>
+            <table>
+              <tr>
+                <td>Tanggal Pendaftaran &nbsp;</td>
+                <td>: &nbsp;</td>
+                <td>
+                  {trivia?.pendaftaran_mulai} &nbsp;s.d.&nbsp;
+                  {trivia?.pendaftaran_selesai}{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>Tanggal Pelatihan </td>
+                <td> : </td>{" "}
+                <td>
+                  {trivia?.pelatihan_mulai} &nbsp;s.d.&nbsp;
+                  {trivia?.pelatihan_selesai}{" "}
+                </td>
+              </tr>
+            </table>
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
@@ -349,7 +370,18 @@ const StepTwo = ({ token, tokenPermission }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  {" "}
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push(`/subvit/trivia/edit?id=${router.query.id}`);
+                    }}
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

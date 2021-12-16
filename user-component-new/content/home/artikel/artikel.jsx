@@ -497,7 +497,7 @@ const Artikel = () => {
 
                                         {
                                             kategoriToShow ?
-                                                kategoriToShow.map((el, i) => {
+                                                kategoriToShow?.map((el, i) => {
                                                     return (
                                                         kategoriArtikel == el ?
                                                             <SplideSlide>
@@ -582,7 +582,7 @@ const Artikel = () => {
 
                                         {
                                             kategoriToShow ?
-                                                kategoriToShow.map((el, i) => {
+                                                kategoriToShow?.map((el, i) => {
                                                     return (
                                                         kategoriArtikel == el ?
                                                             <SplideSlide>
@@ -672,7 +672,7 @@ const Artikel = () => {
 
                     {
                         kategoriToShow ?
-                            kategoriToShow.map((el, i) => {
+                            kategoriToShow?.map((el, i) => {
                                 return (
                                     kategoriArtikel == el ?
                                         <SplideSlide>
@@ -760,7 +760,7 @@ const Artikel = () => {
 
                     {
                         kategoriToShow ?
-                            kategoriToShow.map((el, i) => {
+                            kategoriToShow?.map((el, i) => {
                                 return (
                                     kategoriArtikel == el ?
                                         <SplideSlide>
@@ -1058,7 +1058,7 @@ const Artikel = () => {
                             </div>
                         :
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
-                                artikel.artikel.map ((el, i) => {
+                                artikel?.artikel?.map ((el, i) => {
                                     return (
                                         <div 
                                             className= "row mt-20 mb-3 pl-6"
@@ -1297,7 +1297,7 @@ const Artikel = () => {
                                         activePage = {activePage}
                                         itemsCountPerPage={5}
                                         // itemsCountPerPage={artikel.perPage}
-                                        totalItemsCount={artikel.total}
+                                        totalItemsCount={artikel?.total}
                                         pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
                                         onChange={handlePagination}
                                         nextPageText={">"}

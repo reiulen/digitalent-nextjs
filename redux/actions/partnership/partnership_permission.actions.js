@@ -15,15 +15,17 @@ export const getPartnershipPermissions =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: permission,
+          // Permission: permission,
         },
       };
 
       const { data } = await axios.get(link, config);
+
       dispatch({
         type: FETCH_PARTNERSHIP_PERMISSION_SUCCESS,
         payload: data,
       });
+
     } catch (error) {
       dispatch({
         type: FETCH_PARTNERSHIP_PERMISSION_FAIL,

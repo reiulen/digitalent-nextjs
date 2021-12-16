@@ -67,14 +67,24 @@ export default function RiwayatPelatihanDetail({ session }) {
 							md={4}
 							className="d-flex justify-content-md-end justify-content-start"
 						>
+							{data.midtest && data.trivia ? (
+								<p
+									style={{ borderRadius: "50px" }}
+									className={`label label-inline label-light-${
+										data.midtest ? "primary" : label
+									} font-weight-bolder p-4 text-center text-capitalize mr-5`}
+								>
+									Kerjakan Mid Test
+								</p>
+							) : (
+								""
+							)}
 							<span
-								className={`label label-inline label-light-${label} fz-12 text-center font-weight-bolder text-capitalize`}
+								className={`label label-inline label-light-${label} p-4 fz-12 text-center font-weight-bolder text-capitalize`}
 								style={{
 									borderRadius: "25px",
 									paddingRight: "12px",
 									paddingLeft: "12px",
-									paddingTop: "4px",
-									paddingBottom: "4px",
 								}}
 							>
 								{data?.lpj

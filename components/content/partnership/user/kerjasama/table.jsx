@@ -114,7 +114,21 @@ const Table = ({ token }) => {
         setIsProfile(true);
       }
     } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      // Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      Swal.fire({
+        icon: 'error',
+        title: `Gagal`,
+        text: `${error.response.data.message}`,
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          router.back()
+        }
+      })
+      
     }
   };
 

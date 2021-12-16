@@ -64,11 +64,11 @@ const Table = ({ token }) => {
     dispatch(fetchAllMKCooporation(token));
   }, [
     dispatch,
-    allMKCooporation.keyword,
-    allMKCooporation.limit,
-    allMKCooporation.page,
-    allMKCooporation.status_delete,
-    allMKCooporation.status_list,
+    allMKCooporation?.keyword,
+    allMKCooporation?.limit,
+    allMKCooporation?.page,
+    allMKCooporation?.status_delete,
+    allMKCooporation?.status_list,
     token
   ]);
 

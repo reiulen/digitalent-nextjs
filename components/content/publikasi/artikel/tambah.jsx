@@ -417,7 +417,7 @@ const TambahArtikel = ({ token, id }) => {
                         <option value="">Data Kosong</option>
                       ) : (
                         akademi &&
-                        akademi.map((row) => {
+                        akademi?.map((row) => {
                           return (
                             <option key={row.id} value={row.slug}>
                               {row.slug}
@@ -461,8 +461,8 @@ const TambahArtikel = ({ token, id }) => {
                         <option value="">Data Kosong</option>
                       ) : (
                         kategori &&
-                        kategori.kategori &&
-                        kategori.kategori.map((row) => {
+                        kategori?.kategori &&
+                        kategori?.kategori?.map((row) => {
                           return row.jenis_kategori == "Artikel" ? (
                             <option key={row.id} value={row.id}>
                               {row.nama_kategori}

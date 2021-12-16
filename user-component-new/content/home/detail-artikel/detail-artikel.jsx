@@ -55,7 +55,7 @@ const DetailArtikel = () => {
 
   const handleLinkContent = () => {
     if (detail) {
-      let text = detail.isi_artikel;
+      let text = detail?.isi_artikel;
 
       let result = "";
 
@@ -146,7 +146,7 @@ const DetailArtikel = () => {
         <div className="row my-5 d-flex flex-column ml-1">
           <div>
             <div className="badge badge-light mr-2">
-              <div className="text-primary">{detail.nama_kategori}</div>
+              <div className="text-primary">{detail?.nama_kategori}</div>
             </div>
           </div>
           <div className="mt-5">
@@ -154,21 +154,21 @@ const DetailArtikel = () => {
               className={`${styles.fontTitle} font-weight-bolder`}
             >
               {/* Insert Title Here */}
-              {detail.judul}
+              {detail?.judul}
             </h1>
           </div>
 
           <div className="mt-5 d-flex flex-row align-items-center">
             <span className="font-weight-bolder" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Akademi Here */}
-              {detail.kategori_akademi}
+              {detail?.kategori_akademi}
             </span>
             <span className="mr-1 ml-3">
               <i className="ri-eye-line"></i>
             </span>
             <span className="text-muted" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Views Here */}
-              Dibaca {detail.dibaca}
+              Dibaca {detail?.dibaca}
             </span>
           </div>
 
@@ -191,7 +191,7 @@ const DetailArtikel = () => {
               <div className="d-flex flex-column ml-3">
                 <div className="font-weight-bolder mb-2">
                   {/* Insert Admin Here */}
-                  {detail.dibuat}
+                  {detail?.dibuat}
                 </div>
                 <div className="text-muted" style={{fontSize:"14px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                   {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
@@ -204,7 +204,7 @@ const DetailArtikel = () => {
                 {/* SHAREOVERLAY */}
                 <ShareOverlay
                   url={`http://dts-dev.majapahit.id/artikel/detail/${id}`}
-                  quote={detail.judul}
+                  quote={detail?.judul}
                 >
                   <button className="btn btn-sm btn-outline-light rounded-circle">
                     <i className="ri-share-line px-0 py-1"></i>
@@ -274,7 +274,7 @@ const DetailArtikel = () => {
                 <div className="row m-3 d-flex justify-content-between pb-5">
                   <div className="row d-flex justify-content-between ml-1">
                     {detail && detail.tag && detail.tag.length !== 0
-                      ? detail.tag.map((el, i) => {
+                      ? detail?.tag?.map((el, i) => {
                           return (
                             <div
                               className="mr-3 border p-3 rounded mb-3"
@@ -375,7 +375,7 @@ const DetailArtikel = () => {
                 </h3>
                 <div className=" d-flex flex-wrap flex-row">
                   {tagArtikel && tagArtikel.length !== 0 ? (
-                    tagArtikel.map((el, i) => {
+                    tagArtikel?.map((el, i) => {
                       return (
                         <div
                           className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center"

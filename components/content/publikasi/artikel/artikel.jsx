@@ -632,7 +632,7 @@ const Artikel = ({ token }) => {
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
                         <td className='align-middle text-center' colSpan={9}>Data Kosong</td>
                       ) : (
-                        artikel && artikel.artikel.map((artikel, i) => {
+                        artikel && artikel?.artikel?.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
                               <td className='align-middle text-center'>
@@ -748,7 +748,7 @@ const Artikel = ({ token }) => {
                 )}
               </div>
               <div className="row">
-                {artikel && artikel.perPage < artikel.total && (
+                {artikel && artikel?.perPage < artikel?.total && (
                   <>
                     <div className={`${stylesPag.pagination} table-pagination`}>
                       <Pagination

@@ -199,8 +199,8 @@ const Preview = () => {
 
                                     <div className="row m-3 d-flex justify-content-between pb-5">
                                         <div className="row d-flex justify-content-between ml-3">
-                                            {berita && berita.tag && berita.tag.length !== 0
-                                                ? berita.tag.map((el, i) => {
+                                            {berita && berita?.tag && berita?.tag.length !== 0
+                                                ? berita?.tag?.map((el, i) => {
                                                     return (
                                                         <div className="mr-3 border p-3 rounded" key={i}>
                                                             #{(el).toUpperCase()}

@@ -97,7 +97,7 @@ const Table = ({ token }) => {
         formData.append("_method", "put");
         formData.append("status", e.target.value);
 
-        dispatch(changeStatusList(token, formData, id));
+        dispatch(changeStatusList(token, formData, id, cookiePermission));
         setIsStatusBar(true);
         setDeleteBar(false);
         setIsChangeOption(true);
@@ -141,18 +141,19 @@ const Table = ({ token }) => {
 
   useEffect(() => {
     dispatch(fetchAllMK(token, cookiePermission));
+    // dispatch(fetchAllMK(token));
   }, [dispatch, 
-    allMK.keyword, 
-    allMK.page, 
-    allMK.status, 
-    allMK.categories_cooporation, 
-    allMK.partner, 
-    allMK.limit, 
-    allMK.card, 
-    allMK.status_delete, 
-    allMK.status_list, 
+    allMK?.keyword, 
+    allMK?.page, 
+    allMK?.status, 
+    allMK?.categories_cooporation, 
+    allMK?.partner, 
+    allMK?.limit, 
+    allMK?.card, 
+    allMK?.status_delete, 
+    allMK?.status_list, 
     token,
-    cookiePermission
+    // cookiePermission
   ]);
 
   const [sumWillExpire, setSumWillExpire] = useState(0);

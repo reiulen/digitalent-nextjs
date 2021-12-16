@@ -257,99 +257,114 @@ const Tambah = ({ token }) => {
   const [citiesAll, setCitiesAll] = useState([]);
 
   useEffect(() => {
-    async function getDataProvinces(token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/provinces`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-        let dataNewProvinces = data?.data?.map((items) => {
-          return { ...items, label: items?.name, value: items?.id };
-        });
-        // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-        setAllProvinces(dataNewProvinces);
-      } catch (error) {
-        return;
-      }
-    }
-
-    async function getProfiles(token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-
-        if (data) {
-          setImageview(data?.data?.agency_logo);
-          setAddress(data?.data?.address === "-" ? "" : data?.data?.address);
-          setPostal_code(
-            data?.data?.postal_code === "-" ? "" : data?.data?.postal_code
-          );
-          setPic_name(data?.data?.pic_name === "-" ? "" : data?.data?.pic_name);
-          setPic_contact_number(
-            data?.data?.pic_contact_number === "-"
-              ? ""
-              : data?.data?.pic_contact_number
-          );
-          setPic_email(data?.data?.pic_email === "-" ? "" : data?.data?.pic_email);
-          setWesite(data?.data?.website === null ? "" : data?.data?.website);
-          setEmail(data?.data?.email === "-" ? "" : data?.data?.email);
-          setInstitution_name(
-            data?.data?.institution_name === "-" ? "" : data?.data?.institution_name
-          );
-          if (data?.data?.city.id !== "-" && data?.data?.province.id !== "-") {
-            let citiesss = {
-              ...data.data.city,
-              label: data.data.city.name,
-              value: data.data.city.id,
-            };
-            let provinciesss = {
-              ...data.data.province,
-              label: data.data.province.name,
-              value: data.data.province.id,
-            };
-            setIndonesia_cities_id(citiesss);
-            setIndonesia_provinces_id(provinciesss);
-          }
-        }
-      } catch (error) {
-        return;
-      }
-    }
-
     getDataProvinces(token);
     getProfiles(token);
   }, [token]);
 
-  useEffect(() => {
-    if (indonesia_provinces_id !== "") {
-      async function fetchAPI() {
-        try {
-          let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${indonesia_provinces_id.id}`
-          );
-          let dataNewCitites = data.data.map((items) => {
-            return { ...items, label: items.name, value: items.id };
-          });
-          setCitiesAll(dataNewCitites);
-        } catch (error) {
-          return;
+  async function getDataProvinces(token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/provinces`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      let dataNewProvinces = data?.data?.map((items) => {
+        return { ...items, label: items?.name, value: items?.id };
+      });
+      // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+      setAllProvinces(dataNewProvinces);
+    } catch (error) {
+      return;
+    }
+  }
+
+  async function getProfiles(token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+
+      if (data) {
+        setImageview(data?.data?.agency_logo);
+        setAddress(data?.data?.address === "-" ? "" : data?.data?.address);
+        setPostal_code(
+          data?.data?.postal_code === "-" ? "" : data?.data?.postal_code
+        );
+        setPic_name(data?.data?.pic_name === "-" ? "" : data?.data?.pic_name);
+        setPic_contact_number(
+          data?.data?.pic_contact_number === "-"
+            ? ""
+            : data?.data?.pic_contact_number
+        );
+        setPic_email(data?.data?.pic_email === "-" ? "" : data?.data?.pic_email);
+        setWesite(data?.data?.website === null ? "" : data?.data?.website);
+        setEmail(data?.data?.email === "-" ? "" : data?.data?.email);
+        setInstitution_name(
+          data?.data?.institution_name === "-" ? "" : data?.data?.institution_name
+        );
+        if (data?.data?.city.id !== "-" && data?.data?.province.id !== "-") {
+          let citiesss = {
+            ...data.data.city,
+            label: data.data.city.name,
+            value: data.data.city.id,
+          };
+          let provinciesss = {
+            ...data.data.province,
+            label: data.data.province.name,
+            value: data.data.province.id,
+          };
+          setIndonesia_cities_id(citiesss);
+          setIndonesia_provinces_id(provinciesss);
         }
       }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: `Gagal`,
+        text: `${error.response.data.message}`,
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          router.back()
+        }
+      })
+      // return;
+    }
+  }
+
+
+  useEffect(() => {
+    if (indonesia_provinces_id !== "") {
       fetchAPI();
     }
   }, [indonesia_provinces_id]);
+
+  async function fetchAPI() {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${indonesia_provinces_id.id}`
+      );
+      let dataNewCitites = data.data.map((items) => {
+        return { ...items, label: items.name, value: items.id };
+      });
+      setCitiesAll(dataNewCitites);
+    } catch (error) {
+      return;
+    }
+  }
 
   const onNewReset = () => {
     router.replace("/partnership/user/profile-lembaga", undefined, {

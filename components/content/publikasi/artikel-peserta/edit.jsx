@@ -48,9 +48,9 @@ const EditArtikel = ({ token }) => {
   const { akademi } = useSelector(state => state.allAkademi);
   const { role_permission } = useSelector((state) => state.allRolePermission);
 
-  const [id, setId] = useState(artikel_peserta.id);
-  const [judul_artikel, setJudulArtikel] = useState(artikel_peserta.judul_artikel);
-  const [isi_artikel, setIsiArtikel] = useState(artikel_peserta.isi_artikel);
+  const [id, setId] = useState(artikel_peserta?.id);
+  const [judul_artikel, setJudulArtikel] = useState(artikel_peserta?.judul_artikel);
+  const [isi_artikel, setIsiArtikel] = useState(artikel_peserta?.isi_artikel);
   const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel_peserta.gambar);
   const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel_peserta.gambar);
   const { quill, quillRef } = useQuill();
@@ -60,14 +60,14 @@ const EditArtikel = ({ token }) => {
     "/assets/icon/Add.svg"
   );
   const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel_peserta.gambar);
-  const [gambarName, setGambarName] = useState(artikel_peserta.gambar)
-  const [kategori_id, setKategoriId] = useState(artikel_peserta.kategori_id); //belum
-  const [users_id, setUserId] = useState(artikel_peserta.users_id);
-  const [kategori_akademi, setKategoriAkademi] = useState(artikel_peserta.kategori_akademi);
-  const [tag, setTag] = useState(artikel_peserta.tag);
-  const [publish, setPublish] = useState(artikel_peserta.publish);
-  const [publishDate, setPublishDate] = useState(artikel_peserta.tanggal_publish ? new Date(artikel_peserta.tanggal_publish) : null);
-  const [disablePublishDate, setDisablePublishDate] = useState(artikel_peserta.publish === 0 ? true : false)
+  const [gambarName, setGambarName] = useState(artikel_peserta?.gambar)
+  const [kategori_id, setKategoriId] = useState(artikel_peserta?.kategori_id); //belum
+  const [users_id, setUserId] = useState(artikel_peserta?.users_id);
+  const [kategori_akademi, setKategoriAkademi] = useState(artikel_peserta?.kategori_akademi);
+  const [tag, setTag] = useState(artikel_peserta?.tag);
+  const [publish, setPublish] = useState(artikel_peserta?.publish);
+  const [publishDate, setPublishDate] = useState(artikel_peserta?.tanggal_publish ? new Date(artikel_peserta?.tanggal_publish) : null);
+  const [disablePublishDate, setDisablePublishDate] = useState(artikel_peserta?.publish === 0 ? true : false)
   const [_method, setMethod] = useState("put");
   const [disableTag, setDisableTag] = useState(false)
 
@@ -505,7 +505,7 @@ const EditArtikel = ({ token }) => {
                       {!akademi || (akademi && akademi.length === 0) ? (
                         <option value="">Data Tidak Ditemukan</option>
                       ) : (
-                        akademi && akademi.map((row) => {
+                        akademi && akademi?.map((row) => {
                           return (
                             <option key={row.id} value={row.slug} selected={kategori_akademi === row.slug ? true : false}>
                               {row.slug}
@@ -527,7 +527,7 @@ const EditArtikel = ({ token }) => {
                       {!kategori || (kategori && kategori.length === 0) ? (
                         <option value="">Data kosong</option>
                       ) : (
-                        kategori && kategori.kategori && kategori.kategori.map((row) => {
+                        kategori && kategori?.kategori && kategori?.kategori?.map((row) => {
                           return (
                             row.jenis_kategori == "Artikel" ?
                               <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
