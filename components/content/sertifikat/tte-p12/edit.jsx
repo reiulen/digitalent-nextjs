@@ -5,6 +5,7 @@ import { SweatAlert } from "../../../../utils/middleware/helper/index";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getTTEP12 } from "../../../../redux/actions/sertifikat/tte-p12.action";
+import Cookies from "js-cookie";
 
 export default function EditTTEP12({ setUbah, data, token }) {
 	const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export default function EditTTEP12({ setUbah, data, token }) {
 	const [hidePassword, setHidePassword] = useState(true);
 
 	const [fileName, setFileName] = useState("");
+	const token_permission = Cookies.get("token_permission");
 
 	const onChangeFile = (e) => {
 		const type = ["application/x-pkcs12"];

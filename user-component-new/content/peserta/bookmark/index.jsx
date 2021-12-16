@@ -312,8 +312,8 @@ export default function Bookmark({ session }) {
 							prevPageText={"<"}
 							firstPageText={"<<"}
 							lastPageText={">>"}
-							itemClass="page-item"
-							linkClass="page-link"
+							itemClass="page-item-dashboard"
+							linkClass="page-link-dashboard"
 						/>
 					</div>
 				)}
