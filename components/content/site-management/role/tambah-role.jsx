@@ -59,6 +59,7 @@ const TambahRole = ({ token }) => {
     if (allPermission.data.data[i].list_sub_menu.length > 0) {
       allPermission.data.data[i].list_sub_menu.forEach((item) => {
         permission.push(item);
+        console.log(item)
       });
     }
   }
