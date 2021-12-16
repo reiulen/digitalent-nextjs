@@ -105,7 +105,7 @@ const SubtansiUser = ({ token }) => {
   useEffect(() => {
     // Handle Error akan langsung ke done
     if (error) {
-      // router.push(`/peserta/done-trivia`);
+      router.push(`/peserta/done-trivia`);
     }
 
     // Hitung Waktu Mundur
@@ -121,7 +121,7 @@ const SubtansiUser = ({ token }) => {
     } else {
       localStorage.clear();
 
-      // router.push(`/peserta/done-trivia`);
+      router.push(`/peserta/done-trivia`);
     }
   }, [count, router, error]);
 
@@ -139,14 +139,14 @@ const SubtansiUser = ({ token }) => {
     } else {
       localStorage.clear();
 
-      // router.push(`/peserta/done-trivia`);
+      router.push(`/peserta/done-trivia`);
     }
   }, [times, router]);
 
   useEffect(() => {
-    // setData(random_trivia);
-    setData(initialData);
-  }, []);
+    setData(random_trivia);
+    // setData(initialData);
+  }, [data, random_trivia]);
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -225,7 +225,6 @@ const SubtansiUser = ({ token }) => {
         multi.push(e.key);
         sessionStorage.setItem(router.query.id, JSON.stringify(multi));
       }
-      console.log(sessionStorage.getItem(router.query.id));
     } else {
       setAnswer(e.key);
 
