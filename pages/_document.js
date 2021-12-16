@@ -62,11 +62,11 @@ class MyDocument extends Document {
 
           <script
             type="text/javascript"
-            src="/assets/plugins/global/plugins.bundle.js"
+            src="/assets/plugins/global/plugins.bundle.min.js"
           ></script>
           <script
             type="text/javascript"
-            src="/assets/js/scripts.bundle.js"
+            src="/assets/js/scripts2.bundle.min.js"
           ></script>
         </Head>
         <body

@@ -110,7 +110,7 @@ const Navigationbar = ({ session }) => {
 
     ws.onmessage = (e) => {
       let res = JSON.parse(e.data);
-      if (session && (res?.To == session?.id)) {
+      if (session && res?.To == session?.id) {
         GetNotifikasi();
         // console.log("notifikasi masuk");
       }
@@ -149,7 +149,7 @@ const Navigationbar = ({ session }) => {
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -168,7 +168,7 @@ const Navigationbar = ({ session }) => {
         process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
         {
           headers: {
-            authorization: `Bearer ${session.token}`,
+            Authorization: `Bearer ${session.token}`,
           },
         }
       )
@@ -184,7 +184,7 @@ const Navigationbar = ({ session }) => {
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

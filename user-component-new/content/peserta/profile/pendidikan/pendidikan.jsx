@@ -369,13 +369,13 @@ const Pendidikan = ({ token }) => {
 							pendidikan.jenjang !== "Tidak Sekolah" && (
 								<Fragment>
 									<Col md={12}>
-										<p className="text-neutral-body my-1">Unggah Ijazah</p>
+										<p className="text-neutral-body my-1"> Ijazah</p>
 										{pendidikan !== undefined && pendidikan ? (
 											<a
 												className="text-primary cursor-pointer"
 												onClick={() => setShowModalIjazah(true)}
 											>
-												{pendidikan.ijasah.split("/ijasah/")}
+												Lihat Ijazah
 											</a>
 										) : (
 											<p>-</p>
@@ -441,7 +441,7 @@ const Pendidikan = ({ token }) => {
 					</Row>
 					<Row>
 						<Col md={12}>
-							<p className="text-neutral-body my-1">Unggah Ijazah</p>
+							<p className="text-neutral-body my-1"> Ijazah</p>
 							<p>-</p>
 						</Col>
 					</Row>

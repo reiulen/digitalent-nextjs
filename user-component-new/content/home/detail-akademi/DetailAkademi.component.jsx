@@ -79,11 +79,30 @@ const DetailAkademi = ({ session }) => {
   };
 
   useEffect(() => {
-    handleHoverCard();
+    dispatch(
+      getAllPelatihanByAkademi(
+        id,
+        tema_id,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        session?.token
+      )
+    );
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (pelatihan) {
+      handleHoverCard();
+    }
     if (akademi) {
       handleTextTrim();
     }
-  }, [akademi]);
+  }, [akademi, pelatihan]);
 
   const handleTextTrim = () => {
     if (akademi) {

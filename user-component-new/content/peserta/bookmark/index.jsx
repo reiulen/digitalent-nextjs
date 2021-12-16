@@ -51,7 +51,7 @@ export default function Bookmark({ session }) {
 	useEffect(() => {
 		dispatch(getAllBookmark(session?.token));
 	}, [dispatch, allBookmark.page]);
-	console.log(allBookmark);
+
 	return (
 		<PesertaWrapper>
 			<Row className="my-n10 my-md-0">
@@ -83,7 +83,7 @@ export default function Bookmark({ session }) {
 											></i>
 										</Button>
 										<ShareOverlay
-											url={`http://dts-dev.majapahit.id/detail/pelatihan/${el.id}?akademiId=`}
+											url={`http://dts-dev.majapahit.id/detail/pelatihan/${el.id}?akademiId=${el.akademi_id}`}
 											quote={el.name}
 										>
 											<Button
@@ -108,17 +108,29 @@ export default function Bookmark({ session }) {
 												: `${style.btn_disabled_tema} p-0 mb-0 `
 										}
 										onClick={() => {
-											router.push(`/detail/pelatihan/${el.id}`);
+											router.push(
+												`/detail/pelatihan/${el.id}?akademiId=${el.akademi_id}`
+											);
 										}}
 										style={{ borderRadius: "12px" }}
 									>
 										<div
-											style={{
-												width: "100%",
-												height: "180px",
-												position: "relative",
-												borderRadius: "12px",
-											}}
+											style={
+												el.status == "Dibuka"
+													? {
+															width: "100%",
+															height: "180px",
+															position: "relative",
+															borderRadius: "12px",
+													  }
+													: {
+															width: "100%",
+															height: "180px",
+															position: "relative",
+															borderRadius: "12px",
+															filter: "saturate(0)",
+													  }
+											}
 										>
 											<Image
 												className={`${style.image_dashboard}`}
@@ -139,6 +151,11 @@ export default function Bookmark({ session }) {
 													<Badge
 														bg={` py-3 px-4 ${style.badge_card}`}
 														className=" d-none d-md-flex"
+														style={
+															el.status == "Dibuka"
+																? {}
+																: { filter: "saturate(0)" }
+														}
 													>
 														Pelatihan {el.metode_pelatihan}
 													</Badge>
@@ -173,7 +190,12 @@ export default function Bookmark({ session }) {
 											</div>
 										</Card.ImgOverlay>
 										<Card.Body className="position-relative">
-											<div className={style.bungkus_mitra_pelatihan}>
+											<div
+												className={style.bungkus_mitra_pelatihan}
+												style={
+													el.status == "Dibuka" ? {} : { filter: "saturate(0)" }
+												}
+											>
 												<Image
 													src={
 														!el.gambar_mitra

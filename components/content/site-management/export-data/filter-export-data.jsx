@@ -23,7 +23,7 @@ import {
 import { postFilterExportData } from "../../../../redux/actions/site-management/export-data.actions";
 import { temaByAkademiReducer } from "../../../../redux/reducers/beranda/beranda.reducers";
 
-const UbahRole = ({ token }) => {
+const UbahRole = ({ token, name }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
@@ -115,7 +115,7 @@ const UbahRole = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(postFilterExportData(token, data));
+        dispatch(postFilterExportData(token, data, null, null, name));
       }
     });
   };
