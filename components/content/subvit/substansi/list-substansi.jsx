@@ -47,6 +47,8 @@ const ListSubstansi = ({ token, tokenPermission }) => {
   const [num, setNum] = useState(0);
 
   useEffect(() => {
+    localStorage.removeItem("step1");
+    localStorage.removeItem("clone1");
     if (isDeleted) {
       dispatch({
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET,
