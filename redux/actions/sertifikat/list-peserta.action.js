@@ -21,8 +21,8 @@ export const getAllParticipant =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token}`,
-					Permission: token_permission,
 				},
+				// Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);
@@ -50,8 +50,8 @@ export const getDetailParticipant =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token}`,
-					Permission: token_permission,
 				},
+				// Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);
