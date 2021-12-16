@@ -313,11 +313,18 @@ const SubtansiUser = ({ token }) => {
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "survey",
+      };
+
+      dispatch(postResultSurvey(setData, token));
       localStorage.clear();
       sessionStorage.clear();
       router.push(`/peserta/done-survey`);
     }
-  }, [count, data, error, dispatch, router]);
+  }, [count, data, error, dispatch, router, token]);
 
   useEffect(() => {
     setData(random_survey);
@@ -357,20 +364,29 @@ const SubtansiUser = ({ token }) => {
     setSub(sub[i]);
 
     if (e.sub && e.sub.length > 0) {
-      sessionStorage.setItem(`${router.query.id}`, e.key);
+      sessionStorage.setItem(`${router.query.id}e`, e.key);
       setOpen(!open);
     } else {
-      sessionStorage.setItem(`${router.query.id}`, e.key);
+      sessionStorage.setItem(`${router.query.id}e`, e.key);
     }
   };
 
   const handleTriggered = (e) => {
+    let ansTw = [sessionStorage.getItem(router.query.id + "e"), e.key];
+    sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
     sessionStorage.setItem(`${router.query.id}tr`, e.key);
     setListAnswer(sessionStorage.getItem(`${router.query.id}tr`));
   };
 
   const handleTriggered2 = (e) => {
+    let ansTw = [
+      sessionStorage.getItem(router.query.id + "e"),
+      sessionStorage.getItem(router.query.id + "tr"),
+      e.key,
+    ];
     sessionStorage.setItem(`${router.query.id}td`, e.key);
+    sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
+
     setListAnswer2(sessionStorage.getItem(`${router.query.id}td`));
   };
 
@@ -403,6 +419,7 @@ const SubtansiUser = ({ token }) => {
       training_id: router.query.training_id,
       type: "survey",
     };
+
     dispatch(postResultSurvey(setData, token));
     localStorage.clear();
     sessionStorage.clear();

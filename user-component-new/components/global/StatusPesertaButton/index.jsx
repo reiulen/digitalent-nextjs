@@ -4,6 +4,7 @@ import CustomButton from "../../../content/peserta/riwayat-pelatihan/card/Button
 import axios from "axios";
 import { Col, Row, Card, Button, Modal } from "react-bootstrap";
 import Cookies from "js-cookie";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 export default function ButtonStatusPeserta({ data, token }) {
 	const router = useRouter();
 
@@ -13,11 +14,10 @@ export default function ButtonStatusPeserta({ data, token }) {
 
 	const config = {
 		headers: {
-			authorization: "Bearer " + token,
+			Authorization: "Bearer " + token,
 		},
 	};
 	const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
-
 	// upload sertifikasi
 	const uploadSertifikasi = async (sertifikasi, id) => {
 		try {
@@ -30,10 +30,11 @@ export default function ButtonStatusPeserta({ data, token }) {
 
 			const { data } = await axios.post(link, body, config);
 			if (data) {
-				Swal.fire(data?.message, "Berhasil upload sertifikasi", "success");
+				setShowModalSertifikasi(false);
+				SweatAlert("Berhasil", "Berhasil upload sertifikasi", "success");
 			}
 		} catch (error) {
-			Swal.fire("Gagal", `${error.response.data?.message}`, "error");
+			SweatAlert("Gagal", `${error.response.data?.message}`, "error");
 		}
 	};
 
@@ -41,9 +42,9 @@ export default function ButtonStatusPeserta({ data, token }) {
 		setFileName(e.target.files[0].name);
 		if (e.target.files[0].size > 5000000) {
 			e.target.value = null;
-			Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+			Swal.fire("Oops !", "PDF maksimal 5 MB.", "error");
 		} else {
-			const type = ["image/jpg", "image/png", "image/jpeg"];
+			const type = ["application/pdf"];
 			if (type.includes(e.target.files[0].type)) {
 				const reader = new FileReader();
 				reader.onload = () => {
@@ -56,7 +57,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 				e.target.value = null;
 				Swal.fire(
 					"Oops !",
-					"Data yang bisa dimasukkan hanya berupa data background.",
+					"Data yang bisa dimasukkan hanya berupa data PDF.",
 					"error"
 				);
 			}
@@ -215,7 +216,11 @@ export default function ButtonStatusPeserta({ data, token }) {
 			  data?.status == "Lulus Pelatihan" ? (
 				<Fragment>
 					{data?.sertifikasi != "0" && (
-						<CustomButton outline click={() => setShowModalSertifikasi(true)}>
+						<CustomButton
+							outline
+							click={() => setShowModalSertifikasi(true)}
+							disabled={data?.upload_sertifikasi ? true : false}
+						>
 							<i className="ri-upload-2-fill mr-2"></i>
 							Unggah Sertifikasi
 						</CustomButton>
@@ -257,7 +262,11 @@ export default function ButtonStatusPeserta({ data, token }) {
 			) : data?.status == "diterima" ? (
 				<Fragment>
 					{data?.sertifikasi != "0" && (
-						<CustomButton outline click={() => setShowModalSertifikasi(true)}>
+						<CustomButton
+							outline
+							click={() => setShowModalSertifikasi(true)}
+							disabled={data?.upload_sertifikasi ? true : false}
+						>
 							<i className="ri-upload-2-fill mr-2"></i>
 							Unggah Sertifikasi
 						</CustomButton>
@@ -341,7 +350,9 @@ export default function ButtonStatusPeserta({ data, token }) {
 				size="lg"
 			>
 				<Modal.Header>
-					<Modal.Title>Tambah Sertifikasi</Modal.Title>
+					<Modal.Title className="text-capitalize">
+						Tambah Sertifikasi {data?.sertifikasi}
+					</Modal.Title>
 					<button
 						type="button"
 						className="close"
@@ -397,7 +408,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 								<input
 									type="file"
 									className="custom-file-input"
-									accept="image/png, image/jpeg , image/jpg"
+									accept="application/pdf"
 									onChange={(e) => {
 										onChangeFile(e);
 									}}
@@ -408,7 +419,7 @@ export default function ButtonStatusPeserta({ data, token }) {
 							</div>
 						</div>
 						<small className="text-muted">
-							Format File (.pdf/.jpg) & Max size 5 mb
+							Format File (.pdf) & Max size 5 mb
 						</small>
 					</div>
 				</Modal.Body>

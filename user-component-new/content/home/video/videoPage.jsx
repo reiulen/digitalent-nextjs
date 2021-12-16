@@ -55,7 +55,7 @@ const VideoPage = () => {
   const [kategoriToShow, setKategoriToShow] = useState([])
   const [showArrow, setShowArrow] = useState(null)
   const [videoContent, setVideoContent] = useState([])
-  const [showDescButton, setShowDescButton ] = useState(false)
+  const [showDescButton, setShowDescButton] = useState(false)
 
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
@@ -171,7 +171,7 @@ const VideoPage = () => {
       )
     );
 
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
 
   const handleFilterTag = (str) => {
@@ -193,7 +193,7 @@ const VideoPage = () => {
       )
     );
 
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
 
   const submitFilter = () => {
@@ -210,7 +210,7 @@ const VideoPage = () => {
       )
     );
 
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
 
   const handleFilterKeyword = (e) => {
@@ -228,7 +228,7 @@ const VideoPage = () => {
       )
     );
 
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
 
   const handleFilterPublish = (publish, status) => {
@@ -259,7 +259,7 @@ const VideoPage = () => {
       )
     );
 
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
 
   const handlePreview = (
@@ -294,7 +294,6 @@ const VideoPage = () => {
           data={[{ link: router.asPath, name: "Video" }]}
         />
         {/* End of Breadcrumb */}
-
         {/* Header */}
         <div className="col-12">
           <h1
@@ -303,7 +302,7 @@ const VideoPage = () => {
           >
             {activeTitle}
           </h1>
-          <span style={{fontSize: "20px", fontFamily:"Poppins", color:"#6C6C6C"}}>
+          <span style={{ fontSize: "20px", fontFamily: "Poppins", color: "#6C6C6C" }}>
             Temukan konten terupdate dan terkini mengenai Digital Talent
             Scholarship
           </span>
@@ -319,8 +318,8 @@ const VideoPage = () => {
             showArrow === null ?
               <div className="col col-12">
                 <PulseLoaderRender />
-              </div> 
-            :
+              </div>
+              :
 
               showArrow === true ?
                 <Splide
@@ -347,7 +346,7 @@ const VideoPage = () => {
                     <SplideSlide>
                       <div
                         className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
-                        style={{ cursor: "pointer", height: "40px"}}
+                        style={{ cursor: "pointer", height: "40px" }}
                         onClick={() => handleFilterKategori("")}
                       >
                         <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
@@ -358,7 +357,7 @@ const VideoPage = () => {
                     <SplideSlide>
                       <div
                         className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                        style={{ cursor: "pointer", height: "40px"}}
+                        style={{ cursor: "pointer", height: "40px" }}
                         onClick={() => handleFilterKategori("")}
                       >
                         <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
@@ -373,7 +372,7 @@ const VideoPage = () => {
                           <SplideSlide>
                             <div
                               className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
-                              style={{ cursor: "pointer", height: "40px"}}
+                              style={{ cursor: "pointer", height: "40px" }}
                               onClick={() => handleFilterKategori(row)}
                               key={i}
                             >
@@ -388,7 +387,7 @@ const VideoPage = () => {
                           <SplideSlide>
                             <div
                               className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                              style={{ cursor: "pointer", height: "40px"}}
+                              style={{ cursor: "pointer", height: "40px" }}
                               onClick={() => handleFilterKategori(row)}
                               key={i}
                             >
@@ -423,7 +422,7 @@ const VideoPage = () => {
                       },
                     }
                   }}
-                  className= "ml-2 ml-sm-3 mr-3 pr-0 mr-lg-5"
+                  className="ml-2 ml-sm-3 mr-3 pr-0 mr-lg-5"
                 >
 
                   {kategoriVideo === "" ? (
@@ -456,7 +455,7 @@ const VideoPage = () => {
                           <SplideSlide>
                             <div
                               className="d-flex w-100 align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
-                              style={{ cursor: "pointer", height: "40px"}}
+                              style={{ cursor: "pointer", height: "40px" }}
                               onClick={() => handleFilterKategori(row)}
                               key={i}
                             >
@@ -471,7 +470,7 @@ const VideoPage = () => {
                           <SplideSlide>
                             <div
                               className="d-flex w-100 align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                              style={{ cursor: "pointer", height: "40px"}}
+                              style={{ cursor: "pointer", height: "40px" }}
                               onClick={() => handleFilterKategori(row)}
                               key={i}
                             >
@@ -491,7 +490,7 @@ const VideoPage = () => {
           }
 
         </div>
-        
+
         {/* Filter on Tablet */}
         <div className="col-xl-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-0 pr-xxl-11 d-none d-md-block d-lg-none">
           <Splide
@@ -518,7 +517,7 @@ const VideoPage = () => {
               <SplideSlide>
                 <div
                   className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
-                  style={{ cursor: "pointer", height: "40px"}}
+                  style={{ cursor: "pointer", height: "40px" }}
                   onClick={() => handleFilterKategori("")}
                 >
                   <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
@@ -529,7 +528,7 @@ const VideoPage = () => {
               <SplideSlide>
                 <div
                   className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                  style={{ cursor: "pointer", height: "40px"}}
+                  style={{ cursor: "pointer", height: "40px" }}
                   onClick={() => handleFilterKategori("")}
                 >
                   <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
@@ -544,7 +543,7 @@ const VideoPage = () => {
                     <SplideSlide>
                       <div
                         className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
-                        style={{ cursor: "pointer", height: "40px"}}
+                        style={{ cursor: "pointer", height: "40px" }}
                         onClick={() => handleFilterKategori(row)}
                         key={i}
                       >
@@ -559,7 +558,7 @@ const VideoPage = () => {
                     <SplideSlide>
                       <div
                         className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                        style={{ cursor: "pointer", height: "40px"}}
+                        style={{ cursor: "pointer", height: "40px" }}
                         onClick={() => handleFilterKategori(row)}
                         key={i}
                       >
@@ -604,7 +603,7 @@ const VideoPage = () => {
               <SplideSlide>
                 <div
                   className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
-                  style={{ cursor: "pointer", height: "40px"}}
+                  style={{ cursor: "pointer", height: "40px" }}
                   onClick={() => handleFilterKategori("")}
                 >
                   <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
@@ -615,7 +614,7 @@ const VideoPage = () => {
               <SplideSlide>
                 <div
                   className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                  style={{ cursor: "pointer", height: "40px"}}
+                  style={{ cursor: "pointer", height: "40px" }}
                   onClick={() => handleFilterKategori("")}
                 >
                   <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
@@ -630,7 +629,7 @@ const VideoPage = () => {
                     <SplideSlide>
                       <div
                         className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
-                        style={{ cursor: "pointer", height: "40px"}}
+                        style={{ cursor: "pointer", height: "40px" }}
                         onClick={() => handleFilterKategori(row)}
                         key={i}
                       >
@@ -645,7 +644,7 @@ const VideoPage = () => {
                     <SplideSlide>
                       <div
                         className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
-                        style={{ cursor: "pointer", height: "40px"}}
+                        style={{ cursor: "pointer", height: "40px" }}
                         onClick={() => handleFilterKategori(row)}
                         key={i}
                       >
@@ -681,155 +680,155 @@ const VideoPage = () => {
 
             {/* Filter at mobile screen */}
 
-                {
-                        
-                  windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                      <div className="border rounded-lg p-2 order-1 mb-10 ml-3">
-                          <div className="row "> 
-                              <div className="col-2 my-auto ml-3">
-                                  <Image 
-                                      src={`/assets/media/logo-filter.svg`}
-                                      width={40}
-                                      height={40}
-                                      alt="Logo filter"
-                                  />
-                              </div>
-                              <div className="col-7 my-auto">
-                                  <h3 className={`font-weight-bolder ${styles.fontText}`}>
-                                      Filter
-                                  </h3>
-                              </div>
-                              <div className="col-2 my-auto text-right">
-                                  {
-                                      showFilter === false ?
-                                          <div onClick={() => setShowFilter(true)}>
-                                              <i className="ri-arrow-right-s-line"></i>
-                                          </div>
-                                      :
-                                          <div onClick={() => setShowFilter(false)}>
-                                              <i className="ri-arrow-down-s-line"></i>
-                                          </div>
-                                  }
-                                  
-                              </div>
+            {
+
+              windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                <div className="border rounded-lg p-2 order-1 mb-10 ml-3">
+                  <div className="row ">
+                    <div className="col-2 my-auto ml-3">
+                      <Image
+                        src={`/assets/media/logo-filter.svg`}
+                        width={40}
+                        height={40}
+                        alt="Logo filter"
+                      />
+                    </div>
+                    <div className="col-7 my-auto">
+                      <h3 className={`font-weight-bolder ${styles.fontText}`}>
+                        Filter
+                      </h3>
+                    </div>
+                    <div className="col-2 my-auto text-right">
+                      {
+                        showFilter === false ?
+                          <div onClick={() => setShowFilter(true)}>
+                            <i className="ri-arrow-right-s-line"></i>
+                          </div>
+                          :
+                          <div onClick={() => setShowFilter(false)}>
+                            <i className="ri-arrow-down-s-line"></i>
+                          </div>
+                      }
+
+                    </div>
+                  </div>
+
+                  {
+                    showFilter === true ?
+                      <>
+                        <div className="row ml-3 mt-5">
+                          <p style={{ fontSize: "16px", fontFamily: "Poppins" }}>
+                            Urutkan Berdasarkan
+                          </p>
+                        </div>
+
+                        <div className="row mx-3 mb-3 d-flex justify-content-between">
+                          <div className=" col-6">
+                            {
+                              showDescButton === true && sort === "" ?
+                                <button
+                                  className="btn btn-primary rounded-pill btn-block"
+                                  onClick={() => handleFilterPublish("", false)}
+                                  style={{ fontFamily: "Poppins", fontSize: '14px' }}
+                                >
+                                  Terbaru
+                                </button>
+                                :
+                                <button
+                                  className="btn btn-outline-light rounded-pill btn-block"
+                                  onClick={() => handleFilterPublish("desc", true)}
+                                  style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
+                                >
+                                  Terbaru
+                                </button>
+                            }
                           </div>
 
-                          {
-                              showFilter === true ?
-                                  <>
-                                      <div className="row ml-3 mt-5">
-                                          <p style={{fontSize:"16px", fontFamily:"Poppins"}}>
-                                              Urutkan Berdasarkan
-                                          </p>
-                                      </div>
+                          <div className="col-6">
+                            {
+                              filterPublish === "asc" && sort === "" ?
+                                <button
+                                  className="btn btn-primary rounded-pill btn-block"
+                                  onClick={() => handleFilterPublish("desc", false)}
+                                  style={{ fontFamily: "Poppins", fontSize: '14px' }}
+                                >
+                                  Terlama
+                                </button>
+                                :
+                                <button
+                                  className="btn btn-outline-light rounded-pill btn-block"
+                                  onClick={() => handleFilterPublish("asc", false)}
+                                  style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
+                                >
+                                  Terlama
+                                </button>
+                            }
+                          </div>
+                        </div>
 
-                                      <div className="row mx-3 mb-3 d-flex justify-content-between">
-                                          <div className=" col-6">
-                                              {
-                                                  showDescButton === true && sort === "" ?
-                                                      <button 
-                                                          className="btn btn-primary rounded-pill btn-block" 
-                                                          onClick={() => handleFilterPublish("", false)}
-                                                          style={{fontFamily: "Poppins", fontSize:'14px'}}
-                                                      >
-                                                          Terbaru
-                                                      </button>
-                                                  :
-                                                      <button 
-                                                          className="btn btn-outline-light rounded-pill btn-block" 
-                                                          onClick={() => handleFilterPublish("desc", true)}
-                                                          style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
-                                                      >
-                                                          Terbaru
-                                                      </button>
-                                              }
-                                          </div>
+                        <div className="row mx-3 mb-3 d-flex justify-content-between">
+                          <div className="col-6">
+                            {
+                              sort === "asc" && showDescButton === false ?
+                                <button
+                                  className="btn btn-primary rounded-pill btn-block"
+                                  onClick={() => handleSort("", "desc")}
+                                  style={{ fontFamily: "Poppins", fontSize: '14px' }}
+                                >
+                                  A-Z
+                                </button>
+                                :
+                                <button
+                                  className="btn btn-outline-light rounded-pill btn-block"
+                                  onClick={() => handleSort("asc", "")}
+                                  style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
+                                >
+                                  A-Z
+                                </button>
+                            }
+                          </div>
 
-                                          <div className="col-6">
-                                              {
-                                                  filterPublish === "asc"  && sort === "" ?
-                                                      <button 
-                                                          className="btn btn-primary rounded-pill btn-block" 
-                                                          onClick={() => handleFilterPublish("desc", false)}
-                                                          style={{fontFamily: "Poppins", fontSize:'14px'}}
-                                                      >
-                                                          Terlama
-                                                      </button>
-                                                  :
-                                                      <button 
-                                                          className="btn btn-outline-light rounded-pill btn-block" 
-                                                          onClick={() => handleFilterPublish("asc", false)}
-                                                          style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
-                                                      >
-                                                          Terlama
-                                                      </button>
-                                              }
-                                          </div>
-                                      </div>
+                          <div className="col-6">
+                            {
+                              sort === "desc" && showDescButton === false ?
+                                <button
+                                  className="btn btn-primary rounded-pill btn-block"
+                                  onClick={() => handleSort("", "desc")}
+                                  style={{ fontFamily: "Poppins", fontSize: '14px' }}
+                                >
+                                  Z-A
+                                </button>
+                                :
+                                <button
+                                  className="btn btn-outline-light rounded-pill btn-block"
+                                  onClick={() => handleSort("desc", "")}
+                                  style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
+                                >
+                                  Z-A
+                                </button>
+                            }
 
-                                      <div className="row mx-3 mb-3 d-flex justify-content-between">
-                                          <div className="col-6">
-                                              {
-                                                  sort === "asc" && showDescButton === false   ?
-                                                      <button 
-                                                          className="btn btn-primary rounded-pill btn-block" 
-                                                          onClick={() => handleSort("", "desc")}
-                                                          style={{fontFamily: "Poppins", fontSize:'14px'}}
-                                                      >
-                                                          A-Z
-                                                      </button>
-                                                  :
-                                                      <button 
-                                                          className="btn btn-outline-light rounded-pill btn-block" 
-                                                          onClick={() => handleSort("asc", "")}
-                                                          style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
-                                                      >
-                                                          A-Z
-                                                      </button>
-                                              }
-                                          </div>
+                          </div>
+                        </div>
 
-                                          <div className="col-6">
-                                              {
-                                                  sort === "desc" &&  showDescButton === false   ?
-                                                      <button 
-                                                          className="btn btn-primary rounded-pill btn-block" 
-                                                          onClick={() => handleSort("", "desc")}
-                                                          style={{fontFamily: "Poppins", fontSize:'14px'}}
-                                                      >
-                                                          Z-A
-                                                      </button>
-                                                  :
-                                                      <button 
-                                                          className="btn btn-outline-light rounded-pill btn-block" 
-                                                          onClick={() => handleSort("desc", "")}
-                                                          style={{fontFamily: "Poppins", color:"#ADB5BD", fontSize:'14px'}}
-                                                      >
-                                                          Z-A
-                                                      </button>
-                                              }
-                                              
-                                          </div>
-                                      </div>
-
-                                      <div className="row mx-3 mb-3">
-                                          <button 
-                                              className="btn btn-primary-dashboard rounded-pill btn-block"
-                                              onClick={() => submitFilter()}
-                                          >
-                                              Tampilkan
-                                          </button>
-                                      </div>
-                                  </>
-                              :
-                                  null
-                          }
-                          
-
-                      </div>
-                  :
+                        <div className="row mx-3 mb-3">
+                          <button
+                            className="btn btn-primary-dashboard rounded-pill btn-block"
+                            onClick={() => submitFilter()}
+                          >
+                            Tampilkan
+                          </button>
+                        </div>
+                      </>
+                      :
                       null
-                }
+                  }
+
+
+                </div>
+                :
+                null
+            }
 
             {/* Search Field */}
             <form className="mb-10 pr-0 pr-xl-7 ml-4">
@@ -863,9 +862,9 @@ const VideoPage = () => {
               </div>
             </form>
             {/* End of Search Field */}
-
             {/* Card Video */}
             {
+             
               allLoading ?
                 <div className="row my-20 ml-5">
                   <div className="col col-12">
@@ -877,8 +876,7 @@ const VideoPage = () => {
                   <div
                     className="row d-flex justify-content-between flex-wrap"
                   >
-                    {!video || (video && video.video.length === 0) ? (
-
+                    {!video || (video && video?.video.length === 0) ? (
                       <div className="row mx-auto">
                         <div className="col col-12 d-flex flex-column justify-content-center">
                           <Image
@@ -899,7 +897,7 @@ const VideoPage = () => {
 
                     ) : (
                       video &&
-                      video.video.map((row, i) => {
+                      video?.video?.map((row, i) => {
                         return (
                           <div
                             className="col-12 col-md-6 mt-5 mb-sm-n3 mb-0 py-0 pr-lg-11 pr-3 pr-sm-5"
@@ -966,7 +964,8 @@ const VideoPage = () => {
                                         className="ml-2 d-inline-block text-truncate FW-600"
                                         style={{ maxWidth: "120px", color: "#6C6C6C", fontFamily: "Poppins", fontSize: "16px" }}
                                       >
-                                        {row.dibuat}
+                                        {row.dibuat.name}
+                                        {/* row.dibuat */}
                                       </span>
                                     </div>
                                     <span
@@ -1040,7 +1039,7 @@ const VideoPage = () => {
                     </h3>
                   </div>
                   <div className="card-body">
-                    <h5 style={{ marginLeft: "-10px" }} style={{fontSize:"16px", fontFamily:"Poppins"}}>Urutkan Berdasarkan</h5>
+                    <h5 style={{ marginLeft: "-10px" }} style={{ fontSize: "16px", fontFamily: "Poppins" }}>Urutkan Berdasarkan</h5>
                     <div className="row justify-content-between">
                       <div className="col-md-6 col-12">
                         {showDescButton === true && sort === "" ? (
@@ -1054,7 +1053,7 @@ const VideoPage = () => {
                         ) : (
                           <button
                             className="btn btn-outline-light rounded-pill btn-block text-truncate"
-                            onClick={() => handleFilterPublish("desc",true)}
+                            onClick={() => handleFilterPublish("desc", true)}
                             style={{ fontFamily: "Poppins", color: "#ADB5BD", fontSize: '14px' }}
                           >
                             Terbaru
@@ -1104,7 +1103,7 @@ const VideoPage = () => {
                       </div>
 
                       <div className="col-md-6 col-12">
-                        {sort === "desc" &&  showDescButton === false ? (
+                        {sort === "desc" && showDescButton === false ? (
                           <button
                             className="btn btn-primary rounded-pill btn-block"
                             onClick={() => handleSort("", "desc")}
@@ -1190,9 +1189,9 @@ const VideoPage = () => {
               show={show}
               centered
               dialogClassName="mx-10 mx-md-auto rounded-lg"
-              style={{borderRadius:"12px"}}
+              style={{ borderRadius: "12px" }}
             >
-              
+
               <Modal.Header>
                 <div
                   className="col-12 d-flex justify-content-end"
@@ -1260,17 +1259,17 @@ const VideoPage = () => {
                     {/*Isi Video */}
                     {
                       showDesc === false && detail.isi_video ?
-                        <div 
-                          className="mx-0 px-0 text-justify" 
+                        <div
+                          className="mx-0 px-0 text-justify"
                         >
                           <div
                             style={{
-                              fontSize:'14px',
-                              display:"-webkit-box", 
-                              overflow: 'hidden', 
-                              textOverflow: 'ellipsis', 
+                              fontSize: '14px',
+                              display: "-webkit-box",
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
                               WebkitLineClamp: "1",
-                              WebkitBoxOrient:"vertical"
+                              WebkitBoxOrient: "vertical"
                             }}
                           >
                             {detail.isi_video}
@@ -1285,12 +1284,12 @@ const VideoPage = () => {
                           </div>
                         </div>
                         :
-                        <div 
-                          className="overflow-auto text-justify" 
-                          style={{fontSize:'14px'}}
+                        <div
+                          className="overflow-auto text-justify"
+                          style={{ fontSize: '14px' }}
                         >
                           {detail.isi_video}
-                          
+
                           <div
                             className="mt-1 mb-3 text-primary"
                             style={{ cursor: "pointer" }}
@@ -1324,43 +1323,43 @@ const VideoPage = () => {
 
                     {
                       windowDimensions && windowDimensions.width && windowDimensions.width >= 770 ?
-                          <div className="mr-3">
-                            {detail.nama_kategori === null ? null : (
-                              <span className="p-2 badge badge-light font-weight-bold" style={{ color: "#0063CC", fontSize: "12px" }}>
-                                {detail.nama_kategori}
-                              </span>
-                            )}
-                          </div>
+                        <div className="mr-3">
+                          {detail.nama_kategori === null ? null : (
+                            <span className="p-2 badge badge-light font-weight-bold" style={{ color: "#0063CC", fontSize: "12px" }}>
+                              {detail.nama_kategori}
+                            </span>
+                          )}
+                        </div>
                         :
-                          // Insert Tag Here
-                          <div className="d-flex flex-row flex-wrap my-2">
-                              {
-                                detail.tag && detail.tag.length === 0 && detail.tag == undefined ?
-                                  null
-                                  :
-                                  detail?.tag?.map((el, i) => {
-                                    return (
-                                      <div
-                                        style={{
-                                          background: "#fff",
-                                          border: "1px solid #d7e1ea",
-                                          height: "25px"
-                                        }}
-                                        className="mr-2 px-3 py-1 rounded text-truncate mb-2"
-                                        key={i}
-                                      >
-                                        <div
-                                          className="text-center text-truncate"
-                                          style={{ fontSize: "12px", color: "#6C6C6C" }}
-                                        >
-                                          {/* #{el.toUpperCase()} */}
-                                          #{el}
-                                        </div>
-                                      </div>
-                                    );
-                                  })
-                              }
-                            </div>
+                        // Insert Tag Here
+                        <div className="d-flex flex-row flex-wrap my-2">
+                          {
+                            detail.tag && detail.tag.length === 0 && detail.tag == undefined ?
+                              null
+                              :
+                              detail?.tag?.map((el, i) => {
+                                return (
+                                  <div
+                                    style={{
+                                      background: "#fff",
+                                      border: "1px solid #d7e1ea",
+                                      height: "25px"
+                                    }}
+                                    className="mr-2 px-3 py-1 rounded text-truncate mb-2"
+                                    key={i}
+                                  >
+                                    <div
+                                      className="text-center text-truncate"
+                                      style={{ fontSize: "12px", color: "#6C6C6C" }}
+                                    >
+                                      {/* #{el.toUpperCase()} */}
+                                      #{el}
+                                    </div>
+                                  </div>
+                                );
+                              })
+                          }
+                        </div>
                     }
 
                   </div>

@@ -415,7 +415,7 @@ const Imagetron = ({ token }) => {
                         background='bg-light-success'
                         icon='user-white.svg'
                         color='#ffffff'
-                        value='0'
+                        value={imagetron?.data && imagetron?.data.total_author != "" ? imagetron?.data.total_author : 0}
                         titleValue='Orang'
                         title='Total Author'
                         publishedVal=""

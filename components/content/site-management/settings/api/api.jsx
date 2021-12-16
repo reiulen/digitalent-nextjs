@@ -90,23 +90,32 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header row border-0">
-            <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-7 col-xl-9`}>
+            <h3
+              className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-7 col-xl-9`}
+            >
               List API
             </h3>
-            <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
-              <Link href="/site-management/setting/api/tambah-api" passHref>
-                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah API
-                </a>
-              </Link>
-            </div>
+            {localStorage
+              .getItem("permissions")
+              .includes("site_management.setting.api.manage") && (
+              <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
+                <Link href="/site-management/setting/api/tambah-api" passHref>
+                  <a
+                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
+                  >
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah API
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="card-body">
             <div className="table-filter">
               <div className="row">
                 <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                  <div className="position-relative overflow-hidden mt-3"
+                  <div
+                    className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
                     <i className="ri-search-line left-center-absolute ml-2"></i>
@@ -115,9 +124,7 @@ const Table = ({ token }) => {
                       type="text"
                       className={`${styles.cari} form-control pl-10`}
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) =>
-                        handleChangeValueSearch(e.target.value)
-                      }
+                      onChange={(e) => handleChangeValueSearch(e.target.value)}
                     />
                     <button
                       type="button"
@@ -133,7 +140,6 @@ const Table = ({ token }) => {
                   </div>
                 </div>
               </div>
-
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
@@ -166,7 +172,7 @@ const Table = ({ token }) => {
                                 {allApi.page === 1
                                   ? index + 1
                                   : (allApi.page - 1) * allApi.limit +
-                                  (index + 1)}
+                                    (index + 1)}
                               </td>
                               <td className="align-middle text-left">
                                 <p className="p-part-t text-overflow-ens">
@@ -212,38 +218,58 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <Link
-                                    href={`/site-management/setting/api/ubah-api?id=${items.id}`} passHref
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </a>
-                                  </Link>
-                                  <Link
-                                    href={`/site-management/setting/api/detail-api?id=${items.id}`} passHref
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
-                                      <IconEye width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Detail
-                                      </div>
-                                    </a>
-                                  </Link>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.setting.api.manage"
+                                    ) && (
+                                    <Link
+                                      href={`/site-management/setting/api/ubah-api?id=${items.id}`}
+                                      passHref
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                        <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.setting.api.view"
+                                    ) && (
+                                    <Link
+                                      href={`/site-management/setting/api/detail-api?id=${items.id}`}
+                                      passHref
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                        <IconEye width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </a>
+                                    </Link>
+                                  )}
 
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      handleDelete(items.id, token)
-                                    }
-                                  >
-                                    <IconDelete width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Hapus
-                                    </div>
-                                  </button>
+                                  {localStorage
+                                    .getItem("permissions")
+                                    .includes(
+                                      "site_management.setting.api.manage"
+                                    ) && (
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                      onClick={() =>
+                                        handleDelete(items.id, token)
+                                      }
+                                    >
+                                      <IconDelete width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Hapus
+                                      </div>
+                                    </button>
+                                  )}
                                 </div>
                               </td>
                             </tr>
@@ -256,7 +282,7 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                {allApi && allApi?.data?.perPage < allApi?.data?.total &&
+                {allApi && allApi?.data?.perPage < allApi?.data?.total && (
                   <>
                     <div className={`${stylesPag.pagination} table-pagination`}>
                       <Pagination
@@ -274,9 +300,9 @@ const Table = ({ token }) => {
                       />
                     </div>
                   </>
-                }
+                )}
 
-                {allApi ?
+                {allApi ? (
                   <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
                       <div className="col-4 mt-3">
@@ -306,12 +332,15 @@ const Table = ({ token }) => {
                           className="align-middle mt-6"
                           style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                         >
-                          Total Data {allApi.data && allApi.data.total} List Data
+                          Total Data {allApi.data && allApi.data.total} List
+                          Data
                         </p>
                       </div>
                     </div>
-                  </div> : ""
-                }
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

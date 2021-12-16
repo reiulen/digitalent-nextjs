@@ -18,7 +18,7 @@ import IconCalender from "../../../assets/icon/Calender";
 import moment from "moment";
 
 import Swal from "sweetalert2";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 const EditDokumentKerjasama = ({ token }) => {
   const dispatch = useDispatch();
@@ -156,8 +156,8 @@ const EditDokumentKerjasama = ({ token }) => {
             formData,
             {
               headers: {
-                authorization: `Bearer ${token}`,
-                Permission: Cookies.get("token_permission")
+                Authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission"),
               },
             }
           );
@@ -216,7 +216,6 @@ const EditDokumentKerjasama = ({ token }) => {
     setDataSingle(router.query.id);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
-    
   }, [dispatch, router.query.id, token]);
 
   async function setDataSingle(id) {
@@ -225,8 +224,8 @@ const EditDokumentKerjasama = ({ token }) => {
         `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
-            Permission: Cookies.get("token_permission")
+            Authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission"),
           },
         }
       );
@@ -293,17 +292,22 @@ const EditDokumentKerjasama = ({ token }) => {
     setError({ ...error, period: "" });
     const regex = new RegExp(/[^0-9]/, "g");
     const val = e.target.value;
-    
+
     if (val.match(regex)) {
       setError({ ...error, period: "Masukkan angka" });
       setPeriod("");
-    }else if(e.target.value.toString().charAt(0) === "0"){
-      setError({ ...error, period: "Lama Periode tidak boleh kosong atau angka nol" });
+    } else if (e.target.value.toString().charAt(0) === "0") {
+      setError({
+        ...error,
+        period: "Lama Periode tidak boleh kosong atau angka nol",
+      });
       setPeriod("");
-    }else if(e.target.value.length > 5){
-      setError({ ...error, period: "Lama Periode tidak boleh lebih 5 karakter" });
-    }
-    else {
+    } else if (e.target.value.length > 5) {
+      setError({
+        ...error,
+        period: "Lama Periode tidak boleh lebih 5 karakter",
+      });
+    } else {
       setPeriod(e.target.value);
     }
   };
@@ -402,7 +406,7 @@ const EditDokumentKerjasama = ({ token }) => {
                               (items, i) => {
                                 return (
                                   <option key={i} value={items.id}>
-                                    {itemsa?.cooperation_categories}
+                                    {items?.cooperation_categories}
                                   </option>
                                 );
                               }
@@ -438,7 +442,7 @@ const EditDokumentKerjasama = ({ token }) => {
                       value={period}
                     />
                   </div>
-                  
+
                   <div className="col-12 col-sm-6">
                     <input
                       disabled
@@ -451,7 +455,7 @@ const EditDokumentKerjasama = ({ token }) => {
                 </div>
               </div>
               {error.period ? (
-                  <p className="error-text mb-4 mt-0">{errora?.period}</p>
+                  <p className="error-text mb-4 mt-0">{error?.period}</p>
                 ) : (
                   ""
                 )} 
@@ -681,12 +685,12 @@ const EditDokumentKerjasama = ({ token }) => {
 
               {cooperationID === ""
                 ? ""
-                : cooperationIDa?.data_contenta?.map((items, i) => {
+                : cooperationID?.data_content?.map((items, i) => {
                     return (
                       <div
                         key={i}
                         className={`form-group ${
-                          allMKa?.cooperationActiveSelect.length !== 0
+                          allMK?.cooperationActiveSelect.length !== 0
                             ? "d-none"
                             : ""
                         }`}

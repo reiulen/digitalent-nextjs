@@ -24,7 +24,7 @@ export default function UbahRoles(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <UbahRole token={session.token} />
+        <UbahRole token={session.token} name={session.user.name} />
       </div>
     </>
   );

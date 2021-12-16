@@ -183,6 +183,10 @@ const PasswordPemulihan = () => {
                         />
                       )}
                   </div>
+                  <small className="text-white">
+                    Minimal 8 Karakter yang berisi kombinasi huruf besar, huruf
+                    kecil, angka dan simbol.
+                  </small>
                   {simpleValidator.current.message(
                     "Password",
                     password,

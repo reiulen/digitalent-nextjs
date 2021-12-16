@@ -662,7 +662,7 @@ const Galeri = ({ token }) => {
                         background="bg-light-warning"
                         icon="new/mail-white.svg"
                         color="#ffffff"
-                        value="0"
+                        value={galeri && galeri.total_author != "" ? galeri.total_author : 0}
                         titleValue="Orang"
                         title="Total Author"
                         publishedVal=""

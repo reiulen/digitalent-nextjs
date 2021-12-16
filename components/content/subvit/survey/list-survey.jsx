@@ -45,6 +45,8 @@ const ListSurvey = ({ token, tokenPermission }) => {
   const [viewSoal, setViewSoal] = useState(false);
   const [open, setOpen] = useState(true);
   useEffect(() => {
+    localStorage.removeItem("step1");
+    localStorage.removeItem("clone1");
     if (isDeleted) {
       dispatch({
         type: DELETE_SURVEY_QUESTION_BANKS_RESET,

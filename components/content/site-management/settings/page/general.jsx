@@ -13,7 +13,6 @@ import styles from "../../../../../styles/previewGaleri.module.css";
 import styles2 from "../../../../../styles/sitemanagement/userMitra.module.css";
 import { set } from "lodash";
 import { useSelector } from "react-redux";
-
 const GeneralPage = ({ token }) => {
   const router = useRouter();
 
@@ -52,25 +51,6 @@ const GeneralPage = ({ token }) => {
     },
   ]);
 
-  const changeColor = (e, i) => {
-    let _temp = [...color];
-
-    _temp.map((items, idx) => {
-      if (idx === i) {
-        _temp[i].color = e.target.value;
-      }
-    });
-
-    setColor(_temp);
-  };
-
-  // const [formSocialMedia, setFormSocialMedia] = useState([
-  //   {
-  //     image_logo: "",
-  //     name: "",
-  //     link_social_media: "",
-  //   },
-  // ]);
   const [formSocialMedia, setFormSocialMedia] = useState(
     data_general.social_media
   );
@@ -467,57 +447,56 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi === ""
                               ? imageLogo && (
-                                  <Image
-                                    src={imageLogo}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )
+                                <Image
+                                  src={imageLogo}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )
                               : imageLogoApi && (
-                                  <Image
-                                    // src={imageLogo}
-                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )}
+                                <Image
+                                  // src={imageLogo}
+                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )}
                           </div>
-
-                          <label
-                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                            data-action="change"
-                            data-toggle="tooltip"
-                            title=""
-                            data-original-title="Change avatar"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              width="12"
-                              height="12"
+                          {localStorage
+                            .getItem("permissions")
+                            .includes(
+                              "site_management.setting.general.manage"
+                            ) && (
+                            <label
+                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                              data-action="change"
+                              data-toggle="tooltip"
+                              title=""
+                              data-original-title="Change avatar"
                             >
-                              <path fill="none" d="M0 0h24v24H0z" />
-                              <path
-                                d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
-                                fill="rgba(108,108,108,1)"
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                width="12"
+                                height="12"
+                              >
+                                <path fill="none" d="M0 0h24v24H0z" />
+                                <path
+                                  d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                  fill="rgba(108,108,108,1)"
+                                />
+                              </svg>
+                              <input
+                                type="file"
+                                accept=".png, .jpg, .jpeg .svg"
+                                onChange={(e) => onChangeImage(e)}
                               />
-                            </svg>
-                            <input
-                              type="file"
-                              name="profile_avatar"
-                              accept=".png, .jpg, .jpeg .svg"
-                              onChange={(e) => onChangeImage(e)}
-                              onBlur={() =>
-                                simpleValidator.current.showMessageFor(
-                                  "logoHeader"
-                                )
-                              }
-                            />
 
-                            <input type="hidden" name="profile_avatar_remove" />
-                          </label>
+                              <input type="hidden" />
+                            </label>
+                          )}
 
                           <span
                             className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -532,12 +511,12 @@ const GeneralPage = ({ token }) => {
                           (Maksimal ukuran file 5 MB)
                         </span>
 
-                        {/* {simpleValidator.current.message(
+                        {simpleValidator.current.message(
                           "logoHeader",
                           imageLogo,
-                          "required",
+                          "",
                           { className: "text-danger" }
-                        )} */}
+                        )}
                       </div>
                     </div>
 
@@ -550,56 +529,60 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi2 === ""
                               ? imageLogo2 && (
-                                  <Image
-                                    src={imageLogo2}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )
+                                <Image
+                                  src={imageLogo2}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )
                               : imageLogoApi2 && (
-                                  <Image
-                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )}
+                                <Image
+                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )}
                           </div>
-
-                          <label
-                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                            data-action="change"
-                            data-toggle="tooltip"
-                            title=""
-                            data-original-title="Change avatar"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              width="12"
-                              height="12"
+                          {localStorage
+                            .getItem("permissions")
+                            .includes(
+                              "site_management.setting.general.manage"
+                            ) && (
+                            <label
+                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                              data-action="change"
+                              data-toggle="tooltip"
+                              title=""
+                              data-original-title="Change avatar"
                             >
-                              <path fill="none" d="M0 0h24v24H0z" />
-                              <path
-                                d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
-                                fill="rgba(108,108,108,1)"
-                              />
-                            </svg>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                width="12"
+                                height="12"
+                              >
+                                <path fill="none" d="M0 0h24v24H0z" />
+                                <path
+                                  d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                  fill="rgba(108,108,108,1)"
+                                />
+                              </svg>
 
-                            <input
-                              type="file"
-                              name="profile_avatar"
-                              accept=".png, .jpg, .jpeg .svg"
-                              onChange={(e) => onChangeImage2(e)}
-                              onBlur={() =>
-                                simpleValidator.current.showMessageFor(
-                                  "logoFooter"
-                                )
-                              }
-                            />
-                            <input type="hidden" name="profile_avatar_remove" />
-                          </label>
+                              <input
+                                type="file"
+                                accept=".png, .jpg, .jpeg .svg"
+                                onChange={(e) => onChangeImage2(e)}
+                                onBlur={() =>
+                                  simpleValidator.current.showMessageFor(
+                                    "logoFooter"
+                                  )
+                                }
+                              />
+                              <input type="hidden" />
+                            </label>
+                          )}
 
                           <span
                             className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -658,69 +641,70 @@ const GeneralPage = ({ token }) => {
                               <div className="image-input image-input-outline">
                                 <div className="image-input-wrapper">
                                   {isUpdate &&
-                                  /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
-                                    items.image_logo
-                                  )
+                                    /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
+                                      items.image_logo
+                                    )
                                     ? items.image_logo && (
-                                        <Image
-                                          src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
-                                          layout="fill"
-                                          objectFit="fill"
-                                          alt="imageLogo"
-                                        />
-                                      )
+                                      <Image
+                                        src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
+                                        layout="fill"
+                                        objectFit="fill"
+                                        alt="imageLogo"
+                                      />
+                                    )
                                     : items.image_logo && (
-                                        <Image
-                                          src={
-                                            update === true
-                                              ? items.image_logo
-                                              : `/${items.image_logo}`
-                                          }
-                                          layout="fill"
-                                          objectFit="fill"
-                                          alt="imageLogo"
-                                        />
-                                      )}
+                                      <Image
+                                        src={
+                                          update === true
+                                            ? items.image_logo
+                                            : `/${items.image_logo}`
+                                        }
+                                        layout="fill"
+                                        objectFit="fill"
+                                        alt="imageLogo"
+                                      />
+                                    )}
                                 </div>
-
-                                <label
-                                  className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                  data-action="change"
-                                  data-toggle="tooltip"
-                                  title=""
-                                  data-original-title="Change avatar"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    width="12"
-                                    height="12"
+                                {localStorage
+                                  .getItem("permissions")
+                                  .includes(
+                                    "site_management.setting.general.manage"
+                                  ) && (
+                                  <label
+                                    className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                    data-action="change"
+                                    data-toggle="tooltip"
+                                    title=""
+                                    data-original-title="Change avatar"
                                   >
-                                    <path fill="none" d="M0 0h24v24H0z" />
-                                    <path
-                                      d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
-                                      fill="rgba(108,108,108,1)"
-                                    />
-                                  </svg>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 24 24"
+                                      width="12"
+                                      height="12"
+                                    >
+                                      <path fill="none" d="M0 0h24v24H0z" />
+                                      <path
+                                        d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                        fill="rgba(108,108,108,1)"
+                                      />
+                                    </svg>
 
-                                  <input
-                                    type="file"
-                                    name="profile_avatar"
-                                    accept=".png, .jpg, .jpeg"
-                                    onChange={(e) =>
-                                      handleChangeSocialMedia(e, index)
-                                    }
-                                    onBlur={() =>
-                                      simpleValidator.current.showMessageFor(
-                                        "logoSocialMedia"
-                                      )
-                                    }
-                                  />
-                                  <input
-                                    type="hidden"
-                                    name="profile_avatar_remove"
-                                  />
-                                </label>
+                                    <input
+                                      type="file"
+                                      accept=".png, .jpg, .jpeg"
+                                      onChange={(e) =>
+                                        handleChangeSocialMedia(e, index)
+                                      }
+                                      onBlur={() =>
+                                        simpleValidator.current.showMessageFor(
+                                          "logoSocialMedia"
+                                        )
+                                      }
+                                    />
+                                    <input type="hidden" />
+                                  </label>
+                                )}
 
                                 <span
                                   className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -802,25 +786,36 @@ const GeneralPage = ({ token }) => {
                                 ) : (
                                   <div className="col-12 col-md-1 col-xl-1">
                                     <div className="d-flex align-items-center h-100 justify-content-end ml-14 mb-8">
-                                      <button
-                                        type="button"
-                                        onClick={() => removeSocialMedia(index)}
-                                        className="btn"
-                                        style={{ backgroundColor: "#EE2D41" }}
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          width="16"
-                                          height="16"
+                                      {localStorage
+                                        .getItem("permissions")
+                                        .includes(
+                                          "site_management.setting.general.manage"
+                                        ) && (
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            removeSocialMedia(index)
+                                          }
+                                          className="btn"
+                                          style={{ backgroundColor: "#EE2D41" }}
                                         >
-                                          <path fill="none" d="M0 0h24v24H0z" />
-                                          <path
-                                            d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
-                                            fill="rgba(255,255,255,1)"
-                                          />
-                                        </svg>
-                                      </button>
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            width="16"
+                                            height="16"
+                                          >
+                                            <path
+                                              fill="none"
+                                              d="M0 0h24v24H0z"
+                                            />
+                                            <path
+                                              d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                              fill="rgba(255,255,255,1)"
+                                            />
+                                          </svg>
+                                        </button>
+                                      )}
                                     </div>
                                   </div>
                                 )}
@@ -838,18 +833,22 @@ const GeneralPage = ({ token }) => {
                         </div>
                       );
                     })}
-                    <div className="form-group row mt-2">
-                      <div className="col-sm-12 d-flex justify-content-end">
-                        <button
-                          type="button"
-                          className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
-                          onClick={() => addSocialMedia()}
-                        >
-                          <IconAdd className="mr-3" width="14" height="14" />
-                          Tambah Social Media
-                        </button>
+                    {localStorage
+                      .getItem("permissions")
+                      .includes("site_management.setting.general.manage") && (
+                      <div className="form-group row mt-2">
+                        <div className="col-sm-12 d-flex justify-content-end">
+                          <button
+                            type="button"
+                            className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
+                            onClick={() => addSocialMedia()}
+                          >
+                            <IconAdd className="mr-3" width="14" height="14" />
+                            Tambah Social Media
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                   {/* end social media */}
 
@@ -881,7 +880,7 @@ const GeneralPage = ({ token }) => {
 
                                 {simpleValidator.current.message(
                                   "namaExternalLinks",
-                                  items.name[index],
+                                  items.name,
                                   "required",
                                   { className: "text-danger" }
                                 )}
@@ -916,27 +915,36 @@ const GeneralPage = ({ token }) => {
                                 ) : (
                                   <div className="col-12 col-md-1 col-xl-1">
                                     <div className="d-flex align-items-center h-100 justify-content-end ml-14 mb-10">
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          removeExternalLink(index)
-                                        }
-                                        className="btn"
-                                        style={{ backgroundColor: "#EE2D41" }}
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          width="16"
-                                          height="16"
+                                      {localStorage
+                                        .getItem("permissions")
+                                        .includes(
+                                          "site_management.setting.general.manage"
+                                        ) && (
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            removeExternalLink(index)
+                                          }
+                                          className="btn"
+                                          style={{ backgroundColor: "#EE2D41" }}
                                         >
-                                          <path fill="none" d="M0 0h24v24H0z" />
-                                          <path
-                                            d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
-                                            fill="rgba(255,255,255,1)"
-                                          />
-                                        </svg>
-                                      </button>
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            width="16"
+                                            height="16"
+                                          >
+                                            <path
+                                              fill="none"
+                                              d="M0 0h24v24H0z"
+                                            />
+                                            <path
+                                              d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                              fill="rgba(255,255,255,1)"
+                                            />
+                                          </svg>
+                                        </button>
+                                      )}
                                     </div>
                                   </div>
                                 )}
@@ -945,7 +953,7 @@ const GeneralPage = ({ token }) => {
                                 {simpleValidator.current.message(
                                   "linkExternalLinks",
                                   items.link,
-                                  items.link.includes("http") ? "" : "required|url",
+                                  "required|url",
                                   { className: "text-danger" }
                                 )}
                               </div>
@@ -954,19 +962,22 @@ const GeneralPage = ({ token }) => {
                         </div>
                       );
                     })}
-
-                    <div className="form-group row">
-                      <div className="col-sm-12 d-flex justify-content-end">
-                        <button
-                          type="button"
-                          className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
-                          onClick={() => addExternalLink()}
-                        >
-                          <IconAdd className="mr-3" width="14" height="14" />
-                          Tambah External Links
-                        </button>
+                    {localStorage
+                      .getItem("permissions")
+                      .includes("site_management.setting.general.manage") && (
+                      <div className="form-group row">
+                        <div className="col-sm-12 d-flex justify-content-end">
+                          <button
+                            type="button"
+                            className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
+                            onClick={() => addExternalLink()}
+                          >
+                            <IconAdd className="mr-3" width="14" height="14" />
+                            Tambah External Links
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                   {/* end External Links */}
 
@@ -980,7 +991,6 @@ const GeneralPage = ({ token }) => {
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder="Masukkan alamat lengkap"
                         className="form-control"
-                        name=""
                         id=""
                         cols="30"
                         rows="10"
@@ -1006,7 +1016,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Primary</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorPrimary(e.target.value)}
@@ -1021,7 +1030,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Secondary</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorSecondary(e.target.value)}
@@ -1036,7 +1044,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Extras</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorExtras(e.target.value)}
@@ -1052,17 +1059,22 @@ const GeneralPage = ({ token }) => {
                   {/* end Alamat */}
 
                   {/* start footer btn */}
-                  <div className="form-group row mt-10">
-                    <div className="col-sm-12 d-flex justify-content-end">
-                      <button
-                        type="button"
-                        className={`${styles2.btnTambahContent} btn btn-sm btn-rounded-full bg-blue-primary text-white`}
-                        onClick={(e) => submit(e)}
-                      >
-                        Simpan
-                      </button>
+                  {localStorage
+                    .getItem("permissions")
+                    .includes("site_management.setting.general.manage") && (
+                    <div className="form-group row mt-10">
+                      <div className="col-sm-12 d-flex justify-content-end">
+                        <button
+                          type="button"
+                          className={`${styles2.btnTambahContent} btn btn-sm btn-rounded-full bg-blue-primary text-white`}
+                          onClick={(e) => submit(e)}
+                        >
+                          Simpan
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )}
+
                   {/* end footer btn */}
                 </form>
               </div>

@@ -15,6 +15,7 @@ import {
   clearErrors,
   getAllSummary,
 } from "../../../../redux/actions/pelatihan/summary.actions";
+import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -29,13 +30,6 @@ const ListSummary = ({ token }) => {
   let { success } = router.query;
   const { permission } = useSelector((state) => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
-
-  useEffect(() => {
-    const filterPermission = permission?.permissions?.filter((item) =>
-      item.includes("pelatihan")
-    );
-    setListPermission(filterPermission);
-  }, []);
 
   const { loading, error, summary } = useSelector((state) => state.allSummary);
   const {
@@ -52,6 +46,10 @@ const ListSummary = ({ token }) => {
   );
   const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
     useSelector((state) => state.drowpdownPenyelenggara);
+
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
+  );
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -70,6 +68,14 @@ const ListSummary = ({ token }) => {
   const [dateDisabled, setDateDisabled] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(dropdownTemabyAkademi(academy?.value, token));
+    const filterPermission = permission?.permissions?.filter((item) =>
+      item.includes("pelatihan")
+    );
+    setListPermission(filterPermission);
+  }, [academy?.value]);
 
   const optionsAkademi = dataAkademi.data || [];
   const optionsTema = dataTema.data || [];
@@ -601,7 +607,7 @@ const ListSummary = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              options={optionsTema}
+              options={drowpdownTemabyAkademi.data.data}
               defaultValue={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />

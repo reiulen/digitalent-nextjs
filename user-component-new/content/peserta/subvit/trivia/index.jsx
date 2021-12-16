@@ -79,22 +79,30 @@ const SubtansiUser = ({ token }) => {
   const [modalResponsive, setModalResponsive] = useState(false);
   const [count, setCount] = useState(random_trivia && random_trivia.time_left);
 
-  const millisToMinutesAndSeconds = (millis) => {
-    let minutes = Math.floor(millis / 60000);
+  const [alert, setAlert] = useState(true);
 
-    let seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-  };
+  let tt = [];
 
-  let dataDuration = millisToMinutesAndSeconds(
-    data?.list_questions[parseInt(router.query.id) - 1]?.duration
-  );
+  random_trivia?.list_questions.map((it) => {
+    tt.push(it.duration / 1000);
+  });
+
+  $(window).on("popstate", function (event) {
+    router.push("/peserta/done-trivia");
+    const setData = {
+      list: null,
+      training_id: router.query.training_id,
+      type: "trivia",
+    };
+    dispatch(postResultTrivia(setData, token));
+  });
 
   const [times, setTimes] = useState(
-    data?.list_questions[parseInt(router.query.id) - 1]?.duration
-      ? dataDuration
-      : 30000
+    tt[parseInt(router.query.id) - 1] > 1
+      ? tt[parseInt(router.query.id) - 1]
+      : 3000
   );
+
   const [modalDone, setModalDone] = useState(false);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("");
@@ -114,6 +122,12 @@ const SubtansiUser = ({ token }) => {
     // Handle Error akan langsung ke done
     if (error) {
       router.push(`/peserta/done-trivia`);
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "trivia",
+      };
+      dispatch(postResultTrivia(setData, token));
     }
 
     // Hitung Waktu Mundur
@@ -127,10 +141,16 @@ const SubtansiUser = ({ token }) => {
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "trivia",
+      };
+      dispatch(postResultTrivia(setData, token));
       localStorage.clear();
       router.push(`/peserta/done-trivia`);
     }
-  }, [count, router, error]);
+  }, [count, router, error, dispatch, token]);
 
   useEffect(() => {
     // window.location.reload();
@@ -143,8 +163,8 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handleAnswerText = (e) => {
-    localStorage.setItem(`${parseInt(router.query.id)}`, e.target.value);
-    if (localStorage.getItem(`${parseInt(router.query.id)}`) === "") {
+    sessionStorage.setItem(`${parseInt(router.query.id)}`, e.target.value);
+    if (sessionStorage.getItem(`${parseInt(router.query.id)}`) === "") {
       setAnswer("");
     } else {
       setAnswer(e.target.value);
@@ -273,8 +293,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePageNext = () => {
-    // setNo(no + 1);
-    setTimes(tt[no + 1]);
+    setTimes(tt[router.query.id]);
     const page = parseInt(router.query.id) + 1;
     router.push(
       `${router.pathname.slice(0, 23)}/${page}?theme_id=${
@@ -566,7 +585,7 @@ const SubtansiUser = ({ token }) => {
                       placeholder="Jelaskan jawaban Anda di sini..."
                       className={styles.textArea}
                       onChange={(event) => handleAnswerText(event)}
-                      value={localStorage.getItem(`${router.query.id}`)}
+                      value={sessionStorage.getItem(`${router.query.id}`)}
                     />
                   </Form>
                 )}
@@ -624,11 +643,9 @@ const SubtansiUser = ({ token }) => {
                               <input
                                 className="quiz_checkbox"
                                 type="checkbox"
+                                onChange={() => handleAnswerCheckbox(item)}
                               />
-                              <div
-                                className="single_quiz_card"
-                                onClick={() => handleAnswerCheckbox(item)}
-                              >
+                              <div className="single_quiz_card">
                                 <div className="quiz_card_content">
                                   <div className="quiz_card_title">
                                     <p>
@@ -641,11 +658,12 @@ const SubtansiUser = ({ token }) => {
                           </div>
                         </div>
                       ) : (
-                        <div
-                          className="quiz_card_area"
-                          onClick={() => handleAnswerCheckbox(item)}
-                        >
-                          <input className="quiz_checkbox" type="checkbox" />
+                        <div className="quiz_card_area">
+                          <input
+                            className="quiz_checkbox"
+                            type="checkbox"
+                            onChange={() => handleAnswerCheckbox(item)}
+                          />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_title">
