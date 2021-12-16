@@ -12,16 +12,16 @@ import IconStop from "../../../../public/assets/icon/folder-forbid-line.svg";
 import Image from "next/image";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { getSession } from "next-auth/client";
-import Link from 'next/link'
+import Link from "next/link";
 import { fetchDashboard } from "../../../../redux/actions/partnership/dashboard.action";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 import axios from "axios";
 
 export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
-  const { permission } = useSelector ((state) => state.partnershipPermissions)
+  const { permission } = useSelector((state) => state.partnershipPermissions);
   const [user, setUser] = useState("");
 
   const colors = ["#215480", "#4299E1", "#357AB4"];
@@ -32,7 +32,7 @@ export default function DashboardPage({ token }) {
     useState([]);
 
   const [errorGetData, setErrorGetData] = useState("");
-  const cookiePermission = Cookies.get("token_permission")
+  const cookiePermission = Cookies.get("token_permission");
 
   useEffect(() => {
     // dispatch (fetchDashboard(token))
@@ -42,7 +42,6 @@ export default function DashboardPage({ token }) {
     getSession().then((session) => {
       setUser(session.user.user.data.user);
     });
-
   }, [dispatch, token, cookiePermission]);
 
   async function fetchDashboards() {
@@ -51,8 +50,8 @@ export default function DashboardPage({ token }) {
         `${process.env.END_POINT_API_PARTNERSHIP}api/dashbord`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
-            Permission: cookiePermission
+            Authorization: `Bearer ${token}`,
+            Permission: cookiePermission,
           },
         }
       );
@@ -95,9 +94,7 @@ export default function DashboardPage({ token }) {
           <Image src={ImagePlants} alt="imagehero" />
         </div>
 
-        <h5 className="text-blue-secondary fw-600 fz-24">
-          Halo {user.name} !
-        </h5>
+        <h5 className="text-blue-secondary fw-600 fz-24">Halo {user.name} !</h5>
         <p className="text-gray-primary fw-600 fz-16">
           Selamat Datang di Dashboard Partnership, yuk cek pengajuan kerjasama
           mitra hari ini.
@@ -105,57 +102,15 @@ export default function DashboardPage({ token }) {
       </div>
 
       <div className="row mt-4">
-
         {/* Card Total Mitra */}
         <div className="col-12 col-xl-6 my-3">
-          {
-            permission?.permissions?.includes("partnership.dashboard.manage") && 
-            permission?.permissions?.includes("partnership.mitra.manage") ?
-              <Link href="/partnership/mitra" passHref>
-                <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2 cursor-pointer">
-                  <div className="d-flex justify-content-between align-items-center position-relative">
-                    <div>
-                      <div className="d-flex align-items-center">
-
-                        <Image
-                          src="/assets/icon/add-user-white.svg"
-                          width={50}
-                          height={50}
-                          alt="add-user"
-                        />
-
-                        {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
-
-                        <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
-                          {allDashboard?.data_dashboard?.data?.mitra}
-                        </h1>
-                      </div>
-
-                      <div>
-                        <h5 className="fw-500 fz-14">Total Mitra</h5>
-                      </div>
-                    </div>
-
-                    <i 
-                      className="ri-user-add-fill ri-7x" 
-                      style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.25rem"}}
-                    />
-                      {/* <Image 
-                          src="/assets/icon/add-user-shade-primary.svg"
-                          width={100}
-                          height={100}
-                          className="border border-dark mt-0 position-absolute right-0"
-                          style={{marginTop:"-5%"}}
-                        /> */}
-                  </div>
-                </div>
-              </Link>
-            :
-              <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2">
+          {permission?.permissions?.includes("partnership.dashboard.manage") &&
+          permission?.permissions?.includes("partnership.mitra.manage") ? (
+            <Link href="/partnership/mitra" passHref>
+              <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2 cursor-pointer">
                 <div className="d-flex justify-content-between align-items-center position-relative">
                   <div>
                     <div className="d-flex align-items-center">
-
                       <Image
                         src="/assets/icon/add-user-white.svg"
                         width={50}
@@ -165,7 +120,10 @@ export default function DashboardPage({ token }) {
 
                       {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
 
-                      <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
+                      <h1
+                        className="text-white ml-3 mt-7"
+                        style={{ fontSize: "3rem" }}
+                      >
                         {allDashboard?.data_dashboard?.data?.mitra}
                       </h1>
                     </div>
@@ -175,119 +133,166 @@ export default function DashboardPage({ token }) {
                     </div>
                   </div>
 
-                  <i 
-                    className="ri-user-add-fill ri-7x" 
-                    style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.25rem"}}
+                  <i
+                    className="ri-user-add-fill ri-7x"
+                    style={{
+                      color: "#1a4367",
+                      marginTop: "-2rem",
+                      marginRight: "-0.25rem",
+                    }}
                   />
-                    {/* <Image 
+                  {/* <Image 
+                          src="/assets/icon/add-user-shade-primary.svg"
+                          width={100}
+                          height={100}
+                          className="border border-dark mt-0 position-absolute right-0"
+                          style={{marginTop:"-5%"}}
+                        /> */}
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2">
+              <div className="d-flex justify-content-between align-items-center position-relative">
+                <div>
+                  <div className="d-flex align-items-center">
+                    <Image
+                      src="/assets/icon/add-user-white.svg"
+                      width={50}
+                      height={50}
+                      alt="add-user"
+                    />
+
+                    {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
+
+                    <h1
+                      className="text-white ml-3 mt-7"
+                      style={{ fontSize: "3rem" }}
+                    >
+                      {allDashboard?.data_dashboard?.data?.mitra}
+                    </h1>
+                  </div>
+
+                  <div>
+                    <h5 className="fw-500 fz-14">Total Mitra</h5>
+                  </div>
+                </div>
+
+                <i
+                  className="ri-user-add-fill ri-7x"
+                  style={{
+                    color: "#1a4367",
+                    marginTop: "-2rem",
+                    marginRight: "-0.25rem",
+                  }}
+                />
+                {/* <Image 
                         src="/assets/icon/add-user-shade-primary.svg"
                         width={100}
                         height={100}
                         className="border border-dark mt-0 position-absolute right-0"
                         style={{marginTop:"-5%"}}
                       /> */}
-                </div>
-              </div> 
-          }
-          
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Card Total Kerjasama */}
         <div className="col-12 col-xl-6 my-3">
-          {
-              permission?.permissions?.includes("partnership.dashboard.manage") && 
-              permission?.permissions?.includes("partnership.kerjasama.manage") ?
-                <Link href="/partnership/kerjasama" passHref>
+          {permission?.permissions?.includes("partnership.dashboard.manage") &&
+          permission?.permissions?.includes("partnership.kerjasama.manage") ? (
+            <Link href="/partnership/kerjasama" passHref>
+              <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2 cursor-pointer">
+                <div className="d-flex justify-content-between align-items-center position-relative">
+                  <div>
+                    <div className="d-flex align-items-center">
+                      {/* <i className="ri-clipboard-fill ri-4x text-white" /> */}
 
-                  <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2 cursor-pointer">
-                    <div className="d-flex justify-content-between align-items-center position-relative">
-                      <div>
-                        <div className="d-flex align-items-center">
-      
-                          {/* <i className="ri-clipboard-fill ri-4x text-white" /> */}
-      
-                          <Image
-                            src="/assets/icon/clipboard-list-white.svg"
-                            width={50}
-                            height={50}
-                            alt="clipboard"
-                          />
-      
-                          <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
-                            {allDashboard?.data_dashboard?.data?.cooperation}
-                          </h1>
-                        </div>
-      
-                        <div>
-                          <h5 className="fw-500 fz-14">Total Kerjasama</h5>
-                        </div>
-                      </div>
-      
-                      {/* <i 
+                      <Image
+                        src="/assets/icon/clipboard-list-white.svg"
+                        width={50}
+                        height={50}
+                        alt="clipboard"
+                      />
+
+                      <h1
+                        className="text-white ml-3 mt-7"
+                        style={{ fontSize: "3rem" }}
+                      >
+                        {allDashboard?.data_dashboard?.data?.cooperation}
+                      </h1>
+                    </div>
+
+                    <div>
+                      <h5 className="fw-500 fz-14">Total Kerjasama</h5>
+                    </div>
+                  </div>
+
+                  {/* <i 
                         className="ri-clipboard-fill ri-7x" 
                         style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.75rem"}}
                       /> */}
-      
-                      <Image 
-                        src="/assets/icon/clipboard-list-primary-shade.svg"
-                        width={100}
-                        height={100}
-                        className="mr-0"
-                        style={{marginTop:"-2rem", marginRight:"-3rem"}}
-                        alt="clipboard"
-                      />
-                    </div>
+
+                  <Image
+                    src="/assets/icon/clipboard-list-primary-shade.svg"
+                    width={100}
+                    height={100}
+                    className="mr-0"
+                    style={{ marginTop: "-2rem", marginRight: "-3rem" }}
+                    alt="clipboard"
+                  />
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2">
+              <div className="d-flex justify-content-between align-items-center position-relative">
+                <div>
+                  <div className="d-flex align-items-center">
+                    {/* <i className="ri-clipboard-fill ri-4x text-white" /> */}
+
+                    <Image
+                      src="/assets/icon/clipboard-list-white.svg"
+                      width={50}
+                      height={50}
+                      alt="clipboard"
+                    />
+
+                    <h1
+                      className="text-white ml-3 mt-7"
+                      style={{ fontSize: "3rem" }}
+                    >
+                      {allDashboard?.data_dashboard?.data?.cooperation}
+                    </h1>
                   </div>
-                </Link>
-              :
-                <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2">
-                  <div className="d-flex justify-content-between align-items-center position-relative">
-                    <div>
-                      <div className="d-flex align-items-center">
 
-                        {/* <i className="ri-clipboard-fill ri-4x text-white" /> */}
+                  <div>
+                    <h5 className="fw-500 fz-14">Total Kerjasama</h5>
+                  </div>
+                </div>
 
-                        <Image
-                          src="/assets/icon/clipboard-list-white.svg"
-                          width={50}
-                          height={50}
-                          alt="clipboard"
-                        />
-
-                        <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
-                          {allDashboard?.data_dashboard?.data?.cooperation}
-                        </h1>
-                      </div>
-
-                      <div>
-                        <h5 className="fw-500 fz-14">Total Kerjasama</h5>
-                      </div>
-                    </div>
-
-                    {/* <i 
+                {/* <i 
                       className="ri-clipboard-fill ri-7x" 
                       style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.75rem"}}
                     /> */}
 
-                    <Image 
-                      src="/assets/icon/clipboard-list-primary-shade.svg"
-                      width={100}
-                      height={100}
-                      className="mr-0"
-                      style={{marginTop:"-2rem", marginRight:"-3rem"}}
-                      alt="clipboard"
-                    />
-                  </div>
-                </div>    
-          }
-          
+                <Image
+                  src="/assets/icon/clipboard-list-primary-shade.svg"
+                  width={100}
+                  height={100}
+                  className="mr-0"
+                  style={{ marginTop: "-2rem", marginRight: "-3rem" }}
+                  alt="clipboard"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      
       {/* Content */}
       <div className="row mt-4">
-
         {/* Card pengajuan Aktif */}
         <div className="col-12 col-xl-6 my-5">
           <div className="br-12 bg-white px-10 py-6 mt-2">
@@ -296,8 +301,8 @@ export default function DashboardPage({ token }) {
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
               {allDashboard?.data_dashboard?.data?.cooperation_active +
-                allDashboard?.data_dashboard?.data?.cooperation_approved}&nbsp;
-              Total Aktif dan Tidak Aktif
+                allDashboard?.data_dashboard?.data?.cooperation_approved}
+              &nbsp; Total Aktif dan Tidak Aktif
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
@@ -306,7 +311,7 @@ export default function DashboardPage({ token }) {
                   : allDashboard?.data_dashboard?.data?.cooperation_active +
                     allDashboard?.data_dashboard?.data?.cooperation_approved}
               </span>
-              
+
               <div className="col-12">
                 <ResponsiveContainer width="100%" height={350}>
                   <PieChart>
@@ -317,7 +322,7 @@ export default function DashboardPage({ token }) {
                       innerRadius={60}
                       outerRadius={80}
                       paddingAngle={-10}
-                      cornerRadius={30} 
+                      cornerRadius={30}
                     >
                       {dataPieChartStatusPengajuan &&
                         dataPieChartStatusPengajuan?.map((el, i) => {
@@ -327,8 +332,6 @@ export default function DashboardPage({ token }) {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              
-              
             </div>
             <div className="row">
               <div className="col-6">
@@ -367,18 +370,20 @@ export default function DashboardPage({ token }) {
 
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
-                        {allDashboard?.data_dashboard?.data?.cooperation_non_active}
+                        {
+                          allDashboard?.data_dashboard?.data
+                            ?.cooperation_non_active
+                        }
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className='text-center'>
+                <div className="text-center">
                   <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
                     Pengajuan Tidak Aktif
                   </p>
                 </div>
-                
               </div>
             </div>
           </div>
@@ -400,7 +405,7 @@ export default function DashboardPage({ token }) {
                 {allDashboard?.data_dashboard?.data?.cooperation_will_expired +
                   allDashboard?.data_dashboard?.data?.cooperation_rejected}
               </span>
-              
+
               <div className="col-12">
                 <ResponsiveContainer width="100%" height={350}>
                   <PieChart>
@@ -421,7 +426,6 @@ export default function DashboardPage({ token }) {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              
             </div>
             <div className="row">
               <div className="col-6">
@@ -464,7 +468,10 @@ export default function DashboardPage({ token }) {
 
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
-                        {allDashboard?.data_dashboard?.data?.cooperation_rejected}
+                        {
+                          allDashboard?.data_dashboard?.data
+                            ?.cooperation_rejected
+                        }
                       </p>
                     </div>
                   </div>

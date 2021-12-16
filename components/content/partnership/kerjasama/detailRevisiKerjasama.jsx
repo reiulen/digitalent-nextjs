@@ -50,8 +50,8 @@ const DetailRevisiKerjasama = ({ token }) => {
             formData,
             {
               headers: {
-                authorization: `Bearer ${token}`,
-                Permission: Cookies.get("token_permission")
+                Authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission"),
               },
             }
           );
@@ -61,13 +61,12 @@ const DetailRevisiKerjasama = ({ token }) => {
             query: { id: router.query.id },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error")
+          Swal.fire("Gagal", `${error.response.data.message}`, "error");
         }
       }
     });
   };
 
-  
   const handleChange = (e, index) => {
     let dataaa = [...allCooperation];
     dataaa[index].form_content_review = e.target.value;
@@ -75,16 +74,16 @@ const DetailRevisiKerjasama = ({ token }) => {
   };
   useEffect(() => {
     setDataSingle(router.query.id);
-  }, [router.query.id,token]);
+  }, [router.query.id, token]);
 
-  async function setDataSingle(id){
+  async function setDataSingle(id) {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
-            Permission: Cookies.get("token_permission")
+            Authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission"),
           },
         }
       );
@@ -96,9 +95,8 @@ const DetailRevisiKerjasama = ({ token }) => {
       setPeriodUnit(data?.data?.period_unit);
       setNote(data?.data?.note);
     } catch (error) {
-      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
     }
-
   }
 
   return (
@@ -129,7 +127,9 @@ const DetailRevisiKerjasama = ({ token }) => {
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
-                    <label className="required mb-2 text-muted">Judul Kerjasama</label>
+                    <label className="required mb-2 text-muted">
+                      Judul Kerjasama
+                    </label>
                     <input
                       placeholder="Masukan Judul Kerjasama"
                       readOnly
@@ -141,11 +141,13 @@ const DetailRevisiKerjasama = ({ token }) => {
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
-                    <label className="required mb-2 text-muted">Kategori Kerjasama</label>
+                    <label className="required mb-2 text-muted">
+                      Kategori Kerjasama
+                    </label>
                     <select
                       className="form-control remove-icon-default border-0 ml-n4"
                       disabled
-                      style={{backgroundColor:"transparent"}}
+                      style={{ backgroundColor: "transparent" }}
                     >
                       <option value="">
                         {cooperationID && cooperationID?.name}
@@ -158,7 +160,9 @@ const DetailRevisiKerjasama = ({ token }) => {
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
-                    <label className="required mb-2 text-muted">Periode Kerjasama</label>
+                    <label className="required mb-2 text-muted">
+                      Periode Kerjasama
+                    </label>
                     <input
                       placeholder="Masukan Lama Kerjasama"
                       readOnly
@@ -171,7 +175,11 @@ const DetailRevisiKerjasama = ({ token }) => {
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
-                    <select className="form-control mt-2 border-0 remove-icon-default ml-n4" disabled style={{backgroundColor:"transparent"}}>
+                    <select
+                      className="form-control mt-2 border-0 remove-icon-default ml-n4"
+                      disabled
+                      style={{ backgroundColor: "transparent" }}
+                    >
                       <option value="">Tahun</option>
                     </select>
                   </div>
@@ -179,9 +187,6 @@ const DetailRevisiKerjasama = ({ token }) => {
               </div>
 
               {/* start loop */}
-
-
-              
 
               {!allCooperation.length
                 ? ""
@@ -277,7 +282,6 @@ const DetailRevisiKerjasama = ({ token }) => {
                   </button>
                 </div>
               </div>
-              
             </form>
           </div>
         </div>
