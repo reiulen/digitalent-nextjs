@@ -24,14 +24,27 @@ export default function FormPengaduan() {
 	useEffect(() => {
 		setOptions([
 			{ value: "dts", label: "Digital Talent Scholarship" },
-			{ value: "simonas", label: "Simonas" },
-			{ value: "beasiswa", label: "Beasiswa" },
+			{ value: "vsga", label: "Akademi VSGA" },
+			{ value: "fga", label: "Akademi FGA" },
+			{ value: "pro", label: "Akademi PRO" },
+			{ value: "ta", label: "Akademi TA" },
+			{ value: "dea", label: "Akademi DEA" },
+			{ value: "tsa", label: "Akademi TSA" },
+			{ value: "teknis", label: "Teknis" },
 		]);
 	}, []);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (simpleValidator.current.allValid()) {
+			const data = {
+				name,
+				handphone,
+				email,
+				platform,
+				deskripsi,
+			};
+			console.log(data);
 		} else {
 			simpleValidator.current.showMessages();
 			forceUpdate(1);
@@ -106,7 +119,6 @@ export default function FormPengaduan() {
 							aria-label="Default select example"
 							onChange={(e) => setPlatform(e.target.value)}
 						>
-							<option>Silahkan Pilih</option>
 							{options.map((option, i) => (
 								<option value={option.value} key={i}>
 									{option.label}
