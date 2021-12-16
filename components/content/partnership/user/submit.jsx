@@ -159,25 +159,27 @@ const SubmitKerjasama = ({ token }) => {
   };
 
   useEffect(() => {
-    async function cekProgresStatus(id) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-
-        setPeriodValue(data.data.period);
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
-      }
-    }
+    
     cekProgresStatus(router.query.id);
   }, [router.query.id, token]);
+
+  async function cekProgresStatus(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+
+      setPeriodValue(data.data.period);
+    } catch (error) {
+      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+    }
+  }
 
   return (
     <PageWrapper>

@@ -28,25 +28,26 @@ function RevisiList({ token }) {
   const [listCardREvisi, setListCardREvisi] = useState([]);
 
   useEffect(() => {
-    async function getCardREviewList(id, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/card-review/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-
-        setListCardREvisi(data.data);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
-      }
-    }
     getCardREviewList(router.query.id, token);
   }, [router.query.id, token]);
+
+  async function getCardREviewList(id, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/card-review/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+
+      setListCardREvisi(data.data);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+    }
+  }
 
   return (
     <PageWrapper>

@@ -15,14 +15,14 @@ const Preview = () => {
 
     const { artikel } = useSelector(state => state.detailArtikel)
 
-    const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel)
-    const [jenis_kategori, setJenisKategori] = useState(artikel.jenis_kategori)
-    const [created_at, setCreatedAt] = useState(new Date(artikel.created_at).toLocaleDateString("en-IN"))
-    const [nama, setNamaKategori] = useState(artikel.nama)
-    const [gambar, setGambar] = useState(artikel.gambar)
-    const [user, setUser] = useState(artikel.dibuat)
-    const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel)
-    const [tag, setTag] = useState(artikel.tag)
+    const [judul_artikel, setJudulArtikel] = useState(artikel?.judul_artikel)
+    const [jenis_kategori, setJenisKategori] = useState(artikel?.jenis_kategori)
+    const [created_at, setCreatedAt] = useState(new Date(artikel?.created_at).toLocaleDateString("en-IN"))
+    const [nama, setNamaKategori] = useState(artikel?.nama)
+    const [gambar, setGambar] = useState(artikel?.gambar)
+    const [user, setUser] = useState(artikel?.dibuat)
+    const [isi_artikel, setIsiArtikel] = useState(artikel?.isi_artikel)
+    const [tag, setTag] = useState(artikel?.tag)
 
     const dispatch = useDispatch();
     const router = useRouter();
@@ -122,7 +122,7 @@ const Preview = () => {
                                     <div className="ml-2">
                                         {/* Insert Logo Image Here */}
                                         {
-                                            artikel.role[0].name !== "Peserta" || typeof artikel.role !== "string" ?
+                                            artikel.role[0]?.name !== "Peserta" || typeof artikel.role !== "string" ?
                                                 <Image
                                                     src={
                                                         imageLogo
@@ -149,7 +149,7 @@ const Preview = () => {
                                     <div className="d-flex flex-column ml-3">
                                         <div className="font-weight-bolder mb-2">
                                             {/* Insert Admin Here */}
-                                            {artikel.role[0].name}
+                                            {artikel.role[0]?.name}
                                         </div>
                                         <div className="text-muted">
                                             {moment(artikel.tanggal_publish).format("DD MMMM YYYY")}
@@ -277,7 +277,7 @@ const Preview = () => {
                                         </h3>
                                         <div className=" d-flex flex-wrap flex-row">
                                             {tags && tags.tag && tags.tag.length !== 0 ? (
-                                                tags.tag.map((el, i) => {
+                                                tags?.tag?.map((el, i) => {
                                                     return (
                                                         <div
                                                             className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center"

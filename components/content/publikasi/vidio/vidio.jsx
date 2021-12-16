@@ -658,7 +658,7 @@ const Vidio = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions.includes("publikasi.video.manage") || role_permission.roles.includes("Super Admin") ?
+                                                    role_permission?.permissions.includes("publikasi.video.manage") || role_permission?.roles.includes("Super Admin") ?
                                                         <th style={{ width: '9.7vw' }}>Aksi</th>
                                                         : null
                                                 }
@@ -666,9 +666,9 @@ const Vidio = ({ token }) => {
                                         </thead>
                                         <tbody>
                                             {
-                                                !video || video && video.video.length === 0 ?
+                                                !video || video && video?.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={12}>Data Kosong</td> :
-                                                    video && video.video.map((row, i) => {
+                                                    video && video?.video?.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -721,7 +721,7 @@ const Vidio = ({ token }) => {
                                                             </td>
                                                             <td className='align-middle'>{row.role[0].name}</td>
                                                             {
-                                                                role_permission.permissions.includes("publikasi.video.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                role_permission?.permissions.includes("publikasi.video.manage") || role_permission?.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex">
                                                                         <button
                                                                             onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.total_views, row.kategori, row.isi_video, row.tag)}
@@ -768,13 +768,13 @@ const Vidio = ({ token }) => {
                             </div>
 
                             <div className="row">
-                                {video && video.perPage < video.total &&
+                                {video && video?.perPage < video?.total &&
                                     <>
                                         <div className={`${stylesPag.pagination} table-pagination`}>
                                             <Pagination
                                                 activePage={page}
-                                                itemsCountPerPage={video.perPage}
-                                                totalItemsCount={video.total}
+                                                itemsCountPerPage={video?.perPage}
+                                                totalItemsCount={video?.total}
                                                 pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={'>'}
@@ -806,7 +806,7 @@ const Vidio = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {video.total} List Data</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {video?.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''

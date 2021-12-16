@@ -20,8 +20,8 @@ function Error({ statusCode }) {
           /> */}
           <div className="text-center">
             <h1 className="font-weight-bolder">
-              {statusCode} Mohon maaf saat ini terjadi gangguan, silahkan
-              kembali
+              {statusCode} Saat ini halaman tersebut tidak dapat di akses, mohon
+              kembali.
             </h1>
             <button
               className="btn btn-primary rounded-xl font-weight-bolder text-center mt-2"

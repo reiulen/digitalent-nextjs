@@ -45,10 +45,10 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
   );
 
   const [question, setQuestion] = useState(
-    subtance_question_detail.question || ""
+    subtance_question_detail?.question || ""
   );
   const [question_image, setQuestionImage] = useState(
-    subtance_question_detail.question_image
+    subtance_question_detail?.question_image
   );
   // const [question_image_preview, setQuestionImagePreview] = useState(
   //   subtance_question_detail.question_image_preview
@@ -57,11 +57,11 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
 
   const [question_image_preview, setQuestionImagePreview] = useState(
     process.env.END_POINT_API_IMAGE_SUBVIT +
-      subtance_question_detail.question_image_preview
+      subtance_question_detail?.question_image_preview
   );
   const [question_image_name, setQuestionImageName] = useState(
-    (subtance_question_detail.question_image_preview &&
-      subtance_question_detail.question_image_preview.substr(16)) ||
+    (subtance_question_detail?.question_image_preview &&
+      subtance_question_detail?.question_image_preview.substr(16)) ||
       "Pilih Gambar"
   );
 

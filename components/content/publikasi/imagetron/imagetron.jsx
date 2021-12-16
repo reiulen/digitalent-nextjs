@@ -405,7 +405,7 @@ const Imagetron = ({ token }) => {
                         background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        value={imagetron.data && imagetron.data.publish != "" ? imagetron.data.publish : 0}
+                        value={imagetron?.data && imagetron?.data.publish != "" ? imagetron?.data.publish : 0}
                         titleValue='Imagetron'
                         title='Total Publish'
                         publishedVal="1"
@@ -425,7 +425,7 @@ const Imagetron = ({ token }) => {
                         background='bg-light-danger'
                         icon="Library.svg"
                         color='#ffffff'
-                        value={imagetron.data && imagetron.data.unpublish != "" ? imagetron.data.unpublish : 0}
+                        value={imagetron?.data && imagetron?.data.unpublish != "" ? imagetron?.data.unpublish : 0}
                         titleValue='Imagetron'
                         title='Total Belum Dipublish'
                         publishedVal="0"
@@ -645,7 +645,7 @@ const Imagetron = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions.includes("publikasi.imagetron.manage") || role_permission.roles.includes("Super Admin") ?
+                                                    role_permission?.permissions.includes("publikasi.imagetron.manage") || role_permission?.roles.includes("Super Admin") ?
                                                         <th style={{ width: '9vw', textAlign: 'center' }}>Aksi</th>
                                                         : null
                                                 }
@@ -654,9 +654,9 @@ const Imagetron = ({ token }) => {
 
                                         <tbody>
                                             {
-                                                !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
+                                                !imagetron || imagetron && imagetron?.data?.imagetron.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
-                                                    imagetron && imagetron.data.imagetron.map((row, i) => {
+                                                    imagetron && imagetron?.data?.imagetron.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -715,7 +715,7 @@ const Imagetron = ({ token }) => {
                                                             </td>
                                                             <td className='align-middle'>{row.role[0].name}</td>
                                                             {
-                                                                role_permission.permissions.includes("publikasi.imagetron.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                role_permission?.permissions.includes("publikasi.imagetron.manage") || role_permission?.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex justify-content-center">
 
                                                                         <Link
@@ -752,13 +752,13 @@ const Imagetron = ({ token }) => {
                             </div>
 
                             <div className="row">
-                                {imagetron && parseInt(imagetron.data.perPage) < imagetron.data.total &&
+                                {imagetron && parseInt(imagetron?.data?.perPage) < imagetron?.data?.total &&
                                     <>
                                         <div className={`${stylesPag.pagination} table-pagination`}>
                                             <Pagination
                                                 activePage={page}
-                                                itemsCountPerPage={parseInt(imagetron.data.perPage)}
-                                                totalItemsCount={imagetron.data.total}
+                                                itemsCountPerPage={parseInt(imagetron?.data?.perPage)}
+                                                totalItemsCount={imagetron?.data?.total}
                                                 pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={'>'}
@@ -795,7 +795,7 @@ const Imagetron = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {imagetron.data.total} List Data</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {imagetron?.data?.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''

@@ -149,29 +149,30 @@ const RevisiKerjasama = ({ token }) => {
   };
 
   useEffect(() => {
-    async function setDataSingle(id, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-        setPeriod_start(data?.data?.period_date_start);
-        setPeriod_end(data?.data?.period_date_end);
-        setNo_perjanjianLembaga(data?.data?.agreement_number_partner);
-        setNo_perjanjianKoninfo(data?.data?.agreement_number_kemkominfo);
-        setTgl_ttd(data?.data?.signing_date);
-        setDokument(data?.data?.document);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
-      }
-    }
     setDataSingle(router.query.id, token);
   }, [router.query.id, token]);
+
+  async function setDataSingle(id, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      setPeriod_start(data?.data?.period_date_start);
+      setPeriod_end(data?.data?.period_date_end);
+      setNo_perjanjianLembaga(data?.data?.agreement_number_partner);
+      setNo_perjanjianKoninfo(data?.data?.agreement_number_kemkominfo);
+      setTgl_ttd(data?.data?.signing_date);
+      setDokument(data?.data?.document);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+    }
+  }
 
   return (
     <PageWrapper>

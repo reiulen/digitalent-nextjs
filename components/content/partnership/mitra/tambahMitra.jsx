@@ -205,55 +205,59 @@ const TambahMitra = ({ token }) => {
   };
 
   useEffect(() => {
-    async function getDataProvinces(token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/option/provinces`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-        let dataNewProvinces = data?.data?.map((items) => {
-          return { ...items, label: items?.name, value: items?.id };
-        });
-        // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-        setAllProvinces(dataNewProvinces);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
-      }
-    }
+    
     getDataProvinces(token);
   }, [token]);
+
+  async function getDataProvinces(token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/provinces`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      let dataNewProvinces = data?.data?.map((items) => {
+        return { ...items, label: items?.name, value: items?.id };
+      });
+      // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+      setAllProvinces(dataNewProvinces);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+    }
+  }
 
   useEffect(() => {
     // get data cities
     if (indonesia_provinces_id !== "") {
-      async function fetchAPI() {
-        try {
-          let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
-            {
-              headers: {
-                authorization: `Bearer ${token}`,
-                Permission: Cookies.get("token_permission")
-              },
-            }
-          );
-          let dataNewCitites = data?.data?.map((items) => {
-            return { ...items, label: items.name, value: items.id };
-          });
-          // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
-          setCitiesAll(dataNewCitites);
-        } catch (error) {
-          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
-        }
-      }
+      
       fetchAPI();
     }
   }, [indonesia_provinces_id, token]);
+
+  async function fetchAPI() {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      let dataNewCitites = data?.data?.map((items) => {
+        return { ...items, label: items.name, value: items.id };
+      });
+      // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
+      setCitiesAll(dataNewCitites);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+    }
+  }
 
   return (
     <PageWrapper>
