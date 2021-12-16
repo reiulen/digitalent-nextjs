@@ -21,8 +21,8 @@ export const getTTEP12 =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token}`,
-					Permission: token_permission,
 				},
+				// Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);
