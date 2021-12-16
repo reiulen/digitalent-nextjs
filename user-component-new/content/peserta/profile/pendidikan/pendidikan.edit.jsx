@@ -385,6 +385,29 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									className: "text-danger",
 								}
 							)}
+							<Col md={6}>
+								<Form.Group className="mb-3" controlId="formGridAddress1">
+									<Form.Label>Nama Institusi Pendidikan</Form.Label>
+									<Form.Control
+										placeholder="Silahkan Masukkan Nama Institusi"
+										onChange={(e) => {
+											setSekolahLainnya(e.target.value);
+										}}
+										onBlur={() =>
+											simpleValidator.current.showMessageFor("tahun masuk")
+										}
+										type="text"
+									/>
+									{simpleValidator.current.message(
+										"sekolah lainnya",
+										sekolahLainnya,
+										"required",
+										{
+											className: "text-danger",
+										}
+									)}
+								</Form.Group>
+							</Col>
 						</Form.Group>
 					)}
 
