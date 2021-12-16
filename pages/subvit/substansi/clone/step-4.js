@@ -1,10 +1,22 @@
+import dynamic from "next/dynamic";
 import Layout from "/components/templates/layout.component";
-import StepTree from "../../../../components/content/subvit/substansi/clone/step-tree";
+// import StepTree from "../../../../components/content/subvit/substansi/clone/step-tree";
 
 import { getDetailSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const StepTree = dynamic(
+  () => import("../../../../components/content/subvit/substansi/clone/step-tree"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function CloneSoalSubtansi(props) {
   const session = props.session.user.user.data;

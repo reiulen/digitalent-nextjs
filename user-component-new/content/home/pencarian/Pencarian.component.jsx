@@ -24,7 +24,7 @@ const Pencarian = ({ session }) => {
 	const dispatch = useDispatch();
 	const { query } = router;
 	const allPencarian = useSelector((state) => state.allPencarian);
-
+	console.log(allPencarian);
 	const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
 		useSelector((state) => state.allPenyelenggaraPeserta);
 

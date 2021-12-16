@@ -226,7 +226,6 @@ const Tambah = ({ token }) => {
     setIndonesia_cities_id("")
     setCitiesAll([])
     selectInputRef.current.select.clearValue();
-    // console.log (selectInputRef.current.select.value)
 
     setIndonesia_provinces_id(e.id);
     fetchAPICity(e.id)

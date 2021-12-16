@@ -183,12 +183,12 @@ export const updateProfilePendidikan =
 	};
 
 export const getDataAsalSekolah =
-	(token, limit = 100, search = "") =>
+	(token, search = "") =>
 	async (dispatch) => {
 		try {
 			let link =
 				process.env.END_POINT_API_SITE_MANAGEMENT +
-				`api/option/origin-of-school?limit=${limit}&search=${search}`;
+				`api/option/origin-of-school?keyword=${search}`;
 
 			const config = {
 				headers: {

@@ -23,6 +23,7 @@ import {
   getSimonasProvinsiApplierRequired,
 } from "../../redux/actions/dashboard-kabadan/dashboard/simonas.actions";
 import { getDigitalentTotalPengguna } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 export default function DashboardSimonasPage(props) {
   const DashboardSimonas = dynamic(
@@ -30,7 +31,12 @@ export default function DashboardSimonasPage(props) {
       import(
         "../../components/content/dashboard-kabadan/simonas/dashboard-simonas"
       ),
-    { ssr: false }
+    {
+      loading: function loadingNow() {
+        return <LoadingSkeleton />;
+      },
+      ssr: false
+    }
   );
   const MyMap = dynamic(
     () =>

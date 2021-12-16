@@ -20,7 +20,6 @@ import {
 	loadDataZonasi,
 	loadDataZonasiNext,
 } from "../../../../redux/actions/site-management/dashboard.actions";
-import { set } from "js-cookie";
 
 const DashboardSiteManagement = ({ token, user }) => {
 	const [participant, setParticipant] = useState(0);
@@ -30,6 +29,8 @@ const DashboardSiteManagement = ({ token, user }) => {
 	const [pagePeserta, setPagePeserta] = useState(1);
 	const [type, setType] = useState("province");
 	const [typePeserta, setTypePeserta] = useState("province");
+	const [dataZonasi, setDataZonasi] = useState(null)
+	const [totalZonasi, setTotalZonasi] = useState(null)
 
 	let dispatch = useDispatch();
 
@@ -51,6 +52,20 @@ const DashboardSiteManagement = ({ token, user }) => {
 		dispatch(loadDataPeserta(token, typePeserta, pagePeserta));
 	}, [dispatch, token, type, pageZonasi, typePeserta, pagePeserta]);
 
+	useEffect(() => {
+		axios
+			.get(`${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/peserta-zonasi?page=${pageZonasi}`, {
+				headers: {
+					authorization: `Bearer ${token}`,
+					// Permission: localStorage.getItem("token-permission"),
+				},
+			})
+			.then((items) => {
+				setDataZonasi(items.data.data.list_zonasi);
+				setTotalZonasi(items.data);
+			});
+	}, [dispatch, token, pageZonasi]);
+
 	const { allDataZonasi, allDataPeserta } = useSelector(
 		(state) => ({
 			allDataZonasi: state.allDataZonasi,
@@ -58,6 +73,8 @@ const DashboardSiteManagement = ({ token, user }) => {
 		}),
 		shallowEqual
 	);
+
+	const allListPeserta = useSelector((state) => state.allListPeserta);
 
 	function capitalize(s) {
 		let a = s.split(" ");
@@ -73,17 +90,17 @@ const DashboardSiteManagement = ({ token, user }) => {
 		return 1;
 	}
 
-	const tableZonasi = allDataZonasi.map((item, index) => {
+	const tableZonasi = dataZonasi?.map((item, index) => {
 		return (
 			<tr key={index}>
 				<div className="row justify-content-between align-items-center ml-0 mr-10">
 					<div className="d-flex align-items-center">
 						<td className="data-daerah py-4">
-							<span className="nomor">{item.nomor}</span>
+							<span className="nomor">{index + 5 * (pageZonasi - 1) + 1}</span>
 						</td>
-						<td className="data-daerah-provinsi">{item.provinsi}</td>
+						<td className="data-daerah-provinsi">{item.key}</td>
 					</div>
-					<td className="total-peserta text-right">{item?.total} Zonasi</td>
+					<td className="total-peserta text-right">{item?.value} Peserta</td>
 				</div>
 			</tr>
 		);
@@ -99,7 +116,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 						</td>
 						<td className="data-daerah-provinsi">{item.provinsi}</td>
 					</div>
-					<td className="total-peserta text-right">{item.total} Peserta</td>
+					<td className="total-peserta text-right">{item.total} User</td>
 				</div>
 			</tr>
 		);
@@ -122,7 +139,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 								background="bg-light-success "
 								icon="User.svg"
 								color="#ffffff"
-								titleValue={participant}
+								titleValue={allListPeserta?.data?.data?.total}
 								title="Total User DTS"
 								publishedVal="1"
 							/>
@@ -196,7 +213,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 								{/* <div className="d-flex flex-column justify-content-between" style={{border:'1px solid black'}}> */}
 								<div className="row">
 									<div className="col-lg-12 ml-5 my-4">
-										<div className="data-peserta">Data Peserta</div>
+										<div className="data-peserta">Data User</div>
 										<div className="berdasarkan">
 											Berdasarkan{" "}
 											{typePeserta === "city" ? "Daerah" : "Provinsi"}
@@ -249,10 +266,10 @@ const DashboardSiteManagement = ({ token, user }) => {
 								<div className="d-flex ml-6 justify-content-between align-items-center pagination-button">
 									<p className="pt-5">
 										Total:{" "}
-										{allDataPeserta &&
+										{/* {allDataPeserta &&
 											allDataPeserta.length > 0 &&
-											allDataPeserta[0].totalPeserta}{" "}
-										Peserta
+											allDataPeserta[0].totalPeserta}{" "} */}
+											{allListPeserta?.data?.data?.total} User
 									</p>
 									<div className="ml-auto mx-7 my-4">
 										<button
@@ -280,11 +297,11 @@ const DashboardSiteManagement = ({ token, user }) => {
 											type="button"
 											className={
 												pagePeserta >=
-												Math.ceil(
-													allDataPeserta &&
+													Math.ceil(
+														allDataPeserta &&
 														allDataPeserta.length > 0 &&
 														allDataPeserta[0].totalPage / 5
-												)
+													)
 													? "btn text-white disabled"
 													: "btn text-white"
 											}
@@ -294,8 +311,8 @@ const DashboardSiteManagement = ({ token, user }) => {
 													pagePeserta >=
 													Math.ceil(
 														allDataPeserta &&
-															allDataPeserta.length > 0 &&
-															allDataPeserta[0].totalPage / 5
+														allDataPeserta.length > 0 &&
+														allDataPeserta[0].totalPage / 5
 													)
 												) {
 													setPagePeserta(pagePeserta);
@@ -307,11 +324,11 @@ const DashboardSiteManagement = ({ token, user }) => {
 												backgroundColor: "#203E80",
 												cursor:
 													pagePeserta >=
-													Math.ceil(
-														allDataPeserta &&
+														Math.ceil(
+															allDataPeserta &&
 															allDataPeserta.length > 0 &&
 															allDataPeserta[0].totalPage / 5
-													)
+														)
 														? "not-allowed"
 														: "",
 											}}
@@ -328,10 +345,11 @@ const DashboardSiteManagement = ({ token, user }) => {
 									<div className="col-lg-12 ml-5 my-4">
 										<div className="data-peserta">Data Zonasi</div>
 										<div className="berdasarkan">
-											Berdasarkan {type === "city" ? "Daerah" : "Provinsi"}
+											Berdasarkan Pelatihan
+											{/* Berdasarkan {type === "city" ? "Daerah" : "Provinsi"} */}
 										</div>
 									</div>
-									<div className="col-lg-12 row justify-content-evenly mb-4">
+									{/* <div className="col-lg-12 row justify-content-evenly mb-4">
 										<div
 											className={
 												type === "city"
@@ -368,16 +386,16 @@ const DashboardSiteManagement = ({ token, user }) => {
 												Provinsi
 											</a>
 										</div>
-									</div>
+									</div> */}
 								</div>
 
 								<div className="d-flex flex-column">
-									{tableZonasi.length > 0 ? tableZonasi : emptyData}
+									{tableZonasi !== null ? tableZonasi : emptyData}
 								</div>
 
 								<div className="d-flex ml-6 justify-content-between align-items-center pagination-button">
 									<p className="pt-5">
-										Total: {allDataZonasi[0]?.totalZonasi} Zonasi
+										Total: {totalZonasi?.data.total} Zonasi
 									</p>
 									<div className="ml-auto mx-7 my-4">
 										<button
@@ -404,7 +422,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 										<button
 											type="button"
 											className={
-												pageZonasi >= Math.ceil(allDataZonasi[0]?.totalPage / 5)
+												pageZonasi >= Math.ceil(totalZonasi?.data?.total / 5)
 													? "btn text-white disabled"
 													: "btn text-white"
 											}
@@ -412,7 +430,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 												e.preventDefault();
 												if (
 													pageZonasi >=
-													Math.ceil(allDataZonasi[0]?.totalPage / 5)
+													Math.ceil(totalZonasi?.data?.total / 5)
 												) {
 													setPageZonasi(pageZonasi);
 												} else {
@@ -423,7 +441,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 												backgroundColor: "#203E80",
 												cursor:
 													pageZonasi >=
-													Math.ceil(allDataZonasi[0]?.totalPage / 5)
+														Math.ceil(totalZonasi?.data?.total / 5)
 														? "not-allowed"
 														: "",
 											}}

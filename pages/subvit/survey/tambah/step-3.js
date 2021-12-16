@@ -1,8 +1,20 @@
+import dynamic from "next/dynamic";
 import Layout from "../../../../components/templates/layout.component";
-import StepThree from "../../../../components/content/subvit/survey/tambah/step-3";
+// import StepThree from "../../../../components/content/subvit/survey/tambah/step-3";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
 import { getOneSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const StepThree = dynamic(
+  () => import("../../../../components/content/subvit/survey/tambah/step-3"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function TambahBankSoalTesSurveyStep3(props) {
   const session = props.session.user.user.data;

@@ -1,4 +1,5 @@
-import EditTriviaStep1 from "../../../../components/content/subvit/trivia/edit/step-1";
+import dynamic from "next/dynamic";
+// import EditTriviaStep1 from "../../../../components/content/subvit/trivia/edit/step-1";
 
 import { getDetailTriviaQuestionBanks } from "../../../../redux/actions/subvit/trivia-question.actions";
 import { wrapper } from "../../../../redux/store";
@@ -9,6 +10,17 @@ import {
   dropdownTema,
 } from "../../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const EditTriviaStep1 = dynamic(
+  () => import("../../../../components/content/subvit/trivia/edit/step-1"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditTriviaStep1Page(props) {
   const session = props.session.user.user.data;

@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { getAllPermission } from '../../../../redux/actions/site-management/role.actions'
 import { wrapper } from "../../../../redux/store";
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const TambahRole = dynamic(
@@ -10,7 +10,7 @@ const TambahRole = dynamic(
     import("../../../../components/content/site-management/role/tambah-role"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

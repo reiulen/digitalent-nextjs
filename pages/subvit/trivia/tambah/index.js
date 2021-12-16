@@ -1,8 +1,20 @@
-import StepOne from "/components/content/subvit/trivia/tambah/step-1";
+import dynamic from "next/dynamic";
+// import StepOne from "/components/content/subvit/trivia/tambah/step-1";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.actions";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const StepOne = dynamic(
+  () => import("/components/content/subvit/trivia/tambah/step-1"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function TambahBankSoalTesTriviaStep1(props) {
   const session = props.session.user.user.data;
