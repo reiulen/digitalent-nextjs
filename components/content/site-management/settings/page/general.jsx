@@ -51,7 +51,7 @@ const GeneralPage = ({ token }) => {
       color: "",
     },
   ]);
-  
+
   const [formSocialMedia, setFormSocialMedia] = useState(
     data_general.social_media
   );
@@ -495,9 +495,7 @@ const GeneralPage = ({ token }) => {
                                 onChange={(e) => onChangeImage(e)}
                               />
 
-                              <input
-                                type="hidden"
-                              />
+                              <input type="hidden" />
                             </label>
                           )}
 
@@ -583,9 +581,7 @@ const GeneralPage = ({ token }) => {
                                   )
                                 }
                               />
-                              <input
-                                type="hidden"
-                              />
+                              <input type="hidden" />
                             </label>
                           )}
 
@@ -707,9 +703,7 @@ const GeneralPage = ({ token }) => {
                                         )
                                       }
                                     />
-                                    <input
-                                      type="hidden"
-                                    />
+                                    <input type="hidden" />
                                   </label>
                                 )}
 
@@ -960,9 +954,7 @@ const GeneralPage = ({ token }) => {
                                 {simpleValidator.current.message(
                                   "linkExternalLinks",
                                   items.link,
-                                  items.link.includes("http")
-                                    ? ""
-                                    : "required|url",
+                                  "required|url",
                                   { className: "text-danger" }
                                 )}
                               </div>
