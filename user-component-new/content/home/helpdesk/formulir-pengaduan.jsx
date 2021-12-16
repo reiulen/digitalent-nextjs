@@ -6,11 +6,17 @@ import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
 
 import Sidebar from "../../../components/template/helpdesk/index";
-import { helperRegexNumber } from "../../../../utils/middleware/helper";
+import {
+	helperRegexNumber,
+	SweatAlert,
+} from "../../../../utils/middleware/helper";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function FormPengaduan() {
 	const router = useRouter();
 	const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+	const data = useSelector((state) => state.dropdownHelpdesk);
 
 	const [name, setName] = useState("");
 	const [handphone, setHandphone] = useState("");
@@ -21,30 +27,28 @@ export default function FormPengaduan() {
 	const [deskripsi, setDeskripsi] = useState("");
 	const [options, setOptions] = useState([]);
 
-	useEffect(() => {
-		setOptions([
-			{ value: "dts", label: "Digital Talent Scholarship" },
-			{ value: "vsga", label: "Akademi VSGA" },
-			{ value: "fga", label: "Akademi FGA" },
-			{ value: "pro", label: "Akademi PRO" },
-			{ value: "ta", label: "Akademi TA" },
-			{ value: "dea", label: "Akademi DEA" },
-			{ value: "tsa", label: "Akademi TSA" },
-			{ value: "teknis", label: "Teknis" },
-		]);
-	}, []);
-
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (simpleValidator.current.allValid()) {
 			const data = {
 				name,
-				handphone,
 				email,
-				platform,
-				deskripsi,
+				no_handphone: handphone,
+				kategori_informasi: +platform,
+				detail_informasi: deskripsi,
 			};
-			console.log(data);
+			try {
+				const result = await axios.post(
+					`${process.env.END_POINT_API_PELATIHAN}api/v1/helpdesk/create-helpdesk`,
+					data
+				);
+				if (result) {
+					SweatAlert("Berhasil", "Pengaduanmu Berhasil Terkirim", "success");
+					router.piush;
+				}
+			} catch (e) {
+				SweatAlert("Gagal", e.message, "error");
+			}
 		} else {
 			simpleValidator.current.showMessages();
 			forceUpdate(1);
@@ -119,11 +123,12 @@ export default function FormPengaduan() {
 							aria-label="Default select example"
 							onChange={(e) => setPlatform(e.target.value)}
 						>
-							{options.map((option, i) => (
-								<option value={option.value} key={i}>
-									{option.label}
-								</option>
-							))}
+							{data &&
+								data.dropdown.map((option, i) => (
+									<option value={option.value} key={i}>
+										{option.label}
+									</option>
+								))}
 						</Form.Select>
 						{simpleValidator.current.message("platform", platform, "required", {
 							className: "text-danger",
