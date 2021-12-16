@@ -13,13 +13,35 @@ export default function LoginMitra() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
+  // if (session) {
+  //   return {
+  //     redirect: {
+  //       destination: "http://dts-dev.majapahit.id/partnership/user/kerjasama",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
+
   if (session) {
-    return {
-      redirect: {
-        destination: "http://dts-dev.majapahit.id/partnership/user/kerjasama",
-        permanent: false,
-      },
-    };
+    const data = session.user.user.data;
+    
+    if (data.user.roles[0] !== "mitra") {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
+
+    if (data.user.roles[0] === "mitra") {
+      return {
+        redirect: {
+          destination: "/partnership/user/kerjasama",
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

@@ -21,26 +21,27 @@ const DetailDokumenKerjasama = ({ token }) => {
   const cookiePermission = Cookies.get("token_permission")
 
   useEffect(() => {
-    async function getSingleValue(id) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: cookiePermission
-            },
-          }
-        );
-        setPdfFIle(data.data.document_file);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
-      }
-    }
-
     getSingleValue(router.query.id);
     dispatch(getSingleCooperation(token, router.query.id, cookiePermission));
+    
   }, [dispatch, router.query.id, token, cookiePermission]);
+
+  async function getSingleValue(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: cookiePermission
+          },
+        }
+      );
+      setPdfFIle(data.data.document_file);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+    }
+  }
 
   return (
     <PageWrapper>

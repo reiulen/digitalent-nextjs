@@ -213,44 +213,48 @@ const EditDokumentKerjasama = ({ token }) => {
   };
 
   useEffect(() => {
-    async function setDataSingle(id) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-        setIsntitusiName(data?.data?.institution_name);
-        setTitle(data?.data?.title);
-        setDate(data?.data?.submission_date);
-        setCooperationID(data?.data?.cooperation_category);
-        //
-        setPeriod(data?.data?.period);
-        setPeriodUnit(data?.data?.period_unit);
-        //
-        setPeriodDateStart(data?.data?.period_date_start);
-        setPeriodDateEnd(data?.data?.period_date_end);
-        //
-        setAggrementNumber(data?.data?.agreement_number_partner);
-        setAggrementNumberInfo(data?.data?.agreement_number_kemkominfo);
-        setSigninDate(data?.data?.signing_date);
-        setDocument(data?.data?.document_file);
-        setEmail(data?.data?.email);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data.message}`, "error");
-      }
-    }
     setDataSingle(router.query.id);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
+    
   }, [dispatch, router.query.id, token]);
+
+  async function setDataSingle(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      setIsntitusiName(data?.data?.institution_name);
+      setTitle(data?.data?.title);
+      setDate(data?.data?.submission_date);
+      setCooperationID(data?.data?.cooperation_category);
+      //
+      setPeriod(data?.data?.period);
+      setPeriodUnit(data?.data?.period_unit);
+      //
+      setPeriodDateStart(data?.data?.period_date_start);
+      setPeriodDateEnd(data?.data?.period_date_end);
+      //
+      setAggrementNumber(data?.data?.agreement_number_partner);
+      setAggrementNumberInfo(data?.data?.agreement_number_kemkominfo);
+      setSigninDate(data?.data?.signing_date);
+      setDocument(data?.data?.document_file);
+      setEmail(data?.data?.email);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data.message}`, "error");
+    }
+  }
+
   useEffect(() => {
     dispatch(fetchListCooperationSelectById(token, cooperationC_id));
   }, [dispatch, allMK?.idCooporationSelect, cooperationC_id, token]);
+
   useEffect(() => {
     dispatch(fetchDataEmail(token));
   }, [dispatch, allMK?.institution_name, allMK.stateListMitra, token]);
