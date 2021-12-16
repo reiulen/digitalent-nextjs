@@ -5,11 +5,18 @@ import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
 import { getAllBerandaArtikel, getKategoriBerandaArtikel,  getTagBerandaArtikel} from "../../redux/actions/beranda/artikel.actions"
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
+import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const Artikel  =  dynamic (() => 
     import (
         "../../user-component-new/content/home/artikel/artikel"
-    )
+    ),
+    {
+      loading: function loadingNow() {
+        return <LoadingDetailAkademi />;
+      },
+      ssr: false,
+    }
 )
 
 const Layout = dynamic (() => 

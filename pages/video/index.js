@@ -8,9 +8,16 @@ import {
   getKategoriVideoContent,
 } from "../../redux/actions/beranda/video-content.actions";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
+import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const VideoPage = dynamic(() =>
-  import("../../user-component-new/content/home/video/videoPage")
+  import("../../user-component-new/content/home/video/videoPage"),
+  {
+    loading: function loadingNow() {
+      return <LoadingDetailAkademi />;
+    },
+    ssr: false,
+  }
 );
 const Layout = dynamic(() =>
   import("../../user-component-new/components/template/Layout.component")

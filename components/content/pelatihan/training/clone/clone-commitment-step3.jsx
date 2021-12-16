@@ -97,10 +97,10 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
       data.penyelenggara = data.penyelenggara.label && data.penyelenggara.label;
       data.provinsi = data.provinsi.label && data.provinsi.label;
       data.zonasi_id = data.zonasi_id.label && data.zonasi_id.label;
-      data.tuna_daksa = data.tuna_daksa ? "1" : "0";
-      data.tuna_netra = data.tuna_netra ? "1" : "0";
-      data.tuna_rungu = data.tuna_rungu ? "1" : "0";
-      data.umum = data.umum ? "1" : "0";
+      // data.tuna_daksa = data.tuna_daksa ? "1" : "0";
+      // data.tuna_netra = data.tuna_netra ? "1" : "0";
+      // data.tuna_rungu = data.tuna_rungu ? "1" : "0";
+      // data.umum = data.umum ? "1" : "0";
       data.ketentuan_peserta = data.ketentuan_peserta ? "1" : "0";
       data.pendaftaran_mulai = moment(data.pendaftaran_mulai).format(
         "YYYY-MM-DD HH:mm:ss"
@@ -162,6 +162,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
                       checked={commitment === "0"}
                       onClick={() => {
                         setCommitment("0");
+                        setDescription("");
                       }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("komitmen")
@@ -208,13 +209,13 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
               )}
               <div className="form-group">
                 <div className="text-right">
-                  <button
+                  {/* <button
                     className="btn btn-light-ghost-rounded-full mr-2"
                     type="button"
                     onClick={() => propsStep(2)}
                   >
-                    Batal
-                  </button>
+                    Kembali
+                  </button> */}
                   <button
                     className="btn btn-primary-rounded-full"
                     type="submit"

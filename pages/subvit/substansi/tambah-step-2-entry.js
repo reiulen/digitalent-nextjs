@@ -1,10 +1,22 @@
-import StepTwo from "/components/content/subvit/substansi/tambah/step-2-entry";
+import dynamic from "next/dynamic";
+// import StepTwo from "/components/content/subvit/substansi/tambah/step-2-entry";
 
 import { getAllSubtanceQuestionBanksType } from "../../../redux/actions/subvit/subtance-question-type.actions";
 import { getOneSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const StepTwo = dynamic(
+  () => import("/components/content/subvit/substansi/tambah/step-2-entry"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function TambahBankSoalTesSubstansiStep2(props) {
   const session = props.session.user.user.data;

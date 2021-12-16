@@ -12,9 +12,16 @@ import {
 import {getDetailPages} from '../../redux/actions/site-management/settings/page.actions'
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 import {getBerandaFooter} from '../../redux/actions/beranda/beranda.actions'
+import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const Berita = dynamic(() =>
-  import("../../user-component-new/content/home/lainnya/lainnya")
+  import("../../user-component-new/content/home/lainnya/lainnya"),
+  {
+    loading: function loadingNow() {
+      return <LoadingDetailAkademi />;
+    },
+    ssr: false,
+  }
 );
 
 const Layout = dynamic(() =>

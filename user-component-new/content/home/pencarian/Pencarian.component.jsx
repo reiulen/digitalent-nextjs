@@ -348,7 +348,7 @@ const Pencarian = ({ session }) => {
 														</Button>
 														<ShareOverlay
 															quote={row?.name}
-															url={`http://dts-dev.majapahit.id/detail/pelatihan/${row?.id}`}
+															url={`http://dts-dev.majapahit.id/detail/pelatihan/${row?.id}?akademiId=${row.akademi_id}`}
 														>
 															<Button
 																variant="light"
@@ -372,7 +372,9 @@ const Pencarian = ({ session }) => {
 														className="h-100 shadow-sm"
 														key={i}
 														onClick={() => {
-															router.push(`/detail/pelatihan/${row?.id}`);
+															router.push(
+																`/detail/pelatihan/${row?.id}?akademiId=${row.akademi_id}`
+															);
 														}}
 														style={{ cursor: "pointer" }}
 													>

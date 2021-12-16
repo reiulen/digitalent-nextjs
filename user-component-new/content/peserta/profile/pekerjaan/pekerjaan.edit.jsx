@@ -53,21 +53,6 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 		}
 	);
 
-	const optionsAsalSekolah = [];
-
-	dataAsalSekolah &&
-		dataAsalSekolah.map((item) => {
-			optionsAsalSekolah.push({
-				value: item.id,
-				label: item.label,
-			});
-		});
-
-	optionsAsalSekolah.push({
-		value: "",
-		label: "Nama Institusi Lainnya..",
-	});
-
 	const [pekerjaanNama, setPekerjaan] = useState(
 		(pekerjaan && pekerjaan.pekerjaan) || ""
 	);
@@ -107,7 +92,6 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 	}
 
 	useEffect(() => {
-		dispatch(getDataAsalSekolah(token, 1, 100, sekolah));
 		if (errorUpdateData) {
 			SweatAlert("Gagal", errorUpdateData, "error");
 			dispatch(clearErrors());
@@ -123,7 +107,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 			dispatch({ type: UPDATE_PEKERJAAN_RESET });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
+	}, [errorUpdateData, success, dispatch, funcViewEdit, token]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -251,6 +235,28 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 			setLainnya(false);
 		}
 	}, [sekolah]);
+
+	const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
+	const [inputSekolah, setInputSekolah] = useState("");
+
+	useEffect(() => {
+		setOptionsAsalSekolah((prev) => {
+			let arr = [];
+			arr.push({ value: "", label: "Nama Institusi Lainnya.." });
+			dataAsalSekolah.map((item) => {
+				arr.push({ label: item.label, value: item.id });
+			});
+			return arr;
+		});
+	}, [dataAsalSekolah]);
+
+	useEffect(() => {
+		if (inputSekolah.length > 3) {
+			setTimeout(() => {
+				dispatch(getDataAsalSekolah(token, inputSekolah));
+			}, 1000);
+		}
+	}, [inputSekolah]);
 
 	return (
 		<>
@@ -387,7 +393,9 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 											placeholder={"Pilih Sekolah"}
 											options={optionsAsalSekolah}
 											// className="form-control"
-
+											onInputChange={(e) => {
+												setInputSekolah(e);
+											}}
 											value={{ label: sekolah }}
 											onChange={(e) => {
 												setSekolah(e.label);

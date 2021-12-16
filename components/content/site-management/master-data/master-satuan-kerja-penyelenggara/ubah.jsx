@@ -23,7 +23,7 @@ const TambahApi = ({ token }) => {
   let sortirOptionTempProv = detailUnitWork?.unitWork?.provinsi
 
   let optionTempProv = sortirOptionTempProv.map((items) => {
-    return { ...items, label: items.provinsi, region: items.provinsi }
+    return { ...items, label: items.provinsi, region: items.provinsi, value: items.id }
   })
 
   const allProvincesSite = useSelector((state) => state.allProvincesSite);
@@ -35,28 +35,6 @@ const TambahApi = ({ token }) => {
   let optionTempProvList = sortirOptionTempProvList.map((items) => {
     return { ...items, value: items.label }
   })
-
-  // const optionTempProvList = [];
-  // if (sortirOptionTempProvList) {
-  //   for (let index = 0; index < sortirOptionTempProvList.length; index++) {
-  //     let val = {
-  //       id: sortirOptionTempProvList[index].id,
-  //       label: sortirOptionTempProvList[index].label,
-  //     };
-  //     optionTempProvList.push(val);
-  //   }
-  // }
-
-  // let province = optionTempProvList.filter((items, i) => {
-  //   // for (let j = 0; j < optionTempProv.length; j++) {
-  //   //   if (items.label !== optionTempProv[j].label) {
-  //   //     return { ...items }
-  //   //   }
-  //   // }
-  //   if (items.label !== optionTempProv[0].label) {
-  //     return { ...items }
-  //   }
-  // })
   
   const [valueProvinsi, setValueProvinsi] = useState(optionTempProv);
   const [nameUnitWork, setNameUnitWork] = useState(detailUnitWork.unitWork.name);
@@ -207,7 +185,7 @@ const TambahApi = ({ token }) => {
                   className={`${styles.cari} basic-single`}
                   classNamePrefix="select"
                   placeholder="Pilih provinsi"
-                  defaultValue={optionTempProv}
+                  defaultValue={valueProvinsi}
                   isMulti
                   isDisabled={false}
                   isLoading={false}
@@ -222,7 +200,7 @@ const TambahApi = ({ token }) => {
 
                 {simpleValidator.current.message(
                   "provinsi",
-                  optionTempProvList,
+                  valueProvinsi,
                   "required",
                   { className: "text-danger" }
                 )}

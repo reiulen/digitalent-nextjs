@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import React, { useEffect, Fragment, useState } from "react";
+import { Row, Col, Modal, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { getProfilePendidikan } from "../../../../../redux/actions/pelatihan/profile.actions";
@@ -17,7 +17,10 @@ const Pendidikan = ({ token }) => {
 		// }
 		dispatch(getProfilePendidikan(token));
 	}, [dispatch, token]);
-
+	const [showModalIjazah, setShowModalIjazah] = useState(false);
+	const handleClose = () => {
+		setShowModalIjazah(false);
+	};
 	if (pendidikan !== undefined) {
 		return (
 			<>
@@ -364,15 +367,40 @@ const Pendidikan = ({ token }) => {
 					<Row>
 						{pendidikan.jenjang !== "TK" &&
 							pendidikan.jenjang !== "Tidak Sekolah" && (
-								<Col md={12}>
-									<p className="text-neutral-body my-1">Unggah Ijazah</p>
-									<p>
-										{(pendidikan !== undefined &&
-											pendidikan &&
-											pendidikan.ijasah.split("/ijasah/")) ||
-											"-"}
-									</p>
-								</Col>
+								<Fragment>
+									<Col md={12}>
+										<p className="text-neutral-body my-1"> Ijazah</p>
+										{pendidikan !== undefined && pendidikan ? (
+											<a
+												className="text-primary cursor-pointer"
+												onClick={() => setShowModalIjazah(true)}
+											>
+												Lihat Ijazah
+											</a>
+										) : (
+											<p>-</p>
+										)}
+									</Col>
+									<Modal show={showModalIjazah} onHide={handleClose} centered>
+										<Modal.Header>
+											<Modal.Title>Ijazah</Modal.Title>
+										</Modal.Header>
+										<Modal.Body>
+											<div className="d-flex justify-content-center">
+												<img
+													src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${pendidikan.ijasah}`}
+													alt="file ijasah"
+													className="img-fluid"
+												/>
+											</div>
+										</Modal.Body>
+										<Modal.Footer>
+											<Button variant="secondary" onClick={handleClose}>
+												Close
+											</Button>
+										</Modal.Footer>
+									</Modal>
+								</Fragment>
 							)}
 					</Row>
 				</div>
@@ -413,7 +441,7 @@ const Pendidikan = ({ token }) => {
 					</Row>
 					<Row>
 						<Col md={12}>
-							<p className="text-neutral-body my-1">Unggah Ijazah</p>
+							<p className="text-neutral-body my-1"> Ijazah</p>
 							<p>-</p>
 						</Col>
 					</Row>

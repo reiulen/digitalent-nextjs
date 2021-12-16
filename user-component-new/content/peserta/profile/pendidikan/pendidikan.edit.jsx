@@ -128,21 +128,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 		asalSekolah,
 	]);
 
-	const optionsAsalSekolah = [];
-
-	dataAsalSekolah &&
-		dataAsalSekolah.map((item) => {
-			optionsAsalSekolah.push({
-				value: item.id,
-				label: item.label,
-			});
-		});
-
-	optionsAsalSekolah.push({
-		value: "",
-		label: "Nama Institusi Lainnya..",
-	});
-
 	const searchAsal = (word) => {
 		let array = [];
 		const searchData = getAsalSekolah;
@@ -196,6 +181,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		let data = {};
+		if (
+			!asalSekolah.includes("Lainnya") ||
+			jengjangPendidikan.label != "SMA/Sederajat"
+		) {
+			simpleValidator.current.fields["sekolah lainnya"] = true;
+		}
+
 		if (simpleValidator.current.allValid()) {
 			if (jengjangPendidikan.label === "Tidak Sekolah") {
 				data = {
@@ -222,15 +214,27 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 					ijasah: ijazah,
 				};
 			} else if (jengjangPendidikan.label === "SMA/Sederajat") {
-				data = {
-					jenjang: jengjangPendidikan.label,
-					asal_pendidikan: asalSekolah,
-					lainya: "-",
-					program_studi: "0",
-					ipk: "0",
-					tahun_masuk: parseInt(tahunMasuk),
-					ijasah: ijazah,
-				};
+				if (!sekolahLainnya) {
+					data = {
+						jenjang: jengjangPendidikan.label,
+						asal_pendidikan: asalSekolah,
+						lainya: "-",
+						program_studi: "0",
+						ipk: "0",
+						tahun_masuk: parseInt(tahunMasuk),
+						ijasah: ijazah,
+					};
+				} else {
+					data = {
+						jenjang: jengjangPendidikan.label,
+						asal_pendidikan: sekolahLainnya,
+						lainya: "-",
+						program_studi: "0",
+						ipk: "0",
+						tahun_masuk: parseInt(tahunMasuk),
+						ijasah: ijazah,
+					};
+				}
 			} else if (
 				jengjangPendidikan.label === "D3" ||
 				jengjangPendidikan.label === "D4" ||
@@ -309,6 +313,40 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 		}
 	}, [ipk]);
 
+	const [lainnya, setLainnya] = useState(false);
+	const [sekolahLainnya, setSekolahLainnya] = useState("");
+
+	useEffect(() => {
+		if (asalSekolah.includes("Lainnya")) {
+			setLainnya(true);
+		} else {
+			setSekolahLainnya("");
+			setLainnya(false);
+		}
+	}, [asalSekolah]);
+
+	const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
+	const [inputSekolah, setInputSekolah] = useState("");
+
+	useEffect(() => {
+		setOptionsAsalSekolah((prev) => {
+			let arr = [];
+			arr.push({ value: "", label: "Nama Institusi Lainnya.." });
+			dataAsalSekolah.map((item) => {
+				arr.push({ label: item.label, value: item.id });
+			});
+			return arr;
+		});
+	}, [dataAsalSekolah]);
+
+	useEffect(() => {
+		if (inputSekolah.length > 3) {
+			setTimeout(() => {
+				dispatch(getDataAsalSekolah(token, inputSekolah));
+			}, 1000);
+		}
+	}, [inputSekolah]);
+
 	return (
 		<>
 			<Form onSubmit={handleSubmit}>
@@ -343,29 +381,62 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 					</Form.Group>
 					{jengjangPendidikan.value === 19 && <div className=""></div>}
 					{jengjangPendidikan.label === "SMA/Sederajat" && (
-						<Form.Group className="mb-3" controlId="formGridAdress1">
-							<Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-							<div className="position-relative" style={{ zIndex: "4" }}>
-								<Select
-									// list="data"
-									placeholder={asalSekolah || "Pilih Sekolah"}
-									options={optionsAsalSekolah}
-									// className="form-control"
-									defaultValue={asalSekolah}
-									onChange={(e) => {
-										setAsalSekolah(e.label);
-									}}
-								/>
-							</div>
-							{simpleValidator.current.message(
-								"asal sekolah",
-								asalSekolah,
-								asalSekolah === null ? "required" : "",
-								{
-									className: "text-danger",
-								}
+						<Row>
+							<Col>
+								<Form.Group className="mb-3" controlId="formGridAdress1">
+									<Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+									<div className="position-relative" style={{ zIndex: "4" }}>
+										<Select
+											// list="data"
+											placeholder={asalSekolah || "Pilih Sekolah"}
+											options={optionsAsalSekolah}
+											onInputChange={(e) => {
+												setInputSekolah(e);
+											}}
+											// className="form-control"
+
+											defaultValue={asalSekolah}
+											onChange={(e) => {
+												setAsalSekolah(e.label);
+											}}
+										/>
+									</div>
+									{simpleValidator.current.message(
+										"asal sekolah",
+										asalSekolah,
+										asalSekolah === null ? "required" : "",
+										{
+											className: "text-danger",
+										}
+									)}
+								</Form.Group>
+							</Col>
+							{lainnya && (
+								<Col md={6}>
+									<Form.Group className="mb-3" controlId="formGridAddress1">
+										<Form.Label>Nama Institusi Pendidikan</Form.Label>
+										<Form.Control
+											placeholder="Silahkan Masukkan Nama Institusi"
+											onChange={(e) => {
+												setSekolahLainnya(e.target.value);
+											}}
+											onBlur={() =>
+												simpleValidator.current.showMessageFor("tahun masuk")
+											}
+											type="text"
+										/>
+										{simpleValidator.current.message(
+											"sekolah lainnya",
+											sekolahLainnya,
+											"required",
+											{
+												className: "text-danger",
+											}
+										)}
+									</Form.Group>
+								</Col>
 							)}
-						</Form.Group>
+						</Row>
 					)}
 
 					{jengjangPendidikan.label === "D3" && showInputCollegeName === false && (
@@ -381,6 +452,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -439,6 +513,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -496,6 +573,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -553,6 +633,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -610,6 +693,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -667,6 +753,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -724,6 +813,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -781,6 +873,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -838,6 +933,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);
@@ -895,6 +993,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									<Select
 										placeholder={asalSekolah || "Pilih Sekolah"}
 										options={optionsAsalSekolah}
+										onInputChange={(e) => {
+											setInputSekolah(e);
+										}}
 										selectedValue={asalSekolah}
 										onChange={(e) => {
 											onChangeAsalSekolah(e.label);

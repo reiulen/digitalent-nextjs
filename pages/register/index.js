@@ -1,5 +1,17 @@
-import RegisterUser from "../../components/content/auth/user/register";
+import dynamic from "next/dynamic";
+// import RegisterUser from "../../components/content/auth/user/register";
 import { getSession } from "next-auth/client";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
+
+const RegisterUser = dynamic(
+  () => import("../../components/content/auth/user/register"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function RegisterUserPage() {
   return (
@@ -13,14 +25,6 @@ export default function RegisterUserPage() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  // if (session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/dashboard",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
 
   return {
     props: {

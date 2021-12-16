@@ -1,9 +1,21 @@
-import TambahSurveyStep1 from "../../../../components/content/subvit/survey/tambah/step-1";
+import dynamic from "next/dynamic";
+// import TambahSurveyStep1 from "../../../../components/content/subvit/survey/tambah/step-1";
 import Layout from "../../../../components/templates/layout.component";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.actions";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const TambahSurveyStep1 = dynamic(
+  () => import("../../../../components/content/subvit/survey/tambah/step-1"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function TambahSurveyStep1Page(props) {
   const session = props.session.user.user.data;

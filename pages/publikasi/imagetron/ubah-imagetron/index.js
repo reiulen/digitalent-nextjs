@@ -5,7 +5,7 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 import { getDetailImagetron } from "../../../../redux/actions/publikasi/imagetron.actions";
 import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action"
@@ -14,7 +14,7 @@ const EditImagetron = dynamic(
   () => import("../../../../components/content/publikasi/imagetron/edit"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

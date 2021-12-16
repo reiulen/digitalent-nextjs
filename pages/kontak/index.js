@@ -5,9 +5,16 @@ import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 import { getTagBerandaBerita } from "../../redux/actions/beranda/berita.actions";
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
+import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const Kontak = dynamic(() =>
-  import("../../user-component-new/content/home/kontak/Kontak.component")
+  import("../../user-component-new/content/home/kontak/Kontak.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingDetailAkademi />;
+    },
+    ssr: false,
+  }
 );
 
 const Layout = dynamic(

@@ -1,9 +1,21 @@
+import dynamic from "next/dynamic";
 import Layout from "/components/templates/layout.component";
-import Report from "../../../../components/content/subvit/substansi/report";
+// import Report from "../../../../components/content/subvit/substansi/report";
 import { allReportSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const Report = dynamic(
+  () => import("../../../../components/content/subvit/substansi/report"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ReportPage(props) {
   const session = props.session.user.user.data;

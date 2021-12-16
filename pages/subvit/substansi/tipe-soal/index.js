@@ -1,4 +1,5 @@
-import ListTipeSoal from "../../../../components/content/subvit/substansi/tipe-soal/list";
+import dynamic from "next/dynamic";
+// import ListTipeSoal from "../../../../components/content/subvit/substansi/tipe-soal/list";
 import Layout from "/components/templates/layout.component";
 
 import { getAllSubtanceQuestionBanksType } from "../../../../redux/actions/subvit/subtance-question-type.actions";
@@ -6,6 +7,17 @@ import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import { getPermissionSubvit } from "../../../../redux/actions/subvit/subtance.actions";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const ListTipeSoal = dynamic(
+  () => import("../../../../components/content/subvit/substansi/tipe-soal/list"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function TipeSoal(props) {
   const session = props.session.user.user.data;

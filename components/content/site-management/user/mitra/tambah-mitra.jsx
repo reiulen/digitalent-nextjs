@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -7,6 +7,9 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Modal } from "react-bootstrap";
+import ReactCrop from "react-image-crop";
+import IconClose from "../../../../../components/assets/icon/Close";
 
 import { postMitraSite } from "../../../../../redux/actions/site-management/user/mitra-site.actions";
 
@@ -25,6 +28,15 @@ const TambahApi = ({ token }) => {
     "/assets/media/default.jpg"
   );
   const [gambarName, setGambarName] = useState(null);
+  
+  const imgRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
+  const [showEditImage, setShowEditImage] = useState(false)
+  const [upImg, setUpImg] = useState();
+  const [imageview, setImageview] = useState("");
+  const defaultImage = "/assets/media/default.jpg"
+  const previewCanvasRef = useRef(null);
+  const [completedCrop, setCompletedCrop] = useState(null);
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
@@ -135,6 +147,65 @@ const TambahApi = ({ token }) => {
     }
   };
 
+  const onLoad = useCallback((img) => {
+    imgRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+
+    const image = imgRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+  }, [completedCrop]);
+
+  const onHandleHideModal = () => {
+    setShowEditImage(false)
+    setUpImg(null)
+  }
+
+  const onSubmitEditImage = () => {
+    setShowEditImage(false)
+    setUpImg(null)
+    setAgencyLogo(previewCanvasRef.current.toDataURL("image/png"))
+  }
+
+  const onSelectFile = (e) => {
+    if (e.target.files[0].size > '2000000') {
+      e.target.value = null;
+      Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+    } else if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -149,7 +220,7 @@ const TambahApi = ({ token }) => {
           <div className="card-body">
             <form>
               <div className="form-group">
-                <label>Nama Lengkap</label>
+                <label>Nama Lembaga</label>
                 <input
                   type="text"
                   className="form-control"
@@ -183,51 +254,144 @@ const TambahApi = ({ token }) => {
                   { className: "text-danger" }
                 )}
               </div>
-
-              <div className={`${styles2.selectKategori} form-group`}>
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-4 col-form-label"
-                  style={{marginLeft:'-10px'}}
-                >
-                  Gambar Logo (Optional)
+              
+              <div className="form-group mb-0 mb-sm-4">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Gambar Logo
                 </label>
-                <div className="row ml-0 mt-2">
-                  <figure
-                    className="avatar item-rtl position-relative"
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                  >
-                    <Image
-                      src={gambarPreview}
-                      alt="image"
-                      width={160}
-                      height={160}
-                      objectFit="cover"
-                    />
-                  </figure>
-                  <div className="position-relative">
-                    <label className="circle-top" htmlFor="inputGroupFile04">
-                      <i className="ri-add-line text-dark"></i>
-                    </label>
-                    <input
-                      type="file"
-                      name="gambar"
-                      className="custom-file-input"
-                      id="inputGroupFile04"
-                      onChange={onChangeGambar}
-                      accept="image/*"
-                      style={{ display: "none" }}
-                    />
+
+                {!agency_logo ? (
+                  <div className="ml-0 row">
+                    <figure
+                      className="avatar item-rtl position-relative"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src=
+                        {
+                          imageview ?
+                            process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
+                            :
+                            defaultImage
+                        }
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="fill"
+                        className={
+                          imageview ?
+                            "rounded-circle"
+                            :
+                            ""
+                        }
+                      />
+                    </figure>
+
+                    <div className="position-relative">
+                      <label
+                        className="circle-top"
+                        onClick={() => setShowEditImage(true)}
+                      >
+                        <i className="ri-add-line text-dark"></i>
+                      </label>
+                    </div>
                   </div>
-                </div>
+
+
+                ) : (
+                  <div className="ml-0 row">
+                    <figure
+                      className="avatar item-rtl position-relative shadow-sm rounded-circle"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src={agency_logo}
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="fill"
+                        className="rounded-circle"
+                      />
+
+                    </figure>
+                    <div className="position-relative">
+                      <label
+                        className="circle-top"
+                        onClick={() => setShowEditImage(true)}
+                      >
+                        <i className="ri-add-line text-dark"></i>
+                      </label>
+                    </div>
+                  </div>
+                )}
+
+                {agency_logo && imageview ? (
+                  <button
+                    className="btn btn-primary btn-sm my-3 mr-3"
+                    type="button"
+                    onClick={() => setAgencyLogo("")}
+                  >
+                    Batal ubah
+                  </button>
+                ) : (
+                  ""
+                )}
+
+              </div>
+
+              <div
+                className="modal fade"
+                id="exampleModalCenter"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+              >
                 <div
-                  className={`${styles.resolusiTambah} col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}
-                  style={{marginLeft:'-11px'}}
+                  className="modal-dialog modal-dialog-centered"
+                  role="document"
                 >
-                  <p>
-                   Maksimal ukuran gambar 2 MB
-                  </p>
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalLongTitle">
+                        Logo Gambar
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <IconClose />
+                      </button>
+                    </div>
+
+                    <div
+                      className="modal-body text-left p-0"
+                      style={{ height: "400px" }}
+                    >
+                      {!agency_logo ? (
+                        <Image
+                          src={
+                            process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                            imageview
+                          }
+                          alt="Picture of the author"
+                          layout="fill"
+                          objectFit="fill"
+                        />
+                      ) : (
+                        <Image
+                          src={agency_logo}
+                          alt="Picture of the author"
+                          layout="fill"
+                          objectFit="fill"
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -343,6 +507,107 @@ const TambahApi = ({ token }) => {
           </div>
         </div>
       </div>
+
+      {/* Modal Edit Image  */}
+      <Modal
+        show={showEditImage}
+        onHide={() => onHandleHideModal()}
+        centered
+      // dialogClassName="mx-10 mx-sm-auto rounded-lg"
+      >
+        <Modal.Header>
+          <Modal.Title>Ganti Logo Lembaga</Modal.Title>
+
+          <button
+            type="button"
+            className="close"
+            onClick={() => onHandleHideModal()}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+
+        </Modal.Header>
+
+        <Modal.Body>
+          <div>
+            Logo Lembaga
+          </div>
+
+          <div className="my-5">
+            <button
+              className="btn btn-rounded-full btn-sm bg-blue-primary text-white d-flex justify-content-center"
+              onClick={() => {
+                document.getElementById("edit-image").click();
+              }}
+            >
+              <i className="ri-upload-2-fill text-white"></i> Pilih Logo Lembaga
+            </button>
+            <input
+              type="file"
+              name="gambar"
+              className="custom-file-input"
+              id="edit-image"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={onSelectFile}
+            />
+
+            <div className="row mt-5">
+              <div className="col-12 col-md-6">
+                <ReactCrop
+                  src={upImg}
+                  onImageLoaded={onLoad}
+                  crop={crop}
+                  onChange={(c) => setCrop(c)}
+                  onComplete={(c) => setCompletedCrop(c)}
+                />
+              </div>
+
+              <div className="col-12 col-md-6">
+                {
+                  upImg ?
+                    <div>
+                      <div>
+                        Pratinjau
+                      </div>
+                      <canvas
+                        ref={previewCanvasRef}
+                        style={{
+                          width: Math.round(completedCrop?.width ?? 0),
+                          height: Math.round(completedCrop?.height ?? 0),
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </div>
+                    :
+                    null
+                }
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <div className="row">
+            <div className="d-flex justify-content-between align-items-center">
+              <button
+                className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center"
+              onClick={() => onHandleHideModal()}
+              >
+                Batal
+              </button>
+              <button
+                className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
+              onClick={() => onSubmitEditImage()}
+              >
+                Simpan
+              </button>
+            </div>
+          </div>
+        </Modal.Footer>
+
+      </Modal>
+      {/* End of Modal Edit Image */}
     </PageWrapper>
   );
 };
