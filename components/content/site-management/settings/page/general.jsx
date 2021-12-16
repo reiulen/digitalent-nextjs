@@ -51,26 +51,7 @@ const GeneralPage = ({ token }) => {
       color: "",
     },
   ]);
-
-  const changeColor = (e, i) => {
-    let _temp = [...color];
-
-    _temp.map((items, idx) => {
-      if (idx === i) {
-        _temp[i].color = e.target.value;
-      }
-    });
-
-    setColor(_temp);
-  };
-
-  // const [formSocialMedia, setFormSocialMedia] = useState([
-  //   {
-  //     image_logo: "",
-  //     name: "",
-  //     link_social_media: "",
-  //   },
-  // ]);
+  
   const [formSocialMedia, setFormSocialMedia] = useState(
     data_general.social_media
   );
@@ -510,14 +491,12 @@ const GeneralPage = ({ token }) => {
                               </svg>
                               <input
                                 type="file"
-                                name="profile_avatar"
                                 accept=".png, .jpg, .jpeg .svg"
                                 onChange={(e) => onChangeImage(e)}
                               />
 
                               <input
                                 type="hidden"
-                                name="profile_avatar_remove"
                               />
                             </label>
                           )}
@@ -596,7 +575,6 @@ const GeneralPage = ({ token }) => {
 
                               <input
                                 type="file"
-                                name="profile_avatar"
                                 accept=".png, .jpg, .jpeg .svg"
                                 onChange={(e) => onChangeImage2(e)}
                                 onBlur={() =>
@@ -607,7 +585,6 @@ const GeneralPage = ({ token }) => {
                               />
                               <input
                                 type="hidden"
-                                name="profile_avatar_remove"
                               />
                             </label>
                           )}
@@ -720,7 +697,6 @@ const GeneralPage = ({ token }) => {
 
                                     <input
                                       type="file"
-                                      name="profile_avatar"
                                       accept=".png, .jpg, .jpeg"
                                       onChange={(e) =>
                                         handleChangeSocialMedia(e, index)
@@ -733,7 +709,6 @@ const GeneralPage = ({ token }) => {
                                     />
                                     <input
                                       type="hidden"
-                                      name="profile_avatar_remove"
                                     />
                                   </label>
                                 )}
@@ -912,7 +887,7 @@ const GeneralPage = ({ token }) => {
 
                                 {simpleValidator.current.message(
                                   "namaExternalLinks",
-                                  items.name[index],
+                                  items.name,
                                   "required",
                                   { className: "text-danger" }
                                 )}
@@ -1025,7 +1000,6 @@ const GeneralPage = ({ token }) => {
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder="Masukkan alamat lengkap"
                         className="form-control"
-                        name=""
                         id=""
                         cols="30"
                         rows="10"
@@ -1051,7 +1025,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Primary</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorPrimary(e.target.value)}
@@ -1066,7 +1039,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Secondary</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorSecondary(e.target.value)}
@@ -1081,7 +1053,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Extras</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorExtras(e.target.value)}
