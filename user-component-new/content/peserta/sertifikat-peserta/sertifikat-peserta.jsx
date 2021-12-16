@@ -97,7 +97,6 @@ export default function RiwayatPelatihanDetail({ session }) {
 				setLoading(false);
 			}
 		} catch (e) {
-			console.log(e, "ini errornya");
 			setLoading(false);
 			SweatAlert("Gagal", e.message, "error");
 		}
