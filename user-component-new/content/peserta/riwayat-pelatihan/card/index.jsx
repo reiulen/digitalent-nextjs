@@ -26,7 +26,6 @@ export default function CardTemplateOriginal({ data, session }) {
 		helperUserStatusColor(data.status, setLabel);
 	}, [data.status]);
 	// console.log(data);
-	console.log(data);
 	return (
 		<Fragment>
 			<Card className="position-relative mb-8 rounded-lg">
@@ -192,7 +191,11 @@ export default function CardTemplateOriginal({ data, session }) {
 												: data.status}
 										</p>
 									</Col>
-									<Col lg={12} className="order-5">
+									<Col
+										lg={12}
+										className="order-5"
+										style={{ paddingTop: "24px", paddingBottom: "8px" }}
+									>
 										<div className="d-flex align-items-center align-middle text-left">
 											<i className="ri-time-line"></i>
 											<span className={` pl-2`}>
@@ -200,10 +203,7 @@ export default function CardTemplateOriginal({ data, session }) {
 											</span>
 										</div>
 									</Col>
-									<Col
-										lg={12}
-										className="my-auto order-5 pb-40 pb-lg-30 pb-lg-20"
-									>
+									<Col lg={12} className="my-auto order-5 pb-40 pb-md-20 ">
 										<div className="d-flex align-items-center align-middle ">
 											<i className="ri-map-pin-line"></i>
 											<span
