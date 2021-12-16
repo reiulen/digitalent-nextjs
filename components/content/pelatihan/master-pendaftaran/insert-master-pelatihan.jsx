@@ -10,6 +10,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import axios from "axios";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import Cookies from "js-cookie";
+import ModalProfile from "../training/components/modal-profile-peserta";
 
 const AddMasterPelatihan = ({ token }) => {
   const dispatch = useDispatch();
@@ -352,91 +353,28 @@ const AddMasterPelatihan = ({ token }) => {
   return (
     <PageWrapper>
       <>
-        <div className="card card-custom mb-8">
-          <div className="card-body">
-            <h3 className="font-weight-bolder pb-5 pt-4">
-              Data Profil Peserta
-            </h3>
-            <div className="list-profile">
-              <div className="content-profile mb-5">
-                <p className="mb-2 fz-16 text-dark fw-600">Data Diri</p>
-                <p className="fz-16">
-                  Foto Profil, Nama Lengkap, Email, NIK, Jenis Kelamin, Nomor
-                  Handphone, Agama, Tempat dan Tanggal Lahir, Kontak Darurat
-                  (Nama Lengkap, Nomor Handphone, Hubungan), File KTP
-                </p>
-              </div>
-              {limitProfile ? (
-                <>
-                  <div className="content-profile mb-5">
-                    <p className="mb-2 fz-16 text-dark fw-600">Alamat KTP</p>
-                    <p className="fz-16">
-                      Alamat Lengkap, Provinsi, Kota/Kabupaten, Kecamatan,
-                      Desa/Kelurahan, Kode Pos
-                    </p>
-                  </div>
-                  <div className="content-profile mb-5">
-                    <p className="mb-2 fz-16 text-dark fw-600">
-                      Alamat Domisili
-                    </p>
-                    <p className="fz-16">
-                      Alamat Lengkap, Provinsi, Kota/Kabupaten, Kecamatan,
-                      Desa/Kelurahan, Kode Pos
-                    </p>
-                  </div>
-                  <div className="content-profile">
-                    <p className="mb-2 fz-16 text-dark fw-600">
-                      Pendidikan Terakhir
-                    </p>
-                    <p className="fz-16 mb-2">Jenjang Pendidikan :</p>
-                    <ul className="fz-16">
-                      <li>
-                        TK, SD, SMP, SMA : Asal Sekolah, Tahun Masuk, File
-                        Ijazah
-                      </li>
-                      <li>
-                        D3, S1, S2, S3 : Asal Perguruan Tinggi, Program Studi,
-                        IPK, Tahun Masuk, File Ijazah
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="content-profile">
-                    <p className="mb-2 fz-16 text-dark fw-600">Pekerjaan</p>
-                    <p className="fz-16 mb-2">Status Pekerjaan :</p>
-                    <ul className="fz-16">
-                      <li>
-                        Bekerja : Pekerjaan, Perusahaan/Institut Tempat Bekerja,
-                        Penghasilan Tidak Bekerja
-                      </li>
-                      <li>
-                        Pelajar/Mahasiswa: Sekolah/Perguruan Tinggi, Tahun Masuk
-                      </li>
-                    </ul>
-                  </div>
-                  <p
-                    className="text-primary fz-16"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => setLimitProfile(false)}
-                  >
-                    Lihat Sedikit
-                  </p>
-                </>
-              ) : (
-                <p
-                  className="text-primary fz-16"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setLimitProfile(true)}
-                >
-                  Lihat Semua
-                </p>
-              )}
+        <div className="card card-custom mb-8"></div>
+        <div className="card card-custom gutter-b">
+          <div className="card-header border-0 mt-3">
+            <h1
+              className="font-weight-bolder card-title"
+              style={{ fontSize: "20px" }}
+            >
+              Form Pendaftaran
+            </h1>
+            <div className="card-toolbar justify-content-between d-flex">
+              <button
+                className="btn btn-outline-primary px-6 font-weight-bolder"
+                data-toggle="modal"
+                data-target="#modalProfile"
+                type="button"
+              >
+                Data Profile Peserta
+              </button>
             </div>
           </div>
-        </div>
-        <div className="card card-custom gutter-b">
           <div className="card-body py-4">
             <form onSubmit={submitHandler}>
-              <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
               <div className="form-group mb-4">
                 <label className="col-form-label font-weight-bold">
                   Judul Form
@@ -621,6 +559,17 @@ const AddMasterPelatihan = ({ token }) => {
               propsToken={token}
             />
           </Modal>
+        </div>
+
+        <div
+          class="modal fade"
+          id="modalProfile"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="modalProfile"
+          aria-hidden="true"
+        >
+          <ModalProfile />
         </div>
       </>
     </PageWrapper>
