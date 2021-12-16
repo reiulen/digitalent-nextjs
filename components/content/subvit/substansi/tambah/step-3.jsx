@@ -201,16 +201,16 @@ const StepThree = ({ token, tokenPermission }) => {
                 <td>Tanggal Pendaftaran &nbsp;</td>
                 <td>: &nbsp;</td>
                 <td>
-                  {moment(subtance?.pendaftaran_mulai).format("ll")} -{" "}
-                  {moment(subtance?.pendaftaran_selesai).format("ll")}{" "}
+                  {subtance?.pendaftaran_mulai} &nbsp;s.d.&nbsp;
+                  {subtance?.pendaftaran_selesai}{" "}
                 </td>
               </tr>
               <tr>
                 <td>Tanggal Pelatihan </td>
                 <td> : </td>{" "}
                 <td>
-                  {moment(subtance?.pelatihan_mulai).format("ll")} -{" "}
-                  {moment(subtance?.pelatihan_selesai).format("ll")}{" "}
+                  {subtance?.pelatihan_mulai} &nbsp;s.d.&nbsp;{" "}
+                  {subtance?.pelatihan_selesai}{" "}
                 </td>
               </tr>
             </table>
