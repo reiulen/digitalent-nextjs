@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 // import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../../redux/store";
-import LoadingPage from "../../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 
 import { getAllOptionProvinces } from "../../../../../redux/actions/site-management/option/option-provinces.actions";
 import { getDetailZonasi } from "../../../../../redux/actions/site-management/zonasi.actions";
@@ -14,7 +14,7 @@ const DetailRole = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

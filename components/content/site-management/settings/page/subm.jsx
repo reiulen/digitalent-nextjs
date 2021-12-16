@@ -211,7 +211,7 @@ export default function SUBM(props) {
     );
   });
 
-  const optAcademy = listAcademy.map((item, index) => {
+  const optAcademy = listAcademy?.map((item, index) => {
     return (
       <option value={item.value} key={index} akademi={item.label}>
         {item.label}
@@ -219,7 +219,7 @@ export default function SUBM(props) {
     );
   });
 
-  const optTheme = listTheme.map((item, index) => {
+  const optTheme = listTheme?.map((item, index) => {
     return (
       <option value={item.value} key={index}>
         {item.label}
@@ -227,7 +227,7 @@ export default function SUBM(props) {
     );
   });
 
-  const optOrganizer = listOrganizer.map((item, index) => {
+  const optOrganizer = listOrganizer?.map((item, index) => {
     return (
       <option value={item.label} key={index}>
         {item.label}
@@ -235,7 +235,7 @@ export default function SUBM(props) {
     );
   });
 
-  const optTraining = listTraining.map((item, index) => {
+  const optTraining = listTraining?.map((item, index) => {
     return (
       <option value={item.value} key={index}>
         {item.label}
@@ -243,7 +243,7 @@ export default function SUBM(props) {
     );
   });
 
-  const optStatusProfile = listProfileStatus.map((item, index) => {
+  const optStatusProfile = listProfileStatus?.map((item, index) => {
     return (
       <option value={item.value} key={index}>
         {item.value}

@@ -338,7 +338,6 @@ const DashbardPublikasi = ({ token, user }) => {
           </div>
 
           <div className="col-lg-12 col-xxl-12"></div>
-
           <div className={`${styles.topBerita} col-lg-6 col-xxl-6`}>
             {dataDashboardBerita?.top_berita ? (
               <div className="card card-custom card-stretch gutter-b">
@@ -355,7 +354,10 @@ const DashbardPublikasi = ({ token, user }) => {
                           <Image
                             width={94}
                             height={63}
-                            src="/assets/media/dummy-banner.png"
+                            src={
+                              process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                              "publikasi/images/" + el.gambar
+                            }
                             className="align-self-end rounded"
                             alt=""
                           />
@@ -417,7 +419,10 @@ const DashbardPublikasi = ({ token, user }) => {
                           <Image
                             width={94}
                             height={63}
-                            src="/assets/media/dummy-banner.png"
+                            src={
+                              process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                              "publikasi/images/" + el.gambar
+                            }
                             className="align-self-end rounded"
                             alt=""
                           />
@@ -482,7 +487,10 @@ const DashbardPublikasi = ({ token, user }) => {
                           <Image
                             width={94}
                             height={63}
-                            src="/assets/media/dummy-banner.png"
+                            src={
+                              process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                              "publikasi/images/" + el.gambar
+                            }
                             className="align-self-end rounded"
                             alt=""
                           />
@@ -543,7 +551,10 @@ const DashbardPublikasi = ({ token, user }) => {
                           <Image
                             width={94}
                             height={63}
-                            src="/assets/media/dummy-banner.png"
+                            src={
+                              process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                              "publikasi/images/" + el.gambar
+                            }
                             className="align-self-end rounded"
                             alt=""
                           />

@@ -4,11 +4,18 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions"
 import { getDetailBerandaBerita, getKategoriBerandaBerita,  getTagBerandaBerita} from "../../../redux/actions/beranda/berita.actions"
+import LoadingDetailAkademi from "../../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const DetailBerita = dynamic (() => 
     import (
         "../../../user-component-new/content/home/detail-berita/detail-berita"
-    )
+    ),
+    {
+      loading: function loadingNow() {
+        return <LoadingDetailAkademi />;
+      },
+      ssr: false,
+    }
 )
 
 const Layout = dynamic (() =>

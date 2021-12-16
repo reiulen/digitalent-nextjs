@@ -1,10 +1,22 @@
+import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import EditSurveyStep2 from "../../../../components/content/subvit/survey/edit/step-2";
+// import EditSurveyStep2 from "../../../../components/content/subvit/survey/edit/step-2";
 import Layout from "../../../../components/templates/layout.component";
 
 import { getDetailSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
 import { wrapper } from "../../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const EditSurveyStep2 = dynamic(
+  () => import("../../../../components/content/subvit/survey/edit/step-2"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditSurveyStep2Page(props) {
   const session = props.session.user.user.data;

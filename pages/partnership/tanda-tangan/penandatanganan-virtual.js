@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 
@@ -9,7 +9,7 @@ const TtdVirtual = dynamic(
     import(
       "../../../components/content/partnership/tanda-tangan/penandatangan-virtual"
     ),
-  { loading: () => <LoadingPage /> }
+  { loading: () => <LoadingSkeleton /> }
 );
 
 export default function TambahPage(props) {

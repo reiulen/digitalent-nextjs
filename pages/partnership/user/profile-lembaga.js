@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import { middlewareAuthMitraSession } from "../../../utils/middleware/authMiddleware";
@@ -9,7 +9,7 @@ const Tambah = dynamic(
     import(
       "../../../components/content/partnership/user/input-profile-kerjasama/tambah"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function TambahPage(props) {

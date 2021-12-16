@@ -1,4 +1,5 @@
-import DetailSurvey from "../../../components/content/subvit/survey/detail-survey";
+import dynamic from "next/dynamic";
+// import DetailSurvey from "../../../components/content/subvit/survey/detail-survey";
 import Layout from "../../../components/templates/layout.component";
 
 import { getAllSurveyQuestionDetail } from "../../../redux/actions/subvit/survey-question-detail.action";
@@ -7,6 +8,17 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.actions";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const DetailSurvey = dynamic(
+  () => import("../../../components/content/subvit/survey/detail-survey"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function DetailSurveyPage(props) {
   const session = props.session.user.user.data;

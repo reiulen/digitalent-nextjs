@@ -1,5 +1,17 @@
-import RegisterUser from "../../../components/content/partnership/user/auth/register";
+import dynamic from "next/dynamic";
+// import RegisterUser from "../../../components/content/partnership/user/auth/register";
 import { getSession } from "next-auth/client";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const RegisterUser = dynamic(
+  () => import("../../../components/content/partnership/user/auth/register"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function LoginMitra() {
   return (

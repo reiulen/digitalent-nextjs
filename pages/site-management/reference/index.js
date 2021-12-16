@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getAllDataReference } from "../../../redux/actions/site-management/data-reference.actions";
@@ -13,7 +13,7 @@ const ListRole = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
