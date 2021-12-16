@@ -26,10 +26,13 @@ import {
   getEditTrainingStep2,
   getEditTrainingStep3,
 } from "../../../../redux/actions/pelatihan/training.actions";
+import { getAllDataReference } from "../../../../redux/actions/site-management/data-reference.actions";
 
 const IndexEdit = dynamic(
   () =>
-    import("../../../../components/content/pelatihan/training/clone/index-clone"),
+    import(
+      "../../../../components/content/pelatihan/training/clone/index-clone"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -84,6 +87,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
       await store.dispatch(dropdownAkademi(session.user.user.data.token));
       await store.dispatch(drowpdownFormBuilder(session.user.user.data.token));
+      await store.dispatch(
+        getAllDataReference(session.user.user.data.token, true)
+      );
       return {
         props: { session, title: "Clone Pelatihan - Pelatihan" },
       };

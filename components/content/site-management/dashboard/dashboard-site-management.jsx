@@ -20,7 +20,6 @@ import {
 	loadDataZonasi,
 	loadDataZonasiNext,
 } from "../../../../redux/actions/site-management/dashboard.actions";
-import { set } from "js-cookie";
 
 const DashboardSiteManagement = ({ token, user }) => {
 	const [participant, setParticipant] = useState(0);

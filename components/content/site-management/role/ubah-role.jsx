@@ -101,7 +101,7 @@ const UbahRole = ({ token }) => {
                   type="checkbox"
                   name="Checkboxes1"
                   checked={item.view === 1 || item.view === true}
-                  onClick={() => {
+                  onChange={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
                         filter.view = !(
@@ -112,7 +112,7 @@ const UbahRole = ({ token }) => {
                           if (cek.list_sub_menu.length > 0) {
                             cek.list_sub_menu.filter((check) => {
                               check.view =
-                                filter.manage === true || filter.manage === 1;
+                                filter.view === true || filter.view === 1;
                             });
                           }
                         });
@@ -134,7 +134,7 @@ const UbahRole = ({ token }) => {
                   type="checkbox"
                   name="Checkboxes1"
                   checked={item.manage === 1 || item.manage === true}
-                  onClick={() => {
+                  onChange={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
                         filter.manage = !(
@@ -196,7 +196,7 @@ const UbahRole = ({ token }) => {
                           defaultChecked={
                             sub.publish === 1 || sub.publish === true
                           }
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -223,7 +223,7 @@ const UbahRole = ({ token }) => {
                           defaultChecked={
                             sub.publish === 1 || sub.publish === true
                           }
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -250,7 +250,7 @@ const UbahRole = ({ token }) => {
                           defaultChecked={
                             sub.publish === 1 || sub.publish === true
                           }
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -277,7 +277,7 @@ const UbahRole = ({ token }) => {
                           defaultChecked={
                             sub.publish === 1 || sub.publish === true
                           }
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -304,7 +304,7 @@ const UbahRole = ({ token }) => {
                           defaultChecked={
                             sub.publish === 1 || sub.publish === true
                           }
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -331,7 +331,7 @@ const UbahRole = ({ token }) => {
                           defaultChecked={
                             sub.publish === 1 || sub.publish === true
                           }
-                          onClick={() => {
+                          onChange={() => {
                             permission.filter((filter) => {
                               if (sub.id === filter.id) {
                                 filter.publish = !(
@@ -361,7 +361,7 @@ const UbahRole = ({ token }) => {
                         type="checkbox"
                         name="Checkboxes1"
                         checked={sub.view === 1 || sub.view === true}
-                        onClick={() => {
+                        onChange={() => {
                           permission.filter((filter) => {
                             if (sub.id === filter.id) {
                               filter.view = !(
@@ -369,6 +369,12 @@ const UbahRole = ({ token }) => {
                               );
                               if (item.view !== 1) {
                                 item.view = 1;
+                              }
+                              if (sub.list_sub_menu.length > 0) {
+                                sub.list_sub_menu.filter((check) => {
+                                  check.view =
+                                    filter.view === true || filter.view === 1;
+                                });
                               }
                             }
                             setForce(!force);
@@ -388,7 +394,7 @@ const UbahRole = ({ token }) => {
                         type="checkbox"
                         name="Checkboxes1"
                         checked={sub.manage === true || sub.manage === 1}
-                        onClick={() => {
+                        onChange={() => {
                           permission.filter((filter) => {
                             if (sub.id === filter.id) {
                               filter.manage = !(
@@ -400,6 +406,15 @@ const UbahRole = ({ token }) => {
                                 item.view = 1;
                                 item.manage = 1;
                               }
+                              if (sub.list_sub_menu.length > 0) {
+                                sub.list_sub_menu.filter((check) => {
+                                  check.view =
+                                    filter.manage === true || filter.manage === 1;
+                                    check.manage =
+                                    filter.manage === true || filter.manage === 1;
+                                });
+                              }
+                              
                             }
                             setForce(!force);
                             return filter;
@@ -442,7 +457,7 @@ const UbahRole = ({ token }) => {
                             type="checkbox"
                             name="Checkboxes1"
                             checked={child.view === true || child.view === 1}
-                            onClick={() => {
+                            onChange={() => {
                               permission.filter((filter) => {
                                 if (child.id === filter.id) {
                                   filter.view = !(
@@ -454,6 +469,7 @@ const UbahRole = ({ token }) => {
                                   if (sub.view !== 1) {
                                     sub.view = 1;
                                   }
+                                 
                                 }
                                 setForce(!force);
                                 return filter;
@@ -474,7 +490,7 @@ const UbahRole = ({ token }) => {
                             checked={
                               child.manage === true || child.manage === 1
                             }
-                            onClick={() => {
+                            onChange={() => {
                               permission.filter((filter) => {
                                 if (child.id === filter.id) {
                                   filter.manage = !(
@@ -530,7 +546,7 @@ const UbahRole = ({ token }) => {
                 type="checkbox"
                 name="Checkboxes1"
                 checked={item.view === 1 || item.view === true}
-                onClick={() => {
+                onChange={() => {
                   permission.filter((filter) => {
                     if (item.id === filter.id) {
                       filter.view = !(
@@ -554,7 +570,7 @@ const UbahRole = ({ token }) => {
                 type="checkbox"
                 name="Checkboxes1"
                 defaultChecked={item.manage === 1 || item.manage === true}
-                onClick={() => {
+                onChange={() => {
                   permission.filter((filter) => {
                     if (item.id === filter.id) {
                       filter.manage = !(
@@ -563,7 +579,6 @@ const UbahRole = ({ token }) => {
                       filter.view =
                         filter.manage === true || filter.manage === 1;
                     }
-
                     setForce(!force);
                     return filter;
                   });

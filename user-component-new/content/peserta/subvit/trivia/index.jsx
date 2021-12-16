@@ -65,7 +65,6 @@ const SubtansiUser = ({ token }) => {
         question_image: "",
         answer:
           '[{"key":"A","type":"","value":"","option":"a","image":"","color":false},{"key":"B","type":"","value":"","option":"b","image":"","color":false},{"key":"C","type":"","value":"","option":"c","image":"","color":false},{"key":"D","type":"","value":"","option":"d","image":"","color":false}]',
-        duration: 1000,
       },
     ],
   };
@@ -73,6 +72,7 @@ const SubtansiUser = ({ token }) => {
   const [data, setData] = useState();
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
+  const [no, setNo] = useState(0);
 
   const [modalSoal, setModalSoal] = useState(false);
   const [modalNext, setModalNext] = useState(false);
@@ -90,7 +90,11 @@ const SubtansiUser = ({ token }) => {
     data?.list_questions[parseInt(router.query.id) - 1]?.duration
   );
 
-  const [times, setTimes] = useState(dataDuration);
+  const [times, setTimes] = useState(
+    data?.list_questions[parseInt(router.query.id) - 1]?.duration
+      ? dataDuration
+      : 30000
+  );
   const [modalDone, setModalDone] = useState(false);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("");
@@ -101,6 +105,10 @@ const SubtansiUser = ({ token }) => {
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
+
+  const [hour2, setHour2] = useState(0);
+  const [minute2, setMinute2] = useState(0);
+  const [second2, setSecond2] = useState(0);
 
   useEffect(() => {
     // Handle Error akan langsung ke done
@@ -125,24 +133,7 @@ const SubtansiUser = ({ token }) => {
   }, [count, router, error]);
 
   useEffect(() => {
-    // Hitung Waktu Mundur
-    if (times >= 0) {
-      const secondsLeft = setInterval(() => {
-        setTimes((c) => c - 1);
-        let timeLeftVar = ToTime(times);
-        setHour(timeLeftVar.h);
-        setMinute(timeLeftVar.m);
-        setSecond(timeLeftVar.s);
-      }, 1000);
-      return () => clearInterval(secondsLeft);
-    } else {
-      localStorage.clear();
-
-      router.push(`/peserta/done-trivia`);
-    }
-  }, [times, router]);
-
-  useEffect(() => {
+    // window.location.reload();
     setData(random_trivia);
     // setData(initialData);
   }, [data, random_trivia]);
@@ -282,6 +273,8 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePageNext = () => {
+    // setNo(no + 1);
+    setTimes(tt[no + 1]);
     const page = parseInt(router.query.id) + 1;
     router.push(
       `${router.pathname.slice(0, 23)}/${page}?theme_id=${
@@ -289,6 +282,7 @@ const SubtansiUser = ({ token }) => {
       }&training_id=${router.query.training_id}`
     );
     setModalNext(false);
+
     if (
       data &&
       data.list_questions &&
@@ -311,6 +305,24 @@ const SubtansiUser = ({ token }) => {
     }
   };
   let listCheckbox = [];
+
+  useEffect(() => {
+    // Hitung Waktu Mundur
+    if (times >= 0) {
+      const secondsLeft = setInterval(() => {
+        setTimes((c) => c - 1);
+        let timeLeftVar = ToTime(times);
+        setHour2(timeLeftVar.h);
+        setMinute2(timeLeftVar.m);
+        setSecond2(timeLeftVar.s);
+      }, 1000);
+      return () => clearInterval(secondsLeft);
+    } else {
+      localStorage.clear();
+      setOpen(true);
+      handleNext();
+    }
+  }, [times, data, router]);
 
   return (
     <>
@@ -384,9 +396,9 @@ const SubtansiUser = ({ token }) => {
                     data.list_questions[parseInt(router.query.id) - 1].type ===
                       "fill_in_the_blank") ? (
                     <p className={styles.totalSoal2} id="time2">
-                      {hour < 9 ? "0" + hour : hour}:
-                      {minute < 9 ? "0" + minute : minute}:
-                      {second < 9 ? "0" + second : second}
+                      {hour2 < 9 ? "0" + hour2 : hour2}:
+                      {minute2 < 9 ? "0" + minute2 : minute2}:
+                      {second2 < 9 ? "0" + second2 : second2}
                     </p>
                   ) : (
                     ""
@@ -1040,7 +1052,7 @@ const SubtansiUser = ({ token }) => {
       </Modal>
 
       {/* Modal Lanjut */}
-      <Modal show={modalNext} onHide={() => setModalNext(false)}>
+      <Modal show={modalNext} onHide={() => !open && setModalNext(false)}>
         <ModalHeader className={styles.headerModal}>
           Konfirmasi Jawaban{" "}
         </ModalHeader>
@@ -1053,6 +1065,7 @@ const SubtansiUser = ({ token }) => {
             variant="link"
             onClick={() => setModalNext(false)}
             className={styles.btnBatal}
+            hidden={open}
           >
             Batal
           </Button>

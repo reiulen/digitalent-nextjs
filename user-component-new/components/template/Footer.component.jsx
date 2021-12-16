@@ -36,7 +36,9 @@ export default function Footer() {
   };
 
   useEffect(() => {
-    getDataGeneral();
+    if (!localStorage.getItem("footer")) {
+      getDataGeneral();
+    }
     if (localStorage.getItem("footer") == "1") {
       setWarna("primary");
     } else if (localStorage.getItem("footer") == "2") {

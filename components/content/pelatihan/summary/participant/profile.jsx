@@ -84,7 +84,7 @@ const ProfileUser = ({ profile }) => {
                   </div>
                   <div className="col-md-6">
                     <p className="text-neutral-body my-0">Pendidikan</p>
-                    <p className="text-dark">{profile.asal_pendidikan}</p>
+                    <p className="text-dark">{profile.jenjang}</p>
                   </div>
                 </div>
                 <div className="row">
@@ -183,29 +183,18 @@ const ProfileUser = ({ profile }) => {
 
                     <p className="text-dark">{profile.jenjang || "-"}</p>
                   </div>
-                  {profile.jenjang !== "Tidak Sekolah" && (
+                  {profile.jenjang === "TK" ||
+                  profile.jenjang === "SD/Sederajat" ||
+                  profile.jenjang === "SMP/Sederajat" ? (
                     <>
                       <div className="col-md-6">
                         <p className="text-neutral-body my-0">
                           Asal Sekolah/Perguruan Tinggi
                         </p>
 
-                        <p className="text-dark">
-                          {profile.asal_pendidikan || "-"}
-                        </p>
+                        <p className="text-dark">{profile.lainya || "-"}</p>
                       </div>
-                      <div className="col-md-6">
-                        <p className="text-neutral-body my-0">Program Studi</p>
 
-                        <p className="text-dark">
-                          {profile.program_studi || "-"}
-                        </p>
-                      </div>
-                      <div className="col-md-6">
-                        <p className="text-neutral-body my-0">IPK</p>
-
-                        <p className="text-dark">{profile.ipk || "-"}</p>
-                      </div>
                       <div className="col-md-6">
                         <p className="text-neutral-body my-0">Tahun Masuk</p>
 
@@ -214,6 +203,41 @@ const ProfileUser = ({ profile }) => {
                         </p>
                       </div>
                     </>
+                  ) : (
+                    profile.jenjang !== "Tidak Sekolah" && (
+                      <>
+                        <div className="col-md-6">
+                          <p className="text-neutral-body my-0">
+                            Asal Sekolah/Perguruan Tinggi
+                          </p>
+
+                          <p className="text-dark">
+                            {profile.asal_pendidikan || "-"}
+                          </p>
+                        </div>
+                        <div className="col-md-6">
+                          <p className="text-neutral-body my-0">
+                            Program Studi
+                          </p>
+
+                          <p className="text-dark">
+                            {profile.program_studi || "-"}
+                          </p>
+                        </div>
+                        <div className="col-md-6">
+                          <p className="text-neutral-body my-0">IPK</p>
+
+                          <p className="text-dark">{profile.ipk || "-"}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <p className="text-neutral-body my-0">Tahun Masuk</p>
+
+                          <p className="text-dark">
+                            {profile.tahun_masuk || "-"}
+                          </p>
+                        </div>
+                      </>
+                    )
                   )}
                 </div>
               </div>

@@ -719,7 +719,8 @@ const DashbardSubvit = ({ token }) => {
                       disabled={
                         Math.ceil(
                           parseInt(
-                            dashboard_subvit && dashboard_subvit?.substansi?.total
+                            dashboard_subvit &&
+                              dashboard_subvit?.substansi?.total
                           ) / 5
                         ) !== 0
                           ? parseInt(router.query.page_substansi) ===
@@ -788,14 +789,18 @@ const DashbardSubvit = ({ token }) => {
                                   : index + 1 * 1 * 5 - (5 - 1)}
                               </div>
                             </div>
-                            <div className={`${styles.theme} col-sm-5`}>
+                            <div
+                              className={`${styles.theme}  col-sm-5 col-xs-8 col-md-7 col-lg-7 col-xl-5 col-xxl-7`}
+                            >
                               {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
                                 {item.theme ? item.theme.name : "-"}
                               </span>
                             </div>
-                            <div className={`${styles.total} col-sm-6`}>
+                            <div
+                              className={`${styles.total} col-sm-6 col-xs-3 col-md-4 col-lg-4 col-xl-6 col-xxl-4`}
+                            >
                               {item.participant_finished
                                 ? item.participant_finished
                                 : "0"}{" "}
@@ -863,7 +868,8 @@ const DashbardSubvit = ({ token }) => {
                           parseInt(router.query.page_trivia) ===
                           Math.ceil(
                             parseInt(
-                              dashboard_subvit && dashboard_subvit?.trivia?.total
+                              dashboard_subvit &&
+                                dashboard_subvit?.trivia?.total
                             ) / 5
                           )
                             ? "not-allowed"
@@ -912,14 +918,18 @@ const DashbardSubvit = ({ token }) => {
                                   : index + 1 * 1 * 5 - (5 - 1)}
                               </div>
                             </div>
-                            <div className={`${styles.theme} col-sm-5`}>
+                            <div
+                              className={`${styles.theme} col-sm-5 col-xs-8 col-md-7 col-lg-7 col-xl-5 col-xxl-7`}
+                            >
                               {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
                                 {item.theme ? item.theme.name : "-"}
                               </span>
                             </div>
-                            <div className={`${styles.total} col-sm-6`}>
+                            <div
+                              className={`${styles.total} col-sm-6 col-xs-3 col-md-4 col-lg-4 col-xl-6 col-xxl-4`}
+                            >
                               {item.participant_finished
                                 ? item.participant_finished
                                 : "0"}{" "}
@@ -987,7 +997,8 @@ const DashbardSubvit = ({ token }) => {
                           parseInt(router.query.page_survey) ===
                           Math.ceil(
                             parseInt(
-                              dashboard_subvit && dashboard_subvit?.survey?.total
+                              dashboard_subvit &&
+                                dashboard_subvit?.survey?.total
                             ) / 5
                           )
                             ? "not-allowed"

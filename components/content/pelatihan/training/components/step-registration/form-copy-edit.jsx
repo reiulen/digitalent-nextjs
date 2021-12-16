@@ -39,14 +39,14 @@ const FormCopyEdit = ({
   }, [dispatch, formPendaftaran]);
 
   const showPreviewHandler = () => {
-    let list = [...formBuilder];
-    list.forEach((row, i) => {
-      if (row.option === "manual") {
-        let dataOption = row.dataOption.split(";");
-        row.dataOption = dataOption;
-      }
-    });
-    funcFormBuilder(list);
+    // let list = [...formBuilder];
+    // list.forEach((row, i) => {
+    //   if (row.option === "manual") {
+    //     let dataOption = row.dataOption.split(";");
+    //     row.dataOption = dataOption;
+    //   }
+    // });
+    // funcFormBuilder(list);
     funcModalShow(true);
   };
 
@@ -105,7 +105,7 @@ const FormCopyEdit = ({
                 -- PILIH --
               </option>
               {dataOptions.map((datOpt, i) => (
-                <option key={i} value={datOpt.value}>
+                <option key={i} value={datOpt.id}>
                   {datOpt.value}
                 </option>
               ))}
