@@ -491,7 +491,7 @@ const TambahPage = ({ token }) => {
           <div className="col-12 col-lg-9 col-xl-9">
             <div className="card card-custom card-stretch gutter-b">
               <div className="">
-                <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
+                <h3 className="card-title font-weight-bolder text-dark w-100 px-5 pt-5 mb-5 mt-5 titles-1">
                   Data Pribadi
                 </h3>
 
@@ -818,7 +818,7 @@ const TambahPage = ({ token }) => {
                             if (e.target.value.length === 6) {
                               setKodePostKtp(kodePostKtp);
                             } else {
-                              setKodePostKtp(e.target.value);
+                              setKodePostKtp(e.target.value.replace(/[^0-9]/g));
                             }
                           }}
                           onBlur={(e) => {
@@ -982,7 +982,7 @@ const TambahPage = ({ token }) => {
                             if (e.target.value.length === 6) {
                               setKodePost(kodePost);
                             } else {
-                              setKodePost(e.target.value);
+                              setKodePost(e.target.value.replace(/[^0-9]/g));
                             }
                           }}
                           onBlur={(e) => {
