@@ -47,10 +47,10 @@ const PasswordPemulihan = () => {
 
   const handlePassword = (value) => {
     if (value !== passwordConfirm) {
-      setMessageDontMatch(true);
+      // setMessageDontMatch(true);
       setPassword(value);
     } else {
-      setMessageDontMatch(false);
+      // setMessageDontMatch(false);
       setPassword(value);
     }
   };
@@ -193,9 +193,9 @@ const PasswordPemulihan = () => {
                       className: "text-danger",
                     }
                   )}
-                  {messageDontMatch && (
+                  {/* {messageDontMatch && (
                     <p className="text-danger">Password tidak sama</p>
-                  )}
+                  )} */}
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">
