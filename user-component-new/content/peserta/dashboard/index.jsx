@@ -173,7 +173,7 @@ const Dashboard = ({ session, success }) => {
 							backgroundImage="new-game-3.svg"
 							background="success"
 							color="#00B27A"
-							link={`/peserta/panduan-survey?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
+							link={`/peserta/survey/panduan-survey?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
 							text="Lakukan Survey"
 							desc="Anda Belum Melakukan Test Survey"
 							total={dataDashboard?.subvit.survei.status}
@@ -186,7 +186,7 @@ const Dashboard = ({ session, success }) => {
 							backgroundImage="new-game-1.svg"
 							background="danger"
 							color="#EE2D41"
-							link={`/peserta/panduan-trivia?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
+							link={`/peserta/trivia/panduan-trivia?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
 							text="Lakukan TRIVIA"
 							desc="Anda Belum Melakukan TRIVIA"
 							total={dataDashboard.subvit.trivia.status}
