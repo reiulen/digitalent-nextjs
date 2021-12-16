@@ -86,7 +86,7 @@ const ViewReviewTraining = ({ token }) => {
     silabus: review.silabus,
     metodePelatihan: review.metode_pelatihan,
     penyelenggara: review.penyelenggara,
-    mitra: review.mitra_nama,
+    mitra: review.mitra_nama || "-",
     tanggalPendaftaran:
       moment(review.pendaftaran_mulai).utc().format("DD MMMM YYYY") +
       " sd " +
