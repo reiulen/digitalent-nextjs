@@ -313,11 +313,18 @@ const SubtansiUser = ({ token }) => {
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "survey",
+      };
+
+      dispatch(postResultSurvey(setData, token));
       localStorage.clear();
       sessionStorage.clear();
       router.push(`/peserta/done-survey`);
     }
-  }, [count, data, error, dispatch, router]);
+  }, [count, data, error, dispatch, router, token]);
 
   useEffect(() => {
     setData(random_survey);

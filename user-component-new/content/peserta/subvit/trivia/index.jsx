@@ -89,6 +89,12 @@ const SubtansiUser = ({ token }) => {
 
   $(window).on("popstate", function (event) {
     router.push("/peserta/done-trivia");
+    const setData = {
+      list: null,
+      training_id: router.query.training_id,
+      type: "trivia",
+    };
+    dispatch(postResultTrivia(setData, token));
   });
 
   const [times, setTimes] = useState(
@@ -116,6 +122,12 @@ const SubtansiUser = ({ token }) => {
     // Handle Error akan langsung ke done
     if (error) {
       router.push(`/peserta/done-trivia`);
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "trivia",
+      };
+      dispatch(postResultTrivia(setData, token));
     }
 
     // Hitung Waktu Mundur
@@ -129,10 +141,16 @@ const SubtansiUser = ({ token }) => {
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "trivia",
+      };
+      dispatch(postResultTrivia(setData, token));
       localStorage.clear();
       router.push(`/peserta/done-trivia`);
     }
-  }, [count, router, error]);
+  }, [count, router, error, dispatch, token]);
 
   useEffect(() => {
     // window.location.reload();
