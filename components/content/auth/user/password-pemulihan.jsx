@@ -47,10 +47,8 @@ const PasswordPemulihan = () => {
 
   const handlePassword = (value) => {
     if (value !== passwordConfirm) {
-      // setMessageDontMatch(true);
       setPassword(value);
     } else {
-      // setMessageDontMatch(false);
       setPassword(value);
     }
   };
