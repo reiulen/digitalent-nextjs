@@ -395,7 +395,7 @@ const Faq = ({ token }) => {
                         background='bg-light-success'
                         icon="new/mail-white.svg"
                         color="#ffffff"
-                        value='0'
+                        value={faq && faq.total_author != "" ? faq.total_author : 0}
                         titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
