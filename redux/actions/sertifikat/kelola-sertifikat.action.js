@@ -61,8 +61,8 @@ export const getAllSertifikat =
 				params,
 				headers: {
 					Authorization: `Bearer ${token}`,
+					Permission: token_permission,
 				},
-				Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);
@@ -135,8 +135,8 @@ export const getDetailSertifikat =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token}`,
+					Permission: token_permission,
 				},
-				Permission: token_permission,
 			};
 			const { data } = await axios.get(link, config);
 			if (data) {
@@ -163,8 +163,8 @@ export const newSertifikat =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token.token}`,
+					Permission: token_permission,
 				},
-				Permission: token_permission,
 			};
 
 			const { data } = await axios.post(link, formData, config);
@@ -197,8 +197,8 @@ export const getSingleSertifikat =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token}`,
+					Permission: token_permission,
 				},
-				Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);
@@ -226,8 +226,8 @@ export const getPublishedSertifikat =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token}`,
+					Permission: token_permission,
 				},
-				Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);
@@ -259,8 +259,8 @@ export const updateSertifikat =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token.token}`,
+					Permission: token_permission,
 				},
-				Permission: token_permission,
 			};
 
 			const { data } = await axios.post(link, formData, config);
@@ -285,8 +285,8 @@ export const getOptionsAcademy =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token}`,
+					Permission: token_permission,
 				},
-				Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);
@@ -312,8 +312,8 @@ export const getOptionsTheme =
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token}`,
+					Permission: token_permission,
 				},
-				Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);
