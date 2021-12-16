@@ -532,7 +532,9 @@ const Dashboard = ({ session, success }) => {
 													style={{ top: "-15px" }}
 												>
 													<p className={`pl-20 my-0 ${style.text_mitra}`}>
-														{dataDashboard?.pelatihan.pelatihan_selesi.mitra ||
+														{dataDashboard?.pelatihan?.pelatihan_selesi.mitra ||
+															dataDashboard?.pelatihan?.pelatihan_selesi
+																.penyelenggara ||
 															"-"}
 													</p>
 												</div>
