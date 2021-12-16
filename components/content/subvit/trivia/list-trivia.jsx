@@ -45,6 +45,8 @@ const ListTrivia = ({ token, tokenPermission }) => {
   const [viewSoal, setViewSoal] = useState(false);
 
   useEffect(() => {
+    localStorage.removeItem("step1");
+    localStorage.removeItem("clone1");
     if (isDeleted) {
       dispatch({
         type: DELETE_TRIVIA_QUESTION_BANKS_RESET,
