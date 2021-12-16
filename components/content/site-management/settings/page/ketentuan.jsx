@@ -105,14 +105,17 @@ export default function Ketentuan(props) {
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-end mb-4">
+          {localStorage
+            .getItem("permissions")
+            .includes("site_management.setting.pelatihan.manage") && <div className="d-flex justify-content-end mb-4">
             <button
               type="submit"
               className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill mr-3`}
             >
               Simpan
             </button>
-          </div>
+          </div> }
+         
         </form>
       </div>
     </div>

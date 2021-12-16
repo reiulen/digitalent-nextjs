@@ -124,7 +124,7 @@ export const getDetailsExportData =
   };
 
 export const postFilterExportData =
-  (token, datas, page = 1, limit = 5) =>
+  (token, datas, page = 1, limit = 5, name = "") =>
   async (dispatch) => {
     try {
       dispatch({
@@ -164,7 +164,7 @@ export const postFilterExportData =
         const url = window.URL.createObjectURL(new Blob([data.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", `export${Date.now()}.zip`);
+        link.setAttribute("download", `${name}.zip`);
         document.body.appendChild(link);
         link.click();
       }

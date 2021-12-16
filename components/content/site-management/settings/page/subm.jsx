@@ -691,7 +691,9 @@ export default function SUBM(props) {
               />
             </div>
           </div>
-          <div className="d-flex justify-content-end mb-4 mr-4">
+          {localStorage
+            .getItem("permissions")
+            .includes("site_management.setting.pelatihan.manage") && <div className="d-flex justify-content-end mb-4 mr-4">
             <button
               type="reset"
               className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
@@ -723,7 +725,8 @@ export default function SUBM(props) {
             >
               Kirim
             </button>
-          </div>
+          </div>}
+          
         </form>
       </div>
     </div>
