@@ -107,6 +107,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 	}
 
 	useEffect(() => {
+		dispatch(getDataAsalSekolah(token, 1, 100, sekolah));
 		if (errorUpdateData) {
 			SweatAlert("Gagal", errorUpdateData, "error");
 			dispatch(clearErrors());
@@ -122,7 +123,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 			dispatch({ type: UPDATE_PEKERJAAN_RESET });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [errorUpdateData, success, dispatch, funcViewEdit, token]);
+	}, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -242,25 +243,14 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 	const [lainnya, setLainnya] = useState(false);
 	const [sekolahLainnya, setSekolahLainnya] = useState("");
 
-	const [inputSekolah, setInputSekolah] = useState("");
-
 	useEffect(() => {
-		if (inputSekolah.length > 3) {
-			console.log("masuk true");
-			// dispatch(getDataAsalSekolah(token, 100, inputSekolah));
-		}
-
 		if (sekolah.includes("Lainnya")) {
 			setLainnya(true);
 		} else {
 			setSekolahLainnya("");
 			setLainnya(false);
 		}
-	}, [sekolah, inputSekolah]);
-
-	// useEffect(() => {
-	// 	console.log(dataAsalSekolah, "ini data asal sekolah");
-	// }, [dataAsalSekolah]);
+	}, [sekolah]);
 
 	return (
 		<>
@@ -401,9 +391,6 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
 											value={{ label: sekolah }}
 											onChange={(e) => {
 												setSekolah(e.label);
-											}}
-											onInputChange={(e) => {
-												setInputSekolah(e);
 											}}
 										/>
 										{/* <datalist id="data">

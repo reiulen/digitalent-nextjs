@@ -201,6 +201,7 @@ export const getDataAsalSekolah =
 				type: GET_ASAL_SEKOLAH,
 				payload: data.data.list_signatures,
 			});
+			return data.data.list_signatures;
 		} catch (error) {
 			throw error;
 		}
