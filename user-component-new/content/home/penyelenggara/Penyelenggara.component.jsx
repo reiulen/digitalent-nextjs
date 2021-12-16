@@ -57,7 +57,13 @@ const Penyelenggara = () => {
 					<p className="mr-6 fz-18 text-muted fw-400">
 						Memiliki Lembaga Pelatihan dan ingin menjadi bagian dari Program
 						Digitalent? tanya saja{" "}
-						<span className="text-primary fw-500" style={{ cursor: "pointer" }}>
+						<span
+							onClick={() => {
+								router.push("/helpdesk/live-chat");
+							}}
+							className="text-primary fw-500"
+							style={{ cursor: "pointer" }}
+						>
 							di sini
 						</span>
 					</p>
