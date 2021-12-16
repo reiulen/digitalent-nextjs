@@ -660,7 +660,7 @@ const ViewReviewTraining = ({ token }) => {
             </div>
             <div className="modal-body">
               <div style={{ overflow: "scroll", height: 600 }}>
-                <PDFReader url={review.file_path + review.silabus} scale={90} />
+                <PDFReader url={review.file_path + review.silabus} />
               </div>
             </div>
             <div className="modal-footer">

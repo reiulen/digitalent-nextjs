@@ -470,12 +470,21 @@ const Beranda = ({ session }) => {
                             <h1>{row.Name}</h1>
                           </div>
                           <div className="link-pelatihan-new">
-                            <Link
+                            {/* <Link
                               href={`/detail/akademi/${akademiId}?tema_id=${row.id}`}
                               passHref
                             >
-                              <span className={`color-extras-${warna}`}>Lihat Semua {">"}</span>
-                            </Link>
+                            </Link> */}
+                            <span
+                              className={`color-extras-${warna}`}
+                              onClick={() =>
+                                router.push(
+                                  `/detail/akademi/${akademiId}?tema_id=${row.id}`
+                                )
+                              }
+                            >
+                              Lihat Semua {">"}
+                            </span>
                           </div>
                         </div>
                         <div className="card-pelatihan-new">
@@ -983,7 +992,8 @@ const Beranda = ({ session }) => {
                         </div>
                       </div>
                     ) : (
-                      tema.length <= 1 && (
+                      tema.length > 0 &&
+                      i === 0 && (
                         <div className="row">
                           <h1 className="text-center text-muted col-12 font-weight-bolder">
                             Pelatihan Belum Tersedia

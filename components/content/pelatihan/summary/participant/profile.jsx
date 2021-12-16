@@ -185,14 +185,21 @@ const ProfileUser = ({ profile }) => {
                   </div>
                   {profile.jenjang === "TK" ||
                   profile.jenjang === "SD/Sederajat" ||
-                  profile.jenjang === "SMP/Sederajat" ? (
+                  profile.jenjang === "SMP/Sederajat" ||
+                  profile.jenjang === "SMA/Sederajat" ? (
                     <>
                       <div className="col-md-6">
                         <p className="text-neutral-body my-0">
                           Asal Sekolah/Perguruan Tinggi
                         </p>
 
-                        <p className="text-dark">{profile.lainya || "-"}</p>
+                        {profile.jenjang === "SMA/Sederajat" ? (
+                          <p className="text-dark">
+                            {profile.asal_pendidikan || "-"}
+                          </p>
+                        ) : (
+                          <p className="text-dark">{profile.lainya || "-"}</p>
+                        )}
                       </div>
 
                       <div className="col-md-6">
