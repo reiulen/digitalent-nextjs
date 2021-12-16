@@ -56,7 +56,6 @@ const ListTraining = ({ token }) => {
 	const { permission } = useSelector((state) => state.adminPermission);
 	const [listPermission, setListPermission] = useState([]);
 
-	console.log(permission, "ini permission");
 	useEffect(() => {
 		const filterPermission = permission.permissions.filter((item) =>
 			item.includes("pelatihan")
