@@ -3,15 +3,15 @@ import React from "react";
 const ModalProfile = () => {
   return (
     <>
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">
+      <div className="modal-dialog modal-lg" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLongTitle">
               Data Profile Peserta
             </h5>
             <button
               type="button"
-              class="btn"
+              className="btn"
               data-dismiss="modal"
               aria-label="Close"
             >
@@ -20,7 +20,7 @@ const ModalProfile = () => {
               </span>
             </button>
           </div>
-          <div class="modal-body">
+          <div className="modal-body">
             <div className="list-profile">
               <div className="content-profile mb-5">
                 <p className="mb-2 fz-16 text-dark fw-600">Data Diri</p>
