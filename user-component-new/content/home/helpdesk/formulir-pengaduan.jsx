@@ -16,7 +16,7 @@ import axios from "axios";
 export default function FormPengaduan() {
 	const router = useRouter();
 	const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-	const dropdown = useSelector((state) => state.dropdownHelpdesk);
+	const data = useSelector((state) => state.dropdownHelpdesk);
 
 	const [name, setName] = useState("");
 	const [handphone, setHandphone] = useState("");
@@ -27,19 +27,6 @@ export default function FormPengaduan() {
 	const [deskripsi, setDeskripsi] = useState("");
 	const [options, setOptions] = useState([]);
 
-	useEffect(() => {
-		setOptions([
-			{ value: "dts", label: "Digital Talent Scholarship" },
-			{ value: "vsga", label: "Akademi VSGA" },
-			{ value: "fga", label: "Akademi FGA" },
-			{ value: "pro", label: "Akademi PRO" },
-			{ value: "ta", label: "Akademi TA" },
-			{ value: "dea", label: "Akademi DEA" },
-			{ value: "tsa", label: "Akademi TSA" },
-			{ value: "teknis", label: "Teknis" },
-		]);
-	}, []);
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (simpleValidator.current.allValid()) {
@@ -47,24 +34,17 @@ export default function FormPengaduan() {
 				name,
 				email,
 				no_handphone: handphone,
-				kategori_informasi: platform,
+				kategori_informasi: +platform,
 				detail_informasi: deskripsi,
 			};
-			console.log(data);
-			// {
-			// 	"name" : "Test",
-			// 	"email" : "fajarsetiawan295@gmail.com",
-			// 	"no_handphone" : "082213100879",
-			// 	"kategori_informasi" : 6,
-			// 	"detail_informasi" : "aku sangat senang mendapatkan ini"
-			// }
 			try {
 				const result = await axios.post(
 					`${process.env.END_POINT_API_PELATIHAN}api/v1/helpdesk/create-helpdesk`,
 					data
 				);
 				if (result) {
-					SweatAlert("Berhasil", "", "success");
+					SweatAlert("Berhasil", "Pengaduanmu Berhasil Terkirim", "success");
+					router.piush;
 				}
 			} catch (e) {
 				SweatAlert("Gagal", e.message, "error");
@@ -143,11 +123,12 @@ export default function FormPengaduan() {
 							aria-label="Default select example"
 							onChange={(e) => setPlatform(e.target.value)}
 						>
-							{options.map((option, i) => (
-								<option value={option.value} key={i}>
-									{option.label}
-								</option>
-							))}
+							{data &&
+								data.dropdown.map((option, i) => (
+									<option value={option.value} key={i}>
+										{option.label}
+									</option>
+								))}
 						</Form.Select>
 						{simpleValidator.current.message("platform", platform, "required", {
 							className: "text-danger",

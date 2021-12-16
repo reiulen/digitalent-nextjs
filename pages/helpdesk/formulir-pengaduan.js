@@ -49,7 +49,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
 			await store.dispatch(getDataPribadi(sessionToken));
 			const data = await store.dispatch(getDropdownHelpdesk());
-			console.log(data, "ini data");
 			return {
 				props: {
 					title: "Berita",

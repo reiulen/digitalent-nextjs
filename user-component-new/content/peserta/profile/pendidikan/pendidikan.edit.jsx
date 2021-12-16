@@ -181,13 +181,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		let data = {};
-		console.log(jengjangPendidikan);
 		if (
 			!asalSekolah.includes("Lainnya") ||
 			jengjangPendidikan.label != "SMA/Sederajat"
 		) {
 			simpleValidator.current.fields["sekolah lainnya"] = true;
 		}
+
 		if (simpleValidator.current.allValid()) {
 			if (jengjangPendidikan.label === "Tidak Sekolah") {
 				data = {
