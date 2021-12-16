@@ -375,7 +375,7 @@ const Beranda = ({ session }) => {
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
