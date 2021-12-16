@@ -153,14 +153,14 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allExportData.data.exports.length === 0 ? (
+                      {allExportData?.data?.total === 0 ? (
                         <tr>
                           <td colSpan="8" className="text-center">
                             Data Kosong
                           </td>
                         </tr>
                       ) : (
-                        allExportData.data.exports.map((items, index) => {
+                        allExportData?.data?.exports?.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
@@ -256,7 +256,7 @@ const Table = ({ token }) => {
                   </table>
                 )}
               </div>
-              {allExportData.data.total > 5 && (
+              {allExportData?.data?.total > 5 && (
                 <div className="row px-4">
                   <div className="table-pagination pagination-custom col-12 col-md-6">
                     <Pagination

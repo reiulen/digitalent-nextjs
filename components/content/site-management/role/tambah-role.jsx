@@ -26,8 +26,8 @@ const TambahRole = ({ token }) => {
   const [editTable, setEditTable] = useState("");
   const [nameRole, setNameRole] = useState("");
   const [allCheck, setAllCheck] = useState(false);
-  const [, forceUpdate] = useState()
-  const [force, setForce] = useState(false)
+  const [, forceUpdate] = useState();
+  const [force, setForce] = useState(false);
 
   const allPermission = useSelector((state) => state.allPermission);
 
@@ -98,13 +98,11 @@ const TambahRole = ({ token }) => {
                         filter.view = !(
                           filter.view === true || filter.view === 1
                         );
-                        item.list_sub_menu.filter(cek => {
-                          cek.view = (
-                            filter.view === true || filter.view === 1
-                          )
-                        })
+                        item.list_sub_menu.filter((cek) => {
+                          cek.view = filter.view === true || filter.view === 1;
+                        });
                       }
-                      setForce(!force)
+                      setForce(!force);
                       return filter;
                     });
                   }}
@@ -120,19 +118,23 @@ const TambahRole = ({ token }) => {
                 <input
                   type="checkbox"
                   name="Checkboxes1"
+                  checked={item.manage === true || item.manage === 1}
                   onClick={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
                         filter.manage = !(
                           filter.manage === true || filter.manage === 1
                         );
-                        item.list_sub_menu.filter(cek => {
-                          cek.manage = (
-                            filter.manage === true || filter.manage === 1
-                          )
-                        })
+                        filter.view =
+                          filter.manage === true || filter.manage === 1;
+                        item.list_sub_menu.filter((cek) => {
+                          cek.manage =
+                            filter.manage === true || filter.manage === 1;
+                          cek.view =
+                            filter.manage === true || filter.manage === 1;
+                        });
                       }
-                      setForce(!force)
+                      setForce(!force);
                       return filter;
                     });
                   }}
@@ -316,11 +318,14 @@ const TambahRole = ({ token }) => {
                         permission.filter((filter) => {
                           if (sub.id === filter.id) {
                             filter.view = !(
-                              filter.view === true ||
-                              filter.view === 1
+                              filter.view === true || filter.view === 1
                             );
+                            if (item.view !== 1) {
+                              item.view =
+                                1
+                            }
                           }
-                          setForce(!force)
+                          setForce(!force);
                           return filter;
                         });
                       }}
@@ -343,12 +348,16 @@ const TambahRole = ({ token }) => {
                             filter.manage = !(
                               filter.manage === true || filter.manage === 1
                             );
-                            filter.view = (
-                              filter.manage === true || filter.manage === 1
-                            );
-                            
+                            filter.view =
+                              filter.manage === true || filter.manage === 1;
+                            if (item.manage !== 1 || item.view !== 1) {
+                              item.view =
+                                1
+                              item.manage =
+                               1
+                            }
                           }
-                          setForce(!force)
+                          setForce(!force);
                           return filter;
                         });
                       }}
@@ -389,7 +398,7 @@ const TambahRole = ({ token }) => {
                         filter.view === true || filter.view === 1
                       );
                     }
-                    setForce(!force)
+                    setForce(!force);
                     return filter;
                   });
                 }}
@@ -411,11 +420,10 @@ const TambahRole = ({ token }) => {
                       filter.manage = !(
                         filter.manage === true || filter.manage === 1
                       );
-                      filter.view = (
-                        filter.manage === true || filter.manage === 1
-                      );
+                      filter.view =
+                        filter.manage === true || filter.manage === 1;
                     }
-                    setForce(!force)
+                    setForce(!force);
                     return filter;
                   });
                 }}
@@ -447,7 +455,7 @@ const TambahRole = ({ token }) => {
       dispatch(postRoles(data, token));
     } else {
       simpleValidator.current.showMessages();
-      forceUpdate(1)
+      forceUpdate(1);
       Swal.fire({
         icon: "error",
         title: "Oops...",

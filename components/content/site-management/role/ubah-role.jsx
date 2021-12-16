@@ -122,16 +122,19 @@ const UbahRole = ({ token }) => {
                 <input
                   type="checkbox"
                   name="Checkboxes1"
-                  defaultChecked={item.manage === 1 || item.manage === true}
+                  checked={item.manage === 1 || item.manage === true}
                   onClick={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
                         filter.manage = !(
                           filter.manage === true || filter.manage === 1
                         );
-                       
+                        filter.view =
+                          filter.manage === true || filter.manage === 1;
                         item.list_sub_menu.filter((cek) => {
                           cek.manage =
+                            filter.manage === true || filter.manage === 1;
+                          cek.view =
                             filter.manage === true || filter.manage === 1;
                         });
                       }
@@ -339,6 +342,10 @@ const UbahRole = ({ token }) => {
                             filter.view = !(
                               filter.view === true || filter.view === 1
                             );
+                            if (item.view !== 1) {
+                              item.view =
+                                1
+                            }
                           }
                           setForce(!force);
                           return filter;
@@ -366,6 +373,12 @@ const UbahRole = ({ token }) => {
                             );
                             filter.view =
                               filter.manage === true || filter.manage === 1;
+                            if (item.manage !== 1 || item.view !== 1) {
+                              item.view =
+                                1
+                              item.manage =
+                               1
+                            }
                           }
                           setForce(!force);
                           return filter;

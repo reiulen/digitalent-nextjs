@@ -13,7 +13,7 @@ import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
 import Image from "next/image";
 import IconArrow from "../../../../assets/icon/Arrow";
-import {getPelatihanWithPagination} from '../../../../../redux/actions/site-management/user/peserta-dts'
+import { getPelatihanWithPagination } from "../../../../../redux/actions/site-management/user/peserta-dts";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -65,7 +65,9 @@ const Table = ({ token }) => {
                 </p>
               </div>
             </td>
-            <td className="align-middle text-left">{item.pindahan ? "Pindahan" : "Register"}</td>
+            <td className="align-middle text-left">
+              {item.pindahan ? "Pindahan" : "Register"}
+            </td>
             <td className="align-middle text-left">
               <div className="d-flex align-items-center">
                 <button
@@ -101,16 +103,11 @@ const Table = ({ token }) => {
 
   return (
     <PageWrapper>
-      <div
-        className="col-12 col-lg-12 col-xl-12"
-      >
+      <div className="col-12 col-lg-12 col-xl-12 order-0" style={{marginLeft: "-25px"}}>
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
-            >
-              List Data Pelatihan
+            <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
+             List Data Pelatihan
             </h3>
           </div>
           <div className="card-body pt-0">
@@ -119,7 +116,7 @@ const Table = ({ token }) => {
                 <div className="col-lg-12 col-xl-12">
                   <form
                     // onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
+                    className="d-flex align-items-center"
                   >
                     <div className="row w-100">
                       <div className="col-12 col-sm-6">
@@ -134,14 +131,20 @@ const Table = ({ token }) => {
                             value={search}
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) =>
-                              setSearch(e.target.value)
-                            }
+                            onChange={(e) => setSearch(e.target.value)}
                           />
                           <button
                             type="button"
-                            onClick={e => {
-                              dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, page))  
+                            onClick={(e) => {
+                              dispatch(
+                                getPelatihanWithPagination(
+                                  token,
+                                  router.query.id,
+                                  search,
+                                  limit,
+                                  page
+                                )
+                              );
                             }}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
@@ -167,11 +170,21 @@ const Table = ({ token }) => {
                       <th className="text-left align-middle">Nama Pelatihan</th>
                       <th className="text-left align-middle">ID Pelatihan</th>
                       <th className="text-left align-middle">Status</th>
-                      <th className="text-left align-middle">Status Pindahan</th>
+                      <th className="text-left align-middle">
+                        Status Pindahan
+                      </th>
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>{allListPelatihanPagination.loading ? <td colSpan="8"><LoadingTable /></td> : listPelatihan}</tbody>
+                  <tbody>
+                    {allListPelatihanPagination.loading ? (
+                      <td colSpan="8">
+                        <LoadingTable />
+                      </td>
+                    ) : (
+                      listPelatihan
+                    )}
+                  </tbody>
                 </table>
               </div>
 
@@ -186,7 +199,15 @@ const Table = ({ token }) => {
                     pageRangeDisplayed={3}
                     onChange={(e) => {
                       setPage(e);
-                      dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, e))  
+                      dispatch(
+                        getPelatihanWithPagination(
+                          token,
+                          router.query.id,
+                          search,
+                          limit,
+                          e
+                        )
+                      );
                     }}
                     nextPageText={">"}
                     prevPageText={"<"}
@@ -210,9 +231,17 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
-                        onChange={e => {
-                          setLimit(e.target.value)
-                          dispatch(getPelatihanWithPagination(token, router.query.id, search, e.target.value, page))
+                        onChange={(e) => {
+                          setLimit(e.target.value);
+                          dispatch(
+                            getPelatihanWithPagination(
+                              token,
+                              router.query.id,
+                              search,
+                              e.target.value,
+                              page
+                            )
+                          );
                         }}
                       >
                         <option value="5">5</option>
