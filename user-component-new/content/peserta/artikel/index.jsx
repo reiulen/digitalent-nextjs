@@ -28,7 +28,14 @@ const Dashboard = ({ session, success }) => {
 	const deleteArtikel = useSelector((state) => state.deleteArtikel);
 	const cekLulus = useSelector((state) => state.cekLulusPelatihan);
 
-	const [listPeserta, setPeserta] = useState(
+	const [keyword, setKeyword] = useState(null);
+	const [page, setPage] = useState(1);
+	const [limit, setLimit] = useState(5);
+	const [dateRegister, setDateRegister] = useState([null, null]);
+	const [dateRegisterStart, dateRegisterEnd] = dateRegister;
+	const [showModal, setShowModal] = useState(false);
+
+	const listPeserta =
 		allArtikelsPeserta.artikel?.artikel.length > 0 ? (
 			allArtikelsPeserta.artikel.artikel.map((item, index) => {
 				return (
@@ -134,15 +141,7 @@ const Dashboard = ({ session, success }) => {
 			<td className="align-middle text-center" colSpan={8}>
 				Data Kosong
 			</td>
-		)
-	);
-
-	const [keyword, setKeyword] = useState(null);
-	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(5);
-	const [dateRegister, setDateRegister] = useState([null, null]);
-	const [dateRegisterStart, dateRegisterEnd] = dateRegister;
-	const [showModal, setShowModal] = useState(false);
+		);
 
 	useEffect(() => {
 		if (deleteArtikel.loading) {
@@ -410,8 +409,8 @@ const Dashboard = ({ session, success }) => {
 										prevPageText={"<"}
 										firstPageText={"<<"}
 										lastPageText={">>"}
-										itemClass="page-item-dashboard"
-										linkClass="page-link-dashboard"
+										itemClass="page-item"
+										linkClass="page-link"
 									/>
 								</div>
 								<div className="table-total ml-auto">
@@ -486,6 +485,8 @@ const Dashboard = ({ session, success }) => {
 								<DatePicker
 									wrapperClassName="datepicker"
 									className="form-control"
+									placeholder="Filter Tanggal"
+									value={dateRegister}
 									name="start_date"
 									selectsRange={true}
 									onChange={(date) => setDateRegister(date)}
@@ -502,6 +503,17 @@ const Dashboard = ({ session, success }) => {
 								type="button"
 								onClick={(e) => {
 									setDateRegister([null, null]);
+									setShowModal(false);
+									dispatch(
+										getAllArtikelsPeserta(
+											session.token,
+											1,
+											limit,
+											keyword,
+											null,
+											null
+										)
+									);
 								}}
 							>
 								Reset
@@ -511,7 +523,6 @@ const Dashboard = ({ session, success }) => {
 								type="button"
 								onClick={() => {
 									setPage(1);
-									setDateRegister([null, null]);
 									setShowModal(false);
 									dispatch(
 										getAllArtikelsPeserta(
@@ -520,8 +531,12 @@ const Dashboard = ({ session, success }) => {
 											limit,
 											keyword,
 											null,
-											moment(dateRegister[0]).format("YYYY-MM-DD"),
-											moment(dateRegister[1]).format("YYYY-MM-DD")
+											dateRegister[0] !== null
+												? moment(dateRegister[0]).format("YYYY-MM-DD")
+												: null,
+											dateRegister[1] !== null
+												? moment(dateRegister[1]).format("YYYY-MM-DD")
+												: null
 										)
 									);
 								}}
