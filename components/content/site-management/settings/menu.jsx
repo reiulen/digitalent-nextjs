@@ -246,6 +246,11 @@ const Table = ({ token }) => {
                               key={i}
                               defaultValue={parrent.status}
                               onChange={(e) => handleChangeInput(e, i)}
+                              onBlur={(e) => {
+                                simpleValidator.current.showMessageFor(
+                                  "status"
+                                );
+                              }}
                             >
                               <option value="" disabled>
                                 Pilih Status
@@ -253,6 +258,12 @@ const Table = ({ token }) => {
                               <option value="1">Aktif</option>
                               <option value="0">Tidak Aktif</option>
                             </select>
+                            {simpleValidator.current.message(
+                              "status",
+                              parrent.status,
+                              "required",
+                              { className: "text-danger" }
+                            )}
                           </div>
                         </div>
                         {localStorage

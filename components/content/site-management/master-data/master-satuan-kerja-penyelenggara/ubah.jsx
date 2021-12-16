@@ -200,7 +200,7 @@ const TambahApi = ({ token }) => {
 
                 {simpleValidator.current.message(
                   "provinsi",
-                  optionTempProvList,
+                  valueProvinsi,
                   "required",
                   { className: "text-danger" }
                 )}

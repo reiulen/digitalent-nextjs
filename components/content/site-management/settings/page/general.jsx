@@ -513,11 +513,6 @@ const GeneralPage = ({ token }) => {
                                 name="profile_avatar"
                                 accept=".png, .jpg, .jpeg .svg"
                                 onChange={(e) => onChangeImage(e)}
-                                onBlur={() =>
-                                  simpleValidator.current.showMessageFor(
-                                    "logoHeader"
-                                  )
-                                }
                               />
 
                               <input
@@ -543,7 +538,7 @@ const GeneralPage = ({ token }) => {
                         {simpleValidator.current.message(
                           "logoHeader",
                           imageLogo,
-                          "required",
+                          "",
                           { className: "text-danger" }
                         )}
                       </div>
