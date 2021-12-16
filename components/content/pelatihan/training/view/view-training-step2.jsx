@@ -73,6 +73,9 @@ const ViewTrainingStep2 = ({ token }) => {
               {row.name}
             </label>
             <select name="" className="form-control" required={row.required}>
+              <option value="" disabled selected>
+                Silahkan Pilih {row.name}
+              </option>
               {row.option === "manual" ? (
                 row.dataOption.split(";").map((dat, i) => (
                   <option value={dat} key={i}>
@@ -246,9 +249,12 @@ const ViewTrainingStep2 = ({ token }) => {
             <h3 className="text-neutral-bodyer pb-5 pt-4">{titleForm}</h3>
 
             <div className="row">
-              {formBuilder.map((row, i) => (
-                <>{readerElementHandler(row, i)}</>
-              ))}
+              {formBuilder &&
+                formBuilder !== null &&
+                formBuilder.length > 0 &&
+                formBuilder.map((row, i) => (
+                  <>{readerElementHandler(row, i)}</>
+                ))}
             </div>
 
             <div className="button my-5">

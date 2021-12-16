@@ -344,11 +344,11 @@ const DetailSummary = ({ token }) => {
 							<div className="col-md-6">
 								<p className="text-neutral-body my-0">Jadwal Pendaftaran</p>
 								<p className="text-neutral-body">
-									{moment(dataPelatihan.pendaftaran_mulai).format(
+									{moment(dataPelatihan.pendaftaran_mulai).utc().format(
 										"DD MMMM YYYY"
 									)}{" "}
 									Sampai{" "}
-									{moment(dataPelatihan.pendaftaran_selesai).format(
+									{moment(dataPelatihan.pendaftaran_selesai).utc().format(
 										"DD MMMM YYYY"
 									)}{" "}
 								</p>

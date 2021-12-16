@@ -26,7 +26,7 @@ const FormBerhasil = ({ token }) => {
     try {
       const config = {
         headers: {
-          authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       };
       const { data } = await axios.get(

@@ -4,7 +4,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import axios from "axios";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 const ReviewKerjasama = ({ token }) => {
   const router = useRouter();
@@ -74,7 +74,7 @@ const ReviewKerjasama = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
-                Permission: Cookies.get("token_permission")
+                Permission: Cookies.get("token_permission"),
               },
             }
           );
@@ -117,7 +117,7 @@ const ReviewKerjasama = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
-                Permission: Cookies.get("token_permission")
+                Permission: Cookies.get("token_permission"),
               },
             }
           );
@@ -141,7 +141,6 @@ const ReviewKerjasama = ({ token }) => {
 
   const [statusInfo, setstatusInfo] = useState("");
   useEffect(() => {
-    
     setDataSingle(router.query.id, token);
     setDataSingleSelesaiReview(router.query.id, router.query.version, token);
 
@@ -157,7 +156,7 @@ const ReviewKerjasama = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            Permission: Cookies.get("token_permission")
+            Permission: Cookies.get("token_permission"),
           },
         }
       );
@@ -178,7 +177,7 @@ const ReviewKerjasama = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            Permission: Cookies.get("token_permission")
+            Permission: Cookies.get("token_permission"),
           },
         }
       );
@@ -208,7 +207,11 @@ const ReviewKerjasama = ({ token }) => {
             {statusInfo && statusInfo === "Sudah direview" ? (
               <form>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label"
+                    style={{ color: "#6C6C6C" }}
+                  >
                     Tanggal
                   </label>
                   <input
@@ -219,7 +222,11 @@ const ReviewKerjasama = ({ token }) => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label"
+                    style={{ color: "#6C6C6C" }}
+                  >
                     Judul kerjasama
                   </label>
                   <input
@@ -233,7 +240,11 @@ const ReviewKerjasama = ({ token }) => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label"
+                    style={{ color: "#6C6C6C" }}
+                  >
                     Kategori kerjasama
                   </label>
                   <select
@@ -248,7 +259,11 @@ const ReviewKerjasama = ({ token }) => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label"
+                    style={{ color: "#6C6C6C" }}
+                  >
                     Periode
                   </label>
                   <div className="row">
@@ -278,7 +293,7 @@ const ReviewKerjasama = ({ token }) => {
                               <label
                                 htmlFor="staticEmail"
                                 className="col-form-label"
-                                style={{color:"#6C6C6C"}}
+                                style={{ color: "#6C6C6C" }}
                               >
                                 {items?.cooperation_form}
                               </label>

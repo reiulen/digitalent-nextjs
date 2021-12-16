@@ -18,12 +18,11 @@ const DetailDokumenKerjasama = ({ token }) => {
 
   const [pdfFIle, setPdfFIle] = useState("");
 
-  const cookiePermission = Cookies.get("token_permission")
+  const cookiePermission = Cookies.get("token_permission");
 
   useEffect(() => {
     getSingleValue(router.query.id);
     dispatch(getSingleCooperation(token, router.query.id, cookiePermission));
-    
   }, [dispatch, router.query.id, token, cookiePermission]);
 
   async function getSingleValue(id) {
@@ -32,8 +31,8 @@ const DetailDokumenKerjasama = ({ token }) => {
         `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
-            Permission: cookiePermission
+            Authorization: `Bearer ${token}`,
+            Permission: cookiePermission,
           },
         }
       );
@@ -131,15 +130,15 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Tahun (
                 {allMK?.cooperationById?.length === 0
                   ? ""
-                  : moment(allMK?.cooperationById?.data?.period_date_start).format(
-                      "DD MMMM YYYY"
-                    )}
+                  : moment(
+                      allMK?.cooperationById?.data?.period_date_start
+                    ).format("DD MMMM YYYY")}
                 &nbsp;-&nbsp;
                 {allMK?.cooperationById?.length === 0
                   ? ""
-                  : moment(allMK?.cooperationById?.data?.period_date_end).format(
-                      "DD MMMM YYYY"
-                    )}
+                  : moment(
+                      allMK?.cooperationById?.data?.period_date_end
+                    ).format("DD MMMM YYYY")}
                 )
               </p>
 
@@ -169,7 +168,8 @@ const DetailDokumenKerjasama = ({ token }) => {
                   <p className="fz-16">
                     {allMK?.cooperationById.length === 0
                       ? ""
-                      : allMK?.cooperationById?.data?.agreement_number_kemkominfo}
+                      : allMK?.cooperationById?.data
+                          ?.agreement_number_kemkominfo}
                   </p>
                 </div>
               </div>
@@ -217,8 +217,8 @@ const DetailDokumenKerjasama = ({ token }) => {
 
               {allMK?.cooperationById.length === 0 ? (
                 ""
-              ) : allMK?.cooperationById?.data?.cooperation_category?.data_content
-                  .cooperation_form === "-" ? (
+              ) : allMK?.cooperationById?.data?.cooperation_category
+                  ?.data_content.cooperation_form === "-" ? (
                 <h1 className="my-4">Data kerja sama tidak ada</h1>
               ) : (
                 allMK?.cooperationById?.data?.cooperation_category?.data_content?.map(

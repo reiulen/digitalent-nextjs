@@ -115,7 +115,7 @@ const FilterBar = ({ session, funcSetPage }) => {
       overflow: "hidden",
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
-      maxWidth: "11rem",
+      maxWidth: "8rem",
     }),
     valueContainer: (styles) => ({
       ...styles,
