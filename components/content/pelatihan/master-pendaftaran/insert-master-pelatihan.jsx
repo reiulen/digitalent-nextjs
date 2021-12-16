@@ -562,9 +562,9 @@ const AddMasterPelatihan = ({ token }) => {
         </div>
 
         <div
-          class="modal fade"
+          className="modal fade"
           id="modalProfile"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="modalProfile"
           aria-hidden="true"
