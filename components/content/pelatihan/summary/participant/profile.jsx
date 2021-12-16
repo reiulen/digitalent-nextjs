@@ -175,34 +175,97 @@ const ProfileUser = ({ profile }) => {
                   </div>
                 </div>
               </div>
+              <div className="data-pendidikan">
+                <h3 className="font-weight-bolder mb-4">Pendidikan Terakhir</h3>
+                <div className="row">
+                  <div className="col-md-12">
+                    <p className="text-neutral-body my-0">Jenjang Pendidikan</p>
+
+                    <p className="text-dark">{profile.jenjang || "-"}</p>
+                  </div>
+                  {profile.jenjang !== "Tidak Sekolah" && (
+                    <>
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">
+                          Asal Sekolah/Perguruan Tinggi
+                        </p>
+
+                        <p className="text-dark">
+                          {profile.asal_pendidikan || "-"}
+                        </p>
+                      </div>
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">Program Studi</p>
+
+                        <p className="text-dark">
+                          {profile.program_studi || "-"}
+                        </p>
+                      </div>
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">IPK</p>
+
+                        <p className="text-dark">{profile.ipk || "-"}</p>
+                      </div>
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">Tahun Masuk</p>
+
+                        <p className="text-dark">
+                          {profile.tahun_masuk || "-"}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
               <div className="data-pekerjaan">
                 <h3 className="font-weight-bolder mb-4">Pekerjaan</h3>
                 <div className="row">
                   <div className="col-md-12">
                     <p className="text-neutral-body my-0">Status Pekerjaan</p>
+
                     <p className="text-dark">
                       {profile.status_pekerjaan || "-"}
                     </p>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <p className="text-neutral-body my-0">Pekerjaan</p>
-                    <p className="text-dark">{profile.pekerjaan || "-"}</p>
+                {profile.status_pekerjaan === "Pelajar/Mahasiswa" && (
+                  <div className="row">
+                    <div className="col-md-6">
+                      <p className="text-neutral-body my-0">
+                        Sekolah/Perguruan Tinggi
+                      </p>
+                      <p className="text-dark">{profile.sekolah || "-"}</p>
+                    </div>
+                    <div className="col-md-6">
+                      <p className="text-neutral-body my-0">Tahun Masuk</p>
+                      <p className="text-dark">{profile.tahun_masuk || "-"}</p>
+                    </div>
                   </div>
-                  <div className="col-md-6">
-                    <p className="text-neutral-body my-0">
-                      Perusahaan / Institusi Tempat Bekerja
-                    </p>
-                    <p className="text-dark">{profile.perusahaan || "-"}</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <p className="text-neutral-body my-0">Penghasilan</p>
-                    <p className="text-dark">{profile.penghasilan || "-"}</p>
-                  </div>
-                </div>
+                )}
+                {profile.status_pekerjaan === "Bekerja" && (
+                  <>
+                    <div className="row">
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">Pekerjaan</p>
+                        <p className="text-dark">{profile.pekerjaan || "-"}</p>
+                      </div>
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">
+                          Perusahaan / Institusi Tempat Bekerja
+                        </p>
+                        <p className="text-dark">{profile.perusahaan || "-"}</p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <p className="text-neutral-body my-0">Penghasilan</p>
+                        <p className="text-dark">
+                          {profile.penghasilan || "-"}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
               <div className="data-berkas">
                 <h3 className="font-weight-bolder mb-4">Berkas</h3>
