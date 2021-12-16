@@ -113,12 +113,22 @@ export default function Bookmark({ session }) {
 										style={{ borderRadius: "12px" }}
 									>
 										<div
-											style={{
-												width: "100%",
-												height: "180px",
-												position: "relative",
-												borderRadius: "12px",
-											}}
+											style={
+												el.status == "Dibuka"
+													? {
+															width: "100%",
+															height: "180px",
+															position: "relative",
+															borderRadius: "12px",
+													  }
+													: {
+															width: "100%",
+															height: "180px",
+															position: "relative",
+															borderRadius: "12px",
+															filter: "saturate(0)",
+													  }
+											}
 										>
 											<Image
 												className={`${style.image_dashboard}`}
@@ -139,6 +149,11 @@ export default function Bookmark({ session }) {
 													<Badge
 														bg={` py-3 px-4 ${style.badge_card}`}
 														className=" d-none d-md-flex"
+														style={
+															el.status == "Dibuka"
+																? {}
+																: { filter: "saturate(0)" }
+														}
 													>
 														Pelatihan {el.metode_pelatihan}
 													</Badge>
@@ -173,7 +188,12 @@ export default function Bookmark({ session }) {
 											</div>
 										</Card.ImgOverlay>
 										<Card.Body className="position-relative">
-											<div className={style.bungkus_mitra_pelatihan}>
+											<div
+												className={style.bungkus_mitra_pelatihan}
+												style={
+													el.status == "Dibuka" ? {} : { filter: "saturate(0)" }
+												}
+											>
 												<Image
 													src={
 														!el.gambar_mitra

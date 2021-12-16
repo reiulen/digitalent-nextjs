@@ -6,11 +6,17 @@ import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
 
 import Sidebar from "../../../components/template/helpdesk/index";
-import { helperRegexNumber } from "../../../../utils/middleware/helper";
+import {
+	helperRegexNumber,
+	SweatAlert,
+} from "../../../../utils/middleware/helper";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function FormPengaduan() {
 	const router = useRouter();
 	const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+	const dropdown = useSelector((state) => state.dropdownHelpdesk);
 
 	const [name, setName] = useState("");
 	const [handphone, setHandphone] = useState("");
@@ -34,16 +40,35 @@ export default function FormPengaduan() {
 		]);
 	}, []);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (simpleValidator.current.allValid()) {
 			const data = {
 				name,
-				handphone,
 				email,
-				platform,
-				deskripsi,
+				no_handphone: handphone,
+				kategori_informasi: platform,
+				detail_informasi: deskripsi,
 			};
+			console.log(data);
+			// {
+			// 	"name" : "Test",
+			// 	"email" : "fajarsetiawan295@gmail.com",
+			// 	"no_handphone" : "082213100879",
+			// 	"kategori_informasi" : 6,
+			// 	"detail_informasi" : "aku sangat senang mendapatkan ini"
+			// }
+			try {
+				const result = await axios.post(
+					`${process.env.END_POINT_API_PELATIHAN}api/v1/helpdesk/create-helpdesk`,
+					data
+				);
+				if (result) {
+					SweatAlert("Berhasil", "", "success");
+				}
+			} catch (e) {
+				SweatAlert("Gagal", e.message, "error");
+			}
 		} else {
 			simpleValidator.current.showMessages();
 			forceUpdate(1);
