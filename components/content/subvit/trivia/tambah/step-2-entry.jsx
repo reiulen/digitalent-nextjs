@@ -555,7 +555,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                         className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                         type="button"
                         onClick={() => {
-                          router.push("/subvit/substansi/tambah-step-1");
+                          router.push("/subvit/trivia/tambah");
                         }}
                       >
                         Kembali

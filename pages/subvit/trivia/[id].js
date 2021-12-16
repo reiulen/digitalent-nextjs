@@ -56,17 +56,19 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      const permission = req.cookies.token_permission;
+
       await store.dispatch(
         getAllTriviaQuestionDetail(
           params.id,
           query.page,
           query.keyword,
           query.limit,
-          session.user.user.data.token
+          session.user.user.data.token,
+          permission
         )
       );
-
-      const permission = req.cookies.token_permission;
 
       await store.dispatch(
         getDetailTriviaQuestionBanks(

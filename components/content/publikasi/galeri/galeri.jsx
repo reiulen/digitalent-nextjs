@@ -510,7 +510,7 @@ const Galeri = ({ token }) => {
                         className="carousel-inner"
                     >
                         {isViewed && isViewed.length !== 0
-                            ? isViewed.gambar.map((row, i) => {
+                            ? isViewed?.gambar?.map((row, i) => {
                                 return (
                                     <div className={i === 0 ? "carousel-item active" : "carousel-item"} key={i}>
 
@@ -533,7 +533,7 @@ const Galeri = ({ token }) => {
                             : null}
                     </div>
                     {
-                        isViewed.gambar.length === 1 ? null :
+                        isViewed?.gambar.length === 1 ? null :
                             <div>
                                 <button
                                     className="carousel-control-prev"
@@ -889,7 +889,7 @@ const Galeri = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions.includes("publikasi.gallery.manage") || role_permission.roles.includes("Super Admin") ?
+                                                    role_permission?.permissions.includes("publikasi.gallery.manage") || role_permission?.roles.includes("Super Admin") ?
                                                         <th style={{ width: '9.7vw' }}>Aksi</th>
                                                         : null
                                                 }
@@ -897,13 +897,13 @@ const Galeri = ({ token }) => {
                                         </thead>
 
                                         <tbody>
-                                            {!galeri || (galeri && galeri.gallery.length === 0) ? (
+                                            {!galeri || (galeri && galeri?.gallery.length === 0) ? (
                                                 <td className="align-middle text-center" colSpan={9}>
                                                     Data Kosong
                                                 </td>
                                             ) : (
                                                 galeri &&
-                                                galeri.gallery.map((row, i) => {
+                                                galeri?.gallery?.map((row, i) => {
                                                     return (
                                                         <tr key={row.id}>
                                                             <td className="align-middle text-center">
@@ -966,7 +966,7 @@ const Galeri = ({ token }) => {
                                                             </td>
                                                             <td className="align-middle">{row.role[0].name}</td>
                                                             {
-                                                                role_permission.permissions.includes("publikasi.gallery.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                role_permission?.permissions.includes("publikasi.gallery.manage") || role_permission?.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex">
                                                                         <button
                                                                             onClick={() =>
@@ -1017,13 +1017,13 @@ const Galeri = ({ token }) => {
                             </div>
 
                             <div className="row">
-                                {galeri && galeri.perPage < galeri.total && (
+                                {galeri && galeri?.perPage < galeri?.total && (
                                     <>
                                         <div className={`${stylesPag.pagination} table-pagination`}>
                                             <Pagination
                                                 activePage={page}
-                                                itemsCountPerPage={galeri.perPage}
-                                                totalItemsCount={galeri.total}
+                                                itemsCountPerPage={galeri?.perPage}
+                                                totalItemsCount={galeri?.total}
                                                 pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={">"}

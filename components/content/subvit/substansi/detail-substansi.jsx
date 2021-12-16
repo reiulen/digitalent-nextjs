@@ -653,16 +653,21 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
-                                      onClick={() => handleDelete(question.id)}
+                                      className={
+                                        i === 0
+                                          ? "btn btn-link-action btn-secondary  text-white"
+                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                      }
+                                      onClick={() =>
+                                        i !== 0 && handleDelete(question.id)
+                                      }
                                       data-toggle="tooltip"
                                       data-placement="bottom"
-                                      disabled={i === 0}
+                                      title="Hapus"
                                       style={{
                                         cursor:
                                           i === 0 ? "not-allowed" : "pointer",
                                       }}
-                                      title="Hapus"
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>

@@ -9,7 +9,7 @@ import {
 } from "../../types/sertifikat/list-peserta.type";
 
 export const getAllParticipant =
-	(id, page = 1, keyword = "", limit = 5, token, token_permission) =>
+	(id, page = 1, keyword = "", limit = 5, token, token_permission = "") =>
 	async (dispatch) => {
 		try {
 			dispatch({ type: LIST_PESERTA_REQUEST });
@@ -22,7 +22,7 @@ export const getAllParticipant =
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
-				Permission: token_permission,
+				// Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);
@@ -38,7 +38,8 @@ export const getAllParticipant =
 	};
 
 export const getDetailParticipant =
-	(id, id_pelatihan, token, token_permission) => async (dispatch) => {
+	(id, id_pelatihan, token, token_permission = "") =>
+	async (dispatch) => {
 		try {
 			dispatch({ type: DETAIL_LIST_PESERTA_REQUEST });
 
@@ -50,7 +51,7 @@ export const getDetailParticipant =
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
-				Permission: token_permission,
+				// Permission: token_permission,
 			};
 
 			const { data } = await axios.get(link, config);

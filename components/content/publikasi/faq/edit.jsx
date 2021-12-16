@@ -68,14 +68,14 @@ const EditFaq = ({ token }) => {
     }, [dispatch, error, isUpdated, router]);
 
 
-    const [judul, setJudulPertanyaan] = useState(faq.judul)
-    const [jawaban, setJawaban] = useState(faq.jawaban);
-    const [kategori_id, setKategoriId] = useState(faq.kategori_id)
-    const [users_id, setUsersId] = useState(faq.users_id)
-    const [pinned, setPinnedFaq] = useState(faq.pinned)
-    const [publish, setPublish] = useState(faq.publish)
-    const [publishDate, setPublishDate] = useState(faq.tanggal_publish ? new Date(faq.tanggal_publish) : null);
-    const [disablePublishDate, setDisablePublishDate] = useState(faq.publish === 0 ? true : false)
+    const [judul, setJudulPertanyaan] = useState(faq?.judul)
+    const [jawaban, setJawaban] = useState(faq?.jawaban);
+    const [kategori_id, setKategoriId] = useState(faq?.kategori_id)
+    const [users_id, setUsersId] = useState(faq?.users_id)
+    const [pinned, setPinnedFaq] = useState(faq?.pinned)
+    const [publish, setPublish] = useState(faq?.publish)
+    const [publishDate, setPublishDate] = useState(faq?.tanggal_publish ? new Date(faq?.tanggal_publish) : null);
+    const [disablePublishDate, setDisablePublishDate] = useState(faq?.publish === 0 ? true : false)
     const [, forceUpdate] = useState();
 
     const handleChangePinned = (e) => {
@@ -283,8 +283,8 @@ const EditFaq = ({ token }) => {
                                                     <option value="">Data Kosong</option>
                                                 ) : (
                                                     kategori &&
-                                                    kategori.kategori &&
-                                                    kategori.kategori.map((row) => {
+                                                    kategori?.kategori &&
+                                                    kategori?.kategori?.map((row) => {
                                                         return (
                                                             row.jenis_kategori == "Faq" ?
                                                                 <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
@@ -332,7 +332,7 @@ const EditFaq = ({ token }) => {
                                     }
 
                                     {
-                                        role_permission.roles.includes("Super Admin") ?
+                                        role_permission?.roles.includes("Super Admin") ?
                                             disablePublishDate === false ?
                                                 <div className="form-group">
                                                     <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>

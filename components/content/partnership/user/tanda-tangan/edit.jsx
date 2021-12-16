@@ -162,27 +162,28 @@ const EditTandaTangan = ({ token }) => {
   };
 
   useEffect(() => {
-    async function setDataSingle(id) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get ("token_permission")
-            },
-          }
-        );
-
-        setNama(data?.data?.name);
-        setJabatan(data?.data?.position);
-        setTandaTangan(data?.data?.signature_image);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
-      }
-    }
     setDataSingle(router.query.id);
   }, [router.query.id, token]);
+
+  async function setDataSingle(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get ("token_permission")
+          },
+        }
+      );
+
+      setNama(data?.data?.name);
+      setJabatan(data?.data?.position);
+      setTandaTangan(data?.data?.signature_image);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+    }
+  }
 
   return (
     <PageWrapper>

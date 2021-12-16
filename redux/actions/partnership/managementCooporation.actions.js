@@ -555,7 +555,7 @@ export const successGetSingleCooperation = data => {
   };
 };
 
-export const changeStatusList = (token, formData, id) => {
+export const changeStatusList = (token, formData, id, permission) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.post(

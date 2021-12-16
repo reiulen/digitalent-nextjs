@@ -7,6 +7,8 @@ import OptionsReference from "./option-reference.component";
 import CheckboxReference from "./checkbox-reference.component";
 import RadioReference from "./radio-reference.component";
 
+import { helperElementRenderParent } from "../../../../../utils/middleware/helper";
+
 const ModalPreview = ({
   propsTitle,
   propsForm,
@@ -20,15 +22,15 @@ const ModalPreview = ({
   const [formBuilder, setFormBuilder] = useState(propsForm);
 
   const closePreviewHandler = () => {
-    let list = [...formBuilder];
-    list.forEach((row, i) => {
-      if (row.option === "manual") {
-        let dataOption = row.dataOption.join(";");
-        row.dataOption = dataOption;
-      }
-    });
-    setFormBuilder(list);
-    sendPropsFormBuilder(list);
+    // let list = [...formBuilder];
+    // list.forEach((row, i) => {
+    //   if (row.option === "manual") {
+    //     let dataOption = row.dataOption.join(";");
+    //     row.dataOption = dataOption;
+    //   }
+    // });
+    // setFormBuilder(list);
+    // sendPropsFormBuilder(list);
     setModalShow(false);
     sendPropsModalShow(false);
   };
@@ -60,7 +62,7 @@ const ModalPreview = ({
               <option value="">--Pilih Data--</option>
               {modalShow === true ? (
                 row.option === "manual" ? (
-                  row.dataOption.map((dat, i) => (
+                  row.dataOption.split(";").map((dat, i) => (
                     <option value={dat} key={i}>
                       {dat}
                     </option>
@@ -84,7 +86,7 @@ const ModalPreview = ({
             <div className="my-auto">
               {modalShow === true ? (
                 row.option === "manual" ? (
-                  row.dataOption.map((dat, i) => (
+                  row.dataOption.split(";").map((dat, i) => (
                     <div className="form-check pb-3" key={i}>
                       <input
                         type="checkbox"
@@ -135,7 +137,7 @@ const ModalPreview = ({
             <div className="my-auto">
               {modalShow === true ? (
                 row.option === "manual" ? (
-                  row.dataOption.map((dat, i) => (
+                  row.dataOption.split(";").map((dat, i) => (
                     <div className="form-check pb-3" key={i}>
                       <input
                         type="radio"
@@ -217,6 +219,29 @@ const ModalPreview = ({
         );
         break;
       case "triggered":
+        return (
+          <>
+            <div className={`form-group mt-0 mb-0 ${row.size}`}>
+              <label className="col-form-label font-weight-bold">
+                {row.name}
+              </label>
+              <select name="" className="form-control" required={row.required}>
+                <option value="">--Pilih Data--</option>
+                {modalShow === true &&
+                  row.option === "manual" &&
+                  row.dataOption.split(";").map((dat, i) => (
+                    <option value={dat} key={i}>
+                      {dat}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            {row.triggered_parent.map((rowParent, k) => (
+              <>{helperElementRenderParent(rowParent, propsToken)}</>
+            ))}
+          </>
+        );
+        break;
       default:
         break;
     }

@@ -53,22 +53,22 @@ const EditVideo = ({ token }) => {
 
     }, [dispatch, error, success, router]);
 
-    const [id, setId] = useState(video.id)
-    const [judul_video, setJudulVideo] = useState(video.judul_video)
-    const [isi_video, setIsiVideo] = useState(video.isi_video);
+    const [id, setId] = useState(video?.id)
+    const [judul_video, setJudulVideo] = useState(video?.judul_video)
+    const [isi_video, setIsiVideo] = useState(video?.isi_video);
     const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
-    const [url_video, setUrlVideo] = useState(video.url_video)
+    const [url_video, setUrlVideo] = useState(video?.url_video)
     // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
     );
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
-    const [gambarName, setGambarName] = useState(video.gambar)
-    const [kategori_id, setKategoriId] = useState(video.kategori_id)
-    const [users_id, setUserId] = useState(video.users_id)
-    const [tag, setTag] = useState(video.tag)
-    const [publish, setPublish] = useState(video.publish)
+    const [gambarName, setGambarName] = useState(video?.gambar)
+    const [kategori_id, setKategoriId] = useState(video?.kategori_id)
+    const [users_id, setUserId] = useState(video?.users_id)
+    const [tag, setTag] = useState(video?.tag)
+    const [publish, setPublish] = useState(video?.publish)
     // const [publish, setPublish] = useState(video.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
     const [publishDate, setPublishDate] = useState(new Date(video.tanggal_publish));
@@ -454,7 +454,7 @@ const EditVideo = ({ token }) => {
                                             {!kategori || (kategori && kategori.length === 0) ? (
                                                 <option value="">Data Kosong</option>
                                             ) : (
-                                                kategori && kategori.kategori && kategori.kategori.map((row) => {
+                                                kategori && kategori?.kategori && kategori?.kategori.map((row) => {
                                                     return (
                                                         row.jenis_kategori == "Video" ?
                                                             <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
@@ -498,7 +498,7 @@ const EditVideo = ({ token }) => {
                                 </div>
 
                                 {
-                                    role_permission.roles[0] !== "Super Admin" ? null
+                                    role_permission?.roles[0] !== "Super Admin" ? null
                                         :
                                         <div className="form-group row">
                                             <label
@@ -530,7 +530,7 @@ const EditVideo = ({ token }) => {
                                 }
 
                                 {
-                                    role_permission.roles[0] !== "Super Admin" ? null
+                                    role_permission?.roles[0] !== "Super Admin" ? null
                                         :
                                         disablePublishDate === false ?
                                             <div className="form-group">

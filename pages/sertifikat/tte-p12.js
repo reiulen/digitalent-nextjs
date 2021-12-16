@@ -9,50 +9,50 @@ import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddlewar
 import { getAllPermission } from "../../redux/actions/utils/utils.actions";
 
 const TTEP12 = dynamic(
-  () => import("../../components/content/sertifikat/tte-p12/index"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
+	() => import("../../components/content/sertifikat/tte-p12/index"),
+	{
+		loading: function loadingNow() {
+			return <LoadingSkeleton />;
+		},
+		ssr: false,
+	}
 );
 
 export default function KelokaSertifikatPage(props) {
-  const session = props.session.user.user.data;
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        <TTEP12 token={session.token} />
-      </div>
-    </>
-  );
+	const session = props.session.user.user.data;
+	return (
+		<>
+			<div className="d-flex flex-column flex-root">
+				<TTEP12 token={session.token} />
+			</div>
+		</>
+	);
 }
 
 // Function GETSERVERSIDE PROPS
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
-    async ({ query, req }) => {
-      const session = await getSession({ req });
+	(store) =>
+		async ({ query, req }) => {
+			const session = await getSession({ req });
 
-      const middleware = middlewareAuthAdminSession(session);
-      if (!middleware.status) {
-        return {
-          redirect: {
-            destination: middleware.redirect,
-            permanent: false,
-          },
-        };
-      }
-      const token_permission = req.cookies.token_permission;
+			const middleware = middlewareAuthAdminSession(session);
+			if (!middleware.status) {
+				return {
+					redirect: {
+						destination: middleware.redirect,
+						permanent: false,
+					},
+				};
+			}
+			const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(
-        getTTEP12(session.user.user.data.token, token_permission)
-      );
+			const data = await store.dispatch(
+				getTTEP12(session.user.user.data.token, token_permission)
+			);
 
-      await store.dispatch(getAllPermission(session.user.user.data.token));
-      return {
-        props: { session, title: "List Akademi - Sertifikat" },
-      };
-    }
+			await store.dispatch(getAllPermission(session.user.user.data.token));
+			return {
+				props: { session, title: "List Akademi - Sertifikat" },
+			};
+		}
 );

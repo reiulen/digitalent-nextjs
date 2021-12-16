@@ -55,7 +55,7 @@ const DetailBerita = () => {
 
   const handleLinkContent = () => {
     if (detail) {
-      let text = detail.isi_berita;
+      let text = detail?.isi_berita;
       let result = "";
 
       if (text.includes("<a")) {
@@ -145,7 +145,7 @@ const DetailBerita = () => {
         <div className="row my-5 d-flex flex-column ml-1">
           <div>
             <div className="badge badge-light mr-2">
-              <div className="text-primary">{detail.nama_kategori}</div>
+              <div className="text-primary">{detail?.nama_kategori}</div>
             </div>
           </div>
 
@@ -154,21 +154,21 @@ const DetailBerita = () => {
               className={`${styles.fontTitle} font-weight-bolder`}
             >
               {/* Insert Title Here */}
-              {detail.judul}
+              {detail?.judul}
             </h1>
           </div>
 
           <div className="mt-5 d-flex flex-row align-items-center">
             <span className="font-weight-bolder" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Akademi Here */}
-              {detail.kategori_akademi}
+              {detail?.kategori_akademi}
             </span>
             <span className="mr-1 ml-3">
               <i className="ri-eye-line"></i>
             </span>
             <span className="text-muted" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Views Here */}
-              Dibaca {detail.dibaca}
+              Dibaca {detail?.dibaca}
             </span>
           </div>
 
@@ -194,10 +194,10 @@ const DetailBerita = () => {
                   style={{fontSize:"14px", fontFamily:"Poppins"}}
                 >
                   {/* Insert Admin Here */}
-                  {detail.dibuat}
+                  {detail?.dibuat}
                 </div>
                 <div className="text-muted" style={{fontSize:"14px", fontFamily:"Poppins", color:"#6C6C6C"}}>
-                  {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
+                  {moment(detail?.tanggal_publish).format("DD MMMM YYYY")}
                 </div>
               </div>
             </div>
@@ -275,7 +275,7 @@ const DetailBerita = () => {
               <div className="row m-3 d-flex justify-content-between pb-5">
                 <div className="row d-flex justify-content-evenly ml-1">
                   {detail && detail.tag && detail.tag.length !== 0
-                    ? detail.tag.map((el, i) => {
+                    ? detail?.tag?.map((el, i) => {
                         return (
                           <div
                             className="mr-3 border p-3 rounded mb-3"

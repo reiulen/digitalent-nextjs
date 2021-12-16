@@ -198,7 +198,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(importFileTriviaQuestionDetail(data, token, tokenPermission));
+        dispatch(importFileTriviaQuestionDetail(data, token));
       }
     });
   };
@@ -627,7 +627,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="button"
                     onClick={() => {
-                      router.push("/subvit/trivia/tambah-step-1");
+                      router.push("/subvit/trivia/tambah");
                     }}
                   >
                     Kembali

@@ -173,7 +173,7 @@ const Dashboard = ({ session, success }) => {
 							backgroundImage="new-game-3.svg"
 							background="success"
 							color="#00B27A"
-							link={`/peserta/panduan-survey?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
+							link={`/peserta/survey/panduan-survey?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
 							text="Lakukan Survey"
 							desc="Anda Belum Melakukan Test Survey"
 							total={dataDashboard?.subvit.survei.status}
@@ -186,7 +186,7 @@ const Dashboard = ({ session, success }) => {
 							backgroundImage="new-game-1.svg"
 							background="danger"
 							color="#EE2D41"
-							link={`/peserta/panduan-trivia?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
+							link={`/peserta/trivia/panduan-trivia?no=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_pelatihan=${dataDashboard?.subvit?.trivia?.pelatihan_id}&id_tema=${dataDashboard?.subvit?.trivia?.tema_id}`}
 							text="Lakukan TRIVIA"
 							desc="Anda Belum Melakukan TRIVIA"
 							total={dataDashboard.subvit.trivia.status}
@@ -434,12 +434,7 @@ const Dashboard = ({ session, success }) => {
 					{dataDashboard &&
 						dataDashboard?.pelatihan.pelatihan_selesi.length === 0 && (
 							<Col md={6} className="mb-4 px-2">
-								<Card
-									className="rounded-xl h-100"
-									onClick={() => {
-										router.push(`/`);
-									}}
-								>
+								<Card className="rounded-xl h-100">
 									<Card.Body>
 										<Card.Title>
 											<p className={style.card_title}>Pelatihan Sebelumnya</p>
@@ -473,9 +468,7 @@ const Dashboard = ({ session, success }) => {
 								<Card
 									className="rounded-xl h-100"
 									onClick={() => {
-										router.push(
-											`/detail/pelatihan/${dataDashboard.pelatihan.pelatihan_selesi.id}?akademiId=${dataDashboard.pelatihan.pelatihan_selesi.akademi_id}`
-										);
+										router.push(`/peserta/riwayat-pelatihan`);
 									}}
 									style={{ cursor: "pointer" }}
 								>

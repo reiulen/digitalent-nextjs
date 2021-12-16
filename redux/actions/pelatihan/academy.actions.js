@@ -94,7 +94,7 @@ export const newAcademy =
         headers: {
           Authorization: "Bearer " + token,
         },
-        Permission: token_permission,
+        // Permission: token_permission,
       };
 
       const { data } = await axios.post(
@@ -116,7 +116,7 @@ export const newAcademy =
   };
 
 export const updateAcademy =
-  (academyData, toke, token_permission = "") =>
+  (academyData, token, token_permission = "") =>
   async (dispatch) => {
     try {
       dispatch({
@@ -127,7 +127,7 @@ export const updateAcademy =
         headers: {
           Authorization: "Bearer " + token,
         },
-        Permission: token_permission,
+        // Permission: token_permission,
       };
 
       const { data } = await axios.post(

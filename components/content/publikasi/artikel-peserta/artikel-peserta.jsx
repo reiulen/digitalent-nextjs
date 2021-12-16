@@ -567,7 +567,7 @@ const ArtikelPeserta = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions.includes("publikasi.artikel_peserta.manage") || role_permission.roles.includes("Super Admin") ?
+                                                    role_permission?.permissions.includes("publikasi.artikel_peserta.manage") || role_permission?.roles.includes("Super Admin") ?
                                                         <th style={{ width: '9.5vw' }}>Aksi</th>
                                                         : null
                                                 }
@@ -578,7 +578,7 @@ const ArtikelPeserta = ({ token }) => {
                                                 !artikel_peserta || artikel_peserta && artikel_peserta.artikel.length === 0 ? (
                                                     <td className='align-middle text-center' colSpan={9}>Data Kosong</td>
                                                 ) : (
-                                                    artikel_peserta && artikel_peserta.artikel.map((artikel_peserta, i) => {
+                                                    artikel_peserta && artikel_peserta?.artikel?.map((artikel_peserta, i) => {
                                                         return (
                                                             <tr key={artikel_peserta.id}>
                                                                 <td className='align-middle text-center'>
@@ -646,7 +646,7 @@ const ArtikelPeserta = ({ token }) => {
                                                                     {artikel_peserta.role}
                                                                 </td>
                                                                 {
-                                                                    role_permission.permissions.includes("publikasi.artikel_peserta.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                    role_permission?.permissions?.includes("publikasi.artikel_peserta.manage") || role_permission?.roles?.includes("Super Admin") ?
                                                                         <td className="align-middle d-flex">
 
                                                                             <Link
@@ -694,13 +694,13 @@ const ArtikelPeserta = ({ token }) => {
                             </div>
 
                             <div className="row">
-                                {artikel_peserta && artikel_peserta.perPage < artikel_peserta.total &&
+                                {artikel_peserta && artikel_peserta?.perPage < artikel_peserta?.total &&
                                     <>
                                         <div className={`${stylesPag.pagination} table-pagination`}>
                                             <Pagination
                                                 activePage={page}
-                                                itemsCountPerPage={artikel_peserta.perPage}
-                                                totalItemsCount={artikel_peserta.total}
+                                                itemsCountPerPage={artikel_peserta?.perPage}
+                                                totalItemsCount={artikel_peserta?.total}
                                                 pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={">"}
