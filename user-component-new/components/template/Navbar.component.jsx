@@ -62,6 +62,7 @@ const Navigationbar = ({ session }) => {
       return;
     }
     if (session && session.roles[0] == "user") {
+      GetNotifikasi();
       if (
         !dataPribadi || // 👈 null and undefined check
         (dataPribadi && Object.keys(dataPribadi).length === 0)
@@ -92,7 +93,6 @@ const Navigationbar = ({ session }) => {
     }
 
     handleConnectSocket();
-    GetNotifikasi();
   }, []);
 
   const handleConnectSocket = () => {
@@ -110,12 +110,12 @@ const Navigationbar = ({ session }) => {
 
     ws.onmessage = (e) => {
       let res = JSON.parse(e.data);
-      if (res?.To == session?.id) {
+      if (session && (res?.To == session?.id)) {
         GetNotifikasi();
-        console.log("notifikasi masuk");
+        // console.log("notifikasi masuk");
       }
-      console.log(res);
-      console.log("notif untuk semua");
+      // console.log(res);
+      // console.log("notif untuk semua");
     };
 
     ws.onclose = (e) => {
@@ -161,6 +161,7 @@ const Navigationbar = ({ session }) => {
   };
 
   const GetNotifikasi = async () => {
+    // console.log("fungsi hit");
     setAlertNotif(true);
     axios
       .get(
