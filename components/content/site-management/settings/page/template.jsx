@@ -79,20 +79,21 @@ export default function Template(props) {
     };
 
     setEditorLoaded(true);
-
-    axios
-      .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status?.value}`,
-        {
-          headers: {
-            authorization: `Bearer ${props.token}`,
-          },
-        }
-      )
-      .then((items) => {
-        setSubject(items.data.data.training_rules.subject);
-        setBody(items.data.data.training_rules.body);
-      });
+    if (status?.value !== undefined) {
+      axios
+        .get(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status?.value}`,
+          {
+            headers: {
+              authorization: `Bearer ${props.token}`,
+            },
+          }
+        )
+        .then((items) => {
+          setSubject(items.data.data.training_rules.subject);
+          setBody(items.data.data.training_rules.body);
+        });
+    }
   }, [props.token, status]);
 
   return (
