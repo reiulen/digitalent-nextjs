@@ -37,8 +37,8 @@ const EditKategori = ({ token }) => {
     }, [dispatch, isUpdated, router]);
 
 
-    const [nama, setNamaKategori] = useState(kategori.nama)
-    const [jenis_kategori, setJenisKategori] = useState(kategori.jenis_kategori)
+    const [nama, setNamaKategori] = useState(kategori?.nama)
+    const [jenis_kategori, setJenisKategori] = useState(kategori?.jenis_kategori)
     const [, forceUpdate] = useState();
 
 

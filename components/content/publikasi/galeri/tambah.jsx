@@ -460,7 +460,7 @@ const TambahGaleri = ({ token, id }) => {
 
                                 <div className="form-group mb-4">
                                     <div className="row align-items-center ml-3">
-                                        {image.map((row, i) => (
+                                        {image?.map((row, i) => (
                                             <div className={`${styles.imgPrevTambah} col-4 col-md-2 col-lg-2 p-0 mb-2`} key={row.key} >
                                                 <div
                                                     className="position-relative mx-auto mt-5"
@@ -577,8 +577,8 @@ const TambahGaleri = ({ token, id }) => {
                                             <option value="">Data Kosong</option>
                                         ) : (
                                             kategori &&
-                                            kategori.kategori &&
-                                            kategori.kategori.map((row) => {
+                                            kategori?.kategori &&
+                                            kategori?.kategori?.map((row) => {
                                                 return (
                                                     row.jenis_kategori == "Galeri" ?
                                                         <option key={row.id} value={row.id}>
@@ -697,54 +697,6 @@ const TambahGaleri = ({ token, id }) => {
                     </div>
                 </div>
             </div>
-
-
-            {/* <div
-                className="modal fade"
-                id="exampleModalCenter"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                <div className="modal-content">
-                    <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLongTitle">
-                        Pratinjau Gambar
-                    </h5>
-                    <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                    >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div
-                    className="modal-body text-center"
-                    style={{ height: "400px" }}
-                    >
-                    <Image
-                        src={gambarPreview}
-                        alt="image"
-                        layout="fill"
-                        objectFit="cover"
-                    />
-                    </div>
-                    <div className="modal-footer">
-                    <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-dismiss="modal"
-                    >
-                        Tutup
-                    </button>
-                    </div>
-                </div>
-                </div>
-            </div> */}
 
         </PageWrapper>
     )

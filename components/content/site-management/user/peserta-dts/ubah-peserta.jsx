@@ -93,7 +93,9 @@ const TambahPage = ({ token }) => {
   const [ktpName, setKtpName] = useState(allDetailPeserta.data.data.File_ktp);
   const [ktpBase, setKtpBase] = useState(allDetailPeserta.data.data.File_ktp);
   const [ijazahName, setIjazahName] = useState(
-    allDetailPeserta.data.data.ijasah
+    allDetailPeserta.data.data.ijasah === ""
+      ? null
+      : allDetailPeserta.data.data.ijasah
   );
   const [ijazahBase, setIjazahBase] = useState(
     allDetailPeserta.data.data.ijasah
@@ -139,7 +141,7 @@ const TambahPage = ({ token }) => {
 
     today = yyyy + "-" + mm + "-" + dd;
 
-    document.getElementById("setTodaysDate").setAttribute("max", today);
+    document.getElementById("setTodaysDate")?.setAttribute("max", today);
   };
 
   const optionKabupaten = dataKabupaten.data?.map((item) => {
@@ -338,7 +340,7 @@ const TambahPage = ({ token }) => {
     }
   };
 
-  const formatDate = (date) =>  {
+  const formatDate = (date) => {
     var d = new Date(date),
       month = "" + (d.getMonth() + 1),
       day = "" + d.getDate(),
@@ -348,7 +350,7 @@ const TambahPage = ({ token }) => {
     if (day.length < 2) day = "0" + day;
 
     return [year, month, day].join("-");
-  }
+  };
 
   const colorText = {
     color: "#6C6C6C",
@@ -370,10 +372,10 @@ const TambahPage = ({ token }) => {
     <PageWrapper>
       <div className="row">
         {!router.query.ubah_pelatihan_id && (
-          <div className="col-12 col-xl-3">
+          <div className="col-12 col-lg-12 col-xl-3">
             <div
               className="card card-custom card-stretch gutter-b px-10 py-12"
-              style={{ height: "470px" }}
+              style={{ height: "480px" }}
             >
               <div className="form-group" style={{ maxWidth: "19rem" }}>
                 <div>
@@ -486,661 +488,690 @@ const TambahPage = ({ token }) => {
         )}
 
         {sideBar && !router.query.ubah_pelatihan_id && (
-          <div className="col-12 col-xl-9">
-            <div className="card card-custom card-stretch gutter-b px-4 px-sm-8 py-4">
-              <div className="card-header border-0">
+          <div className="col-12 col-lg-9 col-xl-9">
+            <div className="card card-custom card-stretch gutter-b">
+              <div className="">
                 <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
                   Data Pribadi
                 </h3>
-              </div>
-              <div className="card-body pt-0 px-4 px-sm-8 py-4">
-                <div className="form-group">
-                  <label>Nama Lengkap</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nama Lengkap"
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                    onBlur={(e) => {
-                      simpleValidator.current.showMessageFor("name");
-                    }}
-                  />
-                  {simpleValidator.current.message("name", name, "required", {
-                    className: "text-danger",
-                  })}
-                </div>
-                <div className="form-group row">
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Email</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        placeholder="Masukkan Email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("email");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "email",
-                        email,
-                        "required",
-                        { className: "text-danger" }
-                      )}
-                    </div>
-                    <div className="form-group">
-                      <label>NIK</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Masukkan NIK"
-                        maxLength={16}
-                        value={nik}
-                        onChange={(e) => {
-                          if (e.target.value.length === 17) {
-                            setNik(nik);
-                          }else{
-                            setNik(e.target.value.replace(/[^0-9]/g, ""))
-                          }
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("nik");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "nik",
-                        nik,
-                        "required|max:17",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                    <div className="form-group">
-                      <label>Tempat Lahir</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Masukkan Tempat Lahir"
-                        value={tempatLahir}
-                        onChange={(e) => {
-                          setTempatLahir(e.target.value);
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("tempatLahir");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "tempatLahir",
-                        tempatLahir,
-                        "required",
-                        { className: "text-danger" }
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label htmlFor="exampleSelect1">Jenis Kelamin</label>
-                      <select
-                        className="form-control"
-                        placeholder="Pilih Jenis Kelamin"
-                        id="exampleSelect1"
-                        value={jenisKelamin}
-                        onChange={(e) => {
-                          setJenisKelamin(e.target.value);
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor(
-                            "jenisKelamin"
-                          );
-                        }}
-                      >
-                        <option value="" disabled hidden>Pilih Jenis Kelamin</option>
-                        <option value="Perempuan">Perempuan</option>
-                        <option value="Laki - Laki">Laki-Laki</option>
-                      </select>
 
-                      {simpleValidator.current.message(
-                        "jenisKelamin",
-                        jenisKelamin,
-                        "required",
-                        { className: "text-danger" }
-                      )}
-                    </div>
-                    <div className="form-group">
-                      <label>Nomor Handphone</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Masukkan Nomor Handphone"
-                        value={nomorHandphone}
-                        onChange={(e) => {
-                          if (e.target.value.length === 15) {
-                            setNomorHandphone(nomorHandphone)
-                          }else{
-
-                            setNomorHandphone(e.target.value.replace(/[^0-9]/g, ""));
-                          }
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor(
-                            "nomorHandphone"
-                          );
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "nomorHandphone",
-                        nomorHandphone,
-                        "required|max:14",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                    <div className="form-group">
-                      <label>Tanggal Lahir</label>
-                      <input
-                        type="date"
-                        id="setTodaysDate"
-                        className="form-control"
-                        placeholder="Masukkan Tanggal Lahir"
-                        value={tanggalLahir}
-                        onChange={(e) => {
-                          if (
-                            e.target.value < formatDate(new Date(Date.now()))
-                          ) {
-                            setTanggalLahir(e.target.value);
-                          } else if (e.target.value) {
-                            setTanggalLahir(formatDate(new Date(Date.now())));
-                          }
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor(
-                            "tanggalLahir"
-                          );
-                        }}
-                        max={moment().subtract(1, "year").format("YYYY-MM-DD")}
-                      />
-                      {simpleValidator.current.message(
-                        "tanggalLahir",
-                        tanggalLahir,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
-                  Alamat
-                </h3>
-                <div className="form-group">
-                  <label>Alamat (Sesuai KTP)</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Alamat KTP"
-                    value={alamatKtp}
-                    onChange={(e) => {
-                      setAlamatKtp(e.target.value);
-                    }}
-                    onBlur={(e) => {
-                      simpleValidator.current.showMessageFor("alamatKtp");
-                    }}
-                  />
-                  {simpleValidator.current.message(
-                    "alamatKtp",
-                    alamatKtp,
-                    "required",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
-                </div>
-                <div className="form-group row">
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Provinsi</label>
-                      <Select
-                        placeholder="Pilih Provinsi"
-                        defaultValue={{
-                          label: provinsiKtp,
-                          value: provinsiKtp,
-                        }}
-                        onChange={(e) => {
-                          dispatch(dropdownKabupaten(token, e.value));
-                          setProvinsiKtp({ label: e?.label, value: e?.value });
-                        }}
-                        options={optionProvinsi}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("provinsiKtp");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "provinsiKtp",
-                        provinsiKtp,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label htmlFor="exampleSelect1">Kota</label>
-                      <Select
-                        placeholder="Pilih Kota"
-                        options={optionKabupaten}
-                        defaultValue={{ label: kotaKtp, value: kotaKtp }}
-                        onChange={(e) => {
-                          dispatch(dropdownProvinsiToDesa(token, e.value));
-                          setKotaKtp({ label: e?.label, value: e?.value });
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("kotaKtp");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "kotaKtp",
-                        kotaKtp,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Kecamatan</label>
-                      <Select
-                        placeholder="Pilih Provinsi"
-                        defaultValue={{
-                          label: kecamatanKtp,
-                          value: kecamatanKtp,
-                        }}
-                        onChange={(e) => {
-                          setKecamatanKtp({ label: e?.label, value: e?.value });
-                          dispatch(dropdownKecamatanToDesa(token, e.value));
-                        }}
-                        options={optionKecamatan}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor(
-                            "kecamatanKtp"
-                          );
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "kecamatanKtp",
-                        kecamatanKtp,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                    <div className="form-group">
-                      <label>Kode Pos</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Masukkan Kode Pos KTP"
-                        value={kodePostKtp}
-                        onChange={(e) => {
-                          setKodePostKtp(e.target.value);
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("kodePostKtp");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "kodePostKtp",
-                        kodePostKtp,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label htmlFor="exampleSelect1">Kelurahan</label>
-                      <Select
-                        placeholder="Pilih Kota"
-                        options={optionKelurahan}
-                        defaultValue={{
-                          label: kelurahanKtp,
-                          value: kelurahanKtp,
-                        }}
-                        onChange={(e) => {
-                          setKelurahanKtp({ label: e?.label, value: e?.value });
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor(
-                            "kelurahanKtp"
-                          );
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "kelurahanKtp",
-                        kelurahanKtp,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Alamat Domisili</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Alamat Domisili"
-                    value={alamat}
-                    onChange={(e) => {
-                      setAlamat(e.target.value);
-                    }}
-                    onBlur={(e) => {
-                      simpleValidator.current.showMessageFor("alamat");
-                    }}
-                  />
-                  {simpleValidator.current.message(
-                    "alamat",
-                    alamat,
-                    "required",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
-                </div>
-                <div className="form-group row">
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Provinsi</label>
-                      <Select
-                        placeholder="Pilih Provinsi"
-                        defaultValue={{ label: provinsi, value: provinsi }}
-                        onChange={(e) => {
-                          dispatch(dropdownKabupaten(token, e.value));
-                          setProvinsi({ label: e?.label, value: e?.value });
-                        }}
-                        options={optionProvinsi}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("provinsi");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "provinsi",
-                        provinsi,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label htmlFor="exampleSelect1">Kota</label>
-                      <Select
-                        placeholder="Pilih Kota"
-                        options={optionKabupaten}
-                        defaultValue={{ label: kota, value: kota }}
-                        onChange={(e) => {
-                          dispatch(dropdownProvinsiToDesa(token, e.value));
-                          setKota({ label: e?.label, value: e?.value });
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("kota");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "kota",
-                        kota,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Kecamatan</label>
-                      <Select
-                        placeholder="Pilih Provinsi"
-                        defaultValue={{ label: kecamatan, value: kecamatan }}
-                        onChange={(e) => {
-                          dispatch(dropdownKecamatanToDesa(token, e.value));
-                          setKecamatan({ label: e?.label, value: e?.value });
-                        }}
-                        options={optionKecamatan}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("kecamatan");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "kecamatan",
-                        kecamatan,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                    <div className="form-group">
-                      <label>Kode Pos</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Masukkan Kode Pos Domisili"
-                        value={kodePost}
-                        onChange={(e) => {
-                          setKodePost(e.target.value);
-                        }}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("kodePost");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "kodePost",
-                        kodePost,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label htmlFor="exampleSelect1">Kelurahan</label>
-                      <Select
-                        placeholder="Pilih Kota"
-                        defaultValue={{ label: kelurahan, value: kelurahan }}
-                        onChange={(e) => {
-                          setKelurahan({ label: e?.label, value: e?.value });
-                        }}
-                        options={optionKelurahan}
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("kelurahan");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "kelurahan",
-                        kelurahan,
-                        "required",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
-                  Upload Berkas Pribadi
-                </h3>
-                <div className="form-group">
-                  <label>KTP</label>
-                  <div className="input-group">
-                    <div className="custom-file">
-                      <input
-                        // onFocus={() => setError({ ...error, agency_logo: "" })}
-                        onChange={(e) => onKtpHandler(e)}
-                        type="file"
-                        name="logo"
-                        className="custom-file-input cursor-pointer"
-                        id="inputGroupFile04"
-                        accept="image/png,image/jpg"
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("ktpName");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "ktpName",
-                        ktpName,
-                        ktpName === "" ? "required" : "",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-
-                      <label
-                        className="custom-file-label"
-                        htmlFor="inputGroupFile04"
-                      >
-                        {ktpName}
-                      </label>
-                    </div>
-                  </div>
-                  <p className="text-muted">*JPG/JPEG/PNG.</p>
-                </div>
-                <div className="form-group">
-                  <label>Ijazah</label>
-                  <div className="input-group">
-                    <div className="custom-file">
-                      <input
-                        // onFocus={() => setError({ ...error, agency_logo: "" })}
-                        onChange={(e) => onIjasahHandler(e)}
-                        type="file"
-                        name="logo"
-                        className="custom-file-input cursor-pointer"
-                        id="inputGroupFile04"
-                        accept="image/png,image/jpg"
-                        onBlur={(e) => {
-                          simpleValidator.current.showMessageFor("ijazahName");
-                        }}
-                      />
-                      {simpleValidator.current.message(
-                        "ijazahName",
-                        ijazahName,
-                        ijazahName === "" ? "required" : "",
-                        {
-                          className: "text-danger",
-                        }
-                      )}
-
-                      <label
-                        className="custom-file-label"
-                        htmlFor="inputGroupFile04"
-                      >
-                        {ijazahName}
-                      </label>
-                    </div>
-                  </div>
-                  <p className="text-muted">*JPG/JPEG/PNG.</p>
-                </div>
-
-                <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
-                  Ganti Kata Sandi
-                </h3>
-                <div className="form-group">
-                  <label>Kata Sandi Baru</label>
-                  <div className="position-relative">
+                <div className="card-body pt-0 px-4 px-sm-8 py-4">
+                  <div className="form-group">
+                    <label>Nama Lengkap</label>
                     <input
-                      id="input-password"
-                      type="password"
+                      type="text"
                       className="form-control"
-                      placeholder="Silahkan Masukkan Password"
+                      placeholder="Masukkan Nama Lengkap"
+                      value={name}
                       onChange={(e) => {
-                        setPassword(e.target.value);
+                        setName(e.target.value);
+                      }}
+                      onBlur={(e) => {
+                        simpleValidator.current.showMessageFor("name");
                       }}
                     />
-                    {hidePassword === true ? (
-                      <i
-                        className="ri-eye-fill right-center-absolute cursor-pointer"
-                        style={{ right: "10px" }}
-                        onClick={() => handlerShowPassword(false)}
-                      />
-                    ) : (
-                      <i
-                        className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                        style={{ right: "10px" }}
-                        onClick={() => handlerShowPassword(true)}
-                      />
-                    )}
+                    {simpleValidator.current.message("name", name, "required", {
+                      className: "text-danger",
+                    })}
                   </div>
-                </div>
-                <div className="form-group">
-                  <label>Konfirmasi Kata Sandi Baru</label>
-                  <div className="position-relative">
+                  <div className="form-group row">
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label>Email</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          placeholder="Masukkan Email"
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("email");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "email",
+                          email,
+                          "required",
+                          { className: "text-danger" }
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label>NIK</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Masukkan NIK"
+                          maxLength={16}
+                          value={nik}
+                          onChange={(e) => {
+                            if (e.target.value.length === 17) {
+                              setNik(nik);
+                            } else {
+                              setNik(e.target.value.replace(/[^0-9]/g, ""));
+                            }
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("nik");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "nik",
+                          nik,
+                          "required|max:17",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label>Tempat Lahir</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Masukkan Tempat Lahir"
+                          value={tempatLahir}
+                          onChange={(e) => {
+                            setTempatLahir(e.target.value);
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "tempatLahir"
+                            );
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "tempatLahir",
+                          tempatLahir,
+                          "required",
+                          { className: "text-danger" }
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label htmlFor="exampleSelect1">Jenis Kelamin</label>
+                        <select
+                          className="form-control"
+                          placeholder="Pilih Jenis Kelamin"
+                          id="exampleSelect1"
+                          value={jenisKelamin}
+                          onChange={(e) => {
+                            setJenisKelamin(e.target.value);
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "jenisKelamin"
+                            );
+                          }}
+                        >
+                          <option value="" disabled hidden>
+                            Pilih Jenis Kelamin
+                          </option>
+                          <option value="Perempuan">Perempuan</option>
+                          <option value="Laki - Laki">Laki-Laki</option>
+                        </select>
+
+                        {simpleValidator.current.message(
+                          "jenisKelamin",
+                          jenisKelamin,
+                          "required",
+                          { className: "text-danger" }
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label>Nomor Handphone</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Masukkan Nomor Handphone"
+                          value={nomorHandphone}
+                          onChange={(e) => {
+                            if (e.target.value.length === 15) {
+                              setNomorHandphone(nomorHandphone);
+                            } else {
+                              setNomorHandphone(
+                                e.target.value.replace(/[^0-9]/g, "")
+                              );
+                            }
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "nomorHandphone"
+                            );
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "nomorHandphone",
+                          nomorHandphone,
+                          "required|max:14",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label>Tanggal Lahir</label>
+                        <input
+                          type="date"
+                          id="setTodaysDate"
+                          className="form-control"
+                          placeholder="Masukkan Tanggal Lahir"
+                          value={tanggalLahir}
+                          onChange={(e) => {
+                            if (
+                              e.target.value < formatDate(new Date(Date.now()))
+                            ) {
+                              setTanggalLahir(e.target.value);
+                            } else if (e.target.value) {
+                              setTanggalLahir(formatDate(new Date(Date.now())));
+                            }
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "tanggalLahir"
+                            );
+                          }}
+                          max={moment()
+                            .subtract(1, "year")
+                            .format("YYYY-MM-DD")}
+                        />
+                        {simpleValidator.current.message(
+                          "tanggalLahir",
+                          tanggalLahir,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
+                    Alamat
+                  </h3>
+                  <div className="form-group">
+                    <label>Alamat (Sesuai KTP)</label>
                     <input
-                      id="input-password-confirm"
-                      type="password"
+                      type="text"
                       className="form-control"
-                      placeholder="Silahkan Masukkan Konfirmasi Password"
+                      placeholder="Masukkan Alamat KTP"
+                      value={alamatKtp}
                       onChange={(e) => {
-                        setPasswordConfirm(e.target.value);
+                        setAlamatKtp(e.target.value);
+                      }}
+                      onBlur={(e) => {
+                        simpleValidator.current.showMessageFor("alamatKtp");
                       }}
                     />
-
-                    {hidePasswordConfirm === true ? (
-                      <i
-                        className="ri-eye-fill right-center-absolute cursor-pointer"
-                        style={{ right: "10px" }}
-                        onClick={() => handlerShowPasswordConfirm(false)}
-                      />
-                    ) : (
-                      <i
-                        className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                        style={{ right: "10px" }}
-                        onClick={() => handlerShowPasswordConfirm(true)}
-                      />
+                    {simpleValidator.current.message(
+                      "alamatKtp",
+                      alamatKtp,
+                      "required",
+                      {
+                        className: "text-danger",
+                      }
                     )}
                   </div>
-                </div>
+                  <div className="form-group row">
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label>Provinsi</label>
+                        <Select
+                          placeholder="Pilih Provinsi"
+                          defaultValue={{
+                            label: provinsiKtp,
+                            value: provinsiKtp,
+                          }}
+                          onChange={(e) => {
+                            dispatch(dropdownKabupaten(token, e.value));
+                            setProvinsiKtp({
+                              label: e?.label,
+                              value: e?.value,
+                            });
+                          }}
+                          options={optionProvinsi}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "provinsiKtp"
+                            );
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "provinsiKtp",
+                          provinsiKtp,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label htmlFor="exampleSelect1">Kota</label>
+                        <Select
+                          placeholder="Pilih Kota"
+                          options={optionKabupaten}
+                          defaultValue={{ label: kotaKtp, value: kotaKtp }}
+                          onChange={(e) => {
+                            dispatch(dropdownProvinsiToDesa(token, e.value));
+                            setKotaKtp({ label: e?.label, value: e?.value });
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("kotaKtp");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "kotaKtp",
+                          kotaKtp,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label>Kecamatan</label>
+                        <Select
+                          placeholder="Pilih Provinsi"
+                          defaultValue={{
+                            label: kecamatanKtp,
+                            value: kecamatanKtp,
+                          }}
+                          onChange={(e) => {
+                            setKecamatanKtp({
+                              label: e?.label,
+                              value: e?.value,
+                            });
+                            dispatch(dropdownKecamatanToDesa(token, e.value));
+                          }}
+                          options={optionKecamatan}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "kecamatanKtp"
+                            );
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "kecamatanKtp",
+                          kecamatanKtp,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label>Kode Pos</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Masukkan Kode Pos KTP"
+                          value={kodePostKtp}
+                          onChange={(e) => {
+                            if (e.target.value.length === 6) {
+                              setKodePostKtp(kodePostKtp);
+                            } else {
+                              setKodePostKtp(e.target.value);
+                            }
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "kodePostKtp"
+                            );
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "kodePostKtp",
+                          kodePostKtp,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label htmlFor="exampleSelect1">Kelurahan</label>
+                        <Select
+                          placeholder="Pilih Kota"
+                          options={optionKelurahan}
+                          defaultValue={{
+                            label: kelurahanKtp,
+                            value: kelurahanKtp,
+                          }}
+                          onChange={(e) => {
+                            setKelurahanKtp({
+                              label: e?.label,
+                              value: e?.value,
+                            });
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "kelurahanKtp"
+                            );
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "kelurahanKtp",
+                          kelurahanKtp,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="form-group row mt-6">
-                  <div className="col-sm-12 d-flex justify-content-end">
-                    <Link href="/site-management/user/user-dts" passHref>
-                      <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                        Kembali
-                      </a>
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={onSubmit}
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    >
-                      Simpan
-                    </button>
+                  <div className="form-group">
+                    <label>Alamat Domisili</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Masukkan Alamat Domisili"
+                      value={alamat}
+                      onChange={(e) => {
+                        setAlamat(e.target.value);
+                      }}
+                      onBlur={(e) => {
+                        simpleValidator.current.showMessageFor("alamat");
+                      }}
+                    />
+                    {simpleValidator.current.message(
+                      "alamat",
+                      alamat,
+                      "required",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label>Provinsi</label>
+                        <Select
+                          placeholder="Pilih Provinsi"
+                          defaultValue={{ label: provinsi, value: provinsi }}
+                          onChange={(e) => {
+                            dispatch(dropdownKabupaten(token, e.value));
+                            setProvinsi({ label: e?.label, value: e?.value });
+                          }}
+                          options={optionProvinsi}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("provinsi");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "provinsi",
+                          provinsi,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label htmlFor="exampleSelect1">Kota</label>
+                        <Select
+                          placeholder="Pilih Kota"
+                          options={optionKabupaten}
+                          defaultValue={{ label: kota, value: kota }}
+                          onChange={(e) => {
+                            dispatch(dropdownProvinsiToDesa(token, e.value));
+                            setKota({ label: e?.label, value: e?.value });
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("kota");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "kota",
+                          kota,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label>Kecamatan</label>
+                        <Select
+                          placeholder="Pilih Provinsi"
+                          defaultValue={{ label: kecamatan, value: kecamatan }}
+                          onChange={(e) => {
+                            dispatch(dropdownKecamatanToDesa(token, e.value));
+                            setKecamatan({ label: e?.label, value: e?.value });
+                          }}
+                          options={optionKecamatan}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("kecamatan");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "kecamatan",
+                          kecamatan,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label>Kode Pos</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Masukkan Kode Pos Domisili"
+                          value={kodePost}
+                          onChange={(e) => {
+                            if (e.target.value.length === 6) {
+                              setKodePost(kodePost);
+                            } else {
+                              setKodePost(e.target.value);
+                            }
+                          }}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("kodePost");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "kodePost",
+                          kodePost,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <label htmlFor="exampleSelect1">Kelurahan</label>
+                        <Select
+                          placeholder="Pilih Kota"
+                          defaultValue={{ label: kelurahan, value: kelurahan }}
+                          onChange={(e) => {
+                            setKelurahan({ label: e?.label, value: e?.value });
+                          }}
+                          options={optionKelurahan}
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("kelurahan");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "kelurahan",
+                          kelurahan,
+                          "required",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
+                    Upload Berkas Pribadi
+                  </h3>
+                  <div className="form-group">
+                    <label>KTP</label>
+                    <div className="d-flex">
+                      <div className="custom-file">
+                        <input
+                          // onFocus={() => setError({ ...error, agency_logo: "" })}
+                          onChange={(e) => onKtpHandler(e)}
+                          type="file"
+                          name="logo"
+                          className="custom-file-input cursor-pointer"
+                          id="inputGroupFile04"
+                          accept="image/png,image/jpg"
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor("ktpName");
+                          }}
+                        />
+                        {simpleValidator.current.message(
+                          "ktpName",
+                          ktpName,
+                          "required",
+                          {
+                            className: "text-danger mt-6",
+                          }
+                        )}
+
+                        <label
+                          className="custom-file-label"
+                          htmlFor="inputGroupFile04"
+                        >
+                          {ktpName}
+                        </label>
+                      </div>
+                    </div>
+                    <p className="text-muted">*JPG/JPEG/PNG.</p>
+                  </div>
+                  <div className="form-group">
+                    <label>Ijazah</label>
+                    <div className="d-flex">
+                      <div className="custom-file">
+                        <input
+                          onChange={(e) => onIjasahHandler(e)}
+                          type="file"
+                          name="logo"
+                          className="custom-file-input"
+                          accept="image/png,image/jpg"
+                          onBlur={(e) => {
+                            simpleValidator.current.showMessageFor(
+                              "ijazahName"
+                            );
+                          }}
+                        />
+
+                        <label
+                          className="custom-file-label"
+                          htmlFor="inputGroupFile04"
+                        >
+                          {ijazahName}
+                        </label>
+                        <label style={{ marginTop: "15px" }}>
+                          {simpleValidator.current.message(
+                            "Ijasah",
+                            ijazahName,
+                            "required",
+                            { className: "text-danger" }
+                          )}
+                        </label>
+                      </div>
+                    </div>
+                    <p className="text-muted">*JPG/JPEG/PNG.</p>
+                  </div>
+
+                  <h3 className="card-title font-weight-bolder text-dark w-100 pt-5 mb-5 mt-5 titles-1">
+                    Ganti Kata Sandi
+                  </h3>
+                  <div className="form-group">
+                    <label>Kata Sandi Baru</label>
+                    <div className="position-relative">
+                      <input
+                        id="input-password"
+                        type="password"
+                        className="form-control"
+                        placeholder="Silahkan Masukkan Password"
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
+                      />
+                      {hidePassword === true ? (
+                        <i
+                          className="ri-eye-fill right-center-absolute cursor-pointer"
+                          style={{ right: "10px" }}
+                          onClick={() => handlerShowPassword(false)}
+                        />
+                      ) : (
+                        <i
+                          className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                          style={{ right: "10px" }}
+                          onClick={() => handlerShowPassword(true)}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label>Konfirmasi Kata Sandi Baru</label>
+                    <div className="position-relative">
+                      <input
+                        id="input-password-confirm"
+                        type="password"
+                        className="form-control"
+                        placeholder="Silahkan Masukkan Konfirmasi Password"
+                        onChange={(e) => {
+                          setPasswordConfirm(e.target.value);
+                        }}
+                      />
+
+                      {hidePasswordConfirm === true ? (
+                        <i
+                          className="ri-eye-fill right-center-absolute cursor-pointer"
+                          style={{ right: "10px" }}
+                          onClick={() => handlerShowPasswordConfirm(false)}
+                        />
+                      ) : (
+                        <i
+                          className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                          style={{ right: "10px" }}
+                          onClick={() => handlerShowPasswordConfirm(true)}
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="form-group row mt-6">
+                    <div className="col-sm-12 d-flex justify-content-end">
+                      <Link href="/site-management/user/user-dts" passHref>
+                        <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                          Kembali
+                        </a>
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={onSubmit}
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                      >
+                        Simpan
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

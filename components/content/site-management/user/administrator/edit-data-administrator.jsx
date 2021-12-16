@@ -480,6 +480,10 @@ const TambahApi = ({ token }) => {
                     }
                   }).map(item => {
                     return { ...item, label: item.name, value: item.name };
+                  }).filter((item) => {
+                    return !roleOption.some((filter) => {
+                      return item.label === filter.label;
+                    });
                   })}
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("roleOption");
@@ -510,9 +514,23 @@ const TambahApi = ({ token }) => {
                   isSearchable={true}
                   name="color"
                   onChange={(e) => handleChangeUnitWork(e)}
-                  options={allUnitWorkList?.data?.unit_work?.map((items) => {
-                    return { ...items, label: items.name, value: items.name };
-                  })}
+                  options={allUnitWorkList?.data?.unit_work
+                    ?.filter((items) => {
+                      if (items.status === "1") {
+                        return {
+                          ...items,
+                          label: items.name,
+                          value: items.name,
+                        };
+                      }
+                    })
+                    .map((item) => {
+                      return { ...item, label: item.name, value: item.name };
+                    }).filter((item) => {
+                      return !unitWorkOption.some((filter) => {
+                        return item.label === filter.label;
+                      });
+                    })}
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("unitWorkOption");
                   }}

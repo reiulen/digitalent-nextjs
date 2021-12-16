@@ -423,13 +423,13 @@ const Kategori = ({ token }) => {
                     <tbody>
                       {!paginateKategori ||
                         (paginateKategori &&
-                          paginateKategori.kategori.length === 0) ? (
+                          paginateKategori?.kategori.length === 0) ? (
                         <td className="align-middle text-center" colSpan={4}>
                           Data Kosong
                         </td>
                       ) : (
                         paginateKategori &&
-                        paginateKategori.kategori.map((row, i) => {
+                        paginateKategori?.kategori?.map((row, i) => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
@@ -450,7 +450,7 @@ const Kategori = ({ token }) => {
                                 {row.jenis_kategori}
                               </td>
                               {
-                                role_permission.permissions.includes("publikasi.kategori.manage") || role_permission.roles.includes("Super Admin") ?
+                                role_permission?.permissions.includes("publikasi.kategori.manage") || role_permission?.roles.includes("Super Admin") ?
                                   <td className="align-middle d-flex justify-content-center">
                                     <Link href={`/publikasi/kategori/ubah-kategori?id=${row.id}`}>
                                       <a className="btn btn-link-action bg-blue-secondary text-white mr-2 position-relative btn-delete">
@@ -486,13 +486,13 @@ const Kategori = ({ token }) => {
 
               {kategori && paginateKategori ? (
                 <div className="row">
-                  {paginateKategori.perPage < kategori.total && (
+                  {paginateKategori?.perPage < kategori?.total && (
                     <>
                       <div className={`${stylesPag.pagination} table-pagination`}>
                         <Pagination
                           activePage={page}
-                          itemsCountPerPage={paginateKategori.perPage}
-                          totalItemsCount={paginateKategori.total}
+                          itemsCountPerPage={paginateKategori?.perPage}
+                          totalItemsCount={paginateKategori?.total}
                           pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                           onChange={handlePagination}
                           nextPageText={">"}
@@ -532,7 +532,7 @@ const Kategori = ({ token }) => {
                           className="align-middle mt-5 pt-1"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {paginateKategori.total} List Data
+                          Total Data {paginateKategori?.total} List Data
                         </p>
                       </div>
                     </div>

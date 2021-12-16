@@ -141,57 +141,59 @@ const ReviewKerjasama = ({ token }) => {
 
   const [statusInfo, setstatusInfo] = useState("");
   useEffect(() => {
-    async function setDataSingle(id, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-        setTitle(data?.data?.title);
-        setDate(data?.data?.submission_date);
-        setCooperationID(data?.data?.cooperation_category);
-        setPeriod(data?.data?.period);
-        setPeriodUnit(data?.data?.period_unit);
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data?.message}`, "error");
-      }
-    }
+    
     setDataSingle(router.query.id, token);
-
-    async function setDataSingleSelesaiReview(id, version, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/show-revisi/${id}/${version}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              Permission: Cookies.get("token_permission")
-            },
-          }
-        );
-        setTitleView(data?.data?.title);
-        setDateView(data?.data?.date);
-        setCooperationIDView(data?.data?.cooperation_category);
-        setPeriodView(data?.data?.period);
-        setPeriodUnitView(data?.data?.period_unit);
-        setAllCooperationView(data?.data?.cooperation_category.data_content);
-        setNoteView(data?.data?.note);
-        setMitra(data?.data?.mitra);
-      } catch (error) {
-        Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
-      }
-    }
-
     setDataSingleSelesaiReview(router.query.id, router.query.version, token);
+
     if (router.query.statusInfo) {
       setstatusInfo(router.query.statusInfo);
     }
   }, [router.query.id, router.query.version, router.query.statusInfo, token]);
+
+  async function setDataSingle(id, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      setTitle(data?.data?.title);
+      setDate(data?.data?.submission_date);
+      setCooperationID(data?.data?.cooperation_category);
+      setPeriod(data?.data?.period);
+      setPeriodUnit(data?.data?.period_unit);
+    } catch (error) {
+      Swal.fire("Gagal", `${error.response.data?.message}`, "error");
+    }
+  }
+
+  async function setDataSingleSelesaiReview(id, version, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/show-revisi/${id}/${version}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      setTitleView(data?.data?.title);
+      setDateView(data?.data?.date);
+      setCooperationIDView(data?.data?.cooperation_category);
+      setPeriodView(data?.data?.period);
+      setPeriodUnitView(data?.data?.period_unit);
+      setAllCooperationView(data?.data?.cooperation_category.data_content);
+      setNoteView(data?.data?.note);
+      setMitra(data?.data?.mitra);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+    }
+  }
 
   return (
     <PageWrapper>

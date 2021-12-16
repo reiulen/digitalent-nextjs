@@ -388,7 +388,7 @@ const TambahBerita = ({ token, id }) => {
                                         {!akademi || (akademi && akademi.length === 0) ? (
                                             <option value="">Data Kosong</option>
                                         ) : (
-                                            akademi && akademi.map((row) => {
+                                            akademi && akademi?.map((row) => {
                                                 return (
                                                     <option key={row.id} value={row.slug}>
                                                         {row.slug}
@@ -410,7 +410,7 @@ const TambahBerita = ({ token, id }) => {
                                         {!kategori || (kategori && kategori.length === 0) ? (
                                             <option value="">Data Kosong</option>
                                         ) : (
-                                            kategori && kategori.kategori && kategori.kategori.map((row) => {
+                                            kategori && kategori?.kategori && kategori?.kategori?.map((row) => {
                                                 return (
                                                     row.jenis_kategori == "Berita" ?
                                                         <option key={row.id} value={row.id}>
@@ -453,7 +453,7 @@ const TambahBerita = ({ token, id }) => {
                             </div>
 
                             {
-                                role_permission.roles.includes("Super Admin") ?
+                                role_permission?.roles.includes("Super Admin") ?
                                     <div className="form-group row">
                                         <label
                                             htmlFor="staticEmail"

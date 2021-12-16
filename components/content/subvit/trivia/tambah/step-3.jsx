@@ -202,16 +202,16 @@ const StepThree = ({ token, tokenPermission }) => {
                 <td>Tanggal Pendaftaran &nbsp;</td>
                 <td>: &nbsp;</td>
                 <td>
-                  {moment(trivia?.pendaftaran_mulai).format("ll")} -{" "}
-                  {moment(trivia?.pendaftaran_selesai).format("ll")}{" "}
+                  {trivia?.pendaftaran_mulai} &nbsp;s.d.&nbsp;
+                  {trivia?.pendaftaran_selesai}{" "}
                 </td>
               </tr>
               <tr>
                 <td>Tanggal Pelatihan </td>
                 <td> : </td>{" "}
                 <td>
-                  {moment(trivia?.pelatihan_mulai).format("ll")} -{" "}
-                  {moment(trivia?.pelatihan_selesai).format("ll")}{" "}
+                  {trivia?.pelatihan_mulai} &nbsp;s.d.&nbsp;
+                  {trivia?.pelatihan_selesai}{" "}
                 </td>
               </tr>
             </table>

@@ -295,20 +295,19 @@ const StepTwo = ({ token, tokenPermission }) => {
                         <th>Kategori</th>
                         <th>Bobot</th>
                         <th>Status</th>
-                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {subtance_question_detail &&
-                      subtance_question_detail.list_questions &&
-                      subtance_question_detail.list_questions.length === 0 ? (
+                      subtance_question_detail?.list_questions &&
+                      subtance_question_detail?.list_questions.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
                       ) : (
                         subtance_question_detail &&
-                        subtance_question_detail.list_questions &&
-                        subtance_question_detail.list_questions.map(
+                        subtance_question_detail?.list_questions &&
+                        subtance_question_detail?.list_questions?.map(
                           (question, i) => {
                             return (
                               <tr key={question.id}>
@@ -354,20 +353,6 @@ const StepTwo = ({ token, tokenPermission }) => {
                                     </span>
                                   )}
                                 </td>
-                                <td className="align-middle">
-                                  <Link
-                                    href={`/subvit/substansi/edit-soal-substansi?id=${question.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="Edit"
-                                    >
-                                      <i className="ri-pencil-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
-                                </td>
                               </tr>
                             );
                           }
@@ -383,8 +368,8 @@ const StepTwo = ({ token, tokenPermission }) => {
                   {subtance_question_detail && (
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={subtance_question_detail.perPage}
-                      totalItemsCount={subtance_question_detail.total}
+                      itemsCountPerPage={subtance_question_detail?.perPage}
+                      totalItemsCount={subtance_question_detail?.total}
                       pageRangeDisplayed={3}
                       onChange={handlePagination}
                       nextPageText={">"}
@@ -399,7 +384,7 @@ const StepTwo = ({ token, tokenPermission }) => {
 
                 <div className="table-total ml-auto">
                   {subtance_question_detail &&
-                    subtance_question_detail.list_questions && (
+                    subtance_question_detail?.list_questions && (
                       <div className="row">
                         <div className="col-4 mr-0 p-0">
                           <select
@@ -426,7 +411,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                             className="align-middle mt-3"
                             style={{ color: "#B5B5C3" }}
                           >
-                            Total Data {subtance_question_detail.total}
+                            Total Data {subtance_question_detail?.total}
                           </p>
                         </div>
                       </div>
