@@ -83,20 +83,68 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
-    dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
+    dispatch(
+      getAllSubtanceQuestionDetail(
+        id,
+        1,
+        null,
+        null,
+        "",
+        "",
+        "",
+        token,
+        tokenPermission
+      )
+    );
     // if (error) {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
+      dispatch(
+        getAllSubtanceQuestionDetail(
+          id,
+          1,
+          null,
+          null,
+          "",
+          "",
+          "",
+          token,
+          tokenPermission
+        )
+      );
     }
 
     if (successImages) {
-      dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
+      dispatch(
+        getAllSubtanceQuestionDetail(
+          id,
+          1,
+          null,
+          null,
+          "",
+          "",
+          "",
+          token,
+          tokenPermission
+        )
+      );
     }
 
     if (isDeleted) {
-      dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
+      dispatch(
+        getAllSubtanceQuestionDetail(
+          id,
+          1,
+          null,
+          null,
+          "",
+          "",
+          "",
+          token,
+          tokenPermission
+        )
+      );
     }
   }, [
     dispatch,
