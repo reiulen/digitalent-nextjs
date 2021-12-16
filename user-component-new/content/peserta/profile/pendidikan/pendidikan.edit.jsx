@@ -128,21 +128,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 		asalSekolah,
 	]);
 
-	const optionsAsalSekolah = [];
-
-	dataAsalSekolah &&
-		dataAsalSekolah.map((item) => {
-			optionsAsalSekolah.push({
-				value: item.id,
-				label: item.label,
-			});
-		});
-
-	optionsAsalSekolah.push({
-		value: "",
-		label: "Nama Institusi Lainnya..",
-	});
-
 	const searchAsal = (word) => {
 		let array = [];
 		const searchData = getAsalSekolah;
@@ -308,6 +293,41 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 			};
 		}
 	}, [ipk]);
+
+	const [lainnya, setLainnya] = useState(false);
+	const [sekolahLainnya, setSekolahLainnya] = useState("");
+
+	useEffect(() => {
+		if (asalSekolah.includes("Lainnya")) {
+			setLainnya(true);
+		} else {
+			setSekolahLainnya("");
+			setLainnya(false);
+		}
+	}, [asalSekolah]);
+
+	const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
+	const [inputSekolah, setInputSekolah] = useState("");
+
+	useEffect(() => {
+		setOptionsAsalSekolah((prev) => {
+			let arr = [];
+			arr.push({ value: "", label: "Nama Institusi Lainnya.." });
+			dataAsalSekolah.map((item) => {
+				arr.push({ label: item.label, value: item.id });
+			});
+			return arr;
+		});
+	}, [dataAsalSekolah]);
+
+	useEffect(() => {
+		console.log(inputSekolah);
+		if (inputSekolah.length > 3) {
+			setTimeout(() => {
+				dispatch(getDataAsalSekolah(token, inputSekolah));
+			}, 1000);
+		}
+	}, [inputSekolah]);
 
 	return (
 		<>
