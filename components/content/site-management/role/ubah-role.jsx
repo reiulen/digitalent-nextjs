@@ -102,6 +102,9 @@ const UbahRole = ({ token }) => {
                         filter.view = !(
                           filter.view === true || filter.view === 1
                         );
+                        item.list_sub_menu.filter((cek) => {
+                          cek.view = filter.view === true || filter.view === 1;
+                        });
                       }
                       setForce(!force);
                       return filter;
@@ -119,7 +122,7 @@ const UbahRole = ({ token }) => {
                 <input
                   type="checkbox"
                   name="Checkboxes1"
-                  defaultChecked={item.manage === 1 || item.manage === true}
+                  checked={item.manage === 1 || item.manage === true}
                   onClick={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
@@ -128,6 +131,12 @@ const UbahRole = ({ token }) => {
                         );
                         filter.view =
                           filter.manage === true || filter.manage === 1;
+                        item.list_sub_menu.filter((cek) => {
+                          cek.manage =
+                            filter.manage === true || filter.manage === 1;
+                          cek.view =
+                            filter.manage === true || filter.manage === 1;
+                        });
                       }
 
                       setForce(!force);
@@ -333,6 +342,10 @@ const UbahRole = ({ token }) => {
                             filter.view = !(
                               filter.view === true || filter.view === 1
                             );
+                            if (item.view !== 1) {
+                              item.view =
+                                1
+                            }
                           }
                           setForce(!force);
                           return filter;
@@ -350,7 +363,8 @@ const UbahRole = ({ token }) => {
                     <input
                       type="checkbox"
                       name="Checkboxes1"
-                      defaultChecked={sub.manage === 1 || sub.manage === true}
+                      checked={sub.manage === true || sub.manage === 1}
+
                       onClick={() => {
                         permission.filter((filter) => {
                           if (sub.id === filter.id) {
@@ -359,6 +373,12 @@ const UbahRole = ({ token }) => {
                             );
                             filter.view =
                               filter.manage === true || filter.manage === 1;
+                            if (item.manage !== 1 || item.view !== 1) {
+                              item.view =
+                                1
+                              item.manage =
+                               1
+                            }
                           }
                           setForce(!force);
                           return filter;
@@ -461,7 +481,7 @@ const UbahRole = ({ token }) => {
       dispatch(updateRoles(data, token));
     } else {
       simpleValidator.current.showMessages();
-      forceUpdate(1)
+      forceUpdate(1);
       Swal.fire({
         icon: "error",
         title: "Oops...",

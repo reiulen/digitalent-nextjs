@@ -16,7 +16,7 @@ export const middlewareAuthAdminSession = (session) => {
   if (auth.roles[0] === "user") {
     data = {
       status: false,
-      redirect: process.env.PATH_URL + "/login",
+      redirect: process.env.PATH_URL + "/peserta",
     };
     return data;
   }
@@ -24,7 +24,7 @@ export const middlewareAuthAdminSession = (session) => {
   if (auth.roles[0] === "mitra") {
     data = {
       status: false,
-      redirect: process.env.PATH_URL + "/login/mitra",
+      redirect: process.env.PATH_URL + "/partnership/user/kerjasama",
     };
     return data;
   }
@@ -51,10 +51,18 @@ export const middlewareAuthPesertaSession = (session) => {
   }
 
   const auth = session.user.user.data.user;
-  if (auth.roles[0] !== "user") {
+  if (auth.roles[0] === "admin" || auth.roles[0] === "Super Admin") {
     data = {
       status: false,
-      redirect: process.env.PATH_URL + "/login",
+      redirect: process.env.PATH_URL + "/dashboard",
+    };
+    return data;
+  }
+
+  if (auth.roles[0] === "mitra") {
+    data = {
+      status: false,
+      redirect: process.env.PATH_URL + "/partnership/user/kerjasama",
     };
     return data;
   }
@@ -81,10 +89,19 @@ export const middlewareAuthMitraSession = (session) => {
   }
 
   const auth = session.user.user.data.user;
-  if (auth.roles[0] !== "mitra") {
+  console.log (auth)
+  if (auth.roles[0] === "user") {
     data = {
       status: false,
-      redirect: process.env.PATH_URL + "/login",
+      redirect: process.env.PATH_URL + "/peserta",
+    };
+    return data;
+  }
+
+  if (auth.roles[0] === "admin" || auth.roles[0] === "Super Admin" ) {
+    data = {
+      status: false,
+      redirect: process.env.PATH_URL + "/dashboard",
     };
     return data;
   }

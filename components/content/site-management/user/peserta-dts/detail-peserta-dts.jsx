@@ -44,7 +44,7 @@ const Table = ({ token }) => {
     <PageWrapper>
       <div className="row ">
         {!router.query.ubah_pelatihan_id && (
-          <div className="col-12 col-xl-3 order-0 d-flex align-items-self" style={{ height: "530px" }}>
+          <div className="col-12 col-lg-12 col-xl-3" style={{ height: "530px" }}>
             <div className="card card-custom card-stretch gutter-b px-10 py-12">
               <div className="form-group" style={{ maxWidth: "19rem" }}>
                 <div>

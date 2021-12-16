@@ -38,7 +38,7 @@ const Table = ({ token }) => {
     e.preventDefault();
     dispatch(searchByKey(keyWord));
   };
-
+  
   const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data tanda tangan ?",
