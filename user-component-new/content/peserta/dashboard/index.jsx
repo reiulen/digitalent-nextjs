@@ -313,17 +313,12 @@ const Dashboard = ({ session, success }) => {
 												<div className={style.bungkus_mitra_pelatihan}>
 													<Image
 														src={
-															dataDashboard?.pelatihan?.pelatihan_berjalan
-																.logo &&
-															dataDashboard?.pelatihan?.pelatihan_berjalan
-																.logo !== "Belum ada file"
+															dataDashboard?.pelatihan?.pelatihan_berjalan.logo
 																? process.env.END_POINT_API_IMAGE_BEASISWA +
 																  dataDashboard?.pelatihan.pelatihan_berjalan
 																		.logo
 																: dataDashboard?.pelatihan.pelatihan_berjalan
-																		.gambar_mitra &&
-																  dataDashboard?.pelatihan.pelatihan_berjalan
-																		.gambar_mitra === "Belum ada file"
+																		.gambar_mitra
 																? process.env.END_POINT_API_IMAGE_PARTNERSHIP +
 																  dataDashboard?.pelatihan.pelatihan_berjalan
 																		.gambar_mitra
@@ -476,14 +471,12 @@ const Dashboard = ({ session, success }) => {
 										<Card.Title>
 											<p className={style.card_title}>Pelatihan Sebelumnya</p>
 										</Card.Title>
-
+										{console.log(dataDashboard.pelatihan.pelatihan_selesi)}
 										<Card className="shadow rounded-md mt-4">
 											<Image
 												className={`${style.image_dashboard}`}
 												src={`${
-													!dataDashboard?.pelatihan?.pelatihan_selesi?.gambar &&
-													dataDashboard?.pelatihan?.pelatihan_selesi?.gambar ===
-														"Belum ada file"
+													!dataDashboard?.pelatihan?.pelatihan_selesi?.gambar
 														? "/assets/media/default-card.png"
 														: dataDashboard?.pelatihan?.pelatihan_selesi
 																?.file_path +

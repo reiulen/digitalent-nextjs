@@ -634,17 +634,17 @@ const ViewReviewTraining = ({ token }) => {
       </Modal>
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="silabusModal"
-        tabindex="-1"
+        tabIndex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
+        <div className="modal-dialog modal-lg" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
                 Preview Silabus
               </h5>
               <button
@@ -658,15 +658,15 @@ const ViewReviewTraining = ({ token }) => {
                 </span>
               </button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <div style={{ overflow: "scroll", height: 600 }}>
                 <PDFReader url={review.file_path + review.silabus} scale={90} />
               </div>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-primary"
+                className="btn btn-primary"
                 onClick={() =>
                   window.open(review.file_path + review.silabus, "_blank")
                 }

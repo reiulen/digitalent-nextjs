@@ -1,10 +1,22 @@
+import dynamic from "next/dynamic";
 import Layout from "/components/templates/layout.component";
-import EditTipeSoal from "../../../../components/content/subvit/substansi/tipe-soal/edit";
+// import EditTipeSoal from "../../../../components/content/subvit/substansi/tipe-soal/edit";
 
 import { getDetailSubtanceQuestionBanksType } from "../../../../redux/actions/subvit/subtance-question-type.actions";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const EditTipeSoal = dynamic(
+  () => import("../../../../components/content/subvit/substansi/tipe-soal/edit"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditTipeSoalTestSubstansi(props) {
   const session = props.session.user.user.data;

@@ -1,12 +1,12 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
 import { middlewareAuthMitraSession } from "../../../../utils/middleware/authMiddleware";
 
 const Pembahasan = dynamic(
   () => import("../../../../components/content/partnership/user/pembahasan"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function PembahasanPage(props) {

@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { getDetailZonasi } from "../../../../../redux/actions/site-management/zonasi.actions";
 import { wrapper } from "../../../../../redux/store";
-import LoadingPage from "../../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 const DetailRole = dynamic(
@@ -12,7 +12,7 @@ const DetailRole = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }

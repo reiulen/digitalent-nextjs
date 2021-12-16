@@ -1,15 +1,21 @@
 import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
-
 import {
   getAllFaq,
   getKategoriBerandaFaq,
 } from "../../redux/actions/beranda/faq-content.actions";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
+import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const FaqPage = dynamic(() =>
-  import("../../user-component-new/content/home/faq/faq")
+  import("../../user-component-new/content/home/faq/faq"),
+  {
+    loading: function loadingNow() {
+      return <LoadingDetailAkademi />;
+    },
+    ssr: false,
+  }
 );
 
 const Layout = dynamic(
@@ -18,11 +24,6 @@ const Layout = dynamic(
 );
 
 export default function FaqDetail(props) {
-  // let session = null;
-  // if (props.session) {
-  //     session = props.session.user.user.data.Token
-  // }
-
   let session = null;
 
   if (props.session) {

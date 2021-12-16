@@ -1,5 +1,17 @@
-import LoginAdmin from "../../../components/content/auth/admin/login";
+import dynamic from "next/dynamic";
+// import LoginAdmin from "../../../components/content/auth/admin/login";
 import { getSession } from "next-auth/client";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const LoginAdmin = dynamic(
+  () => import("../../../components/content/auth/admin/login"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function LoginAdminPage() {
   return (

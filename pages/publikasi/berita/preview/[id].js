@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-import Preview from "../../../../components/content/publikasi/berita/preview";
+// import Preview from "../../../../components/content/publikasi/berita/preview";
 import Footer from "../../../../components/templates/footer.component";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
@@ -9,6 +9,17 @@ import { getTagBerandaBerita } from "../../../../redux/actions/beranda/berita.ac
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const Preview = dynamic(
+  () => import("../../../../components/content/publikasi/berita/preview"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 const Layout = dynamic(
   () => import("../../../../user-component-new/components/template/Layout.component")

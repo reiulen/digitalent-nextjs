@@ -128,21 +128,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 		asalSekolah,
 	]);
 
-	const optionsAsalSekolah = [];
-
-	dataAsalSekolah &&
-		dataAsalSekolah.map((item) => {
-			optionsAsalSekolah.push({
-				value: item.id,
-				label: item.label,
-			});
-		});
-
-	optionsAsalSekolah.push({
-		value: "",
-		label: "Nama Institusi Lainnya..",
-	});
-
 	const searchAsal = (word) => {
 		let array = [];
 		const searchData = getAsalSekolah;
@@ -309,6 +294,41 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 		}
 	}, [ipk]);
 
+	const [lainnya, setLainnya] = useState(false);
+	const [sekolahLainnya, setSekolahLainnya] = useState("");
+
+	useEffect(() => {
+		if (asalSekolah.includes("Lainnya")) {
+			setLainnya(true);
+		} else {
+			setSekolahLainnya("");
+			setLainnya(false);
+		}
+	}, [asalSekolah]);
+
+	const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
+	const [inputSekolah, setInputSekolah] = useState("");
+
+	useEffect(() => {
+		setOptionsAsalSekolah((prev) => {
+			let arr = [];
+			arr.push({ value: "", label: "Nama Institusi Lainnya.." });
+			dataAsalSekolah.map((item) => {
+				arr.push({ label: item.label, value: item.id });
+			});
+			return arr;
+		});
+	}, [dataAsalSekolah]);
+
+	useEffect(() => {
+		console.log(inputSekolah);
+		if (inputSekolah.length > 3) {
+			setTimeout(() => {
+				dispatch(getDataAsalSekolah(token, inputSekolah));
+			}, 1000);
+		}
+	}, [inputSekolah]);
+
 	return (
 		<>
 			<Form onSubmit={handleSubmit}>
@@ -365,6 +385,29 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 									className: "text-danger",
 								}
 							)}
+							<Col md={6}>
+								<Form.Group className="mb-3" controlId="formGridAddress1">
+									<Form.Label>Nama Institusi Pendidikan</Form.Label>
+									<Form.Control
+										placeholder="Silahkan Masukkan Nama Institusi"
+										onChange={(e) => {
+											setSekolahLainnya(e.target.value);
+										}}
+										onBlur={() =>
+											simpleValidator.current.showMessageFor("tahun masuk")
+										}
+										type="text"
+									/>
+									{simpleValidator.current.message(
+										"sekolah lainnya",
+										sekolahLainnya,
+										"required",
+										{
+											className: "text-danger",
+										}
+									)}
+								</Form.Group>
+							</Col>
 						</Form.Group>
 					)}
 
