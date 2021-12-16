@@ -85,20 +85,28 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [imageFileName, setImageFileName] = useState("");
 
   useEffect(() => {
-    dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
+    dispatch(
+      getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+    );
     // if (error) {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
+      dispatch(
+        getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+      );
     }
 
     if (successImages) {
-      dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
+      dispatch(
+        getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+      );
     }
 
     if (isDeleted) {
-      dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
+      dispatch(
+        getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+      );
     }
   }, [
     dispatch,
