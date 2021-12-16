@@ -131,7 +131,7 @@ const Tambah = ({ token }) => {
       setFormInput(_temp);
       setValueSend(_tempValue);
     } catch (error) {
-      notify(error.response.data.message);
+      // notify(error.response.data.message);
     }
   };
   
