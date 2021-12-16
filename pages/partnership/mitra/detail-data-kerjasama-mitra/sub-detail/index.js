@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
@@ -8,7 +8,7 @@ const DetailDataKerjasamaById = dynamic(
     import(
       "../../../../../components/content/partnership/mitra/detailKerjasamaById"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function subDetail(props) {

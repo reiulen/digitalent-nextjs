@@ -274,26 +274,26 @@ const AddMasterPelatihan = ({ token }) => {
   };
 
   const showPreviewHandler = () => {
-    let list = [...formBuilder];
-    list.forEach((row, i) => {
-      if (row.option === "manual") {
-        let dataOption = row.dataOption.split(";");
-        row.dataOption = dataOption;
-      }
-    });
-    setFormBuilder(list);
+    // let list = [...formBuilder];
+    // list.forEach((row, i) => {
+    //   if (row.option === "manual") {
+    //     let dataOption = row.dataOption.split(";");
+    //     row.dataOption = dataOption;
+    //   }
+    // });
+    // setFormBuilder(list);
     setModalShow(true);
   };
 
   const closePreviewHandler = () => {
-    let list = [...formBuilder];
-    list.forEach((row, i) => {
-      if (row.option === "manual") {
-        let dataOption = row.dataOption.join(";");
-        row.dataOption = dataOption;
-      }
-    });
-    setFormBuilder(list);
+    // let list = [...formBuilder];
+    // list.forEach((row, i) => {
+    //   if (row.option === "manual") {
+    //     let dataOption = row.dataOption.join(";");
+    //     row.dataOption = dataOption;
+    //   }
+    // });
+    // setFormBuilder(list);
     setModalShow(false);
   };
 

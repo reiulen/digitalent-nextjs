@@ -5,12 +5,12 @@ import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddle
 import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
 import { wrapper } from "../../../redux/store";
 
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getAllRolePermission } from "../../../redux/actions/publikasi/role-permissions.action"
 
 const PengaturanPublikasi = dynamic(
   () => import("../../../components/content/publikasi/pengaturan/pengaturan"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function PengaturanPublikasiPage(props) {

@@ -23,7 +23,7 @@ const Table = ({ token }) => {
         setNameZonation(data.data.name)
         setFormInput(data.data.data);
       } catch (error) {
-        notify(error.response.data.message);
+        // notify(error.response.data.message);
       }
     }
 

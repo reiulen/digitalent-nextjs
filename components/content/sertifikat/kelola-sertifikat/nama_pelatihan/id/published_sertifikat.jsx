@@ -44,7 +44,7 @@ export default function KelolasertifikatID({ token }) {
         link.click();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      // notify(error.response.data.message);
     }
   };
 

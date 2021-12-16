@@ -1,10 +1,22 @@
-import EditSurveyBank from "../../../components/content/subvit/survey/question-bank-soal/edit";
+import dynamic from "next/dynamic";
+// import EditSurveyBank from "../../../components/content/subvit/survey/question-bank-soal/edit";
 import Layout from "../../../components/templates/layout.component";
 
 import { detailSurveyQuestionDetail } from "../../../redux/actions/subvit/survey-question-detail.action";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const EditSurveyBank = dynamic(
+  () => import("../../../components/content/subvit/survey/question-bank-soal/edit"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditSurveyBankPage(props) {
   const session = props.session.user.user.data;

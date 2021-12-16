@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
-
-import Preview from "../../../../components/content/publikasi/artikel-peserta/preview";
+// import Preview from "../../../../components/content/publikasi/artikel-peserta/preview";
 import Footer from "../../../../components/templates/footer.component";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
@@ -8,6 +7,17 @@ import { getDetailArtikelPeserta } from "../../../../redux/actions/publikasi/art
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getTagBerandaArtikel } from "../../../../redux/actions/beranda/artikel.actions"
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const Preview = dynamic(
+  () => import("../../../../components/content/publikasi/artikel-peserta/preview"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 const Layout = dynamic(
   () => import("../../../../user-component-new/components/template/Layout.component")
@@ -41,7 +51,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDetailArtikelPeserta(params.id, session.user.user.data.token, req.cookies.token_permission)
       );
-      
+
       await store.dispatch(
         getTagBerandaArtikel(session.user.user.data.token, req.cookies.token_permission)
       )

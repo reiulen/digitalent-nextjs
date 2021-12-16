@@ -1,4 +1,5 @@
-import EditSubstansiBank from "../../../components/content/subvit/substansi/question-bank-soal/edit";
+import dynamic from "next/dynamic";
+// import EditSubstansiBank from "../../../components/content/subvit/substansi/question-bank-soal/edit";
 
 import { detailSubtanceQuestionDetail } from "../../../redux/actions/subvit/subtance-question-detail.action";
 import { getAllSubtanceQuestionBanksType } from "../../../redux/actions/subvit/subtance-question-type.actions";
@@ -6,6 +7,17 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.actions";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const EditSubstansiBank = dynamic(
+  () => import("../../../components/content/subvit/substansi/question-bank-soal/edit"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditSubstansiBankPage(props) {
   const session = props.session.user.user.data;

@@ -1,4 +1,5 @@
-import DetailSubstansi from "../../../components/content/subvit/substansi/detail-substansi";
+import dynamic from "next/dynamic";
+// import DetailSubstansi from "../../../components/content/subvit/substansi/detail-substansi";
 // import Layout from "../../../components/templates/layout.component";
 
 import { getAllSubtanceQuestionDetail } from "../../../redux/actions/subvit/subtance-question-detail.action";
@@ -10,7 +11,17 @@ import { getAllSubtanceQuestionBanksType } from "../../../redux/actions/subvit/s
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
+const DetailSubstansi = dynamic(
+  () => import("../../../components/content/subvit/substansi/detail-substansi"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 export default function DetailSubstansiPage(props) {
   const session = props.session.user.user.data;
   return (

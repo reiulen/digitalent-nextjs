@@ -174,9 +174,9 @@ export const postFilterExportData =
         payload: data.data,
       });
     } catch (error) {
-      Swal.fire("Ooppss", JSON.stringify(error.message), "error").then(
-        () => {}
-      );
+      // Swal.fire("Ooppss", JSON.stringify(error.message), "error").then(
+      //   () => {}
+      // );
       dispatch({
         type: POST_EXPORT_DATA_FAIL,
       });

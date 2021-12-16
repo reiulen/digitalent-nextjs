@@ -63,6 +63,11 @@ const UbahRole = ({ token }) => {
     if (detailRoles.role.permissions[i].list_sub_menu.length > 0) {
       detailRoles.role.permissions[i].list_sub_menu.forEach((item) => {
         permission.push(item);
+        if (item.list_sub_menu.length > 0) {
+          item.list_sub_menu.forEach((sub) => {
+            permission.push(sub);
+          });
+        }
       });
     }
   }
@@ -96,7 +101,7 @@ const UbahRole = ({ token }) => {
                   type="checkbox"
                   name="Checkboxes1"
                   checked={item.view === 1 || item.view === true}
-                  onClick={() => {
+                  onChange={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
                         filter.view = !(
@@ -104,6 +109,12 @@ const UbahRole = ({ token }) => {
                         );
                         item.list_sub_menu.filter((cek) => {
                           cek.view = filter.view === true || filter.view === 1;
+                          if (cek.list_sub_menu.length > 0) {
+                            cek.list_sub_menu.filter((check) => {
+                              check.view =
+                                filter.view === true || filter.view === 1;
+                            });
+                          }
                         });
                       }
                       setForce(!force);
@@ -123,7 +134,7 @@ const UbahRole = ({ token }) => {
                   type="checkbox"
                   name="Checkboxes1"
                   checked={item.manage === 1 || item.manage === true}
-                  onClick={() => {
+                  onChange={() => {
                     permission.filter((filter) => {
                       if (item.id === filter.id) {
                         filter.manage = !(
@@ -136,9 +147,16 @@ const UbahRole = ({ token }) => {
                             filter.manage === true || filter.manage === 1;
                           cek.view =
                             filter.manage === true || filter.manage === 1;
+                          if (cek.list_sub_menu.length > 0) {
+                            cek.list_sub_menu.filter((check) => {
+                              check.manage =
+                                filter.manage === true || filter.manage === 1;
+                              check.view =
+                                filter.manage === true || filter.manage === 1;
+                            });
+                          }
                         });
                       }
-
                       setForce(!force);
                       return filter;
                     });
@@ -151,244 +169,358 @@ const UbahRole = ({ token }) => {
 
           {item.list_sub_menu.map((sub) => {
             return (
-              <tr className="" key={sub.id}>
-                <td className="text-left">
-                  <div className="d-flex align-items-center ml-6">
-                    <div style={btnMin} className="cursor-pointer mr-3">
-                      <Image
-                        src={IconMinus}
-                        width={12}
-                        height={12}
-                        alt="plus-icon"
-                      />
+              <>
+                <tr className="" key={sub.id}>
+                  <td className="text-left">
+                    <div className="d-flex align-items-center ml-6">
+                      <div style={btnMin} className="cursor-pointer mr-3">
+                        <Image
+                          src={IconMinus}
+                          width={12}
+                          height={12}
+                          alt="plus-icon"
+                        />
+                      </div>
+                      <p className="mb-0">{sub.name}</p>
                     </div>
-                    <p className="mb-0">{sub.name}</p>
-                  </div>
-                </td>
-                {sub.name === "Artikel" ? (
-                  <td
-                    className="text-right child-permission align-middle"
-                    style={{ width: "10rem" }}
-                  >
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        name="Checkboxes1"
-                        defaultChecked={
-                          sub.publish === 1 || sub.publish === true
-                        }
-                        onClick={() => {
-                          permission.filter((filter) => {
-                            if (sub.id === filter.id) {
-                              filter.publish = !(
-                                filter.publish === true || filter.publish === 1
-                              );
-                            }
-                            return filter;
-                          });
-                        }}
-                      />
-                      <span></span>
-                    </label>
                   </td>
-                ) : sub.name === "Berita" ? (
-                  <td
-                    className="text-right child-permission align-middle"
-                    style={{ width: "10rem" }}
-                  >
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        name="Checkboxes1"
-                        defaultChecked={
-                          sub.publish === 1 || sub.publish === true
-                        }
-                        onClick={() => {
-                          permission.filter((filter) => {
-                            if (sub.id === filter.id) {
-                              filter.publish = !(
-                                filter.publish === true || filter.publish === 1
-                              );
-                            }
-                            return filter;
-                          });
-                        }}
-                      />
-                      <span></span>
-                    </label>
-                  </td>
-                ) : sub.name === "Video" ? (
-                  <td
-                    className="text-right child-permission align-middle"
-                    style={{ width: "10rem" }}
-                  >
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        name="Checkboxes1"
-                        defaultChecked={
-                          sub.publish === 1 || sub.publish === true
-                        }
-                        onClick={() => {
-                          permission.filter((filter) => {
-                            if (sub.id === filter.id) {
-                              filter.publish = !(
-                                filter.publish === true || filter.publish === 1
-                              );
-                            }
-                            return filter;
-                          });
-                        }}
-                      />
-                      <span></span>
-                    </label>
-                  </td>
-                ) : sub.name === "FAQ" ? (
-                  <td
-                    className="text-right child-permission align-middle"
-                    style={{ width: "10rem" }}
-                  >
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        name="Checkboxes1"
-                        defaultChecked={
-                          sub.publish === 1 || sub.publish === true
-                        }
-                        onClick={() => {
-                          permission.filter((filter) => {
-                            if (sub.id === filter.id) {
-                              filter.publish = !(
-                                filter.publish === true || filter.publish === 1
-                              );
-                            }
-                            return filter;
-                          });
-                        }}
-                      />
-                      <span></span>
-                    </label>
-                  </td>
-                ) : sub.name === "Imagetron" ? (
-                  <td
-                    className="text-right child-permission align-middle"
-                    style={{ width: "10rem" }}
-                  >
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        name="Checkboxes1"
-                        defaultChecked={
-                          sub.publish === 1 || sub.publish === true
-                        }
-                        onClick={() => {
-                          permission.filter((filter) => {
-                            if (sub.id === filter.id) {
-                              filter.publish = !(
-                                filter.publish === true || filter.publish === 1
-                              );
-                            }
-                            return filter;
-                          });
-                        }}
-                      />
-                      <span></span>
-                    </label>
-                  </td>
-                ) : sub.name === "Galeri" ? (
-                  <td
-                    className="text-right child-permission align-middle"
-                    style={{ width: "10rem" }}
-                  >
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        name="Checkboxes1"
-                        defaultChecked={
-                          sub.publish === 1 || sub.publish === true
-                        }
-                        onClick={() => {
-                          permission.filter((filter) => {
-                            if (sub.id === filter.id) {
-                              filter.publish = !(
-                                filter.publish === true || filter.publish === 1
-                              );
-                            }
-                            return filter;
-                          });
-                        }}
-                      />
-                      <span></span>
-                    </label>
-                  </td>
-                ) : (
-                  <td
-                    className="text-right child-permission align-middle"
-                    style={{ width: "10rem" }}
-                  ></td>
-                )}
-                <td
-                  className="text-right child-permission align-middle"
-                  style={{ width: "10rem" }}
-                >
-                  <label className="checkbox">
-                    <input
-                      type="checkbox"
-                      name="Checkboxes1"
-                      checked={sub.view === 1 || sub.view === true}
-                      onClick={() => {
-                        permission.filter((filter) => {
-                          if (sub.id === filter.id) {
-                            filter.view = !(
-                              filter.view === true || filter.view === 1
-                            );
-                            if (item.view !== 1) {
-                              item.view =
-                                1
-                            }
+                  {sub.name === "Artikel" ? (
+                    <td
+                      className="text-right child-permission align-middle"
+                      style={{ width: "10rem" }}
+                    >
+                      <label className="checkbox">
+                        <input
+                          type="checkbox"
+                          name="Checkboxes1"
+                          defaultChecked={
+                            sub.publish === 1 || sub.publish === true
                           }
-                          setForce(!force);
-                          return filter;
-                        });
-                      }}
-                    />
-                    <span></span>
-                  </label>
-                </td>
-                <td
-                  className="text-right child-permission align-middle"
-                  style={{ width: "0" }}
-                >
-                  <label className="checkbox">
-                    <input
-                      type="checkbox"
-                      name="Checkboxes1"
-                      checked={sub.manage === true || sub.manage === 1}
-
-                      onClick={() => {
-                        permission.filter((filter) => {
-                          if (sub.id === filter.id) {
-                            filter.manage = !(
-                              filter.manage === true || filter.manage === 1
-                            );
-                            filter.view =
-                              filter.manage === true || filter.manage === 1;
-                            if (item.manage !== 1 || item.view !== 1) {
-                              item.view =
-                                1
-                              item.manage =
-                               1
-                            }
+                          onChange={() => {
+                            permission.filter((filter) => {
+                              if (sub.id === filter.id) {
+                                filter.publish = !(
+                                  filter.publish === true ||
+                                  filter.publish === 1
+                                );
+                              }
+                              return filter;
+                            });
+                          }}
+                        />
+                        <span></span>
+                      </label>
+                    </td>
+                  ) : sub.name === "Berita" ? (
+                    <td
+                      className="text-right child-permission align-middle"
+                      style={{ width: "10rem" }}
+                    >
+                      <label className="checkbox">
+                        <input
+                          type="checkbox"
+                          name="Checkboxes1"
+                          defaultChecked={
+                            sub.publish === 1 || sub.publish === true
                           }
-                          setForce(!force);
-                          return filter;
-                        });
-                      }}
-                    />
-                    <span></span>
-                  </label>
-                </td>
-              </tr>
+                          onChange={() => {
+                            permission.filter((filter) => {
+                              if (sub.id === filter.id) {
+                                filter.publish = !(
+                                  filter.publish === true ||
+                                  filter.publish === 1
+                                );
+                              }
+                              return filter;
+                            });
+                          }}
+                        />
+                        <span></span>
+                      </label>
+                    </td>
+                  ) : sub.name === "Video" ? (
+                    <td
+                      className="text-right child-permission align-middle"
+                      style={{ width: "10rem" }}
+                    >
+                      <label className="checkbox">
+                        <input
+                          type="checkbox"
+                          name="Checkboxes1"
+                          defaultChecked={
+                            sub.publish === 1 || sub.publish === true
+                          }
+                          onChange={() => {
+                            permission.filter((filter) => {
+                              if (sub.id === filter.id) {
+                                filter.publish = !(
+                                  filter.publish === true ||
+                                  filter.publish === 1
+                                );
+                              }
+                              return filter;
+                            });
+                          }}
+                        />
+                        <span></span>
+                      </label>
+                    </td>
+                  ) : sub.name === "FAQ" ? (
+                    <td
+                      className="text-right child-permission align-middle"
+                      style={{ width: "10rem" }}
+                    >
+                      <label className="checkbox">
+                        <input
+                          type="checkbox"
+                          name="Checkboxes1"
+                          defaultChecked={
+                            sub.publish === 1 || sub.publish === true
+                          }
+                          onChange={() => {
+                            permission.filter((filter) => {
+                              if (sub.id === filter.id) {
+                                filter.publish = !(
+                                  filter.publish === true ||
+                                  filter.publish === 1
+                                );
+                              }
+                              return filter;
+                            });
+                          }}
+                        />
+                        <span></span>
+                      </label>
+                    </td>
+                  ) : sub.name === "Imagetron" ? (
+                    <td
+                      className="text-right child-permission align-middle"
+                      style={{ width: "10rem" }}
+                    >
+                      <label className="checkbox">
+                        <input
+                          type="checkbox"
+                          name="Checkboxes1"
+                          defaultChecked={
+                            sub.publish === 1 || sub.publish === true
+                          }
+                          onChange={() => {
+                            permission.filter((filter) => {
+                              if (sub.id === filter.id) {
+                                filter.publish = !(
+                                  filter.publish === true ||
+                                  filter.publish === 1
+                                );
+                              }
+                              return filter;
+                            });
+                          }}
+                        />
+                        <span></span>
+                      </label>
+                    </td>
+                  ) : sub.name === "Galeri" ? (
+                    <td
+                      className="text-right child-permission align-middle"
+                      style={{ width: "10rem" }}
+                    >
+                      <label className="checkbox">
+                        <input
+                          type="checkbox"
+                          name="Checkboxes1"
+                          defaultChecked={
+                            sub.publish === 1 || sub.publish === true
+                          }
+                          onChange={() => {
+                            permission.filter((filter) => {
+                              if (sub.id === filter.id) {
+                                filter.publish = !(
+                                  filter.publish === true ||
+                                  filter.publish === 1
+                                );
+                              }
+                              return filter;
+                            });
+                          }}
+                        />
+                        <span></span>
+                      </label>
+                    </td>
+                  ) : (
+                    <td
+                      className="text-right child-permission align-middle"
+                      style={{ width: "10rem" }}
+                    ></td>
+                  )}
+                  <td
+                    className="text-right child-permission align-middle"
+                    style={{ width: "10rem" }}
+                  >
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="Checkboxes1"
+                        checked={sub.view === 1 || sub.view === true}
+                        onChange={() => {
+                          permission.filter((filter) => {
+                            if (sub.id === filter.id) {
+                              filter.view = !(
+                                filter.view === true || filter.view === 1
+                              );
+                              if (item.view !== 1) {
+                                item.view = 1;
+                              }
+                              if (sub.list_sub_menu.length > 0) {
+                                sub.list_sub_menu.filter((check) => {
+                                  check.view =
+                                    filter.view === true || filter.view === 1;
+                                });
+                              }
+                            }
+                            setForce(!force);
+                            return filter;
+                          });
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </td>
+                  <td
+                    className="text-right child-permission align-middle"
+                    style={{ width: "0" }}
+                  >
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="Checkboxes1"
+                        checked={sub.manage === true || sub.manage === 1}
+                        onChange={() => {
+                          permission.filter((filter) => {
+                            if (sub.id === filter.id) {
+                              filter.manage = !(
+                                filter.manage === true || filter.manage === 1
+                              );
+                              filter.view =
+                                filter.manage === true || filter.manage === 1;
+                              if (item.manage !== 1 || item.view !== 1) {
+                                item.view = 1;
+                                item.manage = 1;
+                              }
+                              if (sub.list_sub_menu.length > 0) {
+                                sub.list_sub_menu.filter((check) => {
+                                  check.view =
+                                    filter.manage === true || filter.manage === 1;
+                                    check.manage =
+                                    filter.manage === true || filter.manage === 1;
+                                });
+                              }
+                              
+                            }
+                            setForce(!force);
+                            return filter;
+                          });
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </td>
+                </tr>
+                {sub.list_sub_menu.map((child) => {
+                  return (
+                    <tr key={child.id}>
+                      <td className="text-left">
+                        <div className="d-flex align-items-center ml-6">
+                          <div
+                            style={btnMin}
+                            className="cursor-pointer mr-3 ml-6"
+                          >
+                            <Image
+                              src={IconMinus}
+                              width={12}
+                              height={12}
+                              alt="plus-icon"
+                            />
+                          </div>
+                          <p className="mb-0">{child.name}</p>
+                        </div>
+                      </td>
+                      <td
+                        className="text-right child-permission align-middle"
+                        style={{ width: "10rem" }}
+                      ></td>
+                      <td
+                        className="text-right child-permission align-middle"
+                        style={{ width: "10rem" }}
+                      >
+                        <label className="checkbox">
+                          <input
+                            type="checkbox"
+                            name="Checkboxes1"
+                            checked={child.view === true || child.view === 1}
+                            onChange={() => {
+                              permission.filter((filter) => {
+                                if (child.id === filter.id) {
+                                  filter.view = !(
+                                    filter.view === true || filter.view === 1
+                                  );
+                                  if (item.view !== 1) {
+                                    item.view = 1;
+                                  }
+                                  if (sub.view !== 1) {
+                                    sub.view = 1;
+                                  }
+                                 
+                                }
+                                setForce(!force);
+                                return filter;
+                              });
+                            }}
+                          />
+                          <span></span>
+                        </label>
+                      </td>
+                      <td
+                        className="text-right child-permission align-middle"
+                        style={{ width: "0" }}
+                      >
+                        <label className="checkbox">
+                          <input
+                            type="checkbox"
+                            name="Checkboxes1"
+                            checked={
+                              child.manage === true || child.manage === 1
+                            }
+                            onChange={() => {
+                              permission.filter((filter) => {
+                                if (child.id === filter.id) {
+                                  filter.manage = !(
+                                    filter.manage === true ||
+                                    filter.manage === 1
+                                  );
+                                  filter.view =
+                                    filter.manage === true ||
+                                    filter.manage === 1;
+                                  if (sub.manage !== 1 || sub.view !== 1) {
+                                    sub.view = 1;
+                                    sub.manage = 1;
+                                  }
+                                  if (item.manage !== 1 || item.view !== 1) {
+                                    item.view = 1;
+                                    item.manage = 1;
+                                  }
+                                }
+                                setForce(!force);
+                                return filter;
+                              });
+                            }}
+                          />
+                          <span></span>
+                        </label>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </>
             );
           })}
         </>
@@ -414,7 +546,7 @@ const UbahRole = ({ token }) => {
                 type="checkbox"
                 name="Checkboxes1"
                 checked={item.view === 1 || item.view === true}
-                onClick={() => {
+                onChange={() => {
                   permission.filter((filter) => {
                     if (item.id === filter.id) {
                       filter.view = !(
@@ -438,7 +570,7 @@ const UbahRole = ({ token }) => {
                 type="checkbox"
                 name="Checkboxes1"
                 defaultChecked={item.manage === 1 || item.manage === true}
-                onClick={() => {
+                onChange={() => {
                   permission.filter((filter) => {
                     if (item.id === filter.id) {
                       filter.manage = !(
@@ -447,7 +579,6 @@ const UbahRole = ({ token }) => {
                       filter.view =
                         filter.manage === true || filter.manage === 1;
                     }
-
                     setForce(!force);
                     return filter;
                   });

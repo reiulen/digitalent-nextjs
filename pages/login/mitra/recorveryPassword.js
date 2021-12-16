@@ -1,5 +1,17 @@
-import RecoveryPassword from "../../../components/content/partnership/user/auth/recoveryPassword";
+import dynamic from "next/dynamic";
+// import RecoveryPassword from "../../../components/content/partnership/user/auth/recoveryPassword";
 import { getSession } from "next-auth/client";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const RecoveryPassword = dynamic(
+  () => import("../../../components/content/partnership/user/auth/recoveryPassword"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function RecoveryPasswordMitra() {
   return (

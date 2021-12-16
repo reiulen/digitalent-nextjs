@@ -51,7 +51,7 @@ export default function Bookmark({ session }) {
 	useEffect(() => {
 		dispatch(getAllBookmark(session?.token));
 	}, [dispatch, allBookmark.page]);
-
+	console.log(allBookmark);
 	return (
 		<PesertaWrapper>
 			<Row className="my-n10 my-md-0">
@@ -83,7 +83,7 @@ export default function Bookmark({ session }) {
 											></i>
 										</Button>
 										<ShareOverlay
-											url={`http://dts-dev.majapahit.id/detail/pelatihan/${el.id}`}
+											url={`http://dts-dev.majapahit.id/detail/pelatihan/${el.id}?akademiId=`}
 											quote={el.name}
 										>
 											<Button
@@ -312,8 +312,8 @@ export default function Bookmark({ session }) {
 							prevPageText={"<"}
 							firstPageText={"<<"}
 							lastPageText={">>"}
-							itemClass="page-item"
-							linkClass="page-link"
+							itemClass="page-item-dashboard"
+							linkClass="page-link-dashboard"
 						/>
 					</div>
 				)}

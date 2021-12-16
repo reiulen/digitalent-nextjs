@@ -71,8 +71,8 @@ const ListSummary = ({ token }) => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const optionsAkademi = dataAkademi.data;
-  const optionsTema = dataTema.data;
+  const optionsAkademi = dataAkademi.data || [];
+  const optionsTema = dataTema.data || [];
   const optionsPenyelenggara = [];
   if (dataPenyelenggara && dataPenyelenggara.data.length > 0) {
     for (let index = 0; index < dataPenyelenggara.data.length; index++) {

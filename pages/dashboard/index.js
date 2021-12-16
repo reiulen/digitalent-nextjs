@@ -16,6 +16,7 @@ import {
   getDigitalentDataPribadi,
 } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 import { dropdownAkademi } from "../../redux/actions/pelatihan/function.actions";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 export default function DashboardPage(props) {
   const DashboardDigitalent = dynamic(
@@ -23,7 +24,12 @@ export default function DashboardPage(props) {
       import(
         "../../components/content/dashboard-kabadan/digitalent/dashboard-digitalent"
       ),
-    { ssr: false }
+    {
+      loading: function loadingNow() {
+        return <LoadingSkeleton />;
+      },
+      ssr: false
+    }
   );
   const MyMap = dynamic(
     () =>

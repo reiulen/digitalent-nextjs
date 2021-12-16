@@ -42,7 +42,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
   const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
@@ -55,13 +55,14 @@ const Navigationbar = ({ session }) => {
   const [socket, setSocket] = useState(null);
   const [dataNotification, setDataNotification] = useState([]);
 
-  const { footer, loading } = useSelector(state => state.berandaFooter);
+  const { footer, loading } = useSelector((state) => state.berandaFooter);
 
   useEffect(() => {
     if (!session) {
       return;
     }
     if (session && session.roles[0] == "user") {
+      GetNotifikasi();
       if (
         !dataPribadi || // 👈 null and undefined check
         (dataPribadi && Object.keys(dataPribadi).length === 0)
@@ -92,7 +93,6 @@ const Navigationbar = ({ session }) => {
     }
 
     handleConnectSocket();
-    GetNotifikasi();
   }, []);
 
   const handleConnectSocket = () => {
@@ -107,17 +107,22 @@ const Navigationbar = ({ session }) => {
       timeout = 250;
       clearTimeout(connectInterval);
     };
-    
+
     ws.onmessage = (e) => {
-      let res = JSON.parse(e.data)
-      res?.To == session?.id ?  GetNotifikasi() : "";
+      let res = JSON.parse(e.data);
+      if (session && (res?.To == session?.id)) {
+        GetNotifikasi();
+        // console.log("notifikasi masuk");
+      }
+      // console.log(res);
+      // console.log("notif untuk semua");
     };
 
-    ws.onclose = e => {
+    ws.onclose = (e) => {
       // connectInterval = setTimeout(handleCheckSocket, Math.min(10000, timeout));
     };
 
-    ws.onerror = err => {
+    ws.onerror = (err) => {
       ws.close();
     };
   };
@@ -138,7 +143,7 @@ const Navigationbar = ({ session }) => {
   //     handleConnectSocket();
   // };
 
-  const getDataGeneral = async token => {
+  const getDataGeneral = async (token) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
@@ -156,21 +161,22 @@ const Navigationbar = ({ session }) => {
   };
 
   const GetNotifikasi = async () => {
+    // console.log("fungsi hit");
+    setAlertNotif(true);
     axios
-    .get(
-      process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
-      {
-        headers: {
-          authorization: `Bearer ${session.token}`,
-        },
-      }
-    )
-    .then((res) => {
-      setDataNotification(res.data.data);
-    })
-    .catch((err) => {});
+      .get(
+        process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
+        {
+          headers: {
+            authorization: `Bearer ${session.token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setDataNotification(res.data.data);
+      })
+      .catch((err) => {});
   };
-  
 
   const getMenu = async (token) => {
     try {
@@ -188,8 +194,7 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     getMenu();
-    getDataGeneral();
-    
+
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
     }
@@ -250,7 +255,7 @@ const Navigationbar = ({ session }) => {
 
   const [search, setSearch] = useState("");
 
-  const handleEnter = e => {
+  const handleEnter = (e) => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
@@ -259,6 +264,7 @@ const Navigationbar = ({ session }) => {
   };
 
   const [notification, setNotification] = useState(false);
+  const [alertNotif, setAlertNotif] = useState(false);
 
   const [navbarItems, setNavbarItems] = useState("");
   const [rilisMedia, setRilisMedia] = useState([
@@ -324,6 +330,19 @@ const Navigationbar = ({ session }) => {
                       setNotification(!notification);
                     }}
                   ></i>
+                  {alertNotif && (
+                    <div
+                      onClick={() => setNotification(!notification)}
+                      className="position-absolute bg-danger rounded-full cursor-pointer"
+                      style={{
+                        height: "15px",
+                        width: "15px",
+                        right: "8px",
+                        top: "5px",
+                        border: "2px solid white",
+                      }}
+                    ></div>
+                  )}
                   {notification && (
                     <div
                       className="position-absolute px-5 bg-white w-200px right-0 p-6 max-h-275px overflow-auto"
@@ -334,7 +353,10 @@ const Navigationbar = ({ session }) => {
                         <img
                           src="/assets/media/notification/Close_Button.png"
                           alt="close_button"
-                          onClick={() => setNotification(!notification)}
+                          onClick={() => {
+                            setNotification(!notification);
+                            setAlertNotif(false);
+                          }}
                           className="cursor-pointer"
                           style={{ width: "20px", height: "20px" }}
                         />
@@ -364,7 +386,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={e => {
+              onClick={(e) => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -389,7 +411,7 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={e => {
+                onKeyDown={(e) => {
                   setSearch(e.target.value);
                   if (e.code == "Enter") {
                     handleEnter(e);
@@ -424,7 +446,7 @@ const Navigationbar = ({ session }) => {
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={e => {
+                      onClick={(e) => {
                         setNavbarItems(akademi);
 
                         if (index != 1) {
@@ -459,7 +481,7 @@ const Navigationbar = ({ session }) => {
                     </Link>
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={e => {
+                      onClick={(e) => {
                         setNavbarItems(rilisMedia);
                         if (index != 2) {
                           setIndex(2);
@@ -488,7 +510,7 @@ const Navigationbar = ({ session }) => {
                     </Link>
                     {menu?.length > 0 && (
                       <NavDropdown.Item
-                        onClick={e => {
+                        onClick={(e) => {
                           setNavbarItems(menu);
                           if (index != 3) {
                             setIndex(3);
@@ -558,12 +580,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={e => {
+                onKeyDown={(e) => {
                   if (e.code == "Enter") {
                     handleEnter(e);
                   }
                 }}
-                onChange={e => {
+                onChange={(e) => {
                   setSearch(e.target.value);
                 }}
               />
@@ -596,6 +618,21 @@ const Navigationbar = ({ session }) => {
                   className="ri-notification-4-line ri-2x  text-gray"
                 ></i>
               </a>
+              {alertNotif && (
+                <div
+                  onClick={() => {
+                    setNotification(!notification);
+                  }}
+                  className="position-absolute bg-danger rounded-full cursor-pointer"
+                  style={{
+                    height: "15px",
+                    width: "15px",
+                    right: "10px",
+                    top: "5px",
+                    border: "2px solid white",
+                  }}
+                ></div>
+              )}
               {notification && (
                 <div
                   className="position-absolute px-5 bg-white w-400px right-0 p-12 max-h-275px overflow-auto d-md-block d-none"
@@ -606,7 +643,10 @@ const Navigationbar = ({ session }) => {
                     <img
                       src="/assets/media/notification/Close_Button.png"
                       alt="close_button"
-                      onClick={() => setNotification(!notification)}
+                      onClick={() => {
+                        setNotification(!notification);
+                        setAlertNotif(false);
+                      }}
                       className="cursor-pointer"
                     />
                   </div>
@@ -951,7 +991,9 @@ const Navigationbar = ({ session }) => {
                                   onClick={() => {
                                     router.push("/lainnya/" + item.url);
                                   }}
-                                  className={`p-4 fz-12 ${item.status === 1 ? "" : "d-none"}`}
+                                  className={`p-4 fz-12 ${
+                                    item.status === 1 ? "" : "d-none"
+                                  }`}
                                 >
                                   {item.name}
                                 </div>

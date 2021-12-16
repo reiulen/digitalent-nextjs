@@ -1,5 +1,17 @@
-import ForgotPassword from "../../../components/content/partnership/user/auth/forgotPassword";
+import dynamic from "next/dynamic";
+// import ForgotPassword from "../../../components/content/partnership/user/auth/forgotPassword";
 import { getSession } from "next-auth/client";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const ForgotPassword = dynamic(
+  () => import("../../../components/content/partnership/user/auth/forgotPassword"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ForgotPasswordMitra() {
   return (

@@ -3,6 +3,7 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getAllListsPeserta } from "../../../redux/actions/site-management/user/peserta-dts";
 
 const SiteManagementDashboard = dynamic(
   () =>
@@ -24,17 +25,19 @@ export default function DashboardSiteManagement(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  () => async ({ req }) => {
+  (store) => async ({ req }) => {
     const session = await getSession({ req });
     const middleware = middlewareAuthAdminSession(session);
-      if (!middleware.status) {
-        return {
-          redirect: {
-            destination: middleware.redirect,
-            permanent: false,
-          },
-        };
-      }
+    if (!middleware.status) {
+      return {
+        redirect: {
+          destination: middleware.redirect,
+          permanent: false,
+        },
+      };
+    }
+
+    await store.dispatch(getAllListsPeserta(session.user.user.data.token));
 
     return {
       props: { session, title: "Dashboard - Site Management" },

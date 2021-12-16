@@ -33,9 +33,9 @@ const GeneralPage = ({ token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [colorPrimary, setColorPrimary] = useState(null)
-  const [colorSecondary, setColorSecondary] = useState(null)
-  const [colorExtras, setColorExtras] = useState(null)
+  const [colorPrimary, setColorPrimary] = useState(null);
+  const [colorSecondary, setColorSecondary] = useState(null);
+  const [colorExtras, setColorExtras] = useState(null);
 
   const [color, setColor] = useState([
     {
@@ -71,7 +71,9 @@ const GeneralPage = ({ token }) => {
   //     link_social_media: "",
   //   },
   // ]);
-  const [formSocialMedia, setFormSocialMedia] = useState(data_general.social_media);
+  const [formSocialMedia, setFormSocialMedia] = useState(
+    data_general.social_media
+  );
   const [formExternalLink, setFormExternalLink] = useState([
     {
       name: "",
@@ -83,32 +85,35 @@ const GeneralPage = ({ token }) => {
     e.preventDefault();
 
     let dataSosmedImage = formSocialMedia.map((row, i) => {
-      return row.image_logo
-    })
+      return row.image_logo;
+    });
 
     let dataSosmedName = formSocialMedia.map((row, i) => {
-      return row.name
-    })
+      return row.name;
+    });
 
     let dataSosmedLink = formSocialMedia.map((row, i) => {
-      return row.link_social_media
-    })
+      return row.link_social_media;
+    });
 
     let dataExternal = formExternalLink.map((row, i) => {
-      return row.name
-    })
+      return row.name;
+    });
 
     let dataExternalLink = formExternalLink.map((row, i) => {
-      return row.link
-    })
+      return row.link;
+    });
 
     if (simpleValidator.current.allValid()) {
       if (dataExternal.includes("") || dataExternalLink.includes("")) {
         Swal.fire("Oops !", "Isi data dengan benar !", "error");
-      } else if (dataSosmedImage.includes("") || dataSosmedName.includes("") || dataSosmedLink.includes("")) {
+      } else if (
+        dataSosmedImage.includes("") ||
+        dataSosmedName.includes("") ||
+        dataSosmedLink.includes("")
+      ) {
         Swal.fire("Oops !", "Isi data dengan benar !", "error");
       } else {
-
         if (description === "") {
           Swal.fire("Oops !", "Isi data dengan benar !", "error");
         } else {
@@ -159,21 +164,15 @@ const GeneralPage = ({ token }) => {
                   }
                 );
                 Swal.fire("Berhasil", "Berhasil simpan data", "success");
-                window.location.reload()
+                window.location.reload();
               } catch (error) {
-                Swal.fire(
-                  "Oops !",
-                  `${error.response.data.message}`,
-                  "error"
-                );
+                Swal.fire("Oops !", `${error.response.data.message}`, "error");
               }
             }
           });
         }
       }
-    }
-
-    else {
+    } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
       Swal.fire({
@@ -237,7 +236,11 @@ const GeneralPage = ({ token }) => {
             setImageLogo(e.target.result);
           };
         } else {
-          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+          Swal.fire(
+            "Oops !",
+            "Gambar harus PNG atau JPG dan max size 5MB",
+            "error"
+          );
         }
       } else {
         Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -252,7 +255,11 @@ const GeneralPage = ({ token }) => {
             setImageLogo(e.target.result);
           };
         } else {
-          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+          Swal.fire(
+            "Oops !",
+            "Gambar harus PNG atau JPG dan max size 5MB",
+            "error"
+          );
         }
       } else {
         Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -271,7 +278,11 @@ const GeneralPage = ({ token }) => {
             setImageLogo2(e.target.result);
           };
         } else {
-          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+          Swal.fire(
+            "Oops !",
+            "Gambar harus PNG atau JPG dan max size 5MB",
+            "error"
+          );
         }
       } else {
         Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -286,7 +297,11 @@ const GeneralPage = ({ token }) => {
             setImageLogo2(e.target.result);
           };
         } else {
-          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+          Swal.fire(
+            "Oops !",
+            "Gambar harus PNG atau JPG dan max size 5MB",
+            "error"
+          );
         }
       } else {
         Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -369,10 +384,14 @@ const GeneralPage = ({ token }) => {
               setImageSocialTemp(e.target.result);
               _temp[index].image_logo = e.target.result;
               setFormSocialMedia(_temp);
-              setUpdate(true)
+              setUpdate(true);
             };
           } else {
-            Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+            Swal.fire(
+              "Oops !",
+              "Gambar harus PNG atau JPG dan max size 5MB",
+              "error"
+            );
           }
         } else {
           Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -403,7 +422,6 @@ const GeneralPage = ({ token }) => {
           }
         );
 
-
         if (data) {
           setIsUpdate(true);
           setAddress(data.data.alamat);
@@ -413,9 +431,9 @@ const GeneralPage = ({ token }) => {
           // setImageLogoApi2(data.data.footer_logo);
           setDescription(data.data.logo_description);
           // setFormSocialMedia(data.data.social_media);
-          setColorPrimary(data.data.color[0].color)
-          setColorSecondary(data.data.color[1].color)
-          setColorExtras(data.data.color[2].color)
+          setColorPrimary(data.data.color[0].color);
+          setColorSecondary(data.data.color[1].color);
+          setColorExtras(data.data.color[2].color);
         }
       } catch (error) {
         Swal.fire("Oops !", `${error.response.data.message}`, "error");
@@ -424,14 +442,15 @@ const GeneralPage = ({ token }) => {
     getDataGeneral(token);
   }, [token]);
 
-
   return (
     <PageWrapper>
       <div className="row">
         <div className="col-12 order-1">
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header row border-0">
-              <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>
+              <h3
+                className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}
+              >
                 General
               </h3>
             </div>
@@ -448,22 +467,22 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi === ""
                               ? imageLogo && (
-                                <Image
-                                  src={imageLogo}
-                                  layout="fill"
-                                  objectFit="fill"
-                                  alt="imageLogo"
-                                />
-                              )
+                                  <Image
+                                    src={imageLogo}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )
                               : imageLogoApi && (
-                                <Image
-                                  // src={imageLogo}
-                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
-                                  layout="fill"
-                                  objectFit="fill"
-                                  alt="imageLogo"
-                                />
-                              )}
+                                  <Image
+                                    // src={imageLogo}
+                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )}
                           </div>
 
                           <label
@@ -491,7 +510,9 @@ const GeneralPage = ({ token }) => {
                               accept=".png, .jpg, .jpeg .svg"
                               onChange={(e) => onChangeImage(e)}
                               onBlur={() =>
-                                simpleValidator.current.showMessageFor("logoHeader")
+                                simpleValidator.current.showMessageFor(
+                                  "logoHeader"
+                                )
                               }
                             />
 
@@ -506,7 +527,6 @@ const GeneralPage = ({ token }) => {
                           >
                             <i className="ki ki-bold-close icon-xs text-muted"></i>
                           </span>
-
                         </div>
                         <span className="form-text text-muted mt-6">
                           (Maksimal ukuran file 5 MB)
@@ -530,21 +550,21 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi2 === ""
                               ? imageLogo2 && (
-                                <Image
-                                  src={imageLogo2}
-                                  layout="fill"
-                                  objectFit="fill"
-                                  alt="imageLogo"
-                                />
-                              )
+                                  <Image
+                                    src={imageLogo2}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )
                               : imageLogoApi2 && (
-                                <Image
-                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
-                                  layout="fill"
-                                  objectFit="fill"
-                                  alt="imageLogo"
-                                />
-                              )}
+                                  <Image
+                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )}
                           </div>
 
                           <label
@@ -573,7 +593,9 @@ const GeneralPage = ({ token }) => {
                               accept=".png, .jpg, .jpeg .svg"
                               onChange={(e) => onChangeImage2(e)}
                               onBlur={() =>
-                                simpleValidator.current.showMessageFor("logoFooter")
+                                simpleValidator.current.showMessageFor(
+                                  "logoFooter"
+                                )
                               }
                             />
                             <input type="hidden" name="profile_avatar_remove" />
@@ -636,27 +658,29 @@ const GeneralPage = ({ token }) => {
                               <div className="image-input image-input-outline">
                                 <div className="image-input-wrapper">
                                   {isUpdate &&
-                                    /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
-                                      items.image_logo
-                                    )
+                                  /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
+                                    items.image_logo
+                                  )
                                     ? items.image_logo && (
-                                      <Image
-                                        src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
-                                        layout="fill"
-                                        objectFit="fill"
-                                        alt="imageLogo"
-                                      />
-                                    )
-                                    : 
-                                    items.image_logo && (
-                                      <Image
-                                        src={update === true ? items.image_logo : `/${items.image_logo}`}
-                                        layout="fill"
-                                        objectFit="fill"
-                                        alt="imageLogo"
-                                      />
-                                    )
-                                  }
+                                        <Image
+                                          src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
+                                          layout="fill"
+                                          objectFit="fill"
+                                          alt="imageLogo"
+                                        />
+                                      )
+                                    : items.image_logo && (
+                                        <Image
+                                          src={
+                                            update === true
+                                              ? items.image_logo
+                                              : `/${items.image_logo}`
+                                          }
+                                          layout="fill"
+                                          objectFit="fill"
+                                          alt="imageLogo"
+                                        />
+                                      )}
                                 </div>
 
                                 <label
@@ -687,7 +711,9 @@ const GeneralPage = ({ token }) => {
                                       handleChangeSocialMedia(e, index)
                                     }
                                     onBlur={() =>
-                                      simpleValidator.current.showMessageFor("logoSocialMedia")
+                                      simpleValidator.current.showMessageFor(
+                                        "logoSocialMedia"
+                                      )
                                     }
                                   />
                                   <input
@@ -730,7 +756,9 @@ const GeneralPage = ({ token }) => {
                                   className="form-control"
                                   placeholder="Masukkan Nama"
                                   onBlur={() =>
-                                    simpleValidator.current.showMessageFor("namaSocialMedia")
+                                    simpleValidator.current.showMessageFor(
+                                      "namaSocialMedia"
+                                    )
                                   }
                                 />
 
@@ -742,7 +770,10 @@ const GeneralPage = ({ token }) => {
                                 )}
                               </div>
                             </div>
-                            <div className="col-12 col-md-6 col-xl-6" style={{ position: 'relative' }}>
+                            <div
+                              className="col-12 col-md-6 col-xl-6"
+                              style={{ position: "relative" }}
+                            >
                               <div className="row">
                                 <div className="col-12 col-md-11">
                                   <div className="form-group">
@@ -758,7 +789,9 @@ const GeneralPage = ({ token }) => {
                                       className="form-control pr-10"
                                       placeholder="Masukkan Link"
                                       onBlur={() =>
-                                        simpleValidator.current.showMessageFor("link")
+                                        simpleValidator.current.showMessageFor(
+                                          "link"
+                                        )
                                       }
                                     />
                                   </div>
@@ -840,13 +873,15 @@ const GeneralPage = ({ token }) => {
                                   className="form-control"
                                   placeholder="Masukkan Nama"
                                   onBlur={() =>
-                                    simpleValidator.current.showMessageFor("namaExternalLinks")
+                                    simpleValidator.current.showMessageFor(
+                                      "namaExternalLinks"
+                                    )
                                   }
                                 />
 
                                 {simpleValidator.current.message(
                                   "namaExternalLinks",
-                                  items.name,
+                                  items.name[index],
                                   "required",
                                   { className: "text-danger" }
                                 )}
@@ -868,7 +903,9 @@ const GeneralPage = ({ token }) => {
                                       className="form-control pr-10"
                                       placeholder="Masukkan Link"
                                       onBlur={() =>
-                                        simpleValidator.current.showMessageFor("linkExternalLinks")
+                                        simpleValidator.current.showMessageFor(
+                                          "linkExternalLinks"
+                                        )
                                       }
                                     />
                                   </div>
@@ -908,7 +945,7 @@ const GeneralPage = ({ token }) => {
                                 {simpleValidator.current.message(
                                   "linkExternalLinks",
                                   items.link,
-                                  "required|url",
+                                  items.link.includes("http") ? "" : "required|url",
                                   { className: "text-danger" }
                                 )}
                               </div>
