@@ -120,8 +120,8 @@ export const postRoles = (sendData, token) => {
       }
 
     } catch (error) {
-      Swal.fire("Oopss", "Jika Sub Menu di Pilih, Menu juga harus dipilih !", "error").then(() => {
-      });
+      // Swal.fire("Oopss", "Jika Sub Menu di Pilih, Menu juga harus dipilih !", "error").then(() => {
+      // });
       dispatch({
         type: POST_ROLES_FAIL,
       });

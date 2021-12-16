@@ -6,85 +6,84 @@ import { getDetailMasterPelatihan } from "../../../../../../redux/actions/pelati
 import Cookies from "js-cookie";
 
 const FormCopy = ({
-	title,
-	optionsForm,
-	funcTitle,
-	funcFormBuilder,
-	funcModalShow,
-	token,
+  title,
+  optionsForm,
+  funcTitle,
+  funcFormBuilder,
+  funcModalShow,
+  token,
 }) => {
-	const dispatch = useDispatch();
-	const {
-		loading: loadingFormPendaftaran,
-		form: formPendaftaran,
-		error: errorForm,
-	} = useSelector((state) => state.getDetailMasterPelatihan);
+  const dispatch = useDispatch();
+  const {
+    loading: loadingFormPendaftaran,
+    form: formPendaftaran,
+    error: errorForm,
+  } = useSelector((state) => state.getDetailMasterPelatihan);
 
-	const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-	const [, forceUpdate] = useState();
-	const token_permission = Cookies.get("token_permission");
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
+  const token_permission = Cookies.get("token_permission");
 
-	useEffect(() => {
-		if (
-			formPendaftaran &&
-			Object.keys(formPendaftaran).length !== 0 &&
-			Object.getPrototypeOf(formPendaftaran) === Object.prototype
-		) {
-			funcFormBuilder(formPendaftaran.data.formBuilder);
-		}
-	}, [formPendaftaran]);
+  useEffect(() => {
+    if (
+      formPendaftaran &&
+      Object.keys(formPendaftaran).length !== 0 &&
+      Object.getPrototypeOf(formPendaftaran) === Object.prototype
+    ) {
+      funcFormBuilder(formPendaftaran.data.formBuilder);
+    }
+  }, [formPendaftaran]);
 
-	const showPreviewHandler = () => {
-		let list = [...formPendaftaran.data.formBuilder];
-		list.forEach((row, i) => {
-			if (row.option === "manual") {
-				let dataOption = row.dataOption.split(";");
-				row.dataOption = dataOption;
-			}
-		});
-		funcFormBuilder(list);
-		funcModalShow(true);
-	};
+  const showPreviewHandler = () => {
+    // let list =
+    //   formPendaftaran.length > 0 ? [...formPendaftaran?.data?.formBuilder] : [];
+    // list.forEach((row, i) => {
+    //   if (row.option === "manual") {
+    //     let dataOption = row.dataOption.split(";");
+    //     row.dataOption = dataOption;
+    //   }
+    // });
+    // funcFormBuilder(list);
+    funcModalShow(true);
+  };
 
-	return (
-		<>
-			<div className="form-group mb-4">
-				<label className="col-form-label font-weight-bold">Judul Form</label>
-				<Select
-					options={optionsForm}
-					value={{ value: title, label: title }}
-					onChange={(e) => {
-						funcTitle(e.label);
-						dispatch(
-							getDetailMasterPelatihan(e.value, token, token_permission)
-						);
-					}}
-				/>
-				<small className="form-text text-danger">
-					*Form pendaftaran akan terhubung dengan master form pendaftaran.
-					Apabila master form pendaftaran diubah maka form pendaftaran pelatihan
-					ini akan ikut berubah.
-				</small>
+  return (
+    <>
+      <div className="form-group mb-4">
+        <label className="col-form-label font-weight-bold">Judul Form</label>
+        <Select
+          options={optionsForm}
+          value={{ value: title, label: title }}
+          onChange={(e) => {
+            funcTitle(e.label);
+            dispatch(getDetailMasterPelatihan(e.value, token));
+          }}
+        />
+        <small className="form-text text-danger">
+          *Form pendaftaran akan terhubung dengan master form pendaftaran.
+          Apabila master form pendaftaran diubah maka form pendaftaran pelatihan
+          ini akan ikut berubah.
+        </small>
 
-				{simpleValidator.current.message("judul form", title, "required", {
-					className: "text-danger",
-				})}
-			</div>
+        {simpleValidator.current.message("judul form", title, "required", {
+          className: "text-danger",
+        })}
+      </div>
 
-			<div className="form-group mb-9 mt-4">
-				<div className="text-right">
-					<button
-						className="btn btn-light-success mr-2"
-						type="button"
-						style={{ borderRadius: "30px", fontWeight: "600" }}
-						onClick={showPreviewHandler}
-					>
-						Review
-					</button>
-				</div>
-			</div>
-		</>
-	);
+      <div className="form-group mb-9 mt-4">
+        <div className="text-right">
+          <button
+            className="btn btn-light-success mr-2"
+            type="button"
+            style={{ borderRadius: "30px", fontWeight: "600" }}
+            onClick={showPreviewHandler}
+          >
+            Review
+          </button>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default FormCopy;

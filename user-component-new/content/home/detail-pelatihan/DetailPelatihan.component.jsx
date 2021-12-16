@@ -331,9 +331,11 @@ const DetailPelatihan = ({ session }) => {
                 </div>
 
                 <div className="ml-5">
-                  <p className="fw-600 fz-16 mb-2">{pelatihan?.mitra_nama}</p>
+                  <p className="fw-600 fz-16 mb-2">
+                    {pelatihan?.mitra_nama || "-"}
+                  </p>
                   <p style={{ color: "#6C6C6C" }}>
-                    {pelatihan?.mitra !== "" ? pelatihan?.provinsi : "-"}
+                    {pelatihan?.lokasi_mitra || "-"}
                   </p>
                 </div>
               </div>

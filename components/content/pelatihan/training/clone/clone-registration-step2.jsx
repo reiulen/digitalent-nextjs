@@ -11,6 +11,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 import ModalPreview from "../components/modal-preview-form.component";
+import ModalProfile from "../components/modal-profile-peserta";
 import { putTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
 import {
   storeRegistrationStep2,
@@ -30,6 +31,10 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   const { data: dataForm, error: errorDropdownForm } = useSelector(
     (state) => state.drowpdownFormBuilder
   );
+  const { data: dataReferenceOption } = useSelector(
+    (state) => state.allDataReference
+  );
+  const [dataOptions, setDataOptions] = useState([]);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -50,6 +55,20 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   // END FORM BUILDER
 
   const [viewForm, setViewForm] = useState(getEditTraining2.type_form);
+
+  useEffect(() => {
+    const dataOptionsArr = [];
+    if (dataReferenceOption) {
+      dataReferenceOption.list_reference.map((row, i) => {
+        let data = {
+          id: row.id,
+          value: row.name,
+        };
+        dataOptionsArr.push(data);
+      });
+    }
+    setDataOptions(dataOptionsArr);
+  }, []);
 
   const [element] = useState([
     {
@@ -102,41 +121,41 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
     },
   ]);
 
-  const [dataOptions] = useState([
-    {
-      value: "status_menikah",
-    },
-    {
-      value: "pendidikan",
-    },
-    {
-      value: "status_pekerjaan",
-    },
-    {
-      value: "hubungan",
-    },
-    {
-      value: "bidang_pekerjaan",
-    },
-    {
-      value: "level_pelatihan",
-    },
-    {
-      value: "agama",
-    },
-    {
-      value: "penyelengaara",
-    },
-    {
-      value: "provinsi",
-    },
-    {
-      value: "kota/kabupaten",
-    },
-    {
-      value: "universitas",
-    },
-  ]);
+  // const [dataOptions] = useState([
+  //   {
+  //     value: "status_menikah",
+  //   },
+  //   {
+  //     value: "pendidikan",
+  //   },
+  //   {
+  //     value: "status_pekerjaan",
+  //   },
+  //   {
+  //     value: "hubungan",
+  //   },
+  //   {
+  //     value: "bidang_pekerjaan",
+  //   },
+  //   {
+  //     value: "level_pelatihan",
+  //   },
+  //   {
+  //     value: "agama",
+  //   },
+  //   {
+  //     value: "penyelengaara",
+  //   },
+  //   {
+  //     value: "provinsi",
+  //   },
+  //   {
+  //     value: "kota/kabupaten",
+  //   },
+  //   {
+  //     value: "universitas",
+  //   },
+  // ]);
 
   const optionsForm = dataForm.data || [];
 
@@ -274,10 +293,26 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   return (
     <div className="col-lg-12 order-1 px-0">
       <div className="card card-custom card-stretch gutter-b">
+        <div className="card-header border-0">
+          <h1
+            className="font-weight-bolder card-title"
+            style={{ fontSize: "20px" }}
+          >
+            Form Pendaftaran
+          </h1>
+          <div className="card-toolbar justify-content-between d-flex">
+            <button
+              className="btn btn-outline-primary px-6 font-weight-bolder"
+              data-toggle="modal"
+              data-target="#modalProfile"
+              type="button"
+            >
+              Data Profile Peserta
+            </button>
+          </div>
+        </div>
         <div className="card-body py-4">
           <form onSubmit={submitHandler}>
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
-
             <div className="form-group mb-4">
               <label className="col-form-label font-weight-bold">
                 Tambah Form
@@ -320,13 +355,13 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
 
             <div className="form-group mt-9">
               <div className="text-right">
-                <button
+                {/* <button
                   className="btn btn-light-ghost-rounded-full mr-2"
                   type="button"
                   onClick={() => propsStep(1)}
                 >
                   Kembali
-                </button>
+                </button> */}
                 <button className="btn btn-primary-rounded-full" type="submit">
                   Simpan & Lanjut
                 </button>
@@ -368,6 +403,17 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
           sendPropsModalShow={(value) => setModalShow(value)}
         />
       </Modal>
+
+      <div
+        className="modal fade"
+        id="modalProfile"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="modalProfile"
+        aria-hidden="true"
+      >
+        <ModalProfile />
+      </div>
     </div>
   );
 };

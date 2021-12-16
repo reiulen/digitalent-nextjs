@@ -8,7 +8,7 @@ const RadioReference = ({ id, token, onChangeValue }) => {
     axios
       .get(
         process.env.END_POINT_API_SITE_MANAGEMENT +
-          `api/reference/detail/${id}`,
+          `api/option/reference-choose/${id}?paginate=false`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -16,7 +16,7 @@ const RadioReference = ({ id, token, onChangeValue }) => {
         }
       )
       .then((res) => {
-        setOptionsReference(res.data.data.value_reference);
+        setOptionsReference(res.data.data);
       });
   }, []);
 
@@ -31,10 +31,10 @@ const RadioReference = ({ id, token, onChangeValue }) => {
                 type="radio"
                 name={"radiobutton"}
                 className="form-check-input"
-                value={row.value}
-                onClick={(e) => onChangeValue(row.value)}
+                value={row.label}
+                onClick={(e) => onChangeValue(row.label)}
               />
-              <label className="form-check-label">{row.value}</label>
+              <label className="form-check-label">{row.label}</label>
             </div>
           </>
         ))}

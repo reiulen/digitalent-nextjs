@@ -11,7 +11,7 @@ const CardPelatihanClose = ({ row }) => {
         disabled
         className={`p-0 mb-0 btn-disabled-pelatihan-new`}
       >
-        <div className={`parent-image-pelatihan-new`}>
+        <div className={`parent-image-pelatihan-new-close`}>
           <Image
             className={`image-list-pelatihan-new`}
             src={
@@ -29,7 +29,7 @@ const CardPelatihanClose = ({ row }) => {
           <div className="d-flex justify-content-between">
             <div className="align-self-start">
               <Badge
-                bg={`py-3 px-4 badge-card-pelatihan-new`}
+                bg={`py-3 px-4 badge-card-pelatihan-new-close`}
                 classNam="d-flex "
               >
                 Pelatihan {row.metode_pelatihan}
@@ -51,7 +51,7 @@ const CardPelatihanClose = ({ row }) => {
               objectFit="cover"
               thumbnail
               roundedCircle
-              className={`mitra-pelatihan-image-new`}
+              className={`mitra-pelatihan-image-new-close`}
               alt="Image Mitra"
             />
           </div>
