@@ -294,7 +294,6 @@ const VideoPage = () => {
           data={[{ link: router.asPath, name: "Video" }]}
         />
         {/* End of Breadcrumb */}
-
         {/* Header */}
         <div className="col-12">
           <h1
@@ -863,9 +862,9 @@ const VideoPage = () => {
               </div>
             </form>
             {/* End of Search Field */}
-
             {/* Card Video */}
             {
+             
               allLoading ?
                 <div className="row my-20 ml-5">
                   <div className="col col-12">
@@ -877,8 +876,7 @@ const VideoPage = () => {
                   <div
                     className="row d-flex justify-content-between flex-wrap"
                   >
-                    {!video || (video && video.video.length === 0) ? (
-
+                    {!video || (video && video?.video.length === 0) ? (
                       <div className="row mx-auto">
                         <div className="col col-12 d-flex flex-column justify-content-center">
                           <Image
@@ -899,7 +897,7 @@ const VideoPage = () => {
 
                     ) : (
                       video &&
-                      video.video.map((row, i) => {
+                      video?.video?.map((row, i) => {
                         return (
                           <div
                             className="col-12 col-md-6 mt-5 mb-sm-n3 mb-0 py-0 pr-lg-11 pr-3 pr-sm-5"

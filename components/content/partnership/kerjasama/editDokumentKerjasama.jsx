@@ -402,7 +402,7 @@ const EditDokumentKerjasama = ({ token }) => {
                               (items, i) => {
                                 return (
                                   <option key={i} value={items.id}>
-                                    {itemsa?.cooperation_categories}
+                                    {items?.cooperation_categories}
                                   </option>
                                 );
                               }
@@ -451,7 +451,7 @@ const EditDokumentKerjasama = ({ token }) => {
                 </div>
               </div>
               {error.period ? (
-                  <p className="error-text mb-4 mt-0">{errora?.period}</p>
+                  <p className="error-text mb-4 mt-0">{error?.period}</p>
                 ) : (
                   ""
                 )} 
@@ -681,12 +681,12 @@ const EditDokumentKerjasama = ({ token }) => {
 
               {cooperationID === ""
                 ? ""
-                : cooperationIDa?.data_contenta?.map((items, i) => {
+                : cooperationID?.data_content?.map((items, i) => {
                     return (
                       <div
                         key={i}
                         className={`form-group ${
-                          allMKa?.cooperationActiveSelect.length !== 0
+                          allMK?.cooperationActiveSelect.length !== 0
                             ? "d-none"
                             : ""
                         }`}

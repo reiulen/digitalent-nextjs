@@ -845,7 +845,7 @@ const Galeri = () => {
                                             kategori.map((element, index) => {
                                                 return (
                                                     detail.kategori_id == element.id ?
-                                                        <div className={`${styles.kategoriModal} badge badge-light d-none d-sm-block`} key={index}>
+                                                        <div className={`${styles.kategoriModal} badge badge-light`} key={index}>
                                                             <div className="text-primary">
                                                                 {element.nama_kategori}
                                                             </div>
