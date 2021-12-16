@@ -468,9 +468,7 @@ const Dashboard = ({ session, success }) => {
 								<Card
 									className="rounded-xl h-100"
 									onClick={() => {
-										router.push(
-											`/detail/pelatihan/${dataDashboard.pelatihan.pelatihan_selesi.id}?akademiId=${dataDashboard.pelatihan.pelatihan_selesi.akademi_id}`
-										);
+										router.push(`/peserta/riwayat-pelatihan`);
 									}}
 									style={{ cursor: "pointer" }}
 								>
