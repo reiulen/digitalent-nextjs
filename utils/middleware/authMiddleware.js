@@ -79,8 +79,8 @@ export const middlewareAuthMitraSession = (session) => {
     };
     return data;
   }
-  const auth = session.user.user.data.user;
 
+  const auth = session.user.user.data.user;
   if (auth.roles[0] !== "mitra") {
     data = {
       status: false,
