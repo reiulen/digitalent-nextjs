@@ -20,6 +20,7 @@ import {
 } from "../../../../../redux/types/pelatihan/review.type";
 import { route } from "next/dist/server/router";
 import Cookies from "js-cookie";
+import { PDFReader } from "react-read-pdf";
 
 const ViewReviewTraining = ({ token }) => {
   const router = useRouter();
@@ -313,9 +314,11 @@ const ViewReviewTraining = ({ token }) => {
                 <p
                   className="fz-16 text-primary"
                   style={{ cursor: "pointer", textDecoration: "underline" }}
-                  onClick={() =>
-                    window.open(review.file_path + review.silabus, "_blank")
-                  }
+                  // onClick={() =>
+                  //   window.open(review.file_path + review.silabus, "_blank")
+                  // }
+                  data-toggle="modal"
+                  data-target="#silabusModal"
                 >
                   {dataPelatihan.silabus.split("/")[2]}
                 </p>
@@ -629,6 +632,51 @@ const ViewReviewTraining = ({ token }) => {
           </button>
         </Modal.Footer>
       </Modal>
+
+      <div
+        class="modal fade"
+        id="silabusModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Preview Silabus
+              </h5>
+              <button
+                type="button"
+                className="btn"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">
+                  <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+                </span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div style={{ overflow: "scroll", height: 600 }}>
+                <PDFReader url={review.file_path + review.silabus} scale={90} />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                onClick={() =>
+                  window.open(review.file_path + review.silabus, "_blank")
+                }
+              >
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </PageWrapper>
   );
 };
