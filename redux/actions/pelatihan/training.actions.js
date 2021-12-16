@@ -165,7 +165,7 @@ export const getCardTraining =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: token_permission,
+          // Permission: token_permission,
         },
       };
 
