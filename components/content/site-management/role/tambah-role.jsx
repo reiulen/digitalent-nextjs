@@ -23,6 +23,7 @@ const TambahRole = ({ token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const [status, setStatus] = useState("");
+  const [array, setArray] = useState([])
   const [editTable, setEditTable] = useState("");
   const [nameRole, setNameRole] = useState("");
   const [allCheck, setAllCheck] = useState(false);
@@ -49,6 +50,7 @@ const TambahRole = ({ token }) => {
     borderRadius: "5px",
     backgroundColor: "#203E80",
   };
+
 
   let list = allPermission.data.data;
 
@@ -352,8 +354,11 @@ const TambahRole = ({ token }) => {
                                 sub.list_sub_menu.filter((check) => {
                                   check.view =
                                     filter.view === true || filter.view === 1;
+                              
                                 });
                               }
+
+                      
                             }
                             setForce(!force);
                             return filter;
@@ -392,6 +397,7 @@ const TambahRole = ({ token }) => {
                                     filter.manage === true || filter.manage === 1;
                                 });
                               }
+
                               
                             }
                             setForce(!force);
@@ -578,9 +584,9 @@ const TambahRole = ({ token }) => {
       permissions_id: permission.map((item) => {
         return {
           id: item.id,
-          view: item.view === true ? 1 : 0,
-          manage: item.manage === true ? 1 : 0,
-          publish: item.publish === true ? 1 : 0,
+          view: item.view === true || item.view === 1 ? 1 : 0,
+          manage: item.manage === true || item.manage === 1 ? 1 : 0,
+          publish: item.publish === true || item.publish === 1 ? 1 : 0,
         };
       }),
     };

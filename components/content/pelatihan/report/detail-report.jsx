@@ -17,6 +17,7 @@ import {
   uploadSertifikat,
 } from "../../../../redux/actions/pelatihan/report-training.actions";
 import axios from "axios";
+import { PDFReader } from "react-read-pdf";
 
 const DetailReport = ({ token }) => {
   const dispatch = useDispatch();
@@ -31,7 +32,11 @@ const DetailReport = ({ token }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(5);
   const [showModal, setShowModal] = useState(false);
+
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
+  const [showModalPreview, setShowModalPreview] = useState(false);
+  const [filePreviewPdf, setFilePreviewPdf] = useState("");
+
   const [publishValue, setPublishValue] = useState(null);
   const [sertifikasi, setSertifikasi] = useState(null);
   const [statusSubstansi, setStatusSubstansi] = useState(null);
@@ -255,7 +260,7 @@ const DetailReport = ({ token }) => {
                 {item.sertifikat === "" ? "Tidak Ada" : "Ada"}
               </div>
             </td>
-            {item.sertifikat === "" && (
+            {item.sertifikat === "" ? (
               <td className="align-middle">
                 <button
                   className="btn btn-link-action bg-blue-primary text-white"
@@ -269,6 +274,27 @@ const DetailReport = ({ token }) => {
                   type="button"
                 >
                   <i className="ri-add-fill text-white p-0"></i>
+                </button>
+              </td>
+            ) : (
+              <td className="align-middle">
+                <button
+                  className="btn btn-link-action bg-blue-primary text-white"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Preview Sertifikasi"
+                  onClick={() => {
+                    setFilePreviewPdf(
+                      item.file_sertifikat !== ""
+                        ? item.file_path + item.file_sertifikat
+                        : ""
+                    );
+                    setShowModalPreview(true);
+                    setId(item.id);
+                  }}
+                  type="button"
+                >
+                  <i className="ri-eye-line text-white p-0"></i>
                 </button>
               </td>
             )}
@@ -659,7 +685,7 @@ const DetailReport = ({ token }) => {
               </div>
             </div>
             <small className="text-muted">
-              Format File (.pdf/.jpg) & Max size 5 mb
+              Format File (.pdf) & Max size 5 mb
             </small>
           </div>
         </Modal.Body>
@@ -681,6 +707,29 @@ const DetailReport = ({ token }) => {
             Upload
           </button>
         </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showModalPreview}
+        onHide={() => setShowModalPreview(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        size="lg"
+      >
+        <Modal.Header>
+          <Modal.Title>Preview Sertifikasi</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModalPreview(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ overflow: "scroll", height: 600 }}>
+            {filePreviewPdf !== "" && <PDFReader url={filePreviewPdf} />}
+          </div>
+        </Modal.Body>
       </Modal>
     </PageWrapper>
   );

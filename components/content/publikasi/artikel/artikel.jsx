@@ -393,7 +393,7 @@ const Artikel = ({ token }) => {
             background="bg-light-warning"
             icon="new/mail-white.svg"
             color='#ffffff'
-            value="0"
+            value={artikel && artikel.total_author != "" ? artikel.total_author : 0}
             titleValue="Orang"
             title="Total Author"
             publishedVal=""

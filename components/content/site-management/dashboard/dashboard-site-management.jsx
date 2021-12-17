@@ -32,6 +32,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 	const [dataZonasi, setDataZonasi] = useState(null)
 	const [totalZonasi, setTotalZonasi] = useState(null)
 
+
 	let dispatch = useDispatch();
 
 	useEffect(() => {
@@ -193,6 +194,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 							color="text-black"
 							title="SUBM"
 							link="/site-management/setting/pelatihan?sidebar=SUBM"
+							backgroundImage=""
 						></CardDashboardSiteManagement>
 					</div>
 					<div className="col-lg-3 mt-2">
@@ -203,6 +205,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 							color="text-black"
 							title="Zonasi"
 							link="/site-management/master-data/master-zonasi"
+							backgroundImage=""
 						></CardDashboardSiteManagement>
 					</div>
 				</div>
@@ -269,7 +272,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 										{/* {allDataPeserta &&
 											allDataPeserta.length > 0 &&
 											allDataPeserta[0].totalPeserta}{" "} */}
-											{allListPeserta?.data?.data?.total} User
+										{allListPeserta?.data?.data?.total} User
 									</p>
 									<div className="ml-auto mx-7 my-4">
 										<button
