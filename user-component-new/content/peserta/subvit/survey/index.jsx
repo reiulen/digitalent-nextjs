@@ -412,7 +412,7 @@ const SubtansiUser = ({ token }) => {
           return {
             ...item,
 
-            participant_answer: sessionStorage.getItem(index + 1),
+            answer: sessionStorage.getItem(index + 1),
           };
         })
       ),
@@ -604,8 +604,9 @@ const SubtansiUser = ({ token }) => {
                               >
                                 <Card
                                   className={
-                                    sessionStorage.getItem(router.query.id) ===
-                                    item.key
+                                    sessionStorage.getItem(
+                                      router.query.id + "e"
+                                    ) === item.key
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
@@ -629,8 +630,9 @@ const SubtansiUser = ({ token }) => {
                           ) : (
                             <Card
                               className={
-                                sessionStorage.getItem(router.query.id) ===
-                                item.key
+                                sessionStorage.getItem(
+                                  router.query.id + "e"
+                                ) === item.key
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
