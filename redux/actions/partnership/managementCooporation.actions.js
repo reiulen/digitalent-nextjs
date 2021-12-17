@@ -653,7 +653,7 @@ export const rejectCooperation = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            Permission: permission
+            // Permission: permission
           },
         }
       );

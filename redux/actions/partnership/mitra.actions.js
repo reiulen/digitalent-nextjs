@@ -189,7 +189,7 @@ export const exportFileCSV = (token) => {
       fetch(url, {
         headers: {
           authorization: `Bearer ${token}`,
-          Permission: Cookies.get("token_permission")
+          // Permission: Cookies.get("token_permission")
         },
       })
         .then((response) => response.blob())
