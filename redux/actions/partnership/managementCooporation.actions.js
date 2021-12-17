@@ -595,7 +595,7 @@ export const cancelChangeNamaLembaga = () => {
     type: CANCEL_CHANGE_EMAIL,
   };
 };
-export const exportFileCSV = token => {
+export const exportFileCSV = (token,permission) => {
   return async (dispatch, getState) => {
     let statusState = getState().allMK.status || "";
     let categories_cooporationState =
@@ -614,7 +614,7 @@ export const exportFileCSV = token => {
           paramssz,
           headers: {
             authorization: `Bearer ${token}`,
-            Permission: permission
+            // Permission: permission
           },
         }
       );
