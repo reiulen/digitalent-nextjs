@@ -45,7 +45,7 @@ export default function ListPesertaID({ token }) {
 
 	const config = {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${token.token}`,
 		},
 	};
 
