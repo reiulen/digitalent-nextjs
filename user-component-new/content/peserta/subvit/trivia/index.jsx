@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/dist/client/image";
-import Dot from "../../../../../public/assets/media/logos/dot.png";
 import { useSelector } from "react-redux";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
@@ -23,6 +22,7 @@ import { postResultTrivia } from "../../../../../redux/actions/subvit/trivia-que
 import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
 import { useDispatch } from "react-redux";
 import { parseInt } from "lodash";
+import axios from "axios";
 
 const SubtansiUser = ({ token }) => {
   const dispatch = useDispatch();
@@ -72,14 +72,11 @@ const SubtansiUser = ({ token }) => {
   const [data, setData] = useState();
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
-  const [no, setNo] = useState(0);
 
   const [modalSoal, setModalSoal] = useState(false);
   const [modalNext, setModalNext] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
   const [count, setCount] = useState(random_trivia && random_trivia.time_left);
-
-  const [alert, setAlert] = useState(true);
 
   let tt = [];
 
@@ -118,6 +115,12 @@ const SubtansiUser = ({ token }) => {
   const [minute2, setMinute2] = useState(0);
   const [second2, setSecond2] = useState(0);
 
+  const [question, setQuestion] = useState("");
+  const [time, setTime] = useState("");
+
+  const routerTraining = router.query.training_id;
+  const routerTema = router.query.theme_id;
+
   useEffect(() => {
     // Handle Error akan langsung ke done
     if (error) {
@@ -153,9 +156,19 @@ const SubtansiUser = ({ token }) => {
   }, [count, router, error, dispatch, token]);
 
   useEffect(() => {
-    // window.location.reload();
+    axios
+      .get(
+        process.env.END_POINT_API_SUBVIT +
+          `api/trivia-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`
+      )
+      .then((res) => {
+        setQuestion(res.data.total_questions);
+        setTime(res.data.duration);
+      });
+  }, [routerTraining, routerTema]);
+
+  useEffect(() => {
     setData(random_trivia);
-    // setData(initialData);
   }, [data, random_trivia]);
 
   const handleModalSoal = () => {
@@ -951,8 +964,8 @@ const SubtansiUser = ({ token }) => {
                   <td>&nbsp;</td>
                   <td>
                     {" "}
-                    Peserta wajib menjawab seluruh TRIVIA yang berjumlah 50
-                    pertanyaan.
+                    Peserta wajib menjawab seluruh TRIVIA yang berjumlah{" "}
+                    {question || 50} pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -968,7 +981,12 @@ const SubtansiUser = ({ token }) => {
                 <tr>
                   <td style={{ verticalAlign: "top" }}>4.</td>
                   <td>&nbsp;</td>
-                  <td> Waktu yang tersedia untuk mengisi TRIVIA ini 1 Jam.</td>
+                  <td>
+                    {" "}
+                    Waktu yang tersedia untuk mengisi TRIVIA ini {time ||
+                      5}{" "}
+                    Jam.
+                  </td>
                 </tr>
               </table>
             </Card>
