@@ -30,7 +30,7 @@ const CardPelatihanClose = ({ row }) => {
             <div className="align-self-start">
               <Badge
                 bg={`py-3 px-4 badge-card-pelatihan-new-close`}
-                classNam="d-flex "
+                className="d-flex"
               >
                 Pelatihan {row.metode_pelatihan}
               </Badge>
@@ -49,8 +49,8 @@ const CardPelatihanClose = ({ row }) => {
               width={60}
               height={60}
               objectFit="cover"
-              thumbnail
-              roundedCircle
+              thumbnail="true"
+              // roundedCircle
               className={`mitra-pelatihan-image-new-close`}
               alt="Image Mitra"
             />
