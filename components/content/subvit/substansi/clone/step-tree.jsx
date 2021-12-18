@@ -61,8 +61,6 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [status, setStatus] = useState(subtance?.status || 0);
   const [, forceUpdate] = useState();
 
-  console.log(subtance);
-
   const saveDraft = () => {
     if (simpleValidator.current.allValid()) {
       const start_at = moment(startDate).format("YYYY-MM-DD");
