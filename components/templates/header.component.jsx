@@ -82,7 +82,7 @@ const Header = () => {
           {/* <!--begin::Header Menu Wrapper--> */}
           <div
             className={`header-menu-wrapper header-menu-wrapper-left ${
-              allFunctionls.isAsideHeader && allFunctionls.isAsideHeader
+              (allFunctionls.isAsideHeader && allFunctionls.isAsideHeader)
                 ? "header-menu-wrapper-on"
                 : ""
             }`}
@@ -100,7 +100,7 @@ const Header = () => {
                   data-menu-toggle="click"
                   aria-haspopup="true"
                 >
-                  <a href="javascript:;" className="menu-link menu-toggle">
+                  <a className="menu-link menu-toggle">
                     {/* <span className="menu-text">Dashboard</span> */}
                     {breadcrumbs ? (
                       <span className="menu-text">
