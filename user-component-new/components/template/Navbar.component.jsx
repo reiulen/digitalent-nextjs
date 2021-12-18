@@ -111,6 +111,7 @@ const Navigationbar = ({ session }) => {
     ws.onmessage = (e) => {
       let res = JSON.parse(e.data);
       if (session && res?.To == session?.id) {
+        setAlertNotif(true);
         GetNotifikasi();
       }
     };
@@ -158,8 +159,6 @@ const Navigationbar = ({ session }) => {
   };
 
   const GetNotifikasi = async () => {
-    // console.log("fungsi hit");
-    setAlertNotif(true);
     axios
       .get(
         process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
