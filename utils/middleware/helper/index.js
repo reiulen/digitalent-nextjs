@@ -139,20 +139,27 @@ export const helperElementRenderIndex = (row, propsToken) => {
   switch (row.element) {
     case "text":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "91%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <input
             type={row.element}
             name=""
             className="form-control"
             required={row.required}
+            placeholder={`Silahkan Masukkan ${row.name}`}
           />
         </div>
       );
       break;
     case "select":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "91%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <select name="" className="form-control" required={row.required}>
             <option value="">--Pilih Data--</option>
@@ -171,7 +178,10 @@ export const helperElementRenderIndex = (row, propsToken) => {
       break;
     case "checkbox":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "91%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="my-auto">
             {row.option === "manual" ? (
@@ -200,7 +210,10 @@ export const helperElementRenderIndex = (row, propsToken) => {
       break;
     case "textarea":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "91%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <textarea
             name=""
@@ -214,7 +227,10 @@ export const helperElementRenderIndex = (row, propsToken) => {
       break;
     case "radio":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "91%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="my-auto">
             {row.option === "manual" ? (
@@ -243,7 +259,10 @@ export const helperElementRenderIndex = (row, propsToken) => {
       break;
     case "file_image":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "91%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="custom-file">
             <input
@@ -261,7 +280,10 @@ export const helperElementRenderIndex = (row, propsToken) => {
       break;
     case "file_doc":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "91%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="custom-file">
             <input
@@ -279,7 +301,10 @@ export const helperElementRenderIndex = (row, propsToken) => {
       break;
     case "date":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "91%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <input
             type={row.element}
@@ -293,7 +318,10 @@ export const helperElementRenderIndex = (row, propsToken) => {
     case "triggered":
       return (
         <>
-          <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <div
+            style={{ maxWidth: "91%" }}
+            className={`form-group  mt-0 mb-0 ${row.size}`}
+          >
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
@@ -310,6 +338,17 @@ export const helperElementRenderIndex = (row, propsToken) => {
         </>
       );
       break;
+    case "upload_document":
+      return (
+        <div
+          style={{ maxWidth: "91%" }}
+          className={`form-group mt-0 mb-0 ${row.size}`}
+        >
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <p>{row.fileName}</p>
+        </div>
+      );
+      break;
     default:
       break;
   }
@@ -319,20 +358,27 @@ export const helperElementRenderChildren = (row, propsToken) => {
   switch (row.element) {
     case "text":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "94%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <input
             type={row.element}
             name=""
             className="form-control"
             required={row.required}
+            placeholder={`Silahkan Masukkan ${row.name}`}
           />
         </div>
       );
       break;
     case "select":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "94%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <select name="" className="form-control" required={row.required}>
             <option value="">--Pilih Data--</option>
@@ -351,7 +397,10 @@ export const helperElementRenderChildren = (row, propsToken) => {
       break;
     case "checkbox":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "94%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="my-auto">
             {row.option === "manual" ? (
@@ -380,7 +429,10 @@ export const helperElementRenderChildren = (row, propsToken) => {
       break;
     case "textarea":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "94%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <textarea
             name=""
@@ -394,7 +446,10 @@ export const helperElementRenderChildren = (row, propsToken) => {
       break;
     case "radio":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "94%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="my-auto">
             {row.option === "manual" ? (
@@ -423,7 +478,10 @@ export const helperElementRenderChildren = (row, propsToken) => {
       break;
     case "file_image":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "94%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="custom-file">
             <input
@@ -441,7 +499,10 @@ export const helperElementRenderChildren = (row, propsToken) => {
       break;
     case "file_doc":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "94%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="custom-file">
             <input
@@ -459,7 +520,10 @@ export const helperElementRenderChildren = (row, propsToken) => {
       break;
     case "date":
       return (
-        <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "94%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <input
             type={row.element}
@@ -473,7 +537,10 @@ export const helperElementRenderChildren = (row, propsToken) => {
     case "triggered":
       return (
         <>
-          <div className={`form-group mr-0  mt-0 mb-0 ${row.size}`}>
+          <div
+            style={{ maxWidth: "94%" }}
+            className={`form-group  mt-0 mb-0 ${row.size}`}
+          >
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
@@ -488,9 +555,32 @@ export const helperElementRenderChildren = (row, propsToken) => {
             </select>
           </div>
           {row.triggered_index.map((rowIndex, k) => (
-            <>{helperElementRenderIndex(rowIndex, propsToken)}</>
+            <>
+              <div
+                style={{ maxWidth: "94%" }}
+                className={`form-group  mt-0 mb-0 col-md-12`}
+              >
+                <p className="mb-0 mt-3 fw-600 fz-16">
+                  Opsi : {rowIndex.triggeredName}
+                </p>
+              </div>
+              {rowIndex.triggeredForm.map((rowForm, index) => (
+                <>{helperElementRenderIndex(rowForm, propsToken)}</>
+              ))}
+            </>
           ))}
         </>
+      );
+      break;
+    case "upload_document":
+      return (
+        <div
+          style={{ maxWidth: "94%" }}
+          className={`form-group mt-0 mb-0 ${row.size}`}
+        >
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <p>{row.fileName}</p>
+        </div>
       );
       break;
     default:
@@ -502,20 +592,27 @@ export const helperElementRenderParent = (row, propsToken) => {
   switch (row.element) {
     case "text":
       return (
-        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "97%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <input
             type={row.element}
             name=""
             className="form-control"
             required={row.required}
+            placeholder={`Silahkan Masukkan ${row.name}`}
           />
         </div>
       );
       break;
     case "select":
       return (
-        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "97%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <select name="" className="form-control" required={row.required}>
             <option value="">--Pilih Data--</option>
@@ -534,7 +631,10 @@ export const helperElementRenderParent = (row, propsToken) => {
       break;
     case "checkbox":
       return (
-        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "97%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="my-auto">
             {row.option === "manual" ? (
@@ -563,7 +663,10 @@ export const helperElementRenderParent = (row, propsToken) => {
       break;
     case "textarea":
       return (
-        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "97%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <textarea
             name=""
@@ -577,7 +680,10 @@ export const helperElementRenderParent = (row, propsToken) => {
       break;
     case "radio":
       return (
-        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "97%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="my-auto">
             {row.option === "manual" ? (
@@ -606,7 +712,10 @@ export const helperElementRenderParent = (row, propsToken) => {
       break;
     case "file_image":
       return (
-        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "97%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="custom-file">
             <input
@@ -624,7 +733,10 @@ export const helperElementRenderParent = (row, propsToken) => {
       break;
     case "file_doc":
       return (
-        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "97%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <div className="custom-file">
             <input
@@ -642,7 +754,10 @@ export const helperElementRenderParent = (row, propsToken) => {
       break;
     case "date":
       return (
-        <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+        <div
+          style={{ maxWidth: "97%" }}
+          className={`form-group  mt-0 mb-0 ${row.size}`}
+        >
           <label className="col-form-label font-weight-bold">{row.name}</label>
           <input
             type={row.element}
@@ -656,7 +771,10 @@ export const helperElementRenderParent = (row, propsToken) => {
     case "triggered":
       return (
         <>
-          <div className={`form-group  mt-0 mb-0 ${row.size}`}>
+          <div
+            style={{ maxWidth: "97%" }}
+            className={`form-group  mt-0 mb-0 ${row.size}`}
+          >
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
@@ -672,9 +790,237 @@ export const helperElementRenderParent = (row, propsToken) => {
             </select>
           </div>
           {row.triggered_children.map((rowChildren, k) => (
-            <>{helperElementRenderChildren(rowChildren, propsToken)}</>
+            <>
+              <div
+                style={{ maxWidth: "94%" }}
+                className={`form-group  mt-0 mb-0 col-md-12`}
+              >
+                <p className="mb-0 mt-3 fw-600 fz-16">
+                  Opsi : {rowChildren.triggeredName}
+                </p>
+              </div>
+              {rowChildren.triggeredForm.map((rowForm, index) => (
+                <>{helperElementRenderChildren(rowForm, propsToken)}</>
+              ))}
+            </>
           ))}
         </>
+      );
+      break;
+    case "upload_document":
+      return (
+        <div
+          style={{ maxWidth: "97%" }}
+          className={`form-group mt-0 mb-0 ${row.size}`}
+        >
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <p>{row.fileName}</p>
+        </div>
+      );
+      break;
+    default:
+      break;
+  }
+};
+
+export const helperElementRender = (row, propsToken) => {
+  switch (row.element) {
+    case "text":
+      return (
+        <div className={`form-group mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <input
+            type={row.element}
+            name=""
+            className="form-control"
+            required={row.required}
+            placeholder={`Silahkan Masukkan ${row.name}`}
+          />
+        </div>
+      );
+      break;
+    case "select":
+      return (
+        <div className={`form-group mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <select name="" className="form-control" required={row.required}>
+            <option value="">--Pilih Data--</option>
+
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <option value={dat} key={i}>
+                  {dat}
+                </option>
+              ))
+            ) : (
+              <OptionsReference id={row.dataOption} token={propsToken} />
+            )}
+          </select>
+        </div>
+      );
+      break;
+    case "checkbox":
+      return (
+        <div className={`form-group mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="my-auto">
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <div className="form-check pb-3" key={i}>
+                  <input
+                    type="checkbox"
+                    name="plotRegistration"
+                    className="form-check-input"
+                    required={row.required}
+                    value={dat}
+                  />
+                  <label className="form-check-label">{dat}</label>
+                </div>
+              ))
+            ) : (
+              <CheckboxReference
+                id={row.dataOption}
+                token={propsToken}
+                required={row.required}
+              />
+            )}
+          </div>
+        </div>
+      );
+      break;
+    case "textarea":
+      return (
+        <div className={`form-group mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <textarea
+            name=""
+            cols="30"
+            rows="5"
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "radio":
+      return (
+        <div className={`form-group mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="my-auto">
+            {row.option === "manual" ? (
+              row.dataOption.split(";").map((dat, i) => (
+                <div className="form-check pb-3" key={i}>
+                  <input
+                    type="radio"
+                    name={row.name}
+                    className="form-check-input"
+                    value={dat}
+                    required={row.required}
+                  />
+                  <label className="form-check-label">{dat}</label>
+                </div>
+              ))
+            ) : (
+              <RadioReference
+                id={row.dataOption}
+                token={propsToken}
+                required={row.required}
+              />
+            )}
+          </div>
+        </div>
+      );
+      break;
+    case "file_image":
+      return (
+        <div className={`form-group mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              accept="image/png, image/jpeg , image/jpg"
+              required={row.required}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              Belum ada File
+            </label>
+          </div>
+        </div>
+      );
+      break;
+    case "file_doc":
+      return (
+        <div className={`form-group mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              accept="application/pdf"
+              required={row.required}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              Belum ada File
+            </label>
+          </div>
+        </div>
+      );
+      break;
+    case "date":
+      return (
+        <div className={`form-group mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <input
+            type={row.element}
+            name=""
+            className="form-control"
+            required={row.required}
+          />
+        </div>
+      );
+      break;
+    case "triggered":
+      return (
+        <>
+          <div className={`form-group mt-0 mb-0 ${row.size}`}>
+            <label className="col-form-label font-weight-bold">
+              {row.name}
+            </label>
+            <select name="" className="form-control" required={row.required}>
+              <option value="">--Pilih Data--</option>
+              {row.option === "manual" &&
+                row.dataOption.split(";").map((dat, i) => (
+                  <option value={dat} key={i}>
+                    {dat}
+                  </option>
+                ))}
+            </select>
+          </div>
+          {row.triggered_parent.map((rowParent, k) => (
+            <>
+              <div
+                style={{ maxWidth: "97%" }}
+                className={`form-group  mt-0 mb-0 col-md-12`}
+              >
+                <p className="mb-0 mt-3 fw-600 fz-16">
+                  Opsi : {rowParent.triggeredName}
+                </p>
+              </div>
+              {rowParent.triggeredForm.map((rowForm, index) => (
+                <>{helperElementRenderParent(rowForm, propsToken)}</>
+              ))}
+            </>
+          ))}
+        </>
+      );
+      break;
+    case "upload_document":
+      return (
+        <div className={`form-group mt-0 mb-0 ${row.size}`}>
+          <label className="col-form-label font-weight-bold">{row.name}</label>
+          <p>{row.fileName}</p>
+        </div>
       );
       break;
     default:

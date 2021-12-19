@@ -3,6 +3,8 @@ import {
 	DRAW_LOAD_DATA_PESERTA_CITY_DASHBOARD_SITE_MANAGEMENT,
 	DRAW_LOAD_DATA_PESERTA_DASHBOARD_SITE_MANAGEMENT,
 	LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
+	DRAW_LOAD_DATA_LIST_DASHBOARD_SITE_MANAGEMENT,
+	LOAD_DATA_LIST_DASHBOARD_SITE_MANAGEMENT
 } from "../../types/site-management/dashboard.type";
 
 import axios from "axios";
@@ -100,6 +102,34 @@ export const loadDataZonasiNext = (token, type, page) => {
 			dispatch({
 				type: DRAW_LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
 				payload: data.data.list_zonasi,
+			});
+		} catch (error) {
+			// notify(error.response.data.message);
+		}
+	};
+};
+
+export const loadDataListZonasi = (token, page = 1) => {
+	const params = {
+		page,
+	};
+
+	return async (dispatch) => {
+		try {
+			let { data } = await axios.get(
+				// `${process.env.END_POINT_API_PELATIHAN}/api/v1/formPendaftaran/peserta-zonasi`,
+				`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/zonasi-participant`,
+				{
+					params,
+					headers: {
+						authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			dispatch({
+				type: LOAD_DATA_LIST_DASHBOARD_SITE_MANAGEMENT,
+				payload: data,
+				page,
 			});
 		} catch (error) {
 			// notify(error.response.data.message);

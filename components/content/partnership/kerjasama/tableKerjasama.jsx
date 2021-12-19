@@ -90,7 +90,7 @@ const Table = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         let formData = new FormData();
@@ -117,7 +117,7 @@ const Table = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         dispatch(deleteCooperation(token, id));
@@ -167,7 +167,7 @@ const Table = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         dispatch(rejectCooperation(token, id));

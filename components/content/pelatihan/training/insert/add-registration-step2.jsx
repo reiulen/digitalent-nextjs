@@ -72,14 +72,14 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
       value: "date",
       name: "Input Date",
     },
-    // {
-    //   value: "triggered",
-    //   name: "Triggered",
-    // },
-    // {
-    //   value: "upload_document",
-    //   name: "Upload Document",
-    // },
+    {
+      value: "triggered",
+      name: "Triggered",
+    },
+    {
+      value: "upload_document",
+      name: "Upload Document",
+    },
   ]);
 
   const [size] = useState([
@@ -295,8 +295,9 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
           type_form: viewForm,
           formBuilder: formBuilderStore,
         };
-        dispatch(storeRegistrationStep2(data));
-        propsStep(3);
+        console.log(data);
+        // dispatch(storeRegistrationStep2(data));
+        // propsStep(3);
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);

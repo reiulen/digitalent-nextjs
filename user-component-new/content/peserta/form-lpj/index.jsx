@@ -200,7 +200,11 @@ const FormLPJ = ({ token }) => {
                 <td className={styles.tableLabel}>No</td>
                 <td
                   className={styles.tableLabel}
-                  style={{ textAlign: "center", width: "100%" }}
+                  style={{
+                    textAlign: "left",
+                    width: "100%",
+                    paddingLeft: "40px",
+                  }}
                 >
                   Uraian
                 </td>

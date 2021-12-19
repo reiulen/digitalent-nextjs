@@ -111,6 +111,7 @@ const Navigationbar = ({ session }) => {
     ws.onmessage = (e) => {
       let res = JSON.parse(e.data);
       if (session && res?.To == session?.id) {
+        setAlertNotif(true);
         GetNotifikasi();
       }
     };
@@ -158,8 +159,6 @@ const Navigationbar = ({ session }) => {
   };
 
   const GetNotifikasi = async () => {
-    // console.log("fungsi hit");
-    setAlertNotif(true);
     axios
       .get(
         process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
@@ -551,7 +550,7 @@ const Navigationbar = ({ session }) => {
                           >
                             <NavDropdown.Item
                               className={`navdropdown-child ${
-                                el.status === 0 ? "d-none" : ""
+                                el.status === 1 && el.page_status === 1 ? "" : "d-none"
                               }`}
                             >
                               {el.slug ? el.slug : el.name ? el.name : el}
@@ -813,7 +812,7 @@ const Navigationbar = ({ session }) => {
                 {/* Button Masuk dan Daftar */}
                 <Link href="/login">
                   <a className="mx-4 mx-md-2">
-                    <button className="btn btn-sm btn-block btn-login-peserta btn-outline-primary-new my-2 justify-content-center py-3">
+                    <button className={`btn btn-sm btn-block btn-login-peserta btn-outline-primary-new my-2 justify-content-center py-3 color-hover-${warna}`}>
                       {/* <IconLogin className="mr-2 icon-login" /> */}
                       <i className="ri-login-box-line mr-2"></i>
                       Masuk
@@ -989,7 +988,7 @@ const Navigationbar = ({ session }) => {
                                     router.push("/lainnya/" + item.url);
                                   }}
                                   className={`p-4 fz-12 ${
-                                    item.status === 1 ? "" : "d-none"
+                                    item.status === 1 && item.page_status === 1 ? "" : "d-none"
                                   }`}
                                 >
                                   {item.name}

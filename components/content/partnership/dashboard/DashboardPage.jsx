@@ -238,8 +238,9 @@ export default function DashboardPage({ token }) {
                     src="/assets/icon/clipboard-list-primary-shade.svg"
                     width={100}
                     height={100}
-                    className="mr-0"
-                    style={{ marginTop: "-2rem", marginRight: "-3rem" }}
+                    // className="mr-0"
+                    className="mt-n1 mr-n1"
+                    // style={{ marginTop: "-2rem", marginRight: "-3rem" }}
                     alt="clipboard"
                   />
                 </div>
@@ -323,6 +324,8 @@ export default function DashboardPage({ token }) {
                       outerRadius={80}
                       paddingAngle={-10}
                       cornerRadius={30}
+                      dataKey="value"
+                      nameKey="name"
                     >
                       {dataPieChartStatusPengajuan &&
                         dataPieChartStatusPengajuan?.map((el, i) => {
@@ -417,6 +420,8 @@ export default function DashboardPage({ token }) {
                       outerRadius={80}
                       paddingAngle={-10}
                       cornerRadius={30}
+                      dataKey="value"
+                      nameKey="name"
                     >
                       {dataPieChartPengajuanDisetujui &&
                         dataPieChartPengajuanDisetujui.map((el, i) => {

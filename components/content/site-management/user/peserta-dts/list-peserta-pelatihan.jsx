@@ -102,9 +102,7 @@ const Table = ({ token }) => {
     );
 
   return (
-    <PageWrapper>
-      <div className="row">
-        <div className="col-12 col-lg-12 col-xl-12">
+        <div className="col-12 col-lg-12 col-xl-9" style={{height: "max-content"}}>
           <div
             className="card card-custom card-stretch gutter-b"
           >
@@ -277,8 +275,6 @@ const Table = ({ token }) => {
             </div>
           </div>
         </div>
-      </div>
-    </PageWrapper>
   );
 };
 

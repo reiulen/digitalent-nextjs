@@ -41,7 +41,7 @@ const ReviewKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         router.push({
@@ -64,7 +64,7 @@ const ReviewKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         try {
@@ -107,7 +107,7 @@ const ReviewKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         try {
