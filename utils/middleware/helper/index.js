@@ -345,7 +345,7 @@ export const helperElementRenderIndex = (row, propsToken) => {
           className={`form-group mt-0 mb-0 ${row.size}`}
         >
           <label className="col-form-label font-weight-bold">{row.name}</label>
-          <p>{row.fileName}</p>
+          <p>{row.fileName || row.dataOption}</p>
         </div>
       );
       break;
@@ -579,7 +579,7 @@ export const helperElementRenderChildren = (row, propsToken) => {
           className={`form-group mt-0 mb-0 ${row.size}`}
         >
           <label className="col-form-label font-weight-bold">{row.name}</label>
-          <p>{row.fileName}</p>
+          <p>{row.fileName || row.dataOption}</p>
         </div>
       );
       break;
@@ -814,7 +814,7 @@ export const helperElementRenderParent = (row, propsToken) => {
           className={`form-group mt-0 mb-0 ${row.size}`}
         >
           <label className="col-form-label font-weight-bold">{row.name}</label>
-          <p>{row.fileName}</p>
+          <p>{row.fileName || row.dataOption}</p>
         </div>
       );
       break;
@@ -1019,7 +1019,7 @@ export const helperElementRender = (row, propsToken) => {
       return (
         <div className={`form-group mt-0 mb-0 ${row.size}`}>
           <label className="col-form-label font-weight-bold">{row.name}</label>
-          <p>{row.fileName}</p>
+          <p>{row.fileName || row.dataOption}</p>
         </div>
       );
       break;

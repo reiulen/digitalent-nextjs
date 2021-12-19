@@ -13,31 +13,34 @@ const FileRegister = ({ file }) => {
         <div className="card-body">
           <div className="row">
             {file &&
-              file.map((row, i) => (
-                <div className="col-md-6" key={i}>
-                  <p className="text-neutral-body my-0">{row.name}</p>
+              file.map(
+                (row, i) =>
+                  row.value !== "" && (
+                    <div className="col-md-6" key={i}>
+                      <p className="text-neutral-body my-0">{row.name}</p>
 
-                  <p
-                    className={
-                      row.type.includes("file_doc") ||
-                      row.type.includes("file_image")
-                        ? `text-primary`
-                        : "text-dark"
-                    }
-                    style={
-                      row.type.includes("file_doc") ||
-                      row.type.includes("file_image")
-                        ? { textDecoration: "underline", cursor: "pointer" }
-                        : {}
-                    }
-                    onClick={() => {
-                      handleDownload(row);
-                    }}
-                  >
-                    {row.value}
-                  </p>
-                </div>
-              ))}
+                      <p
+                        className={
+                          row.type.includes("file_doc") ||
+                          row.type.includes("file_image")
+                            ? `text-primary`
+                            : "text-dark"
+                        }
+                        style={
+                          row.type.includes("file_doc") ||
+                          row.type.includes("file_image")
+                            ? { textDecoration: "underline", cursor: "pointer" }
+                            : {}
+                        }
+                        onClick={() => {
+                          handleDownload(row);
+                        }}
+                      >
+                        {row.value}
+                      </p>
+                    </div>
+                  )
+              )}
           </div>
         </div>
       </div>

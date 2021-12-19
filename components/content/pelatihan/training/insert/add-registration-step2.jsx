@@ -263,9 +263,9 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
           type_form: viewForm,
           formBuilder: formBuilderStore,
         };
-        console.log(data);
-        // dispatch(storeRegistrationStep2(data));
-        // propsStep(3);
+        // console.log(data);
+        dispatch(storeRegistrationStep2(data));
+        propsStep(3);
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);

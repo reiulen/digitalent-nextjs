@@ -1989,6 +1989,17 @@ const AddMasterPelatihan = ({ token }) => {
                   </button>
                 </div>
               </div>
+
+              <div className="form-group mt-md-10">
+                <div className="text-right">
+                  <button
+                    className="btn btn-primary-rounded-full"
+                    type="submit"
+                  >
+                    Simpan
+                  </button>
+                </div>
+              </div>
             </form>
           </div>
           <Modal
