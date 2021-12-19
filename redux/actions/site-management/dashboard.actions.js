@@ -117,7 +117,8 @@ export const loadDataListZonasi = (token, page = 1) => {
 	return async (dispatch) => {
 		try {
 			let { data } = await axios.get(
-				`${process.env.END_POINT_API_PELATIHAN}/api/v1/formPendaftaran/peserta-zonasi`,
+				// `${process.env.END_POINT_API_PELATIHAN}/api/v1/formPendaftaran/peserta-zonasi`,
+				`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/zonasi-participant`,
 				{
 					params,
 					headers: {

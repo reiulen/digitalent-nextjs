@@ -52,7 +52,7 @@ export const allDataListZonasiReducer = (state = initialstate, action) => {
             return action.payload.data.list_zonasi.map((item, index) => {
                 return {
                     nomor: index + 5 * (action.page - 1) + 1,
-                    zonasi: item.key,
+                    zonasi: item.name,
                     value: item.value
                 }
             })

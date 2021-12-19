@@ -56,13 +56,13 @@ const DashboardSiteManagement = ({ token, user }) => {
 
 	useEffect(() => {
 		axios
-			.get(`${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/peserta-zonasi?page=${pageZonasi}`, {
+			.get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/zonasi-participant`, {
 				headers: {
 					authorization: `Bearer ${token}`,
 				},
 			})
 			.then((items) => {
-				setTotalZonasi(items.data);
+				setTotalZonasi(items.data.data.total);
 			});
 	}, [dispatch, token, pageZonasi]);
 
@@ -344,7 +344,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 
 								<div className="d-flex ml-6 justify-content-between align-items-center pagination-button">
 									<p className="pt-5">
-										Total: {totalZonasi?.data.total} Zonasi
+										Total: {totalZonasi} Zonasi
 									</p>
 									<div className="ml-auto mx-7 my-4">
 										<button
@@ -373,7 +373,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 										<button
 											type="button"
 											className={
-												pageZonasi >= Math.ceil(totalZonasi?.data?.total / 5)
+												pageZonasi >= Math.ceil(totalZonasi / 5)
 													? "btn text-white disabled"
 													: "btn text-white"
 											}
@@ -381,7 +381,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 												e.preventDefault();
 												if (
 													pageZonasi >=
-													Math.ceil(totalZonasi?.data?.total / 5)
+													Math.ceil(totalZonasi / 5)
 												) {
 													setPageZonasi(pageZonasi);
 													dispatch(loadDataListZonasi(token, pageZonasi))
@@ -394,7 +394,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 												backgroundColor: "#203E80",
 												cursor:
 													pageZonasi >=
-														Math.ceil(totalZonasi?.data?.total / 5)
+														Math.ceil(totalZonasi / 5)
 														? "not-allowed"
 														: "",
 											}}
