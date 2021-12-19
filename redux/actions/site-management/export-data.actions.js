@@ -25,6 +25,7 @@ import {
 } from "../../types/site-management/export-data.type";
 
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export const getAllExportData = (token) => async (dispatch, getState) => {
   try {
@@ -80,6 +81,7 @@ export const deleteExportDataAction = (id, token) => async (dispatch) => {
       type: DELETE_EXPORT_DATA_SUCCESS,
       payload: data.status,
     });
+    Swal.fire("Berhasil", "Data berhasil dihapus", "success")
   } catch (error) {
     dispatch({
       type: DELETE_EXPORT_DATA_FAIL,
@@ -167,6 +169,7 @@ export const postFilterExportData =
         link.setAttribute("download", `${name}.zip`);
         document.body.appendChild(link);
         link.click();
+        window.location="/site-management/export-data"
       }
 
       dispatch({

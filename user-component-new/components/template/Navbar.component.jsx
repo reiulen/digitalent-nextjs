@@ -550,7 +550,7 @@ const Navigationbar = ({ session }) => {
                           >
                             <NavDropdown.Item
                               className={`navdropdown-child ${
-                                el.status === 0 ? "d-none" : ""
+                                el.status === 1 && el.page_status === 1 ? "" : "d-none"
                               }`}
                             >
                               {el.slug ? el.slug : el.name ? el.name : el}
@@ -988,7 +988,7 @@ const Navigationbar = ({ session }) => {
                                     router.push("/lainnya/" + item.url);
                                   }}
                                   className={`p-4 fz-12 ${
-                                    item.status === 1 ? "" : "d-none"
+                                    item.status === 1 && item.page_status === 1 ? "" : "d-none"
                                   }`}
                                 >
                                   {item.name}

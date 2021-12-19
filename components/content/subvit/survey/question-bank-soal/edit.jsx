@@ -186,6 +186,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
             type: methodAdd,
             _method: "put",
           };
+
           dispatch(
             updateSurveyQuestionDetail(id, data, token, tokenPermission)
           );
