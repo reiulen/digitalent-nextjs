@@ -84,7 +84,22 @@ const GeneralPage = ({ token }) => {
       return row.link;
     });
 
-    if (simpleValidator.current.allValid()) {
+    let link = []
+    let linkSosmed = []
+
+    formExternalLink.filter((item) => {
+      if (!item.link.includes("http")) {
+        link.push(item.link)
+      }
+    })
+
+    formSocialMedia.filter((item) => {
+      if (!item.link_social_media.includes("http")) {
+        linkSosmed.push(item.link_social_media)
+      }
+    })
+
+    if (simpleValidator.current.allValid() && link.length === 0 && linkSosmed.length === 0) {
       if (dataExternal.includes("") || dataExternalLink.includes("")) {
         Swal.fire("Oops !", "Isi data dengan benar !", "error");
       } else if (
@@ -447,56 +462,56 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi === ""
                               ? imageLogo && (
-                                  <Image
-                                    src={imageLogo}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )
+                                <Image
+                                  src={imageLogo}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )
                               : imageLogoApi && (
-                                  <Image
-                                    // src={imageLogo}
-                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )}
+                                <Image
+                                  // src={imageLogo}
+                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )}
                           </div>
                           {localStorage
                             .getItem("permissions")
                             .includes(
                               "site_management.setting.general.manage"
                             ) && (
-                            <label
-                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                              data-action="change"
-                              data-toggle="tooltip"
-                              title=""
-                              data-original-title="Change avatar"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                width="12"
-                                height="12"
+                              <label
+                                className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                data-action="change"
+                                data-toggle="tooltip"
+                                title=""
+                                data-original-title="Change avatar"
                               >
-                                <path fill="none" d="M0 0h24v24H0z" />
-                                <path
-                                  d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
-                                  fill="rgba(108,108,108,1)"
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width="12"
+                                  height="12"
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z" />
+                                  <path
+                                    d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                    fill="rgba(108,108,108,1)"
+                                  />
+                                </svg>
+                                <input
+                                  type="file"
+                                  accept=".png, .jpg, .jpeg .svg"
+                                  onChange={(e) => onChangeImage(e)}
                                 />
-                              </svg>
-                              <input
-                                type="file"
-                                accept=".png, .jpg, .jpeg .svg"
-                                onChange={(e) => onChangeImage(e)}
-                              />
 
-                              <input type="hidden" />
-                            </label>
-                          )}
+                                <input type="hidden" />
+                              </label>
+                            )}
 
                           <span
                             className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -522,55 +537,55 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi2 === ""
                               ? imageLogo2 && (
-                                  <Image
-                                    src={imageLogo2}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )
+                                <Image
+                                  src={imageLogo2}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )
                               : imageLogoApi2 && (
-                                  <Image
-                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )}
+                                <Image
+                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )}
                           </div>
                           {localStorage
                             .getItem("permissions")
                             .includes(
                               "site_management.setting.general.manage"
                             ) && (
-                            <label
-                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                              data-action="change"
-                              data-toggle="tooltip"
-                              title=""
-                              data-original-title="Change avatar"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                width="12"
-                                height="12"
+                              <label
+                                className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                data-action="change"
+                                data-toggle="tooltip"
+                                title=""
+                                data-original-title="Change avatar"
                               >
-                                <path fill="none" d="M0 0h24v24H0z" />
-                                <path
-                                  d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
-                                  fill="rgba(108,108,108,1)"
-                                />
-                              </svg>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width="12"
+                                  height="12"
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z" />
+                                  <path
+                                    d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                    fill="rgba(108,108,108,1)"
+                                  />
+                                </svg>
 
-                              <input
-                                type="file"
-                                accept=".png, .jpg, .jpeg .svg"
-                                onChange={(e) => onChangeImage2(e)}
-                              />
-                              <input type="hidden" />
-                            </label>
-                          )}
+                                <input
+                                  type="file"
+                                  accept=".png, .jpg, .jpeg .svg"
+                                  onChange={(e) => onChangeImage2(e)}
+                                />
+                                <input type="hidden" />
+                              </label>
+                            )}
 
                           <span
                             className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -629,70 +644,70 @@ const GeneralPage = ({ token }) => {
                               <div className="image-input image-input-outline">
                                 <div className="image-input-wrapper">
                                   {isUpdate &&
-                                  /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
-                                    items.image_logo
-                                  )
+                                    /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
+                                      items.image_logo
+                                    )
                                     ? items.image_logo && (
-                                        <Image
-                                          src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
-                                          layout="fill"
-                                          objectFit="fill"
-                                          alt="imageLogo"
-                                        />
-                                      )
+                                      <Image
+                                        src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
+                                        layout="fill"
+                                        objectFit="fill"
+                                        alt="imageLogo"
+                                      />
+                                    )
                                     : items.image_logo && (
-                                        <Image
-                                          src={
-                                            update === true
-                                              ? items.image_logo
-                                              : `/${items.image_logo}`
-                                          }
-                                          layout="fill"
-                                          objectFit="fill"
-                                          alt="imageLogo"
-                                        />
-                                      )}
+                                      <Image
+                                        src={
+                                          update === true
+                                            ? items.image_logo
+                                            : `/${items.image_logo}`
+                                        }
+                                        layout="fill"
+                                        objectFit="fill"
+                                        alt="imageLogo"
+                                      />
+                                    )}
                                 </div>
                                 {localStorage
                                   .getItem("permissions")
                                   .includes(
                                     "site_management.setting.general.manage"
                                   ) && (
-                                  <label
-                                    className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                    data-action="change"
-                                    data-toggle="tooltip"
-                                    title=""
-                                    data-original-title="Change avatar"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 24 24"
-                                      width="12"
-                                      height="12"
+                                    <label
+                                      className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                      data-action="change"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      data-original-title="Change avatar"
                                     >
-                                      <path fill="none" d="M0 0h24v24H0z" />
-                                      <path
-                                        d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
-                                        fill="rgba(108,108,108,1)"
-                                      />
-                                    </svg>
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        width="12"
+                                        height="12"
+                                      >
+                                        <path fill="none" d="M0 0h24v24H0z" />
+                                        <path
+                                          d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                          fill="rgba(108,108,108,1)"
+                                        />
+                                      </svg>
 
-                                    <input
-                                      type="file"
-                                      accept=".png, .jpg, .jpeg"
-                                      onChange={(e) =>
-                                        handleChangeSocialMedia(e, index)
-                                      }
-                                      onBlur={() =>
-                                        simpleValidator.current.showMessageFor(
-                                          "logoSocialMedia"
-                                        )
-                                      }
-                                    />
-                                    <input type="hidden" />
-                                  </label>
-                                )}
+                                      <input
+                                        type="file"
+                                        accept=".png, .jpg, .jpeg"
+                                        onChange={(e) =>
+                                          handleChangeSocialMedia(e, index)
+                                        }
+                                        onBlur={() =>
+                                          simpleValidator.current.showMessageFor(
+                                            "logoSocialMedia"
+                                          )
+                                        }
+                                      />
+                                      <input type="hidden" />
+                                    </label>
+                                  )}
 
                                 <span
                                   className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -779,31 +794,31 @@ const GeneralPage = ({ token }) => {
                                         .includes(
                                           "site_management.setting.general.manage"
                                         ) && (
-                                        <button
-                                          type="button"
-                                          onClick={() =>
-                                            removeSocialMedia(index)
-                                          }
-                                          className="btn"
-                                          style={{ backgroundColor: "#EE2D41" }}
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            width="16"
-                                            height="16"
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              removeSocialMedia(index)
+                                            }
+                                            className="btn"
+                                            style={{ backgroundColor: "#EE2D41" }}
                                           >
-                                            <path
-                                              fill="none"
-                                              d="M0 0h24v24H0z"
-                                            />
-                                            <path
-                                              d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
-                                              fill="rgba(255,255,255,1)"
-                                            />
-                                          </svg>
-                                        </button>
-                                      )}
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              viewBox="0 0 24 24"
+                                              width="16"
+                                              height="16"
+                                            >
+                                              <path
+                                                fill="none"
+                                                d="M0 0h24v24H0z"
+                                              />
+                                              <path
+                                                d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                                fill="rgba(255,255,255,1)"
+                                              />
+                                            </svg>
+                                          </button>
+                                        )}
                                     </div>
                                   </div>
                                 )}
@@ -824,19 +839,19 @@ const GeneralPage = ({ token }) => {
                     {localStorage
                       .getItem("permissions")
                       .includes("site_management.setting.general.manage") && (
-                      <div className="form-group row mt-2">
-                        <div className="col-sm-12 d-flex justify-content-end">
-                          <button
-                            type="button"
-                            className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
-                            onClick={() => addSocialMedia()}
-                          >
-                            <IconAdd className="mr-3" width="14" height="14" />
-                            Tambah Social Media
-                          </button>
+                        <div className="form-group row mt-2">
+                          <div className="col-sm-12 d-flex justify-content-end">
+                            <button
+                              type="button"
+                              className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
+                              onClick={() => addSocialMedia()}
+                            >
+                              <IconAdd className="mr-3" width="14" height="14" />
+                              Tambah Social Media
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                   </div>
                   {/* end social media */}
 
@@ -908,31 +923,31 @@ const GeneralPage = ({ token }) => {
                                         .includes(
                                           "site_management.setting.general.manage"
                                         ) && (
-                                        <button
-                                          type="button"
-                                          onClick={() =>
-                                            removeExternalLink(index)
-                                          }
-                                          className="btn"
-                                          style={{ backgroundColor: "#EE2D41" }}
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            width="16"
-                                            height="16"
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              removeExternalLink(index)
+                                            }
+                                            className="btn"
+                                            style={{ backgroundColor: "#EE2D41" }}
                                           >
-                                            <path
-                                              fill="none"
-                                              d="M0 0h24v24H0z"
-                                            />
-                                            <path
-                                              d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
-                                              fill="rgba(255,255,255,1)"
-                                            />
-                                          </svg>
-                                        </button>
-                                      )}
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              viewBox="0 0 24 24"
+                                              width="16"
+                                              height="16"
+                                            >
+                                              <path
+                                                fill="none"
+                                                d="M0 0h24v24H0z"
+                                              />
+                                              <path
+                                                d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                                fill="rgba(255,255,255,1)"
+                                              />
+                                            </svg>
+                                          </button>
+                                        )}
                                     </div>
                                   </div>
                                 )}
@@ -953,19 +968,19 @@ const GeneralPage = ({ token }) => {
                     {localStorage
                       .getItem("permissions")
                       .includes("site_management.setting.general.manage") && (
-                      <div className="form-group row">
-                        <div className="col-sm-12 d-flex justify-content-end">
-                          <button
-                            type="button"
-                            className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
-                            onClick={() => addExternalLink()}
-                          >
-                            <IconAdd className="mr-3" width="14" height="14" />
-                            Tambah External Links
-                          </button>
+                        <div className="form-group row">
+                          <div className="col-sm-12 d-flex justify-content-end">
+                            <button
+                              type="button"
+                              className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
+                              onClick={() => addExternalLink()}
+                            >
+                              <IconAdd className="mr-3" width="14" height="14" />
+                              Tambah External Links
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                   </div>
                   {/* end External Links */}
 
@@ -1050,18 +1065,18 @@ const GeneralPage = ({ token }) => {
                   {localStorage
                     .getItem("permissions")
                     .includes("site_management.setting.general.manage") && (
-                    <div className="form-group row mt-10">
-                      <div className="col-sm-12 d-flex justify-content-end">
-                        <button
-                          type="button"
-                          className={`${styles2.btnTambahContent} btn btn-sm btn-rounded-full bg-blue-primary text-white`}
-                          onClick={(e) => submit(e)}
-                        >
-                          Simpan
-                        </button>
+                      <div className="form-group row mt-10">
+                        <div className="col-sm-12 d-flex justify-content-end">
+                          <button
+                            type="button"
+                            className={`${styles2.btnTambahContent} btn btn-sm btn-rounded-full bg-blue-primary text-white`}
+                            onClick={(e) => submit(e)}
+                          >
+                            Simpan
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
                   {/* end footer btn */}
                 </form>
