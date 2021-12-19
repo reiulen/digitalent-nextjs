@@ -58,7 +58,7 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [duration, setDuration] = useState(subtance?.duration);
   const [jumlah_soal, setJumlahSoal] = useState(subtance?.questions_to_share);
   const [passing_grade, setPassingGrade] = useState(subtance?.passing_grade);
-  const [status, setStatus] = useState(subtance?.status || false);
+  const [status, setStatus] = useState(subtance?.status || 0);
   const [, forceUpdate] = useState();
 
   const saveDraft = () => {
@@ -98,13 +98,15 @@ const StepTwo = ({ token, tokenPermission }) => {
         end_at,
         duration,
         passing_grade,
-        status: false,
+        status: status,
         questions_to_share: jumlah_soal,
       };
 
       dispatch(
         updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
       );
+      localStorage.removeItem("clone1");
+      localStorage.removeItem("clone3");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -389,18 +391,18 @@ const StepTwo = ({ token, tokenPermission }) => {
                     id=""
                     className="form-control"
                     value={status}
-                    disabled
                     onChange={(e) => setStatus(e.target.value)}
                     onBlur={(e) => {
                       setStatus(e.target.value);
                       simpleValidator.current.showMessageFor("status");
                     }}
                   >
-                    <option value={false}> Draft </option>
+                    <option value={1}> Publish </option>
+                    <option value={0}> Draft </option>
                   </select>
                   {simpleValidator.current.message(
                     "status",
-                    passing_grade,
+                    status,
                     "required",
                     { className: "text-danger" }
                   )}
@@ -431,7 +433,16 @@ const StepTwo = ({ token, tokenPermission }) => {
                       </button>
                     </div>
                     <div className={`${styles.normalBtn} row`}>
-                      <div className="col-xs-6"></div>
+                      <div className="col-xs-6">
+                        {" "}
+                        <button
+                          className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                          type="button"
+                          onClick={onSubmit}
+                        >
+                          Simpan & Lanjut
+                        </button>
+                      </div>
                       <div className="col-xs-6">
                         <button
                           className={` btn btn-primary-rounded-full`}

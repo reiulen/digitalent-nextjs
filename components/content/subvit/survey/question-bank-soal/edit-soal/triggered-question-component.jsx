@@ -270,13 +270,12 @@ const TriggeredQuestionComponent = ({
                   {row.type === "choose" ? (
                     <>
                       <div className="col-md-2 p-0 pl-3">
-                        {row.image ? (
+                        {row.image_preview ? (
                           <Image
                             src={
                               row.image_preview.includes("blob")
                                 ? row.image_preview
                                 : process.env.END_POINT_API_IMAGE_SUBVIT +
-                                  "survey/images/" +
                                   row.image_preview
                             }
                             alt="logo"
@@ -313,7 +312,7 @@ const TriggeredQuestionComponent = ({
                             className="custom-file-label"
                             htmlFor="customFile"
                           >
-                            {row.image_name || "Pilih Gambar"}
+                            {row.imageName || "Pilih Gambar"}
                           </label>
                         </div>
                       </div>
@@ -373,13 +372,13 @@ const TriggeredQuestionComponent = ({
                           <>
                             <div className="col-md-1"></div>
                             <div className="col-md-2 p-0 pl-3" key={j}>
-                              {rowY.image != "" ? (
+                              {rowY.image_preview ? (
                                 <Image
                                   src={
+                                    rowY.image_preview &&
                                     rowY.image_preview.includes("blob")
                                       ? rowY.image_preview
                                       : process.env.END_POINT_API_IMAGE_SUBVIT +
-                                        "survey/images/" +
                                         rowY.image_preview
                                   }
                                   alt="logo"
@@ -411,12 +410,13 @@ const TriggeredQuestionComponent = ({
                                   onChange={(e) =>
                                     handleInputChange(e, null, i, j)
                                   }
+                                  accept="image/png, image/gif, image/jpeg , image/jpg"
                                 />
                                 <label
                                   className="custom-file-label"
                                   htmlFor="customFile"
                                 >
-                                  {rowY.image_name || "Pilih Gambar"}
+                                  {rowY.imageName || "Pilih Gambar"}
                                 </label>
                               </div>
                             </div>
@@ -477,7 +477,6 @@ const TriggeredQuestionComponent = ({
                                                   ? rowX.image_preview
                                                   : process.env
                                                       .END_POINT_API_IMAGE_SUBVIT +
-                                                    "survey/images/" +
                                                     rowX.image_preview
                                               }
                                               alt="logo"
@@ -508,12 +507,13 @@ const TriggeredQuestionComponent = ({
                                                 onChange={(e) =>
                                                   handleInputChange(e, i, j, k)
                                                 }
+                                                accept="image/png, image/gif, image/jpeg , image/jpg"
                                               />
                                               <label
                                                 className="custom-file-label"
                                                 htmlFor="customFile"
                                               >
-                                                {rowX.image_name ||
+                                                {rowX.imageName ||
                                                   "Pilih Gambar"}
                                               </label>
                                             </div>
