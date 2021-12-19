@@ -486,7 +486,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
               rowParent.triggeredForm.map((rowFormParent, indexFormParent) => {
                 // SECOND FORM BUILDER OBJECT
                 if (rowFormParent.element === "checkbox") {
-                  rowFormParent.value = [];
+                  let val = rowFormParent.value.join(",");
+                  rowFormParent.value = val;
                 }
                 rowFormParent.triggered_children.length > 0 &&
                   rowFormParent.triggered_children.map(
@@ -497,7 +498,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
                           (rowFormChildren, indexFormChildren) => {
                             // THIRD FORM BUILDER OBJECT
                             if (rowFormChildren.element === "checkbox") {
-                              rowFormChildren.value = [];
+                              let val = rowFormChildren.value.join(",");
+                              rowFormChildren.value = val;
                             }
                             rowFormChildren.triggered_index.length > 0 &&
                               rowFormChildren.triggered_index.map(
@@ -510,7 +512,9 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
                                         if (
                                           rowFormIndex.element === "checkbox"
                                         ) {
-                                          rowFormIndex.value = [];
+                                          let val =
+                                            rowFormIndex.value.join(",");
+                                          rowFormIndex.value = val;
                                         }
                                         // console.log(rowFormIndex);
                                         // FOURTH FORM BUILDER OBJECT
