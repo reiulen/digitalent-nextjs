@@ -361,7 +361,7 @@ import { allPromptReducer } from "./site-management/settings/pelatihan.reducers"
 
 // ============== dashboard ===============
 import { allDataZonasiReducer } from "./site-management/dashboard.reducers";
-import { allDataPesertaReducer } from "./site-management/dashboard-data-peserta.reducers";
+import { allDataPesertaReducer, allDataListZonasiReducer } from "./site-management/dashboard-data-peserta.reducers";
 
 // End Site Management
 
@@ -904,6 +904,7 @@ const reducer = combineReducers({
 	// ============ Dashboatd =======
 	allDataZonasi: allDataZonasiReducer,
 	allDataPeserta: allDataPesertaReducer,
+	allDataListZonasi: allDataListZonasiReducer,
 	// ============ Export Data =======
 	allExportData: allExportDataReducer,
 	detailExportData: detailExportDataReducer,
