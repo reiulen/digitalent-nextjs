@@ -308,11 +308,22 @@ const SubtansiUser = ({ token }) => {
   const handlePageNext = () => {
     setTimes(tt[router.query.id]);
     const page = parseInt(router.query.id) + 1;
-    router.push(
-      `${router.pathname.slice(0, 23)}/${page}?theme_id=${
-        router.query.theme_id
-      }&training_id=${router.query.training_id}`
-    );
+    if (parseInt(router.query.id) === data?.total_questions) {
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "trivia",
+      };
+      dispatch(postResultTrivia(setData, token));
+      router.push("/peserta/done-trivia");
+    } else {
+      router.push(
+        `${router.pathname.slice(0, 23)}/${page}?theme_id=${
+          router.query.theme_id
+        }&training_id=${router.query.training_id}`
+      );
+    }
+
     setModalNext(false);
 
     if (
@@ -985,7 +996,7 @@ const SubtansiUser = ({ token }) => {
                     {" "}
                     Waktu yang tersedia untuk mengisi TRIVIA ini {time ||
                       5}{" "}
-                    Jam.
+                    Menit.
                   </td>
                 </tr>
               </table>

@@ -1491,8 +1491,7 @@ const SubtansiUser = ({ token }) => {
                   <td>
                     {" "}
                     Peserta wajib menjawab seluruh survey yang berjumlah{" "}
-                    {question || 50}
-                    pertanyaan.
+                    {question || 50}&nbsp; pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -1512,7 +1511,7 @@ const SubtansiUser = ({ token }) => {
                     {" "}
                     Waktu yang tersedia untuk mengisi survey ini {time ||
                       5}{" "}
-                    Jam.
+                    Menit.
                   </td>
                 </tr>
               </table>
