@@ -447,22 +447,22 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi === ""
                               ? imageLogo && (
-                                <Image
-                                  src={imageLogo}
-                                  layout="fill"
-                                  objectFit="fill"
-                                  alt="imageLogo"
-                                />
-                              )
+                                  <Image
+                                    src={imageLogo}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )
                               : imageLogoApi && (
-                                <Image
-                                  // src={imageLogo}
-                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
-                                  layout="fill"
-                                  objectFit="fill"
-                                  alt="imageLogo"
-                                />
-                              )}
+                                  <Image
+                                    // src={imageLogo}
+                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )}
                           </div>
                           {localStorage
                             .getItem("permissions")
@@ -490,15 +490,11 @@ const GeneralPage = ({ token }) => {
                               </svg>
                               <input
                                 type="file"
-                                name="profile_avatar"
                                 accept=".png, .jpg, .jpeg .svg"
                                 onChange={(e) => onChangeImage(e)}
                               />
 
-                              <input
-                                type="hidden"
-                                name="profile_avatar_remove"
-                              />
+                              <input type="hidden" />
                             </label>
                           )}
 
@@ -514,13 +510,6 @@ const GeneralPage = ({ token }) => {
                         <span className="form-text text-muted mt-6">
                           (Maksimal ukuran file 5 MB)
                         </span>
-
-                        {/* {simpleValidator.current.message(
-                          "logoHeader",
-                          imageLogo,
-                          "",
-                          { className: "text-danger" }
-                        )} */}
                       </div>
                     </div>
 
@@ -533,21 +522,21 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi2 === ""
                               ? imageLogo2 && (
-                                <Image
-                                  src={imageLogo2}
-                                  layout="fill"
-                                  objectFit="fill"
-                                  alt="imageLogo"
-                                />
-                              )
+                                  <Image
+                                    src={imageLogo2}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )
                               : imageLogoApi2 && (
-                                <Image
-                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
-                                  layout="fill"
-                                  objectFit="fill"
-                                  alt="imageLogo"
-                                />
-                              )}
+                                  <Image
+                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )}
                           </div>
                           {localStorage
                             .getItem("permissions")
@@ -576,19 +565,10 @@ const GeneralPage = ({ token }) => {
 
                               <input
                                 type="file"
-                                name="profile_avatar"
                                 accept=".png, .jpg, .jpeg .svg"
                                 onChange={(e) => onChangeImage2(e)}
-                                // onBlur={() =>
-                                //   simpleValidator.current.showMessageFor(
-                                //     "logoFooter"
-                                //   )
-                                // }
                               />
-                              <input
-                                type="hidden"
-                                name="profile_avatar_remove"
-                              />
+                              <input type="hidden" />
                             </label>
                           )}
 
@@ -649,29 +629,29 @@ const GeneralPage = ({ token }) => {
                               <div className="image-input image-input-outline">
                                 <div className="image-input-wrapper">
                                   {isUpdate &&
-                                    /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
-                                      items.image_logo
-                                    )
+                                  /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
+                                    items.image_logo
+                                  )
                                     ? items.image_logo && (
-                                      <Image
-                                        src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
-                                        layout="fill"
-                                        objectFit="fill"
-                                        alt="imageLogo"
-                                      />
-                                    )
+                                        <Image
+                                          src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
+                                          layout="fill"
+                                          objectFit="fill"
+                                          alt="imageLogo"
+                                        />
+                                      )
                                     : items.image_logo && (
-                                      <Image
-                                        src={
-                                          update === true
-                                            ? items.image_logo
-                                            : `/${items.image_logo}`
-                                        }
-                                        layout="fill"
-                                        objectFit="fill"
-                                        alt="imageLogo"
-                                      />
-                                    )}
+                                        <Image
+                                          src={
+                                            update === true
+                                              ? items.image_logo
+                                              : `/${items.image_logo}`
+                                          }
+                                          layout="fill"
+                                          objectFit="fill"
+                                          alt="imageLogo"
+                                        />
+                                      )}
                                 </div>
                                 {localStorage
                                   .getItem("permissions")
@@ -700,7 +680,6 @@ const GeneralPage = ({ token }) => {
 
                                     <input
                                       type="file"
-                                      name="profile_avatar"
                                       accept=".png, .jpg, .jpeg"
                                       onChange={(e) =>
                                         handleChangeSocialMedia(e, index)
@@ -711,10 +690,7 @@ const GeneralPage = ({ token }) => {
                                         )
                                       }
                                     />
-                                    <input
-                                      type="hidden"
-                                      name="profile_avatar_remove"
-                                    />
+                                    <input type="hidden" />
                                   </label>
                                 )}
 
@@ -892,7 +868,7 @@ const GeneralPage = ({ token }) => {
 
                                 {simpleValidator.current.message(
                                   "namaExternalLinks",
-                                  items.name[index],
+                                  items.name,
                                   "required",
                                   { className: "text-danger" }
                                 )}
@@ -1003,7 +979,6 @@ const GeneralPage = ({ token }) => {
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder="Masukkan alamat lengkap"
                         className="form-control"
-                        name=""
                         id=""
                         cols="30"
                         rows="10"
@@ -1029,7 +1004,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Primary</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorPrimary(e.target.value)}
@@ -1044,7 +1018,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Secondary</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorSecondary(e.target.value)}
@@ -1059,7 +1032,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Extras</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorExtras(e.target.value)}

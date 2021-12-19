@@ -23,6 +23,7 @@ import { postResultSurvey } from "../../../../../redux/actions/subvit/survey-que
 
 import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 
 const SubtansiUser = ({ token }) => {
   const dispatch = useDispatch();
@@ -223,6 +224,12 @@ const SubtansiUser = ({ token }) => {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
 
+  const routerTraining = router.query.training_id;
+  const routerTema = router.query.theme_id;
+
+  const [question, setQuestion] = useState("");
+  const [time, setTime] = useState("");
+
   let keyMap = [];
 
   const handleMultiple = (item, index) => {
@@ -298,6 +305,18 @@ const SubtansiUser = ({ token }) => {
       );
     }
   };
+
+  useEffect(() => {
+    axios
+      .get(
+        process.env.END_POINT_API_SUBVIT +
+          `api/survey-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`
+      )
+      .then((res) => {
+        setQuestion(res.data.total_questions);
+        setTime(res.data.duration);
+      });
+  }, [routerTema, routerTraining]);
 
   useEffect(() => {
     if (error) {
@@ -412,7 +431,7 @@ const SubtansiUser = ({ token }) => {
           return {
             ...item,
 
-            participant_answer: sessionStorage.getItem(index + 1),
+            answer: sessionStorage.getItem(index + 1),
           };
         })
       ),
@@ -604,8 +623,9 @@ const SubtansiUser = ({ token }) => {
                               >
                                 <Card
                                   className={
-                                    sessionStorage.getItem(router.query.id) ===
-                                    item.key
+                                    sessionStorage.getItem(
+                                      router.query.id + "e"
+                                    ) === item.key
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
@@ -629,8 +649,9 @@ const SubtansiUser = ({ token }) => {
                           ) : (
                             <Card
                               className={
-                                sessionStorage.getItem(router.query.id) ===
-                                item.key
+                                sessionStorage.getItem(
+                                  router.query.id + "e"
+                                ) === item.key
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
@@ -1469,8 +1490,8 @@ const SubtansiUser = ({ token }) => {
                   <td>&nbsp;</td>
                   <td>
                     {" "}
-                    Peserta wajib menjawab seluruh survey yang berjumlah 50
-                    pertanyaan.
+                    Peserta wajib menjawab seluruh survey yang berjumlah{" "}
+                    {question || 50}&nbsp; pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -1486,7 +1507,12 @@ const SubtansiUser = ({ token }) => {
                 <tr>
                   <td style={{ verticalAlign: "top" }}>4.</td>
                   <td>&nbsp;</td>
-                  <td> Waktu yang tersedia untuk mengisi survey ini 1 Jam.</td>
+                  <td>
+                    {" "}
+                    Waktu yang tersedia untuk mengisi survey ini {time ||
+                      5}{" "}
+                    Menit.
+                  </td>
                 </tr>
               </table>
             </Card>

@@ -162,7 +162,7 @@ export const newSertifikat =
 
 			const config = {
 				headers: {
-					Authorization: `Bearer ${token.token}`,
+					Authorization: `Bearer ${token}`,
 					// Permission: token_permission,
 				},
 			};

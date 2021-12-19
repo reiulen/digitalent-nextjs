@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 
-import { useDispatch, useSelector } from "react-redux";
-
-import OptionsReference from "./option-reference.component";
-import CheckboxReference from "./checkbox-reference.component";
-import RadioReference from "./radio-reference.component";
-
-import { helperElementRenderParent } from "../../../../../utils/middleware/helper";
+import { helperElementRender } from "../../../../../utils/middleware/helper";
 
 const ModalPreview = ({
   propsTitle,
@@ -22,230 +16,10 @@ const ModalPreview = ({
   const [formBuilder, setFormBuilder] = useState(propsForm);
 
   const closePreviewHandler = () => {
-    // let list = [...formBuilder];
-    // list.forEach((row, i) => {
-    //   if (row.option === "manual") {
-    //     let dataOption = row.dataOption.join(";");
-    //     row.dataOption = dataOption;
-    //   }
-    // });
-    // setFormBuilder(list);
-    // sendPropsFormBuilder(list);
     setModalShow(false);
     sendPropsModalShow(false);
   };
 
-  const readerElementHandler = (row, i) => {
-    switch (row.element) {
-      case "text":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <input
-              type={row.element}
-              name=""
-              className="form-control"
-              required={row.required}
-            />
-          </div>
-        );
-        break;
-      case "select":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <select name="" className="form-control" required={row.required}>
-              <option value="">--Pilih Data--</option>
-              {modalShow === true ? (
-                row.option === "manual" ? (
-                  row.dataOption.split(";").map((dat, i) => (
-                    <option value={dat} key={i}>
-                      {dat}
-                    </option>
-                  ))
-                ) : (
-                  <OptionsReference id={row.dataOption} token={propsToken} />
-                )
-              ) : (
-                ""
-              )}
-            </select>
-          </div>
-        );
-        break;
-      case "checkbox":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <div className="my-auto">
-              {modalShow === true ? (
-                row.option === "manual" ? (
-                  row.dataOption.split(";").map((dat, i) => (
-                    <div className="form-check pb-3" key={i}>
-                      <input
-                        type="checkbox"
-                        name="plotRegistration"
-                        className="form-check-input"
-                        required={row.required}
-                        value={dat}
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                ) : (
-                  <CheckboxReference
-                    id={row.dataOption}
-                    token={propsToken}
-                    required={row.required}
-                  />
-                )
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-        );
-        break;
-      case "textarea":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <textarea
-              name=""
-              cols="30"
-              rows="5"
-              className="form-control"
-              required={row.required}
-            />
-          </div>
-        );
-        break;
-      case "radio":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <div className="my-auto">
-              {modalShow === true ? (
-                row.option === "manual" ? (
-                  row.dataOption.split(";").map((dat, i) => (
-                    <div className="form-check pb-3" key={i}>
-                      <input
-                        type="radio"
-                        name={row.name}
-                        className="form-check-input"
-                        value={dat}
-                        required={row.required}
-                      />
-                      <label className="form-check-label">{dat}</label>
-                    </div>
-                  ))
-                ) : (
-                  <RadioReference
-                    id={row.dataOption}
-                    token={propsToken}
-                    required={row.required}
-                  />
-                )
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-        );
-        break;
-      case "file_image":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <div className="custom-file">
-              <input
-                type="file"
-                className="custom-file-input"
-                accept="image/png, image/jpeg , image/jpg"
-                required={row.required}
-              />
-              <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
-              </label>
-            </div>
-          </div>
-        );
-        break;
-      case "file_doc":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <div className="custom-file">
-              <input
-                type="file"
-                className="custom-file-input"
-                accept="application/pdf"
-                required={row.required}
-              />
-              <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
-              </label>
-            </div>
-          </div>
-        );
-        break;
-      case "date":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <input
-              type={row.element}
-              name=""
-              className="form-control"
-              required={row.required}
-            />
-          </div>
-        );
-        break;
-      case "triggered":
-        return (
-          <>
-            <div className={`form-group mt-0 mb-0 ${row.size}`}>
-              <label className="col-form-label font-weight-bold">
-                {row.name}
-              </label>
-              <select name="" className="form-control" required={row.required}>
-                <option value="">--Pilih Data--</option>
-                {modalShow === true &&
-                  row.option === "manual" &&
-                  row.dataOption.split(";").map((dat, i) => (
-                    <option value={dat} key={i}>
-                      {dat}
-                    </option>
-                  ))}
-              </select>
-            </div>
-            {row.triggered_parent.map((rowParent, k) => (
-              <>{helperElementRenderParent(rowParent, propsToken)}</>
-            ))}
-          </>
-        );
-        break;
-      default:
-        break;
-    }
-  };
   return (
     <>
       <Modal.Header>
@@ -255,9 +29,9 @@ const ModalPreview = ({
         </button>
       </Modal.Header>
       <Modal.Body>
-        <div className="row">
+        <div className="row justify-content-end">
           {formBuilder.map((row, i) => (
-            <>{readerElementHandler(row, i)}</>
+            <>{helperElementRender(row, propsToken)}</>
           ))}
         </div>
       </Modal.Body>
