@@ -5,9 +5,7 @@ import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
 import { useDispatch, useSelector } from "react-redux";
-import OptionsReference from "../components/option-reference.component";
-import CheckboxReference from "../components/checkbox-reference.component";
-import RadioReference from "../components/radio-reference.component";
+import ViewStep2Component from "../components/view-training/view-step2.component";
 
 const ViewTrainingStep2 = ({ token }) => {
   const router = useRouter();
@@ -20,214 +18,6 @@ const ViewTrainingStep2 = ({ token }) => {
   const [formBuilder] = useState(review.FormBuilder);
 
   const { id } = router.query;
-
-  // const [formBuilder] = useState([
-  //   {
-  //     key: 1,
-  //     name: "Nama Depan",
-  //     element: "text",
-  //     size: "col-md-6",
-  //     option: "",
-  //     dataOption: "",
-  //     required: true,
-  //   },
-  //   {
-  //     key: 2,
-  //     name: "Nama Belakang",
-  //     element: "text",
-  //     size: "col-md-6",
-  //     option: "",
-  //     dataOption: "",
-  //     required: true,
-  //   },
-  //   {
-  //     key: 3,
-  //     name: "Jenis Kelamin",
-  //     element: "radio",
-  //     size: "col-md-12",
-  //     option: "manual",
-  //     dataOption: "laki laki;perempuan",
-  //     required: false,
-  //   },
-  // ]);
-  const readerElementHandler = (row, i) => {
-    switch (row.element) {
-      case "text":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label text-neutral-body fz-14">
-              {row.name}
-            </label>
-            <input
-              type={row.element}
-              className="form-control"
-              required={row.required}
-            />
-          </div>
-        );
-        break;
-      case "select":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label text-neutral-body fz-14">
-              {row.name}
-            </label>
-            <select name="" className="form-control" required={row.required}>
-              <option value="" disabled selected>
-                Silahkan Pilih {row.name}
-              </option>
-              {row.option === "manual" ? (
-                row.dataOption.split(";").map((dat, i) => (
-                  <option value={dat} key={i}>
-                    {dat}
-                  </option>
-                ))
-              ) : (
-                <OptionsReference id={row.dataOption} token={token} />
-              )}
-            </select>
-          </div>
-        );
-        break;
-      case "checkbox":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label text-neutral-body fz-14">
-              {row.name}
-            </label>
-            <div className="my-auto">
-              {row.option === "manual" ? (
-                row.dataOption.split(";").map((dat, i) => (
-                  <div className="form-check pb-3" key={i}>
-                    <input
-                      type="checkbox"
-                      name="plotRegistration"
-                      className="form-check-input"
-                      required={row.required}
-                      value={dat}
-                    />
-                    <label className="form-check-label">{dat}</label>
-                  </div>
-                ))
-              ) : (
-                <CheckboxReference
-                  id={row.dataOption}
-                  token={token}
-                  required={row.required}
-                  onChangeValue={(value) => {}}
-                />
-              )}
-            </div>
-          </div>
-        );
-        break;
-      case "textarea":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label text-neutral-body fz-14">
-              {row.name}
-            </label>
-            <textarea
-              name=""
-              cols="30"
-              rows="5"
-              className="form-control"
-              required={row.required}
-            />
-          </div>
-        );
-        break;
-      case "radio":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label text-neutral-body fz-14">
-              {row.name}
-            </label>
-            <div className="my-auto">
-              {row.option === "manual" ? (
-                row.dataOption.split(";").map((dat, i) => (
-                  <div className="form-check pb-3" key={i}>
-                    <input
-                      type="radio"
-                      name={row.name}
-                      className="form-check-input"
-                      value={dat}
-                      required={row.required}
-                    />
-                    <label className="form-check-label">{dat}</label>
-                  </div>
-                ))
-              ) : (
-                <RadioReference
-                  id={row.dataOption}
-                  token={token}
-                  required={row.required}
-                  onChangeValue={(value) => {}}
-                />
-              )}
-            </div>
-          </div>
-        );
-        break;
-      case "file_image":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label text-neutral-body fz-14">
-              {row.name}
-            </label>
-            <div className="custom-file">
-              <input
-                type="file"
-                className="custom-file-input"
-                accept="image/png, image/jpeg , image/jpg"
-                required={row.required}
-              />
-              <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
-              </label>
-            </div>
-          </div>
-        );
-        break;
-      case "file_doc":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label text-neutral-body fz-14">
-              {row.name}
-            </label>
-            <div className="custom-file">
-              <input
-                type="file"
-                className="custom-file-input"
-                accept="application/pdf"
-                required={row.required}
-              />
-              <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
-              </label>
-            </div>
-          </div>
-        );
-        break;
-      case "date":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label text-neutral-body fz-14">
-              {row.name}
-            </label>
-            <input
-              type={row.element}
-              name=""
-              className="form-control"
-              required={row.required}
-            />
-          </div>
-        );
-        break;
-      default:
-        break;
-    }
-  };
 
   return (
     <PageWrapper>
@@ -246,17 +36,11 @@ const ViewTrainingStep2 = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
-            <h3 className="text-neutral-bodyer pb-5 pt-4">{titleForm}</h3>
-
-            <div className="row">
-              {formBuilder &&
-                formBuilder !== null &&
-                formBuilder.length > 0 &&
-                formBuilder.map((row, i) => (
-                  <>{readerElementHandler(row, i)}</>
-                ))}
-            </div>
-
+            <ViewStep2Component
+              titleForm={titleForm}
+              formBuilder={formBuilder}
+              token={token}
+            />
             <div className="button my-5">
               <div className="text-right">
                 <button
