@@ -71,49 +71,75 @@ export default function SUBM(props) {
 
   const handleSubmit = async (e) => {
     if (via === "filter") {
-      dispatch(
-        postViaFilter(
-          props.token,
-          title,
-          year,
-          namaakademi ? namaakademi : "",
-          namatema ? namatema : "",
-          namapenyelenggara ? namapenyelenggara : "",
-          namapelatihan ? namapelatihan : "",
-          profileStatus ? profileStatus : "",
-          selectionStatus ? selectionStatus : "",
-          participantSelectionStatusUpdate ||
-            participantSelectionStatusUpdate === 1
-            ? true
-            : false,
-          status.value ? status.value : "",
-          broadcastEmailSendNotification || broadcastEmailSendNotification === 1
-            ? true
-            : false,
-          emailSubject,
-          emailContent,
-          `via ${via}`
-        )
-      );
+      Swal.fire({
+        title: "Apakah anda yakin ingin mengirim ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then((result) => {
+        dispatch(
+          postViaFilter(
+            props.token,
+            title,
+            year,
+            namaakademi ? namaakademi : "",
+            namatema ? namatema : "",
+            namapenyelenggara ? namapenyelenggara : "",
+            namapelatihan ? namapelatihan : "",
+            profileStatus ? profileStatus : "",
+            selectionStatus ? selectionStatus : "",
+            participantSelectionStatusUpdate ||
+              participantSelectionStatusUpdate === 1
+              ? true
+              : false,
+            status.value ? status.value : "",
+            broadcastEmailSendNotification ||
+              broadcastEmailSendNotification === 1
+              ? true
+              : false,
+            emailSubject,
+            emailContent,
+            `via ${via}`
+          )
+        );
+      });
     } else {
-      dispatch(
-        postViaTemplate(
-          props.token,
-          title,
-          file,
-          participantSelectionStatusUpdate ||
-            participantSelectionStatusUpdate === 1
-            ? true
-            : false,
-          status.value,
-          broadcastEmailSendNotification || broadcastEmailSendNotification === 1
-            ? true
-            : false,
-          emailSubject,
-          emailContent,
-          `via ${via}`
-        )
-      );
+      Swal.fire({
+        title: "Apakah anda yakin ingin mengirim ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then((result) => {
+        dispatch(
+          postViaTemplate(
+            props.token,
+            title,
+            file,
+            participantSelectionStatusUpdate ||
+              participantSelectionStatusUpdate === 1
+              ? true
+              : false,
+            status.value,
+            broadcastEmailSendNotification ||
+              broadcastEmailSendNotification === 1
+              ? true
+              : false,
+            emailSubject,
+            emailContent,
+            `via ${via}`
+          )
+        );
+      });
     }
   };
 
@@ -243,9 +269,10 @@ export default function SUBM(props) {
     );
   });
 
+  
   const optStatusProfile = listProfileStatus?.map((item, index) => {
     return (
-      <option value={item.value} key={index}>
+      <option value={item.value} key={index} className="text-capitalize">
         {item.value}
       </option>
     );
@@ -284,6 +311,7 @@ export default function SUBM(props) {
                   name="via"
                   id="template"
                   value="template"
+                  checked={via === "template"}
                   onChange={(e) => {
                     setVia(e.target.value);
                   }}
@@ -406,10 +434,10 @@ export default function SUBM(props) {
                     required
                     disabled={disableOption === true || disableOption === ""}
                     style={{
-                      cursor: (
-                        disableOption === true || disableOption === "" ?
-                          "not-allowed" : "pointer"
-                      )
+                      cursor:
+                        disableOption === true || disableOption === ""
+                          ? "not-allowed"
+                          : "pointer",
                     }}
                   >
                     <option disabled selected>
@@ -435,10 +463,10 @@ export default function SUBM(props) {
                     required
                     disabled={disableAkademi === true || disableAkademi === ""}
                     style={{
-                      cursor: (
-                        disableAkademi === true || disableAkademi === "" ?
-                          "not-allowed" : "pointer"
-                      )
+                      cursor:
+                        disableAkademi === true || disableAkademi === ""
+                          ? "not-allowed"
+                          : "pointer",
                     }}
                   >
                     <option disabled selected>
@@ -466,10 +494,10 @@ export default function SUBM(props) {
                     required
                     disabled={disableTema === true || disableTema === ""}
                     style={{
-                      cursor: (
-                        disableTema === true || disableTema === "" ?
-                          "not-allowed" : "pointer"
-                      )
+                      cursor:
+                        disableTema === true || disableTema === ""
+                          ? "not-allowed"
+                          : "pointer",
                     }}
                   >
                     <option disabled selected>
@@ -493,12 +521,16 @@ export default function SUBM(props) {
                       setDisablePelatihan(false);
                     }}
                     required
-                    disabled={disablePenyelenggara === true || disablePenyelenggara === ""}
+                    disabled={
+                      disablePenyelenggara === true ||
+                      disablePenyelenggara === ""
+                    }
                     style={{
-                      cursor: (
-                        disablePenyelenggara === true || disablePenyelenggara === "" ?
-                          "not-allowed" : "pointer"
-                      )
+                      cursor:
+                        disablePenyelenggara === true ||
+                        disablePenyelenggara === ""
+                          ? "not-allowed"
+                          : "pointer",
                     }}
                   >
                     <option disabled selected>
@@ -514,24 +546,16 @@ export default function SUBM(props) {
                   ) : null}
                 </div>
                 <div className="form-group col-xl-6">
-                  <h3 className="judul">Status Profil</h3>
+                  <h3 className="judul">Status Administrasi</h3>
                   <select
                     className="form-control"
                     onChange={(e) => {
                       setProfileStatus(e.target.value);
                       setDisableStatusProfile(false);
                     }}
-                    required
-                    disabled={disablePelatihan === true || disablePelatihan === ""}
-                    style={{
-                      cursor: (
-                        disablePelatihan === true || disablePelatihan === "" ?
-                          "not-allowed" : "pointer"
-                      )
-                    }}
                   >
                     <option disabled selected>
-                      PILIH STATUS PROFIL
+                      PILIH STATUS ADMINISTRASI
                     </option>
                     {optStatusProfile}
                   </select>
@@ -542,26 +566,24 @@ export default function SUBM(props) {
                   ) : null}
                 </div>
                 <div className="form-group col-xl-6">
-                  <h3 className="judul">Status Seleksi</h3>
+                  <h3 className="judul">Status Peserta</h3>
                   <select
                     className="form-control"
                     onChange={(e) => {
                       setSelectionStatus(e.target.value);
                       setDisableStatusSelection(false);
                     }}
-                    required
-                    disabled={disableStatusProfile === true || disableStatusProfile === ""}
-                    style={{
-                      cursor: (
-                        disableStatusProfile === true || disableStatusProfile === "" ?
-                          "not-allowed" : "pointer"
-                      )
-                    }}
                   >
                     <option disabled selected>
-                      PILIH STATUS SELEKSI
+                      PILIH STATUS PESERTA
                     </option>
-                    <option value="Lulus">Lulus</option>
+                    {optionsStatus.map((item, index) => {
+                      return (
+                        <option key={index} value={item.value}>
+                          {item.label}
+                        </option>
+                      );
+                    })}
                   </select>
                   {disableStatusProfile === true ||
                   disableStatusProfile === "" ? (
@@ -693,40 +715,41 @@ export default function SUBM(props) {
           </div>
           {localStorage
             .getItem("permissions")
-            .includes("site_management.setting.pelatihan.manage") && <div className="d-flex justify-content-end mb-4 mr-4">
-            <button
-              type="reset"
-              className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
-              onClick={() => {
-                setVia("template");
-                setTitle("");
-                setYear("");
-                setAcademy("");
-                setTheme("");
-                setOrganizer("");
-                setTraining("");
-                setProfileStatus("");
-                setSelectionStatus("");
-                setParticipantSelectionStatusUpdate(0);
-                setStatus("");
-                setBroadcastEmailSendNotification(0);
-                setEmailSubject("");
-                setEmailContent("");
-                setFile("");
-                setLink("");
-              }}
-            >
-              Reset
-            </button>
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e)}
-              className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-            >
-              Kirim
-            </button>
-          </div>}
-          
+            .includes("site_management.setting.pelatihan.manage") && (
+            <div className="d-flex justify-content-end mb-4 mr-4">
+              <button
+                type="reset"
+                className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                onClick={() => {
+                  setVia("template");
+                  setTitle("");
+                  setYear("");
+                  setAcademy("");
+                  setTheme("");
+                  setOrganizer("");
+                  setTraining("");
+                  setProfileStatus("");
+                  setSelectionStatus("");
+                  setParticipantSelectionStatusUpdate(0);
+                  setStatus("");
+                  setBroadcastEmailSendNotification(0);
+                  setEmailSubject("");
+                  setEmailContent("");
+                  setFile("");
+                  setLink("");
+                }}
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                onClick={(e) => handleSubmit(e)}
+                className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+              >
+                Kirim
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>

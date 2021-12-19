@@ -84,7 +84,15 @@ const GeneralPage = ({ token }) => {
       return row.link;
     });
 
-    if (simpleValidator.current.allValid()) {
+    let link = [];
+
+    formExternalLink.filter((item) => {
+      if (!item.link.includes("http")) {
+        link.push(item.link);
+      }
+    });
+
+    if (simpleValidator.current.allValid() && link.length === 0) {
       if (dataExternal.includes("") || dataExternalLink.includes("")) {
         Swal.fire("Oops !", "Isi data dengan benar !", "error");
       } else if (
@@ -132,7 +140,6 @@ const GeneralPage = ({ token }) => {
                   },
                 ],
               };
-
               try {
                 const { data } = await axios.post(
                   `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
