@@ -54,6 +54,7 @@ export default function SUBM(props) {
   const [namapenyelenggara, setnamapenyelenggara] = useState(null);
   const [namapelatihan, setnamapelatihan] = useState(null);
   const [namastatusseleksi, setnamastatusseleksi] = useState(null);
+  const [nameFile, setNameFile] = useState(null)
 
   const optionsStatus = [
     { value: "seleksi administrasi", label: "Seleksi Administrasi" },
@@ -269,7 +270,6 @@ export default function SUBM(props) {
     );
   });
 
-  
   const optStatusProfile = listProfileStatus?.map((item, index) => {
     return (
       <option value={item.value} key={index} className="text-capitalize">
@@ -277,6 +277,29 @@ export default function SUBM(props) {
       </option>
     );
   });
+
+  const onChangeFile = (e) => {
+    const type = ["text/csv"];
+
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > "5000000") {
+        e.target.value = null;
+        Swal.fire("Oops !", "File Size Melebihi 5 MB", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setFile(e.target.files[0])
+        setNameFile(e.target.files[0].name);
+      }
+    } else {
+      e.target.value = null;
+      Swal.fire("Oops !", "Tipe File Harus Berupa .csv", "error");
+    }
+  };
 
   return (
     <div className="row">
@@ -388,13 +411,14 @@ export default function SUBM(props) {
                           type="file"
                           required
                           onChange={(e) => {
-                            setFile(e.target.files[0]);
+                            onChangeFile(e)
                           }}
                           style={{ width: "100%" }}
                         />
                       </div>
                     </div>
                   </div>
+                  <p>{nameFile}</p>
                 </div>
               </div>
               <p className="border-bottom mt-4 pb-3 text-muted">
