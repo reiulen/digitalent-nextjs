@@ -315,6 +315,21 @@ const Artikel = () => {
             tag
         ))
 
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaArtikel(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                str, 
+                category_academy,
+                tag
+            ))
+        }
+
         window.scrollTo(0,0)
     }
 
@@ -331,6 +346,21 @@ const Artikel = () => {
             category_academy,
             tag
         ))
+
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaArtikel(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriArtikel, 
+                category_academy,
+                tag
+            ))
+        }
 
         window.scrollTo(0,0)
     }
@@ -363,6 +393,21 @@ const Artikel = () => {
             category_academy,
             tag
         ))
+
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaArtikel(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriArtikel, 
+                category_academy,
+                tag
+            ))
+        }
 
         window.scrollTo(0,0)
     }
@@ -398,6 +443,21 @@ const Artikel = () => {
             tag
         ))
 
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaArtikel(
+                pageNumber, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriArtikel, 
+                category_academy,
+                tag
+            ))
+        }
+
         window.scrollTo(0,0)
     }
 
@@ -431,7 +491,7 @@ const Artikel = () => {
             {/* Filter Button */}
             {/* Filter on Desktop */}
             {
-                kategoriToShow ? (
+                kategori ? (
                     <div
                         className={
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
@@ -496,19 +556,19 @@ const Artikel = () => {
                                         }
 
                                         {
-                                            kategoriToShow ?
-                                                kategoriToShow?.map((el, i) => {
+                                            kategori ?
+                                                kategori?.map((el, i) => {
                                                     return (
-                                                        kategoriArtikel == el ?
+                                                        kategoriArtikel == el.nama_kategori ?
                                                             <SplideSlide>
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
@@ -517,11 +577,11 @@ const Artikel = () => {
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div> 
                                                             </SplideSlide>
@@ -581,19 +641,19 @@ const Artikel = () => {
                                         }
 
                                         {
-                                            kategoriToShow ?
-                                                kategoriToShow?.map((el, i) => {
+                                            kategori ?
+                                                kategori?.map((el, i) => {
                                                     return (
-                                                        kategoriArtikel == el ?
+                                                        kategoriArtikel == el.nama_kategori ?
                                                             <SplideSlide>
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
@@ -602,11 +662,11 @@ const Artikel = () => {
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div> 
                                                             </SplideSlide>
@@ -671,19 +731,19 @@ const Artikel = () => {
                     }
 
                     {
-                        kategoriToShow ?
-                            kategoriToShow?.map((el, i) => {
+                        kategori ?
+                            kategori?.map((el, i) => {
                                 return (
-                                    kategoriArtikel == el ?
+                                    kategoriArtikel == el.nama_kategori ?
                                         <SplideSlide>
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div>
                                         </SplideSlide>
@@ -692,11 +752,11 @@ const Artikel = () => {
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div> 
                                         </SplideSlide>
@@ -759,19 +819,19 @@ const Artikel = () => {
                     }
 
                     {
-                        kategoriToShow ?
-                            kategoriToShow?.map((el, i) => {
+                        kategori ?
+                            kategori?.map((el, i) => {
                                 return (
-                                    kategoriArtikel == el ?
+                                    kategoriArtikel == el.nama_kategori ?
                                         <SplideSlide>
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div>
                                         </SplideSlide>
@@ -780,11 +840,11 @@ const Artikel = () => {
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div> 
                                         </SplideSlide>

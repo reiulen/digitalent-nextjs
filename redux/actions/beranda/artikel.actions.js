@@ -113,7 +113,8 @@ export const getKategoriBerandaArtikel = () => async dispatch => {
     try {
         dispatch({ type: KATEGORI_BERANDA_ARTIKEL_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
+        // let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Artikel&type=home`
 
         const { data } = await axios.get(link)
 
