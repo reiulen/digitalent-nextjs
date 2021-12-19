@@ -515,12 +515,12 @@ const GeneralPage = ({ token }) => {
                           (Maksimal ukuran file 5 MB)
                         </span>
 
-                        {simpleValidator.current.message(
+                        {/* {simpleValidator.current.message(
                           "logoHeader",
                           imageLogo,
                           "",
                           { className: "text-danger" }
-                        )}
+                        )} */}
                       </div>
                     </div>
 
@@ -579,11 +579,11 @@ const GeneralPage = ({ token }) => {
                                 name="profile_avatar"
                                 accept=".png, .jpg, .jpeg .svg"
                                 onChange={(e) => onChangeImage2(e)}
-                                onBlur={() =>
-                                  simpleValidator.current.showMessageFor(
-                                    "logoFooter"
-                                  )
-                                }
+                                // onBlur={() =>
+                                //   simpleValidator.current.showMessageFor(
+                                //     "logoFooter"
+                                //   )
+                                // }
                               />
                               <input
                                 type="hidden"
