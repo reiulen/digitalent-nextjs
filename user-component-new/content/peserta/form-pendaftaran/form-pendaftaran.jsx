@@ -157,9 +157,9 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   // );
 
   useEffect(() => {
-    formBuilder &&
-      formBuilder.FormBuilder &&
-      formBuilder.FormBuilder.map((rowBuilder, i) => {
+    dataPendaftaran &&
+      dataPendaftaran.length > 0 &&
+      dataPendaftaran.map((rowBuilder, i) => {
         // FIRST FORM BUILDER OBJECT
         if (rowBuilder.element === "checkbox") {
           rowBuilder.value = [];
@@ -245,7 +245,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
     ) {
       let list = [...dataPendaftaran];
       let element = list[alfa];
-      element.value = value;
+
       if (element.element === "checkbox") {
         let valArr = element.value;
         if (valArr.length > 0) {
@@ -259,6 +259,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         } else {
           valArr.push(value);
         }
+      } else {
+        element.value = value;
       }
       if (element.element === "file_image" || element.element === "file_doc") {
         let type = [""];
@@ -301,7 +303,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
       let list = [...dataPendaftaran];
       let element =
         list[alfa].triggered_parent[parentIndex].triggeredForm[beta];
-      element.value = value;
+
       if (element.element === "checkbox") {
         let valArr = element.value;
         if (valArr.length > 0) {
@@ -315,6 +317,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         } else {
           valArr.push(value);
         }
+      } else {
+        element.value = value;
       }
       if (element.element === "file_image" || element.element === "file_doc") {
         let type = [""];
@@ -358,7 +362,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
       let element =
         list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
           .triggered_children[childrenIndex].triggeredForm[gamma];
-      element.value = value;
+
       if (element.element === "checkbox") {
         let valArr = element.value;
         if (valArr.length > 0) {
@@ -372,6 +376,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         } else {
           valArr.push(value);
         }
+      } else {
+        element.value = value;
       }
       if (element.element === "file_image" || element.element === "file_doc") {
         let type = [""];
@@ -416,7 +422,6 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
           .triggered_children[childrenIndex].triggeredForm[gamma]
           .triggered_index[indexIndex].triggeredForm[delta];
-      element.value = value;
       if (element.element === "checkbox") {
         let valArr = element.value;
         if (valArr.length > 0) {
@@ -430,6 +435,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         } else {
           valArr.push(value);
         }
+      } else {
+        element.value = value;
       }
       if (element.element === "file_image" || element.element === "file_doc") {
         let type = [""];
@@ -458,6 +465,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
           }
         }
       }
+
       setDataPendaftaran(list);
     }
   };

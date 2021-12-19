@@ -127,6 +127,18 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                   id={row.dataOption}
                   token={propsToken}
                   required={row.required}
+                  onChangeValue={(value) =>
+                    funcChangeInput(
+                      value,
+                      alfa,
+                      indexParent,
+                      beta,
+                      indexChildren,
+                      gamma,
+                      indexIndex,
+                      delta
+                    )
+                  }
                 />
               )}
             </div>
@@ -453,6 +465,16 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                   id={row.dataOption}
                   token={propsToken}
                   required={row.required}
+                  onChangeValue={(value) =>
+                    funcChangeInput(
+                      value,
+                      alfa,
+                      indexParent,
+                      beta,
+                      indexChildren,
+                      gamma
+                    )
+                  }
                 />
               )}
             </div>
@@ -802,6 +824,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                   id={row.dataOption}
                   token={propsToken}
                   required={row.required}
+                  onChangeValue={(value) =>
+                    funcChangeInput(value, alfa, indexParent, beta)
+                  }
                 />
               )}
             </div>
@@ -1083,6 +1108,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                   id={row.dataOption}
                   token={propsToken}
                   required={row.required}
+                  onChangeValue={(value) => funcChangeInput(value, alfa)}
                 />
               )}
             </div>
