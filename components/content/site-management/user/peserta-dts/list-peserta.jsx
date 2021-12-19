@@ -31,7 +31,12 @@ const Table = ({ token }) => {
             <td className="align-middle text-left">
               {index + limit * (page - 1) + 1}
             </td>
-            <td className="align-middle text-left">{item.name}</td>
+            <td className="align-middle text-left" style={{
+																	overflow: "hidden",
+																	textOverflow: "ellipsis",
+																	whiteSpace: "nowrap",
+																	maxWidth: "11rem",
+																}}>{item.name}</td>
             <td className="align-middle text-left">{item.email}</td>
             <td className="align-middle text-left">{item.nomor_handphone}</td>
             <td className="align-middle text-left">
