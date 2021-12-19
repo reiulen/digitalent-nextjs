@@ -19,3 +19,4 @@ Site Management Module is one of many modules in Digi Talent Scholarship Applica
 
 ## Deploy Issue
 - [x] deploy on the schedule UAT'S
+- [x] must be clean
