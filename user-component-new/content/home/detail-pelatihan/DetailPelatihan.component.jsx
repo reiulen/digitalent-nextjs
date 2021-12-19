@@ -53,7 +53,7 @@ const DetailPelatihan = ({ session }) => {
   };
 
   const handleDownloadSilabus = async () => {
-    let silabus = pelatihan.file_path + pelatihan.silabus;
+    let silabus = process.env.END_POINT_API_IMAGE_BEASISWA + pelatihan.silabus;
     window.location.href = silabus;
   };
 

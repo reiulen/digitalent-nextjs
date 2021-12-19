@@ -28,6 +28,7 @@ import {
   storeTrainingStep1,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { useQuill } from "react-quilljs";
+import { helperRemoveZeroFromIndex0 } from "../../../../../utils/middleware/helper";
 
 const EditTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
