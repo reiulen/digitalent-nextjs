@@ -147,7 +147,6 @@ const GeneralPage = ({ token }) => {
                   },
                 ],
               };
-
               try {
                 const { data } = await axios.post(
                   `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
