@@ -55,7 +55,7 @@ const DetailReport = ({ token }) => {
   const [sertifikatName, setSertifikatName] = useState("");
 
   const fileSertifikatHandler = (e) => {
-    const type = ["application/pdf", "image/jpeg"];
+    const type = ["application/pdf"];
     if (type.includes(e.target.files[0].type)) {
       if (e.target.files[0].size > 5000000) {
         e.target.value = null;
@@ -676,7 +676,7 @@ const DetailReport = ({ token }) => {
                 <input
                   type="file"
                   className="custom-file-input"
-                  accept="application/pdf, image/jpeg , image/jpg"
+                  accept="application/pdf"
                   onChange={fileSertifikatHandler}
                 />
                 <label className="custom-file-label" htmlFor="customFile">

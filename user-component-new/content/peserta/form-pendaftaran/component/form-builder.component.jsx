@@ -319,7 +319,18 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <p>{row.fileName}</p>
+            <p
+              className="text-primary"
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                window.open(
+                  process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                  "_blank"
+                )
+              }
+            >
+              {row.dataOption}
+            </p>
           </div>
         );
         break;
@@ -680,7 +691,18 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <p>{row.fileName}</p>
+            <p
+              className="text-primary"
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                window.open(
+                  process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                  "_blank"
+                )
+              }
+            >
+              {row.dataOption}
+            </p>
           </div>
         );
         break;
@@ -970,7 +992,18 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <p>{row.fileName}</p>
+            <p
+              className="text-primary"
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                window.open(
+                  process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                  "_blank"
+                )
+              }
+            >
+              {row.dataOption}
+            </p>
           </div>
         );
         break;
@@ -1209,7 +1242,18 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <p>{row.fileName}</p>
+            <p
+              className="text-primary"
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                window.open(
+                  process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                  "_blank"
+                )
+              }
+            >
+              {row.dataOption}
+            </p>
           </div>
         );
         break;

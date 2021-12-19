@@ -6,7 +6,7 @@ const ViewStep2Component = ({ titleForm, formBuilder, token }) => {
     <>
       <h3 className="text-neutral-bodyer pb-5 pt-4">{titleForm}</h3>
 
-      <div className="row">
+      <div className="row justify-content-end">
         {formBuilder &&
           formBuilder !== null &&
           formBuilder.length > 0 &&

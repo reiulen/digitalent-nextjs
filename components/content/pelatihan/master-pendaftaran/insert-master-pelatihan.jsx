@@ -1936,8 +1936,8 @@ const AddMasterPelatihan = ({ token }) => {
                                               )
                                             }
                                           >
-                                            <i className="ri-add-line"></i> Tambah
-                                            Field
+                                            <i className="ri-add-line"></i>{" "}
+                                            Tambah Field
                                           </button>
                                         </div>
                                       </>
@@ -1986,6 +1986,17 @@ const AddMasterPelatihan = ({ token }) => {
                     onClick={addFieldHandler}
                   >
                     <i className="ri-pencil-fill"></i> Tambah Field
+                  </button>
+                </div>
+              </div>
+
+              <div className="form-group mt-md-10">
+                <div className="text-right">
+                  <button
+                    className="btn btn-primary-rounded-full"
+                    type="submit"
+                  >
+                    Simpan
                   </button>
                 </div>
               </div>

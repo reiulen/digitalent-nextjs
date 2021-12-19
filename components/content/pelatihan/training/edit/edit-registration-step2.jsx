@@ -79,11 +79,19 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
     },
     {
       value: "file_doc",
-      name: "File Documet",
+      name: "File Document",
     },
     {
       value: "date",
       name: "Input Date",
+    },
+    {
+      value: "triggered",
+      name: "Triggered",
+    },
+    {
+      value: "upload_document",
+      name: "Upload Document",
     },
   ]);
 
@@ -128,7 +136,9 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
         size: "",
         option: "",
         dataOption: "",
-        required: false,
+        required: "0",
+        triggered: "0",
+        triggered_parent: [],
       },
     ]
   );
