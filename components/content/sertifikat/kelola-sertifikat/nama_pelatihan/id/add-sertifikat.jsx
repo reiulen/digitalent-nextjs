@@ -386,7 +386,7 @@ export default function TambahMasterSertifikat({ token }) {
 
 				formData.append("status_migrate_id", status);
 
-				dispatch(newSertifikat(id, formData, token, token_permission));
+				dispatch(newSertifikat(id, formData, token.token, token_permission));
 			} else {
 				simpleValidator.current.showMessages();
 				forceUpdate(1);
