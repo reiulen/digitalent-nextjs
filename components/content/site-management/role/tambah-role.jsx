@@ -408,7 +408,7 @@ const TambahRole = ({ token }) => {
                                 arr.push(cek.manage);
                                 view.push(cek.view);
                               });
-                              if (!arr.includes(true)) {
+                              if (!arr.includes(true) && !view.includes(true)) {
                                 item.view = false;
                                 item.manage = false;
                               }
@@ -520,7 +520,7 @@ const TambahRole = ({ token }) => {
                                     arr.push(cek.manage);
                                     view.push(cek.view);
                                   });
-                                  if (!arr.includes(true)) {
+                                  if (!arr.includes(true)  && !view.includes(true)) {
                                     sub.view = false;
                                     sub.manage = false;
                                   }
