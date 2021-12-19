@@ -19,6 +19,7 @@ import {
 	loadDataPeserta,
 	loadDataZonasi,
 	loadDataZonasiNext,
+	loadDataListZonasi
 } from "../../../../redux/actions/site-management/dashboard.actions";
 
 const DashboardSiteManagement = ({ token, user }) => {
@@ -58,48 +59,33 @@ const DashboardSiteManagement = ({ token, user }) => {
 			.get(`${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/peserta-zonasi?page=${pageZonasi}`, {
 				headers: {
 					authorization: `Bearer ${token}`,
-					// Permission: localStorage.getItem("token-permission"),
 				},
 			})
 			.then((items) => {
-				setDataZonasi(items.data.data.list_zonasi);
 				setTotalZonasi(items.data);
 			});
 	}, [dispatch, token, pageZonasi]);
 
-	const { allDataZonasi, allDataPeserta } = useSelector(
+	const { allDataZonasi, allDataPeserta, allDataListZonasi } = useSelector(
 		(state) => ({
 			allDataZonasi: state.allDataZonasi,
 			allDataPeserta: state.allDataPeserta,
+			allDataListZonasi: state.allDataListZonasi
 		}),
 		shallowEqual
 	);
 
 	const allListPeserta = useSelector((state) => state.allListPeserta);
 
-	function capitalize(s) {
-		let a = s.split(" ");
-		let result = [];
-		for (let i = 0; i < a.length; i++) {
-			result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
-		}
-		return result.join(" ");
-	}
-
-	function formatNumber(num) {
-		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-		return 1;
-	}
-
-	const tableZonasi = dataZonasi?.map((item, index) => {
+	const tableZonasi = allDataListZonasi?.map((item, index) => {
 		return (
 			<tr key={index}>
 				<div className="row justify-content-between align-items-center ml-0 mr-10">
 					<div className="d-flex align-items-center">
 						<td className="data-daerah py-4">
-							<span className="nomor">{index + 5 * (pageZonasi - 1) + 1}</span>
+							<span className="nomor">{item.nomor}</span>
 						</td>
-						<td className="data-daerah-provinsi">{item.key}</td>
+						<td className="data-daerah-provinsi">{item.zonasi}</td>
 					</div>
 					<td className="total-peserta text-right">{item?.value} Peserta</td>
 				</div>
@@ -213,7 +199,6 @@ const DashboardSiteManagement = ({ token, user }) => {
 					<div className="row mx-0">
 						<div className="col-lg-6 mt-2">
 							<div className="content-data bg-white">
-								{/* <div className="d-flex flex-column justify-content-between" style={{border:'1px solid black'}}> */}
 								<div className="row">
 									<div className="col-lg-12 ml-5 my-4">
 										<div className="data-peserta">Data User</div>
@@ -264,7 +249,6 @@ const DashboardSiteManagement = ({ token, user }) => {
 								<div className="d-flex flex-column">
 									{tablePeserta.length > 0 ? tablePeserta : emptyData}
 								</div>
-								{/* </div> */}
 
 								<div className="d-flex ml-6 justify-content-between align-items-center pagination-button">
 									<p className="pt-5">
@@ -352,44 +336,6 @@ const DashboardSiteManagement = ({ token, user }) => {
 											{/* Berdasarkan {type === "city" ? "Daerah" : "Provinsi"} */}
 										</div>
 									</div>
-									{/* <div className="col-lg-12 row justify-content-evenly mb-4">
-										<div
-											className={
-												type === "city"
-													? "btn text-white type-styling data-head-2 mx-9"
-													: "text-gray pt-3 mx-9"
-											}
-										>
-											<a
-												href="#"
-												onClick={(e) => {
-													e.preventDefault();
-													setType("city");
-													setPageZonasi(1);
-												}}
-											>
-												Kota / Kabupaten
-											</a>
-										</div>
-										<div
-											className={
-												type === "province"
-													? "btn text-white type-styling provinsi-styling-2"
-													: "text-gray pt-3 provinsi-styling"
-											}
-										>
-											<a
-												href="#"
-												onClick={(e) => {
-													e.preventDefault();
-													setType("province");
-													setPageZonasi(1);
-												}}
-											>
-												Provinsi
-											</a>
-										</div>
-									</div> */}
 								</div>
 
 								<div className="d-flex flex-column">
@@ -411,8 +357,10 @@ const DashboardSiteManagement = ({ token, user }) => {
 												e.preventDefault();
 												if (pageZonasi === 1) {
 													setPageZonasi(pageZonasi);
+													dispatch(loadDataListZonasi(token, pageZonasi))
 												} else {
 													setPageZonasi(pageZonasi - 1);
+													dispatch(loadDataListZonasi(token, pageZonasi - 1))
 												}
 											}}
 											style={{
@@ -436,8 +384,10 @@ const DashboardSiteManagement = ({ token, user }) => {
 													Math.ceil(totalZonasi?.data?.total / 5)
 												) {
 													setPageZonasi(pageZonasi);
+													dispatch(loadDataListZonasi(token, pageZonasi))
 												} else {
 													setPageZonasi(pageZonasi + 1);
+													dispatch(loadDataListZonasi(token, pageZonasi + 1))
 												}
 											}}
 											style={{
