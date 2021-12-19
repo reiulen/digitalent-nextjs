@@ -510,13 +510,6 @@ const GeneralPage = ({ token }) => {
                         <span className="form-text text-muted mt-6">
                           (Maksimal ukuran file 5 MB)
                         </span>
-
-                        {simpleValidator.current.message(
-                          "logoHeader",
-                          imageLogo,
-                          "",
-                          { className: "text-danger" }
-                        )}
                       </div>
                     </div>
 
@@ -574,11 +567,6 @@ const GeneralPage = ({ token }) => {
                                 type="file"
                                 accept=".png, .jpg, .jpeg .svg"
                                 onChange={(e) => onChangeImage2(e)}
-                                onBlur={() =>
-                                  simpleValidator.current.showMessageFor(
-                                    "logoFooter"
-                                  )
-                                }
                               />
                               <input type="hidden" />
                             </label>
