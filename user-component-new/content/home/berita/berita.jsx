@@ -321,6 +321,21 @@ const Berita = () => {
             tag
         ))
 
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaBerita(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                str, 
+                category_academy,
+                tag
+            ))
+        }
+
         // if (keyword){
         //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
         
@@ -344,6 +359,21 @@ const Berita = () => {
             category_academy,
             tag
         ))
+
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaBerita(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriBerita, 
+                category_academy,
+                tag
+            ))
+        }
 
         // router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
             
@@ -378,6 +408,21 @@ const Berita = () => {
             category_academy,
             tag
         ))
+
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaBerita(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriBerita, 
+                category_academy,
+                tag
+            ))
+        }
 
         // if (keyword){
         //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
@@ -427,6 +472,21 @@ const Berita = () => {
             tag
         ))
 
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaBerita(
+                pageNumber, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriBerita, 
+                category_academy,
+                tag
+            ))
+        }
+
         // if (keyword){
         //     router.push (`${router.pathname}?page=${pageNumber}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
         
@@ -467,7 +527,8 @@ const Berita = () => {
             {/* Filter Button */}
             {/* Filter on Desktop */}
             {
-                kategoriToShow ?
+                // kategoriToShow ?
+                kategori ?
                     <div
                         className={
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
@@ -530,19 +591,19 @@ const Berita = () => {
                                                 
                                         }
                                         {
-                                            kategoriToShow ?
-                                                kategoriToShow.map((el, i) => {
+                                            kategori ?
+                                                kategori.map((el, i) => {
                                                     return (
-                                                        kategoriBerita == el ?
+                                                        kategoriBerita == el.nama_kategori ?
                                                             <SplideSlide>
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
@@ -551,11 +612,11 @@ const Berita = () => {
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div> 
                                                             </SplideSlide>
@@ -615,19 +676,19 @@ const Berita = () => {
                                                 
                                         }
                                         {
-                                            kategoriToShow ?
-                                                kategoriToShow.map((el, i) => {
+                                            kategori ?
+                                                kategori.map((el, i) => {
                                                     return (
-                                                        kategoriBerita == el ?
+                                                        kategoriBerita == el.nama_kategori ?
                                                             <SplideSlide>
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
@@ -636,11 +697,11 @@ const Berita = () => {
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div> 
                                                             </SplideSlide>
@@ -709,19 +770,19 @@ const Berita = () => {
                             
                     }
                     {
-                        kategoriToShow ?
-                            kategoriToShow.map((el, i) => {
+                        kategori ?
+                            kategori.map((el, i) => {
                                 return (
-                                    kategoriBerita == el ?
+                                    kategoriBerita == el.nama_kategori ?
                                         <SplideSlide>
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div>
                                         </SplideSlide>
@@ -730,11 +791,11 @@ const Berita = () => {
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div> 
                                         </SplideSlide>
@@ -797,19 +858,19 @@ const Berita = () => {
                             
                     }
                     {
-                        kategoriToShow ?
-                            kategoriToShow.map((el, i) => {
+                        kategori ?
+                            kategori.map((el, i) => {
                                 return (
-                                    kategoriBerita == el ?
+                                    kategoriBerita == el.nama_kategori ?
                                         <SplideSlide>
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div>
                                         </SplideSlide>
@@ -818,11 +879,11 @@ const Berita = () => {
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div> 
                                         </SplideSlide>

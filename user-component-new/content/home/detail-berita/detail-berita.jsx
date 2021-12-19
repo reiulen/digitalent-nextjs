@@ -108,6 +108,10 @@ const DetailBerita = () => {
 
   const handleFilterTag = (str) => {
     router.push(`/berita?tag=${str}`);
+    // router.push ({
+    //   pathname:"/berita",
+    //   query: `tag=${str}`
+    // }, "/berita")
   };
 
   const handleHighlightWords = (e, text) => {

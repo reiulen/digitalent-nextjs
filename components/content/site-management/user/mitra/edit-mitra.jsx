@@ -394,7 +394,7 @@ const TambahApi = ({ token, id }) => {
                     type="password"
                     className={`${styles.passwordWord} form-control`}
                     placeholder="Masukkan password"
-                    onBlur={() => simpleValidator.current.showMessageFor("password")}
+                    // onBlur={() => simpleValidator.current.showMessageFor("password")}
                   />
 
                   {hidePassword === true ? (
@@ -409,12 +409,12 @@ const TambahApi = ({ token, id }) => {
                     />
                   )}
 
-                  {simpleValidator.current.message(
+                  {/* {simpleValidator.current.message(
                     "password",
                     password,
                     "required",
                     { className: "text-danger" }
-                  )}
+                  )} */}
                 </div>
                 <p className={`${styles.notes}`} style={{ color: "#b7b5cf" }}>
                   Min 8 Karakter,<br />
@@ -431,7 +431,7 @@ const TambahApi = ({ token, id }) => {
                     type="password"
                     className={`${styles.passwordWord} form-control`}
                     placeholder="Masukkan password konfirmasi"
-                    onBlur={() => simpleValidator.current.showMessageFor("confirmPassword")}
+                    // onBlur={() => simpleValidator.current.showMessageFor("confirmPassword")}
                   />
 
                   {hidePasswordConfirm === true ? (
@@ -446,12 +446,12 @@ const TambahApi = ({ token, id }) => {
                     />
                   )}
 
-                  {simpleValidator.current.message(
+                  {/* {simpleValidator.current.message(
                     "confirmPassword",
                     confirmPassword,
                     "required",
                     { className: "text-danger" }
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="form-group">
