@@ -98,42 +98,6 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
     },
   ]);
 
-  // const [dataOptions,setDataOptions] = useState([
-  //   {
-  //     value: "status_menikah",
-  //   },
-  //   {
-  //     value: "pendidikan",
-  //   },
-  //   {
-  //     value: "status_pekerjaan",
-  //   },
-  //   {
-  //     value: "hubungan",
-  //   },
-  //   {
-  //     value: "bidang_pekerjaan",
-  //   },
-  //   {
-  //     value: "level_pelatihan",
-  //   },
-  //   {
-  //     value: "agama",
-  //   },
-  //   {
-  //     value: "penyelengaara",
-  //   },
-  //   {
-  //     value: "provinsi",
-  //   },
-  //   {
-  //     value: "kota/kabupaten",
-  //   },
-  //   {
-  //     value: "universitas",
-  //   },
-  // ]);
-
   const optionsForm = dataForm.data || [];
 
   // TITLE FORM
@@ -295,9 +259,8 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
           type_form: viewForm,
           formBuilder: formBuilderStore,
         };
-        console.log(data);
-        // dispatch(storeRegistrationStep2(data));
-        // propsStep(3);
+        dispatch(storeRegistrationStep2(data));
+        propsStep(3);
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
