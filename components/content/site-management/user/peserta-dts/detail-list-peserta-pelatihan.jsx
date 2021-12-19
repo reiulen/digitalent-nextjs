@@ -67,10 +67,8 @@ const Tables = ({ token }) => {
   };
   const listLi = {};
   return (
-    <PageWrapper>
       <div
-        className="col-12 col-xl-12 order-1 p-0 m-0"
-        style={{ marginLeft: "-10px" }}
+      className="col-12 col-lg-12 col-xl-9" style={{height: "max-content"}}
       >
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 d-flex flex-column">
@@ -186,7 +184,6 @@ const Tables = ({ token }) => {
             </div>
           </div>
       </div>
-    </PageWrapper>
   );
 };
 
