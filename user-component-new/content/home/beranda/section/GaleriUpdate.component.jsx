@@ -17,7 +17,7 @@ export default function GaleriUpdate({ gambar }) {
           <Link href="/galeri">
             <a>
               <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-lg-20 mt-md-10">
-                Lihat Selengkapnya >
+                Lihat Selengkapnya &gt;
               </button>
             </a>
           </Link>
@@ -27,6 +27,7 @@ export default function GaleriUpdate({ gambar }) {
             {gambar &&
               gambar.map((row, i) => (
                 <Col
+                  key={i}
                   md={6}
                   lg={4}
                   className="text-xl-right text-md-left text-left mb-md-0 mb-10"
