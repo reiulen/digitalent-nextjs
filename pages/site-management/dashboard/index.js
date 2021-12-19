@@ -4,6 +4,7 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import { getAllListsPeserta } from "../../../redux/actions/site-management/user/peserta-dts";
+import { loadDataListZonasi } from "../../../redux/actions/site-management/dashboard.actions";
 
 const SiteManagementDashboard = dynamic(
   () =>
@@ -38,6 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
 
     await store.dispatch(getAllListsPeserta(session.user.user.data.token));
+    await store.dispatch(loadDataListZonasi(session.user.user.data.token));
 
     return {
       props: { session, title: "Dashboard - Site Management" },
