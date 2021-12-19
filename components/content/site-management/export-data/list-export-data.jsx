@@ -61,12 +61,6 @@ const Table = ({ token }) => {
 
   useEffect(() => {
     dispatch(getAllExportData(token));
-    if (deleteExportData?.isDeleted) {
-      Swal.fire("Berhasil", "Data berhasil dihapus", "success").then(() => {
-        window.location.reload()
-        dispatch(getAllExportData(token));
-      });
-    }
   }, [
     dispatch,
     allExportData.cari,
