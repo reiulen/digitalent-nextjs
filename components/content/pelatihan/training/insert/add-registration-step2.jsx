@@ -140,6 +140,8 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
           option: "",
           dataOption: "",
           required: "0",
+          triggered: "0",
+          triggered_parent: [],
         },
       ]);
       setTitleCopyEdit("");
@@ -155,6 +157,8 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
           option: "",
           dataOption: "",
           required: "0",
+          triggered: "0",
+          triggered_parent: [],
         },
       ]);
       setTitleCopy("");
@@ -259,8 +263,9 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
           type_form: viewForm,
           formBuilder: formBuilderStore,
         };
-        dispatch(storeRegistrationStep2(data));
-        propsStep(3);
+        console.log(data);
+        // dispatch(storeRegistrationStep2(data));
+        // propsStep(3);
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
