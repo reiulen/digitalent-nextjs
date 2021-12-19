@@ -117,7 +117,7 @@ const Tambah = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then((result) => {
         if (result.value) {
           let allDataPart = [

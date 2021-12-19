@@ -109,7 +109,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Tidak",
       confirmButtonText: "Ya",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async result => {
       if (result.value) {
         let formData = new FormData();
