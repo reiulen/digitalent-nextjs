@@ -25,6 +25,7 @@ const EditDokumentKerjasama = ({ token }) => {
   const router = useRouter();
 
   const allMK = useSelector((state) => state.allMK);
+  const cookiePermission = Cookies.get("token_permission")
   // state onchange form data
   const [isntitusiName, setIsntitusiName] = useState("");
   const [title, setTitle] = useState("");
@@ -251,11 +252,15 @@ const EditDokumentKerjasama = ({ token }) => {
   }
 
   useEffect(() => {
-    dispatch(fetchListCooperationSelectById(token, cooperationC_id));
+    if (cooperationC_id){
+      dispatch(fetchListCooperationSelectById(token, cooperationC_id, cookiePermission));
+    }
   }, [dispatch, allMK?.idCooporationSelect, cooperationC_id, token]);
 
   useEffect(() => {
-    dispatch(fetchDataEmail(token));
+    if (allMK?.institution_name){
+      dispatch(fetchDataEmail(token));
+    }
   }, [dispatch, allMK?.institution_name, allMK.stateListMitra, token]);
 
   useEffect(() => {

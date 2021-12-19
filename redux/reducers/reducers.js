@@ -546,6 +546,7 @@ import {
 	detailBerandaBeritaReducer,
 	kategoriBerandaBeritaReducer,
 	allTagBerandaBeritaReducer,
+	saveKategoriBerandaBeritaReducer,
 } from "../reducers/beranda/berita.reducers";
 
 // ========== video ========
@@ -1059,6 +1060,7 @@ const reducer = combineReducers({
 	detailBerandaBerita: detailBerandaBeritaReducer,
 	kategoriBerandaBerita: kategoriBerandaBeritaReducer,
 	allTagBerandaBerita: allTagBerandaBeritaReducer,
+	saveKategoriBerandaBerita: saveKategoriBerandaBeritaReducer,
 
 	// ========== video ========
 	allVideoContent: allVideoContentReducer,

@@ -15,6 +15,10 @@ import {
     TAG_BERANDA_BERITA_SUCCESS,
     TAG_BERANDA_BERITA_FAIL,
 
+    SAVE_KATEGORI_BERANDA_BERITA_REQUEST,
+    SAVE_KATEGORI_BERANDA_BERITA_SUCCESS,
+    SAVE_KATEGORI_BERANDA_BERITA_FAIL,
+
     CLEAR_ERRORS
 } from "../../types/beranda/berita.type"
 
@@ -138,5 +142,29 @@ export const allTagBerandaBeritaReducer = (state = { tags: [] }, action) => {
 
         default:
             return state
+    }
+}
+
+export const saveKategoriBerandaBeritaReducer = (state = {kategoriBeritaSave: [] }, action) => {
+    switch (action.type){
+        case SAVE_KATEGORI_BERANDA_BERITA_REQUEST:
+            return {
+                loading: true
+            }
+        
+        case SAVE_KATEGORI_BERANDA_BERITA_SUCCESS:
+            return {
+                loading: false,
+                kategoriBeritaSave: action.data
+            }
+
+        case SAVE_KATEGORI_BERANDA_BERITA_FAIL:
+            return {
+                loading: false,
+                error: action.message
+            }
+
+        default:
+            return state;
     }
 }

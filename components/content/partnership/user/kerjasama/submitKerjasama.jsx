@@ -14,7 +14,7 @@ const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const allCooperationUser = useSelector((state) => state.allCooperationUser);
-
+  const cookiePermission = Cookies.get("token_permission")
   const [error, setError] = useState({
     date: "",
     title: "",
@@ -175,9 +175,13 @@ const DetailDokumenKerjasama = ({ token }) => {
       setIsProfile(true);
     }
     dispatch(fetchListCooperationSelect(token));
-    dispatch(fetchListCooperationSelectById(cooperationC_id, token));
+
+    if (cooperationC_id){
+      dispatch(fetchListCooperationSelectById(cooperationC_id, token));
+    }
+
     setDate(moment(new Date()).format("YYYY-MM-DD"));
-  }, [dispatch, cooperationC_id, token, router.query.isProfile]);
+  }, [dispatch, cooperationC_id, token, router.query.isProfile, cookiePermission]);
 
   return (
     <PageWrapper>
