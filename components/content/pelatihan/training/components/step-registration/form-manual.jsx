@@ -477,7 +477,7 @@ const FormManual = ({
         key: newKey,
         name: " ",
         element: "",
-        size: "",
+        size: "col-md-12",
         option: "",
         dataOption: "",
         fileName: "Belum ada file",
@@ -503,7 +503,7 @@ const FormManual = ({
         key: newKey,
         name: " ",
         element: "",
-        size: "",
+        size: "col-md-12",
         option: "",
         dataOption: "",
         fileName: "Belum ada file",
@@ -533,7 +533,7 @@ const FormManual = ({
         key: newKey,
         name: " ",
         element: "",
-        size: "",
+        size: "col-md-12",
         option: "",
         dataOption: "",
         fileName: "Belum ada file",
@@ -618,7 +618,7 @@ const FormManual = ({
                         key: 1,
                         name: " ",
                         element: "",
-                        size: "",
+                        size: "col-md-12",
                         option: "",
                         dataOption: "",
                         fileName: "Belum ada file",
@@ -700,7 +700,7 @@ const FormManual = ({
                   key: 1,
                   name: "",
                   element: "",
-                  size: "",
+                  size: "col-md-12",
                   option: "",
                   dataOption: "",
                   fileName: "Belum ada file",
@@ -778,7 +778,7 @@ const FormManual = ({
                   key: 1,
                   name: "",
                   element: "",
-                  size: "",
+                  size: "col-md-12",
                   option: "",
                   dataOption: "",
                   fileName: "Belum ada file",
@@ -1087,11 +1087,7 @@ const FormManual = ({
                                     )
                                   }
                                   required
-                                  disabled={
-                                    rowParent.element === "triggered"
-                                      ? true
-                                      : false
-                                  }
+                                  disabled
                                 >
                                   <option value="" disabled selected>
                                     -- PILIH --
@@ -1299,12 +1295,7 @@ const FormManual = ({
                                                     )
                                                   }
                                                   required
-                                                  disabled={
-                                                    rowChildren.element ===
-                                                    "triggered"
-                                                      ? true
-                                                      : false
-                                                  }
+                                                  disabled
                                                 >
                                                   <option
                                                     value=""
@@ -1569,12 +1560,7 @@ const FormManual = ({
                                                                     )
                                                                   }
                                                                   required
-                                                                  disabled={
-                                                                    rowIndex.element ===
-                                                                    "triggered"
-                                                                      ? true
-                                                                      : false
-                                                                  }
+                                                                  disabled
                                                                 >
                                                                   <option
                                                                     value=""

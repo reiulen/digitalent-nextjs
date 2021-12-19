@@ -557,7 +557,7 @@ export const helperElementRenderChildren = (row, propsToken) => {
           {row.triggered_index.map((rowIndex, k) => (
             <>
               <div
-                style={{ maxWidth: "94%" }}
+                style={{ maxWidth: "91%" }}
                 className={`form-group  mt-0 mb-0 col-md-12`}
               >
                 <p className="mb-0 mt-3 fw-600 fz-16">
