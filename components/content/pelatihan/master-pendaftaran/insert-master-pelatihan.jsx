@@ -1909,7 +1909,7 @@ const AddMasterPelatihan = ({ token }) => {
                                                               )
                                                             }
                                                           >
-                                                            <i class="ri-add-line"></i>{" "}
+                                                            <i className="ri-add-line"></i>{" "}
                                                             Tambah Field
                                                           </button>
                                                         </div>
@@ -1936,7 +1936,7 @@ const AddMasterPelatihan = ({ token }) => {
                                               )
                                             }
                                           >
-                                            <i class="ri-add-line"></i> Tambah
+                                            <i className="ri-add-line"></i> Tambah
                                             Field
                                           </button>
                                         </div>
@@ -1957,7 +1957,7 @@ const AddMasterPelatihan = ({ token }) => {
                                 addFieldTriggeredHandler(i, parentTitle)
                               }
                             >
-                              <i class="ri-add-line"></i> Tambah Field
+                              <i className="ri-add-line"></i> Tambah Field
                             </button>
                           </div>
                         </>
