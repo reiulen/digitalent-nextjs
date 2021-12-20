@@ -296,10 +296,10 @@ const Pencarian = ({ session }) => {
 								{!allPencarian || allPencarian?.pelatihan?.list?.length == 0 ? (
 									<Fragment>
 										<Card
-											className="card-custom card-stretch gutter-b p-0"
+											className="card-custom card-stretch gutter-b w-100 p-0"
 											style={{ height: "602px" }}
 										>
-											<Row className="d-flex justify-content-center w-100 p-0 m-0">
+											<Row className="d-flex justify-content-center  p-0 m-0">
 												<div className="d-flex justify-content-center pt-10">
 													<Image
 														src={"/assets/media/gambar-belum-tersedia-page.svg"}
@@ -309,13 +309,13 @@ const Pencarian = ({ session }) => {
 														objectFit="contain"
 													/>
 												</div>
-												<p
-													className="d-flex justify-content-center font-weight-bolder"
-													style={{ fontSize: "16px" }}
-												>
-													Pencarian "{router.query.cari}" belum tersedia
-												</p>
 											</Row>
+											<p
+												className="d-flex justify-content-center font-weight-bolder"
+												style={{ fontSize: "16px" }}
+											>
+												Pencarian "{router.query.cari}" belum tersedia
+											</p>
 										</Card>
 									</Fragment>
 								) : (
