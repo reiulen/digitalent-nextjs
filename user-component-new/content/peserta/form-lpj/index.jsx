@@ -21,6 +21,17 @@ const FormLPJ = ({ token }) => {
     (state) => state.getPelatihan
   );
 
+  // let initial =
+
+  const [initial, setInitial] = useState(
+    dataLPJ.map((item, index) => {
+      return {
+        ...item,
+        value: "0",
+      };
+    })
+  );
+
   const [konfirmasi, setKonfirmasi] = useState("0");
   const [value, setValue] = useState("");
   const [saran, setSaran] = useState("");
@@ -39,8 +50,14 @@ const FormLPJ = ({ token }) => {
   };
 
   const handleLPJ = (e, i) => {
-    setIdx(i);
-    e.target.checked === true ? setValue("1") : setValue("0");
+    setInitial(
+      initial.filter((it, id) => {
+        if (id == i) {
+          it.value = e.target.checked ? "1" : "0";
+        }
+        return it;
+      })
+    );
   };
 
   const handlePost = () => {
@@ -57,13 +74,7 @@ const FormLPJ = ({ token }) => {
       pelatian_id: dataTraining.id,
       menyetujui: konfirmasi,
       saran: saran,
-      form_lpj: dataLPJ.map((item, index) => {
-        if (index === idx) {
-          return { ...item, value: value };
-        } else {
-          return { ...item, value: "0" };
-        }
-      }),
+      form_lpj: initial,
     };
 
     Swal.fire({
@@ -224,6 +235,7 @@ const FormLPJ = ({ token }) => {
                         </td>
                         <td className={styles.checkbox}>
                           <input
+                            name={index}
                             type="checkbox"
                             onChange={(event) => handleLPJ(event, index)}
                           />

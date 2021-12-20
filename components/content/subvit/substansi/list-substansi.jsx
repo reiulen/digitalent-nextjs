@@ -474,7 +474,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                                         data-placement="bottom"
                                         title="Review Soal"
                                       >
-                                        <i className="ri-file-text-fill p-0 text-white"></i>
+                                        <i className="ri-file-search-fill p-0 text-white"></i>
                                       </a>
                                     )}
 
