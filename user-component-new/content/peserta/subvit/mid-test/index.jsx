@@ -40,6 +40,7 @@ const SubtansiUser = ({ token }) => {
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [zoom, setZoom] = useState(false);
   const [zoomJawab, setZoomJawab] = useState(false);
+  const [imageClick, setImageClick] = useState("");
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
 
@@ -336,12 +337,15 @@ const SubtansiUser = ({ token }) => {
                           </div>
                           <Modal
                             show={zoomJawab}
-                            onHide={() => setZoomJawab(false)}
+                            onHide={() => {
+                              setZoomJawab(false);
+                              setImageClick(item.image);
+                            }}
                           >
                             <Image
                               src={
                                 process.env.END_POINT_API_IMAGE_SUBVIT +
-                                  item.image || defaultImage
+                                  imageClick || defaultImage
                               }
                               alt=""
                               width={500}
