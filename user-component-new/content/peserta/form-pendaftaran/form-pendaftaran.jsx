@@ -477,7 +477,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
       list.map((rowBuilder, i) => {
         // FIRST FORM BUILDER OBJECT
         if (rowBuilder.element === "checkbox") {
-          rowBuilder.value = [];
+          let val = rowBuilder.value.join(",");
+          rowBuilder.value = val;
         }
         rowBuilder.triggered_parent.length > 0 &&
           rowBuilder.triggered_parent.map((rowParent, indexParent) => {
