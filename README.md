@@ -18,4 +18,5 @@ Site Management Module is one of many modules in Digi Talent Scholarship Applica
 - [x] and finally run npm run dev
 
 ## Deploy Issue
-- [x] deploy on the schedule UAT
+- [x] deploy on the schedule UAT'S
+- [x] must be clean

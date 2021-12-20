@@ -52,6 +52,9 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (commitment !== "1") {
+      simpleValidator.current.fields.deskripsi = true;
+    }
     if (simpleValidator.current.allValid()) {
       const data = {
         Pelatian_id: parseInt(router.query.id),
@@ -66,7 +69,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Tolong isi data dengan benar !",
       });
     }
   };
@@ -121,7 +124,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
                 )}
               </div>
             </div>
-            {commitment === "1" ? (
+            {commitment === "1" && (
               <div className="form-group mb-4">
                 <label className="col-form-label font-weight-bold">
                   Input Deskripsi
@@ -145,10 +148,14 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
                   ) : (
                     <p>Tunggu Sebentar</p>
                   )}
+                  {simpleValidator.current.message(
+                    "deskripsi",
+                    description,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
               </div>
-            ) : (
-              ""
             )}
             <div className="form-group">
               <div className="text-right">

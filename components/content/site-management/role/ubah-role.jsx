@@ -362,6 +362,7 @@ const UbahRole = ({ token }) => {
                         name="Checkboxes1"
                         checked={sub.view === 1 || sub.view === true}
                         onChange={() => {
+                          let arr = [];
                           permission.filter((filter) => {
                             if (sub.id === filter.id) {
                               filter.view = !(
@@ -375,6 +376,12 @@ const UbahRole = ({ token }) => {
                                   check.view =
                                     filter.view === true || filter.view === 1;
                                 });
+                              }
+                              item.list_sub_menu.filter((cek) => {
+                                arr.push(cek.view);
+                              });
+                              if (!arr.includes(true)) {
+                                item.view = false;
                               }
                             }
                             setForce(!force);
@@ -395,6 +402,8 @@ const UbahRole = ({ token }) => {
                         name="Checkboxes1"
                         checked={sub.manage === true || sub.manage === 1}
                         onChange={() => {
+                          let arr = [];
+                          let view = [];
                           permission.filter((filter) => {
                             if (sub.id === filter.id) {
                               filter.manage = !(
@@ -403,18 +412,30 @@ const UbahRole = ({ token }) => {
                               filter.view =
                                 filter.manage === true || filter.manage === 1;
                               if (item.manage !== 1 || item.view !== 1) {
-                                item.view = 1;
-                                item.manage = 1;
+                                item.view = true;
+                                item.manage = true;
                               }
                               if (sub.list_sub_menu.length > 0) {
                                 sub.list_sub_menu.filter((check) => {
                                   check.view =
-                                    filter.manage === true || filter.manage === 1;
-                                    check.manage =
-                                    filter.manage === true || filter.manage === 1;
+                                    filter.manage === true ||
+                                    filter.manage === 1;
+                                  check.manage =
+                                    filter.manage === true ||
+                                    filter.manage === 1;
                                 });
                               }
-                              
+                              item.list_sub_menu.filter((cek) => {
+                                arr.push(cek.manage);
+                                view.push(cek.view);
+                              });
+                              if (!arr.includes(true)  && !view.includes(true)) {
+                                item.view = false;
+                                item.manage = false;
+                              }
+                              if (!view.includes(true)) {
+                                item.view = false;
+                              }
                             }
                             setForce(!force);
                             return filter;
@@ -458,6 +479,7 @@ const UbahRole = ({ token }) => {
                             name="Checkboxes1"
                             checked={child.view === true || child.view === 1}
                             onChange={() => {
+                              let arr = [];
                               permission.filter((filter) => {
                                 if (child.id === filter.id) {
                                   filter.view = !(
@@ -469,7 +491,12 @@ const UbahRole = ({ token }) => {
                                   if (sub.view !== 1) {
                                     sub.view = 1;
                                   }
-                                 
+                                  sub.list_sub_menu.filter((cek) => {
+                                    arr.push(cek.view);
+                                  });
+                                  if (!arr.includes(true)) {
+                                    sub.view = false;
+                                  }
                                 }
                                 setForce(!force);
                                 return filter;
@@ -491,6 +518,8 @@ const UbahRole = ({ token }) => {
                               child.manage === true || child.manage === 1
                             }
                             onChange={() => {
+                              let arr = [];
+                              let view = [];
                               permission.filter((filter) => {
                                 if (child.id === filter.id) {
                                   filter.manage = !(
@@ -507,6 +536,18 @@ const UbahRole = ({ token }) => {
                                   if (item.manage !== 1 || item.view !== 1) {
                                     item.view = 1;
                                     item.manage = 1;
+                                  }
+                                  sub.list_sub_menu.filter((cek) => {
+                                    arr.push(cek.manage);
+                                    view.push(cek.view);
+                                  });
+                                  if (!arr.includes(true)  && !view.includes(true)) {
+                                    sub.view = false;
+                                    sub.manage = false;
+                                  }
+                                  if (!view.includes(true)) {
+                                    sub.view = false;
+                                    item.view = item.view
                                   }
                                 }
                                 setForce(!force);

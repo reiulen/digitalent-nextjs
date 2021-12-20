@@ -116,6 +116,7 @@ const UbahRole = ({ token, name }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(postFilterExportData(token, data, null, null, name));
+        // window.location = ""
       }
     });
   };
@@ -284,7 +285,7 @@ const UbahRole = ({ token, name }) => {
                       color: "#FFFFFF",
                       width: "max-content",
                     }}
-                    // onClick={() => handleAddInput()}
+                  // onClick={() => handleAddInput()}
                   >
                     <IconSearch className="mr-4" />
                     Search
@@ -439,7 +440,7 @@ const UbahRole = ({ token, name }) => {
           </div>
         </div>
       </div>
-    </PageWrapper>
+    </PageWrapper >
   );
 };
 

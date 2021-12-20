@@ -195,7 +195,7 @@ const EditMitra = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();

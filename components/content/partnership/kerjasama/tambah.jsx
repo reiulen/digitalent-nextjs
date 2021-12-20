@@ -18,11 +18,13 @@ import moment from "moment";
 import Select from "react-select";
 import FormSubmit from "./submitKerjasama";
 import { helperRemoveZeroFromIndex0 } from "../../../../utils/middleware/helper/index";
+import Cookies from "js-cookie"
 
 const Tambah = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { formSubmit } = router.query;
+  const cookiePermission = Cookies.get("token_permission")
   const allMK = useSelector((state) => state.allMK);
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");
@@ -115,7 +117,7 @@ const Tambah = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then((result) => {
         if (result.value) {
           let allDataPart = [
@@ -170,10 +172,14 @@ const Tambah = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchDataEmail(token));
+    if (allMK.institution_name){
+      dispatch(fetchDataEmail(token));
+    }
+    if (cooperationC_id){
+      dispatch(fetchListCooperationSelectById(token, cooperationC_id, cookiePermission ));
+    }
     dispatch(fetchListSelectCooperation(token));
     dispatch(fetchListCooperationSelect(token));
-    dispatch(fetchListCooperationSelectById(token, cooperationC_id));
     dispatch(fetchListSelectMitra(token));
     setDate(moment(new Date()).format("YYYY-MM-DD"));
   }, [
@@ -181,6 +187,7 @@ const Tambah = ({ token }) => {
     allMK.institution_name,
     allMK.idCooporationSelect,
     cooperationC_id,
+    cookiePermission,
     token,
   ]);
 
