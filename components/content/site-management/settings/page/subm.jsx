@@ -279,9 +279,6 @@ export default function SUBM(props) {
   });
 
   const onChangeFile = (e) => {
-    const type = ["text/csv"];
-
-    if (type.includes(e.target.files[0].type)) {
       if (e.target.files[0].size > "5000000") {
         e.target.value = null;
         Swal.fire("Oops !", "File Size Melebihi 5 MB", "error");
@@ -295,10 +292,7 @@ export default function SUBM(props) {
         setFile(e.target.files[0])
         setNameFile(e.target.files[0].name);
       }
-    } else {
-      e.target.value = null;
-      Swal.fire("Oops !", "Tipe File Harus Berupa .csv", "error");
-    }
+    
   };
 
   return (
