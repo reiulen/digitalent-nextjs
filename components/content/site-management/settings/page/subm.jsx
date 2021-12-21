@@ -279,19 +279,20 @@ export default function SUBM(props) {
   });
 
   const onChangeFile = (e) => {
-    if (e.target.files[0].size > "5000000") {
-      e.target.value = null;
-      Swal.fire("Oops !", "File Size Melebihi 5 MB", "error");
-    } else {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-      setFile(e.target.files[0])
-      setNameFile(e.target.files[0].name);
-    }
+      if (e.target.files[0].size > "10000000") {
+        e.target.value = null;
+        Swal.fire("Oops !", "File Size Melebihi 10 MB", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setFile(e.target.files[0])
+        setNameFile(e.target.files[0].name);
+      }
+    
   };
 
   return (
@@ -576,11 +577,6 @@ export default function SUBM(props) {
                     </option>
                     {optStatusProfile}
                   </select>
-                  {disablePelatihan === true || disablePelatihan === "" ? (
-                    <small className="text-muted">
-                      Mohon isi pelatihan terlebih dahulu
-                    </small>
-                  ) : null}
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Status Peserta</h3>
@@ -602,12 +598,6 @@ export default function SUBM(props) {
                       );
                     })}
                   </select>
-                  {disableStatusProfile === true ||
-                    disableStatusProfile === "" ? (
-                    <small className="text-muted">
-                      Mohon isi status profile terlebih dahulu
-                    </small>
-                  ) : null}
                 </div>
               </div>
             </div>
@@ -639,13 +629,13 @@ export default function SUBM(props) {
           </div>
           <div className="status-peserta">
             <div className="form-group">
-              <h3 className="mb-4 judul">Status</h3>
+              <h3 className="mb-4 judul">Status Peserta</h3>
               <div
                 className="mr-4"
                 style={{ zIndex: "2", position: "relative" }}
               >
                 <Select
-                  placeholder="PILIH PELATIHAN"
+                  placeholder="PILIH STATUS PESERTA"
                   options={optionsStatus}
                   defaultValue={status}
                   onChange={(e) => {

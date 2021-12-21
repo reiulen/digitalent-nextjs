@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const CheckboxReference = ({ id, token, onChangeValue }) => {
+const CheckboxReference = ({ id, token, required, onChangeValue }) => {
   const [optionsReference, setOptionsReference] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const CheckboxReference = ({ id, token, onChangeValue }) => {
             <div className="form-check pb-3" key={row.label}>
               <input
                 type="checkbox"
-                name="checkboxRegister"
+                name="plotRegistration"
                 className="form-check-input"
                 value={row.label}
                 onChange={(e) => onChangeValue(row.label)}

@@ -230,7 +230,7 @@ const TambahSurveyStepOne = ({ token, tokenPermission }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="1"></StepInput>
+          <StepInput step="1" survey={survey}></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Tambah Test Survey</h2>
           </div>

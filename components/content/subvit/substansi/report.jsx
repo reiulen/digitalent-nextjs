@@ -28,6 +28,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [status, setStatus] = useState("");
+  const [type, setType] = useState(false);
 
   const [nilai, setNilai] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
@@ -36,7 +37,11 @@ const ListSubstansi = ({ token, tokenPermission }) => {
   let { page = 1, id } = router.query;
   page = Number(page);
 
-  useEffect(() => {}, [dispatch]);
+  useEffect(() => {
+    subtance?.data?.reports.map((it) => {
+      return it.type.includes("midtest") ? setType(true) : setType(false);
+    });
+  }, [dispatch, subtance]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
@@ -65,11 +70,11 @@ const ListSubstansi = ({ token, tokenPermission }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`;
+    let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}?`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
     if (nilai) link = link.concat(`&nilai=${nilai}`);
-
+    if (router.query.card) link = link.concat(`&card=${router.query.card}`);
     const config = {
       headers: {
         Authorization: "Bearer " + token,
@@ -247,7 +252,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
           <div className="card-header border-0 align-items-center row">
             <div className="col-lg-10 col-xl-10">
               <h3 className="card-title font-weight-bolder text-dark">
-                Report Test Substansi{" "}
+                Report {type ? "Mid Test" : "Test Substansi"}{" "}
                 {publishValue === null || ""
                   ? ""
                   : `- ${
@@ -288,8 +293,8 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                     </button>
                   </div>
                 </div>
-                <div className="col-md-3"></div>
-                <div className="col-md-3">
+                <div className="col-md-4"></div>
+                <div className="col-md-2">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-2 btn-block"
                     style={{
@@ -400,7 +405,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                                     {/* <span className="label label-inline label-light-success font-weight-bold">
                                       Diterima
                                     </span> */}
-                                    <Badge bg="success">Diterima</Badge>
+                                    <Badge bg="success">Lulus</Badge>
                                   </td>
                                 ) : !row.start_datetime &&
                                   !row.finish_datetime ? (
@@ -418,7 +423,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                                   </td>
                                 ) : row.finish == 1 && row.status == 0 ? (
                                   <td className="align-middle">
-                                    <Badge bg="danger">Ditolak</Badge>
+                                    <Badge bg="danger">Gagal</Badge>
                                   </td>
                                 ) : (
                                   <td className="align-middle">
@@ -527,8 +532,8 @@ const ListSubstansi = ({ token, tokenPermission }) => {
               <option value="" selected>
                 Semua
               </option>
-              <option value={1}>Diterima</option>
-              <option value={0}>Ditolak</option>
+              <option value={1}>Lulus</option>
+              <option value={0}>Gagal</option>
             </select>
           </div>
           <div className="form-group mb-5">

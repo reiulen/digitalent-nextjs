@@ -25,6 +25,12 @@ import FormCopyEdit from "../components/step-registration/form-copy-edit";
 import { getDetailMasterPelatihan } from "../../../../../redux/actions/pelatihan/master-pendaftaran.action";
 import Cookies from "js-cookie";
 
+import {
+  element,
+  size,
+  options,
+} from "../../../../../utils/middleware/helper/data";
+
 const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -38,65 +44,6 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [modalShow, setModalShow] = useState(false);
-
-  const [element] = useState([
-    {
-      value: "select",
-      name: "Select",
-    },
-    {
-      value: "text",
-      name: "Text",
-    },
-    {
-      value: "checkbox",
-      name: "Checkbox",
-    },
-    {
-      value: "textarea",
-      name: "Text Area",
-    },
-    {
-      value: "radio",
-      name: "Radio",
-    },
-    {
-      value: "file_image",
-      name: "File Image",
-    },
-    {
-      value: "file_doc",
-      name: "File Document",
-    },
-    {
-      value: "date",
-      name: "Input Date",
-    },
-    {
-      value: "triggered",
-      name: "Triggered",
-    },
-    {
-      value: "upload_document",
-      name: "Upload Document",
-    },
-  ]);
-
-  const [size] = useState([
-    { value: "col-md-6", name: "Half" },
-    { value: "col-md-12", name: "Full" },
-  ]);
-
-  const [options] = useState([
-    {
-      name: "Manual",
-      value: "manual",
-    },
-    {
-      name: "Select Reference",
-      value: "select_reference",
-    },
-  ]);
 
   const optionsForm = dataForm.data || [];
 
@@ -142,6 +89,7 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
           required: "0",
           triggered: "0",
           triggered_parent: [],
+          value: "",
         },
       ]);
       setTitleCopyEdit("");
@@ -159,6 +107,7 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
           required: "0",
           triggered: "0",
           triggered_parent: [],
+          value: "",
         },
       ]);
       setTitleCopy("");
@@ -425,12 +374,12 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
 
             {viewRegistrationHandler()}
 
-            <div className="form-group mt-md-20">
+            <div className="form-group mt-9">
               <div className="text-right">
                 <button
                   className="btn btn-light-ghost-rounded-full mr-2"
                   type="button"
-                  onClick={backHandler}
+                  onClick={() => backHandler()}
                 >
                   Kembali
                 </button>

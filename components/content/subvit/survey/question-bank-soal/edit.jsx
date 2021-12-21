@@ -294,8 +294,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Soal{" "}
-                {survey_question_detail && survey_question_detail.bank_soal + 1}
+                Soal {parseInt(router.query.no) + 1}
               </h3>
               <div className="card-toolbar ml-auto"></div>
             </div>
