@@ -42,24 +42,8 @@ export default function FormPendaftaran(props) {
   useEffect(() => {
     let data = {
       komitmen: false,
-      form_pendaftaran: [],
+      form_pendaftaran: dataForm.FormBuilder,
     };
-    dataForm &&
-      dataForm.FormBuilder !== null &&
-      dataForm.FormBuilder.length > 0 &&
-      dataForm.FormBuilder.map((row, i) => {
-        data.form_pendaftaran.push({
-          key: row.key,
-          name: row.name,
-          type: row.element,
-          size: row.size,
-          option: row.option,
-          dataOption: row.dataOption,
-          required: row.required,
-          fileName: "",
-          value: "",
-        });
-      });
     dispatch(storeFormRegister(data));
   }, [dataForm, dispatch]);
   return (

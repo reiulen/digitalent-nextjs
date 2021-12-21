@@ -114,14 +114,23 @@ export const postRoles = (sendData, token) => {
         Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
           window.location = "/site-management/role";
         });
-      }else{
-        Swal.fire("Oopss", data.message, "error").then(() => {
-        });
+      } else {
+        Swal.fire("Oopss", data.message, "error").then(() => {});
       }
-
     } catch (error) {
-      // Swal.fire("Oopss", "Jika Sub Menu di Pilih, Menu juga harus dipilih !", "error").then(() => {
-      // });
+      if (error.message.includes("400")) {
+        Swal.fire(
+          "Oopss",
+          "Nama Role Sudah ada Sebelumnya !",
+          "error"
+        ).then(() => {});
+      }else{
+        Swal.fire(
+          "Oopss",
+          error.message,
+          "error"
+        ).then(() => {});
+      }
       dispatch({
         type: POST_ROLES_FAIL,
       });
@@ -219,20 +228,16 @@ export const getSidebar = (token) => async (dispatch) => {
       process.env.END_POINT_API_SITE_MANAGEMENT + " ",
       config
     );
-    localStorage.setItem("sidebar", JSON.stringify(data.data.menu))
-    localStorage.setItem("token-permission", data.data.tokenPermission)
-    localStorage.setItem("permissions", data.data.permissions)
+    localStorage.setItem("sidebar", JSON.stringify(data.data.menu));
+    localStorage.setItem("token-permission", data.data.tokenPermission);
+    localStorage.setItem("permissions", data.data.permissions);
 
-    Cookies.set("token_permission", data.data.tokenPermission)
+    Cookies.set("token_permission", data.data.tokenPermission);
     dispatch({
       type: GET_SIDEBAR,
       payload: data,
     });
-
-    
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 };
 
 export const setPage = (page) => {

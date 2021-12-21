@@ -376,7 +376,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 }
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada file
+                {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
           </div>
@@ -792,7 +792,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 }
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada file
+                {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
           </div>
@@ -1114,7 +1114,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 onChange={(e) => funcChangeInput(e, alfa, indexParent, beta)}
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada file
+                {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
           </div>
