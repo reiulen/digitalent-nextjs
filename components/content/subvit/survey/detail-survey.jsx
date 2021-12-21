@@ -369,7 +369,7 @@ const DetailSurvey = ({ token, tokenPermission }) => {
                                 ) ? (
                                   <div className="d-flex">
                                     <Link
-                                      href={`edit-soal-survey?id=${question.id}`}
+                                      href={`edit-soal-survey?id=${question.id}&no=${i}`}
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
