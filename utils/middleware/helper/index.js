@@ -1933,7 +1933,7 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
   formBuilderCheck &&
     formBuilderCheck.map((rowBuilder, i) => {
       // FIRST FORM BUILDER OBJECT
-      if (rowBuilder.element === "checkbox") {
+      if (rowBuilder.element === "checkbox" && rowBuilder.value !== "") {
         let val = rowBuilder.value.join(",");
         rowBuilder.value = val;
       }
@@ -1943,7 +1943,10 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
           rowParent.triggeredForm.length > 0 &&
             rowParent.triggeredForm.map((rowFormParent, indexFormParent) => {
               // SECOND FORM BUILDER OBJECT
-              if (rowFormParent.element === "checkbox") {
+              if (
+                rowFormParent.element === "checkbox" &&
+                rowFormParent.value !== ""
+              ) {
                 let val = rowFormParent.value.join(",");
                 rowFormParent.value = val;
               }
@@ -1955,7 +1958,10 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
                       rowChildren.triggeredForm.map(
                         (rowFormChildren, indexFormChildren) => {
                           // THIRD FORM BUILDER OBJECT
-                          if (rowFormChildren.element === "checkbox") {
+                          if (
+                            rowFormChildren.element === "checkbox" &&
+                            rowFormChildren.element !== ""
+                          ) {
                             let val = rowFormChildren.value.join(",");
                             rowFormChildren.value = val;
                           }
@@ -1967,7 +1973,10 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
                                   rowIndex.triggeredForm.map(
                                     (rowFormIndex, indexFormIndex) => {
                                       // FOURTH FORM BUILDER OBJECT
-                                      if (rowFormIndex.element === "checkbox") {
+                                      if (
+                                        rowFormIndex.element === "checkbox" &&
+                                        rowFormIndex.element !== ""
+                                      ) {
                                         let val = rowFormIndex.value.join(",");
                                         rowFormIndex.value = val;
                                       }
