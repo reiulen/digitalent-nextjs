@@ -1927,3 +1927,75 @@ export const helperFormatCheckbox = (formBuilderNon) => {
   formBuilderFormat = formBuilderNon;
   return formBuilderFormat;
 };
+
+export const helperUnformatCheckbox = (formBuilderCheck) => {
+  let formBuilderFormat;
+  formBuilderCheck &&
+    formBuilderCheck.map((rowBuilder, i) => {
+      // FIRST FORM BUILDER OBJECT
+      if (rowBuilder.element === "checkbox") {
+        let val = rowBuilder.value.join(",");
+        rowBuilder.value = val;
+      }
+      rowBuilder.triggered_parent.length > 0 &&
+        rowBuilder.triggered_parent.map((rowParent, indexParent) => {
+          // TITLE FORM BUILDER OBJECT PARENT
+          rowParent.triggeredForm.length > 0 &&
+            rowParent.triggeredForm.map((rowFormParent, indexFormParent) => {
+              // SECOND FORM BUILDER OBJECT
+              if (rowFormParent.element === "checkbox") {
+                let val = rowFormParent.value.join(",");
+                rowFormParent.value = val;
+              }
+              rowFormParent.triggered_children.length > 0 &&
+                rowFormParent.triggered_children.map(
+                  (rowChildren, indexChildren) => {
+                    // TITLE FORM BUILDER OBJECT CHILDREN
+                    rowChildren.triggeredForm.length > 0 &&
+                      rowChildren.triggeredForm.map(
+                        (rowFormChildren, indexFormChildren) => {
+                          // THIRD FORM BUILDER OBJECT
+                          if (rowFormChildren.element === "checkbox") {
+                            let val = rowFormChildren.value.join(",");
+                            rowFormChildren.value = val;
+                          }
+                          rowFormChildren.triggered_index.length > 0 &&
+                            rowFormChildren.triggered_index.map(
+                              (rowIndex, indexIndex) => {
+                                // TITLE FORM BUILDER OBJECT INDEX
+                                rowIndex.triggeredForm.length > 0 &&
+                                  rowIndex.triggeredForm.map(
+                                    (rowFormIndex, indexFormIndex) => {
+                                      // FOURTH FORM BUILDER OBJECT
+                                      if (rowFormIndex.element === "checkbox") {
+                                        let val = rowFormIndex.value.join(",");
+                                        rowFormIndex.value = val;
+                                      }
+                                      // console.log(rowFormIndex);
+                                      // FOURTH FORM BUILDER OBJECT
+                                    }
+                                  );
+                                // console.log(rowIndex);
+                                // TITLE FORM BUILDER OBJECT INDEX
+                              }
+                            );
+                          // console.log(rowFormChildren);
+                          // THIRD FORM BUILDER OBJECT
+                        }
+                      );
+                    // TITLE FORM BUILDER OBJECT CHILDREN
+                    // console.log(rowChildren);
+                  }
+                );
+              // SECOND FORM BUILDER OBJECT
+              // console.log(rowFormParent);
+            });
+          // TITLE FORM BUILDER OBJECT PARENT
+          // console.log(rowParent);
+        });
+      // FIRST FORM BUILDER OBJECT
+      // console.log(rowBuilder);
+    });
+  formBuilderFormat = formBuilderCheck;
+  return formBuilderFormat;
+};

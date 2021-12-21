@@ -24,7 +24,7 @@ const FormLPJ = ({ token }) => {
   // let initial =
 
   const [initial, setInitial] = useState(
-    dataLPJ.map((item, index) => {
+    dataLPJ?.map((item, index) => {
       return {
         ...item,
         value: "0",
@@ -222,7 +222,7 @@ const FormLPJ = ({ token }) => {
                 <td className={styles.tableLabel}>Checklist</td>
               </tr>
               {dataLPJ &&
-                dataLPJ.map((item, index) => {
+                dataLPJ?.map((item, index) => {
                   return (
                     <>
                       <tr>

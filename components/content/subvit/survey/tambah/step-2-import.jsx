@@ -206,24 +206,24 @@ const StepTwo = ({ token, tokenPermission }) => {
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(
-      getAllSurveyQuestionDetail(
-        id,
-        pageNumber,
-        limit,
-        "",
-        token,
-        tokenPermission
-      )
-    );
+    // dispatch(
+    //   getAllSurveyQuestionDetail(
+    //     id,
+    //     pageNumber,
+    //     limit,
+    //     "",
+    //     token,
+    //     tokenPermission
+    //   )
+    // );
   };
 
   const handleLimit = (val) => {
     setLimit(val);
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(
-      getAllSurveyQuestionDetail(id, 1, val, "", token, tokenPermission)
-    );
+    // dispatch(
+    //   getAllSurveyQuestionDetail(id, 1, val, "", token, tokenPermission)
+    // );
   };
 
   const handleDelete = (id) => {
