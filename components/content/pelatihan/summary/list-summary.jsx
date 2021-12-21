@@ -410,7 +410,7 @@ const ListSummary = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal</th>
+                        <th>Jadwal Pendaftaran - Jadwal Pelatihan</th>
                         <th>Status Pelatihan</th>
                         <th>Aksi</th>
                       </tr>
@@ -445,20 +445,20 @@ const ListSummary = ({ token }) => {
                               <p className="my-0">
                                 {moment(row.pendaftaran_mulai)
                                   .utc()
-                                  .format("DD MMM YYYY")}{" "}
+                                  .format("DD MMMM YYYY")}{" "}
                                 -{" "}
                                 {moment(row.pendaftaran_selesai)
                                   .utc()
-                                  .format("DD MMM YYYY")}{" "}
+                                  .format("DD MMMM YYYY")}{" "}
                               </p>
                               <p className="my-0">
                                 {moment(row.pelatihan_mulai)
                                   .utc()
-                                  .format("DD MMM YYYY")}{" "}
+                                  .format("DD MMMM YYYY")}{" "}
                                 -{" "}
                                 {moment(row.pelatihan_selesai)
                                   .utc()
-                                  .format("DD MMM YYYY")}{" "}
+                                  .format("DD MMMM YYYY")}{" "}
                               </p>
                             </td>
                             <td className="align-middle">

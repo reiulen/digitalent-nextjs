@@ -17,6 +17,12 @@ import { putTrainingStep2 } from "../../../../../redux/actions/pelatihan/trainin
 import FormManual from "../components/step-registration/form-manual";
 import FormCopy from "../components/step-registration/form-copy";
 
+import {
+  element,
+  size,
+  options,
+} from "../../../../../utils/middleware/helper/data";
+
 const EditRegistrationStep2 = ({ token, propsStep }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -52,65 +58,6 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
 
   const [viewForm, setViewForm] = useState(getEditTraining2.type_form);
 
-  const [element] = useState([
-    {
-      value: "select",
-      name: "Select",
-    },
-    {
-      value: "text",
-      name: "Text",
-    },
-    {
-      value: "checkbox",
-      name: "Checkbox",
-    },
-    {
-      value: "textarea",
-      name: "Text Area",
-    },
-    {
-      value: "radio",
-      name: "Radio",
-    },
-    {
-      value: "file_image",
-      name: "File Image",
-    },
-    {
-      value: "file_doc",
-      name: "File Document",
-    },
-    {
-      value: "date",
-      name: "Input Date",
-    },
-    {
-      value: "triggered",
-      name: "Triggered",
-    },
-    {
-      value: "upload_document",
-      name: "Upload Document",
-    },
-  ]);
-
-  const [size] = useState([
-    { value: "col-md-6", name: "Half" },
-    { value: "col-md-12", name: "Full" },
-  ]);
-
-  const [options] = useState([
-    {
-      name: "Manual",
-      value: "manual",
-    },
-    {
-      name: "Select Reference",
-      value: "select_reference",
-    },
-  ]);
-
   useEffect(() => {
     const dataOptionsArr = [];
     if (dataReferenceOption) {
@@ -139,6 +86,7 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
         required: "0",
         triggered: "0",
         triggered_parent: [],
+        value: "",
       },
     ]
   );

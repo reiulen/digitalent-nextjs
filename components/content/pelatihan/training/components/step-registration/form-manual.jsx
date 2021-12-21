@@ -1,5 +1,10 @@
 import React, { useRef, useState } from "react";
 import SimpleReactValidator from "simple-react-validator";
+import {
+  helperChangeInputFormBuilder,
+  helperAddFieldTriggered,
+  helperRemoveField,
+} from "../../../../../../utils/middleware/helper";
 
 const FormManual = ({
   title,
@@ -14,93 +19,6 @@ const FormManual = ({
 }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
-
-  const removeFieldHandler = (
-    alfa = null,
-    parentIndex = null,
-    beta = null,
-    childrenIndex = null,
-    gamma = null,
-    indexIndex = null,
-    delta = null
-  ) => {
-    if (
-      alfa !== null &&
-      parentIndex === null &&
-      beta === null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      const list = [...formBuilder];
-      list.splice(alfa, 1);
-      list.forEach((row, i) => {
-        let key = i + 1;
-        list[i]["key"] = key;
-      });
-      funcFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      const list = [...formBuilder];
-      let listAlfa = list[alfa].triggered_parent[parentIndex];
-      listAlfa.triggeredForm.splice(beta, 1);
-      listAlfa.triggeredForm.forEach((row, i) => {
-        let key = i + 1;
-        listAlfa.triggeredForm[i]["key"] = key;
-      });
-      funcFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      const list = [...formBuilder];
-      let listBeta =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex];
-      listBeta.triggeredForm.splice(gamma, 1);
-      listBeta.triggeredForm.forEach((row, i) => {
-        let key = i + 1;
-        listBeta.triggeredForm[i]["key"] = key;
-      });
-      funcFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex !== null &&
-      delta !== null
-    ) {
-      const list = [...formBuilder];
-      let listGamma =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma]
-          .triggered_index[indexIndex];
-      listGamma.triggeredForm.splice(delta, 1);
-      listGamma.triggeredForm.forEach((row, i) => {
-        let key = i + 1;
-        listGamma.triggeredForm[i]["key"] = key;
-      });
-      funcFormBuilder(list);
-    }
-  };
 
   const renderDataOptionHandler = (
     row,
@@ -441,6 +359,7 @@ const FormManual = ({
         required: "0",
         triggered: "0",
         triggered_parent: [],
+        value: "",
       },
     ]);
   };
@@ -454,95 +373,39 @@ const FormManual = ({
     indexIndex = null,
     delta = null
   ) => {
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex !== null
-    ) {
-      const list = [...formBuilder];
-      let newKey = 1;
-      const formElement =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma]
-          .triggered_index[indexIndex];
-      if (formElement.triggeredForm.length > 0) {
-        newKey =
-          formElement.triggeredForm[formElement.triggeredForm.length - 1].key +
-          1;
-      }
-      const val = {
-        key: newKey,
-        name: " ",
-        element: "",
-        size: "col-md-12",
-        option: "",
-        dataOption: "",
-        fileName: "Belum ada file",
-        triggered: "0",
-      };
-      formElement.triggeredForm.push(val);
-      funcFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma === null &&
-      indexIndex === null
-    ) {
-      const list = [...formBuilder];
-      let newKey = 1;
-      const formElement =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex];
-      const val = {
-        key: newKey,
-        name: " ",
-        element: "",
-        size: "col-md-12",
-        option: "",
-        dataOption: "",
-        fileName: "Belum ada file",
-        triggered: "0",
-        triggered_index: [],
-      };
-      formElement.triggeredForm.push(val);
-      funcFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta === null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null
-    ) {
-      const list = [...formBuilder];
-      let newKey = 1;
-      const formElement = list[alfa].triggered_parent[parentIndex];
-      if (formElement.triggeredForm.length > 0) {
-        newKey =
-          formElement.triggeredForm[formElement.triggeredForm.length - 1].key +
-          1;
-      }
-      const val = {
-        key: newKey,
-        name: " ",
-        element: "",
-        size: "col-md-12",
-        option: "",
-        dataOption: "",
-        fileName: "Belum ada file",
-        triggered: "0",
-        triggered_children: [],
-      };
-      formElement.triggeredForm.push(val);
-      funcFormBuilder(list);
-    }
+    const valueForm = helperAddFieldTriggered(
+      formBuilder,
+      alfa,
+      parentIndex,
+      beta,
+      childrenIndex,
+      gamma,
+      indexIndex,
+      delta
+    );
+    funcFormBuilder(valueForm);
+  };
+
+  const removeFieldHandler = (
+    alfa = null,
+    parentIndex = null,
+    beta = null,
+    childrenIndex = null,
+    gamma = null,
+    indexIndex = null,
+    delta = null
+  ) => {
+    const valueForm = helperRemoveField(
+      formBuilder,
+      alfa,
+      parentIndex,
+      beta,
+      childrenIndex,
+      gamma,
+      indexIndex,
+      delta
+    );
+    funcFormBuilder(valueForm);
   };
 
   const inputChangeParentHandler = (
@@ -555,295 +418,18 @@ const FormManual = ({
     indexIndex = null,
     delta = null
   ) => {
-    const { value, name, checked } = event.target;
-    const list = [...formBuilder];
-    if (
-      alfa !== null &&
-      parentIndex === null &&
-      beta === null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      if (name === "upload-document") {
-        const type = [
-          "image/jpg",
-          "image/png",
-          "image/jpeg",
-          "application/pdf",
-        ];
-        if (event.target.files[0]) {
-          if (type.includes(event.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                list[alfa].dataOption = reader.result;
-              }
-            };
-            reader.readAsDataURL(event.target.files[0]);
-            list[alfa].fileName = event.target.files[0].name;
-          } else {
-            event.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
-              "error"
-            );
-          }
-        }
-      }
-      if (name === "element" && value === "triggered") {
-        list[alfa].option = "manual";
-        list[alfa].size = "col-md-12";
-      }
-      list[alfa][name] = value;
-      if (name === "required") {
-        let check = checked === true ? "1" : "0";
-        list[alfa]["required"] = check;
-      }
-      if (name === "triggered") {
-        let check = checked === true ? "1" : "0";
-        if (checked) {
-          list.map((row, i) => {
-            if (row.option === "manual") {
-              if (row.dataOption !== "") {
-                let dataOption = row.dataOption.split(";");
-                dataOption.map((triggeredOption, index) => {
-                  let val = {
-                    key: index + 1,
-                    triggeredName: triggeredOption,
-                    triggeredForm: [
-                      {
-                        key: 1,
-                        name: " ",
-                        element: "",
-                        size: "col-md-12",
-                        option: "",
-                        dataOption: "",
-                        fileName: "Belum ada file",
-                        triggered: "0",
-                        triggered_children: [],
-                      },
-                    ],
-                  };
-                  list[alfa].triggered_parent.push(val);
-                });
-              }
-            }
-          });
-        } else {
-          list[alfa].triggered_parent = [];
-        }
-        list[alfa]["triggered"] = check;
-      }
-      funcFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      let element =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta];
-      element[name] = value;
-      if (name === "upload-document") {
-        const type = [
-          "image/jpg",
-          "image/png",
-          "image/jpeg",
-          "application/pdf",
-        ];
-        if (event.target.files[0]) {
-          if (type.includes(event.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.dataOption = reader.result;
-              }
-            };
-            reader.readAsDataURL(event.target.files[0]);
-            element.fileName = event.target.files[0].name;
-          } else {
-            event.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
-              "error"
-            );
-          }
-        }
-      }
-      if (name === "element" && value === "triggered") {
-        element.option = "manual";
-        element.size = "col-md-12";
-      }
-      if (name === "required") {
-        let check = checked === true ? "1" : "0";
-        element.required = check;
-      }
-      if (name === "triggered") {
-        let check = checked === true ? "1" : "0";
-        element.triggered = check;
-        if (checked) {
-          let dataOption = element.dataOption.split(";");
-          dataOption.map((triggeredOption, index) => {
-            let val = {
-              key: index + 1,
-              triggeredName: triggeredOption,
-              triggeredForm: [
-                {
-                  key: 1,
-                  name: "",
-                  element: "",
-                  size: "col-md-12",
-                  option: "",
-                  dataOption: "",
-                  fileName: "Belum ada file",
-                  triggered: "0",
-                  triggered_index: [],
-                },
-              ],
-            };
-            element.triggered_children.push(val);
-          });
-        } else {
-          element.triggered_children = [];
-        }
-      }
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      let element =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma];
-      element[name] = value;
-      if (name === "upload-document") {
-        const type = [
-          "image/jpg",
-          "image/png",
-          "image/jpeg",
-          "application/pdf",
-        ];
-        if (event.target.files[0]) {
-          if (type.includes(event.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.dataOption = reader.result;
-              }
-            };
-            reader.readAsDataURL(event.target.files[0]);
-            element.fileName = event.target.files[0].name;
-          } else {
-            event.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
-              "error"
-            );
-          }
-        }
-      }
-      if (name === "element" && value === "triggered") {
-        element.option = "manual";
-        element.size = "col-md-12";
-      }
-      if (name === "required") {
-        let check = checked === true ? "1" : "0";
-        element.required = check;
-      }
-      if (name === "triggered") {
-        let check = checked === true ? "1" : "0";
-        element.triggered = check;
-        if (checked) {
-          let dataOption = element.dataOption.split(";");
-          dataOption.map((triggeredOption, index) => {
-            let val = {
-              key: index + 1,
-              triggeredName: triggeredOption,
-              triggeredForm: [
-                {
-                  key: 1,
-                  name: "",
-                  element: "",
-                  size: "col-md-12",
-                  option: "",
-                  dataOption: "",
-                  fileName: "Belum ada file",
-                  triggered: "0",
-                },
-              ],
-            };
-            element.triggered_index.push(val);
-          });
-        } else {
-          element.triggered_index = [];
-        }
-      }
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex !== null &&
-      delta !== null
-    ) {
-      let element =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma]
-          .triggered_index[indexIndex].triggeredForm[delta];
-      element[name] = value;
-      if (name === "upload-document") {
-        const type = [
-          "image/jpg",
-          "image/png",
-          "image/jpeg",
-          "application/pdf",
-        ];
-        if (event.target.files[0]) {
-          if (type.includes(event.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.dataOption = reader.result;
-              }
-            };
-            reader.readAsDataURL(event.target.files[0]);
-            element.fileName = event.target.files[0].name;
-          } else {
-            event.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
-              "error"
-            );
-          }
-        }
-      }
-      if (name === "element" && value === "triggered") {
-        element.option = "manual";
-        element.size = "col-md-12";
-      }
-      if (name === "required") {
-        let check = checked === true ? "1" : "0";
-        element.required = check;
-      }
-    }
-    funcFormBuilder(list);
+    const valueForm = helperChangeInputFormBuilder(
+      event,
+      formBuilder,
+      alfa,
+      parentIndex,
+      beta,
+      childrenIndex,
+      gamma,
+      indexIndex,
+      delta
+    );
+    funcFormBuilder(valueForm);
   };
 
   return (
@@ -1739,7 +1325,7 @@ const FormManual = ({
             style={{ borderRadius: "30px", fontWeight: "600" }}
             onClick={showPreviewHandler}
           >
-            Review
+            Preview
           </button>
           <button
             className="btn btn-primary-rounded-full"
