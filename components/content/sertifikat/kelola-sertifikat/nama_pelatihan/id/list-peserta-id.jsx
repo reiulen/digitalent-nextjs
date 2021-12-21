@@ -149,7 +149,7 @@ export default function ListPesertaID({ token }) {
 								id="sertifikat1"
 								ref={divReference}
 							>
-								<div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
+								<div className="position-absolute text-center w-100 responsive-nomor-sertifikat responsive-normal-font-size zindex-1">
 									{participant?.data?.nomor_sertifikat}
 								</div>
 								<div

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // #Page, Component & Library
@@ -24,6 +24,18 @@ export default function KelolasertifikatID({ token }) {
 			dispatch(clearErrors());
 		}
 	};
+	const [enableSyllabus, setEnableSyllabus] = useState(true);
+	const [syllabus, seSyllabus] = useState([]);
+
+	useEffect(() => {
+		if (
+			!certificate?.data?.certificate?.syllabus ||
+			certificate?.data?.certificate?.syllabus[0] == "null"
+		) {
+			setEnableSyllabus(false);
+		}
+		console.log(certificate);
+	}, []);
 
 	return (
 		<PageWrapper>
@@ -90,7 +102,7 @@ export default function KelolasertifikatID({ token }) {
 									className="border-primary border col-lg-8 col-12 position-relative"
 									style={{ fontSize: "100%" }}
 								>
-									<div className="p-0">
+									<div className="p-0" style={{ height: "595px" }}>
 										{certificate.data.certificate.background ? (
 											<Image
 												src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${certificate.data.certificate.background}`}
@@ -101,66 +113,88 @@ export default function KelolasertifikatID({ token }) {
 										) : (
 											""
 										)}
-										<div className="row align-items-center zindex-1">
-											<div className="position-relative">
-												<div className="my-14 mx-8 text-center px-4 border-2">
-													Nomor Sertifikat
-												</div>
-											</div>
+										<div
+											className="row align-items-center zindex-1"
+											style={{ fontSize: "12px" }}
+										>
 											<div
 												className="col-12 text-center font-weight-normal p-0 justify-content-center"
 												style={{ marginTop: "-20px" }}
 											>
 												<label
-													className="font-weight-boldest w-100 "
-													style={{ fontSize: "200%" }}
+													className="font-weight-boldest w-100 mt-40"
+													style={{ fontSize: "24px" }}
 												>
-													SERTIFIKAT
+													SERTIFIKAT PELATIHAN
 												</label>
-												<div className="w-100">Diberikan kepada</div>
+												<div
+													className="mb-3"
+													style={{ height: "18px", minHeight: "18px" }}
+												>
+													<label className="fz-12">Nomor Sertifikat</label>
+												</div>
+												<div className="w-100 fz-11">Diberikan kepada</div>
 												<div className="my-2">
 													<span
-														className="mx-2 px-2 font-size-h6 px-10 w-100"
-														style={{ fontSize: "150%" }}
+														className="mx-2 px-2 fz-18 px-10 w-100 font-weight-boldest responsive-font-size-nama-peserta"
+														style={{ height: "29px" }}
 													>
 														Nama Peserta
 													</span>
 												</div>
 												<div className="w-100">Atas Partisipasi sebagai</div>
-												<div
-													className="font-weight-normal font-size-h2 w-100"
-													style={{ fontSize: "125%" }}
-												>
+												<div className="font-weight-normal fz-14 my-2 w-100">
 													Peserta
 												</div>
-												<div className="w-100">Nama Pelatihan</div>
-												<div
-													className="text-center font-weight-bolder border-2 w-100"
-													style={{
-														fontSize: "125%",
-													}}
-												>
-													{certificate?.data?.pelatihan?.name || "-"}
-												</div>
-												<div className="mt-2 w-100">
-													<span className="w-100">
-														Program{" "}
-														<span className="font-size-h6 font-weight-bold w-100">
-															{certificate?.data?.pelatihan?.slug || "-"}
-														</span>{" "}
-														Selama
-													</span>
-													<span className="mx-2 px-2 border-2 w-100">
-														Waktu Pelatihan
+												<div className="w-100">
+													Pada Pelatihan{" "}
+													<span className="font-weight-bold">
+														{certificate?.data?.pelatihan?.name}
 													</span>
 												</div>
-												<div className="mt-2 w-100">
+												<div className=" w-100">
+													<span className="w-100">Program </span>
+													<span className="font-weight-bold w-100">
+														{certificate?.data?.pelatihan?.akademi}
+													</span>{" "}
+												</div>
+												<div>
+													<span className="mx-2">Selama</span>
+													<span className="font-weight-bold">
+														{moment(
+															certificate?.data?.pelatihan?.pelatihan_mulai
+														)
+															.utc()
+															.format("DD/MM/YYYY")}{" "}
+														-{" "}
+														{moment(
+															certificate?.data?.pelatihan?.pelatihan_selesai
+														)
+															.utc()
+															.format("DD/MM/YYYY")}
+													</span>
+													<span className="mx-2">yang meliputi</span>
+													<span>
+														{certificate?.data?.certificate?.training_hours} jam
+														pembelajaran
+													</span>
+												</div>
+												<div className="w-100">
 													<span>Digital Talent Scholarship</span>
-													<span className="mx-2 px-2 border-2">Tahun</span>
+													<span
+														className="px-2 border-2 font-weight-bold"
+														style={{ width: "19px" }}
+													>
+														{moment(
+															certificate?.data?.pelatihan?.pelatihan_mulai
+														)
+															.utc()
+															.format("YYYY")}
+													</span>
 												</div>
-												<div className="my-4 w-100 text-center">
+												<div className="w-100 my-3 text-center">
 													<span className="mx-2 px-2 border-2">
-														Jakarta, DD/MM/YYYY
+														Jakarta {moment().format("DD/MM/YYYY")}
 													</span>
 												</div>
 												<div
@@ -273,45 +307,51 @@ export default function KelolasertifikatID({ token }) {
 											)}
 											<div
 												className="row align-items-center m-0"
-												style={{ width: "100%" }}
+												style={{ width: "100%", height: "595px" }}
 											>
 												<div
-													className="pt-19 pl-19 zindex-1 col-10-"
-													style={{ height: "370px" }}
+													className="pt-19 pl-19 zindex-1 col-12"
+													style={{ height: "400px" }}
 												>
-													<div style={{ fontSize: "14px", fontWeight: "bold" }}>
-														Silabus yang didapat
-													</div>
-													<div>
-														<ol className="col mt-4">
-															{certificate.data.certificate.syllabus &&
-																certificate.data.certificate.syllabus.map(
-																	(e, i) => {
-																		return (
-																			<li
-																				className="p-0"
-																				key={i}
-																				style={{
-																					fontSize:
-																						certificate.data.certificate
-																							.syllabus.length <= 5
-																							? "16px"
-																							: certificate.data.certificate
-																									.syllabus.length <= 10
-																							? "12px"
-																							: certificate.data.certificate
-																									.syllabus.length <= 15
-																							? "10px"
-																							: "6px",
-																				}}
-																			>
-																				{e}
-																			</li>
-																		);
-																	}
-																)}
-														</ol>
-													</div>
+													{enableSyllabus && (
+														<Fragment>
+															<div
+																style={{ fontSize: "14px", fontWeight: "bold" }}
+															>
+																Silabus yang didapat
+															</div>
+															<div>
+																<ol className="col mt-4">
+																	{certificate.data.certificate.syllabus &&
+																		certificate.data.certificate.syllabus.map(
+																			(e, i) => {
+																				return (
+																					<li
+																						className="p-0"
+																						key={i}
+																						style={{
+																							fontSize:
+																								certificate.data.certificate
+																									.syllabus.length <= 5
+																									? "16px"
+																									: certificate.data.certificate
+																											.syllabus.length <= 10
+																									? "12px"
+																									: certificate.data.certificate
+																											.syllabus.length <= 15
+																									? "10px"
+																									: "6px",
+																						}}
+																					>
+																						{e}
+																					</li>
+																				);
+																			}
+																		)}
+																</ol>
+															</div>
+														</Fragment>
+													)}
 												</div>
 												<div
 													className="col-12 text-center font-weight-normal p-0 justify-content-center"

@@ -19,7 +19,11 @@ import {
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import * as moment from "moment";
 import { Modal } from "react-bootstrap";
-import { SweatAlert } from "../../../../../../utils/middleware/helper";
+import {
+	helperRegexNumber,
+	helperRemoveZeroFromIndex0,
+	SweatAlert,
+} from "../../../../../../utils/middleware/helper";
 import Cookies from "js-cookie";
 
 export default function TambahMasterSertifikat({ token }) {
@@ -315,8 +319,6 @@ export default function TambahMasterSertifikat({ token }) {
 				simpleValidator.current.fields.Jabatan = true;
 				simpleValidator.current.fields.Nama = true;
 				simpleValidator.current.fields["Tanda tangan"] = true;
-				if (!background_syllabus) {
-				}
 			}
 
 			if (simpleValidator.current.allValid()) {
@@ -338,7 +340,7 @@ export default function TambahMasterSertifikat({ token }) {
 					"number_of_signature_syllabus",
 					number_of_signature_syllabus
 				);
-
+				formData.append("training_hours", hour);
 				formData.append("background", background);
 				formData.append("background_syllabus", background_syllabus);
 				// bagian image2
@@ -431,17 +433,41 @@ export default function TambahMasterSertifikat({ token }) {
 		setSyllabus([...syllabus, ""]);
 	};
 
-	function acronym(text) {
-		return text.split(" ").reduce(function (accumulator, word) {
-			return accumulator + word.charAt(0);
-		}, "");
-	}
-
 	const [akademi, setAkademi] = useState(
 		certificate?.data?.tema?.akademi || "-"
 	);
 
-	const [enableSyllabus, setEnableSyllabus] = useState(false);
+	const [enableSyllabus, setEnableSyllabus] = useState(true);
+	const [hour, setHour] = useState("");
+
+	const handleJam = (e) => {
+		if (e === "" || helperRegexNumber.test(e)) {
+			setHour(e);
+		} else {
+			return;
+		}
+	};
+
+	useEffect(() => {
+		const number = document.getElementById("jam_pelatihan");
+		number.onkeydown = (e) => {
+			if (e.code == "Minus") {
+				return false;
+			}
+			if (e.code == "Period") {
+				return false;
+			}
+			if (e.code == "NumpadAdd") {
+				return false;
+			}
+			if (e.code == "NumpadSubtract") {
+				return false;
+			}
+			if (e.code == "Equal") {
+				return false;
+			}
+		};
+	}, [hour]);
 
 	return (
 		<PageWrapper>
@@ -581,7 +607,7 @@ export default function TambahMasterSertifikat({ token }) {
 														.format("DD/MM/YYYY")}
 												</span>
 												<span className="mx-2">yang meliputi</span>
-												<span>98 jam pembelajaran</span>
+												<span>{hour} jam pembelajaran</span>
 											</div>
 											<div className="w-100">
 												<span>Digital Talent Scholarship</span>
@@ -703,6 +729,31 @@ export default function TambahMasterSertifikat({ token }) {
 									>
 										Jenis Sertifikat
 									</label>
+									<div className="form-group">
+										<label htmlFor="exampleInputEmail1">Jam Pelatihan</label>
+										<input
+											type="text"
+											className="form-control"
+											placeholder="Silahkan Masukan Jam Pelatihan"
+											onChange={(e) => {
+												if (
+													e.target.value == "" ||
+													helperRegexNumber.test(e.target.value)
+												) {
+													helperRemoveZeroFromIndex0(e.target.value, setHour);
+												}
+											}}
+											value={hour}
+											maxLength={4}
+											id="jam_pelatihan"
+										/>
+										{simpleValidator.current.message(
+											"jam pelatihan",
+											hour,
+											"required",
+											{ className: "text-danger font-size-sm mt-4" }
+										)}
+									</div>
 									<div className="d-flex justify-content-start">
 										<div className="col-6 form-check form-check-inline">
 											<input
@@ -1229,10 +1280,12 @@ export default function TambahMasterSertifikat({ token }) {
 													</Fragment>
 												)}
 											</div>
+										</div>
+										<div className="position-absolute bottom-0 col-12">
 											<div
 												className="col-12 text-center font-weight-normal p-0 justify-content-center"
 												style={{
-													marginTop: "-20px",
+													marginTop: "20px",
 													width: "100%",
 													height: "100%",
 												}}

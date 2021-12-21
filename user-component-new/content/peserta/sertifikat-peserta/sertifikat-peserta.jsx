@@ -143,7 +143,8 @@ export default function RiwayatPelatihanDetail({ session }) {
 								ref={divReference}
 							>
 								<div
-									className={`position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1`}
+									className="position-absolute text-center w-100 responsive-nomor-sertifikat responsive-normal-font-size zindex-1"
+									// className={`position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1`}
 								>
 									{data?.data_user?.nomor_sertifikat}
 								</div>
