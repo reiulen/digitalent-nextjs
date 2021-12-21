@@ -93,30 +93,32 @@ const Table = ({ token }) => {
                     <div className="row w-100">
                       <div className="col-12 col-sm-12 col-md-5 col-lg-6 col-xl-5 pr-0">
                         <div className="position-relative overflow-hidden w-100">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) =>
-                              handleChangeValueSearch(e.target.value)
-                            }
-                          />
-                          <button
-                            type="button"
-                            onClick={(e) => handleSubmit(e)}
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
+                          <form onSubmit={(e) => handleSubmit(e)}>
+                            <IconSearch
+                              style={{ left: "10" }}
+                              className="left-center-absolute"
+                            />
+                            <input
+                              id="kt_datatable_search_query"
+                              type="text"
+                              className="form-control pl-10"
+                              placeholder="Ketik disini untuk Pencarian..."
+                              onChange={(e) =>
+                                handleChangeValueSearch(e.target.value)
+                              }
+                            />
+                            <button
+                              type="button"
+                              onClick={(e) => handleSubmit(e)}
+                              className="btn bg-blue-primary text-white right-center-absolute"
+                              style={{
+                                borderTopLeftRadius: "0",
+                                borderBottomLeftRadius: "0",
+                              }}
+                            >
+                              Cari
+                            </button>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -219,7 +221,9 @@ const Table = ({ token }) => {
                         activePage={allMitraSite.page}
                         itemsCountPerPage={allMitraSite.data?.perPage}
                         totalItemsCount={allMitraSite.data?.total}
-                        pageRangeDisplayed={windowDimensions.width > 350 ? 3 : 1}
+                        pageRangeDisplayed={
+                          windowDimensions.width > 350 ? 3 : 1
+                        }
                         onChange={(page) => dispatch(setPage(page))}
                         nextPageText={">"}
                         prevPageText={"<"}
@@ -260,10 +264,11 @@ const Table = ({ token }) => {
                       <div className="col-8 my-auto">
                         <p
                           className="align-middle mt-5 pt-1"
-                          style={{ color: "#B5B5C3"}}
+                          style={{ color: "#B5B5C3" }}
                         >
                           Total Data{" "}
-                          {allMitraSite.data && allMitraSite.data.total} List Data
+                          {allMitraSite.data && allMitraSite.data.total} List
+                          Data
                         </p>
                       </div>
                     </div>
