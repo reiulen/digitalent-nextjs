@@ -34,7 +34,6 @@ export default function KelolasertifikatID({ token }) {
 		) {
 			setEnableSyllabus(false);
 		}
-		console.log(certificate);
 	}, []);
 
 	return (

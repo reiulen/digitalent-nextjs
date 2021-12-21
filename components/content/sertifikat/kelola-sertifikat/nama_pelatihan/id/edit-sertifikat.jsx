@@ -532,7 +532,6 @@ export default function EditSertifikat({ token }) {
 				return false;
 			}
 		};
-		console.log(number);
 	}, [hour]);
 
 	return (
@@ -672,7 +671,6 @@ export default function EditSertifikat({ token }) {
 															"Nama Pelatihan"}
 													</span>
 												</div>
-												{console.log(certificate)}
 												<div className=" w-100">
 													<span className="w-100">Program </span>
 													<span className="font-weight-bold w-100">
