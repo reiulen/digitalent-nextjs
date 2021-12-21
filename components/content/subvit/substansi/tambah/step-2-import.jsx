@@ -360,7 +360,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="2" title="Substansi"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Metode Import .csv/.xls</h2>
           </div>

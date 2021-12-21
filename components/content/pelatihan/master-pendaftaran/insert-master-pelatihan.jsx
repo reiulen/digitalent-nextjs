@@ -1018,12 +1018,13 @@ const AddMasterPelatihan = ({ token }) => {
             </h1>
             <div className="card-toolbar justify-content-between d-flex">
               <button
-                className="btn btn-outline-primary px-6 font-weight-bolder"
+                className="btn btn-warning px-6 font-weight-bolder"
+                style={{ borderRadius: "30px" }}
                 data-toggle="modal"
                 data-target="#modalProfile"
                 type="button"
               >
-                Data Profile Peserta
+                Harap dibaca!
               </button>
             </div>
           </div>
