@@ -272,7 +272,9 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
         <div className="card card-custom card-stretch gutter-b">
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
-              <h2 className="card-title h2 text-dark">Soal 1</h2>
+              <h2 className="card-title h2 text-dark">
+                Soal {parseInt(router.query.no) + 1}
+              </h2>
             </div>
 
             <div className="card-body pt-0">

@@ -14,17 +14,16 @@ import {
   setPage,
   searchCooporation,
   limitCooporation,
-  exportFileCSV
+  exportFileCSV,
 } from "../../../../../redux/actions/site-management/settings/api.actions";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import IconCalender from "../../../../assets/icon/Calender";
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/site-management/settings/api.type";
-import styles from "../../../../../styles/sitemanagement/logApi.module.css"
+import styles from "../../../../../styles/sitemanagement/logApi.module.css";
 
-import styles2 from "../../../../../styles/previewGaleri.module.css"
-import stylesPag from "../../../../../styles/pagination.module.css"
-
+import styles2 from "../../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../../styles/pagination.module.css";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -46,7 +45,7 @@ const Table = ({ token }) => {
 
   const onChangePeriodeDateStart = (date) => {
     setFroms(moment(date).format("YYYY-MM-DD"));
-    setTos("")
+    setTos("");
   };
   const onChangePeriodeDateEnd = (date) => {
     setTos(moment(date).format("YYYY-MM-DD"));
@@ -59,7 +58,7 @@ const Table = ({ token }) => {
 
   const resetValueSort = () => {
     setFroms("");
-    setTos("")
+    setTos("");
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
@@ -122,34 +121,38 @@ const Table = ({ token }) => {
                   <div className="row d-flex">
                     <div className="col-12 col-md-5 col-lg-4 col-xl-4">
                       <div className="position-relative overflow-hidden w-100 mt-5">
-                        <IconSearch
-                          style={{ left: "10" }}
-                          className="left-center-absolute"
-                        />
-                        <input
-                          type="text"
-                          className={`${styles.btnCari} form-control pl-10`}
-                          placeholder="Ketik disini untuk Pencarian..."
-                          onChange={(e) =>
-                            handleChangeValueSearch(e.target.value)
-                          }
-                        />
-                        <button
-                          type="button"
-                          onClick={(e) => handleSubmit(e)}
-                          className="btn bg-blue-primary text-white right-center-absolute"
-                          style={{
-                            borderTopLeftRadius: "0",
-                            borderBottomLeftRadius: "0",
-                          }}
-                        >
-                          Cari
-                        </button>
+                        <form onSubmit={(e) => handleSubmit(e)}>
+                          <IconSearch
+                            style={{ left: "10" }}
+                            className="left-center-absolute"
+                          />
+                          <input
+                            type="text"
+                            className={`${styles.btnCari} form-control pl-10`}
+                            placeholder="Ketik disini untuk Pencarian..."
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
+                          />
+                          <button
+                            type="button"
+                            onClick={(e) => handleSubmit(e)}
+                            className="btn bg-blue-primary text-white right-center-absolute"
+                            style={{
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                            }}
+                          >
+                            Cari
+                          </button>
+                        </form>
                       </div>
                     </div>
 
                     <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 ml-auto">
-                      <div className={`${styles.rightBtnHead} row flex-wrap align-items-center justify-content-end mt-2`}>
+                      <div
+                        className={`${styles.rightBtnHead} row flex-wrap align-items-center justify-content-end mt-2`}
+                      >
                         {/* sorotir by modal check */}
                         <div className="col-12 col-md-5 col-lg-5 col-xl-5 mb-2">
                           <button
@@ -159,7 +162,9 @@ const Table = ({ token }) => {
                             data-target="#exampleModalCenter"
                             style={{ color: "#464646" }}
                           >
-                            <div className={`${styles.iconFilter} d-flex align-items-center`}>
+                            <div
+                              className={`${styles.iconFilter} d-flex align-items-center`}
+                            >
                               <IconFilter className="mr-3" />
                               Pilih Filter
                             </div>
@@ -255,7 +260,9 @@ const Table = ({ token }) => {
                                       <button
                                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                         type="button"
-                                        onClick={(e) => handleSubmitSearchMany(e)}
+                                        onClick={(e) =>
+                                          handleSubmitSearchMany(e)
+                                        }
                                       >
                                         Terapkan
                                       </button>
@@ -273,7 +280,9 @@ const Table = ({ token }) => {
                           <button
                             className={`${styles.btnExport} btn btn-rounded-full bg-blue-secondary text-white mt-2`}
                             type="button"
-                            onClick={() => dispatch(exportFileCSV(token, router.query.id))}
+                            onClick={() =>
+                              dispatch(exportFileCSV(token, router.query.id))
+                            }
                           >
                             Export .xlsx
                           </button>
@@ -302,8 +311,12 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {!listLog || (listLog && listLog?.data?.length === 0 || listLog?.data === undefined) ? (
-                        <td className="align-middle text-center" colSpan={6}>Data kosong</td>
+                      {!listLog ||
+                      (listLog && listLog?.data?.length === 0) ||
+                      listLog?.data === undefined ? (
+                        <td className="align-middle text-center" colSpan={6}>
+                          Data kosong
+                        </td>
                       ) : (
                         listLog?.data?.map((items, index) => {
                           return (
@@ -312,7 +325,7 @@ const Table = ({ token }) => {
                                 {listLog.page === 1
                                   ? index + 1
                                   : (listLog.page - 1) * listLog.limit +
-                                  (index + 1)}
+                                    (index + 1)}
                               </td>
                               <td className="align-middle text-left text-overflow-ens">
                                 {items.api_name}
@@ -394,8 +407,8 @@ const Table = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                         >
-                          Total Data {listLog?.data && listLog?.data?.total} List
-                          Data
+                          Total Data {listLog?.data && listLog?.data?.total}{" "}
+                          List Data
                         </p>
                       </div>
                     </div>

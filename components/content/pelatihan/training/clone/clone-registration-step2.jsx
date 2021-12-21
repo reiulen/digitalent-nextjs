@@ -17,6 +17,11 @@ import {
   storeRegistrationStep2,
   getRegistrationStep2,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+import {
+  element,
+  options,
+  size,
+} from "../../../../../utils/middleware/helper/data";
 
 import FormManual from "../components/step-registration/form-manual";
 import FormCopy from "../components/step-registration/form-copy";
@@ -70,93 +75,6 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
     setDataOptions(dataOptionsArr);
   }, []);
 
-  const [element] = useState([
-    {
-      value: "select",
-      name: "Select",
-    },
-    {
-      value: "text",
-      name: "Text",
-    },
-    {
-      value: "checkbox",
-      name: "Checkbox",
-    },
-    {
-      value: "textarea",
-      name: "Text Area",
-    },
-    {
-      value: "radio",
-      name: "Radio",
-    },
-    {
-      value: "file_image",
-      name: "File Image",
-    },
-    {
-      value: "file_doc",
-      name: "File Documet",
-    },
-    {
-      value: "date",
-      name: "Input Date",
-    },
-  ]);
-
-  const [size] = useState([
-    { value: "col-md-6", name: "Half" },
-    { value: "col-md-12", name: "Full" },
-  ]);
-
-  const [options] = useState([
-    {
-      name: "Manual",
-      value: "manual",
-    },
-    {
-      name: "Select Reference",
-      value: "select_reference",
-    },
-  ]);
-
-  // const [dataOptions] = useState([
-  //   {
-  //     value: "status_menikah",
-  //   },
-  //   {
-  //     value: "pendidikan",
-  //   },
-  //   {
-  //     value: "status_pekerjaan",
-  //   },
-  //   {
-  //     value: "hubungan",
-  //   },
-  //   {
-  //     value: "bidang_pekerjaan",
-  //   },
-  //   {
-  //     value: "level_pelatihan",
-  //   },
-  //   {
-  //     value: "agama",
-  //   },
-  //   {
-  //     value: "penyelengaara",
-  //   },
-  //   {
-  //     value: "provinsi",
-  //   },
-  //   {
-  //     value: "kota/kabupaten",
-  //   },
-  //   {
-  //     value: "universitas",
-  //   },
-  // ]);
-
   const optionsForm = dataForm.data || [];
 
   const [formBuilder, setFormBuilder] = useState(
@@ -168,7 +86,10 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
         size: "",
         option: "",
         dataOption: "",
-        required: false,
+        required: "0",
+        triggered: "0",
+        triggered_parent: [],
+        value: "",
       },
     ]
   );
