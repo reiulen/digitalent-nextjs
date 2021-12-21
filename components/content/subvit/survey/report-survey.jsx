@@ -314,7 +314,9 @@ const ReportSurvey = ({ token }) => {
                                     {/* <span className="label label-inline label-light-success font-weight-bold">
                                       Diterima
                                     </span> */}
-                                    <Badge bg="success">Diterima</Badge>
+                                    <Badge bg="success">
+                                      Sudah Mengerjakan
+                                    </Badge>
                                   </td>
                                 ) : !row.start_datetime &&
                                   !row.finish_datetime ? (
@@ -332,7 +334,7 @@ const ReportSurvey = ({ token }) => {
                                   </td>
                                 ) : row.finish == 1 && row.status == 0 ? (
                                   <td className="align-middle">
-                                    <Badge bg="danger">Ditolak</Badge>
+                                    <Badge bg="danger">Sudah Mengerjakan</Badge>
                                   </td>
                                 ) : (
                                   <td className="align-middle">
