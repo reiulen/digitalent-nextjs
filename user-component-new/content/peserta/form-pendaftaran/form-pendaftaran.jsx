@@ -25,7 +25,8 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const [, forceUpdate] = useState();
 
   const [title, setTitle] = useState(propsTitle);
-  const { formBuilder } = useSelector((state) => state.getFormBuilder);
+  // const { formBuilder } = useSelector((state) => state.getFormBuilder);
+  const { dataForm } = useSelector((state) => state.formRegister);
   const [dataPendaftaran, setDataPendaftaran] = useState([]);
 
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
@@ -33,7 +34,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   );
 
   useEffect(() => {
-    const valueForm = helperFormatCheckbox(formBuilder?.FormBuilder);
+    const valueForm = helperFormatCheckbox(dataForm?.form_pendaftaran);
     setDataPendaftaran(valueForm);
   }, []);
 
@@ -69,7 +70,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
     if (dataTraining?.komitmen == "1") {
       if (simpleValidator.current.allValid()) {
         const data = {
-          komitmen: dataTraining.komitmen,
+          komitmen: dataForm.komitmen,
           form_pendaftaran: valueForm,
         };
         dispatch(storeFormRegister(data));
@@ -85,7 +86,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
       }
     } else {
       const data = {
-        komitmen: dataTraining.komitmen,
+        komitmen: dataForm.komitmen,
         form_pendaftaran: valueForm,
         pelatian_id: +router.query.id,
       };
