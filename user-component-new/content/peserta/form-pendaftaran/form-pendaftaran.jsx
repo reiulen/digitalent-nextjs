@@ -10,11 +10,11 @@ import {
   storeFormRegister,
 } from "../../../../redux/actions/pelatihan/register-training.actions";
 
-import RadioReference from "../../../../components/content/pelatihan/training/components/radio-reference.component";
-import OptionsReference from "../../../../components/content/pelatihan/training/components/option-reference.component";
-import CheckboxReference from "../../../../components/content/pelatihan/training/components/checkbox-reference.component";
-
-import { helperElementRender } from "../../../../utils/middleware/helper";
+import {
+  helperFormatCheckbox,
+  helperUnformatCheckbox,
+  helperChangeInputForm,
+} from "../../../../utils/middleware/helper";
 import FormBuilderComponent from "./component/form-builder.component";
 
 const FormPendaftaran = ({ propsTitle, funcView, token }) => {
@@ -26,80 +26,15 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
 
   const [title, setTitle] = useState(propsTitle);
   const { formBuilder } = useSelector((state) => state.getFormBuilder);
-  const [dataPendaftaran, setDataPendaftaran] = useState(
-    formBuilder?.FormBuilder
-  );
+  const [dataPendaftaran, setDataPendaftaran] = useState([]);
 
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
   );
 
   useEffect(() => {
-    dataPendaftaran &&
-      dataPendaftaran.length > 0 &&
-      dataPendaftaran.map((rowBuilder, i) => {
-        // FIRST FORM BUILDER OBJECT
-        if (rowBuilder.element === "checkbox") {
-          rowBuilder.value = [];
-        }
-        rowBuilder.triggered_parent.length > 0 &&
-          rowBuilder.triggered_parent.map((rowParent, indexParent) => {
-            // TITLE FORM BUILDER OBJECT PARENT
-            rowParent.triggeredForm.length > 0 &&
-              rowParent.triggeredForm.map((rowFormParent, indexFormParent) => {
-                // SECOND FORM BUILDER OBJECT
-                if (rowFormParent.element === "checkbox") {
-                  rowFormParent.value = [];
-                }
-                rowFormParent.triggered_children.length > 0 &&
-                  rowFormParent.triggered_children.map(
-                    (rowChildren, indexChildren) => {
-                      // TITLE FORM BUILDER OBJECT CHILDREN
-                      rowChildren.triggeredForm.length > 0 &&
-                        rowChildren.triggeredForm.map(
-                          (rowFormChildren, indexFormChildren) => {
-                            // THIRD FORM BUILDER OBJECT
-                            if (rowFormChildren.element === "checkbox") {
-                              rowFormChildren.value = [];
-                            }
-                            rowFormChildren.triggered_index.length > 0 &&
-                              rowFormChildren.triggered_index.map(
-                                (rowIndex, indexIndex) => {
-                                  // TITLE FORM BUILDER OBJECT INDEX
-                                  rowIndex.triggeredForm.length > 0 &&
-                                    rowIndex.triggeredForm.map(
-                                      (rowFormIndex, indexFormIndex) => {
-                                        // FOURTH FORM BUILDER OBJECT
-                                        if (
-                                          rowFormIndex.element === "checkbox"
-                                        ) {
-                                          rowFormIndex.value = [];
-                                        }
-                                        // console.log(rowFormIndex);
-                                        // FOURTH FORM BUILDER OBJECT
-                                      }
-                                    );
-                                  // console.log(rowIndex);
-                                  // TITLE FORM BUILDER OBJECT INDEX
-                                }
-                              );
-                            // console.log(rowFormChildren);
-                            // THIRD FORM BUILDER OBJECT
-                          }
-                        );
-                      // TITLE FORM BUILDER OBJECT CHILDREN
-                      // console.log(rowChildren);
-                    }
-                  );
-                // SECOND FORM BUILDER OBJECT
-                // console.log(rowFormParent);
-              });
-            // TITLE FORM BUILDER OBJECT PARENT
-            // console.log(rowParent);
-          });
-        // FIRST FORM BUILDER OBJECT
-        // console.log(rowBuilder);
-      });
+    const valueForm = helperFormatCheckbox(formBuilder?.FormBuilder);
+    setDataPendaftaran(valueForm);
   }, []);
 
   const onChangeInputHandler = (
@@ -112,326 +47,30 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
     indexIndex = null,
     delta = null
   ) => {
-    if (
-      alfa !== null &&
-      parentIndex === null &&
-      beta === null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      let list = [...dataPendaftaran];
-      let element = list[alfa];
-
-      if (element.element === "checkbox") {
-        let valArr = element.value;
-        if (valArr.length > 0) {
-          valArr.map((row, i) => {
-            if (row === value) {
-              valArr.splice(i, 1);
-            } else {
-              valArr.push(value);
-            }
-          });
-        } else {
-          valArr.push(value);
-        }
-      } else {
-        element.value = value;
-      }
-      if (element.element === "file_image" || element.element === "file_doc") {
-        let type = [""];
-        if (element.element === "file_image") {
-          type = ["image/jpg", "image/png", "image/jpeg"];
-        } else if (element.element === "file_doc") {
-          type = ["application/pdf"];
-        }
-        if (value.target.files[0]) {
-          if (type.includes(value.target.files[0].element)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.value = reader.result;
-              }
-            };
-            reader.readAsDataURL(value.target.files[0]);
-            element.fileName = value.target.files[0].name;
-          } else {
-            value.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang dimasukkan tidak sesuai format.",
-              "error"
-            );
-          }
-        }
-      }
-      setDataPendaftaran(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      let list = [...dataPendaftaran];
-      let element =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta];
-
-      if (element.element === "checkbox") {
-        let valArr = element.value;
-        if (valArr.length > 0) {
-          valArr.map((row, i) => {
-            if (row === value) {
-              valArr.splice(i, 1);
-            } else {
-              valArr.push(value);
-            }
-          });
-        } else {
-          valArr.push(value);
-        }
-      } else {
-        element.value = value;
-      }
-      if (element.element === "file_image" || element.element === "file_doc") {
-        let type = [""];
-        if (element.element === "file_image") {
-          type = ["image/jpg", "image/png", "image/jpeg"];
-        } else if (element.element === "file_doc") {
-          type = ["application/pdf"];
-        }
-        if (value.target.files[0]) {
-          if (type.includes(value.target.files[0].element)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.value = reader.result;
-              }
-            };
-            reader.readAsDataURL(value.target.files[0]);
-            element.fileName = value.target.files[0].name;
-          } else {
-            value.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang dimasukkan tidak sesuai format.",
-              "error"
-            );
-          }
-        }
-      }
-      setDataPendaftaran(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      let list = [...dataPendaftaran];
-      let element =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma];
-
-      if (element.element === "checkbox") {
-        let valArr = element.value;
-        if (valArr.length > 0) {
-          valArr.map((row, i) => {
-            if (row === value) {
-              valArr.splice(i, 1);
-            } else {
-              valArr.push(value);
-            }
-          });
-        } else {
-          valArr.push(value);
-        }
-      } else {
-        element.value = value;
-      }
-      if (element.element === "file_image" || element.element === "file_doc") {
-        let type = [""];
-        if (element.element === "file_image") {
-          type = ["image/jpg", "image/png", "image/jpeg"];
-        } else if (element.element === "file_doc") {
-          type = ["application/pdf"];
-        }
-        if (value.target.files[0]) {
-          if (type.includes(value.target.files[0].element)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.value = reader.result;
-              }
-            };
-            reader.readAsDataURL(value.target.files[0]);
-            element.fileName = value.target.files[0].name;
-          } else {
-            value.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang dimasukkan tidak sesuai format.",
-              "error"
-            );
-          }
-        }
-      }
-      setDataPendaftaran(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex !== null &&
-      delta !== null
-    ) {
-      let list = [...dataPendaftaran];
-      let element =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma]
-          .triggered_index[indexIndex].triggeredForm[delta];
-      if (element.element === "checkbox") {
-        let valArr = element.value;
-        if (valArr.length > 0) {
-          valArr.map((row, i) => {
-            if (row === value) {
-              valArr.splice(i, 1);
-            } else {
-              valArr.push(value);
-            }
-          });
-        } else {
-          valArr.push(value);
-        }
-      } else {
-        element.value = value;
-      }
-      if (element.element === "file_image" || element.element === "file_doc") {
-        let type = [""];
-        if (element.element === "file_image") {
-          type = ["image/jpg", "image/png", "image/jpeg"];
-        } else if (element.element === "file_doc") {
-          type = ["application/pdf"];
-        }
-        if (value.target.files[0]) {
-          if (type.includes(value.target.files[0].element)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.value = reader.result;
-              }
-            };
-            reader.readAsDataURL(value.target.files[0]);
-            element.fileName = value.target.files[0].name;
-          } else {
-            value.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang dimasukkan tidak sesuai format.",
-              "error"
-            );
-          }
-        }
-      }
-
-      setDataPendaftaran(list);
-    }
+    const valueForm = helperChangeInputForm(
+      value,
+      dataPendaftaran,
+      alfa,
+      parentIndex,
+      beta,
+      childrenIndex,
+      gamma,
+      indexIndex,
+      delta
+    );
+    setDataPendaftaran(valueForm);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     let list = [...dataPendaftaran];
-    list &&
-      list.map((rowBuilder, i) => {
-        // FIRST FORM BUILDER OBJECT
-        if (rowBuilder.element === "checkbox") {
-          let val = rowBuilder.value.join(",");
-          rowBuilder.value = val;
-        }
-        rowBuilder.triggered_parent.length > 0 &&
-          rowBuilder.triggered_parent.map((rowParent, indexParent) => {
-            // TITLE FORM BUILDER OBJECT PARENT
-            rowParent.triggeredForm.length > 0 &&
-              rowParent.triggeredForm.map((rowFormParent, indexFormParent) => {
-                // SECOND FORM BUILDER OBJECT
-                if (rowFormParent.element === "checkbox") {
-                  let val = rowFormParent.value.join(",");
-                  rowFormParent.value = val;
-                }
-                rowFormParent.triggered_children.length > 0 &&
-                  rowFormParent.triggered_children.map(
-                    (rowChildren, indexChildren) => {
-                      // TITLE FORM BUILDER OBJECT CHILDREN
-                      rowChildren.triggeredForm.length > 0 &&
-                        rowChildren.triggeredForm.map(
-                          (rowFormChildren, indexFormChildren) => {
-                            // THIRD FORM BUILDER OBJECT
-                            if (rowFormChildren.element === "checkbox") {
-                              let val = rowFormChildren.value.join(",");
-                              rowFormChildren.value = val;
-                            }
-                            rowFormChildren.triggered_index.length > 0 &&
-                              rowFormChildren.triggered_index.map(
-                                (rowIndex, indexIndex) => {
-                                  // TITLE FORM BUILDER OBJECT INDEX
-                                  rowIndex.triggeredForm.length > 0 &&
-                                    rowIndex.triggeredForm.map(
-                                      (rowFormIndex, indexFormIndex) => {
-                                        // FOURTH FORM BUILDER OBJECT
-                                        if (
-                                          rowFormIndex.element === "checkbox"
-                                        ) {
-                                          let val =
-                                            rowFormIndex.value.join(",");
-                                          rowFormIndex.value = val;
-                                        }
-                                        // console.log(rowFormIndex);
-                                        // FOURTH FORM BUILDER OBJECT
-                                      }
-                                    );
-                                  // console.log(rowIndex);
-                                  // TITLE FORM BUILDER OBJECT INDEX
-                                }
-                              );
-                            // console.log(rowFormChildren);
-                            // THIRD FORM BUILDER OBJECT
-                          }
-                        );
-                      // TITLE FORM BUILDER OBJECT CHILDREN
-                      // console.log(rowChildren);
-                    }
-                  );
-                // SECOND FORM BUILDER OBJECT
-                // console.log(rowFormParent);
-              });
-            // TITLE FORM BUILDER OBJECT PARENT
-            // console.log(rowParent);
-          });
-        // FIRST FORM BUILDER OBJECT
-        // console.log(rowBuilder);
-      });
+    const valueForm = helperUnformatCheckbox(list);
+
     if (dataTraining?.komitmen == "1") {
       if (simpleValidator.current.allValid()) {
-        // let list = [...dataPendaftaran];
-        // list.map((row, i) => {
-        //   if (row.type === "checkbox") {
-        //     let val = row.value.join(",");
-        //     row.value = val;
-        //   }
-        // });
         const data = {
           komitmen: dataTraining.komitmen,
-          form_pendaftaran: list,
+          form_pendaftaran: valueForm,
         };
         dispatch(storeFormRegister(data));
         funcView(2);
@@ -445,16 +84,9 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
         });
       }
     } else {
-      // let list = [...dataPendaftaran];
-      // list.map((row, i) => {
-      //   if (row.type === "checkbox") {
-      //     let val = row.value.join(",");
-      //     row.value = val;
-      //   }
-      // });
       const data = {
         komitmen: dataTraining.komitmen,
-        form_pendaftaran: list,
+        form_pendaftaran: valueForm,
         pelatian_id: +router.query.id,
       };
       dispatch(newPendaftaranPelatihan(data, token));
