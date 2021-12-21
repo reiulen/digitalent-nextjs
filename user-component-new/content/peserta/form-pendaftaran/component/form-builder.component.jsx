@@ -106,7 +106,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) =>
                         funcChangeInput(
@@ -489,7 +488,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) =>
                         funcChangeInput(
@@ -896,7 +894,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) =>
                         funcChangeInput(e.target.value, alfa, indexParent, beta)
@@ -1207,7 +1204,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) => funcChangeInput(e.target.value, alfa)}
                     />
