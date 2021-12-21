@@ -601,7 +601,6 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                     subtance_question_detail.list_questions.length != 0 ? (
                       subtance_question_detail.list_questions.map(
                         (question, i) => {
-                          console.log(i + 1 * (page * 5 || limit) - 4);
                           return (
                             <tr key={question.id}>
                               <td className="align-middle text-center">

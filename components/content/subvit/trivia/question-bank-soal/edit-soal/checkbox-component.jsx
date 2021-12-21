@@ -74,7 +74,6 @@ const CheckboxComponent = ({
       <div className="answer mt-5">
         {answer &&
           answer.map((row, i) => {
-            console.log(row);
             return (
               <>
                 <div className="title row">
