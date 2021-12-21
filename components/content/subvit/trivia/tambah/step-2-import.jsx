@@ -221,13 +221,13 @@ const StepTwo = ({ token, tokenPermission }) => {
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllTriviaQuestionDetail(id, pageNumber, "", limit, token));
+    // dispatch(getAllTriviaQuestionDetail(id, pageNumber, "", limit, token));
   };
 
   const handleLimit = (val) => {
     setLimit(val);
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllTriviaQuestionDetail(id, 1, "", val, token));
+    // dispatch(getAllTriviaQuestionDetail(id, 1, "", val, token));
   };
 
   const handleDelete = (id) => {

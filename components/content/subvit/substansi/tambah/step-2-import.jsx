@@ -255,14 +255,14 @@ const StepTwo = ({ token, tokenPermission }) => {
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(
-      getAllSubtanceQuestionDetail(id, pageNumber, token, tokenPermission)
-    );
+    // dispatch(
+    //   getAllSubtanceQuestionDetail(id, pageNumber, token, tokenPermission)
+    // );
   };
 
   const handleLimit = (val) => {
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllSubtanceQuestionDetail(id, 1, val, token, tokenPermission));
+    // dispatch(getAllSubtanceQuestionDetail(id, 1, val, token, tokenPermission));
   };
 
   const handleDelete = (id) => {
