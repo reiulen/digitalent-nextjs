@@ -30,8 +30,8 @@ module.exports = {
       "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     //subvit
-    END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
-    // END_POINT_API_SUBVIT: "http://api-dts-dev.majapahit.id/subvit/",
+    // END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
+    END_POINT_API_SUBVIT: "http://api-dts-dev.majapahit.id/subvit/",
     END_POINT_API_IMAGE_SUBVIT:
       "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
 
@@ -74,7 +74,7 @@ module.exports = {
 
     TOKEN_MAP:
       "pk.eyJ1IjoiZGVuZHlsb3JkcyIsImEiOiJja3U1NHJnYjkxczdyMnZxZ2ptM2hlNXpqIn0.o5v5Ch0AFJIfeZER2vZvwA",
-    END_POINT_SOCKET:
-      "ws://api-dts-dev.majapahit.id/pelatihan/api/v1/formPendaftaran/notification",
+
+    VERSION_APP: "2.0.0"
   },
 };

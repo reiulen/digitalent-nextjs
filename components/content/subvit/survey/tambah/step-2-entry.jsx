@@ -497,7 +497,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="2" survey={survey}></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
               Soal {survey.bank_soal + 1}

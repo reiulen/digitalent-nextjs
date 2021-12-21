@@ -27,11 +27,23 @@ const ObjectiveComponent = ({
     const newKey = String.fromCharCode(keyindex + 1);
     setAnswer([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      {
+        key: newKey,
+        question: "",
+        image: "",
+        image_preview: "",
+        is_right: false,
+      },
     ]);
     sendPropsAnswer([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      {
+        key: newKey,
+        question: "",
+        image: "",
+        image_preview: "",
+        is_right: false,
+      },
     ]);
   };
 
