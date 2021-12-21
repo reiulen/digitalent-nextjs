@@ -12,7 +12,8 @@ import moment from "moment";
 import axios from "axios";
 import { SweatAlert } from "../../../../../../utils/middleware/helper";
 // #Icon
-
+import QRCode from "react-qr-code";
+import QRCODE2 from "qrcode.react";
 export default function ListPesertaID({ token }) {
 	const router = useRouter();
 	const { query } = router;
@@ -141,6 +142,7 @@ export default function ListPesertaID({ token }) {
 					</div>
 					{/* END HEADER */}
 					{/* START BODY */}
+					{/* <QRCode value={"aa"} /> */}
 					<div className="card-body border-top">
 						<div className="row p-0 justify-content-center">
 							{/* START COL */}
@@ -163,6 +165,14 @@ export default function ListPesertaID({ token }) {
 										{participant?.data?.nama_peserta}
 									</span>
 								</div>
+								<div className="position-absolute zindex-2 responsive-qr-code">
+									<QRCODE2
+										value={"http://dts-dev.majapahit.id/"}
+										size={100}
+										level={"L"}
+									/>
+								</div>
+
 								<Image
 									src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
 									alt={`image ${certificate.data.certificate.certificate_result}`}
