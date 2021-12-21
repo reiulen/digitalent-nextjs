@@ -40,6 +40,7 @@ const SubtansiUser = ({ token }) => {
   const [zoomJawab, setZoomJawab] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
+  const [close, setClose] = useState(0);
 
   const [count, setCount] = useState(
     random_subtance_question_detail && random_subtance_question_detail.time_left
@@ -172,6 +173,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
+    setClose(1);
     const setData = {
       list: JSON.stringify(
         data.list_questions.map((item, index) => {
@@ -186,6 +188,7 @@ const SubtansiUser = ({ token }) => {
     };
     dispatch(postResult(setData, token));
     localStorage.clear();
+
     router.push(`/peserta/done-substansi`);
   };
 
@@ -735,7 +738,11 @@ const SubtansiUser = ({ token }) => {
             >
               Batal
             </Button>
-            <Button onClick={handlePage} className={styles.btnMulai}>
+            <Button
+              onClick={handlePage}
+              className={styles.btnMulai}
+              disabled={close === 1}
+            >
               Selesai
             </Button>
           </div>

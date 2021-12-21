@@ -346,6 +346,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                   </button>
                 </div>
               </div>
+              <div className="mt-5">
+                <span style={{ color: "#ffa800" }}>
+                  *Jika anda ingin membuat soal yang terdapat gambar silahkan
+                  import file gambar terlebih dahulu !
+                </span>
+              </div>
             </div>
             <form onSubmit={onSubmit} id="form-upload">
               <div className="form-group row pt-3">

@@ -328,6 +328,7 @@ const StepTwo = ({ token, tokenPermission }) => {
           <div className="card-body">
             <div className="mb-5">
               <p className="mb-1">Unduh Template Soal</p>
+
               <div className="row">
                 <div className="col">
                   <button
@@ -338,6 +339,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                     <i className="ri-download-2-fill text-white"></i> Unduh
                   </button>
                 </div>
+              </div>
+              <div className="mt-5">
+                <span style={{ color: "#ffa800" }}>
+                  *Jika anda ingin membuat soal yang terdapat gambar silahkan
+                  import file gambar terlebih dahulu !
+                </span>
               </div>
             </div>
             <form onSubmit={onSubmit} id="form-upload">
