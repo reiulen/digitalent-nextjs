@@ -28,6 +28,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [status, setStatus] = useState("");
+  const [type, setType] = useState(false);
 
   const [nilai, setNilai] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
@@ -36,7 +37,11 @@ const ListSubstansi = ({ token, tokenPermission }) => {
   let { page = 1, id } = router.query;
   page = Number(page);
 
-  useEffect(() => {}, [dispatch]);
+  useEffect(() => {
+    subtance?.data?.reports.map((it) => {
+      return it.type.includes("midtest") ? setType(true) : setType(false);
+    });
+  }, [dispatch, subtance]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
@@ -247,7 +252,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
           <div className="card-header border-0 align-items-center row">
             <div className="col-lg-10 col-xl-10">
               <h3 className="card-title font-weight-bolder text-dark">
-                Report Test Substansi{" "}
+                Report {type ? "Mid Test" : "Test Substansi"}{" "}
                 {publishValue === null || ""
                   ? ""
                   : `- ${
