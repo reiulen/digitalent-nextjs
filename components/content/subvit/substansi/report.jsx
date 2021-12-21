@@ -288,7 +288,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                     </button>
                   </div>
                 </div>
-                <div className="col-md-2"></div>
+                <div className="col-md-4"></div>
                 <div className="col-md-2">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-2 btn-block"
@@ -306,7 +306,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                   </button>
                 </div>
 
-                <div className="col-md-3 ">
+                <div className="col-md-2 ">
                   <button
                     className={`${styles.btnResponsive} btn w-200 btn-rounded-full bg-blue-secondary text-center text-white mt-2`}
                     type="button"
