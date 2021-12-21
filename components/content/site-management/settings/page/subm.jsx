@@ -171,7 +171,7 @@ export default function SUBM(props) {
     axios
       .get(
         process.env.END_POINT_API_PELATIHAN +
-          `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
+        `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
@@ -205,7 +205,7 @@ export default function SUBM(props) {
     axios
       .get(
         process.env.END_POINT_API_PELATIHAN +
-          `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme}`,
+        `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
@@ -279,12 +279,9 @@ export default function SUBM(props) {
   });
 
   const onChangeFile = (e) => {
-    const type = ["text/csv"];
-
-    if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > "5000000") {
+      if (e.target.files[0].size > "10000000") {
         e.target.value = null;
-        Swal.fire("Oops !", "File Size Melebihi 5 MB", "error");
+        Swal.fire("Oops !", "File Size Melebihi 10 MB", "error");
       } else {
         const reader = new FileReader();
         reader.onload = () => {
@@ -295,10 +292,7 @@ export default function SUBM(props) {
         setFile(e.target.files[0])
         setNameFile(e.target.files[0].name);
       }
-    } else {
-      e.target.value = null;
-      Swal.fire("Oops !", "Tipe File Harus Berupa .csv", "error");
-    }
+    
   };
 
   return (
@@ -552,7 +546,7 @@ export default function SUBM(props) {
                     style={{
                       cursor:
                         disablePenyelenggara === true ||
-                        disablePenyelenggara === ""
+                          disablePenyelenggara === ""
                           ? "not-allowed"
                           : "pointer",
                     }}
@@ -563,7 +557,7 @@ export default function SUBM(props) {
                     {optTraining}
                   </select>
                   {disablePenyelenggara === true ||
-                  disablePenyelenggara === "" ? (
+                    disablePenyelenggara === "" ? (
                     <small className="text-muted">
                       Mohon isi penyelenggara terlebih dahulu
                     </small>
@@ -583,11 +577,6 @@ export default function SUBM(props) {
                     </option>
                     {optStatusProfile}
                   </select>
-                  {disablePelatihan === true || disablePelatihan === "" ? (
-                    <small className="text-muted">
-                      Mohon isi pelatihan terlebih dahulu
-                    </small>
-                  ) : null}
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Status Peserta</h3>
@@ -609,12 +598,6 @@ export default function SUBM(props) {
                       );
                     })}
                   </select>
-                  {disableStatusProfile === true ||
-                  disableStatusProfile === "" ? (
-                    <small className="text-muted">
-                      Mohon isi status profile terlebih dahulu
-                    </small>
-                  ) : null}
                 </div>
               </div>
             </div>
@@ -646,13 +629,13 @@ export default function SUBM(props) {
           </div>
           <div className="status-peserta">
             <div className="form-group">
-              <h3 className="mb-4 judul">Status</h3>
+              <h3 className="mb-4 judul">Status Peserta</h3>
               <div
                 className="mr-4"
                 style={{ zIndex: "2", position: "relative" }}
               >
                 <Select
-                  placeholder="PILIH PELATIHAN"
+                  placeholder="PILIH STATUS PESERTA"
                   options={optionsStatus}
                   defaultValue={status}
                   onChange={(e) => {
@@ -740,40 +723,40 @@ export default function SUBM(props) {
           {localStorage
             .getItem("permissions")
             .includes("site_management.setting.pelatihan.manage") && (
-            <div className="d-flex justify-content-end mb-4 mr-4">
-              <button
-                type="reset"
-                className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
-                onClick={() => {
-                  setVia("template");
-                  setTitle("");
-                  setYear("");
-                  setAcademy("");
-                  setTheme("");
-                  setOrganizer("");
-                  setTraining("");
-                  setProfileStatus("");
-                  setSelectionStatus("");
-                  setParticipantSelectionStatusUpdate(0);
-                  setStatus("");
-                  setBroadcastEmailSendNotification(0);
-                  setEmailSubject("");
-                  setEmailContent("");
-                  setFile("");
-                  setLink("");
-                }}
-              >
-                Reset
-              </button>
-              <button
-                type="button"
-                onClick={(e) => handleSubmit(e)}
-                className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-              >
-                Kirim
-              </button>
-            </div>
-          )}
+              <div className="d-flex justify-content-end mb-4 mr-4">
+                <button
+                  type="reset"
+                  className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                  onClick={() => {
+                    setVia("template");
+                    setTitle("");
+                    setYear("");
+                    setAcademy("");
+                    setTheme("");
+                    setOrganizer("");
+                    setTraining("");
+                    setProfileStatus("");
+                    setSelectionStatus("");
+                    setParticipantSelectionStatusUpdate(0);
+                    setStatus("");
+                    setBroadcastEmailSendNotification(0);
+                    setEmailSubject("");
+                    setEmailContent("");
+                    setFile("");
+                    setLink("");
+                  }}
+                >
+                  Reset
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => handleSubmit(e)}
+                  className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+                >
+                  Kirim
+                </button>
+              </div>
+            )}
         </form>
       </div>
     </div>

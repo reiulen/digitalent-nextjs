@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../styles/stepInput.module.css";
 
-const StepInput = ({ step }) => {
+const StepInput = ({ step, survey }) => {
   let stepBg1 = "bg-neutral";
   let stepBg2 = "bg-neutral";
   let stepBg3 = "bg-neutral";
@@ -38,6 +38,7 @@ const StepInput = ({ step }) => {
     textDesc3 = "text-dark";
     responsiveStep3 = "d-block";
   }
+
   return (
     <div className="col-12">
       <div className="row row-eq-height bg-gray-shade">
@@ -61,7 +62,9 @@ const StepInput = ({ step }) => {
         <div className={`col-md-4 ${responsiveStep2}`}>
           <div className="container-fluid py-0 px-md-1 px-0">
             <div className="row row-eq-height h-100">
-              <div className={`col-12 col-lg-12 d-flex rounded-top h-100 ${stepBg2}`}>
+              <div
+                className={`col-12 col-lg-12 d-flex rounded-top h-100 ${stepBg2}`}
+              >
                 <div className="my-5 mx-3">
                   <h1 className={`badge badge-secondary h1 ${stepNumber2}`}>
                     2
@@ -69,7 +72,9 @@ const StepInput = ({ step }) => {
                 </div>
                 <div className={`${styles.topHeader} my-5`}>
                   <h5 className={`${textHeader2}`}>Bank Soal</h5>
-                  <p className={`${textDesc2}`}>Masukan Soal</p>
+                  <p className={`${textDesc2}`}>
+                    Masukan {survey ? "Survey" : "Soal"}
+                  </p>
                 </div>
               </div>
             </div>

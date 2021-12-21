@@ -255,14 +255,14 @@ const StepTwo = ({ token, tokenPermission }) => {
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(
-      getAllSubtanceQuestionDetail(id, pageNumber, token, tokenPermission)
-    );
+    // dispatch(
+    //   getAllSubtanceQuestionDetail(id, pageNumber, token, tokenPermission)
+    // );
   };
 
   const handleLimit = (val) => {
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllSubtanceQuestionDetail(id, 1, val, token, tokenPermission));
+    // dispatch(getAllSubtanceQuestionDetail(id, 1, val, token, tokenPermission));
   };
 
   const handleDelete = (id) => {
@@ -377,6 +377,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                     <i className="ri-download-2-fill text-white"></i> Unduh
                   </button>
                 </div>
+              </div>
+              <div className="mt-5">
+                <span style={{ color: "#ffa800" }}>
+                  *Jika anda ingin membuat soal yang terdapat gambar silahkan
+                  import file gambar terlebih dahulu !
+                </span>
               </div>
             </div>
 
@@ -559,7 +565,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                                   </td>
                                   <td className="align-middle d-flex">
                                     <Link
-                                      href={`edit-soal-substansi?id=${question.id}`}
+                                      href={`edit-soal-substansi?id=${question.id}&no=${i}`}
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"

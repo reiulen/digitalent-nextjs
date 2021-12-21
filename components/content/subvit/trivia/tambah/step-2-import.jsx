@@ -221,13 +221,13 @@ const StepTwo = ({ token, tokenPermission }) => {
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllTriviaQuestionDetail(id, pageNumber, "", limit, token));
+    // dispatch(getAllTriviaQuestionDetail(id, pageNumber, "", limit, token));
   };
 
   const handleLimit = (val) => {
     setLimit(val);
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllTriviaQuestionDetail(id, 1, "", val, token));
+    // dispatch(getAllTriviaQuestionDetail(id, 1, "", val, token));
   };
 
   const handleDelete = (id) => {
@@ -345,6 +345,12 @@ const StepTwo = ({ token, tokenPermission }) => {
                     <i className="ri-download-2-fill text-white"></i> Unduh
                   </button>
                 </div>
+              </div>
+              <div className="mt-5">
+                <span style={{ color: "#ffa800" }}>
+                  *Jika anda ingin membuat soal yang terdapat gambar silahkan
+                  import file gambar terlebih dahulu !
+                </span>
               </div>
             </div>
             <form onSubmit={onSubmit} id="form-upload">

@@ -155,6 +155,7 @@ export const getRegistrationStep2 = () => async (dispatch) => {
         required: "0",
         triggered: "0",
         triggered_parent: [],
+        value: "",
       },
     ],
   };

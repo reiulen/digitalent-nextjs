@@ -1027,3 +1027,975 @@ export const helperElementRender = (row, propsToken) => {
       break;
   }
 };
+
+export const helperChangeInputForm = (
+  value,
+  formBuilder,
+  alfa,
+  parentIndex = null,
+  beta = null,
+  childrenIndex = null,
+  gamma = null,
+  indexIndex = null,
+  delta = null
+) => {
+  if (
+    alfa !== null &&
+    parentIndex === null &&
+    beta === null &&
+    childrenIndex === null &&
+    gamma === null &&
+    indexIndex === null &&
+    delta === null
+  ) {
+    let list = [...formBuilder];
+    let element = list[alfa];
+    if (element.element === "triggered") {
+      element.triggered_parent.length > 0 &&
+        element.triggered_parent.map((triggeredRow, triggeredIndex) => {
+          triggeredRow.triggeredForm.length > 0 &&
+            triggeredRow.triggeredForm.map((elementRow, elementIndex) => {
+              elementRow.value = "";
+            });
+        });
+    }
+    if (element.element === "checkbox") {
+      let valArr = element.value;
+      if (valArr.length > 0) {
+        valArr.map((row, i) => {
+          if (row === value) {
+            valArr.splice(i, 1);
+          } else {
+            valArr.push(value);
+          }
+        });
+      } else {
+        valArr.push(value);
+      }
+    } else {
+      element.value = value;
+    }
+    if (element.element === "file_image" || element.element === "file_doc") {
+      let type = [""];
+      if (element.element === "file_image") {
+        type = ["image/jpg", "image/png", "image/jpeg"];
+      } else if (element.element === "file_doc") {
+        type = ["application/pdf"];
+      }
+      if (value.target.files[0]) {
+        if (type.includes(value.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.value = reader.result;
+            }
+          };
+          reader.readAsDataURL(value.target.files[0]);
+          element.fileName = value.target.files[0].name;
+        } else {
+          value.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang dimasukkan tidak sesuai format.",
+            "error"
+          );
+        }
+      }
+    }
+    if (element.element === "upload_document") {
+      let type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
+
+      if (value.target.files[0]) {
+        if (type.includes(value.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.value = reader.result;
+            }
+          };
+          reader.readAsDataURL(value.target.files[0]);
+          element.fileName = value.target.files[0].name;
+        } else {
+          value.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang dimasukkan tidak sesuai format.",
+            "error"
+          );
+        }
+      }
+    }
+    return list;
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex === null &&
+    gamma === null &&
+    indexIndex === null &&
+    delta === null
+  ) {
+    let list = [...formBuilder];
+    let element = list[alfa].triggered_parent[parentIndex].triggeredForm[beta];
+
+    if (element.element === "triggered") {
+      element.triggered_children.length > 0 &&
+        element.triggered_children.map((triggeredRow, triggeredIndex) => {
+          triggeredRow.triggeredForm.length > 0 &&
+            triggeredRow.triggeredForm.map((elementRow, elementIndex) => {
+              elementRow.value = "";
+            });
+        });
+    }
+
+    if (element.element === "checkbox") {
+      let valArr = element.value;
+      if (valArr.length > 0) {
+        valArr.map((row, i) => {
+          if (row === value) {
+            valArr.splice(i, 1);
+          } else {
+            valArr.push(value);
+          }
+        });
+      } else {
+        valArr.push(value);
+      }
+    } else {
+      element.value = value;
+    }
+
+    if (element.element === "file_image" || element.element === "file_doc") {
+      let type = [""];
+      if (element.element === "file_image") {
+        type = ["image/jpg", "image/png", "image/jpeg"];
+      } else if (element.element === "file_doc") {
+        type = ["application/pdf"];
+      }
+      if (value.target.files[0]) {
+        if (type.includes(value.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.value = reader.result;
+            }
+          };
+          reader.readAsDataURL(value.target.files[0]);
+          element.fileName = value.target.files[0].name;
+        } else {
+          value.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang dimasukkan tidak sesuai format.",
+            "error"
+          );
+        }
+      }
+    }
+
+    if (element.element === "upload_document") {
+      let type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
+
+      if (value.target.files[0]) {
+        if (type.includes(value.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.value = reader.result;
+            }
+          };
+          reader.readAsDataURL(value.target.files[0]);
+          element.fileName = value.target.files[0].name;
+        } else {
+          value.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang dimasukkan tidak sesuai format.",
+            "error"
+          );
+        }
+      }
+    }
+    return list;
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex !== null &&
+    gamma !== null &&
+    indexIndex === null &&
+    delta === null
+  ) {
+    let list = [...formBuilder];
+    let element =
+      list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
+        .triggered_children[childrenIndex].triggeredForm[gamma];
+
+    if (element.element === "triggered") {
+      element.triggered_index.length > 0 &&
+        element.triggered_index.map((triggeredRow, triggeredIndex) => {
+          triggeredRow.triggeredForm.length > 0 &&
+            triggeredRow.triggeredForm.map((elementRow, elementIndex) => {
+              elementRow.value = "";
+            });
+        });
+    }
+
+    if (element.element === "checkbox") {
+      let valArr = element.value;
+      if (valArr.length > 0) {
+        valArr.map((row, i) => {
+          if (row === value) {
+            valArr.splice(i, 1);
+          } else {
+            valArr.push(value);
+          }
+        });
+      } else {
+        valArr.push(value);
+      }
+    } else {
+      element.value = value;
+    }
+
+    if (element.element === "file_image" || element.element === "file_doc") {
+      let type = [""];
+      if (element.element === "file_image") {
+        type = ["image/jpg", "image/png", "image/jpeg"];
+      } else if (element.element === "file_doc") {
+        type = ["application/pdf"];
+      }
+      if (value.target.files[0]) {
+        if (type.includes(value.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.value = reader.result;
+            }
+          };
+          reader.readAsDataURL(value.target.files[0]);
+          element.fileName = value.target.files[0].name;
+        } else {
+          value.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang dimasukkan tidak sesuai format.",
+            "error"
+          );
+        }
+      }
+    }
+
+    if (element.element === "upload_document") {
+      let type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
+
+      if (value.target.files[0]) {
+        if (type.includes(value.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.value = reader.result;
+            }
+          };
+          reader.readAsDataURL(value.target.files[0]);
+          element.fileName = value.target.files[0].name;
+        } else {
+          value.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang dimasukkan tidak sesuai format.",
+            "error"
+          );
+        }
+      }
+    }
+    return list;
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex !== null &&
+    gamma !== null &&
+    indexIndex !== null &&
+    delta !== null
+  ) {
+    let list = [...formBuilder];
+    let element =
+      list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
+        .triggered_children[childrenIndex].triggeredForm[gamma].triggered_index[
+        indexIndex
+      ].triggeredForm[delta];
+    if (element.element === "checkbox") {
+      let valArr = element.value;
+      if (valArr.length > 0) {
+        valArr.map((row, i) => {
+          if (row === value) {
+            valArr.splice(i, 1);
+          } else {
+            valArr.push(value);
+          }
+        });
+      } else {
+        valArr.push(value);
+      }
+    } else {
+      element.value = value;
+    }
+    if (element.element === "file_image" || element.element === "file_doc") {
+      let type = [""];
+      if (element.element === "file_image") {
+        type = ["image/jpg", "image/png", "image/jpeg"];
+      } else if (element.element === "file_doc") {
+        type = ["application/pdf"];
+      }
+      if (value.target.files[0]) {
+        if (type.includes(value.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.value = reader.result;
+            }
+          };
+          reader.readAsDataURL(value.target.files[0]);
+          element.fileName = value.target.files[0].name;
+        } else {
+          value.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang dimasukkan tidak sesuai format.",
+            "error"
+          );
+        }
+      }
+    }
+
+    if (element.element === "upload_document") {
+      let type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
+
+      if (value.target.files[0]) {
+        if (type.includes(value.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.value = reader.result;
+            }
+          };
+          reader.readAsDataURL(value.target.files[0]);
+          element.fileName = value.target.files[0].name;
+        } else {
+          value.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang dimasukkan tidak sesuai format.",
+            "error"
+          );
+        }
+      }
+    }
+
+    return list;
+  }
+};
+
+export const helperChangeInputFormBuilder = (
+  event,
+  formBuilder,
+  alfa = null,
+  parentIndex = null,
+  beta = null,
+  childrenIndex = null,
+  gamma = null,
+  indexIndex = null,
+  delta = null
+) => {
+  const { value, name, checked } = event.target;
+  const list = [...formBuilder];
+  if (
+    alfa !== null &&
+    parentIndex === null &&
+    beta === null &&
+    childrenIndex === null &&
+    gamma === null &&
+    indexIndex === null &&
+    delta === null
+  ) {
+    if (name === "upload-document") {
+      const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
+      if (event.target.files[0]) {
+        if (type.includes(event.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              list[alfa].dataOption = reader.result;
+            }
+          };
+          reader.readAsDataURL(event.target.files[0]);
+          list[alfa].fileName = event.target.files[0].name;
+        } else {
+          event.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
+            "error"
+          );
+        }
+      }
+    }
+    if (name === "element" && value === "triggered") {
+      list[alfa].option = "manual";
+      list[alfa].size = "col-md-12";
+    }
+    list[alfa][name] = value;
+    if (name === "required") {
+      let check = checked === true ? "1" : "0";
+      list[alfa]["required"] = check;
+    }
+    if (name === "triggered") {
+      let check = checked === true ? "1" : "0";
+      if (checked) {
+        let dataOption = list[alfa].dataOption.split(";");
+        dataOption.map((triggeredOption, index) => {
+          let val = {
+            key: index + 1,
+            triggeredName: triggeredOption,
+            triggeredForm: [
+              {
+                key: 1,
+                name: " ",
+                element: "",
+                size: "col-md-12",
+                option: "",
+                dataOption: "",
+                fileName: "Belum ada file",
+                triggered: "0",
+                triggered_children: [],
+                value: "",
+              },
+            ],
+          };
+          list[alfa].triggered_parent.push(val);
+        });
+      } else {
+        list[alfa].triggered_parent = [];
+      }
+      list[alfa]["triggered"] = check;
+    }
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex === null &&
+    gamma === null &&
+    indexIndex === null &&
+    delta === null
+  ) {
+    let element = list[alfa].triggered_parent[parentIndex].triggeredForm[beta];
+    element[name] = value;
+    if (name === "upload-document") {
+      const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
+      if (event.target.files[0]) {
+        if (type.includes(event.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.dataOption = reader.result;
+            }
+          };
+          reader.readAsDataURL(event.target.files[0]);
+          element.fileName = event.target.files[0].name;
+        } else {
+          event.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
+            "error"
+          );
+        }
+      }
+    }
+    if (name === "element" && value === "triggered") {
+      element.option = "manual";
+      element.size = "col-md-12";
+    }
+    if (name === "required") {
+      let check = checked === true ? "1" : "0";
+      element.required = check;
+    }
+    if (name === "triggered") {
+      let check = checked === true ? "1" : "0";
+      element.triggered = check;
+      if (checked) {
+        let dataOption = element.dataOption.split(";");
+        dataOption.map((triggeredOption, index) => {
+          let val = {
+            key: index + 1,
+            triggeredName: triggeredOption,
+            triggeredForm: [
+              {
+                key: 1,
+                name: "",
+                element: "",
+                size: "col-md-12",
+                option: "",
+                dataOption: "",
+                fileName: "Belum ada file",
+                triggered: "0",
+                triggered_index: [],
+                value: "",
+              },
+            ],
+          };
+          element.triggered_children.push(val);
+        });
+      } else {
+        element.triggered_children = [];
+      }
+    }
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex !== null &&
+    gamma !== null &&
+    indexIndex === null &&
+    delta === null
+  ) {
+    let element =
+      list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
+        .triggered_children[childrenIndex].triggeredForm[gamma];
+    element[name] = value;
+    if (name === "upload-document") {
+      const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
+      if (event.target.files[0]) {
+        if (type.includes(event.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.dataOption = reader.result;
+            }
+          };
+          reader.readAsDataURL(event.target.files[0]);
+          element.fileName = event.target.files[0].name;
+        } else {
+          event.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
+            "error"
+          );
+        }
+      }
+    }
+    if (name === "element" && value === "triggered") {
+      element.option = "manual";
+      element.size = "col-md-12";
+    }
+    if (name === "required") {
+      let check = checked === true ? "1" : "0";
+      element.required = check;
+    }
+    if (name === "triggered") {
+      let check = checked === true ? "1" : "0";
+      element.triggered = check;
+      if (checked) {
+        let dataOption = element.dataOption.split(";");
+        dataOption.map((triggeredOption, index) => {
+          let val = {
+            key: index + 1,
+            triggeredName: triggeredOption,
+            triggeredForm: [
+              {
+                key: 1,
+                name: "",
+                element: "",
+                size: "col-md-12",
+                option: "",
+                dataOption: "",
+                fileName: "Belum ada file",
+                triggered: "0",
+                value: "",
+              },
+            ],
+          };
+          element.triggered_index.push(val);
+        });
+      } else {
+        element.triggered_index = [];
+      }
+    }
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex !== null &&
+    gamma !== null &&
+    indexIndex !== null &&
+    delta !== null
+  ) {
+    let element =
+      list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
+        .triggered_children[childrenIndex].triggeredForm[gamma].triggered_index[
+        indexIndex
+      ].triggeredForm[delta];
+    element[name] = value;
+    if (name === "upload-document") {
+      const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
+      if (event.target.files[0]) {
+        if (type.includes(event.target.files[0].type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              element.dataOption = reader.result;
+            }
+          };
+          reader.readAsDataURL(event.target.files[0]);
+          element.fileName = event.target.files[0].name;
+        } else {
+          event.target.value = null;
+          Swal.fire(
+            "Oops !",
+            "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
+            "error"
+          );
+        }
+      }
+    }
+    if (name === "element" && value === "triggered") {
+      element.option = "manual";
+      element.size = "col-md-12";
+    }
+    if (name === "required") {
+      let check = checked === true ? "1" : "0";
+      element.required = check;
+    }
+  }
+  return list;
+};
+
+export const helperAddFieldTriggered = (
+  formBuilder,
+  alfa = null,
+  parentIndex = null,
+  beta = null,
+  childrenIndex = null,
+  gamma = null,
+  indexIndex = null,
+  delta = null
+) => {
+  const list = [...formBuilder];
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex !== null &&
+    gamma !== null &&
+    indexIndex !== null
+  ) {
+    let newKey = 1;
+    const formElement =
+      list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
+        .triggered_children[childrenIndex].triggeredForm[gamma].triggered_index[
+        indexIndex
+      ];
+    if (formElement.triggeredForm.length > 0) {
+      newKey =
+        formElement.triggeredForm[formElement.triggeredForm.length - 1].key + 1;
+    }
+    const val = {
+      key: newKey,
+      name: " ",
+      element: "",
+      size: "col-md-12",
+      option: "",
+      dataOption: "",
+      fileName: "Belum ada file",
+      triggered: "0",
+    };
+    formElement.triggeredForm.push(val);
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex !== null &&
+    gamma === null &&
+    indexIndex === null
+  ) {
+    let newKey = 1;
+    const formElement =
+      list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
+        .triggered_children[childrenIndex];
+    const val = {
+      key: newKey,
+      name: " ",
+      element: "",
+      size: "col-md-12",
+      option: "",
+      dataOption: "",
+      fileName: "Belum ada file",
+      triggered: "0",
+      triggered_index: [],
+      value: "",
+    };
+    formElement.triggeredForm.push(val);
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta === null &&
+    childrenIndex === null &&
+    gamma === null &&
+    indexIndex === null
+  ) {
+    let newKey = 1;
+    const formElement = list[alfa].triggered_parent[parentIndex];
+    if (formElement.triggeredForm.length > 0) {
+      newKey =
+        formElement.triggeredForm[formElement.triggeredForm.length - 1].key + 1;
+    }
+    const val = {
+      key: newKey,
+      name: " ",
+      element: "",
+      size: "col-md-12",
+      option: "",
+      dataOption: "",
+      fileName: "Belum ada file",
+      triggered: "0",
+      triggered_children: [],
+      value: "",
+    };
+    formElement.triggeredForm.push(val);
+  }
+  return list;
+};
+
+export const helperRemoveField = (
+  formBuilder,
+  alfa = null,
+  parentIndex = null,
+  beta = null,
+  childrenIndex = null,
+  gamma = null,
+  indexIndex = null,
+  delta = null
+) => {
+  const list = [...formBuilder];
+  if (
+    alfa !== null &&
+    parentIndex === null &&
+    beta === null &&
+    childrenIndex === null &&
+    gamma === null &&
+    indexIndex === null &&
+    delta === null
+  ) {
+    list.splice(alfa, 1);
+    list.forEach((row, i) => {
+      let key = i + 1;
+      list[i]["key"] = key;
+    });
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex === null &&
+    gamma === null &&
+    indexIndex === null &&
+    delta === null
+  ) {
+    let listAlfa = list[alfa].triggered_parent[parentIndex];
+    listAlfa.triggeredForm.splice(beta, 1);
+    listAlfa.triggeredForm.forEach((row, i) => {
+      let key = i + 1;
+      listAlfa.triggeredForm[i]["key"] = key;
+    });
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex !== null &&
+    gamma !== null &&
+    indexIndex === null &&
+    delta === null
+  ) {
+    let listBeta =
+      list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
+        .triggered_children[childrenIndex];
+    listBeta.triggeredForm.splice(gamma, 1);
+    listBeta.triggeredForm.forEach((row, i) => {
+      let key = i + 1;
+      listBeta.triggeredForm[i]["key"] = key;
+    });
+  }
+  if (
+    alfa !== null &&
+    parentIndex !== null &&
+    beta !== null &&
+    childrenIndex !== null &&
+    gamma !== null &&
+    indexIndex !== null &&
+    delta !== null
+  ) {
+    let listGamma =
+      list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
+        .triggered_children[childrenIndex].triggeredForm[gamma].triggered_index[
+        indexIndex
+      ];
+    listGamma.triggeredForm.splice(delta, 1);
+    listGamma.triggeredForm.forEach((row, i) => {
+      let key = i + 1;
+      listGamma.triggeredForm[i]["key"] = key;
+    });
+  }
+  return list;
+};
+
+export const helperFormatCheckbox = (formBuilderNon) => {
+  let formBuilderFormat;
+  formBuilderNon &&
+    formBuilderNon.length > 0 &&
+    formBuilderNon.map((rowBuilder, i) => {
+      // FIRST FORM BUILDER OBJECT
+      if (rowBuilder.element === "checkbox") {
+        rowBuilder.value = [];
+      }
+      rowBuilder.triggered_parent.length > 0 &&
+        rowBuilder.triggered_parent.map((rowParent, indexParent) => {
+          // TITLE FORM BUILDER OBJECT PARENT
+          rowParent.triggeredForm.length > 0 &&
+            rowParent.triggeredForm.map((rowFormParent, indexFormParent) => {
+              // SECOND FORM BUILDER OBJECT
+              if (rowFormParent.element === "checkbox") {
+                rowFormParent.value = [];
+              }
+              rowFormParent.triggered_children.length > 0 &&
+                rowFormParent.triggered_children.map(
+                  (rowChildren, indexChildren) => {
+                    // TITLE FORM BUILDER OBJECT CHILDREN
+                    rowChildren.triggeredForm.length > 0 &&
+                      rowChildren.triggeredForm.map(
+                        (rowFormChildren, indexFormChildren) => {
+                          // THIRD FORM BUILDER OBJECT
+                          if (rowFormChildren.element === "checkbox") {
+                            rowFormChildren.value = [];
+                          }
+                          rowFormChildren.triggered_index.length > 0 &&
+                            rowFormChildren.triggered_index.map(
+                              (rowIndex, indexIndex) => {
+                                // TITLE FORM BUILDER OBJECT INDEX
+                                rowIndex.triggeredForm.length > 0 &&
+                                  rowIndex.triggeredForm.map(
+                                    (rowFormIndex, indexFormIndex) => {
+                                      // FOURTH FORM BUILDER OBJECT
+                                      if (rowFormIndex.element === "checkbox") {
+                                        rowFormIndex.value = [];
+                                      }
+                                      // console.log(rowFormIndex);
+                                      // FOURTH FORM BUILDER OBJECT
+                                    }
+                                  );
+                                // console.log(rowIndex);
+                                // TITLE FORM BUILDER OBJECT INDEX
+                              }
+                            );
+                          // console.log(rowFormChildren);
+                          // THIRD FORM BUILDER OBJECT
+                        }
+                      );
+                    // TITLE FORM BUILDER OBJECT CHILDREN
+                    // console.log(rowChildren);
+                  }
+                );
+              // SECOND FORM BUILDER OBJECT
+              // console.log(rowFormParent);
+            });
+          // TITLE FORM BUILDER OBJECT PARENT
+          // console.log(rowParent);
+        });
+      // FIRST FORM BUILDER OBJECT
+      // console.log(rowBuilder);
+    });
+  formBuilderFormat = formBuilderNon;
+  return formBuilderFormat;
+};
+
+export const helperUnformatCheckbox = (formBuilderCheck) => {
+  let formBuilderFormat;
+  formBuilderCheck &&
+    formBuilderCheck.map((rowBuilder, i) => {
+      // FIRST FORM BUILDER OBJECT
+      if (rowBuilder.element === "checkbox") {
+        let val = rowBuilder.value.join(",");
+        rowBuilder.value = val;
+      }
+      rowBuilder.triggered_parent.length > 0 &&
+        rowBuilder.triggered_parent.map((rowParent, indexParent) => {
+          // TITLE FORM BUILDER OBJECT PARENT
+          rowParent.triggeredForm.length > 0 &&
+            rowParent.triggeredForm.map((rowFormParent, indexFormParent) => {
+              // SECOND FORM BUILDER OBJECT
+              if (rowFormParent.element === "checkbox") {
+                let val = rowFormParent.value.join(",");
+                rowFormParent.value = val;
+              }
+              rowFormParent.triggered_children.length > 0 &&
+                rowFormParent.triggered_children.map(
+                  (rowChildren, indexChildren) => {
+                    // TITLE FORM BUILDER OBJECT CHILDREN
+                    rowChildren.triggeredForm.length > 0 &&
+                      rowChildren.triggeredForm.map(
+                        (rowFormChildren, indexFormChildren) => {
+                          // THIRD FORM BUILDER OBJECT
+                          if (rowFormChildren.element === "checkbox") {
+                            let val = rowFormChildren.value.join(",");
+                            rowFormChildren.value = val;
+                          }
+                          rowFormChildren.triggered_index.length > 0 &&
+                            rowFormChildren.triggered_index.map(
+                              (rowIndex, indexIndex) => {
+                                // TITLE FORM BUILDER OBJECT INDEX
+                                rowIndex.triggeredForm.length > 0 &&
+                                  rowIndex.triggeredForm.map(
+                                    (rowFormIndex, indexFormIndex) => {
+                                      // FOURTH FORM BUILDER OBJECT
+                                      if (rowFormIndex.element === "checkbox") {
+                                        let val = rowFormIndex.value.join(",");
+                                        rowFormIndex.value = val;
+                                      }
+                                      // console.log(rowFormIndex);
+                                      // FOURTH FORM BUILDER OBJECT
+                                    }
+                                  );
+                                // console.log(rowIndex);
+                                // TITLE FORM BUILDER OBJECT INDEX
+                              }
+                            );
+                          // console.log(rowFormChildren);
+                          // THIRD FORM BUILDER OBJECT
+                        }
+                      );
+                    // TITLE FORM BUILDER OBJECT CHILDREN
+                    // console.log(rowChildren);
+                  }
+                );
+              // SECOND FORM BUILDER OBJECT
+              // console.log(rowFormParent);
+            });
+          // TITLE FORM BUILDER OBJECT PARENT
+          // console.log(rowParent);
+        });
+      // FIRST FORM BUILDER OBJECT
+      // console.log(rowBuilder);
+    });
+  formBuilderFormat = formBuilderCheck;
+  return formBuilderFormat;
+};

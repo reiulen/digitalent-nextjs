@@ -40,7 +40,6 @@ export const getAllSurveyQuestionDetail =
         headers: {
           Authorization: "Bearer " + token,
           Permission: tokenPermission || "",
-          apikey: "I8aylVChtrUB15Sp5v8TsjDOvb8kGcML",
         },
       };
       let link =

@@ -65,9 +65,10 @@ const ReportSurvey = ({ token }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/survey-question-banks/report/export/${id}`;
+    let link = `http://dts-subvit-dev.majapahit.id/api/survey-question-banks/report/export/${id}?`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
+    if (router.query.card) link = link.concat(`&card=${router.query.card}`);
 
     const config = {
       headers: {
@@ -213,13 +214,6 @@ const ReportSurvey = ({ token }) => {
                 <div className="col-md-1"></div>
 
                 <div className="col-md-2  ">
-                  {/* <button
-                    className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export .CSV
-                  </button> */}
                   <button
                     className={`${styles.btnResponsive} btn w-200 btn-rounded-full bg-blue-secondary text-center text-white mt-2`}
                     type="button"
@@ -314,7 +308,9 @@ const ReportSurvey = ({ token }) => {
                                     {/* <span className="label label-inline label-light-success font-weight-bold">
                                       Diterima
                                     </span> */}
-                                    <Badge bg="success">Diterima</Badge>
+                                    <Badge bg="success">
+                                      Sudah Mengerjakan
+                                    </Badge>
                                   </td>
                                 ) : !row.start_datetime &&
                                   !row.finish_datetime ? (
@@ -332,7 +328,9 @@ const ReportSurvey = ({ token }) => {
                                   </td>
                                 ) : row.finish == 1 && row.status == 0 ? (
                                   <td className="align-middle">
-                                    <Badge bg="danger">Ditolak</Badge>
+                                    <Badge bg="success">
+                                      Sudah Mengerjakan
+                                    </Badge>
                                   </td>
                                 ) : (
                                   <td className="align-middle">

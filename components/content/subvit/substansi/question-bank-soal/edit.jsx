@@ -134,7 +134,13 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
     const newKey = String.fromCharCode(keyindex + 1);
     setAnswer([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      {
+        key: newKey,
+        question: "",
+        image: "",
+        image_preview: "",
+        is_right: false,
+      },
     ]);
   };
 
@@ -234,6 +240,7 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
         status,
         answer_key,
         question_type_id: question_type,
+        _method: "put",
       };
 
       dispatch(updateSubtanceQuestionDetail(id, data, token, tokenPermission));
@@ -281,10 +288,7 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Soal{" "}
-                {subtance_question_detail
-                  ? subtance_question_detail.bank_soal + 1
-                  : 0}
+                Soal {parseInt(router.query.no) + 1}
               </h3>
               <div className="card-toolbar ml-auto"></div>
             </div>

@@ -297,7 +297,9 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Substansi{" "}
+              {subtance?.category === "Test Substansi"
+                ? "Substansi"
+                : "Mid Test"}{" "}
               {subtance && subtance.academy ? subtance.academy.name : ""} -{" "}
               {subtance && subtance.theme ? subtance.theme.name : ""}
             </h2>
@@ -641,7 +643,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                                 ) ? (
                                   <div className="d-flex">
                                     <Link
-                                      href={`edit-soal-substansi?id=${question.id}`}
+                                      href={`edit-soal-substansi?id=${question.id}&no=${i}`}
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -654,19 +656,22 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                                     </Link>
                                     <button
                                       className={
-                                        i === 0
+                                        i + 1 * (page * 5 || limit) - 4 === 1
                                           ? "btn btn-link-action btn-secondary  text-white"
                                           : "btn btn-link-action bg-blue-secondary text-white"
                                       }
                                       onClick={() =>
-                                        i !== 0 && handleDelete(question.id)
+                                        i + 1 * (page * 5 || limit) - 4 !== 1 &&
+                                        handleDelete(question.id)
                                       }
                                       data-toggle="tooltip"
                                       data-placement="bottom"
                                       title="Hapus"
                                       style={{
                                         cursor:
-                                          i === 0 ? "not-allowed" : "pointer",
+                                          i + 1 * (page * 5 || limit) - 4 === 1
+                                            ? "not-allowed"
+                                            : "pointer",
                                       }}
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
