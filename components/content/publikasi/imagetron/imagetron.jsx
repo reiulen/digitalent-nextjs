@@ -463,24 +463,30 @@ const Imagetron = ({ token }) => {
                                         className="position-relative overflow-hidden mt-3"
                                         style={{ maxWidth: "330px" }}
                                     >
-                                        <i className="ri-search-line left-center-absolute ml-2"></i>
-                                        <input
-                                            type="text"
-                                            className={`${styles.cari} form-control pl-10`}
-                                            placeholder="Ketik disini untuk Pencarian..."
-                                            value={search}
-                                            onChange={(e) => setSearch(e.target.value)}
-                                        />
-                                        <button
-                                            className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
-                                            style={{
-                                                borderTopLeftRadius: "0",
-                                                borderBottomLeftRadius: "0",
-                                            }}
-                                            onClick={handleSearch}
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault();
+                                            handleSearch
+                                        }}
                                         >
-                                            Cari
-                                        </button>
+                                            <i className="ri-search-line left-center-absolute ml-2"></i>
+                                            <input
+                                                type="text"
+                                                className={`${styles.cari} form-control pl-10`}
+                                                placeholder="Ketik disini untuk Pencarian..."
+                                                value={search}
+                                                onChange={(e) => setSearch(e.target.value)}
+                                            />
+                                            <button
+                                                className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
+                                                style={{
+                                                    borderTopLeftRadius: "0",
+                                                    borderBottomLeftRadius: "0",
+                                                }}
+                                                onClick={handleSearch}
+                                            >
+                                                Cari
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div className={`${styles.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
