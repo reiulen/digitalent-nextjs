@@ -373,6 +373,21 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
             </div>
 
             {viewRegistrationHandler()}
+
+            <div className="form-group mt-9">
+              <div className="text-right">
+                <button
+                  className="btn btn-light-ghost-rounded-full mr-2"
+                  type="button"
+                  onClick={() => backHandler()}
+                >
+                  Kembali
+                </button>
+                <button className="btn btn-primary-rounded-full" type="submit">
+                  Simpan & Lanjut
+                </button>
+              </div>
+            </div>
           </form>
         </div>
         <Modal
