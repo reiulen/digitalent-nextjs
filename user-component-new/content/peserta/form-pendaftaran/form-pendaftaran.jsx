@@ -134,8 +134,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
             </Button>
             <Button
               className={`${style.button_profile_simpan} rounded-xl`}
-              type="button"
-              onClick={onSubmit}
+              type="submit"
             >
               {dataTraining?.komitmen == "1" ? "Lanjut" : "Daftar"}
             </Button>
