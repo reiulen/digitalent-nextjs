@@ -74,6 +74,7 @@ const CheckboxComponent = ({
       <div className="answer mt-5">
         {answer &&
           answer.map((row, i) => {
+            console.log(row);
             return (
               <>
                 <div className="title row">
@@ -139,19 +140,19 @@ const CheckboxComponent = ({
                     >
                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                     </button>
-                    <div className="ml-3">
-                      <SwitchButton
-                        checked={row.is_right}
-                        onlabel=" "
-                        onstyle="primary"
-                        offlabel=" "
-                        offstyle="secondary"
-                        size="sm"
-                        width={10}
-                        height={10}
-                        onChange={(checked) => handleAnswer(checked, i)}
-                      />
-                    </div>
+                    {/* <div className="ml-3">
+                        <SwitchButton
+                          checked={row.is_right}
+                          onlabel=" "
+                          onstyle="primary"
+                          offlabel=" "
+                          offstyle="secondary"
+                          size="sm"
+                          width={10}
+                          height={10}
+                          onChange={(checked) => handleAnswer(checked, i)}
+                        />
+                      </div> */}
                   </div>
                 </div>
               </>
