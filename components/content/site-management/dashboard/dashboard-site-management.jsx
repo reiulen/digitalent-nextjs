@@ -332,9 +332,18 @@ const DashboardSiteManagement = ({ token, user }) => {
 									<div className="col-lg-12 ml-5 my-4">
 										<div className="data-peserta">Data Zonasi</div>
 										<div className="berdasarkan">
-											Berdasarkan Pelatihan
+											Data user berdasarkan zonasi
 											{/* Berdasarkan {type === "city" ? "Daerah" : "Provinsi"} */}
 										</div>
+									</div>
+									<div className="col-lg-12 mb-4 ml-5">
+										<button
+											className="btn text-white type-styling provinsi-styling-2 cursor-not-allowed"
+										// "text-gray pt-3 provinsi-styling"
+										// style={{ border: '1px solid #000', textAlign: 'right' }}
+										>
+											Zonasi
+										</button>
 									</div>
 								</div>
 

@@ -11,7 +11,9 @@ import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
-import { getAllListsPeserta } from "../../../../../redux/actions/site-management/user/peserta-dts";
+import stylesPag from "../../../../../styles/pagination.module.css";
+import { getAllListsPeserta, deletePesertaDts } from "../../../../../redux/actions/site-management/user/peserta-dts";
+import Swal from "sweetalert2";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -23,6 +25,36 @@ const Table = ({ token }) => {
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState(null);
 
+  const getWindowDimensions = () => {
+    // if (typeof window === 'undefined') {
+    //     global.window = {}
+    // }
+
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    // getWindowDimensions()
+    {}
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    setWindowDimensions(getWindowDimensions());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [allListPeserta])
+
+  useEffect(() => {
+
+  }, [windowDimensions])
+
   const listPeserta =
     allListPeserta?.data?.data?.list?.length > 0 ? (
       allListPeserta?.data?.data?.list?.map((item, index) => {
@@ -31,12 +63,16 @@ const Table = ({ token }) => {
             <td className="align-middle text-left">
               {index + limit * (page - 1) + 1}
             </td>
-            <td className="align-middle text-left" style={{
-																	overflow: "hidden",
-																	textOverflow: "ellipsis",
-																	whiteSpace: "nowrap",
-																	maxWidth: "11rem",
-																}}>{item.name}</td>
+            <td className="align-middle text-left"
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                maxWidth: "11rem",
+              }}
+            >
+              {item.name}
+            </td>
             <td className="align-middle text-left">{item.email}</td>
             <td className="align-middle text-left">{item.nomor_handphone}</td>
             <td className="align-middle text-left">
@@ -65,6 +101,15 @@ const Table = ({ token }) => {
                     <div className="text-hover-show-hapus">Detail</div>
                   </a>
                 </Link>
+                <button
+                  className="btn btn-link-action bg-blue-secondary text-white ml-3 my-5 position-relative btn-delete"
+                  onClick={() => handleDelete(item.user_id)}
+                >
+                  <i className="ri-delete-bin-fill p-0 text-white"></i>
+                  <div className="text-hover-show-hapus">
+                    Hapus
+                  </div>
+                </button>
               </div>
             </td>
           </tr>
@@ -83,6 +128,23 @@ const Table = ({ token }) => {
       shallow: true,
     });
   };
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: 'Apakah anda yakin ?',
+      text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deletePesertaDts(token, id))
+      }
+    })
+  }
 
   return (
     <PageWrapper>
@@ -164,74 +226,77 @@ const Table = ({ token }) => {
                 </table>
               </div>
 
-              {allListPeserta?.data?.data?.total >= 5 ? (
-                <div className="row px-4">
-                  <div
-                    className="table-pagination table-pagination pagination-custom col-12 col-md-6"
-                    style={{ width: "max-content" }}
-                  >
-                    <Pagination
-                      activePage={page}
-                      itemsCountPerPage={allListPeserta?.data?.data?.perPage}
-                      totalItemsCount={allListPeserta?.data?.data?.total}
-                      pageRangeDisplayed={2}
-                      onChange={(e) => {
-                        setPage(e);
-                        dispatch(getAllListsPeserta(token, limit, e, search));
-                      }}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
+              <div className="row">
+                {allListPeserta?.data?.data?.total >= 5 ? (
+                  <>
+                    <div
+                      className={`${stylesPag.pagination} table-pagination`}
+                    // className="table-pagination table-pagination pagination-custom col-12 col-md-6"
+                    // style={{ width: "max-content" }}
+                    >
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={allListPeserta?.data?.data?.perPage}
+                        totalItemsCount={allListPeserta?.data?.data?.total}
+                        pageRangeDisplayed={2}
+                        onChange={(e) => {
+                          setPage(e);
+                          dispatch(getAllListsPeserta(token, limit, e, search));
+                        }}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
 
-                  <div className="table-total ml-auto mr-4">
-                    <div className="row mt-4">
-                      <div className="col-4 mr-0 p-0">
-                        <select
-                          className="form-control pr-2 cursor-pointer"
-                          id="exampleFormControlSelect2"
-                          value={limit}
-                          onChange={(e) => {
-                            setLimit(e.target.value);
-                            dispatch(
-                              getAllListsPeserta(
-                                token,
-                                e.target.value,
-                                page,
-                                search
-                              )
-                            );
-                          }}
-                          style={{
-                            width: "63px",
-                            background: "#F3F6F9",
-                            borderColor: "#F3F6F9",
-                            color: "#9E9E9E",
-                          }}
-                        >
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                          <option value="30">30</option>
-                          <option value="40">40</option>
-                          <option value="50">50</option>
-                        </select>
-                      </div>
-                      <div className="col-8 my-auto">
-                        <p
-                          className="align-middle mt-3"
-                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                        >
-                          Total Data {allListPeserta?.data?.data?.total}
-                        </p>
+                    <div className="table-total ml-auto mr-4">
+                      <div className="row mt-4">
+                        <div className="col-4 mr-0 p-0">
+                          <select
+                            className="form-control pr-2 cursor-pointer"
+                            id="exampleFormControlSelect2"
+                            value={limit}
+                            onChange={(e) => {
+                              setLimit(e.target.value);
+                              dispatch(
+                                getAllListsPeserta(
+                                  token,
+                                  e.target.value,
+                                  page,
+                                  search
+                                )
+                              );
+                            }}
+                            style={{
+                              width: "63px",
+                              background: "#F3F6F9",
+                              borderColor: "#F3F6F9",
+                              color: "#9E9E9E",
+                            }}
+                          >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                          </select>
+                        </div>
+                        <div className="col-8 my-auto">
+                          <p
+                            className="align-middle mt-3"
+                            style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                          >
+                            Total Data {allListPeserta?.data?.data?.total}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              ) : null}
+                  </>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>

@@ -171,7 +171,7 @@ export default function SUBM(props) {
     axios
       .get(
         process.env.END_POINT_API_PELATIHAN +
-          `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
+        `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
@@ -205,7 +205,7 @@ export default function SUBM(props) {
     axios
       .get(
         process.env.END_POINT_API_PELATIHAN +
-          `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme}`,
+        `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
@@ -279,25 +279,18 @@ export default function SUBM(props) {
   });
 
   const onChangeFile = (e) => {
-    const type = ["text/csv"];
-
-    if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > "5000000") {
-        e.target.value = null;
-        Swal.fire("Oops !", "File Size Melebihi 5 MB", "error");
-      } else {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-          }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-        setFile(e.target.files[0])
-        setNameFile(e.target.files[0].name);
-      }
-    } else {
+    if (e.target.files[0].size > "5000000") {
       e.target.value = null;
-      Swal.fire("Oops !", "Tipe File Harus Berupa .csv", "error");
+      Swal.fire("Oops !", "File Size Melebihi 5 MB", "error");
+    } else {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setFile(e.target.files[0])
+      setNameFile(e.target.files[0].name);
     }
   };
 
@@ -552,7 +545,7 @@ export default function SUBM(props) {
                     style={{
                       cursor:
                         disablePenyelenggara === true ||
-                        disablePenyelenggara === ""
+                          disablePenyelenggara === ""
                           ? "not-allowed"
                           : "pointer",
                     }}
@@ -563,7 +556,7 @@ export default function SUBM(props) {
                     {optTraining}
                   </select>
                   {disablePenyelenggara === true ||
-                  disablePenyelenggara === "" ? (
+                    disablePenyelenggara === "" ? (
                     <small className="text-muted">
                       Mohon isi penyelenggara terlebih dahulu
                     </small>
@@ -610,7 +603,7 @@ export default function SUBM(props) {
                     })}
                   </select>
                   {disableStatusProfile === true ||
-                  disableStatusProfile === "" ? (
+                    disableStatusProfile === "" ? (
                     <small className="text-muted">
                       Mohon isi status profile terlebih dahulu
                     </small>
@@ -740,40 +733,40 @@ export default function SUBM(props) {
           {localStorage
             .getItem("permissions")
             .includes("site_management.setting.pelatihan.manage") && (
-            <div className="d-flex justify-content-end mb-4 mr-4">
-              <button
-                type="reset"
-                className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
-                onClick={() => {
-                  setVia("template");
-                  setTitle("");
-                  setYear("");
-                  setAcademy("");
-                  setTheme("");
-                  setOrganizer("");
-                  setTraining("");
-                  setProfileStatus("");
-                  setSelectionStatus("");
-                  setParticipantSelectionStatusUpdate(0);
-                  setStatus("");
-                  setBroadcastEmailSendNotification(0);
-                  setEmailSubject("");
-                  setEmailContent("");
-                  setFile("");
-                  setLink("");
-                }}
-              >
-                Reset
-              </button>
-              <button
-                type="button"
-                onClick={(e) => handleSubmit(e)}
-                className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-              >
-                Kirim
-              </button>
-            </div>
-          )}
+              <div className="d-flex justify-content-end mb-4 mr-4">
+                <button
+                  type="reset"
+                  className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                  onClick={() => {
+                    setVia("template");
+                    setTitle("");
+                    setYear("");
+                    setAcademy("");
+                    setTheme("");
+                    setOrganizer("");
+                    setTraining("");
+                    setProfileStatus("");
+                    setSelectionStatus("");
+                    setParticipantSelectionStatusUpdate(0);
+                    setStatus("");
+                    setBroadcastEmailSendNotification(0);
+                    setEmailSubject("");
+                    setEmailContent("");
+                    setFile("");
+                    setLink("");
+                  }}
+                >
+                  Reset
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => handleSubmit(e)}
+                  className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+                >
+                  Kirim
+                </button>
+              </div>
+            )}
         </form>
       </div>
     </div>
