@@ -106,7 +106,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) =>
                         funcChangeInput(
@@ -269,6 +268,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG
+            </small>
           </div>
         );
         break;
@@ -304,6 +306,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">Silakan masukkan type file PDF</small>
           </div>
         );
         break;
@@ -379,6 +382,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG/PDF
+            </small>
           </div>
         );
         break;
@@ -482,7 +488,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) =>
                         funcChangeInput(
@@ -633,6 +638,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG
+            </small>
           </div>
         );
         break;
@@ -666,6 +674,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">Silakan masukkan type file PDF</small>
           </div>
         );
         break;
@@ -795,6 +804,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG/PDF
+            </small>
           </div>
         );
         break;
@@ -882,7 +894,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) =>
                         funcChangeInput(e.target.value, alfa, indexParent, beta)
@@ -989,6 +1000,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG
+            </small>
           </div>
         );
         break;
@@ -1013,6 +1027,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">Silakan masukkan type file PDF</small>
           </div>
         );
         break;
@@ -1117,6 +1132,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG/PDF
+            </small>
           </div>
         );
         break;
@@ -1186,7 +1204,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) => funcChangeInput(e.target.value, alfa)}
                     />
@@ -1274,6 +1291,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG
+            </small>
           </div>
         );
         break;
@@ -1295,6 +1315,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">Silakan masukkan type file PDF</small>
           </div>
         );
         break;
@@ -1387,6 +1408,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG/PDF
+            </small>
           </div>
         );
         break;
@@ -1396,7 +1420,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
   };
   return (
     <>
-      <div className="row justify-content-end">
+      <div className="row justify-content-start">
         {formBuilder &&
           formBuilder.map((row, alfa) => (
             <>{helperElementRender(row, token, alfa)}</>

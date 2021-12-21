@@ -11,8 +11,8 @@ import { Modal } from "react-bootstrap";
 import ReactCrop from "react-image-crop";
 import IconClose from "../../../../../components/assets/icon/Close";
 
-import styles from "../../../../../styles/sitemanagement/userMitra.module.css"
-import styles2 from "../../../../../styles/previewGaleri.module.css"
+import styles from "../../../../../styles/sitemanagement/userMitra.module.css";
+import styles2 from "../../../../../styles/previewGaleri.module.css";
 
 const TambahApi = ({ token, id }) => {
   const router = useRouter();
@@ -20,7 +20,9 @@ const TambahApi = ({ token, id }) => {
 
   const { mitaSite } = useSelector((state) => state.detailMitraSite);
 
-  const [nameCooperation, setNameCooperation] = useState(mitaSite?.institution_name);
+  const [nameCooperation, setNameCooperation] = useState(
+    mitaSite?.institution_name
+  );
   const [email, setEmail] = useState(mitaSite?.email);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -40,14 +42,16 @@ const TambahApi = ({ token, id }) => {
     process.env.END_POINT_API_IMAGE_PARTNERSHIP + mitaSite?.agency_logo
   );
 
-  const [gambarName, setGambarName] = useState(mitaSite?.agency_logo.split("/")[3]);
+  const [gambarName, setGambarName] = useState(
+    mitaSite?.agency_logo.split("/")[3]
+  );
 
   const imgRef = useRef(null);
   const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
-  const [showEditImage, setShowEditImage] = useState(false)
+  const [showEditImage, setShowEditImage] = useState(false);
   const [upImg, setUpImg] = useState();
   const [imageview, setImageview] = useState("");
-  const defaultImage = "/assets/media/default.jpg"
+  const defaultImage = "/assets/media/default.jpg";
   const previewCanvasRef = useRef(null);
   const [completedCrop, setCompletedCrop] = useState(null);
 
@@ -74,11 +78,11 @@ const TambahApi = ({ token, id }) => {
     }
   };
 
-  const onChangeGambar = e => {
+  const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
 
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > '2000000') {
+      if (e.target.files[0].size > "2000000") {
         e.target.value = null;
         Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
       } else {
@@ -105,7 +109,6 @@ const TambahApi = ({ token, id }) => {
   const submit = async (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-
       if (nameCooperation === "") {
         Swal.fire(
           "Gagal simpan",
@@ -114,14 +117,12 @@ const TambahApi = ({ token, id }) => {
         );
       } else if (email === "") {
         Swal.fire("Gagal simpan", "Form Email tidak boleh kosong", "error");
-      }
-      else if (status === "") {
+      } else if (status === "") {
         Swal.fire("Gagal simpan", "Form Status tidak boleh kosong", "error");
       } else {
         let formData = new FormData();
         formData.append("name", nameCooperation);
         formData.append("email", email);
-
 
         if (password && confirmPassword) {
           formData.append("password", password);
@@ -141,9 +142,11 @@ const TambahApi = ({ token, id }) => {
               },
             }
           );
-          Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-            router.push(`/site-management/user/mitra/`);
-          });
+          Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+            () => {
+              router.push(`/site-management/user/mitra/`);
+            }
+          );
         } catch (error) {
           Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
         }
@@ -160,7 +163,7 @@ const TambahApi = ({ token, id }) => {
   };
 
   const onSelectFile = (e) => {
-    if (e.target.files[0].size > '2000000') {
+    if (e.target.files[0].size > "2000000") {
       e.target.value = null;
       Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
     } else if (e.target.files && e.target.files.length > 0) {
@@ -207,29 +210,25 @@ const TambahApi = ({ token, id }) => {
     );
   }, [completedCrop]);
 
-  useEffect(() => {
-
-  }, [dispatch])
+  useEffect(() => {}, [dispatch]);
 
   const onHandleHideModal = () => {
-    setShowEditImage(false)
-    setUpImg(null)
-  }
+    setShowEditImage(false);
+    setUpImg(null);
+  };
 
   const onSubmitEditImage = () => {
-    setShowEditImage(false)
-    setUpImg(null)
-    setAgencyLogoNew(previewCanvasRef.current.toDataURL("image/png"))
-  }
+    setShowEditImage(false);
+    setUpImg(null);
+    setAgencyLogoNew(previewCanvasRef.current.toDataURL("image/png"));
+  };
 
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header">
-            <h3
-              className="card-title font-weight-bolder text-dark"
-            >
+            <h3 className="card-title font-weight-bolder text-dark">
               Edit Mitra
             </h3>
           </div>
@@ -243,7 +242,9 @@ const TambahApi = ({ token, id }) => {
                   className="form-control"
                   placeholder="Masukkan nama lengkap"
                   onChange={(e) => setNameCooperation(e.target.value)}
-                  onBlur={() => simpleValidator.current.showMessageFor("namaLengkap")}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("namaLengkap")
+                  }
                 />
 
                 {simpleValidator.current.message(
@@ -263,7 +264,6 @@ const TambahApi = ({ token, id }) => {
                   placeholder="mitra@gmail.com"
                   onBlur={() => simpleValidator.current.showMessageFor("email")}
                 />
-
 
                 {simpleValidator.current.message(
                   "email",
@@ -285,10 +285,7 @@ const TambahApi = ({ token, id }) => {
                     data-target="#exampleModalCenter"
                   >
                     <Image
-                      src={
-                        agency_logoNew === "" ? agency_logo :
-                          agency_logoNew
-                      }
+                      src={agency_logoNew === "" ? agency_logo : agency_logoNew}
                       alt="image"
                       width={160}
                       height={160}
@@ -386,7 +383,7 @@ const TambahApi = ({ token, id }) => {
               </div>
 
               <div className="form-group">
-                <label>Password</label>
+                <label>Password Baru</label>
                 <div className="position-relative">
                   <input
                     onChange={(e) => setPassword(e.target.value)}
@@ -417,13 +414,15 @@ const TambahApi = ({ token, id }) => {
                   )} */}
                 </div>
                 <p className={`${styles.notes}`} style={{ color: "#b7b5cf" }}>
-                  Min 8 Karakter,<br />
-                  Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)<br />
-                  Min 1 Simbol dan angka
+                  Min. 8 Karakter
+                  <br />
+                  Min. 1 Uppercase dan 1 Lowercase (Case Sensitivity)
+                  <br />
+                  Min. 1 Simbol dan 1 Angka
                 </p>
               </div>
               <div className="form-group">
-                <label>Konfirmasi Password</label>
+                <label>Konfirmasi Password Baru</label>
                 <div className="position-relative">
                   <input
                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -460,7 +459,9 @@ const TambahApi = ({ token, id }) => {
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
-                    onBlur={() => simpleValidator.current.showMessageFor("status")}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("status")
+                    }
                   >
                     <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
@@ -475,18 +476,17 @@ const TambahApi = ({ token, id }) => {
                   </select>
                 )}
 
-                {simpleValidator.current.message(
-                  "status",
-                  status,
-                  "required",
-                  { className: "text-danger" }
-                )}
+                {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
               </div>
             </form>
             <div className="form-group row">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/user/mitra" passHref>
-                  <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}>
+                  <a
+                    className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                  >
                     Kembali
                   </a>
                 </Link>
@@ -508,7 +508,7 @@ const TambahApi = ({ token, id }) => {
         show={showEditImage}
         onHide={() => onHandleHideModal()}
         centered
-      // dialogClassName="mx-10 mx-sm-auto rounded-lg"
+        // dialogClassName="mx-10 mx-sm-auto rounded-lg"
       >
         <Modal.Header>
           <Modal.Title>Ganti Logo Lembaga</Modal.Title>
@@ -520,13 +520,10 @@ const TambahApi = ({ token, id }) => {
           >
             <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
           </button>
-
         </Modal.Header>
 
         <Modal.Body>
-          <div>
-            Logo Lembaga
-          </div>
+          <div>Logo Lembaga</div>
 
           <div className="my-5">
             <button
@@ -560,24 +557,19 @@ const TambahApi = ({ token, id }) => {
               </div>
 
               <div className="col-12 col-md-6">
-                {
-                  upImg ?
-                    <div>
-                      <div>
-                        Pratinjau
-                      </div>
-                      <canvas
-                        ref={previewCanvasRef}
-                        style={{
-                          width: Math.round(completedCrop?.width ?? 0),
-                          height: Math.round(completedCrop?.height ?? 0),
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </div>
-                    :
-                    null
-                }
+                {upImg ? (
+                  <div>
+                    <div>Pratinjau</div>
+                    <canvas
+                      ref={previewCanvasRef}
+                      style={{
+                        width: Math.round(completedCrop?.width ?? 0),
+                        height: Math.round(completedCrop?.height ?? 0),
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -601,7 +593,6 @@ const TambahApi = ({ token, id }) => {
             </div>
           </div>
         </Modal.Footer>
-
       </Modal>
       {/* End of Modal Edit Image */}
     </PageWrapper>

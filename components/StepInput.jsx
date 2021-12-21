@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../styles/stepInput.module.css";
 
-const StepInput = ({ step, survey }) => {
+const StepInput = ({ step, survey, title }) => {
   let stepBg1 = "bg-neutral";
   let stepBg2 = "bg-neutral";
   let stepBg3 = "bg-neutral";
@@ -52,7 +52,7 @@ const StepInput = ({ step, survey }) => {
                   </h1>
                 </div>
                 <div className="my-5">
-                  <h5 className={`${textHeader1}`}>Buat Soal</h5>
+                  <h5 className={`${textHeader1}`}>Buat Soal {title}</h5>
                   <p className={`${textDesc1}`}>Masukan Informasi Soal</p>
                 </div>
               </div>
@@ -71,7 +71,7 @@ const StepInput = ({ step, survey }) => {
                   </h1>
                 </div>
                 <div className={`${styles.topHeader} my-5`}>
-                  <h5 className={`${textHeader2}`}>Bank Soal</h5>
+                  <h5 className={`${textHeader2}`}>Bank Soal {title}</h5>
                   <p className={`${textDesc2}`}>
                     Masukan {survey ? "Survey" : "Soal"}
                   </p>
@@ -90,7 +90,7 @@ const StepInput = ({ step, survey }) => {
                   </h1>
                 </div>
                 <div className="my-5">
-                  <h5 className={`${textHeader3}`}>Publish</h5>
+                  <h5 className={`${textHeader3}`}>Publish {title}</h5>
                   <p className={`${textDesc3}`}>Tentukan Publishnya</p>
                 </div>
               </div>

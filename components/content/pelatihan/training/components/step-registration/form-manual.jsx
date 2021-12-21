@@ -504,7 +504,9 @@ const FormManual = ({
             </div>
             <div className="col-sm-12 col-md-2">
               <div className="form-group mb-2">
-                <label className="col-form-label font-weight-bold">Size</label>
+                <label className="col-form-label font-weight-bold">
+                  Ukuran Form
+                </label>
                 <select
                   className="form-control"
                   name="size"
@@ -527,14 +529,16 @@ const FormManual = ({
 
             {renderMultipleHandler(row, i)}
             <div className="col-sm-6 col-md-2">
-              <label className="col-form-label font-weight-bold ">Req</label>
+              <label className="col-form-label font-weight-bold ">
+                Required
+              </label>
               {row.element === "triggered" && (
                 <label className="col-form-label font-weight-bold ml-3">
                   Triggered
                 </label>
               )}
               <div className="d-flex align-items-end justify-content-between">
-                <div className="form-group ">
+                <div className="form-group mr-15">
                   <div className="form-check mb-4">
                     <input
                       type="checkbox"

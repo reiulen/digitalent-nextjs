@@ -12,6 +12,8 @@ import {
   storeRegistrationStep2,
   getRegistrationStep2,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+import { getAllDataReference } from "../../../../../redux/actions/site-management/data-reference.actions";
+import { helperUnformatCheckbox } from "../../../../../utils/middleware/helper";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
@@ -70,6 +72,7 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
   const [viewForm, setViewForm] = useState(registrationData.type_form);
 
   useEffect(() => {
+    dispatch(getAllDataReference(token, true));
     if (registrationData.type_form === "0") {
       setTitleCopy("");
       setFormBuilderCopy([]);
@@ -207,12 +210,12 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
       });
     } else {
       if (simpleValidator.current.allValid()) {
+        const valueForm = helperUnformatCheckbox(formBuilderStore);
         const data = {
           judul_form: titleStore,
           type_form: viewForm,
-          formBuilder: formBuilderStore,
+          formBuilder: valueForm,
         };
-        // console.log(data);
         dispatch(storeRegistrationStep2(data));
         propsStep(3);
       } else {
@@ -311,12 +314,13 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
           </h1>
           <div className="card-toolbar justify-content-between d-flex">
             <button
-              className="btn btn-outline-primary px-6 font-weight-bolder"
+              className="btn btn-warning px-6 font-weight-bolder"
+              style={{ borderRadius: "30px" }}
               data-toggle="modal"
               data-target="#modalProfile"
               type="button"
             >
-              Data Profile Peserta
+              Harap dibaca!
             </button>
           </div>
         </div>

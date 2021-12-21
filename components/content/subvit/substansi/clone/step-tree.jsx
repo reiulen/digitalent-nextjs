@@ -352,7 +352,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                       type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
-                      placeholder="80.00"
+                      placeholder="80"
                       value={passing_grade}
                       onChange={(e) => handlePassingGrade(e.target.value)}
                       onBlur={() =>

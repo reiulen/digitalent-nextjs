@@ -187,7 +187,7 @@ const StepThree = ({ token, tokenPermission }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="3"></StepInput>
+          <StepInput step="3" title="Substansi"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
@@ -373,7 +373,7 @@ const StepThree = ({ token, tokenPermission }) => {
                   <div className="input-group">
                     <input
                       type="text"
-                      placeholder="80.00"
+                      placeholder="80"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={passing_grade}
