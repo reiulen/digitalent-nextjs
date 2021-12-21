@@ -36,6 +36,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
+
 const DataParticipant = ({ token }) => {
 	const dispatch = useDispatch();
 	const router = useRouter();
@@ -264,7 +265,6 @@ const DataParticipant = ({ token }) => {
 		);
 		let timeout = 0;
 		let connectInterval;
-
 		ws.onopen = () => {
 			setSocket(ws);
 			timeout = 250;
@@ -293,7 +293,7 @@ const DataParticipant = ({ token }) => {
 			User_id: peserta.list[0].user_id,
 		};
 		try {
-			socket.send(JSON.stringify({ Message: JSON.stringify(data) }));
+			socket.send(JSON.stringify({ Message: JSON.stringify(data) }));	
 			handleConnectSocket();
 		} catch (err) {}
 	};
