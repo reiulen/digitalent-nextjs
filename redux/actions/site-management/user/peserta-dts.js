@@ -166,7 +166,7 @@ export const deletePesertaDts =
     async (dispatch) => {
       try {
         const { data } = await axios.delete(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/v1/auth/delete?id=${user_id}`,
+          `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/delete?id=${user_id}`,
           {
             headers: {
               authorization: `Bearer ${token}`,
