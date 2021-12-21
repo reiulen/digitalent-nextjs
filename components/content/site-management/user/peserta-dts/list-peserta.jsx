@@ -20,7 +20,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allListPeserta = useSelector((state) => state.allListPeserta);
-
+  
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState(null);
@@ -145,7 +145,7 @@ const Table = ({ token }) => {
       }
     })
   }
-  
+
   const handleSearch = (e) => {
     e.preventDefault()
     setPage(1);
@@ -237,9 +237,9 @@ const Table = ({ token }) => {
                 {allListPeserta?.data?.data?.total >= 5 ? (
                   <>
                     <div
-                      className={`${stylesPag.pagination} table-pagination`}
-                    // className="table-pagination table-pagination pagination-custom col-12 col-md-6"
-                    // style={{ width: "max-content" }}
+                      // className={`${stylesPag.pagination} table-pagination`}
+                    className="table-pagination table-pagination pagination-custom col-12 col-md-6"
+                    style={{ width: "max-content" }}
                     >
                       <Pagination
                         activePage={page}
