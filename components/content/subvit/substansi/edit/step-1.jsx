@@ -48,7 +48,8 @@ const StepOne = ({ token, tokenPermission }) => {
     (subtance?.theme && subtance?.theme.name) || "Silahkan Pilih Tema"
   );
   const [trainingLabel, setTrainingLabel] = useState(
-    (subtance?.training && subtance?.training?.name) || "Silahkan Pilih Pelatihan"
+    (subtance?.training && subtance?.training?.name) ||
+      "Silahkan Pilih Pelatihan"
   );
   const [theme_id, setThemeId] = useState(subtance && subtance?.theme_id);
   const [training_id, setTrainingId] = useState(
@@ -197,7 +198,9 @@ const StepOne = ({ token, tokenPermission }) => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Ubah Test Substansi</h2>
+            <h2 className="card-title h2 text-dark">
+              Ubah {subtance?.category}
+            </h2>
           </div>
           <div className="card-body pt-0">
             <Form>

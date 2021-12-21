@@ -118,25 +118,29 @@ const Table = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      id="kt_datatable_search_query"
-                      type="text"
-                      className={`${styles.cari} form-control pl-10`}
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => handleChangeValueSearch(e.target.value)}
-                    />
-                    <button
-                      type="button"
-                      onClick={(e) => handleSubmit(e)}
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSubmit(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        id="kt_datatable_search_query"
+                        type="text"
+                        className={`${styles.cari} form-control pl-10`}
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) =>
+                          handleChangeValueSearch(e.target.value)
+                        }
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => handleSubmit(e)}
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>

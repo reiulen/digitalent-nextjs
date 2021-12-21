@@ -264,7 +264,6 @@ const DataParticipant = ({ token }) => {
     );
     let timeout = 0;
     let connectInterval;
-
     ws.onopen = () => {
       setSocket(ws);
       timeout = 250;
@@ -607,7 +606,7 @@ const DataParticipant = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              Verifikasi Kelengkapan Berkas
+              Reminder Kelengkapan Berkas
             </h1>
           </div>
 

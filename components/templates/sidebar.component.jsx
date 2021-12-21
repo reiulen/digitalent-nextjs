@@ -458,6 +458,11 @@ const Sidebar = ({ session }) => {
             onClick={() => activeProfileAndOverlay()}
           />
         )}
+        <ul className="menu-nav" style={{listStyleType: "none"}}>
+            <li className="menu-text text-white">
+              DTS Version: {process.env.VERSION_APP}
+            </li>
+        </ul>
     </div>
   );
 };

@@ -84,6 +84,13 @@ const Table = ({ token }) => {
     });
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault()
+    setPage(1);
+    setLimit(5);
+    dispatch(getAllListsPeserta(token, 5, 1, search));
+  }
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -98,7 +105,7 @@ const Table = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <form
-                    // onSubmit={handleSubmit}
+                    onSubmit={(e) => handleSearch(e)}
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
