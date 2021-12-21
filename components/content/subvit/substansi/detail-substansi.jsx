@@ -297,7 +297,9 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Substansi{" "}
+              {subtance?.category === "Test Substansi"
+                ? "Substansi"
+                : "Mid Test"}{" "}
               {subtance && subtance.academy ? subtance.academy.name : ""} -{" "}
               {subtance && subtance.theme ? subtance.theme.name : ""}
             </h2>
