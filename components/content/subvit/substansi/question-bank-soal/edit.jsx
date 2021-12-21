@@ -240,6 +240,7 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
         status,
         answer_key,
         question_type_id: question_type,
+        _method: "put",
       };
 
       dispatch(updateSubtanceQuestionDetail(id, data, token, tokenPermission));
