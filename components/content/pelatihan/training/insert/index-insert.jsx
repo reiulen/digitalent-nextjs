@@ -5,10 +5,6 @@ import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { useDispatch, useSelector } from "react-redux";
 
-// import AddTrainingStep1 from "./add-training-step1";
-// import AddRegistrationStep2 from "./add-registration-step2";
-// import AddCommitmentStep3 from "./add-commitment-step3";
-
 const AddTrainingStep1 = dynamic(() => import("./add-training-step1"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;

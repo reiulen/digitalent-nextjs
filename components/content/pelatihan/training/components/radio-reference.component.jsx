@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const RadioReference = ({ id, token, onChangeValue }) => {
+const RadioReference = ({ id, token, required, onChangeValue }) => {
   const [optionsReference, setOptionsReference] = useState([]);
 
   useEffect(() => {
@@ -32,6 +32,7 @@ const RadioReference = ({ id, token, onChangeValue }) => {
                 name={"radiobutton"}
                 className="form-check-input"
                 value={row.label}
+                required={required}
                 onClick={(e) => onChangeValue(row.label)}
               />
               <label className="form-check-label">{row.label}</label>

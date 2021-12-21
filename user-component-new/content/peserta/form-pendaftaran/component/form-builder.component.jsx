@@ -28,6 +28,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             <input
               type={row.element}
               name=""
+              value={row.value}
               className="form-control"
               required={row.required}
               placeholder={`Silahkan Masukkan ${row.name}`}
@@ -60,6 +61,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) =>
                 funcChangeInput(
                   e.target.value,
@@ -160,6 +162,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               rows="5"
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) =>
                 funcChangeInput(
                   e.target.value,
@@ -216,6 +219,18 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                   id={row.dataOption}
                   token={propsToken}
                   required={row.required}
+                  onChangeValue={(value) =>
+                    funcChangeInput(
+                      value,
+                      alfa,
+                      indexParent,
+                      beta,
+                      indexChildren,
+                      gamma,
+                      indexIndex,
+                      delta
+                    )
+                  }
                 />
               )}
             </div>
@@ -251,7 +266,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 }
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
+                {row.fileName}
               </label>
             </div>
           </div>
@@ -286,7 +301,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 }
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
+                {row.fileName}
               </label>
             </div>
           </div>
@@ -324,25 +339,46 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         break;
       case "upload_document":
         return (
-          <div
-            style={{ maxWidth: "100%" }}
-            className={`form-group mt-0 mb-0 ${row.size}`}
-          >
-            <label className="col-form-label font-weight-bold">
+          <div className={`form-group mt-0 mb-0 ${row.size}`}>
+            <label className="col-form-label font-weight-bold d-flex">
               {row.name}
+              <p
+                className="text-primary ml-3 mb-0"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  !row.dataOption.includes("data:") &&
+                    window.open(
+                      process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                      "_blank"
+                    );
+                }}
+              >
+                Unduh Contoh Document
+              </p>
             </label>
-            <p
-              className="text-primary"
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                window.open(
-                  process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
-                  "_blank"
-                )
-              }
-            >
-              {row.dataOption}
-            </p>
+            <div className="custom-file">
+              <input
+                type="file"
+                className="custom-file-input"
+                accept="application/pdf"
+                required={row.required}
+                onChange={(e) =>
+                  funcChangeInput(
+                    e,
+                    alfa,
+                    indexParent,
+                    beta,
+                    indexChildren,
+                    gamma,
+                    indexIndex,
+                    delta
+                  )
+                }
+              />
+              <label className="custom-file-label" htmlFor="customFile">
+                Belum ada file
+              </label>
+            </div>
           </div>
         );
         break;
@@ -374,6 +410,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               placeholder={`Silahkan Masukkan ${row.name}`}
               onChange={(e) =>
                 funcChangeInput(
@@ -402,6 +439,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) =>
                 funcChangeInput(
                   e.target.value,
@@ -496,6 +534,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               rows="5"
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) =>
                 funcChangeInput(
                   e.target.value,
@@ -548,6 +587,16 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                   id={row.dataOption}
                   token={propsToken}
                   required={row.required}
+                  onChangeValue={(value) =>
+                    funcChangeInput(
+                      value,
+                      alfa,
+                      indexParent,
+                      beta,
+                      indexChildren,
+                      gamma
+                    )
+                  }
                 />
               )}
             </div>
@@ -581,7 +630,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 }
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
+                {row.fileName}
               </label>
             </div>
           </div>
@@ -614,7 +663,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 }
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
+                {row.fileName}
               </label>
             </div>
           </div>
@@ -634,6 +683,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) =>
                 funcChangeInput(
                   e.target.value,
@@ -662,6 +712,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 name=""
                 className="form-control"
                 required={row.required}
+                value={row.value}
                 onChange={(e) =>
                   funcChangeInput(
                     e.target.value,
@@ -706,25 +757,44 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         break;
       case "upload_document":
         return (
-          <div
-            style={{ maxWidth: "100%" }}
-            className={`form-group mt-0 mb-0 ${row.size}`}
-          >
-            <label className="col-form-label font-weight-bold">
+          <div className={`form-group mt-0 mb-0 ${row.size}`}>
+            <label className="col-form-label font-weight-bold d-flex">
               {row.name}
+              <p
+                className="text-primary ml-3 mb-0"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  !row.dataOption.includes("data:") &&
+                    window.open(
+                      process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                      "_blank"
+                    );
+                }}
+              >
+                Unduh Contoh Document
+              </p>
             </label>
-            <p
-              className="text-primary"
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                window.open(
-                  process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
-                  "_blank"
-                )
-              }
-            >
-              {row.dataOption}
-            </p>
+            <div className="custom-file">
+              <input
+                type="file"
+                className="custom-file-input"
+                accept="application/pdf"
+                required={row.required}
+                onChange={(e) =>
+                  funcChangeInput(
+                    e,
+                    alfa,
+                    indexParent,
+                    beta,
+                    indexChildren,
+                    gamma
+                  )
+                }
+              />
+              <label className="custom-file-label" htmlFor="customFile">
+                Belum ada file
+              </label>
+            </div>
           </div>
         );
         break;
@@ -754,6 +824,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               placeholder={`Silahkan Masukkan ${row.name}`}
               onChange={(e) =>
                 funcChangeInput(e.target.value, alfa, indexParent, beta)
@@ -775,6 +846,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) =>
                 funcChangeInput(e.target.value, alfa, indexParent, beta)
               }
@@ -848,6 +920,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               rows="5"
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) =>
                 funcChangeInput(e.target.value, alfa, indexParent, beta)
               }
@@ -886,6 +959,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                   id={row.dataOption}
                   token={propsToken}
                   required={row.required}
+                  onChangeValue={(value) =>
+                    funcChangeInput(value, alfa, indexParent, beta)
+                  }
                 />
               )}
             </div>
@@ -910,7 +986,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 onChange={(e) => funcChangeInput(e, alfa, indexParent, beta)}
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
+                {row.fileName}
               </label>
             </div>
           </div>
@@ -934,7 +1010,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 onChange={(e) => funcChangeInput(e, alfa, indexParent, beta)}
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
+                {row.fileName}
               </label>
             </div>
           </div>
@@ -954,6 +1030,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) =>
                 funcChangeInput(e.target.value, alfa, indexParent, beta)
               }
@@ -975,6 +1052,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 name=""
                 className="form-control"
                 required={row.required}
+                value={row.value}
                 onChange={(e) =>
                   funcChangeInput(e.target.value, alfa, indexParent, beta)
                 }
@@ -1010,25 +1088,35 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         break;
       case "upload_document":
         return (
-          <div
-            style={{ maxWidth: "100%" }}
-            className={`form-group mt-0 mb-0 ${row.size}`}
-          >
-            <label className="col-form-label font-weight-bold">
+          <div className={`form-group mt-0 mb-0 ${row.size}`}>
+            <label className="col-form-label font-weight-bold d-flex">
               {row.name}
+              <p
+                className="text-primary ml-3 mb-0"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  !row.dataOption.includes("data:") &&
+                    window.open(
+                      process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                      "_blank"
+                    );
+                }}
+              >
+                Unduh Contoh Document
+              </p>
             </label>
-            <p
-              className="text-primary"
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                window.open(
-                  process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
-                  "_blank"
-                )
-              }
-            >
-              {row.dataOption}
-            </p>
+            <div className="custom-file">
+              <input
+                type="file"
+                className="custom-file-input"
+                accept="application/pdf"
+                required={row.required}
+                onChange={(e) => funcChangeInput(e, alfa, indexParent, beta)}
+              />
+              <label className="custom-file-label" htmlFor="customFile">
+                Belum ada file
+              </label>
+            </div>
           </div>
         );
         break;
@@ -1049,6 +1137,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               placeholder={`Silahkan Masukkan ${row.name}`}
               onChange={(e) => funcChangeInput(e.target.value, alfa)}
             />
@@ -1065,6 +1154,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) => funcChangeInput(e.target.value, alfa)}
             >
               <option value="">--Pilih Data--</option>
@@ -1127,6 +1217,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               rows="5"
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) => funcChangeInput(e.target.value, alfa)}
             />
           </div>
@@ -1158,6 +1249,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                   id={row.dataOption}
                   token={propsToken}
                   required={row.required}
+                  onChangeValue={(value) => funcChangeInput(value, alfa)}
                 />
               )}
             </div>
@@ -1179,7 +1271,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 onChange={(e) => funcChangeInput(e, alfa)}
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
+                {row.fileName}
               </label>
             </div>
           </div>
@@ -1200,7 +1292,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 onChange={(e) => funcChangeInput(e, alfa)}
               />
               <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
+                {row.fileName}
               </label>
             </div>
           </div>
@@ -1217,6 +1309,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               className="form-control"
               required={row.required}
+              value={row.value}
               onChange={(e) => funcChangeInput(e.target.value, alfa)}
             />
           </div>
@@ -1233,6 +1326,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 name=""
                 className="form-control"
                 required={row.required}
+                value={row.value}
                 onChange={(e) => funcChangeInput(e.target.value, alfa)}
               >
                 <option value="">--Pilih Data--</option>
@@ -1265,21 +1359,34 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
       case "upload_document":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
+            <label className="col-form-label font-weight-bold d-flex">
               {row.name}
+              <p
+                className="text-primary ml-3 mb-0"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  !row.dataOption.includes("data:") &&
+                    window.open(
+                      process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
+                      "_blank"
+                    );
+                }}
+              >
+                Unduh Contoh Document
+              </p>
             </label>
-            <p
-              className="text-primary"
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                window.open(
-                  process.env.END_POINT_API_IMAGE_BEASISWA + row.dataOption,
-                  "_blank"
-                )
-              }
-            >
-              {row.dataOption}
-            </p>
+            <div className="custom-file">
+              <input
+                type="file"
+                className="custom-file-input"
+                accept="application/pdf"
+                required={row.required}
+                onChange={(e) => funcChangeInput(e, alfa)}
+              />
+              <label className="custom-file-label" htmlFor="customFile">
+                {row.value === "" ? "Belum ada file" : row.fileName}
+              </label>
+            </div>
           </div>
         );
         break;

@@ -104,32 +104,34 @@ const Table = ({ token }) => {
                 <div className="col-lg-12 col-xl-12">
                   <div>
                     <div className="row w-100">
-                      <div className="col-12 col-sm-5">
+                      <div className="col-12 col-sm-4">
                         <div className="position-relative overflow-hidden w-100">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) =>
-                              handleChangeValueSearch(e.target.value)
-                            }
-                          />
-                          <button
-                            type="button"
-                            onClick={(e) => handleSubmit(e)}
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
+                          <form onSubmit={(e) => handleSubmit(e)}>
+                            <IconSearch
+                              style={{ left: "10" }}
+                              className="left-center-absolute"
+                            />
+                            <input
+                              id="kt_datatable_search_query"
+                              type="text"
+                              className="form-control pl-10"
+                              placeholder="Ketik disini untuk Pencarian..."
+                              onChange={(e) =>
+                                handleChangeValueSearch(e.target.value)
+                              }
+                            />
+                            <button
+                              type="button"
+                              onClick={(e) => handleSubmit(e)}
+                              className="btn bg-blue-primary text-white right-center-absolute"
+                              style={{
+                                borderTopLeftRadius: "0",
+                                borderBottomLeftRadius: "0",
+                              }}
+                            >
+                              Cari
+                            </button>
+                          </form>
                         </div>
                       </div>
                     </div>
