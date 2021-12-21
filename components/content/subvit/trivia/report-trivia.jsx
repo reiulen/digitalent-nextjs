@@ -53,8 +53,9 @@ const ReportTrivia = ({ token }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/trivia-question-banks/report/export/${id}`;
+    let link = `http://dts-subvit-dev.majapahit.id/api/trivia-question-banks/report/export/${id}?`;
     if (search) link = link.concat(`&keyword=${search}`);
+    if (router.query.card) link = link.concat(`&card=${router.query.card}`);
 
     const config = {
       headers: {
@@ -193,7 +194,7 @@ const ReportTrivia = ({ token }) => {
                   </div>
                 </div>
                 <div className="col-md-3"></div>
-                <div className="col-md-3"></div>
+                <div className="col-md-2"></div>
 
                 <div className="col-md-2">
                   <button
@@ -298,7 +299,9 @@ const ReportTrivia = ({ token }) => {
                                   </td>
                                 ) : row.finish == 1 && row.status == 0 ? (
                                   <td className="align-middle">
-                                    <Badge bg="danger">Sudah Mengerjakan</Badge>
+                                    <Badge bg="success">
+                                      Sudah Mengerjakan
+                                    </Badge>
                                   </td>
                                 ) : (
                                   <td className="align-middle">
