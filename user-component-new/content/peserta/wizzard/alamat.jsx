@@ -48,7 +48,6 @@ const Alamat = ({ session }) => {
 									);
 								})}
 							</div>
-
 							<Card.Body className="p-0">
 								<div className="d-md-flex d-none justify-content-center align-items-center h-100 w-100 my-10">
 									{step.map((el, i) => {
