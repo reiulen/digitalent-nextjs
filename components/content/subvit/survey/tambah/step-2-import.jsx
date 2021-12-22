@@ -84,20 +84,22 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [limit, setLimit] = useState(null);
 
   useEffect(() => {
-    dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
+    dispatch(
+      getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission)
+    );
     // if (error) {
     //   dispatch(clearErrors());
     // }
     if (successFile) {
-      dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
+      getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission);
     }
 
     if (successImages) {
-      dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
+      getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission);
     }
 
     if (isDeleted) {
-      dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
+      getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission);
     }
   }, [
     dispatch,

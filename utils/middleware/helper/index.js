@@ -1055,7 +1055,11 @@ export const helperChangeInputForm = (
         element.triggered_parent.map((triggeredRow, triggeredIndex) => {
           triggeredRow.triggeredForm.length > 0 &&
             triggeredRow.triggeredForm.map((elementRow, elementIndex) => {
-              elementRow.value = "";
+              if (elementRow.element === "checkbox") {
+                elementRow.value = [];
+              } else {
+                elementRow.value = "";
+              }
             });
         });
     }
@@ -1144,7 +1148,11 @@ export const helperChangeInputForm = (
         element.triggered_children.map((triggeredRow, triggeredIndex) => {
           triggeredRow.triggeredForm.length > 0 &&
             triggeredRow.triggeredForm.map((elementRow, elementIndex) => {
-              elementRow.value = "";
+              if (elementRow.element === "checkbox") {
+                elementRow.value = [];
+              } else {
+                elementRow.value = "";
+              }
             });
         });
     }
@@ -1238,7 +1246,11 @@ export const helperChangeInputForm = (
         element.triggered_index.map((triggeredRow, triggeredIndex) => {
           triggeredRow.triggeredForm.length > 0 &&
             triggeredRow.triggeredForm.map((elementRow, elementIndex) => {
-              elementRow.value = "";
+              if (elementRow.element === "checkbox") {
+                elementRow.value = [];
+              } else {
+                elementRow.value = "";
+              }
             });
         });
     }

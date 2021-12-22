@@ -156,3 +156,87 @@
   color: #0063cc;
   font-size: 20px;
 }
+
+
+.stepBlock2 .bigCircle{
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #0063cc;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  color: white;
+  border: 2px solid #0063cc;
+}
+
+.stepBlock2 .bigCircleSelected {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  color: #0063cc;
+  border: 2px solid #0063cc ;
+}
+
+.stepBlock2 .bigStepperWrapperFinish .bigCircle {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  color: #ADB5BD;
+  border: 2px solid #ADB5BD;
+}
+
+
+.bigStepperCircleSelected{
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  color: #0063cc;
+  border: 2px solid #0063cc;
+}
+
+.bigStepperWrapper{
+  padding: 0px 10vw;
+  position: relative;
+  z-index: 2
+}
+
+.stepBlock2:not(:last-child) .bigStepperWrapper::after{
+  content: '';
+  width: 100%;
+  height: 3px;
+  top: 0px;
+  bottom: 0px;
+  position: absolute;
+  background-color:#0063cc;
+  margin: auto;
+  z-index: -1
+}
+
+.stepBlock2:not(:last-child) .bigStepperWrapperFinish::after{
+  content: '';
+  width: 100%;
+  height: 3px;
+  top: 0px;
+  bottom: 0px;
+  position: absolute;
+  background-color:#ADB5BD;
+  margin: auto;
+  z-index: -1
+}
