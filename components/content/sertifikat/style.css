@@ -27,10 +27,6 @@
 	font-size: 3.8vw;
 }
 
-.responsive-margin-peserta {
-	top: 38px !important;
-}
-
 .responsive-margin-publish {
 	top: 42px;
 }
@@ -45,7 +41,7 @@
 }
 
 .responsive-nomor-sertifikat {
-	margin-top: 20%;
+	margin-top: 17%;
 }
 
 .responsive-qr-code {
@@ -93,13 +89,10 @@
 	margin-top: 20%;
 }
 .responsive-margin-peserta-1 {
-	margin-top: 20% !important;
+	margin-top: 22.5% !important;
 }
 
 @media (min-width: 768px) {
-	.responsive-margin-peserta {
-		top: 120px !important;
-	}
 
 	.responsive-font-size-peserta {
 		font-size: 16px !important;
@@ -143,9 +136,7 @@
 	.responsive-margin-without-background {
 		margin-top: 22%;
 	}
-	.responsive-margin-peserta-1 {
-		margin-top: 25% !important;
-	}
+
 	.responsive-normal-font-size {
 		font-size: 10px;
 	}
@@ -174,10 +165,6 @@
 
 	.a4-font-normal {
 		font-size: 0.75vw;
-	}
-
-	.responsive-margin-peserta {
-		top: 110px !important;
 	}
 
 	.responsive-font-size-peserta {
@@ -222,22 +209,12 @@
 	.responsive-margin-without-background {
 		margin-top: 21.5% !important;
 	}
-	.responsive-margin-peserta-1 {
-		margin-top: 25% !important;
-	}
 	.responsive-normal-font-size {
 		font-size: 10px;
 	}
 }
 
 @media (min-width: 1200px) {
-	.responsive-margin-peserta {
-		top: 135px !important;
-	}
-
-	.responsive-margin-peserta-1 {
-		margin-top: 25% !important;
-	}
 
 	.responsive-font-size-peserta {
 		font-size: 24px !important;
