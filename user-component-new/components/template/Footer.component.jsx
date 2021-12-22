@@ -29,10 +29,6 @@ export default function Footer() {
 		}
 	}, [footer]);
 
-	useEffect(() => {
-		console.log(sosmed);
-	}, [sosmed]);
-
 	const getDataGeneral = async () => {
 		try {
 			let { data } = await axios.get(
