@@ -21,10 +21,6 @@ export default function Footer() {
 		}
 	}, [footer]);
 
-	useEffect(() => {
-		dispatch(getBerandaFooter());
-	}, []);
-
 	const getDataGeneral = async () => {
 		try {
 			let { data } = await axios.get(
@@ -53,6 +49,7 @@ export default function Footer() {
 		} else if (localStorage.getItem("footer") == "3") {
 			setWarna("extras");
 		}
+		dispatch(getBerandaFooter());
 	}, []);
 
 	return (
