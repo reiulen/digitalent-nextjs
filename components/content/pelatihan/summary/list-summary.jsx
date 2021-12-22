@@ -410,7 +410,9 @@ const ListSummary = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal Pendaftaran - Jadwal Pelatihan</th>
+                        <th>
+                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                        </th>
                         <th>Status Pelatihan</th>
                         <th>Aksi</th>
                       </tr>

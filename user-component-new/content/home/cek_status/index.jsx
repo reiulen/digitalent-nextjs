@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 
 import { Container, Card, Row, Col, Form, Button } from "react-bootstrap";
@@ -6,14 +6,28 @@ import { useRouter } from "next/router";
 
 import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
+import { getCheckStatusSertifikat } from "../../../../redux/actions/beranda/check-sertifikat.actions";
+
 export default function Kontak() {
+	const [dataSertifikat, setDataSertifikat] = useState("");
+	const dispatch = useDispatch();
+	const [nomorRegistrasi, setNomorRegistrasi] = useState("");
+	const { error, data } = useSelector((state) => state.CheckStatusSertifikat);
+
 	const router = useRouter();
-	const data = false;
+
+	const handleSubmitButton = (nomerRegistrasi) => {
+		router.push(`/cek-sertifikat?registrasi=${nomerRegistrasi}`);
+		// dispatch(getCheckStatusSertifikat(nomerRegistrasi));
+	};
+
 	return (
 		<>
 			<HomeWrapper>
 				<BreadcrumbComponent
-					data={[{ link: router.asPath, name: "Verifikasi Sertifikat" }]}
+					data={[{ link: router.asPath, name: "Cek Sertifikat" }]}
 				/>
 				<div className="mt-5">
 					<h1 className="fw-700 fz-40">Verifikasi Sertifikat</h1>
@@ -33,24 +47,86 @@ export default function Kontak() {
 								</p>
 							</Col>
 							<Col lg={5} className="align-self-center p-10">
-								<Form.Group className="mb-3" controlId="formBasicEmail">
+								<Form.Group className="mb-3 fz-12" controlId="formBasicEmail">
 									<Form.Label>Nomor Registrasi</Form.Label>
 									<Form.Control
 										type="text"
 										placeholder="Masukan nomor registrasi pelatihan"
+										onChange={(e) => {
+											setNomorRegistrasi(e.target.value);
+										}}
 									/>
 								</Form.Group>
 								<div className="w-100 d-flex justify-content-end">
 									<Button
 										type="submit"
 										className="btn btn-primary rounded-full"
+										onClick={() => {
+											handleSubmitButton(nomorRegistrasi);
+										}}
 									>
 										Cek Sertifikat
 									</Button>
 								</div>
-								{data ? (
-									<div></div>
-								) : (
+								{data?.name ? (
+									<Card className="p-8 rounded-xl mt-8">
+										<div className="bg-success d-flex align-items-center p-8 rounded-xl">
+											<Image
+												src={`/assets/icon/icon-status-pelatihan/Shield-check.svg`}
+												width={24}
+												height={24}
+												alt="Checked Icon"
+												objectFit="cover"
+											/>
+											<div className="text-white fz-16 ml-5">
+												Sertifikat terdaftar
+											</div>
+										</div>
+
+										<div className="mt-8 fz-16">
+											<p className="fz-16 mb-8">
+												Sertifikat terdaftar di pelatihan Digital Talent
+												Scholarship dengan data berikut:
+											</p>
+											<div className="row mb-3">
+												<div className="col-4">Nama</div>
+												<div className="col-1 d-flex justify-content-end">
+													:
+												</div>
+												<div className="col-7 p-0">{data?.name}</div>
+											</div>{" "}
+											<div className="row mb-3">
+												<div className="col-4">Akademi</div>
+												<div className="col-1 d-flex justify-content-end">
+													:
+												</div>
+												<div className="col-7 p-0">{data?.akademi}</div>
+											</div>
+											<div className="row mb-3">
+												<div className="col-4">Pelatihan</div>
+												<div className="col-1 d-flex justify-content-end">
+													:
+												</div>
+												<div className="col-7 p-0">{data?.pelatihan}</div>
+											</div>
+											<div className="row mb-3">
+												<div className="col-4">Tanggal Pelaksanaan</div>
+												<div className="col-1 d-flex justify-content-end">
+													:
+												</div>
+												<div className="col-7 p-0">
+													{moment(data?.pelatihan_mulai)
+														.utc()
+														.format("DD MMMM YYYY")}{" "}
+													-{" "}
+													{moment(data?.pelatihan_selesai)
+														.utc()
+														.format("DD MMMM YYYY")}
+												</div>
+											</div>
+										</div>
+									</Card>
+								) : error ? (
 									<Card className="p-8 rounded-xl mt-8">
 										<div className="bg-danger d-flex align-items-center p-8 rounded-xl">
 											<Image
@@ -78,6 +154,8 @@ export default function Kontak() {
 											Scholarship. Cek kembali nomor registrasi yang anda tulis
 										</div>
 									</Card>
+								) : (
+									""
 								)}
 							</Col>
 						</Row>

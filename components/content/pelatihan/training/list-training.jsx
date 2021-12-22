@@ -859,7 +859,9 @@ const ListTraining = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal</th>
+                        <th>
+                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                        </th>
                         <th>Status Publish</th>
                         <th>Status Substansi</th>
                         <th>Status Pelatihan</th>
