@@ -363,7 +363,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <input
                 type="file"
                 className="custom-file-input"
-                accept="application/pdf"
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
                 required={row.value === "" ? row.required : false}
                 onChange={(e) =>
                   funcChangeInput(
@@ -787,7 +787,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <input
                 type="file"
                 className="custom-file-input"
-                accept="application/pdf"
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
                 required={row.value === "" ? row.required : false}
                 onChange={(e) =>
                   funcChangeInput(
@@ -1124,7 +1124,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <input
                 type="file"
                 className="custom-file-input"
-                accept="application/pdf"
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
                 required={row.value === "" ? row.required : false}
                 onChange={(e) => funcChangeInput(e, alfa, indexParent, beta)}
               />
@@ -1400,7 +1400,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <input
                 type="file"
                 className="custom-file-input"
-                accept="application/pdf"
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
                 required={row.value === "" ? row.required : false}
                 onChange={(e) => funcChangeInput(e, alfa)}
               />

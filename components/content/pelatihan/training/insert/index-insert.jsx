@@ -30,7 +30,7 @@ import { SweatAlert } from "../../../../../utils/middleware/helper";
 const IndexInsert = ({ token }) => {
   const dispatch = useDispatch();
 
-  const [view, setView] = useState(1);
+  const [view, setView] = useState(2);
 
   const { training, loading, success, error } = useSelector(
     (state) => state.newTraining

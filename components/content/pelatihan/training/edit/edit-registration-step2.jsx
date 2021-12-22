@@ -14,6 +14,8 @@ import ModalPreview from "../components/modal-preview-form.component";
 import ModalProfile from "../components/modal-profile-peserta";
 import { putTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
 
+import { helperUnformatCheckbox } from "../../../../../utils/middleware/helper";
+
 import FormManual from "../components/step-registration/form-manual";
 import FormCopy from "../components/step-registration/form-copy";
 
@@ -126,13 +128,14 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
     } else {
       titleStore;
     }
-    const data = {
-      judul_form: titleStore,
-      Pelatian_id: parseInt(router.query.id),
-      formBuilder: formBuilderStore,
-      type_form: viewForm,
-    };
     if (simpleValidator.current.allValid()) {
+      const valueForm = helperUnformatCheckbox(formBuilderStore);
+      const data = {
+        judul_form: titleStore,
+        Pelatian_id: parseInt(router.query.id),
+        formBuilder: valueForm,
+        type_form: viewForm,
+      };
       dispatch(putTrainingStep2(token, data));
       propsStep(3);
     } else {
