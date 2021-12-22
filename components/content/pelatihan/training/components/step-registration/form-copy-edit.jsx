@@ -1360,7 +1360,7 @@ const FormCopyEdit = ({
             style={{ borderRadius: "30px", fontWeight: "600" }}
             onClick={showPreviewHandler}
           >
-            Review
+            Preview
           </button>
           <button
             className="btn btn-primary-rounded-full"
