@@ -86,7 +86,6 @@ export default function ListPesertaID({ token }) {
 			SweatAlert("Gagal", e.message, "error");
 		}
 	};
-
 	return (
 		<PageWrapper>
 			{/* error START */}
@@ -151,7 +150,13 @@ export default function ListPesertaID({ token }) {
 								id="sertifikat1"
 								ref={divReference}
 							>
-								<div className="position-absolute text-center w-100 responsive-nomor-sertifikat responsive-normal-font-size zindex-1">
+								<div
+									className={
+										!certificate?.data?.certificate?.background
+											? `responsive-nomor-sertifikat-without-background position-absolute text-center w-100 responsive-normal-font-size zindex-1`
+											: `position-absolute text-center w-100 responsive-nomor-sertifikat responsive-normal-font-size zindex-1`
+									}
+								>
 									{participant?.data?.nomor_sertifikat}
 								</div>
 								<div
