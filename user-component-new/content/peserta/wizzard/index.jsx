@@ -6,6 +6,7 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { Stepper, Step } from "react-form-stepper";
 import Steppers from "./stepper";
 import StepperBig from "./stepperBig";
+
 const InformasiEdit = dynamic(
 	() => import("../profile/informasi/informasi.edit"),
 	{
@@ -29,12 +30,7 @@ const Profile = ({ session }) => {
 		"Pendidikan",
 		"Pekerjaan",
 	]);
-	const [stepBig, setStepBig] = useState([
-		"step 1",
-		"step 2",
-		"step 3",
-		"step 4",
-	]);
+
 	return (
 		<>
 			<Col md={12} style={{ marginTop: "-2%" }}>
@@ -54,68 +50,20 @@ const Profile = ({ session }) => {
 									);
 								})}
 							</div>
-							<div className="d-flex justify-content-center align-items-center h-100 w-100 my-10">
-								{stepBig.map((el, i) => {
-									return (
-										<StepperBig
-											no={step[i]}
-											label={label[i]}
-											finish={i >= viewProfile}
-											selected={i == viewProfile - 1}
-											key={i}
-										/>
-									);
-								})}
-							</div>
+
 							<Card.Body className="p-0">
-								<div className="d-none d-md-block">
-									<Stepper
-										activeStep={viewProfile - 1}
-										connectorStateColors="#0063CC"
-										connectorStyleConfig={{
-											activeColor: "#0063CC",
-											size: "3px",
-											completedColor: "#0063CC",
-										}}
-										style={{
-											fontFamily: "poppins",
-											marginTop: "10px",
-											fontSize: "20px",
-										}}
-										className="d-flex align-item-center overflow-auto"
-									>
-										{step.map((el, i) => {
-											return (
-												<Step
-													key={i}
-													label={label[i]}
-													styleConfig={{
-														activeBgColor: "white",
-														activeTextColor: "#0063CC",
-														size: "28px",
-														inactiveBgColor: "#FFFFFF",
-														inactiveTextColor: "grey",
-														completedBgColor: "#0063CC",
-														completedTextColor: "white",
-														circleFontSize: "20px",
-														labelFontSize: "14px",
-													}}
-													style={{
-														fontFamily: "poppins",
-														color: "#0063CC",
-														border:
-															i < viewProfile
-																? "2px solid #0063CC"
-																: "2px solid grey",
-														width: "40px",
-														height: "40px",
-														marginTop: "-5px",
-														fontWeight: "bolder",
-													}}
-												></Step>
-											);
-										})}
-									</Stepper>
+								<div className="d-md-flex d-none justify-content-center align-items-center h-100 w-100 my-10">
+									{step.map((el, i) => {
+										return (
+											<StepperBig
+												no={step[i]}
+												label={label[i]}
+												finish={i >= viewProfile - 1}
+												selected={i == viewProfile - 1}
+												key={i}
+											/>
+										);
+									})}
 								</div>
 							</Card.Body>
 						</Card>
