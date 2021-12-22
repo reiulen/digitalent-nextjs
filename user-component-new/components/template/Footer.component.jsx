@@ -29,16 +29,11 @@ export default function Footer() {
     }
   }, [footer]);
 
-  // useEffect(() => {
-  // 	console.log(sosmed);
-  // }, [sosmed]);
-
   const getDataGeneral = async () => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`
       );
-
       if (data) {
         localStorage.setItem("footer", data.data.color[1].color);
         localStorage.setItem("footer_logo", data.data.footer_logo);
