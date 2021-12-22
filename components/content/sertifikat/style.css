@@ -49,30 +49,6 @@
 	margin-left: 85%;
 }
 
-.responsive-date-from {
-	margin-top: 37%;
-	left: 63%;
-}
-
-.responsive-date-from-without-background {
-	margin-top: 96px;
-	margin-left: 61%;
-}
-
-.responsive-year {
-	margin-top: 40%;
-	left: 63%;
-}
-
-.responsive-year-without-background {
-	margin-top: 40%;
-	margin-left: 63%;
-}
-
-.responsive-date-text {
-	font-size: 5px;
-}
-
 .responsive-normal-font-size {
 	font-size: 6px;
 }
@@ -86,8 +62,12 @@
 }
 
 .responsive-margin-without-background {
-	margin-top: 20%;
+	margin-top: 23.5%;
 }
+.responsive-nomor-sertifikat-without-background{
+	margin-top: 19%;
+}
+
 .responsive-margin-peserta-1 {
 	margin-top: 22.5% !important;
 }
@@ -102,29 +82,6 @@
 		top: 135px;
 	}
 
-	.responsive-date-from {
-		margin-top: 37%;
-	}
-
-	.responsive-date-from-without-background {
-		margin-top: 265px;
-		margin-left: 59%;
-	}
-
-	.responsive-date-text {
-		font-size: 12px;
-	}
-
-	.responsive-year {
-		margin-top: 40%;
-		left: 63%;
-	}
-
-	.responsive-year-without-background {
-		margin-top: 40.8%;
-		margin-left: 63%;
-	}
-
 	.responsive-font-size-nama-peserta {
 		font-size: 16px;
 	}
@@ -133,9 +90,7 @@
 		font-size: 24px;
 	}
 
-	.responsive-margin-without-background {
-		margin-top: 22%;
-	}
+
 
 	.responsive-normal-font-size {
 		font-size: 10px;
@@ -175,29 +130,6 @@
 		top: 125px;
 	}
 
-	.responsive-date-from {
-		margin-top: 37%;
-	}
-
-	.responsive-date-from-without-background {
-		margin-top: 37%;
-		margin-left: 62%;
-	}
-
-	.responsive-date-text {
-		font-size: 14px;
-	}
-
-	.responsive-year {
-		margin-top: 40%;
-		left: 63%;
-	}
-
-	.responsive-year-without-background {
-		margin-top: 40%;
-		margin-left: 63%;
-	}
-
 	.responsive-font-size-nama-peserta {
 		font-size: 16px;
 	}
@@ -206,9 +138,7 @@
 		font-size: 24px;
 	}
 
-	.responsive-margin-without-background {
-		margin-top: 21.5% !important;
-	}
+
 	.responsive-normal-font-size {
 		font-size: 10px;
 	}
@@ -224,42 +154,16 @@
 		top: 155px !important;
 	}
 
-	.responsive-date-from {
-		margin-top: 37%;
-	}
-
-	.responsive-date-from-without-background {
-		margin-top: 37%;
-		margin-left: 63%;
-	}
-
 	.responsive-font-size-nama-peserta {
 		font-size: 20px;
-	}
-
-	.responsive-date-text {
-		font-size: 16px;
-	}
-
-	.responsive-year {
-		margin-top: 40%;
-		left: 63%;
 	}
 
 	.responsive-normal-font-size {
 		font-size: 12px;
 	}
 
-	.responsive-year-without-background {
-		margin-top: 40.8%;
-		margin-left: 63%;
-	}
 
 	.responsive-font-size-sertifikat {
 		font-size: 32px;
-	}
-
-	.responsive-margin-without-background {
-		margin-top: 21.5% !important;
 	}
 }
