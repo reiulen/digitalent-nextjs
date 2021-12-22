@@ -73,7 +73,6 @@ const Navigationbar = ({ session }) => {
         Object.keys(dataPribadi).length !== 0 &&
         !dataPribadi.status
       ) {
-        console.log(dataPribadi.wizard);
         if (dataPribadi.wizard == 1 || dataPribadi.wizard == 0) {
           return router.push("/peserta/wizzard");
         }
