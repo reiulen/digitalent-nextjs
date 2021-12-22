@@ -147,6 +147,7 @@ const FormBerhasil = ({ token }) => {
               className="text-primary font-weight-bolder"
               onClick={() => {
                 dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
+                router.push("/peserta");
               }}
             >
               Ke Halaman Utama
