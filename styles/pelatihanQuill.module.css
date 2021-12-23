@@ -1,0 +1,27 @@
+.setQuil{
+    margin-bottom: 60px;
+}
+
+@media only screen and (max-width: 1024px){
+    .setQuil{
+        margin-bottom: 80px;
+    }
+}
+
+@media only screen and (max-width: 576px){
+    .setQuil{
+        margin-bottom: 125px;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .setQuil{
+        margin-bottom: 150px;
+    }
+}
+
+@media only screen and (max-width: 280px){
+    .setQuil{
+        margin-bottom: 175px;
+    }
+}

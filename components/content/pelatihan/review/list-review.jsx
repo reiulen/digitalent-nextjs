@@ -359,19 +359,7 @@ const ListReview = ({ token }) => {
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
           <CardPage
-            background="bg-success"
-            icon="new/open-book.svg"
-            color="#FFFFFF"
-            value={cardReview[0].count}
-            titleValue=""
-            title="Revisi"
-            publishedVal={cardReview[0].status}
-            routePublish={() =>
-              handlePublish(cardReview[0].status, cardReview[0].condisi)
-            }
-          />
-          <CardPage
-            background="bg-warning"
+            background="cardMenunggu"
             icon="new/mail-white.svg"
             color="#FFFFFF"
             value={cardReview[1].count}
@@ -383,7 +371,19 @@ const ListReview = ({ token }) => {
             }
           />
           <CardPage
-            background="bg-extras"
+            background="cardSelesai"
+            icon="new/open-book.svg"
+            color="#FFFFFF"
+            value={cardReview[0].count}
+            titleValue=""
+            title="Revisi"
+            publishedVal={cardReview[0].status}
+            routePublish={() =>
+              handlePublish(cardReview[0].status, cardReview[0].condisi)
+            }
+          />
+          <CardPage
+            background="cardDisetujui"
             icon="new/done-circle.svg"
             color="#FFFFFF"
             value={cardReview[2].count}
@@ -395,7 +395,7 @@ const ListReview = ({ token }) => {
             }
           />
           <CardPage
-            background="bg-danger"
+            background="cardRevisi"
             icon="new/error-circle.svg"
             color="#FFFFFF"
             value={cardReview[3].count}
@@ -476,9 +476,7 @@ const ListReview = ({ token }) => {
                         <th className="text-center">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>
-                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
-                        </th>
+                        <th>Jadwal Pendaftaran <br /> Jadwal Pelatihan</th>
                         <th>Kuota</th>
                         <th>Status</th>
                         <th>Revisi</th>
@@ -487,8 +485,8 @@ const ListReview = ({ token }) => {
                     </thead>
                     <tbody>
                       {!review ||
-                      (review && review.list === null) ||
-                      review.list.length === 0 ? (
+                        (review && review.list === null) ||
+                        review.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
@@ -570,19 +568,19 @@ const ListReview = ({ token }) => {
                                   {listPermission.includes(
                                     "pelatihan.review_pelatihan.view"
                                   ) && (
-                                    <Link
-                                      href={`/pelatihan/review-pelatihan/view-pelatihan/${row.id}`}
-                                    >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Detail"
+                                      <Link
+                                        href={`/pelatihan/review-pelatihan/view-pelatihan/${row.id}`}
                                       >
-                                        <i className="ri-eye-fill text-white p-0"></i>
-                                      </a>
-                                    </Link>
-                                  )}
+                                        <a
+                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                          data-toggle="tooltip"
+                                          data-placement="bottom"
+                                          title="Detail"
+                                        >
+                                          <i className="ri-eye-fill text-white p-0"></i>
+                                        </a>
+                                      </Link>
+                                    )}
                                 </div>
                               )}
                             </td>

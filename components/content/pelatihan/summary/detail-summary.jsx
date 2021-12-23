@@ -203,7 +203,7 @@ const DetailSummary = ({ token }) => {
 			<div className="col-lg-12 col-md-12 col-sm-12">
 				<div className="row">
 					<CardPage
-						background="bg-primary"
+						background="cardSelesai"
 						icon="new/add-user.svg"
 						color="#FFFFFF"
 						value={statusPendaftar[0].count}
@@ -213,7 +213,7 @@ const DetailSummary = ({ token }) => {
 						routePublish={() => {}}
 					/>
 					<CardPage
-						background="bg-secondary"
+						background="cardSetuju"
 						icon="new/done-circle.svg"
 						color="#FFFFFF"
 						value={statusPendaftar[2].count}
@@ -238,7 +238,7 @@ const DetailSummary = ({ token }) => {
 						}}
 					/>
 					<CardPage
-						background="bg-success"
+						background="cardBerjalan"
 						icon="new/open-book.svg"
 						color="#FFFFFF"
 						value={statusPendaftar[3].count}
@@ -263,7 +263,7 @@ const DetailSummary = ({ token }) => {
 						routePublish={() => {}}
 					/>
 					<CardPage
-						background="bg-warning"
+						background="cardMenunggu"
 						icon="new/mail-white.svg"
 						color="#FFFFFF"
 						value={statusPendaftar[1].count}
@@ -287,7 +287,7 @@ const DetailSummary = ({ token }) => {
 						}
 					/>
 					<CardPage
-						background="bg-extras"
+						background="cardDiterima"
 						icon="new/block-white.svg"
 						color="#FFFFFF"
 						value={statusPendaftar[4].count}
@@ -552,7 +552,18 @@ const DetailSummary = ({ token }) => {
 															</span>
 														</td>
 														<td>
-															<span className="label label-inline label-light-success font-weight-bold">
+															<span className={
+																row.status === "tidak lulus administrasi" && "label label-inline statusPeserta-danger font-weight-bold" ||
+																row.status === "tidak lulus tes substansi" && "label label-inline statusPeserta-danger font-weight-bold" ||
+																row.status === "tidak lulus pelatihan" && "label label-inline statusPeserta-danger font-weight-bold" ||
+																row.status === "ditolak" && "label label-inline statusPeserta-danger font-weight-bold" ||
+																row.status === "seleksi administrasi" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+																row.status === "tes substansi" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+																row.status === "seleksi akhir" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+																row.status === "administrasi akhir" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+																row.status === "diterima" && "label label-inline statusPeserta-success font-weight-bold" ||
+																row.status === "lulus pelatihan" && "label label-inline statusPeserta-success font-weight-bold"
+															}>
 																{capitalize(row.status)}
 															</span>
 														</td>
