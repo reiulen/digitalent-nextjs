@@ -33,7 +33,7 @@ export default function BerandaKontak(props) {
 	return (
 		<>
 			<div style={{ backgroundColor: "white" }}>
-				<Layout title="Kontak" session={session}>
+				<Layout title="Cek Sertifikat" session={session}>
 					<CekStatus session={session}></CekStatus>
 				</Layout>
 			</div>
@@ -60,7 +60,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
 			return {
 				props: {
-					title: "Berita",
+					title: "Cek Sertifikat",
 					data: "auth",
 					session,
 				},
