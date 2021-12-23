@@ -42,6 +42,13 @@ import {
   STORE_INFORMASI_WIZZARD,
   STORE_PEKERJAAN_WIZZARD,
   STORE_PENDIDIKAN_WIZZARD,
+
+  // UPDATE WIZZARD STATUS
+  UPDATE_WIZZARD_REQUEST,
+  UPDATE_WIZZARD_SUCCESS,
+  UPDATE_WIZZARD_FAIL, 
+  // END UPDATE WIZZARD STATUS
+
 } from "../../../types/pelatihan/profile.type";
 
 export const dataAlamatReducer = (state = { alamat: {} }, action) => {
@@ -351,6 +358,37 @@ export const updatePekerjaanReducer = (state = { success: false }, action) => {
     case UPDATE_PEKERJAAN_RESET:
       return {
         success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// UPDATE STATUS WIZZARD
+export const updateStatusWizzardReducer = (state = { success: false }, action) => {
+  switch (action.type) {
+    case UPDATE_WIZZARD_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case UPDATE_WIZZARD_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.data,
+      };
+
+    case UPDATE_WIZZARD_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
       };
 
     case CLEAR_ERRORS:
