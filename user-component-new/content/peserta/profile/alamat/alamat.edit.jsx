@@ -16,6 +16,7 @@ import {
 
 import {
   updateProfileAlamat,
+  updateWizzardStatus,
   clearErrors,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 
@@ -55,9 +56,15 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
   const {
     error: errorUpdateData,
-    loading,
-    success,
+    loading: loadingUpdateData,
+    success: successUpdateData,
   } = useSelector((state) => state.updateAlamat);
+
+  const {
+		error: errorStatusWizzard,
+		loading: loadingStatusWizzard,
+		success: successStatusWizard,
+	} = useSelector((state) => state.updateStatusWizzard);
 
   const [isValid, setIsValid] = useState(false);
 
@@ -164,7 +171,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
       dispatch(clearErrors());
     }
 
-    if (success) {
+    if (successUpdateData) {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_ALAMAT_RESET });
       if (wizzard) {
@@ -173,7 +180,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         funcViewEdit(false);
       }
     }
-  }, [errorUpdateData, success, dispatch]);
+  }, [errorUpdateData, successUpdateData, dispatch]);
 
   const handleSesuaiKtp = (val) => {
     setIsValid(true);
@@ -568,6 +575,20 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
     }
   };
 
+  const stepBack = async () => {
+    let status = 1
+
+    const data = await dispatch (updateWizzardStatus(status, token))
+
+    if (data?.status === true){
+      router.push("/peserta/wizzard");
+
+    } else {
+      SweatAlert("Gagal", errorStatusWizzard, "error");
+			dispatch(clearErrors());
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     simpleValidator.current.fields["kota domisili"] = true;
@@ -818,8 +839,17 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         ) : (
           <div className="button-aksi mt-5 float-right">
             <Button
+							className={`${style.button_profile_batal} rounded-xl mr-2`}
+							type="button"
+							onClick={() => stepBack()}
+							disabled={loadingStatusWizzard ? true : false}
+						>
+							Kembali
+						</Button>
+            <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
+              disabled = {loadingUpdateData ? true : false}
             >
               Lanjut
             </Button>

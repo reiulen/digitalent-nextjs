@@ -21,6 +21,11 @@ a {
 	box-sizing: border-box;
 }
 
+mark { 
+    background-color: #007CFF !important;
+    color: black;
+}
+
 .aside-menu .menu-nav > .menu-item > .menu-heading .menu-text,
 .aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
 	font-weight: 500 !important;
@@ -365,6 +370,15 @@ a {
 	position: fixed;
 	inset: 0;
 	background-color: white;
+	z-index: 9999;
+}
+
+.success-register-page {
+	position:absolute;
+	overflow-x: auto;
+	inset: 0;
+	background-color: white !important;
+	background: white !important;
 	z-index: 9999;
 }
 

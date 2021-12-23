@@ -132,7 +132,7 @@ const Beranda = ({ session }) => {
       return item.pelatihan == null;
     });
 
-    if (tema.length === filter.length) {
+    if (tema?.length === filter?.length) {
       setArr(true);
     } else {
       setArr(false);
@@ -146,7 +146,7 @@ const Beranda = ({ session }) => {
         return item.pelatihan == null;
       });
 
-      if (tema.length === filter.length) {
+      if (tema?.length === filter?.length) {
         setArr(true);
       } else {
         setArr(false);
