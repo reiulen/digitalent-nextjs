@@ -57,6 +57,8 @@ const Beranda = ({ session }) => {
   const [cardMetode, setCardMetode] = useState(null);
   const [cardBookmark, setCardBookmark] = useState(null);
 
+  const [compareValue, setCompareValue] = useState(tema);
+  const [arr, setArr] = useState(false);
   const optionsSplide = {
     gap: "1rem",
     drag: "free",
@@ -126,13 +128,30 @@ const Beranda = ({ session }) => {
   useEffect(() => {
     handleAkademiStart();
     handlePelatihanCard();
+    const filter = tema?.filter((item) => {
+      return item.pelatihan == null;
+    });
+
+    if (tema.length === filter.length) {
+      setArr(true);
+    } else {
+      setArr(false);
+    }
   }, []);
 
   useEffect(() => {
     if (tema) {
       handlePelatihanCard();
-    }
+      const filter = tema?.filter((item) => {
+        return item.pelatihan == null;
+      });
 
+      if (tema.length === filter.length) {
+        setArr(true);
+      } else {
+        setArr(false);
+      }
+    }
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
     }
@@ -457,10 +476,10 @@ const Beranda = ({ session }) => {
             </>
           ) : (
             <div className="pb-10">
-              {tema ? (
+              {tema && arr !== true ? (
                 tema.map((row, i) => (
                   <div key={i}>
-                    {row.pelatihan !== null ? (
+                    {row.pelatihan !== null && (
                       <div className="mb-25">
                         <div
                           className="d-flex justify-content-between header-pelatihan-new mb-10 flex-wrap"
@@ -991,22 +1010,22 @@ const Beranda = ({ session }) => {
                           </Row>
                         </div>
                       </div>
-                    ) : (
-                      tema.length > 0 &&
-                      i === 0 && (
-                        <div className="row">
-                          <h1 className="text-center text-muted col-12 font-weight-bolder">
-                            Pelatihan Belum Tersedia
-                          </h1>
-                        </div>
-                      )
                     )}
+                    {/* {arr === true && i === 0 && (
+                      <div className="row">
+                        <h1 className="text-center text-muted col-12 font-weight-bolder">
+                          Pelatihan Belum Tersedia
+                        </h1>
+                      </div>
+                    )} */}
                   </div>
                 ))
               ) : (
                 <div className="row">
                   <h1 className="text-center text-muted col-12 font-weight-bolder">
-                    Tema Belum Tersedia
+                    {arr === true
+                      ? "Pelatihan Belum Tersedia"
+                      : "Tema Belum Tersedia"}
                   </h1>
                 </div>
               )}
