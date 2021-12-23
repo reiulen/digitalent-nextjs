@@ -9,6 +9,9 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import LoadingSidebar from "../loader/LoadingSidebar";
 
+import { firebaseCloudMessaging } from "../../../webPush";
+import { getMessaging, onMessage } from "firebase/messaging";
+
 import {
   Navbar,
   Nav,
@@ -54,6 +57,7 @@ const Navigationbar = ({ session }) => {
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
   useEffect(() => {
+    setToken();
     if (!session) {
       return;
     }
@@ -66,7 +70,6 @@ const Navigationbar = ({ session }) => {
         signOut();
       }
     }
-
     if (session) {
       if (
         dataPribadi &&
@@ -90,6 +93,27 @@ const Navigationbar = ({ session }) => {
 
     handleConnectSocket();
   }, []);
+
+  // FIREBASE NOTIFICATION
+
+  const setToken = async () => {
+    try {
+      const token = await firebaseCloudMessaging.init();
+      if (token) {
+        console.log(token);
+        getMessage();
+      }
+    } catch (err) {
+      console.log(err, "ini error");
+    }
+  };
+
+  const getMessage = () => {
+    const messaging = getMessaging();
+    onMessage(messaging, (payload) => {
+      console.log("ada pesan notif", payload);
+    });
+  };
 
   const handleConnectSocket = () => {
     let ws = new WebSocket(

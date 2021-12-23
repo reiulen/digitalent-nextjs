@@ -5,6 +5,7 @@ import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 import { getTagBerandaBerita } from "../../redux/actions/beranda/berita.actions";
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
+import { getCheckStatusSertifikat } from "../../redux/actions/beranda/check-sertifikat.actions";
 import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const CekStatus = dynamic(
@@ -50,6 +51,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
 			await store.dispatch(getDataPribadi(sessionToken));
 
 			await store.dispatch(getAllAkademi());
+
+			console.log(query, "ini query");
+			// }
+			if (query.registrasi) {
+				await store.dispatch(getCheckStatusSertifikat(query.registrasi));
+			}
 
 			return {
 				props: {

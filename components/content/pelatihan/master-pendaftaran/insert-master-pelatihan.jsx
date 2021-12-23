@@ -638,7 +638,7 @@ const AddMasterPelatihan = ({ token }) => {
                     <div className="col-sm-12 col-md-2">
                       <div className="form-group mb-2">
                         <label className="col-form-label font-weight-bold">
-                          Size
+                          Ukuran Form
                         </label>
                         <select
                           className="form-control"
@@ -800,7 +800,7 @@ const AddMasterPelatihan = ({ token }) => {
                                     <div className="col-sm-12 col-md-2">
                                       <div className="form-group mb-2">
                                         <label className="col-form-label font-weight-bold">
-                                          Size
+                                          Ukuran Form
                                         </label>
                                         <select
                                           className="form-control"
@@ -1017,7 +1017,7 @@ const AddMasterPelatihan = ({ token }) => {
                                                     <div className="col-sm-12 col-md-2">
                                                       <div className="form-group mb-2">
                                                         <label className="col-form-label font-weight-bold">
-                                                          Size
+                                                          Ukuran Form
                                                         </label>
                                                         <select
                                                           className="form-control"
@@ -1298,7 +1298,8 @@ const AddMasterPelatihan = ({ token }) => {
                                                                     <div className="col-sm-12 col-md-2">
                                                                       <div className="form-group mb-2">
                                                                         <label className="col-form-label font-weight-bold">
-                                                                          Size
+                                                                          Ukuran
+                                                                          Form
                                                                         </label>
                                                                         <select
                                                                           className="form-control"
