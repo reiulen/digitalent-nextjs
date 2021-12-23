@@ -330,6 +330,15 @@ mark {
 	z-index: 9999;
 }
 
+.success-register-page {
+	position:absolute;
+	overflow-x: auto;
+	inset: 0;
+	background-color: white !important;
+	background: white !important;
+	z-index: 9999;
+}
+
 .img-carousel {
 	border-radius: 5px;
 }
