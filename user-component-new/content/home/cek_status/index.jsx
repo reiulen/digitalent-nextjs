@@ -39,14 +39,22 @@ export default function Kontak() {
 					<Card className="rounded-xl">
 						<Row className="p-0 m-0">
 							<Col lg={7} className="p-10">
-								<p className="mb-0 fz-16">
+								<p className="mb-0 fz-16 mb-4">
 									Cek keaslian sertifikat dengan menggunakan nomor registrasi
 									pelatihan yang tertera di sertifikat atau dengan kode QR.
 									Nomor registrasi dan kode QR dapat dilihat pada bagian yang
 									ditandai merah.{" "}
 								</p>
+								<div>
+									<Image
+										width={842}
+										height={595}
+										src={`/assets/media/cek-sertifikat-image/Contoh Sertifikat Peserta.jpeg`}
+										alt={"Contoh Sertifikat"}
+									/>
+								</div>
 							</Col>
-							<Col lg={5} className="align-self-center p-10">
+							<Col lg={5} className=" p-10">
 								<Form.Group className="mb-3 fz-12" controlId="formBasicEmail">
 									<Form.Label>Nomor Registrasi</Form.Label>
 									<Form.Control
