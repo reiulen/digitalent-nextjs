@@ -648,7 +648,11 @@ export default function TambahMasterSertifikat({ token }) {
 																width: "156px",
 																height: "150px",
 															}}
-															className="col-3 p-0 px-lg-4"
+															className={
+																number_of_signatures > 2
+																	? `col-3 p-0 px-lg-4`
+																	: `col-3 p-0 `
+															}
 														>
 															<div className="col p-0 ">
 																<div
