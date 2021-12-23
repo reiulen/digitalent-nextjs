@@ -49,28 +49,48 @@ export default function ListPesertaID({ token }) {
 		},
 	};
 
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		if (loading) {
+			Swal.fire({
+				title: "Mengunduh Sertifikat",
+				allowOutsideClick: false,
+				didOpen: () => {
+					Swal.showLoading();
+				},
+			});
+		} else {
+			Swal.hideLoading();
+		}
+	}, [loading]);
+
 	const handleDownload = async (id, noRegis, name) => {
+		setLoading(true);
 		const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${noRegis}`;
 		try {
 			const check = await axios.get(linkChecker, config);
 			if (!check.data.status) {
 				const data = await convertDivToPng(divReference.current);
 				if (data) {
-					const formData = new FormData();
-					formData.append("certificate", data);
-					const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
 					try {
+						const formData = new FormData();
+						formData.append("certificate", data);
+						const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
 						const result = await axios.post(link, formData, config); //post image certificate yang udah di render dari html
 						if (!result.data.status) {
-							SweatAlert("Gagal", result.data.message, "error");
+							setLoading(false);
+							SweatAlert("Gagal", result?.data?.message, "error");
 						} else {
 							const a = document.createElement("a");
 							a.download = `Sertifikat - ${query.name} ${noRegis}.png`;
 							a.target = "_blank";
 							a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
 							a.click();
+							setLoading(false);
 						}
 					} catch (e) {
+						setLoading(false);
 						SweatAlert("Gagal", e.message, "error");
 					}
 				}
@@ -80,8 +100,14 @@ export default function ListPesertaID({ token }) {
 				a.target = "_blank";
 				a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
 				a.click();
+				setLoading(false);
 			}
 		} catch (e) {
+			console.log(e);
+			console.log(e.respond.data.message);
+			console.log(e.message);
+
+			setLoading(false);
 			SweatAlert("Gagal", e.message, "error");
 		}
 	};
