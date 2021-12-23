@@ -299,7 +299,7 @@ mark {
 }
 
 .select-pelatihan-success {
-	color: #04aa77;
+	color: #00B37A;
 	background: #e6f7f1;
 }
 
@@ -311,6 +311,49 @@ mark {
 .select-pelatihan-warning {
 	color: #ffa800;
 	background: #fff7e6;
+}
+
+.select-pelatihan-primary {
+	color: #203E80;
+	background: #F2F7FC;
+}
+
+.cardSelesai{
+	background: #007CFF;
+}
+
+.cardSetuju{
+	background: #203E80;
+}
+
+.cardDisetujui{
+	background: #00B27A;
+}
+
+.cardRevisi{
+	background: #EE2D41;
+}
+
+.cardMenunggu{
+	background: #FFA800;
+}
+
+.cardBerjalan{
+	background: #4CBDE2;
+}
+
+.cardDiterima{
+	background: #04AA77;
+}
+
+.statusPeserta-danger{
+	background: #FFE5E8;
+	color: #EE2D41;
+}
+
+.statusPeserta-success{
+	background: #E6FFF7;
+	color: #00B37A;
 }
 
 .box-hide-arrow {

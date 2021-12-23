@@ -20,7 +20,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allListPeserta = useSelector((state) => state.allListPeserta);
-  
+
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState(null);
@@ -130,21 +130,47 @@ const Table = ({ token }) => {
     });
   };
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: 'Apakah anda yakin ?',
-      text: "Data ini tidak bisa dikembalikan !",
-      icon: "warning",
+  const handleDelete = async (id) => {
+    // Swal.fire({
+    //   title: 'Apakah anda yakin ?',
+    //   text: "Data ini tidak bisa dikembalikan !",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Ya !",
+    //   cancelButtonText: "Batal"
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     dispatch(deletePesertaDts(token, id))
+    //   }
+    // })
+
+    const inputValue = ""
+
+    const { value: data } = await Swal.fire({
+      input: 'text',
+      html:
+        '<h3 style="white-space: nowrap"><b>Apakah anda yakin ?</b></h3>' +
+        '<p style="margin-bottom:10px">Dengan menghapus akun user, Anda akan menghilangkan data peserta di DTS, Simonas dan Beasiswa.</p>' +
+        '<h2 style="margin-bottom:10px">12 + 36 =</h2>',
+      icon: 'warning',
+      inputValue: inputValue,
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Ya !",
-      cancelButtonText: "Batal"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deletePesertaDts(token, id))
+      confirmButtonText: "Hapus",
+      cancelButtonText: "Tidak",
+      inputValidator: (value) => {
+        if (!value) {
+          return 'You need to write something!'
+        }
       }
     })
+
+    if (data === '48') {
+      dispatch(deletePesertaDts(token, id))
+    } else {
+      Swal.fire("Ooopss  !", "Data Gagal dihapus !", "error")
+    }
   }
 
   const handleSearch = (e) => {
@@ -239,8 +265,8 @@ const Table = ({ token }) => {
                   <>
                     <div
                       // className={`${stylesPag.pagination} table-pagination`}
-                    className="table-pagination table-pagination pagination-custom col-12 col-md-6"
-                    style={{ width: "max-content" }}
+                      className="table-pagination table-pagination pagination-custom col-12 col-md-6"
+                      style={{ width: "max-content" }}
                     >
                       <Pagination
                         activePage={page}
