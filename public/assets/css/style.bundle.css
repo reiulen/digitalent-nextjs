@@ -2923,7 +2923,20 @@ pre code {
   display: block;
   width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: auto;
+}
+
+.table-responsive::-webkit-scrollbar {
+  width: 12px;
+  height:5px;
+  background-color: #F5F5F5;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #007cff;
 }
 
 .table-responsive > .table-bordered {
