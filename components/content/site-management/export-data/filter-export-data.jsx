@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
+import DatePicker from "react-datepicker";
 import LoadingTable from "../../../LoadingTable";
 import IconEye from "../../../assets/icon/Eye";
 import IconPencil from "../../../assets/icon/Pencil";
@@ -38,6 +39,8 @@ const UbahRole = ({ token, name }) => {
   const [kota, setKota] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
+  const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
+  const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
 
   const drowpdownYear = useSelector((state) => state.drowpdownYear);
   const drowpdownAkademi = useSelector((state) => state.drowpdownAkademi);
@@ -81,7 +84,9 @@ const UbahRole = ({ token, name }) => {
   const handleFilter = () => {
     const data = {
       button_type: 0,
-      tahun: tahun ? tahun.label : "",
+      tahun: "",
+      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD"),
+      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
       akademi: akademi ? akademi.label : "",
       tema: tema ? tema.label : "",
       penyelenggara: penyelenggara ? penyelenggara.label : "",
@@ -90,14 +95,20 @@ const UbahRole = ({ token, name }) => {
       kota: kota ? kota.label : "",
     };
 
-    dispatch(postFilterExportData(token, data));
+    if (datePelaksanaanEnd !== null) {
+      dispatch(postFilterExportData(token, data));
+    } else {
+      Swal.fire("Oppss", "isi tahun dengan benar", "error");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       button_type: 1,
-      tahun: tahun ? tahun.label : "",
+      tahun: "",
+      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD"),
+      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
       akademi: akademi ? akademi.label : "",
       tema: tema ? tema.label : "",
       penyelenggara: penyelenggara ? penyelenggara.label : "",
@@ -105,20 +116,23 @@ const UbahRole = ({ token, name }) => {
       provinsi: provinsi ? provinsi.label : "",
       kota: kota ? kota.label : "",
     };
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Ya !",
-      cancelButtonText: "Batal",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(postFilterExportData(token, data, null, null, name));
-        // window.location = ""
-      }
-    });
+    if (datePelaksanaanEnd !== null) {
+      Swal.fire({
+        title: "Apakah anda yakin ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya !",
+        cancelButtonText: "Batal",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(postFilterExportData(token, data, null, null, name));
+        }
+      });
+    } else {
+      Swal.fire("Oppss", "isi tahun dengan benar", "error");
+    }
   };
 
   const listFilter =
@@ -136,7 +150,16 @@ const UbahRole = ({ token, name }) => {
             </td>
             <td className="align-middle text-left">
               <h6 className="font-weight-bolder mb-0">{item.nama_akademi}</h6>
-              <p>{item.nama_pelatihan}</p>
+              <p
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "22rem",
+                }}
+              >
+                {item.nama_pelatihan}
+              </p>
             </td>
             <td className="align-middle text-left">
               <h6 className="font-weight-bolder mb-0">
@@ -168,7 +191,19 @@ const UbahRole = ({ token, name }) => {
             <form>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Tahun</label>
-                <Select
+                <DatePicker
+                  wrapperClassName="datepicker"
+                  className="form-control"
+                  name="start_date"
+                  selectsRange={true}
+                  onChange={(date) => setDatePelaksanaan(date)}
+                  startDate={datePelaksanaanStart}
+                  endDate={datePelaksanaanEnd}
+                  dateFormat="dd/MM/yyyy"
+                  placeholderText="Silahkan Pilih Tahun"
+                  autoComplete="off"
+                />
+                {/* <Select
                   placeholder="Silahkan Pilih Tahun"
                   options={drowpdownYear.data.data.map((item) => {
                     return {
@@ -179,7 +214,7 @@ const UbahRole = ({ token, name }) => {
                   onChange={(e) =>
                     setTahun({ value: e?.value, label: e?.label })
                   }
-                />
+                /> */}
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Akademi</label>
@@ -285,7 +320,7 @@ const UbahRole = ({ token, name }) => {
                       color: "#FFFFFF",
                       width: "max-content",
                     }}
-                  // onClick={() => handleAddInput()}
+                    // onClick={() => handleAddInput()}
                   >
                     <IconSearch className="mr-4" />
                     Search
@@ -300,11 +335,15 @@ const UbahRole = ({ token, name }) => {
                   className="card-title font-weight-bolder  w-100  mt-5 mb-0"
                   style={{ fontSize: "24px", color: "#04AA77" }}
                 >
-
-                  {filterExportData?.data?.data?.rows?.length > 0 ? "Pencarian Sukses" : "Pencarian Tidak Ditemukan"}
+                  {filterExportData?.data?.data?.rows?.length > 0
+                    ? "Pencarian Sukses"
+                    : "Pencarian Tidak Ditemukan"}
                 </h3>
                 <p className="mb-0" style={{ color: "#6C6C6C" }}>
-                  {filterExportData?.data?.data?.rows?.length > 0 ? filterExportData?.data?.data?.total_rows : 0} Total Data
+                  {filterExportData?.data?.data?.rows?.length > 0
+                    ? filterExportData?.data?.data?.total_rows
+                    : 0}{" "}
+                  Total Data
                 </p>
                 <div className="table-responsive mt-10">
                   <table className="table table-separate table-head-custom table-checkable">
@@ -321,7 +360,7 @@ const UbahRole = ({ token, name }) => {
                     <tbody>{listFilter}</tbody>
                   </table>
                 </div>
-                {filterExportData?.data?.data?.rows?.length > 0 && (
+                {filterExportData?.data?.data?.total_rows > 5 && (
                   <div className="row px-4">
                     <div className="table-pagination">
                       <Pagination
@@ -335,7 +374,12 @@ const UbahRole = ({ token, name }) => {
                           setPage(e);
                           const data = {
                             button_type: 0,
-                            tahun: tahun ? tahun.label : "",
+                            tahun: "",
+                            dari: moment(datePelaksanaanStart).format(
+                              "YYYY-MM-DD"
+                            ),
+                            sampai:
+                              moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
                             akademi: akademi ? akademi.label : "",
                             tema: tema ? tema.label : "",
                             penyelenggara: penyelenggara
@@ -374,7 +418,14 @@ const UbahRole = ({ token, name }) => {
                               setLimit(e.target.value);
                               const data = {
                                 button_type: 0,
-                                tahun: tahun ? tahun.label : "",
+                                tahun: "",
+                                dari: moment(datePelaksanaanStart).format(
+                                  "YYYY-MM-DD"
+                                ),
+                                sampai:
+                                  moment(datePelaksanaanEnd).format(
+                                    "YYYY-MM-DD"
+                                  ),
                                 akademi: akademi ? akademi.label : "",
                                 tema: tema ? tema.label : "",
                                 penyelenggara: penyelenggara
@@ -440,7 +491,7 @@ const UbahRole = ({ token, name }) => {
           </div>
         </div>
       </div>
-    </PageWrapper >
+    </PageWrapper>
   );
 };
 

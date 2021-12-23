@@ -125,12 +125,13 @@ const DetailBerita = () => {
       for (let j = 0; j < splitText.length; j++) {
         if (splitWords[i].toLowerCase() === splitText[j].toLowerCase()) {
           result += `<mark>` + splitText[j] + `</mark>` + " ";
+          window.scrollTo (0, 1200)
+
         } else {
           result += " " + splitText[j] + " ";
         }
       }
     }
-
     setResultText(result);
   };
 
@@ -155,7 +156,7 @@ const DetailBerita = () => {
 
           <div className="mt-5">
             <h1 
-              className={`${styles.fontTitle} font-weight-bolder`}
+              className={`${styles.fontTitle}font-weight-bolder`}
             >
               {/* Insert Title Here */}
               {detail?.judul}
@@ -329,7 +330,7 @@ const DetailBerita = () => {
                   </div>
                   <div className="col-9 my-auto">
                     <h4 
-                      className=" font-weight-bolder"
+                      className={`font-weight-bolder`}
                       style={{fontSize:"20px", fontFamily:"Poppins"}}
                     >Pencarian</h4>
                   </div>
