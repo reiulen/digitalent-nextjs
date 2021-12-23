@@ -26,7 +26,9 @@ import { useRouter } from "next/router";
 
 const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const simpleValidator = useRef(new SimpleReactValidator({ 
+    locale: "id" 
+  }));
   const [, forceUpdate] = useState();
   const router = useRouter();
   const { data: dataAsalSekolah } = useSelector(
@@ -94,8 +96,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       optionsJenjangPendidikan.push(val);
     }
   }
-
   const [showInputCollegeName, setShowInputCollegeName] = useState(false);
+  const [errorOnIpk, setErrorOnIpk] = useState (false)
+  const validateLetter = /[a-zA-Z]/;
 
   const NoOptionsMessage = (props) => {
     return (
@@ -203,7 +206,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let data = {};
-    console.log (ipk)
     if (
       !asalSekolah.includes("Lainnya") ||
       jengjangPendidikan.label != "SMA/Sederajat"
@@ -325,30 +327,42 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 
   useEffect(() => {
     const validateIpk = /^[0-9]+\.[0-9][0-9][0-9][0-9]$/;
+    
     if (ipk >= 4) {
       setIpk(4);
     }
+
     if (validateIpk.test(ipk)) {
       setIpk(Math.round(ipk));
+      setErrorOnIpk(false)
+
+    } else {
+      setErrorOnIpk(true)
     }
+
     const target = document.getElementById("formGridIpk");
     if (target) {
       target.onkeydown = (e) => {
         if (e.code == "Minus") {
           return false;
+
         }
+
         if (e.code == "NumpadAdd") {
           return false;
-        }
+        } 
+
         if (e.code == "NumpadSubtract") {
           return false;
-        }
+        } 
+
         if (e.code == "Equal") {
           return false;
-        }
+        } 
+
         if (e.code == "Comma") {
           return false;
-        }
+        } 
       };
     }
   }, [ipk]);
@@ -1448,18 +1462,35 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
                 <span className="text-muted">
-                  Gunakan titik "." - Contoh : 3.75
+                  Gunakan titik "." dengan dua angka di belakang titik - Contoh : 3.75
                 </span>
-                {simpleValidator.current.message(
-                  "ipk",
-                  ipk,
-                  // ipk === null ? "required|integer" : "",
-                  "required",
-                  {
-                    className: "text-danger",
-                  }
-                )}
+                {/* {
+                  errorOnIpk === true ? 
+                    <div className="text-danger">
+                      ipk harus menggunakan angka
+                    </div>
+                  :
+                    simpleValidator.current.message(
+                      "ipk",
+                      ipk,
+                      `required`,
+                      {
+                        className: "text-danger",
+                      }
+                )} */}
+                {
+                  simpleValidator.current.message(
+                    "ipk",
+                    ipk,
+                    `required`,
+                    {
+                      className: "text-danger",
+                    }
+                  )
+                }
+            
               </Form.Group>
+              
               <Form.Group as={Col} md={6} controlId="formGridTahun">
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
@@ -1816,6 +1847,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
+               
               </Form.Group>
             </Row>
           )}
@@ -1852,6 +1884,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
+                
               </Form.Group>
               <Form.Group as={Col} md={6} controlId="formGridTahun">
                 <Form.Label>Tahun Masuk</Form.Label>
@@ -1947,6 +1980,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
+                
               </Form.Group>
             </Row>
           )}
@@ -1983,6 +2017,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
+                
               </Form.Group>
               <Form.Group as={Col} md={6} controlId="formGridTahun">
                 <Form.Label>Tahun Masuk</Form.Label>
@@ -2048,6 +2083,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }
                 )}
               </Form.Group>
+              
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
@@ -2078,6 +2114,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
+                
               </Form.Group>
             </Row>
           )}
