@@ -1183,20 +1183,14 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     name="plotRegistration"
                     disabled
                     className="form-check-input"
-                    value="Tanpa Tes Substansi & Administrasi"
-                    checked={
-                      plotRegistration === "Tanpa Tes Substansi & Administrasi"
-                    }
-                    onClick={() =>
-                      setPlotRegistration("Tanpa Tes Substansi & Administrasi")
-                    }
+                    value="Administrasi"
+                    checked={plotRegistration === "Administrasi"}
+                    onClick={() => setPlotRegistration("Administrasi")}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("alur pendaftaran")
                     }
                   />
-                  <label className="form-check-label">
-                    Tanpa Tes Substansi & Administrasi
-                  </label>
+                  <label className="form-check-label">Administrasi</label>
                 </div>
                 {simpleValidator.current.message(
                   "alur pendaftaran",
