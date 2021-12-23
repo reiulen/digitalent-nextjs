@@ -526,7 +526,7 @@ const FormCopyEdit = ({
               <div className="col-sm-12 col-md-2">
                 <div className="form-group mb-2">
                   <label className="col-form-label font-weight-bold">
-                    Size
+                    Ukuran Form
                   </label>
                   <select
                     className="form-control"
@@ -684,7 +684,7 @@ const FormCopyEdit = ({
                               <div className="col-sm-12 col-md-2">
                                 <div className="form-group mb-2">
                                   <label className="col-form-label font-weight-bold">
-                                    Size
+                                    Ukuran Form
                                   </label>
                                   <select
                                     className="form-control"
@@ -890,7 +890,7 @@ const FormCopyEdit = ({
                                               <div className="col-sm-12 col-md-2">
                                                 <div className="form-group mb-2">
                                                   <label className="col-form-label font-weight-bold">
-                                                    Size
+                                                    Ukuran Form
                                                   </label>
                                                   <select
                                                     className="form-control"
@@ -1151,7 +1151,7 @@ const FormCopyEdit = ({
                                                               <div className="col-sm-12 col-md-2">
                                                                 <div className="form-group mb-2">
                                                                   <label className="col-form-label font-weight-bold">
-                                                                    Size
+                                                                    Ukuran Form
                                                                   </label>
                                                                   <select
                                                                     className="form-control"
@@ -1360,7 +1360,7 @@ const FormCopyEdit = ({
             style={{ borderRadius: "30px", fontWeight: "600" }}
             onClick={showPreviewHandler}
           >
-            Review
+            Preview
           </button>
           <button
             className="btn btn-primary-rounded-full"

@@ -476,7 +476,9 @@ const ListReview = ({ token }) => {
                         <th className="text-center">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal</th>
+                        <th>
+                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                        </th>
                         <th>Kuota</th>
                         <th>Status</th>
                         <th>Revisi</th>

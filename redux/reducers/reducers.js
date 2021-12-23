@@ -361,7 +361,10 @@ import { allPromptReducer } from "./site-management/settings/pelatihan.reducers"
 
 // ============== dashboard ===============
 import { allDataZonasiReducer } from "./site-management/dashboard.reducers";
-import { allDataPesertaReducer, allDataListZonasiReducer } from "./site-management/dashboard-data-peserta.reducers";
+import {
+	allDataPesertaReducer,
+	allDataListZonasiReducer,
+} from "./site-management/dashboard-data-peserta.reducers";
 
 // End Site Management
 
@@ -597,6 +600,8 @@ import {
 import { TTEP12DataReducer } from "./sertifikat/TTE-P12.reducer";
 
 import { dropdownHelpdeskReducer } from "./beranda/helpdesk.reducer";
+
+import { CheckStatusSertifikatReducer } from "./beranda/check-sertifikat.reducer";
 
 const reducer = combineReducers({
 	// DASHBOARD KABADAN
@@ -1099,6 +1104,7 @@ const reducer = combineReducers({
 	TTEP12Data: TTEP12DataReducer,
 	sertifikatPeserta: sertifikatPesertaReducer,
 	dropdownHelpdesk: dropdownHelpdeskReducer,
+	CheckStatusSertifikat: CheckStatusSertifikatReducer,
 });
 
 export default reducer;
