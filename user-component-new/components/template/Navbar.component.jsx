@@ -517,9 +517,10 @@ const Navigationbar = ({ session }) => {
 										</Link>
 										<Link href="/mitra" passHref>
 											<NavDropdown.Item className="navdropdown-child">
-												mitra
+												mitra pelatihan
 											</NavDropdown.Item>
 										</Link>
+
 										<NavDropdown.Item
 											className="navdropdown-child"
 											onClick={(e) => {
@@ -547,6 +548,11 @@ const Navigationbar = ({ session }) => {
 										<Link href="/kontak" passHref>
 											<NavDropdown.Item className="navdropdown-child">
 												Kontak
+											</NavDropdown.Item>
+										</Link>
+										<Link href="/cek-sertifikat" passHref>
+											<NavDropdown.Item className="navdropdown-child">
+												Cek Sertifikat
 											</NavDropdown.Item>
 										</Link>
 										{menu?.length > 0 && (
@@ -942,7 +948,7 @@ const Navigationbar = ({ session }) => {
 								<Link href="/tentang-kami">Tentang Kami</Link>
 							</Col>
 							<Col className="mb-8" sm={12}>
-								<Link href="/mitra">Mitra</Link>
+								<Link href="/mitra">Mitra Pelatihan</Link>
 							</Col>
 							<Col sm={12}>
 								<Dropdown color="white">
@@ -1011,6 +1017,10 @@ const Navigationbar = ({ session }) => {
 							</Col>
 							<Col className="mb-8" sm={12}>
 								<Link href="/kontak">Kontak</Link>
+							</Col>
+
+							<Col className="mb-8" sm={12}>
+								<Link href="/cek-sertifikat">Cek Sertifikat</Link>
 							</Col>
 							{menu?.length > 0 && (
 								<Col sm={12}>
