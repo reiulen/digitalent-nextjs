@@ -12,7 +12,6 @@ import moment from "moment";
 import axios from "axios";
 import { SweatAlert } from "../../../../../../utils/middleware/helper";
 // #Icon
-// import QRCode from "react-qr-code";
 import QRCode from "qrcode.react";
 export default function ListPesertaID({ token }) {
 	const router = useRouter();
@@ -172,7 +171,7 @@ export default function ListPesertaID({ token }) {
 								</div>
 								<div className="position-absolute zindex-2 responsive-qr-code">
 									<QRCode
-										value={"http://dts-dev.majapahit.id/"}
+										value={`http://dts-dev.majapahit.id/cek-sertifikat?registrasi=${participant?.data?.nomor_registrasi}`}
 										size={80}
 										level={"L"}
 									/>
