@@ -15,12 +15,12 @@ export default function FormPengaduan() {
 				<h1 className={`font-weight-boldest text-blue-primary mb-15 `}>
 					Live Chat
 				</h1>
-				<div className="h-700px d-flex justify-content-center">
+				<div className="h-700px d-flex justify-content-start">
 					<iframe
 						src="https://chat.sociomile.com/livechat/61b28d9773bedb57087fe462"
 						width="700px"
 						// height="100%"
-						className=" m-n10 p-0 border-0"
+						className=" mt-n10 p-0 border-0 ml-n29"
 					/>
 				</div>
 			</Sidebar>
