@@ -30,9 +30,9 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
     (state) => state.newTraining
   );
 
-  const [editorLoaded, setEditorLoaded] = useState(false);
-  const { CKEditor, ClassicEditor, Base64UploadAdapter } =
-    editorRef.current || {};
+  // const [editorLoaded, setEditorLoaded] = useState(false);
+  // const { CKEditor, ClassicEditor, Base64UploadAdapter } =
+  //   editorRef.current || {};
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -43,11 +43,11 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
   useEffect(() => {
     dispatch(getCommitmentStep3());
 
-    editorRef.current = {
-      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
-    };
+    // editorRef.current = {
+    //   CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
+    //   ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
+    //   // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
+    // };
 
     if (success) {
       dispatch({
@@ -59,7 +59,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       });
     }
 
-    setEditorLoaded(true);
+    // setEditorLoaded(true);
   }, [dispatch, success, router]);
 
   const backHandler = () => {
@@ -73,6 +73,9 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (commitment === "0") {
+      simpleValidator.current.fields.alamat = true;
+    }
     if (simpleValidator.current.allValid()) {
       const dataStep3 = {
         komitmen: commitment,
@@ -182,12 +185,12 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
                 )}
               </div>
             </div>
-            {commitment === "1" ? (
+            {commitment === "1" && (
               <div className="form-group mb-4">
                 <label className="col-form-label font-weight-bold">
                   Input Deskripsi
                 </label>
-                <div className="ckeditor">
+                {/* <div className="ckeditor">
                   {editorLoaded ? (
                     <CKEditor
                       editor={ClassicEditor}
@@ -206,10 +209,23 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
                   ) : (
                     <p>Tunggu Sebentar</p>
                   )}
-                </div>
+                </div> */}
+                <textarea
+                  className="form-control"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("deskripsi")
+                  }
+                  rows="10"
+                />
+                {simpleValidator.current.message(
+                  "deskripsi",
+                  description,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
-            ) : (
-              ""
             )}
             <div className="form-group">
               <div className="text-right">
