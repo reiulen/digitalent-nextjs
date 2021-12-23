@@ -436,16 +436,14 @@ export default function Pengaturan({ session }) {
 							</div>
 							<div className="mt-5">
 								{dataPribadi.nomor_handphone || "-"}
-								{handphoneVerify == true && (
-									<span className="ml-5">
-										<button
-											className={`text-primary ${style.btn_ubah}`}
-											onClick={handleShowUbahHandphone}
-										>
-											Ubah
-										</button>
-									</span>
-								)}
+								<span className="ml-5">
+									<button
+										className={`text-primary ${style.btn_ubah}`}
+										onClick={handleShowUbahHandphone}
+									>
+										Ubah
+									</button>
+								</span>
 							</div>
 							{handphoneVerify == false && (
 								<Button

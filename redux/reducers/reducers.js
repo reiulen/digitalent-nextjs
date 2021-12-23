@@ -457,6 +457,7 @@ import {
 	updatePekerjaanReducer,
 	getAsalSekolahReducer,
 	getRefPekerjaanReducer,
+	updateStatusWizzardReducer,
 } from "./pelatihan/peserta/profile.reducers";
 
 import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
@@ -1025,6 +1026,7 @@ const reducer = combineReducers({
 	updatePekerjaan: updatePekerjaanReducer,
 	getAsalSekolah: getAsalSekolahReducer,
 	getRefPekerjaan: getRefPekerjaanReducer,
+	updateStatusWizzard: updateStatusWizzardReducer,
 	//END PELATIHAN
 
 	//BERANDA
