@@ -21,6 +21,11 @@ a {
 	box-sizing: border-box;
 }
 
+mark { 
+    background-color: #007CFF !important;
+    color: black;
+}
+
 .aside-menu .menu-nav > .menu-item > .menu-heading .menu-text,
 .aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
 	font-weight: 500 !important;
