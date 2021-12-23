@@ -132,7 +132,7 @@ const DataParticipant = ({ token }) => {
           break;
       }
       break;
-    case "Tanpa Tes Substansi dan Administrasi":
+    case "Administrasi":
       switch (peserta.list[0].status) {
         case "seleksi akhir":
           optionsPeserta = [
@@ -533,42 +533,40 @@ const DataParticipant = ({ token }) => {
                   </div>
                 </div>
               )}
-            {dataTraining &&
-              dataTraining.alur_pendaftaran ===
-                "Tanpa Tes Substansi dan Administrasi" && (
-                <div className="form-group row mb-2">
-                  <div className="col-sm-12 col-md-6">
-                    <label className="col-form-label font-weight-bold">
-                      Administrasi
-                    </label>
-                    <Select
-                      options={optionsAdministrasi}
-                      placeholder={
-                        capitalize(peserta.list[0].administrasi) || "-"
-                      }
-                      onChange={(e) =>
-                        setStatusAdministrasi({
-                          label: e.label,
-                          value: e.value,
-                        })
-                      }
-                      isDisabled
-                    />
-                  </div>
-                  <div className="col-sm-12 col-md-6">
-                    <label className="col-form-label font-weight-bold">
-                      Status Peserta
-                    </label>
-                    <Select
-                      options={optionsPeserta}
-                      placeholder={capitalize(peserta.list[0].status) || "-"}
-                      onChange={(e) =>
-                        setStatusPeserta({ label: e.label, value: e.value })
-                      }
-                    />
-                  </div>
+            {dataTraining && dataTraining.alur_pendaftaran === "Administrasi" && (
+              <div className="form-group row mb-2">
+                <div className="col-sm-12 col-md-6">
+                  <label className="col-form-label font-weight-bold">
+                    Administrasi
+                  </label>
+                  <Select
+                    options={optionsAdministrasi}
+                    placeholder={
+                      capitalize(peserta.list[0].administrasi) || "-"
+                    }
+                    onChange={(e) =>
+                      setStatusAdministrasi({
+                        label: e.label,
+                        value: e.value,
+                      })
+                    }
+                    isDisabled
+                  />
                 </div>
-              )}
+                <div className="col-sm-12 col-md-6">
+                  <label className="col-form-label font-weight-bold">
+                    Status Peserta
+                  </label>
+                  <Select
+                    options={optionsPeserta}
+                    placeholder={capitalize(peserta.list[0].status) || "-"}
+                    onChange={(e) =>
+                      setStatusPeserta({ label: e.label, value: e.value })
+                    }
+                  />
+                </div>
+              </div>
+            )}
             {/* END PENYESUAIAN STATUS PESERTA PELATIHAN */}
 
             <div className="form-group mt-7">

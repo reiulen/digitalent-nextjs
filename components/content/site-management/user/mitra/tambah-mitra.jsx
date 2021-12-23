@@ -13,8 +13,8 @@ import IconClose from "../../../../../components/assets/icon/Close";
 
 import { postMitraSite } from "../../../../../redux/actions/site-management/user/mitra-site.actions";
 
-import styles from "../../../../../styles/sitemanagement/userMitra.module.css"
-import styles2 from "../../../../../styles/previewGaleri.module.css"
+import styles from "../../../../../styles/sitemanagement/userMitra.module.css";
+import styles2 from "../../../../../styles/previewGaleri.module.css";
 
 const TambahApi = ({ token }) => {
   const router = useRouter();
@@ -28,13 +28,13 @@ const TambahApi = ({ token }) => {
     "/assets/media/default.jpg"
   );
   const [gambarName, setGambarName] = useState(null);
-  
+
   const imgRef = useRef(null);
   const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
-  const [showEditImage, setShowEditImage] = useState(false)
+  const [showEditImage, setShowEditImage] = useState(false);
   const [upImg, setUpImg] = useState();
   const [imageview, setImageview] = useState("");
-  const defaultImage = "/assets/media/default.jpg"
+  const defaultImage = "/assets/media/default.jpg";
   const previewCanvasRef = useRef(null);
   const [completedCrop, setCompletedCrop] = useState(null);
 
@@ -67,13 +67,8 @@ const TambahApi = ({ token }) => {
   const submit = async (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-
       if (nameCooperation === "") {
-        Swal.fire(
-          "Oops...",
-          "Form Nama Lembaga tidak boleh kosong",
-          "error"
-        );
+        Swal.fire("Oops...", "Form Nama Lembaga tidak boleh kosong", "error");
       } else if (email === "") {
         Swal.fire("Oops...", "Form Email tidak boleh kosong", "error");
       } else if (password === "") {
@@ -104,11 +99,12 @@ const TambahApi = ({ token }) => {
               },
             }
           );
-          Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-            router.push(`/site-management/user/mitra/`);
-          });
-        }
-        catch (error) {
+          Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+            () => {
+              router.push(`/site-management/user/mitra/`);
+            }
+          );
+        } catch (error) {
           Swal.fire("Oops...", `${error.response.data.message}`, "error");
         }
       }
@@ -185,18 +181,18 @@ const TambahApi = ({ token }) => {
   }, [completedCrop]);
 
   const onHandleHideModal = () => {
-    setShowEditImage(false)
-    setUpImg(null)
-  }
+    setShowEditImage(false);
+    setUpImg(null);
+  };
 
   const onSubmitEditImage = () => {
-    setShowEditImage(false)
-    setUpImg(null)
-    setAgencyLogo(previewCanvasRef.current.toDataURL("image/png"))
-  }
+    setShowEditImage(false);
+    setUpImg(null);
+    setAgencyLogo(previewCanvasRef.current.toDataURL("image/png"));
+  };
 
   const onSelectFile = (e) => {
-    if (e.target.files[0].size > '2000000') {
+    if (e.target.files[0].size > "2000000") {
       e.target.value = null;
       Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
     } else if (e.target.files && e.target.files.length > 0) {
@@ -211,9 +207,7 @@ const TambahApi = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header">
-            <h3
-              className="card-title font-weight-bolder text-dark"
-            >
+            <h3 className="card-title font-weight-bolder text-dark">
               Tambah Mitra
             </h3>
           </div>
@@ -226,7 +220,9 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   placeholder="Masukkan nama lengkap"
                   onChange={(e) => setNameCooperation(e.target.value)}
-                  onBlur={() => simpleValidator.current.showMessageFor("namaLengkap")}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("namaLengkap")
+                  }
                 />
 
                 {simpleValidator.current.message(
@@ -254,7 +250,7 @@ const TambahApi = ({ token }) => {
                   { className: "text-danger" }
                 )}
               </div>
-              
+
               <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Gambar Logo
@@ -268,23 +264,17 @@ const TambahApi = ({ token }) => {
                       data-target="#exampleModalCenter"
                     >
                       <Image
-                        src=
-                        {
-                          imageview ?
-                            process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
-                            :
-                            defaultImage
+                        src={
+                          imageview
+                            ? process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                              imageview
+                            : defaultImage
                         }
                         alt="image"
                         width={160}
                         height={160}
                         objectFit="fill"
-                        className={
-                          imageview ?
-                            "rounded-circle"
-                            :
-                            ""
-                        }
+                        className={imageview ? "rounded-circle" : ""}
                       />
                     </figure>
 
@@ -297,8 +287,6 @@ const TambahApi = ({ token }) => {
                       </label>
                     </div>
                   </div>
-
-
                 ) : (
                   <div className="ml-0 row">
                     <figure
@@ -314,7 +302,6 @@ const TambahApi = ({ token }) => {
                         objectFit="fill"
                         className="rounded-circle"
                       />
-
                     </figure>
                     <div className="position-relative">
                       <label
@@ -338,7 +325,6 @@ const TambahApi = ({ token }) => {
                 ) : (
                   ""
                 )}
-
               </div>
 
               <div
@@ -404,7 +390,9 @@ const TambahApi = ({ token }) => {
                     id="input-password"
                     className={`${styles.passwordWord} form-control`}
                     placeholder="Masukkan password"
-                    onBlur={() => simpleValidator.current.showMessageFor("password")}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("password")
+                    }
                   />
 
                   {hidePassword === true ? (
@@ -425,12 +413,13 @@ const TambahApi = ({ token }) => {
                     "required",
                     { className: "text-danger" }
                   )}
-
                 </div>
                 <p className={`${styles.notes}`} style={{ color: "#b7b5cf" }}>
-                  Min 8 Karakter,<br />
-                  Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)<br />
-                  Min 1 Simbol dan angka
+                  Min. 8 Karakter
+                  <br />
+                  Min. 1 Uppercase dan 1 Lowercase (Case Sensitivity)
+                  <br />
+                  Min. 1 Simbol dan 1 Angka
                 </p>
               </div>
 
@@ -443,7 +432,9 @@ const TambahApi = ({ token }) => {
                     type="password"
                     className={`${styles.passwordWord} form-control`}
                     placeholder="Masukkan konfirmasi password"
-                    onBlur={() => simpleValidator.current.showMessageFor("confirmPassword")}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("confirmPassword")
+                    }
                   />
 
                   {hidePasswordConfirm === true ? (
@@ -464,7 +455,6 @@ const TambahApi = ({ token }) => {
                     "required",
                     { className: "text-danger" }
                   )}
-
                 </div>
               </div>
 
@@ -473,25 +463,26 @@ const TambahApi = ({ token }) => {
                 <select
                   className="form-control"
                   onChange={(e) => setStatus(e.target.value)}
-                  onBlur={() => simpleValidator.current.showMessageFor("status")}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
                 >
                   <option value="">Pilih status</option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
                 </select>
 
-                {simpleValidator.current.message(
-                  "status",
-                  status,
-                  "required",
-                  { className: "text-danger" }
-                )}
+                {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
               </div>
             </form>
             <div className="form-group row mt-8">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/user/mitra" passHref>
-                  <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}>
+                  <a
+                    className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                  >
                     Kembali
                   </a>
                 </Link>
@@ -513,7 +504,7 @@ const TambahApi = ({ token }) => {
         show={showEditImage}
         onHide={() => onHandleHideModal()}
         centered
-      // dialogClassName="mx-10 mx-sm-auto rounded-lg"
+        // dialogClassName="mx-10 mx-sm-auto rounded-lg"
       >
         <Modal.Header>
           <Modal.Title>Ganti Logo Lembaga</Modal.Title>
@@ -525,13 +516,10 @@ const TambahApi = ({ token }) => {
           >
             <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
           </button>
-
         </Modal.Header>
 
         <Modal.Body>
-          <div>
-            Logo Lembaga
-          </div>
+          <div>Logo Lembaga</div>
 
           <div className="my-5">
             <button
@@ -564,24 +552,19 @@ const TambahApi = ({ token }) => {
               </div>
 
               <div className="col-12 col-md-6">
-                {
-                  upImg ?
-                    <div>
-                      <div>
-                        Pratinjau
-                      </div>
-                      <canvas
-                        ref={previewCanvasRef}
-                        style={{
-                          width: Math.round(completedCrop?.width ?? 0),
-                          height: Math.round(completedCrop?.height ?? 0),
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </div>
-                    :
-                    null
-                }
+                {upImg ? (
+                  <div>
+                    <div>Pratinjau</div>
+                    <canvas
+                      ref={previewCanvasRef}
+                      style={{
+                        width: Math.round(completedCrop?.width ?? 0),
+                        height: Math.round(completedCrop?.height ?? 0),
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -592,20 +575,19 @@ const TambahApi = ({ token }) => {
             <div className="d-flex justify-content-between align-items-center">
               <button
                 className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center"
-              onClick={() => onHandleHideModal()}
+                onClick={() => onHandleHideModal()}
               >
                 Batal
               </button>
               <button
                 className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
-              onClick={() => onSubmitEditImage()}
+                onClick={() => onSubmitEditImage()}
               >
                 Simpan
               </button>
             </div>
           </div>
         </Modal.Footer>
-
       </Modal>
       {/* End of Modal Edit Image */}
     </PageWrapper>
