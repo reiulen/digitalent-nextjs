@@ -37,6 +37,7 @@ const Table = ({ token }) => {
     };
   };
 
+
   const [windowDimensions, setWindowDimensions] = useState(
     // getWindowDimensions()
     {}
