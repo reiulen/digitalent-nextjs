@@ -76,7 +76,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
 			await store.dispatch(dropdownPendidikan(data.token));
 			await store.dispatch(getProfilePekerjaan(data.token));
 			await store.dispatch(getDataRefPekerjaan(data.token));
-			await store.dispatch(getDataAsalSekolah(data.token, 100));
+			// await store.dispatch(getDataAsalSekolah(data.token, 100));
+			await store.dispatch(getDataAsalSekolah(data.token));
 
 			return {
 				props: { data: "auth", session, title: "Profile - Peserta" },

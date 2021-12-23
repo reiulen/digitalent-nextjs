@@ -60,8 +60,9 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     (dataPribadi && dataPribadi.tempat_lahir) || null
   );
   const [tanggalLahir, setTanggalLahir] = useState(
-    (dataPribadi && moment(dataPribadi.tanggal_lahir).format("YYYY-MM-DD")) ||
-      ""
+    // (dataPribadi && moment(dataPribadi?.tanggal_lahir).format("YYYY-MM-DD")) ||
+    //   ""
+    (dataPribadi && dataPribadi?.tanggal_lahir ? moment(dataPribadi.tanggal_lahir).format("YYYY-MM-DD") : "")
   );
 
   const [nameUrgent, setNameUrgent] = useState(
@@ -77,7 +78,8 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const [ktpName, setKtpName] = useState(
     (dataPribadi && dataPribadi.File_ktp) || "Belum ada file"
   );
-  const [ktp, setKtp] = useState("");
+  // const [ktp, setKtp] = useState("");
+  const [ktp, setKtp] = useState((dataPribadi && dataPribadi?.File_ktp) || "");
   const [ktpPreview, setKtpPreview] = useState(
     (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
   );
@@ -722,7 +724,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 <label style={{ marginTop: "15px" }}>
                   {simpleValidator.current.message(
                     "ktp",
-                    ktpName || ktp,
+                    ktpName && ktp,
                     "required",
                     {
                       className: "text-danger",

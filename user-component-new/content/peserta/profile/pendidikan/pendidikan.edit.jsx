@@ -12,6 +12,7 @@ import {
   clearErrors,
   getProfilePendidikan,
   getDataAsalSekolah,
+  updateWizzardStatus,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 import {
@@ -40,9 +41,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   );
   const {
     error: errorUpdateData,
-    loading,
-    success,
+    loading: loadingUpdateData,
+    success: successUpdateData,
   } = useSelector((state) => state.updatePendidikan);
+
+  const {
+		error: errorStatusWizzard,
+		loading: loadingStatusWizzard,
+		success: successStatusWizard,
+	} = useSelector((state) => state.updateStatusWizzard);
 
   const [jengjangPendidikan, setJenjangPendidikan] = useState(
     (pendidikan && {
@@ -64,7 +71,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const [programStudi, setProgramStudi] = useState(
     (pendidikan && pendidikan.program_studi) || ""
   );
-  const [ipk, setIpk] = useState((pendidikan && pendidikan.ipk) || "");
+  const [ipk, setIpk] = useState((pendidikan && pendidikan.ipk) || null);
   const [tahunMasuk, setTahunMasuk] = useState(
     (pendidikan && pendidikan.tahun_masuk) || ""
   );
@@ -72,7 +79,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const [ijazahName, setIjazahName] = useState(
     pendidikan ? pendidikan?.ijasah?.split("/ijasah/") : "Belum ada file"
   );
-  const [ijazah, setIjazah] = useState("");
+  // const [ijazah, setIjazah] = useState("");
+  const [ijazah, setIjazah] = useState(pendidikan?.ijasah ? pendidikan.ijasah : "");
   const [ijazahPreview, setIjazahPreview] = useState("");
 
   const [dataSearch, setDataSearch] = useState([]);
@@ -108,7 +116,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       dispatch(clearErrors());
     }
 
-    if (success) {
+    if (successUpdateData) {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_PENDIDIKAN_RESET });
       if (wizzard) {
@@ -119,7 +127,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    success,
+    successUpdateData,
     errorUpdateData,
     dispatch,
     jengjangPendidikan.value,
@@ -178,9 +186,24 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   };
 
+  const stepBack = async () => {
+    let status = 2
+
+    const data = await dispatch (updateWizzardStatus(status, token))
+
+    if (data?.status === true){
+      router.push("/peserta/wizzard/alamat");
+
+    } else {
+      SweatAlert("Gagal", errorStatusWizzard, "error");
+			dispatch(clearErrors());
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let data = {};
+    console.log (ipk)
     if (
       !asalSekolah.includes("Lainnya") ||
       jengjangPendidikan.label != "SMA/Sederajat"
@@ -279,9 +302,11 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
           };
         }
       }
+
       dispatch(updateProfilePendidikan(data, token));
       window.scrollTo(0, 0);
     } else {
+     
       simpleValidator.current.showMessages();
       forceUpdate(1);
       Swal.fire({
@@ -419,7 +444,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "asal sekolah",
                     asalSekolah,
-                    asalSekolah === null ? "required" : "",
+                    // asalSekolah === null ? "required" : "",
+                    "required",
                     {
                       className: "text-danger",
                     }
@@ -477,7 +503,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -502,7 +529,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -538,7 +566,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -563,7 +592,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -598,7 +628,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -622,7 +653,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -658,7 +690,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -683,7 +716,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -718,7 +752,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -742,7 +777,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -778,7 +814,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -803,7 +840,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -838,7 +876,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -862,7 +901,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -898,7 +938,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -923,7 +964,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -958,7 +1000,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -982,7 +1025,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1018,7 +1062,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1043,7 +1088,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1068,7 +1114,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                lainya === null ? "required" : "",
+                // lainya === null ? "required" : "",
+                "required",
                 {
                   className: "text-danger",
                 }
@@ -1091,7 +1138,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                lainya === null ? "required" : "",
+                // lainya === null ? "required" : "",
+                "required",
                 {
                   className: "text-danger",
                 }
@@ -1114,7 +1162,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                lainya === null ? "required" : "",
+                // lainya === null ? "required" : "",
+                "required",
                 {
                   className: "text-danger",
                 }
@@ -1149,7 +1198,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "" : "required|integer",
+                  // tahunMasuk === null ? "" : "required|integer",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1185,7 +1235,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "" : "required|integer",
+                  // tahunMasuk === null ? "" : "required|integer",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1221,7 +1272,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "" : "required|integer",
+                  // tahunMasuk === null ? "" : "required|integer",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1257,7 +1309,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "" : "required|integer",
+                  // tahunMasuk === null ? "" : "required|integer",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1287,7 +1340,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -1322,7 +1376,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -1357,7 +1412,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -1397,7 +1453,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1429,7 +1486,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1459,7 +1517,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1489,7 +1548,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1524,7 +1584,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1556,7 +1617,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1586,7 +1648,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1616,7 +1679,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1651,7 +1715,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1683,7 +1748,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1713,7 +1779,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1743,7 +1810,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1778,7 +1846,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1810,7 +1879,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1840,7 +1910,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1870,7 +1941,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1905,7 +1977,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1937,7 +2010,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1967,7 +2041,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1997,7 +2072,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -2028,7 +2104,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -2071,7 +2148,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -2100,7 +2178,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    "required",
                     {
                       className: "text-danger",
                     }
@@ -2135,7 +2214,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -2178,7 +2258,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -2207,7 +2288,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    ijazah ? "" : "required",
                     {
                       className: "text-danger",
                     }
@@ -2242,7 +2324,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      ijazah ? "" : "required",
                       {
                         className: "text-danger",
                       }
@@ -2285,7 +2368,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  tahunMasuk ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -2314,7 +2398,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    ijazah ? "" : "required",
                     {
                       className: "text-danger",
                     }
@@ -2349,7 +2434,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      ijazah ? "" : "required",
                       {
                         className: "text-danger",
                       }
@@ -2392,7 +2478,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  tahunMasuk ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -2421,7 +2508,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    ijazah ? "" : "required",
                     {
                       className: "text-danger",
                     }
@@ -2456,7 +2544,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      ijazah ? "" : "required",
                       {
                         className: "text-danger",
                       }
@@ -2499,7 +2588,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  tahunMasuk ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -2528,7 +2618,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    ijazah ? "" : "required",
                     {
                       className: "text-danger",
                     }
@@ -2560,8 +2651,17 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         ) : (
           <div className="button-aksi mt-5 float-right">
             <Button
+							className={`${style.button_profile_batal} rounded-xl mr-2`}
+							type="button"
+							onClick={() => stepBack()}
+							disabled={loadingStatusWizzard ? true : false}
+						>
+							Kembali
+						</Button>
+            <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
+              disabled = {loadingUpdateData ? true : false}
             >
               Lanjut
             </Button>
