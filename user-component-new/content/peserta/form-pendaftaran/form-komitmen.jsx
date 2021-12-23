@@ -154,7 +154,13 @@ const FormKomitmen = ({
                           <input
                             type="checkbox"
                             className="form-check-input"
-                            checked={menyatakan}
+                            checked={
+                              menyatakan === "1"
+                                ? true
+                                : menyatakan === true
+                                ? true
+                                : false
+                            }
                             value={menyatakan}
                             onClick={() => handleCommitment()}
                           />

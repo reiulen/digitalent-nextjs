@@ -42,8 +42,8 @@ export const element = [
 ];
 
 export const size = [
-  { value: "col-md-6", name: "Half" },
-  { value: "col-md-12", name: "Full" },
+  { value: "col-md-6", name: "Half-width" },
+  { value: "col-md-12", name: "Full-width" },
 ];
 
 export const options = [

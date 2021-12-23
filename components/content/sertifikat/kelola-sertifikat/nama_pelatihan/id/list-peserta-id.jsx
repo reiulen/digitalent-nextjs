@@ -12,7 +12,6 @@ import moment from "moment";
 import axios from "axios";
 import { SweatAlert } from "../../../../../../utils/middleware/helper";
 // #Icon
-// import QRCode from "react-qr-code";
 import QRCode from "qrcode.react";
 export default function ListPesertaID({ token }) {
 	const router = useRouter();
@@ -50,28 +49,48 @@ export default function ListPesertaID({ token }) {
 		},
 	};
 
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		if (loading) {
+			Swal.fire({
+				title: "Mengunduh Sertifikat",
+				allowOutsideClick: false,
+				didOpen: () => {
+					Swal.showLoading();
+				},
+			});
+		} else {
+			Swal.hideLoading();
+		}
+	}, [loading]);
+
 	const handleDownload = async (id, noRegis, name) => {
+		setLoading(true);
 		const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${noRegis}`;
 		try {
 			const check = await axios.get(linkChecker, config);
 			if (!check.data.status) {
 				const data = await convertDivToPng(divReference.current);
 				if (data) {
-					const formData = new FormData();
-					formData.append("certificate", data);
-					const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
 					try {
+						const formData = new FormData();
+						formData.append("certificate", data);
+						const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
 						const result = await axios.post(link, formData, config); //post image certificate yang udah di render dari html
 						if (!result.data.status) {
-							SweatAlert("Gagal", result.data.message, "error");
+							setLoading(false);
+							SweatAlert("Gagal", result?.data?.message, "error");
 						} else {
 							const a = document.createElement("a");
 							a.download = `Sertifikat - ${query.name} ${noRegis}.png`;
 							a.target = "_blank";
 							a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
 							a.click();
+							setLoading(false);
 						}
 					} catch (e) {
+						setLoading(false);
 						SweatAlert("Gagal", e.message, "error");
 					}
 				}
@@ -81,12 +100,17 @@ export default function ListPesertaID({ token }) {
 				a.target = "_blank";
 				a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
 				a.click();
+				setLoading(false);
 			}
 		} catch (e) {
+			console.log(e);
+			console.log(e.respond.data.message);
+			console.log(e.message);
+
+			setLoading(false);
 			SweatAlert("Gagal", e.message, "error");
 		}
 	};
-
 	return (
 		<PageWrapper>
 			{/* error START */}
@@ -151,7 +175,13 @@ export default function ListPesertaID({ token }) {
 								id="sertifikat1"
 								ref={divReference}
 							>
-								<div className="position-absolute text-center w-100 responsive-nomor-sertifikat responsive-normal-font-size zindex-1">
+								<div
+									className={
+										!certificate?.data?.certificate?.background
+											? `responsive-nomor-sertifikat-without-background position-absolute text-center w-100 responsive-normal-font-size zindex-1`
+											: `position-absolute text-center w-100 responsive-nomor-sertifikat responsive-normal-font-size zindex-1`
+									}
+								>
 									{participant?.data?.nomor_sertifikat}
 								</div>
 								<div
@@ -167,8 +197,10 @@ export default function ListPesertaID({ token }) {
 								</div>
 								<div className="position-absolute zindex-2 responsive-qr-code">
 									<QRCode
-										value={"http://dts-dev.majapahit.id/"}
-										size={80}
+										value={`http://dts-dev.majapahit.id/cek-sertifikat?registrasi=${participant?.data?.nomor_registrasi}`}
+										// size={80}
+										style={{ height: "60%", width: "60%" }}
+										// className="h-sm-80px w-sm-80px h-lg-100px w-lg-100px w-25px h-25px"
 										level={"L"}
 									/>
 								</div>

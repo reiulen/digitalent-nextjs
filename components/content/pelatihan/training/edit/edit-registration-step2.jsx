@@ -14,6 +14,8 @@ import ModalPreview from "../components/modal-preview-form.component";
 import ModalProfile from "../components/modal-profile-peserta";
 import { putTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
 
+import { helperUnformatCheckbox } from "../../../../../utils/middleware/helper";
+
 import FormManual from "../components/step-registration/form-manual";
 import FormCopy from "../components/step-registration/form-copy";
 
@@ -126,13 +128,14 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
     } else {
       titleStore;
     }
-    const data = {
-      judul_form: titleStore,
-      Pelatian_id: parseInt(router.query.id),
-      formBuilder: formBuilderStore,
-      type_form: viewForm,
-    };
     if (simpleValidator.current.allValid()) {
+      const valueForm = helperUnformatCheckbox(formBuilderStore);
+      const data = {
+        judul_form: titleStore,
+        Pelatian_id: parseInt(router.query.id),
+        formBuilder: valueForm,
+        type_form: viewForm,
+      };
       dispatch(putTrainingStep2(token, data));
       propsStep(3);
     } else {
@@ -220,12 +223,13 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
           </h1>
           <div className="card-toolbar justify-content-between d-flex">
             <button
-              className="btn btn-outline-primary px-6 font-weight-bolder"
+              className="btn btn-warning px-6 font-weight-bolder"
+              style={{ borderRadius: "30px" }}
               data-toggle="modal"
               data-target="#modalProfile"
               type="button"
             >
-              Data Profile Peserta
+              Harap dibaca!
             </button>
           </div>
         </div>

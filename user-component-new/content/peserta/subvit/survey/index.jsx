@@ -430,8 +430,7 @@ const SubtansiUser = ({ token }) => {
         data.list_questions.map((item, index) => {
           return {
             ...item,
-
-            answer: sessionStorage.getItem(index + 1),
+            participant_answer: sessionStorage.getItem(index + 1),
           };
         })
       ),

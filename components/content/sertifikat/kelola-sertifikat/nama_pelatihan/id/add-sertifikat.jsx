@@ -607,7 +607,12 @@ export default function TambahMasterSertifikat({ token }) {
 														.format("DD/MM/YYYY")}
 												</span>
 												<span className="mx-2">yang meliputi</span>
-												<span>{hour} jam pembelajaran</span>
+												<span>
+													<span className="font-weight-bolder mr-2">
+														{hour}
+													</span>
+													<span>Jam Pelajaran</span>
+												</span>
 											</div>
 											<div className="w-100">
 												<span>Digital Talent Scholarship</span>
@@ -643,7 +648,11 @@ export default function TambahMasterSertifikat({ token }) {
 																width: "156px",
 																height: "150px",
 															}}
-															className="col-3 p-0 px-lg-4"
+															className={
+																number_of_signatures > 2
+																	? `col-3 p-0 px-lg-4`
+																	: `col-3 p-0 `
+															}
 														>
 															<div className="col p-0 ">
 																<div

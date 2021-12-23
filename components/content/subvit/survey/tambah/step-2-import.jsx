@@ -84,20 +84,22 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [limit, setLimit] = useState(null);
 
   useEffect(() => {
-    dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
+    dispatch(
+      getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission)
+    );
     // if (error) {
     //   dispatch(clearErrors());
     // }
     if (successFile) {
-      dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
+      getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission);
     }
 
     if (successImages) {
-      dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
+      getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission);
     }
 
     if (isDeleted) {
-      dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
+      getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission);
     }
   }, [
     dispatch,
@@ -321,7 +323,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="2" title="Survey"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Metode Import .csv/.xls</h2>
           </div>

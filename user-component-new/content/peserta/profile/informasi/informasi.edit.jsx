@@ -163,6 +163,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 				file_ktp: ktp,
 				nomorHandphone,
 				email,
+				wizard: 2,
 			};
 			dispatch(updateProfileDataPribadi(data, token));
 			window.scrollTo(0, 0);
@@ -454,7 +455,17 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 							)}
 						</Form.Group>
 						<Form.Group as={Col} md={6}>
-							<Form.Label className={style.label}>Email</Form.Label>
+							<div className="d-flex justify-content-between">
+								<Form.Label className={style.label}>Email</Form.Label>
+								<a
+									className={`${style.label} text-primary cursor-pointer`}
+									onClick={() => {
+										router.push("/peserta/pengaturan");
+									}}
+								>
+									Ubah
+								</a>
+							</div>{" "}
 							<Form.Control
 								className={style.formControl}
 								disabled
@@ -512,7 +523,18 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 					</Row>
 					<Row className="mb-3">
 						<Form.Group as={Col} md={6} controlId="formGridPassword">
-							<Form.Label className={style.label}>Nomor Handphone</Form.Label>
+							<div className="d-flex justify-content-between">
+								<Form.Label className={style.label}>Nomor Handphone</Form.Label>
+								<a
+									className={`${style.label} text-primary cursor-pointer`}
+									onClick={() => {
+										router.push("/peserta/pengaturan");
+									}}
+								>
+									Ubah
+								</a>
+							</div>
+
 							<Form.Control
 								className={style.formControl}
 								disabled
@@ -645,6 +667,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 					<Row className="mb-3">
 						<Form.Group as={Col} md={6}>
 							<Form.Label>Nomor Handphone</Form.Label>
+
 							<Form.Control
 								className={style.formControl}
 								min={4}

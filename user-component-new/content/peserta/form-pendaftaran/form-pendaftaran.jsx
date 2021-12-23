@@ -70,7 +70,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
     if (dataTraining?.komitmen == "1") {
       if (simpleValidator.current.allValid()) {
         const data = {
-          komitmen: dataForm.komitmen,
+          komitmen: dataForm.komitmen ? "1" : "0",
           form_pendaftaran: valueForm,
         };
         dispatch(storeFormRegister(data));
@@ -86,7 +86,7 @@ const FormPendaftaran = ({ propsTitle, funcView, token }) => {
       }
     } else {
       const data = {
-        komitmen: dataForm.komitmen,
+        komitmen: dataForm.komitmen ? "1" : "0",
         form_pendaftaran: valueForm,
         pelatian_id: +router.query.id,
       };

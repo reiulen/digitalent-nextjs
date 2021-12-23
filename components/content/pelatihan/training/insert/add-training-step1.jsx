@@ -1174,13 +1174,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   type="radio"
                   name="plotRegistration"
                   className="form-check-input"
-                  value="Tanpa Tes Substansi dan Administrasi"
-                  checked={
-                    plotRegistration === "Tanpa Tes Substansi dan Administrasi"
-                  }
-                  onClick={() =>
-                    setPlotRegistration("Tanpa Tes Substansi dan Administrasi")
-                  }
+                  value="Administrasi"
+                  checked={plotRegistration === "Administrasi"}
+                  onClick={() => setPlotRegistration("Administrasi")}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("alur pendaftaran")
                   }

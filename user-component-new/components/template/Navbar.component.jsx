@@ -9,6 +9,9 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import LoadingSidebar from "../loader/LoadingSidebar";
 
+import { firebaseCloudMessaging } from "../../../webPush";
+import { getMessaging, onMessage } from "firebase/messaging";
+
 import {
 	Navbar,
 	Nav,
@@ -54,6 +57,7 @@ const Navigationbar = ({ session }) => {
 	const { footer, loading } = useSelector((state) => state.berandaFooter);
 
 	useEffect(() => {
+		setToken();
 		if (!session) {
 			return;
 		}
@@ -66,14 +70,13 @@ const Navigationbar = ({ session }) => {
 				signOut();
 			}
 		}
-
 		if (session) {
 			if (
 				dataPribadi &&
 				Object.keys(dataPribadi).length !== 0 &&
 				!dataPribadi.status
 			) {
-				if (dataPribadi.wizard == 1) {
+				if (dataPribadi.wizard == 1 || dataPribadi.wizard == 0) {
 					return router.push("/peserta/wizzard");
 				}
 				if (dataPribadi.wizard == 2) {
@@ -90,6 +93,27 @@ const Navigationbar = ({ session }) => {
 
 		handleConnectSocket();
 	}, []);
+
+	// FIREBASE NOTIFICATION
+
+	const setToken = async () => {
+		try {
+			const token = await firebaseCloudMessaging.init();
+			if (token) {
+				console.log(token);
+				getMessage();
+			}
+		} catch (err) {
+			console.log(err, "ini error");
+		}
+	};
+
+	const getMessage = () => {
+		const messaging = getMessaging();
+		onMessage(messaging, (payload) => {
+			console.log("ada pesan notif", payload);
+		});
+	};
 
 	const handleConnectSocket = () => {
 		let ws = new WebSocket(
@@ -267,6 +291,8 @@ const Navigationbar = ({ session }) => {
 	]);
 	const [index, setIndex] = useState(0);
 
+	const [state, setState] = useState();
+
 	return (
 		<>
 			<Navbar
@@ -297,7 +323,7 @@ const Navigationbar = ({ session }) => {
 						/>
 					</Navbar.Brand>
 					<div className="d-flex d-lg-none justify-content-end align-items-center">
-						{!isNavOpen && session && session.roles[0] === "user" && (
+						{!isNavOpen && session && session.roles[0] === "user" ? (
 							<div className="row m-3">
 								<a className="col-3 p-md-0 col-xl-4 text-center">
 									<i
@@ -375,6 +401,15 @@ const Navigationbar = ({ session }) => {
 									)}
 								</a>
 							</div>
+						) : (
+							<div>
+								<a className="col-3 p-md-0 col-xl-4 text-left">
+									<i
+										className="ri-search-2-line ri-2x mx-0 mx-md-3 text-gray"
+										onClick={() => setShowSearch(!showSearch)}
+									></i>
+								</a>
+							</div>
 						)}
 						<Navbar.Toggle
 							aria-controls="basic-navbar-nav"
@@ -392,7 +427,16 @@ const Navigationbar = ({ session }) => {
 					</div>
 				</Col>
 				{showSearch && (
-					<Form className="w-100 my-2 mx-1 row ">
+					<Form
+						className="w-100 my-2 mx-1 row "
+						onSubmit={(e) => {
+							e.preventDefault();
+							if (search != "") {
+								router.push(`/pencarian?cari=${search}&page=1`);
+								dispatch(searchKeyword(search));
+							}
+						}}
+					>
 						<div className="position-relative w-100">
 							<FormControl
 								type="search"
@@ -403,17 +447,22 @@ const Navigationbar = ({ session }) => {
 									backgroundColor: "#F2F7FC",
 									border: "0px !important",
 								}}
-								onKeyDown={(e) => {
+								// onKeyDown={(e) => {
+								// 	setSearch(e.target.value);
+								// 	// if (e.code == "Enter") {
+								// 	// 	handleEnter(e);
+								// 	// }
+								// 	setState(e.code);
+								// }}
+								onChange={(e) => {
 									setSearch(e.target.value);
-									if (e.code == "Enter") {
-										handleEnter(e);
-									}
 								}}
 							/>
 							<IconSearch
 								className="left-center-absolute"
 								style={{ left: "10px" }}
 							/>
+							{state}
 						</div>
 					</Form>
 				)}
@@ -466,11 +515,12 @@ const Navigationbar = ({ session }) => {
 												tentang kami
 											</NavDropdown.Item>
 										</Link>
-										<Link href="/penyelenggara" passHref>
+										<Link href="/mitra" passHref>
 											<NavDropdown.Item className="navdropdown-child">
-												penyelenggara
+												mitra pelatihan
 											</NavDropdown.Item>
 										</Link>
+
 										<NavDropdown.Item
 											className="navdropdown-child"
 											onClick={(e) => {
@@ -498,6 +548,11 @@ const Navigationbar = ({ session }) => {
 										<Link href="/kontak" passHref>
 											<NavDropdown.Item className="navdropdown-child">
 												Kontak
+											</NavDropdown.Item>
+										</Link>
+										<Link href="/cek-sertifikat" passHref>
+											<NavDropdown.Item className="navdropdown-child">
+												Cek Sertifikat
 											</NavDropdown.Item>
 										</Link>
 										{menu?.length > 0 && (
@@ -557,7 +612,16 @@ const Navigationbar = ({ session }) => {
 						{/* END MENU */}
 					</Nav>
 					{/* Search Bar */}
-					<Form className="w-100 my-2 mx-5 row ">
+					<Form
+						className="w-100 my-2 mx-5 row"
+						onSubmit={(e) => {
+							e.preventDefault();
+							if (search != "") {
+								router.push(`/pencarian?cari=${search}&page=1`);
+								dispatch(searchKeyword(search));
+							}
+						}}
+					>
 						<div className="position-relative w-100 d-none d-lg-block">
 							<FormControl
 								type="search"
@@ -568,11 +632,11 @@ const Navigationbar = ({ session }) => {
 									backgroundColor: "#F2F7FC",
 									border: "0px !important",
 								}}
-								onKeyDown={(e) => {
-									if (e.code == "Enter") {
-										handleEnter(e);
-									}
-								}}
+								// onKeyDown={(e) => {
+								// 	if (e.code == "Enter") {
+								// 		handleEnter(e);
+								// 	}
+								// }}
 								onChange={(e) => {
 									setSearch(e.target.value);
 								}}
@@ -838,7 +902,7 @@ const Navigationbar = ({ session }) => {
 								Menu
 							</Col>
 							<Col sm={12} className="mb-8">
-								<Link href="/">Beranda</Link>
+								<Link href="/">Berandass</Link>
 							</Col>
 
 							<Col sm={12}>
@@ -884,7 +948,7 @@ const Navigationbar = ({ session }) => {
 								<Link href="/tentang-kami">Tentang Kami</Link>
 							</Col>
 							<Col className="mb-8" sm={12}>
-								<Link href="/penyelenggara">Penyelenggara</Link>
+								<Link href="/mitra">Mitra Pelatihan</Link>
 							</Col>
 							<Col sm={12}>
 								<Dropdown color="white">
@@ -953,6 +1017,10 @@ const Navigationbar = ({ session }) => {
 							</Col>
 							<Col className="mb-8" sm={12}>
 								<Link href="/kontak">Kontak</Link>
+							</Col>
+
+							<Col className="mb-8" sm={12}>
+								<Link href="/cek-sertifikat">Cek Sertifikat</Link>
 							</Col>
 							{menu?.length > 0 && (
 								<Col sm={12}>

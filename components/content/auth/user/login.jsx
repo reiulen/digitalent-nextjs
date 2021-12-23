@@ -57,23 +57,26 @@ const LoginUser = () => {
         } else {
           const session = await getSession();
           if (!session.user.user.data.user.status) {
-            if (session.user.user.data.user.wizard == 1) {
-              return router.push("/peserta/wizzard");
+            if (
+              session.user.user.data.user.wizard == 1 ||
+              session.user.user.data.user.wizard == 0
+            ) {
+              router.push("/peserta/wizzard");
             }
             if (session.user.user.data.user.wizard == 2) {
-              return router.push("/peserta/wizzard/alamat");
+              router.push("/peserta/wizzard/alamat");
             }
             if (session.user.user.data.user.wizard == 3) {
-              return router.push("/peserta/wizzard/pendidikan");
+              router.push("/peserta/wizzard/pendidikan");
             }
             if (session.user.user.data.user.wizard == 4) {
-              return router.push("/peserta/wizzard/pekerjaan");
+              router.push("/peserta/wizzard/pekerjaan");
             }
             if (session.user.user.data.user.wizard == 5) {
-              return router.push("/peserta");
+              router.push("/peserta");
             }
           } else {
-            return router.push("/peserta");
+            router.push("/peserta");
           }
         }
       }

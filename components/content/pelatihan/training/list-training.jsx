@@ -980,7 +980,6 @@ const ListTraining = ({ token }) => {
                                   disabled={
                                     (row.status_pelatihan ===
                                       "review substansi" ||
-                                      row.status_pelatihan === "selesai" ||
                                       row.status_substansi === "ditolak") &&
                                     true
                                   }
@@ -1022,7 +1021,7 @@ const ListTraining = ({ token }) => {
                                     )}
 
                                   {row.status_pelatihan === "selesai" && (
-                                    <option value="selesai">Selesai</option>
+                                    <option value="pelatihan">Pelatihan</option>
                                   )}
 
                                   <option value="dibatalkan">Dibatalkan</option>

@@ -11,6 +11,19 @@ import axios from "axios";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import Cookies from "js-cookie";
 import ModalProfile from "../training/components/modal-profile-peserta";
+import RenderFormElement from "../training/components/render-form-element.component";
+
+import {
+  element,
+  size,
+  options,
+} from "../../../../utils/middleware/helper/data";
+import {
+  helperChangeInputFormBuilder,
+  helperAddFieldTriggered,
+  helperRemoveField,
+  helperUnformatCheckbox,
+} from "../../../../utils/middleware/helper";
 
 const AddMasterPelatihan = ({ token }) => {
   const dispatch = useDispatch();
@@ -28,65 +41,6 @@ const AddMasterPelatihan = ({ token }) => {
   const [modalShow, setModalShow] = useState(false);
   const [dataOptions, setDataOptions] = useState([]);
   const [limitProfile, setLimitProfile] = useState(false);
-
-  const [element] = useState([
-    {
-      value: "select",
-      name: "Select",
-    },
-    {
-      value: "text",
-      name: "Text",
-    },
-    {
-      value: "checkbox",
-      name: "Checkbox",
-    },
-    {
-      value: "textarea",
-      name: "Text Area",
-    },
-    {
-      value: "radio",
-      name: "Radio",
-    },
-    {
-      value: "file_image",
-      name: "File Image",
-    },
-    {
-      value: "file_doc",
-      name: "File Document",
-    },
-    {
-      value: "date",
-      name: "Input Date",
-    },
-    {
-      value: "triggered",
-      name: "Triggered",
-    },
-    {
-      value: "upload_document",
-      name: "Upload Document",
-    },
-  ]);
-
-  const [size] = useState([
-    { value: "col-md-6", name: "Half" },
-    { value: "col-md-12", name: "Full" },
-  ]);
-
-  const [options] = useState([
-    {
-      name: "Manual",
-      value: "manual",
-    },
-    {
-      name: "Select Reference",
-      value: "select_reference",
-    },
-  ]);
 
   const [title, setTitle] = useState(registrationData.judul_form);
   const [formBuilder, setFormBuilder] = useState(registrationData.formBuilder);
@@ -108,93 +62,6 @@ const AddMasterPelatihan = ({ token }) => {
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
-    }
-  };
-
-  const removeFieldHandler = (
-    alfa = null,
-    parentIndex = null,
-    beta = null,
-    childrenIndex = null,
-    gamma = null,
-    indexIndex = null,
-    delta = null
-  ) => {
-    if (
-      alfa !== null &&
-      parentIndex === null &&
-      beta === null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      const list = [...formBuilder];
-      list.splice(alfa, 1);
-      list.forEach((row, i) => {
-        let key = i + 1;
-        list[i]["key"] = key;
-      });
-      setFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      const list = [...formBuilder];
-      let listAlfa = list[alfa].triggered_parent[parentIndex];
-      listAlfa.triggeredForm.splice(beta, 1);
-      listAlfa.triggeredForm.forEach((row, i) => {
-        let key = i + 1;
-        listAlfa.triggeredForm[i]["key"] = key;
-      });
-      setFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      const list = [...formBuilder];
-      let listBeta =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex];
-      listBeta.triggeredForm.splice(gamma, 1);
-      listBeta.triggeredForm.forEach((row, i) => {
-        let key = i + 1;
-        listBeta.triggeredForm[i]["key"] = key;
-      });
-      setFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex !== null &&
-      delta !== null
-    ) {
-      const list = [...formBuilder];
-      let listGamma =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma]
-          .triggered_index[indexIndex];
-      listGamma.triggeredForm.splice(delta, 1);
-      listGamma.triggeredForm.forEach((row, i) => {
-        let key = i + 1;
-        listGamma.triggeredForm[i]["key"] = key;
-      });
-      setFormBuilder(list);
     }
   };
 
@@ -521,7 +388,12 @@ const AddMasterPelatihan = ({ token }) => {
   };
 
   const addFieldHandler = () => {
-    const newKey = formBuilder[formBuilder.length - 1].key + 1;
+    let newKey;
+    if (formBuilder.length > 0) {
+      newKey = formBuilder[formBuilder.length - 1].key + 1;
+    } else {
+      newKey = 1;
+    }
     setFormBuilder([
       ...formBuilder,
       {
@@ -535,6 +407,7 @@ const AddMasterPelatihan = ({ token }) => {
         required: "0",
         triggered: "0",
         triggered_parent: [],
+        value: "",
       },
     ]);
   };
@@ -548,95 +421,39 @@ const AddMasterPelatihan = ({ token }) => {
     indexIndex = null,
     delta = null
   ) => {
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex !== null
-    ) {
-      const list = [...formBuilder];
-      let newKey = 1;
-      const formElement =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma]
-          .triggered_index[indexIndex];
-      if (formElement.triggeredForm.length > 0) {
-        newKey =
-          formElement.triggeredForm[formElement.triggeredForm.length - 1].key +
-          1;
-      }
-      const val = {
-        key: newKey,
-        name: " ",
-        element: "",
-        size: "col-md-12",
-        option: "",
-        dataOption: "",
-        fileName: "Belum ada file",
-        triggered: "0",
-      };
-      formElement.triggeredForm.push(val);
-      setFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma === null &&
-      indexIndex === null
-    ) {
-      const list = [...formBuilder];
-      let newKey = 1;
-      const formElement =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex];
-      const val = {
-        key: newKey,
-        name: " ",
-        element: "",
-        size: "col-md-12",
-        option: "",
-        dataOption: "",
-        fileName: "Belum ada file",
-        triggered: "0",
-        triggered_index: [],
-      };
-      formElement.triggeredForm.push(val);
-      setFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta === null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null
-    ) {
-      const list = [...formBuilder];
-      let newKey = 1;
-      const formElement = list[alfa].triggered_parent[parentIndex];
-      if (formElement.triggeredForm.length > 0) {
-        newKey =
-          formElement.triggeredForm[formElement.triggeredForm.length - 1].key +
-          1;
-      }
-      const val = {
-        key: newKey,
-        name: " ",
-        element: "",
-        size: "col-md-12",
-        option: "",
-        dataOption: "",
-        fileName: "Belum ada file",
-        triggered: "0",
-        triggered_children: [],
-      };
-      formElement.triggeredForm.push(val);
-      setFormBuilder(list);
-    }
+    const valueForm = helperAddFieldTriggered(
+      formBuilder,
+      alfa,
+      parentIndex,
+      beta,
+      childrenIndex,
+      gamma,
+      indexIndex,
+      delta
+    );
+    setFormBuilder(valueForm);
+  };
+
+  const removeFieldHandler = (
+    alfa = null,
+    parentIndex = null,
+    beta = null,
+    childrenIndex = null,
+    gamma = null,
+    indexIndex = null,
+    delta = null
+  ) => {
+    const valueForm = helperRemoveField(
+      formBuilder,
+      alfa,
+      parentIndex,
+      beta,
+      childrenIndex,
+      gamma,
+      indexIndex,
+      delta
+    );
+    setFormBuilder(valueForm);
   };
 
   const inputChangeParentHandler = (
@@ -649,295 +466,18 @@ const AddMasterPelatihan = ({ token }) => {
     indexIndex = null,
     delta = null
   ) => {
-    const { value, name, checked } = event.target;
-    const list = [...formBuilder];
-    if (
-      alfa !== null &&
-      parentIndex === null &&
-      beta === null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      if (name === "upload-document") {
-        const type = [
-          "image/jpg",
-          "image/png",
-          "image/jpeg",
-          "application/pdf",
-        ];
-        if (event.target.files[0]) {
-          if (type.includes(event.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                list[alfa].dataOption = reader.result;
-              }
-            };
-            reader.readAsDataURL(event.target.files[0]);
-            list[alfa].fileName = event.target.files[0].name;
-          } else {
-            event.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
-              "error"
-            );
-          }
-        }
-      }
-      if (name === "element" && value === "triggered") {
-        list[alfa].option = "manual";
-        list[alfa].size = "col-md-12";
-      }
-      list[alfa][name] = value;
-      if (name === "required") {
-        let check = checked === true ? "1" : "0";
-        list[alfa]["required"] = check;
-      }
-      if (name === "triggered") {
-        let check = checked === true ? "1" : "0";
-        if (checked) {
-          list.map((row, i) => {
-            if (row.option === "manual") {
-              if (row.dataOption !== "") {
-                let dataOption = row.dataOption.split(";");
-                dataOption.map((triggeredOption, index) => {
-                  let val = {
-                    key: index + 1,
-                    triggeredName: triggeredOption,
-                    triggeredForm: [
-                      {
-                        key: 1,
-                        name: " ",
-                        element: "",
-                        size: "col-md-12",
-                        option: "",
-                        dataOption: "",
-                        fileName: "Belum ada file",
-                        triggered: "0",
-                        triggered_children: [],
-                      },
-                    ],
-                  };
-                  list[alfa].triggered_parent.push(val);
-                });
-              }
-            }
-          });
-        } else {
-          list[alfa].triggered_parent = [];
-        }
-        list[alfa]["triggered"] = check;
-      }
-      setFormBuilder(list);
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex === null &&
-      gamma === null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      let element =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta];
-      element[name] = value;
-      if (name === "upload-document") {
-        const type = [
-          "image/jpg",
-          "image/png",
-          "image/jpeg",
-          "application/pdf",
-        ];
-        if (event.target.files[0]) {
-          if (type.includes(event.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.dataOption = reader.result;
-              }
-            };
-            reader.readAsDataURL(event.target.files[0]);
-            element.fileName = event.target.files[0].name;
-          } else {
-            event.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
-              "error"
-            );
-          }
-        }
-      }
-      if (name === "element" && value === "triggered") {
-        element.option = "manual";
-        element.size = "col-md-12";
-      }
-      if (name === "required") {
-        let check = checked === true ? "1" : "0";
-        element.required = check;
-      }
-      if (name === "triggered") {
-        let check = checked === true ? "1" : "0";
-        element.triggered = check;
-        if (checked) {
-          let dataOption = element.dataOption.split(";");
-          dataOption.map((triggeredOption, index) => {
-            let val = {
-              key: index + 1,
-              triggeredName: triggeredOption,
-              triggeredForm: [
-                {
-                  key: 1,
-                  name: "",
-                  element: "",
-                  size: "col-md-12",
-                  option: "",
-                  dataOption: "",
-                  fileName: "Belum ada file",
-                  triggered: "0",
-                  triggered_index: [],
-                },
-              ],
-            };
-            element.triggered_children.push(val);
-          });
-        } else {
-          element.triggered_children = [];
-        }
-      }
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex === null &&
-      delta === null
-    ) {
-      let element =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma];
-      element[name] = value;
-      if (name === "upload-document") {
-        const type = [
-          "image/jpg",
-          "image/png",
-          "image/jpeg",
-          "application/pdf",
-        ];
-        if (event.target.files[0]) {
-          if (type.includes(event.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.dataOption = reader.result;
-              }
-            };
-            reader.readAsDataURL(event.target.files[0]);
-            element.fileName = event.target.files[0].name;
-          } else {
-            event.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
-              "error"
-            );
-          }
-        }
-      }
-      if (name === "element" && value === "triggered") {
-        element.option = "manual";
-        element.size = "col-md-12";
-      }
-      if (name === "required") {
-        let check = checked === true ? "1" : "0";
-        element.required = check;
-      }
-      if (name === "triggered") {
-        let check = checked === true ? "1" : "0";
-        element.triggered = check;
-        if (checked) {
-          let dataOption = element.dataOption.split(";");
-          dataOption.map((triggeredOption, index) => {
-            let val = {
-              key: index + 1,
-              triggeredName: triggeredOption,
-              triggeredForm: [
-                {
-                  key: 1,
-                  name: "",
-                  element: "",
-                  size: "col-md-12",
-                  option: "",
-                  dataOption: "",
-                  fileName: "Belum ada file",
-                  triggered: "0",
-                },
-              ],
-            };
-            element.triggered_index.push(val);
-          });
-        } else {
-          element.triggered_index = [];
-        }
-      }
-    }
-    if (
-      alfa !== null &&
-      parentIndex !== null &&
-      beta !== null &&
-      childrenIndex !== null &&
-      gamma !== null &&
-      indexIndex !== null &&
-      delta !== null
-    ) {
-      let element =
-        list[alfa].triggered_parent[parentIndex].triggeredForm[beta]
-          .triggered_children[childrenIndex].triggeredForm[gamma]
-          .triggered_index[indexIndex].triggeredForm[delta];
-      element[name] = value;
-      if (name === "upload-document") {
-        const type = [
-          "image/jpg",
-          "image/png",
-          "image/jpeg",
-          "application/pdf",
-        ];
-        if (event.target.files[0]) {
-          if (type.includes(event.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              if (reader.readyState === 2) {
-                element.dataOption = reader.result;
-              }
-            };
-            reader.readAsDataURL(event.target.files[0]);
-            element.fileName = event.target.files[0].name;
-          } else {
-            event.target.value = null;
-            Swal.fire(
-              "Oops !",
-              "Data yang bisa dimasukkan hanya berupa file pdf dan gambar.",
-              "error"
-            );
-          }
-        }
-      }
-      if (name === "element" && value === "triggered") {
-        element.option = "manual";
-        element.size = "col-md-12";
-      }
-      if (name === "required") {
-        let check = checked === true ? "1" : "0";
-        element.required = check;
-      }
-    }
-    setFormBuilder(list);
+    const valueForm = helperChangeInputFormBuilder(
+      event,
+      formBuilder,
+      alfa,
+      parentIndex,
+      beta,
+      childrenIndex,
+      gamma,
+      indexIndex,
+      delta
+    );
+    setFormBuilder(valueForm);
   };
 
   const closePreviewHandler = () => {
@@ -959,9 +499,10 @@ const AddMasterPelatihan = ({ token }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
+      const valueForm = helperUnformatCheckbox(formBuilder);
       const data = {
         judul_form: title,
-        formBuilder,
+        formBuilder: valueForm,
       };
 
       const config = {
@@ -977,13 +518,14 @@ const AddMasterPelatihan = ({ token }) => {
           config
         );
         if (result.status == 200) {
-          setSuccess(1);
+          SweatAlert("Berhasil", "Berhasil tambah form pendaftaran", "success");
+          router.push("/pelatihan/master-pendaftaran");
         }
         if (!result.status) {
           throw new Error(result.message);
         }
       } catch (error) {
-        setSuccess(2);
+        SweatAlert("Gagal", error, "error");
       }
     } else {
       simpleValidator.current.showMessages();
@@ -995,15 +537,12 @@ const AddMasterPelatihan = ({ token }) => {
       });
     }
   };
-  useEffect(() => {
-    if (success === 1) {
-      SweatAlert("Berhasil", "Berhasil tambah form pendaftaran", "success");
-      router.push("/pelatihan/master-pendaftaran");
-    }
-    if (success === 2) {
-      SweatAlert("Gagal", "Panjang Karakter max 100", "error");
-    }
-  }, [success, router]);
+  // useEffect(() => {
+  //   if (success === 1) {
+  //     SweatAlert("Berhasil", "Berhasil tambah form pendaftaran", "success");
+  //     router.push("/pelatihan/master-pendaftaran");
+  //   }
+  // }, [success, router]);
 
   return (
     <PageWrapper>
@@ -1018,12 +557,13 @@ const AddMasterPelatihan = ({ token }) => {
             </h1>
             <div className="card-toolbar justify-content-between d-flex">
               <button
-                className="btn btn-outline-primary px-6 font-weight-bolder"
+                className="btn btn-warning px-6 font-weight-bolder"
+                style={{ borderRadius: "30px" }}
                 data-toggle="modal"
                 data-target="#modalProfile"
                 type="button"
               >
-                Data Profile Peserta
+                Harap dibaca!
               </button>
             </div>
           </div>
@@ -1060,127 +600,53 @@ const AddMasterPelatihan = ({ token }) => {
               <div className="row justify-content-end">
                 {formBuilder.map((row, i) => (
                   <>
-                    <div className="col-sm-12 col-md-2">
-                      <div className="form-group mb-2">
-                        <label className="col-form-label font-weight-bold">
-                          Nama Field
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="name"
-                          value={row.name}
-                          placeholder="Field"
-                          autoComplete="off"
-                          onChange={(e) => inputChangeParentHandler(e, i)}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-sm-12 col-md-2">
-                      <div className="form-group mb-2">
-                        <label className="col-form-label font-weight-bold">
-                          Pilih Element
-                        </label>
-                        <select
-                          className="form-control"
-                          name="element"
-                          value={row.element}
-                          onChange={(e) => inputChangeParentHandler(e, i)}
-                          required
-                          disabled={row.triggered === "1" ? true : false}
-                        >
-                          <option value="" disabled selected>
-                            -- PILIH --
-                          </option>
-                          {element.map((el, i) => (
-                            <option key={i} value={el.value}>
-                              {el.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="col-sm-12 col-md-2">
-                      <div className="form-group mb-2">
-                        <label className="col-form-label font-weight-bold">
-                          Size
-                        </label>
-                        <select
-                          className="form-control"
-                          name="size"
-                          value={row.size}
-                          onChange={(e) => inputChangeParentHandler(e, i)}
-                          required
-                          disabled={row.element === "triggered" ? true : false}
-                        >
-                          <option value="" disabled selected>
-                            -- PILIH --
-                          </option>
-                          {size.map((siz, i) => (
-                            <option key={i} value={siz.value}>
-                              {siz.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
+                    <RenderFormElement
+                      row={row}
+                      funcInputChangeParentHandler={(
+                        e,
+                        i,
+                        parentIndex,
+                        j,
+                        childrenIndex,
+                        k,
+                        indexIndex,
+                        l
+                      ) => {
+                        inputChangeParentHandler(
+                          e,
+                          i,
+                          parentIndex,
+                          j,
+                          childrenIndex,
+                          k,
+                          indexIndex,
+                          l
+                        );
+                      }}
+                      funcRemoveFieldHandler={(
+                        i,
+                        parentIndex,
+                        j,
+                        childrenIndex,
+                        k,
+                        indexIndex,
+                        l
+                      ) => {
+                        removeFieldHandler(
+                          i,
+                          parentIndex,
+                          j,
+                          childrenIndex,
+                          k,
+                          indexIndex,
+                          l
+                        );
+                      }}
+                      formBuilder={formBuilder}
+                      i={i}
+                      dataOptions={dataOptions}
+                    />
 
-                    {renderMultipleHandler(row, i)}
-                    <div className="col-sm-6 col-md-2">
-                      <label className="col-form-label font-weight-bold ">
-                        Req
-                      </label>
-                      {row.element === "triggered" && (
-                        <label className="col-form-label font-weight-bold ml-3">
-                          Triggered
-                        </label>
-                      )}
-                      <div className="d-flex align-items-end justify-content-between">
-                        <div className="form-group ">
-                          <div className="form-check mb-4">
-                            <input
-                              type="checkbox"
-                              name="required"
-                              checked={row.required === "1" ? true : false}
-                              className="form-check-input"
-                              onChange={(e) => inputChangeParentHandler(e, i)}
-                            />
-                          </div>
-                        </div>
-                        {row.element === "triggered" && (
-                          <div className="">
-                            <label className="switches">
-                              <input
-                                className="checkbox"
-                                name="triggered"
-                                checked={row.triggered === "1" ? true : false}
-                                type="checkbox"
-                                onChange={(e) => inputChangeParentHandler(e, i)}
-                              />
-                              <span className={`sliders round pl-2`}></span>
-                            </label>
-                          </div>
-                        )}
-                        {formBuilder.length !== 1 && row.key !== 1 ? (
-                          <button
-                            className="btn btn-link-action bg-danger text-white mb-3 "
-                            type="button"
-                            onClick={() => removeFieldHandler(i)}
-                          >
-                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                          </button>
-                        ) : (
-                          <button
-                            className="btn btn-link-action bg-danger text-white mb-3  invisible"
-                            type="button"
-                            onClick={() => removeFieldHandler(i)}
-                          >
-                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                          </button>
-                        )}
-                      </div>
-                    </div>
                     {row.triggered_parent &&
                       row.triggered_parent.length > 0 &&
                       row.triggered_parent.map((titleParent, parentTitle) => (
@@ -1204,177 +670,54 @@ const AddMasterPelatihan = ({ token }) => {
                                   style={{ maxWidth: "97%" }}
                                 >
                                   <div className="row">
-                                    <div className="col-sm-12 col-md-2">
-                                      <div className="form-group mb-2">
-                                        <label className="col-form-label font-weight-bold">
-                                          Nama Field
-                                        </label>
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          name="name"
-                                          value={rowParent.name}
-                                          placeholder="Field"
-                                          autoComplete="off"
-                                          onChange={(e) =>
-                                            inputChangeParentHandler(
-                                              e,
-                                              i,
-                                              parentTitle,
-                                              j
-                                            )
-                                          }
-                                          required
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="col-sm-12 col-md-2">
-                                      <div className="form-group mb-2">
-                                        <label className="col-form-label font-weight-bold">
-                                          Pilih Element
-                                        </label>
-                                        <select
-                                          className="form-control"
-                                          name="element"
-                                          value={rowParent.element}
-                                          onChange={(e) =>
-                                            inputChangeParentHandler(
-                                              e,
-                                              i,
-                                              parentTitle,
-                                              j
-                                            )
-                                          }
-                                          required
-                                          disabled={
-                                            rowParent.triggered === "1"
-                                              ? true
-                                              : false
-                                          }
-                                        >
-                                          <option value="" disabled selected>
-                                            -- PILIH --
-                                          </option>
-                                          {element.map((el, i) => (
-                                            <option key={i} value={el.value}>
-                                              {el.name}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div className="col-sm-12 col-md-2">
-                                      <div className="form-group mb-2">
-                                        <label className="col-form-label font-weight-bold">
-                                          Size
-                                        </label>
-                                        <select
-                                          className="form-control"
-                                          name="size"
-                                          value={rowParent.size}
-                                          onChange={(e) =>
-                                            inputChangeParentHandler(
-                                              e,
-                                              i,
-                                              parentTitle,
-                                              j
-                                            )
-                                          }
-                                          required
-                                          disabled
-                                        >
-                                          <option value="" disabled selected>
-                                            -- PILIH --
-                                          </option>
-                                          {size.map((siz, i) => (
-                                            <option key={i} value={siz.value}>
-                                              {siz.name}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                    </div>
-
-                                    {renderMultipleHandler(
-                                      rowParent,
-                                      i,
-                                      parentTitle,
-                                      j
-                                    )}
-                                    <div className="col-sm-6 col-md-2">
-                                      <label className="col-form-label font-weight-bold ">
-                                        Req
-                                      </label>
-                                      {rowParent.element === "triggered" && (
-                                        <label className="col-form-label font-weight-bold ml-3">
-                                          Triggered
-                                        </label>
-                                      )}
-                                      <div className="d-flex align-items-end justify-content-between">
-                                        <div className="form-group ">
-                                          <div className="form-check mb-4">
-                                            <input
-                                              type="checkbox"
-                                              name="required"
-                                              checked={
-                                                rowParent.required === "1"
-                                                  ? true
-                                                  : false
-                                              }
-                                              className="form-check-input"
-                                              onChange={(e) =>
-                                                inputChangeParentHandler(
-                                                  e,
-                                                  i,
-                                                  parentTitle,
-                                                  j
-                                                )
-                                              }
-                                            />
-                                          </div>
-                                        </div>
-                                        {rowParent.element === "triggered" && (
-                                          <div className="">
-                                            <label className="switches">
-                                              <input
-                                                className="checkbox"
-                                                name="triggered"
-                                                checked={
-                                                  rowParent.triggered === "1"
-                                                    ? true
-                                                    : false
-                                                }
-                                                type="checkbox"
-                                                onChange={(e) =>
-                                                  inputChangeParentHandler(
-                                                    e,
-                                                    i,
-                                                    parentTitle,
-                                                    j
-                                                  )
-                                                }
-                                              />
-                                              <span
-                                                className={`sliders round pl-2`}
-                                              ></span>
-                                            </label>
-                                          </div>
-                                        )}
-                                        <button
-                                          className="btn btn-link-action bg-danger text-white mb-3 "
-                                          type="button"
-                                          onClick={() =>
-                                            removeFieldHandler(
-                                              i,
-                                              parentTitle,
-                                              j
-                                            )
-                                          }
-                                        >
-                                          <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                        </button>
-                                      </div>
-                                    </div>
+                                    <RenderFormElement
+                                      row={rowParent}
+                                      funcInputChangeParentHandler={(
+                                        e,
+                                        i,
+                                        parentIndex,
+                                        j,
+                                        childrenIndex,
+                                        k,
+                                        indexIndex,
+                                        l
+                                      ) => {
+                                        inputChangeParentHandler(
+                                          e,
+                                          i,
+                                          parentIndex,
+                                          j,
+                                          childrenIndex,
+                                          k,
+                                          indexIndex,
+                                          l
+                                        );
+                                      }}
+                                      funcRemoveFieldHandler={(
+                                        i,
+                                        parentIndex,
+                                        j,
+                                        childrenIndex,
+                                        k,
+                                        indexIndex,
+                                        l
+                                      ) => {
+                                        removeFieldHandler(
+                                          i,
+                                          parentIndex,
+                                          j,
+                                          childrenIndex,
+                                          k,
+                                          indexIndex,
+                                          l
+                                        );
+                                      }}
+                                      formBuilder={formBuilder}
+                                      i={i}
+                                      parentIndex={parentTitle}
+                                      j={j}
+                                      dataOptions={dataOptions}
+                                    />
                                   </div>
                                 </div>
                                 {rowParent.triggered_children &&
@@ -1403,222 +746,58 @@ const AddMasterPelatihan = ({ token }) => {
                                                   style={{ maxWidth: "94%" }}
                                                 >
                                                   <div className="row">
-                                                    <div className="col-sm-12 col-md-2">
-                                                      <div className="form-group mb-2">
-                                                        <label className="col-form-label font-weight-bold">
-                                                          Nama Field
-                                                        </label>
-                                                        <input
-                                                          type="text"
-                                                          className="form-control"
-                                                          name="name"
-                                                          value={
-                                                            rowChildren.name
-                                                          }
-                                                          placeholder="Field"
-                                                          autoComplete="off"
-                                                          onChange={(e) =>
-                                                            inputChangeParentHandler(
-                                                              e,
-                                                              i,
-                                                              parentTitle,
-                                                              j,
-                                                              childrenTitle,
-                                                              k
-                                                            )
-                                                          }
-                                                          required
-                                                        />
-                                                      </div>
-                                                    </div>
-                                                    <div className="col-sm-12 col-md-2">
-                                                      <div className="form-group mb-2">
-                                                        <label className="col-form-label font-weight-bold">
-                                                          Pilih Element
-                                                        </label>
-                                                        <select
-                                                          className="form-control"
-                                                          name="element"
-                                                          value={
-                                                            rowChildren.element
-                                                          }
-                                                          onChange={(e) =>
-                                                            inputChangeParentHandler(
-                                                              e,
-                                                              i,
-                                                              parentTitle,
-                                                              j,
-                                                              childrenTitle,
-                                                              k
-                                                            )
-                                                          }
-                                                          required
-                                                          disabled={
-                                                            rowChildren.triggered ===
-                                                            "1"
-                                                              ? true
-                                                              : false
-                                                          }
-                                                        >
-                                                          <option
-                                                            value=""
-                                                            disabled
-                                                            selected
-                                                          >
-                                                            -- PILIH --
-                                                          </option>
-                                                          {element.map(
-                                                            (el, i) => (
-                                                              <option
-                                                                key={i}
-                                                                value={el.value}
-                                                              >
-                                                                {el.name}
-                                                              </option>
-                                                            )
-                                                          )}
-                                                        </select>
-                                                      </div>
-                                                    </div>
-                                                    <div className="col-sm-12 col-md-2">
-                                                      <div className="form-group mb-2">
-                                                        <label className="col-form-label font-weight-bold">
-                                                          Size
-                                                        </label>
-                                                        <select
-                                                          className="form-control"
-                                                          name="size"
-                                                          value={
-                                                            rowChildren.size
-                                                          }
-                                                          onChange={(e) =>
-                                                            inputChangeParentHandler(
-                                                              e,
-                                                              i,
-                                                              parentTitle,
-                                                              j,
-                                                              childrenTitle,
-                                                              k
-                                                            )
-                                                          }
-                                                          required
-                                                          disabled
-                                                        >
-                                                          <option
-                                                            value=""
-                                                            disabled
-                                                            selected
-                                                          >
-                                                            -- PILIH --
-                                                          </option>
-                                                          {size.map(
-                                                            (siz, i) => (
-                                                              <option
-                                                                key={i}
-                                                                value={
-                                                                  siz.value
-                                                                }
-                                                              >
-                                                                {siz.name}
-                                                              </option>
-                                                            )
-                                                          )}
-                                                        </select>
-                                                      </div>
-                                                    </div>
-
-                                                    {renderMultipleHandler(
-                                                      rowChildren,
-                                                      i,
-                                                      parentTitle,
-                                                      j,
-                                                      childrenTitle,
-                                                      k
-                                                    )}
-                                                    <div className="col-sm-6 col-md-2">
-                                                      <label className="col-form-label font-weight-bold ">
-                                                        Req
-                                                      </label>
-                                                      {rowChildren.element ===
-                                                        "triggered" && (
-                                                        <label className="col-form-label font-weight-bold ml-3">
-                                                          Triggered
-                                                        </label>
-                                                      )}
-                                                      <div className="d-flex align-items-end justify-content-between">
-                                                        <div className="form-group ">
-                                                          <div className="form-check mb-4">
-                                                            <input
-                                                              type="checkbox"
-                                                              name="required"
-                                                              checked={
-                                                                rowChildren.required ===
-                                                                "1"
-                                                                  ? true
-                                                                  : false
-                                                              }
-                                                              className="form-check-input"
-                                                              onChange={(e) =>
-                                                                inputChangeParentHandler(
-                                                                  e,
-                                                                  i,
-                                                                  parentTitle,
-                                                                  j,
-                                                                  childrenTitle,
-                                                                  k
-                                                                )
-                                                              }
-                                                            />
-                                                          </div>
-                                                        </div>
-                                                        {rowChildren.element ===
-                                                          "triggered" && (
-                                                          <div className="">
-                                                            <label className="switches">
-                                                              <input
-                                                                className="checkbox"
-                                                                name="triggered"
-                                                                checked={
-                                                                  rowChildren.triggered ===
-                                                                  "1"
-                                                                    ? true
-                                                                    : false
-                                                                }
-                                                                type="checkbox"
-                                                                onChange={(e) =>
-                                                                  inputChangeParentHandler(
-                                                                    e,
-                                                                    i,
-                                                                    parentTitle,
-                                                                    j,
-                                                                    childrenTitle,
-                                                                    k
-                                                                  )
-                                                                }
-                                                              />
-                                                              <span
-                                                                className={`sliders round pl-2`}
-                                                              ></span>
-                                                            </label>
-                                                          </div>
-                                                        )}
-                                                        <button
-                                                          className="btn btn-link-action bg-danger text-white mb-3 "
-                                                          type="button"
-                                                          onClick={() =>
-                                                            removeFieldHandler(
-                                                              i,
-                                                              parentTitle,
-                                                              j,
-                                                              childrenTitle,
-                                                              k
-                                                            )
-                                                          }
-                                                        >
-                                                          <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                                        </button>
-                                                      </div>
-                                                    </div>
+                                                    <RenderFormElement
+                                                      row={rowChildren}
+                                                      funcInputChangeParentHandler={(
+                                                        e,
+                                                        i,
+                                                        parentIndex,
+                                                        j,
+                                                        childrenIndex,
+                                                        k,
+                                                        indexIndex,
+                                                        l
+                                                      ) => {
+                                                        inputChangeParentHandler(
+                                                          e,
+                                                          i,
+                                                          parentIndex,
+                                                          j,
+                                                          childrenIndex,
+                                                          k,
+                                                          indexIndex,
+                                                          l
+                                                        );
+                                                      }}
+                                                      funcRemoveFieldHandler={(
+                                                        i,
+                                                        parentIndex,
+                                                        j,
+                                                        childrenIndex,
+                                                        k,
+                                                        indexIndex,
+                                                        l
+                                                      ) => {
+                                                        removeFieldHandler(
+                                                          i,
+                                                          parentIndex,
+                                                          j,
+                                                          childrenIndex,
+                                                          k,
+                                                          indexIndex,
+                                                          l
+                                                        );
+                                                      }}
+                                                      formBuilder={formBuilder}
+                                                      i={i}
+                                                      parentIndex={parentTitle}
+                                                      j={j}
+                                                      childrenIndex={
+                                                        childrenTitle
+                                                      }
+                                                      k={k}
+                                                      dataOptions={dataOptions}
+                                                    />
                                                   </div>
                                                 </div>
 
@@ -1661,229 +840,70 @@ const AddMasterPelatihan = ({ token }) => {
                                                                   }}
                                                                 >
                                                                   <div className="row ">
-                                                                    <div className="col-sm-12 col-md-2">
-                                                                      <div className="form-group mb-2">
-                                                                        <label className="col-form-label font-weight-bold">
-                                                                          Nama
-                                                                          Field
-                                                                        </label>
-                                                                        <input
-                                                                          type="text"
-                                                                          className="form-control"
-                                                                          name="name"
-                                                                          value={
-                                                                            rowIndex.name
-                                                                          }
-                                                                          placeholder="Field"
-                                                                          autoComplete="off"
-                                                                          onChange={(
-                                                                            e
-                                                                          ) =>
-                                                                            inputChangeParentHandler(
-                                                                              e,
-                                                                              i,
-                                                                              parentTitle,
-                                                                              j,
-                                                                              childrenTitle,
-                                                                              k,
-                                                                              indexTitle,
-                                                                              l
-                                                                            )
-                                                                          }
-                                                                          required
-                                                                        />
-                                                                      </div>
-                                                                    </div>
-                                                                    <div className="col-sm-12 col-md-2">
-                                                                      <div className="form-group mb-2">
-                                                                        <label className="col-form-label font-weight-bold">
-                                                                          Pilih
-                                                                          Element
-                                                                        </label>
-                                                                        <select
-                                                                          className="form-control"
-                                                                          name="element"
-                                                                          value={
-                                                                            rowIndex.element
-                                                                          }
-                                                                          onChange={(
-                                                                            e
-                                                                          ) =>
-                                                                            inputChangeParentHandler(
-                                                                              e,
-                                                                              i,
-                                                                              parentTitle,
-                                                                              j,
-                                                                              childrenTitle,
-                                                                              k,
-                                                                              indexTitle,
-                                                                              l
-                                                                            )
-                                                                          }
-                                                                          required
-                                                                          disabled={
-                                                                            rowIndex.triggered ===
-                                                                            "1"
-                                                                              ? true
-                                                                              : false
-                                                                          }
-                                                                        >
-                                                                          <option
-                                                                            value=""
-                                                                            disabled
-                                                                            selected
-                                                                          >
-                                                                            --
-                                                                            PILIH
-                                                                            --
-                                                                          </option>
-                                                                          {element.map(
-                                                                            (
-                                                                              el,
-                                                                              i
-                                                                            ) =>
-                                                                              el.value !==
-                                                                                "triggered" && (
-                                                                                <option
-                                                                                  key={
-                                                                                    i
-                                                                                  }
-                                                                                  value={
-                                                                                    el.value
-                                                                                  }
-                                                                                >
-                                                                                  {
-                                                                                    el.name
-                                                                                  }
-                                                                                </option>
-                                                                              )
-                                                                          )}
-                                                                        </select>
-                                                                      </div>
-                                                                    </div>
-                                                                    <div className="col-sm-12 col-md-2">
-                                                                      <div className="form-group mb-2">
-                                                                        <label className="col-form-label font-weight-bold">
-                                                                          Size
-                                                                        </label>
-                                                                        <select
-                                                                          className="form-control"
-                                                                          name="size"
-                                                                          value={
-                                                                            rowIndex.size
-                                                                          }
-                                                                          onChange={(
-                                                                            e
-                                                                          ) =>
-                                                                            inputChangeParentHandler(
-                                                                              e,
-                                                                              i,
-                                                                              parentTitle,
-                                                                              j,
-                                                                              childrenTitle,
-                                                                              k,
-                                                                              indexTitle,
-                                                                              l
-                                                                            )
-                                                                          }
-                                                                          required
-                                                                          disabled
-                                                                        >
-                                                                          <option
-                                                                            value=""
-                                                                            disabled
-                                                                            selected
-                                                                          >
-                                                                            --
-                                                                            PILIH
-                                                                            --
-                                                                          </option>
-                                                                          {size.map(
-                                                                            (
-                                                                              siz,
-                                                                              i
-                                                                            ) => (
-                                                                              <option
-                                                                                key={
-                                                                                  i
-                                                                                }
-                                                                                value={
-                                                                                  siz.value
-                                                                                }
-                                                                              >
-                                                                                {
-                                                                                  siz.name
-                                                                                }
-                                                                              </option>
-                                                                            )
-                                                                          )}
-                                                                        </select>
-                                                                      </div>
-                                                                    </div>
-
-                                                                    {renderMultipleHandler(
-                                                                      rowIndex,
-                                                                      i,
-                                                                      parentTitle,
-                                                                      j,
-                                                                      childrenTitle,
-                                                                      k,
-                                                                      indexTitle,
-                                                                      l
-                                                                    )}
-                                                                    <div className="col-sm-6 col-md-2">
-                                                                      <label className="col-form-label font-weight-bold ml-md-10">
-                                                                        Req
-                                                                      </label>
-                                                                      <div className="d-flex align-items-end justify-content-between">
-                                                                        <div className="form-group ml-md-10">
-                                                                          <div className="form-check form-check-inline">
-                                                                            <input
-                                                                              type="checkbox"
-                                                                              name="required"
-                                                                              checked={
-                                                                                rowIndex.required ===
-                                                                                "1"
-                                                                                  ? true
-                                                                                  : false
-                                                                              }
-                                                                              className="form-check-input"
-                                                                              onChange={(
-                                                                                e
-                                                                              ) =>
-                                                                                inputChangeParentHandler(
-                                                                                  e,
-                                                                                  i,
-                                                                                  parentTitle,
-                                                                                  j,
-                                                                                  childrenTitle,
-                                                                                  k,
-                                                                                  indexTitle,
-                                                                                  l
-                                                                                )
-                                                                              }
-                                                                            />
-                                                                          </div>
-                                                                        </div>
-                                                                        <button
-                                                                          className="btn btn-link-action bg-danger text-white mb-3 "
-                                                                          type="button"
-                                                                          onClick={() =>
-                                                                            removeFieldHandler(
-                                                                              i,
-                                                                              parentTitle,
-                                                                              j,
-                                                                              childrenTitle,
-                                                                              k,
-                                                                              indexTitle,
-                                                                              l
-                                                                            )
-                                                                          }
-                                                                        >
-                                                                          <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                                                        </button>
-                                                                      </div>
-                                                                    </div>
+                                                                    <RenderFormElement
+                                                                      row={
+                                                                        rowIndex
+                                                                      }
+                                                                      funcInputChangeParentHandler={(
+                                                                        e,
+                                                                        i,
+                                                                        parentIndex,
+                                                                        j,
+                                                                        childrenIndex,
+                                                                        k,
+                                                                        indexIndex,
+                                                                        l
+                                                                      ) => {
+                                                                        inputChangeParentHandler(
+                                                                          e,
+                                                                          i,
+                                                                          parentIndex,
+                                                                          j,
+                                                                          childrenIndex,
+                                                                          k,
+                                                                          indexIndex,
+                                                                          l
+                                                                        );
+                                                                      }}
+                                                                      funcRemoveFieldHandler={(
+                                                                        i,
+                                                                        parentIndex,
+                                                                        j,
+                                                                        childrenIndex,
+                                                                        k,
+                                                                        indexIndex,
+                                                                        l
+                                                                      ) => {
+                                                                        removeFieldHandler(
+                                                                          i,
+                                                                          parentIndex,
+                                                                          j,
+                                                                          childrenIndex,
+                                                                          k,
+                                                                          indexIndex,
+                                                                          l
+                                                                        );
+                                                                      }}
+                                                                      formBuilder={
+                                                                        formBuilder
+                                                                      }
+                                                                      i={i}
+                                                                      parentIndex={
+                                                                        parentTitle
+                                                                      }
+                                                                      j={j}
+                                                                      childrenIndex={
+                                                                        childrenTitle
+                                                                      }
+                                                                      k={k}
+                                                                      indexIndex={
+                                                                        indexTitle
+                                                                      }
+                                                                      l={l}
+                                                                      dataOptions={
+                                                                        dataOptions
+                                                                      }
+                                                                    />
                                                                   </div>
                                                                 </div>
                                                               </>

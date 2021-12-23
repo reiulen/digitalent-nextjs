@@ -30,7 +30,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               name=""
               value={row.value}
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               placeholder={`Silahkan Masukkan ${row.name}`}
               onChange={(e) =>
                 funcChangeInput(
@@ -60,7 +60,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             <select
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) =>
                 funcChangeInput(
@@ -106,7 +106,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) =>
                         funcChangeInput(
@@ -128,7 +127,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 <CheckboxReference
                   id={row.dataOption}
                   token={propsToken}
-                  required={row.required}
+                  required={row.required === "1" ? true : false}
                   onChangeValue={(value) =>
                     funcChangeInput(
                       value,
@@ -161,7 +160,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               cols="30"
               rows="5"
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) =>
                 funcChangeInput(
@@ -197,7 +196,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       name={row.name}
                       className="form-check-input"
                       value={dat}
-                      required={row.required}
+                      required={row.required === "1" ? true : false}
                       onChange={(e) =>
                         funcChangeInput(
                           e.target.value,
@@ -218,7 +217,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 <RadioReference
                   id={row.dataOption}
                   token={propsToken}
-                  required={row.required}
+                  required={row.required === "1" ? true : false}
                   onChangeValue={(value) =>
                     funcChangeInput(
                       value,
@@ -251,7 +250,13 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg , image/jpg"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.required === "1"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={(e) =>
                   funcChangeInput(
                     e,
@@ -269,6 +274,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG
+            </small>
           </div>
         );
         break;
@@ -286,7 +294,13 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="application/pdf"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.required === "1"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={(e) =>
                   funcChangeInput(
                     e,
@@ -304,6 +318,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">Silakan masukkan type file PDF</small>
           </div>
         );
         break;
@@ -320,7 +335,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               type={row.element}
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               onChange={(e) =>
                 funcChangeInput(
                   e.target.value,
@@ -360,8 +375,16 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <input
                 type="file"
                 className="custom-file-input"
-                accept="application/pdf"
-                required={row.value === "" ? row.required : false}
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
+                required={
+                  row.value === ""
+                    ? row.value === ""
+                      ? row.required === "1"
+                        ? true
+                        : false
+                      : false
+                    : false
+                }
                 onChange={(e) =>
                   funcChangeInput(
                     e,
@@ -379,6 +402,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG/PDF
+            </small>
           </div>
         );
         break;
@@ -409,7 +435,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               type={row.element}
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               placeholder={`Silahkan Masukkan ${row.name}`}
               onChange={(e) =>
@@ -438,7 +464,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             <select
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) =>
                 funcChangeInput(
@@ -482,7 +508,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) =>
                         funcChangeInput(
@@ -502,7 +527,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 <CheckboxReference
                   id={row.dataOption}
                   token={propsToken}
-                  required={row.required}
+                  required={row.required === "1" ? true : false}
                   onChangeValue={(value) =>
                     funcChangeInput(
                       value,
@@ -533,7 +558,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               cols="30"
               rows="5"
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) =>
                 funcChangeInput(
@@ -567,7 +592,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       name={row.name}
                       className="form-check-input"
                       value={dat}
-                      required={row.required}
+                      required={row.required === "1" ? true : false}
                       onChange={(e) =>
                         funcChangeInput(
                           e.target.value,
@@ -586,7 +611,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 <RadioReference
                   id={row.dataOption}
                   token={propsToken}
-                  required={row.required}
+                  required={row.required === "1" ? true : false}
                   onChangeValue={(value) =>
                     funcChangeInput(
                       value,
@@ -617,7 +642,13 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg , image/jpg"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.required === "1"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={(e) =>
                   funcChangeInput(
                     e,
@@ -633,6 +664,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG
+            </small>
           </div>
         );
         break;
@@ -650,7 +684,13 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="application/pdf"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.required === "1"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={(e) =>
                   funcChangeInput(
                     e,
@@ -666,6 +706,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">Silakan masukkan type file PDF</small>
           </div>
         );
         break;
@@ -682,7 +723,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               type={row.element}
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) =>
                 funcChangeInput(
@@ -711,7 +752,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <select
                 name=""
                 className="form-control"
-                required={row.required}
+                required={row.required === "1" ? true : false}
                 value={row.value}
                 onChange={(e) =>
                   funcChangeInput(
@@ -778,8 +819,16 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <input
                 type="file"
                 className="custom-file-input"
-                accept="application/pdf"
-                required={row.value === "" ? row.required : false}
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
+                required={
+                  row.value === ""
+                    ? row.value === ""
+                      ? row.required === "1"
+                        ? true
+                        : false
+                      : false
+                    : false
+                }
                 onChange={(e) =>
                   funcChangeInput(
                     e,
@@ -795,6 +844,9 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG/PDF
+            </small>
           </div>
         );
         break;
@@ -823,7 +875,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               type={row.element}
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               placeholder={`Silahkan Masukkan ${row.name}`}
               onChange={(e) =>
@@ -845,7 +897,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             <select
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) =>
                 funcChangeInput(e.target.value, alfa, indexParent, beta)
@@ -882,7 +934,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) =>
                         funcChangeInput(e.target.value, alfa, indexParent, beta)
@@ -895,7 +946,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 <CheckboxReference
                   id={row.dataOption}
                   token={propsToken}
-                  required={row.required}
+                  required={row.required === "1" ? true : false}
                   onChangeValue={(value) =>
                     funcChangeInput(value, alfa, indexParent, beta)
                   }
@@ -919,7 +970,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               cols="30"
               rows="5"
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) =>
                 funcChangeInput(e.target.value, alfa, indexParent, beta)
@@ -946,7 +997,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       name={row.name}
                       className="form-check-input"
                       value={dat}
-                      required={row.required}
+                      required={row.required === "1" ? true : false}
                       onChange={(e) =>
                         funcChangeInput(e.target.value, alfa, indexParent, beta)
                       }
@@ -958,7 +1009,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 <RadioReference
                   id={row.dataOption}
                   token={propsToken}
-                  required={row.required}
+                  required={row.required === "1" ? true : false}
                   onChangeValue={(value) =>
                     funcChangeInput(value, alfa, indexParent, beta)
                   }
@@ -982,13 +1033,22 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg , image/jpg"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.required === "1"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={(e) => funcChangeInput(e, alfa, indexParent, beta)}
               />
               <label className="custom-file-label" htmlFor="customFile">
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG
+            </small>
           </div>
         );
         break;
@@ -1006,13 +1066,20 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="application/pdf"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.required === "1"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={(e) => funcChangeInput(e, alfa, indexParent, beta)}
               />
               <label className="custom-file-label" htmlFor="customFile">
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">Silakan masukkan type file PDF</small>
           </div>
         );
         break;
@@ -1029,7 +1096,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               type={row.element}
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) =>
                 funcChangeInput(e.target.value, alfa, indexParent, beta)
@@ -1051,7 +1118,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <select
                 name=""
                 className="form-control"
-                required={row.required}
+                required={row.required === "1" ? true : false}
                 value={row.value}
                 onChange={(e) =>
                   funcChangeInput(e.target.value, alfa, indexParent, beta)
@@ -1109,14 +1176,25 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <input
                 type="file"
                 className="custom-file-input"
-                accept="application/pdf"
-                required={row.value === "" ? row.required : false}
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
+                required={
+                  row.value === ""
+                    ? row.value === ""
+                      ? row.required === "1"
+                        ? true
+                        : false
+                      : false
+                    : false
+                }
                 onChange={(e) => funcChangeInput(e, alfa, indexParent, beta)}
               />
               <label className="custom-file-label" htmlFor="customFile">
                 {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG/PDF
+            </small>
           </div>
         );
         break;
@@ -1136,7 +1214,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               type={row.element}
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               placeholder={`Silahkan Masukkan ${row.name}`}
               onChange={(e) => funcChangeInput(e.target.value, alfa)}
@@ -1153,7 +1231,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             <select
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) => funcChangeInput(e.target.value, alfa)}
             >
@@ -1186,7 +1264,6 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       type="checkbox"
                       name="plotRegistration"
                       className="form-check-input"
-                      required={row.required}
                       value={dat}
                       onChange={(e) => funcChangeInput(e.target.value, alfa)}
                     />
@@ -1197,7 +1274,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 <CheckboxReference
                   id={row.dataOption}
                   token={propsToken}
-                  required={row.required}
+                  required={row.required === "1" ? true : false}
                   onChangeValue={(value) => funcChangeInput(value, alfa)}
                 />
               )}
@@ -1216,7 +1293,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               cols="30"
               rows="5"
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) => funcChangeInput(e.target.value, alfa)}
             />
@@ -1238,7 +1315,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                       name={row.name}
                       className="form-check-input"
                       value={dat}
-                      required={row.required}
+                      required={row.required === "1" ? true : false}
                       onChange={(e) => funcChangeInput(e.target.value, alfa)}
                     />
                     <label className="form-check-label">{dat}</label>
@@ -1248,7 +1325,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 <RadioReference
                   id={row.dataOption}
                   token={propsToken}
-                  required={row.required}
+                  required={row.required === "1" ? true : false}
                   onChangeValue={(value) => funcChangeInput(value, alfa)}
                 />
               )}
@@ -1267,13 +1344,22 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg , image/jpg"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.required === "1"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={(e) => funcChangeInput(e, alfa)}
               />
               <label className="custom-file-label" htmlFor="customFile">
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG
+            </small>
           </div>
         );
         break;
@@ -1288,13 +1374,20 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="application/pdf"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.required === "1"
+                      ? true
+                      : false
+                    : false
+                }
                 onChange={(e) => funcChangeInput(e, alfa)}
               />
               <label className="custom-file-label" htmlFor="customFile">
                 {row.fileName}
               </label>
             </div>
+            <small className="text-muted">Silakan masukkan type file PDF</small>
           </div>
         );
         break;
@@ -1308,7 +1401,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               type={row.element}
               name=""
               className="form-control"
-              required={row.required}
+              required={row.required === "1" ? true : false}
               value={row.value}
               onChange={(e) => funcChangeInput(e.target.value, alfa)}
             />
@@ -1325,7 +1418,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <select
                 name=""
                 className="form-control"
-                required={row.required}
+                required={row.required === "1" ? true : false}
                 value={row.value}
                 onChange={(e) => funcChangeInput(e.target.value, alfa)}
               >
@@ -1379,14 +1472,25 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               <input
                 type="file"
                 className="custom-file-input"
-                accept="application/pdf"
-                required={row.value === "" ? row.required : false}
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
+                required={
+                  row.value === ""
+                    ? row.value === ""
+                      ? row.required === "1"
+                        ? true
+                        : false
+                      : false
+                    : false
+                }
                 onChange={(e) => funcChangeInput(e, alfa)}
               />
               <label className="custom-file-label" htmlFor="customFile">
                 {row.value === "" ? "Belum ada file" : row.fileName}
               </label>
             </div>
+            <small className="text-muted">
+              Silakan masukkan type file JPG/JPEG/PNG/PDF
+            </small>
           </div>
         );
         break;
@@ -1396,7 +1500,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
   };
   return (
     <>
-      <div className="row justify-content-end">
+      <div className="row justify-content-start">
         {formBuilder &&
           formBuilder.map((row, alfa) => (
             <>{helperElementRender(row, token, alfa)}</>

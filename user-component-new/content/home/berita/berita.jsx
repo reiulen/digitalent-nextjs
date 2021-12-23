@@ -226,6 +226,15 @@ const Berita = () => {
                 setShowArrow (false)
             }
         }
+
+        if (kategori){
+            if (kategori.length > 3){
+                setShowArrow (true)
+        
+            } else {
+                setShowArrow (false)
+            }
+        }
        
     }
 
@@ -1267,12 +1276,9 @@ const Berita = () => {
                                                 {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width >= 768 ?
                                                         <div 
-                                                            className="my-5 d-flex flex-wrap "
-                                                        >
-                                                            {/* Insert Desc Here */}
-                                                            <div 
-                                                                dangerouslySetInnerHTML={{__html: (el.isi_berita)}}
-                                                                style={{ 
+                                                            // className="my-5 d-flex flex-wrap "
+                                                            className="my-5 ml-n3"
+                                                            style={{ 
                                                                     fontSize:"16px", 
                                                                     fontFamily:"Poppins", 
                                                                     color: "#6C6C6C",
@@ -1280,9 +1286,27 @@ const Berita = () => {
                                                                     overflow: 'hidden', 
                                                                     textOverflow: 'ellipsis', 
                                                                     WebkitLineClamp: "2",
-                                                                    WebkitBoxOrient:"vertical"
+                                                                    WebkitBoxOrient:"vertical",
+                                                                    width:"100%",
+                                                                    lineHeight:"25px"
                                                                 }}
-                                                                className="ml-n3"
+                                                        >
+                                                            {/* Insert Desc Here */}
+                                                            <div 
+                                                                dangerouslySetInnerHTML={{__html: (el.isi_berita)}}
+                                                                // style={{ 
+                                                                //     fontSize:"16px", 
+                                                                //     fontFamily:"Poppins", 
+                                                                //     color: "#6C6C6C",
+                                                                //     display:"-webkit-box", 
+                                                                //     overflow: 'hidden', 
+                                                                //     textOverflow: 'ellipsis', 
+                                                                //     WebkitLineClamp: "2",
+                                                                //     WebkitBoxOrient:"vertical",
+                                                                //     width:"100%",
+                                                                //     lineHeight:"25px"
+                                                                // }}
+                                                                // className="ml-n3"
                                                             />
                                                         </div>
                                                     :
