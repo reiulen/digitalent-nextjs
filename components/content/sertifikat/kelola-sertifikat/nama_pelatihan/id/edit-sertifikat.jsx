@@ -693,7 +693,12 @@ export default function EditSertifikat({ token }) {
 															.format("DD/MM/YYYY")}
 													</span>
 													<span className="mx-2">yang meliputi</span>
-													<span>{hour} jam pembelajaran</span>
+													<span>
+														<span className="font-weight-bolder mr-2">
+															{hour}
+														</span>
+														<span>Jam Pelajaran</span>
+													</span>
 												</div>
 												<div className="w-100">
 													<span>Digital Talent Scholarship</span>
