@@ -10,6 +10,7 @@ import { toPng } from "html-to-image";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import LoadingTable from "../../../../components/LoadingTable";
 import Swal from "sweetalert2";
+import QRCode from "qrcode.react";
 
 export default function RiwayatPelatihanDetail({ session }) {
 	const {
@@ -163,6 +164,15 @@ export default function RiwayatPelatihanDetail({ session }) {
 									>
 										{data?.data_user?.nama_peserta}
 									</span>
+								</div>
+								<div className="position-absolute zindex-2 responsive-qr-code">
+									<QRCode
+										value={`http://dts-dev.majapahit.id/cek-sertifikat?registrasi=${data?.data_user?.nomor_registrasi}`}
+										// size={80}
+										style={{ height: "60%", width: "60%" }}
+										// className="h-sm-80px w-sm-80px h-lg-100px w-lg-100px w-25px h-25px"
+										level={"L"}
+									/>
 								</div>
 								<Image
 									src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${data?.data_sertifikat?.certificate?.certificate_result}`}

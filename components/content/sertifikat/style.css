@@ -41,7 +41,7 @@
 }
 
 .responsive-nomor-sertifikat {
-	margin-top: 17%;
+	margin-top: 20%;
 }
 
 .responsive-qr-code {
@@ -62,18 +62,17 @@
 }
 
 .responsive-margin-without-background {
-	margin-top: 23.5%;
+	margin-top: 25%;
 }
-.responsive-nomor-sertifikat-without-background{
+.responsive-nomor-sertifikat-without-background {
 	margin-top: 19%;
 }
 
 .responsive-margin-peserta-1 {
-	margin-top: 22.5% !important;
+	margin-top: 25% !important;
 }
 
 @media (min-width: 768px) {
-
 	.responsive-font-size-peserta {
 		font-size: 16px !important;
 	}
@@ -89,8 +88,6 @@
 	.responsive-font-size-sertifikat {
 		font-size: 24px;
 	}
-
-
 
 	.responsive-normal-font-size {
 		font-size: 10px;
@@ -138,14 +135,12 @@
 		font-size: 24px;
 	}
 
-
 	.responsive-normal-font-size {
 		font-size: 10px;
 	}
 }
 
 @media (min-width: 1200px) {
-
 	.responsive-font-size-peserta {
 		font-size: 24px !important;
 	}
@@ -161,7 +156,6 @@
 	.responsive-normal-font-size {
 		font-size: 12px;
 	}
-
 
 	.responsive-font-size-sertifikat {
 		font-size: 32px;

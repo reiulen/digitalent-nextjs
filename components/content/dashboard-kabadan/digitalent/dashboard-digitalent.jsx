@@ -124,7 +124,7 @@ const DashboardDigitalent = ({ token }) => {
     statistikAkademiPendaftar.map((row, i) => {
       let val = {
         name: row.slug,
-        data: row.jumlah,
+        pendaftar: row.jumlah,
       };
       dataStatistikAkademiPendaftar.push(val);
     });
@@ -138,7 +138,7 @@ const DashboardDigitalent = ({ token }) => {
         pendaftar: row.pendaftar,
         peserta: row.peserta,
         lulus: row.lulus,
-        sertifikasi: row.sertifikasi,
+        sertifikasi: row.sertifikat,
       };
       dataStatistikAkademiPeserta.push(val);
     });
@@ -231,7 +231,6 @@ const DashboardDigitalent = ({ token }) => {
   const dataPendidikanPendaftar = [];
 
   if (dataPribadi) {
-    const dataUmurPendaftar = [];
     if (dataPribadi.umur_pendaftar) {
       dataPribadi.umur_pendaftar.map((row, i) => {
         let val = {
@@ -407,7 +406,7 @@ const DashboardDigitalent = ({ token }) => {
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip cursor={{ fill: "transparent" }} />
-                        <Bar dataKey="data" fill="#0063CC" />
+                        <Bar dataKey="pendaftar" fill="#0063CC" />
                       </BarChart>
                     </ResponsiveContainer>
                   )}
@@ -446,12 +445,12 @@ const DashboardDigitalent = ({ token }) => {
                         }}
                       >
                         <XAxis dataKey="name" />
-                        <YAxis />
+                        <YAxis dataKey="pendaftar" />
                         <Tooltip cursor={{ fill: "transparent" }} />
-                        <Bar stackId="a" dataKey="sertifikasi" fill="#007CFF" />
-                        <Bar stackId="a" dataKey="lulus" fill="#1A3266" />
-                        <Bar stackId="a" dataKey="peserta" fill="#203E80" />
-                        <Bar stackId="a" dataKey="pendaftar" fill="#4CBDE2" />
+                        <Bar dataKey="peserta" fill="#203E80" />
+                        <Bar dataKey="lulus" fill="#1A3266" />
+                        <Bar dataKey="sertifikasi" fill="#007CFF" />
+                        {/* <Bar dataKey="pendaftar" fill="#4CBDE2" /> */}
                       </BarChart>
                     </ResponsiveContainer>
                   )}

@@ -376,7 +376,15 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg, image/jpg, application/pdf"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.value === ""
+                      ? row.required === "1"
+                        ? true
+                        : false
+                      : false
+                    : false
+                }
                 onChange={(e) =>
                   funcChangeInput(
                     e,
@@ -812,7 +820,15 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg, image/jpg, application/pdf"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.value === ""
+                      ? row.required === "1"
+                        ? true
+                        : false
+                      : false
+                    : false
+                }
                 onChange={(e) =>
                   funcChangeInput(
                     e,
@@ -1161,7 +1177,15 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg, image/jpg, application/pdf"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.value === ""
+                      ? row.required === "1"
+                        ? true
+                        : false
+                      : false
+                    : false
+                }
                 onChange={(e) => funcChangeInput(e, alfa, indexParent, beta)}
               />
               <label className="custom-file-label" htmlFor="customFile">
@@ -1449,7 +1473,15 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg, image/jpg, application/pdf"
-                required={row.value === "" ? row.required : false}
+                required={
+                  row.value === ""
+                    ? row.value === ""
+                      ? row.required === "1"
+                        ? true
+                        : false
+                      : false
+                    : false
+                }
                 onChange={(e) => funcChangeInput(e, alfa)}
               />
               <label className="custom-file-label" htmlFor="customFile">

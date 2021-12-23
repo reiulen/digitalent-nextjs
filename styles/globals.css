@@ -21,6 +21,11 @@ a {
 	box-sizing: border-box;
 }
 
+mark { 
+    background-color: #007CFF !important;
+    color: black;
+}
+
 .aside-menu .menu-nav > .menu-item > .menu-heading .menu-text,
 .aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
 	font-weight: 500 !important;
@@ -294,7 +299,7 @@ a {
 }
 
 .select-pelatihan-success {
-	color: #04aa77;
+	color: #00B37A;
 	background: #e6f7f1;
 }
 
@@ -306,6 +311,49 @@ a {
 .select-pelatihan-warning {
 	color: #ffa800;
 	background: #fff7e6;
+}
+
+.select-pelatihan-primary {
+	color: #203E80;
+	background: #F2F7FC;
+}
+
+.cardSelesai{
+	background: #007CFF;
+}
+
+.cardSetuju{
+	background: #203E80;
+}
+
+.cardDisetujui{
+	background: #00B27A;
+}
+
+.cardRevisi{
+	background: #EE2D41;
+}
+
+.cardMenunggu{
+	background: #FFA800;
+}
+
+.cardBerjalan{
+	background: #4CBDE2;
+}
+
+.cardDiterima{
+	background: #04AA77;
+}
+
+.statusPeserta-danger{
+	background: #FFE5E8;
+	color: #EE2D41;
+}
+
+.statusPeserta-success{
+	background: #E6FFF7;
+	color: #00B37A;
 }
 
 .box-hide-arrow {
@@ -322,6 +370,15 @@ a {
 	position: fixed;
 	inset: 0;
 	background-color: white;
+	z-index: 9999;
+}
+
+.success-register-page {
+	position:absolute;
+	overflow-x: auto;
+	inset: 0;
+	background-color: white !important;
+	background: white !important;
 	z-index: 9999;
 }
 
