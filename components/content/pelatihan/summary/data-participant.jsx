@@ -188,6 +188,8 @@ const DataParticipant = ({ token }) => {
           label: "Tidak Lulus Tes Substansi",
         },
         { value: "seleksi akhir", label: "Seleksi Akhir" },
+        { value: "diterima", label: "Diterima" },
+        { value: "ditolak", label: "Ditolak" },
       ];
       break;
     case "tidak lulus pelatihan":
