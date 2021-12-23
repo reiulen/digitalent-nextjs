@@ -30,7 +30,7 @@ export default function Kontak() {
 					data={[{ link: router.asPath, name: "Cek Sertifikat" }]}
 				/>
 				<div className="mt-5">
-					<h1 className="fw-700 fz-40">Verifikasi Sertifikat</h1>
+					<h1 className="fw-700 fz-40">Cek Sertifikat</h1>
 					<p className="mr-6 fz-18 text-muted fw-400">
 						Cek keaslian sertifikat pelatihan Digital Talent Scholarship
 					</p>
