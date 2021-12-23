@@ -49,11 +49,11 @@ const Penyelenggara = () => {
 		<>
 			<HomeWrapper>
 				<BreadcrumbComponent
-					data={[{ link: router.asPath, name: "Penyelenggara Pelatihan" }]}
+					data={[{ link: router.asPath, name: "Mitra Pelatihan" }]}
 				/>
 
 				<section className="penyelenggara-title-filter">
-					<h1 className="mb-4 fz-40">Penyelenggara Pelatihan</h1>
+					<h1 className="mb-4 fz-40">Mitra Pelatihan</h1>
 					<p className="mr-6 fz-18 text-muted fw-400">
 						Memiliki Lembaga Pelatihan dan ingin menjadi bagian dari Program
 						Digitalent? tanya saja{" "}
@@ -87,7 +87,7 @@ const Penyelenggara = () => {
 										<input
 											type="text"
 											className="form-control border-left-0 border p-0 bg-light"
-											placeholder="Cari Penyelenggara.."
+											placeholder="Cari Mitra.."
 											style={{ height: "46px" }}
 											onChange={(e) => setSearch(e.target.value)}
 											value={search}
@@ -158,7 +158,7 @@ const Penyelenggara = () => {
 										className="fw-600 fz-24 mt-14"
 										style={{ color: "#1f1f1f" }}
 									>
-										Tidak ada penyelenggara terkait {`"${search}"`}
+										Tidak ada Mitra terkait {`"${search}"`}
 									</h1>
 								</Col>
 							) : (

@@ -515,7 +515,7 @@ const Navigationbar = ({ session }) => {
 												tentang kami
 											</NavDropdown.Item>
 										</Link>
-										<Link href="/penyelenggara" passHref>
+										<Link href="/mitra" passHref>
 											<NavDropdown.Item className="navdropdown-child">
 												mitra
 											</NavDropdown.Item>
@@ -942,7 +942,7 @@ const Navigationbar = ({ session }) => {
 								<Link href="/tentang-kami">Tentang Kami</Link>
 							</Col>
 							<Col className="mb-8" sm={12}>
-								<Link href="/penyelenggara">Mitra</Link>
+								<Link href="/mitra">Mitra</Link>
 							</Col>
 							<Col sm={12}>
 								<Dropdown color="white">
