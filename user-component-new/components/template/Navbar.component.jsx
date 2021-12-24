@@ -915,7 +915,7 @@ const Navigationbar = ({ session }) => {
 								Menu
 							</Col>
 							<Col sm={12} className="mb-8">
-								<Link href="/">Berandass</Link>
+								<Link href="/">Beranda</Link>
 							</Col>
 
 							<Col sm={12}>
