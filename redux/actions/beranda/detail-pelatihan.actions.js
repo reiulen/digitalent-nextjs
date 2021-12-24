@@ -15,6 +15,7 @@ export const getDetailPelatihan =
 	(id, token = "", type = "") =>
 	async (dispatch) => {
 		try {
+			// console.log(token, "ini token");
 			let link =
 				process.env.END_POINT_API_PELATIHAN +
 				`api/v1/pelatihan/get-pelatihan?pelatian_id=${id}`;

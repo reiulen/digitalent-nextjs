@@ -157,30 +157,39 @@ export default function NamaPelatihan({ token }) {
 						<div className="table-filter">
 							<div className="row align-items-center">
 								<div className="col-lg-6 col-xl-6 col-sm-6">
-									<div
-										className="position-relative overflow-hidden mt-3"
-										style={{ maxWidth: "330px" }}
+									<form
+										onSubmit={(e) => {
+											e.preventDefault();
+											if (search != "") {
+												handleSearch();
+											}
+										}}
 									>
-										<i className="ri-search-line left-center-absolute ml-2"></i>
-										<input
-											type="text"
-											className="form-control pl-10"
-											placeholder="Ketik disini untuk Pencarian..."
-											onChange={(e) => setSearch(e.target.value)}
-										/>
-										<button
-											className="btn bg-blue-primary text-white right-center-absolute"
-											style={{
-												borderTopLeftRadius: "0",
-												borderBottomLeftRadius: "0",
-											}}
-											onClick={(e) => {
-												handleSearch(e);
-											}}
+										<div
+											className="position-relative overflow-hidden mt-3"
+											style={{ maxWidth: "330px" }}
 										>
-											Cari
-										</button>
-									</div>
+											<i className="ri-search-line left-center-absolute ml-2"></i>
+											<input
+												type="text"
+												className="form-control pl-10"
+												placeholder="Ketik disini untuk Pencarian..."
+												onChange={(e) => setSearch(e.target.value)}
+											/>
+											<button
+												className="btn bg-blue-primary text-white right-center-absolute"
+												style={{
+													borderTopLeftRadius: "0",
+													borderBottomLeftRadius: "0",
+												}}
+												onClick={(e) => {
+													handleSearch(e);
+												}}
+											>
+												Cari
+											</button>
+										</div>
+									</form>
 								</div>
 								<div className="col-lg-6 col-sm-6">
 									<div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
