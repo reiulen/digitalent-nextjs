@@ -65,8 +65,9 @@ export default function ListPesertaID({ token }) {
 		}
 	}, [loading]);
 
-	const handleDownload = async (id, noRegis, name) => {
+	const handleDownload = async (id, noRegis, nama) => {
 		setLoading(true);
+
 		const linkChecker = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf/check-pdf/${noRegis}`;
 		try {
 			const check = await axios.get(linkChecker, config);
@@ -77,13 +78,18 @@ export default function ListPesertaID({ token }) {
 						const formData = new FormData();
 						formData.append("certificate", data);
 						const link = `${process.env.END_POINT_API_SERTIFIKAT}api/tte-p12/sign-pdf?training_id=${id}&nomor_registrasi=${noRegis}`;
-						const result = await axios.post(link, formData, config); //post image certificate yang udah di render dari html
+						const result = await axios.post(link, formData, config);
+						//post image certificate yang udah di render dari html
 						if (!result.data.status) {
 							setLoading(false);
-							SweatAlert("Gagal", result?.data?.message, "error");
+							SweatAlert(
+								"Gagal",
+								"Harap menunggu, Sertifikat masih dalam proses pengesahan",
+								"error"
+							);
 						} else {
 							const a = document.createElement("a");
-							a.download = `Sertifikat - ${query.name} ${noRegis}.png`;
+							a.download = `Sertifikat - ${nama} ${noRegis}.png`;
 							a.target = "_blank";
 							a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${result.data.fileName}`;
 							a.click();
@@ -96,18 +102,17 @@ export default function ListPesertaID({ token }) {
 				}
 			} else {
 				const a = document.createElement("a");
-				a.download = `Sertifikat - ${query.name} ${noRegis}.png`;
+				a.download = `Sertifikat - ${nama} ${noRegis}.png`;
 				a.target = "_blank";
 				a.href = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/pdf/${check.data.file_pdf}`;
 				a.click();
 				setLoading(false);
 			}
 		} catch (e) {
-			console.log(e);
-
 			setLoading(false);
 			SweatAlert("Gagal", e.message, "error");
 		}
+		// check udh pernah di sign apa belum?
 	};
 	return (
 		<PageWrapper>
