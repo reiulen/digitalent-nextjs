@@ -342,7 +342,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                                   {question.type.value} poin
                                 </td>
                                 <td className="align-middle">
-                                  {question.status === true ? (
+                                  {question.status ? (
                                     <span className="label label-inline label-light-success font-weight-bold">
                                       Publish
                                     </span>
