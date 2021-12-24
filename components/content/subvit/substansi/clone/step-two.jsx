@@ -309,6 +309,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                         subtance_question_detail?.list_questions &&
                         subtance_question_detail?.list_questions?.map(
                           (question, i) => {
+                            console.log(question);
                             return (
                               <tr key={question.id}>
                                 <td className="align-middle text-center">
@@ -343,7 +344,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                                   {question.type.value} poin
                                 </td>
                                 <td className="align-middle">
-                                  {question.status === true ? (
+                                  {question.status ? (
                                     <span className="label label-inline label-light-success font-weight-bold">
                                       Publish
                                     </span>

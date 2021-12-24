@@ -255,7 +255,9 @@ const StepOne = ({ token, tokenPermission }) => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="3"></StepInput>
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Pilih Pelatihan</h2>
+            <h2 className="card-title h2 text-dark">
+              Tujuan Clone Test Substansi
+            </h2>
           </div>
           <div className="card-body pt-0">
             <Form>

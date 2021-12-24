@@ -232,25 +232,27 @@ const DetailReport = ({ token }) => {
             </td>
             <td className="align-middle">
               <span
-                className={`label label-inline label-light-${
-                  item.administrasi.toLowerCase() !== "verified"
-                    ? "danger"
-                    : "success"
-                } font-weight-bold`}
+                className={item.administrasi === "unverified" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                item.administrasi === "verified" && "label label-inline statusPeserta-success font-weight-bold text-capitalize" ||
+                item.administrasi === "incomplete" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize"}
               >
                 {item.administrasi}
               </span>
             </td>
             <td className="align-middle">
               <span
-                className={`label label-inline label-light-${
-                  item.status.toLowerCase() === "lulus tes substansi" ||
-                  item.status.toLowerCase() === "diterima" ||
-                  item.status.toLowerCase() === "pelatihan" ||
-                  item.status.toLowerCase() === "lulus pelatihan"
-                    ? "success"
-                    : "danger"
-                } font-weight-bold`}
+                className={
+                  item.status === "tidak lulus administrasi" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
+                  item.status === "tidak lulus tes substansi" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
+                  item.status === "tidak lulus pelatihan" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
+                  item.status === "ditolak" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
+                  item.status === "seleksi administrasi" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                  item.status === "tes substansi" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                  item.status === "seleksi akhir" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                  item.status === "administrasi akhir" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                  item.status === "diterima" && "label label-inline statusPeserta-success font-weight-bold text-capitalize" ||
+                  item.status === "lulus pelatihan" && "label label-inline statusPeserta-success font-weight-bold text-capitalize"
+                }
               >
                 {item.status}
               </span>

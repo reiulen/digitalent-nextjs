@@ -47,6 +47,7 @@ const ListTrivia = ({ token, tokenPermission }) => {
   useEffect(() => {
     localStorage.removeItem("step1");
     localStorage.removeItem("clone1");
+    localStorage.removeItem("id_trivia");
     if (isDeleted) {
       dispatch({
         type: DELETE_TRIVIA_QUESTION_BANKS_RESET,
@@ -66,7 +67,7 @@ const ListTrivia = ({ token, tokenPermission }) => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let link = `${router.pathname}?page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
@@ -257,7 +258,8 @@ const ListTrivia = ({ token, tokenPermission }) => {
             style={{ border: "1px solid black" }}
           >
             <h1
-              className={`${styles.headTitle} col-sm-12 col-md-8 col-lg-8 col-xl-9`}
+              className="card-title text-dark mt-2 ml-5"
+              style={{ fontSize: "24px" }}
             >
               List TRIVIA
             </h1>
@@ -265,14 +267,17 @@ const ListTrivia = ({ token, tokenPermission }) => {
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.trivia.manage"
             ) ? (
-              <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
+              <div className=" card-toolbar">
                 <Link href="/subvit/trivia/tambah">
-                  {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
-                  <a
-                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
-                  >
+                  <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
                     <i className="ri-add-fill"></i>
                     Tambah TRIVIA
+                  </a>
+                </Link>
+                <Link href="/subvit/trivia/clone">
+                  <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                    <i className="ri-mastercard-fill"></i>
+                    Clone TRIVIA
                   </a>
                 </Link>
               </div>
@@ -304,7 +309,7 @@ const ListTrivia = ({ token, tokenPermission }) => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={e => handleSearch(e)}
+                      onClick={(e) => handleSearch(e)}
                       // UNFINISH
                     >
                       Cari
@@ -418,9 +423,9 @@ const ListTrivia = ({ token, tokenPermission }) => {
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="Detail"
+                                        title="List Soal"
                                       >
-                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                        <i className="ri-file-list-line p-0 text-white"></i>
                                       </a>
                                     </Link>
                                     {row?.bank_soal !== 0 && (
@@ -447,7 +452,17 @@ const ListTrivia = ({ token, tokenPermission }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      className={
+                                        row?.status
+                                          ? "btn btn-link-action btn-secondary  text-white"
+                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                      }
+                                      disabled={row?.status}
+                                      style={{
+                                        cursor: row?.status
+                                          ? "not-allowed"
+                                          : "pointer",
+                                      }}
                                       onClick={() => handleDelete(row.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"

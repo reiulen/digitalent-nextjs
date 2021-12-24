@@ -9,7 +9,8 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const StepTree = dynamic(
-  () => import("../../../../components/content/subvit/substansi/clone/step-tree"),
+  () =>
+    import("../../../../components/content/subvit/substansi/clone/step-tree"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -33,14 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
+
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {
