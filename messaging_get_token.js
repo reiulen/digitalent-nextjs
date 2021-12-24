@@ -1,8 +1,5 @@
-// import { getApps, initializeApp } from "firebase/app";
-// import { getMessaging, getToken } from "firebase/messaging";
-
-const { getApps, initializeApp } = require("firebase/app");
-const { getMessaging, getToken } = require("firebase/messaging");
+import { getApps, initializeApp } from "firebase/app";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: process.env.FB_API_KEY,
@@ -14,26 +11,30 @@ const firebaseConfig = {
   measurementId: process.env.FB_MEASUREMENT_ID,
 };
 
-const firebaseCloudMessaging = {
-  init: async function () {
-    if (!getApps().length) {
-      initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
-      const messaging = getMessaging();
-      getToken(messaging, { vapidKey: process.env.FB_FCM_KEY_PAIR })
-        .then((currentToken) => {
-          // console.log("masuk sini", currentToken);
-          if (currentToken) {
-            return currentToken;
-          } else {
-            // console.log("tidak ada registrasi token");
-          }
-        })
-        .catch((err) => {
-          // console.log("error waktu generate token. ", err);
-          return null;
-        });
-    }
-  },
+export const getFirebaseToken = (setTokenFound) => {
+  const messaging = getMessaging();
+  return getToken(messaging, { vapidKey: process.env.FB_FCM_KEY_PAIR })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log("current token for client: ", currentToken);
+        setTokenFound(true);
+      } else {
+        console.log(
+          "No registration token available. Request permission to generate one."
+        );
+        setTokenFound(false);
+      }
+    })
+    .catch((err) => {
+      console.log("An error occurred while retrieving token. ", err);
+    });
 };
-export { firebaseCloudMessaging };
+
+export const onMessageListener = () =>
+  new Promise((resolve) => {
+    onMessage((payload) => {
+      resolve(payload);
+    });
+  });
