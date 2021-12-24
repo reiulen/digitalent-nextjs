@@ -47,6 +47,7 @@ const ListTrivia = ({ token, tokenPermission }) => {
   useEffect(() => {
     localStorage.removeItem("step1");
     localStorage.removeItem("clone1");
+    localStorage.removeItem("id_trivia");
     if (isDeleted) {
       dispatch({
         type: DELETE_TRIVIA_QUESTION_BANKS_RESET,
@@ -66,7 +67,7 @@ const ListTrivia = ({ token, tokenPermission }) => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let link = `${router.pathname}?page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
@@ -308,7 +309,7 @@ const ListTrivia = ({ token, tokenPermission }) => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={e => handleSearch(e)}
+                      onClick={(e) => handleSearch(e)}
                       // UNFINISH
                     >
                       Cari
@@ -422,9 +423,9 @@ const ListTrivia = ({ token, tokenPermission }) => {
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="Detail"
+                                        title="List Soal"
                                       >
-                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                        <i className="ri-file-list-line p-0 text-white"></i>
                                       </a>
                                     </Link>
                                     {row?.bank_soal !== 0 && (
@@ -451,7 +452,17 @@ const ListTrivia = ({ token, tokenPermission }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      className={
+                                        row?.status
+                                          ? "btn btn-link-action btn-secondary  text-white"
+                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                      }
+                                      disabled={row?.status}
+                                      style={{
+                                        cursor: row?.status
+                                          ? "not-allowed"
+                                          : "pointer",
+                                      }}
                                       onClick={() => handleDelete(row.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"

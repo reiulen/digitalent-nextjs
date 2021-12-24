@@ -88,7 +88,7 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
 
       // router.back();
       router.push({
-        pathname: `/subvit/substansi/${localStorage.getItem("id")}`,
+        pathname: `/subvit/substansi/${localStorage.getItem("id_substansi")}`,
         query: { success: true },
       });
     }

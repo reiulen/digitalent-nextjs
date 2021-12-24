@@ -47,6 +47,7 @@ const ListSurvey = ({ token, tokenPermission }) => {
   useEffect(() => {
     localStorage.removeItem("step1");
     localStorage.removeItem("clone1");
+    localStorage.removeItem("id_survey");
     if (isDeleted) {
       dispatch({
         type: DELETE_SURVEY_QUESTION_BANKS_RESET,
@@ -429,9 +430,9 @@ const ListSurvey = ({ token, tokenPermission }) => {
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="Detail"
+                                        title="List Soal"
                                       >
-                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                        <i className="ri-file-list-line p-0 text-white"></i>
                                       </a>
                                     </Link>
                                     {row?.bank_soal !== 0 && (
@@ -458,11 +459,21 @@ const ListSurvey = ({ token, tokenPermission }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      className={
+                                        row?.status
+                                          ? "btn btn-link-action btn-secondary  text-white"
+                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                      }
                                       onClick={() => handleDelete(row.id)}
+                                      disabled={row?.status}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
                                       title="Hapus"
+                                      style={{
+                                        cursor: row?.status
+                                          ? "not-allowed"
+                                          : "pointer",
+                                      }}
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>

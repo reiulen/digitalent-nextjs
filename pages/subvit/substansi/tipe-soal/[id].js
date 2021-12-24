@@ -9,7 +9,8 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const EditTipeSoal = dynamic(
-  () => import("../../../../components/content/subvit/substansi/tipe-soal/edit"),
+  () =>
+    import("../../../../components/content/subvit/substansi/tipe-soal/edit"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -36,14 +37,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {

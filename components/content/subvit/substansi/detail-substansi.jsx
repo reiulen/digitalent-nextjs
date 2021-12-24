@@ -41,7 +41,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
   page = Number(page);
 
   useEffect(() => {
-    localStorage.setItem("id", router.query.id);
+    localStorage.setItem("id_substansi", router.query.id);
     if (isDeleted) {
       dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
@@ -128,7 +128,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     dispatch(
       getAllSubtanceQuestionDetail(
         id,
@@ -560,15 +560,14 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                     className={`${styles.btnSearch} position-relative overflow-hidden mt-3`}
                     style={{ maxWidth: "330px" }}
                   >
-                    <form onSubmit={e => handleSearch(e)}>
-
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className={`${styles.inputSearch} form-control pl-10`}
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className={`${styles.inputSearch} form-control pl-10`}
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
                     </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -577,7 +576,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
 
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={ e => handleSearch(e)}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -684,33 +683,21 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                                         <i className="ri-pencil-fill p-0 text-white"></i>
                                       </a>
                                     </Link>
-                                    {subtance.status === 0 ? (
-                                      <button
-                                        className={
-                                          i + 1 * (page * 5 || limit) - 4 === 1
-                                            ? "btn btn-link-action btn-secondary  text-white"
-                                            : "btn btn-link-action bg-blue-secondary text-white"
-                                        }
-                                        onClick={() =>
-                                          i + 1 * (page * 5 || limit) - 4 !==
-                                            1 && handleDelete(question.id)
-                                        }
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Hapus"
-                                        style={{
-                                          cursor:
-                                            i + 1 * (page * 5 || limit) - 4 ===
-                                            1
-                                              ? "not-allowed"
-                                              : "pointer",
-                                        }}
-                                      >
-                                        <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                      </button>
-                                    ) : (
-                                      ""
-                                    )}
+
+                                    <button
+                                      className={
+                                        "btn btn-link-action bg-blue-secondary text-white"
+                                      }
+                                      onClick={() => handleDelete(question.id)}
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Hapus"
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                    </button>
                                   </div>
                                 ) : (
                                   ""

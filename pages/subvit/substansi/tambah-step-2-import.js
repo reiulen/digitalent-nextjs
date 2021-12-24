@@ -27,14 +27,6 @@ export default function TambahBankSoalTesSubstansiStep2(props) {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "http://dts-dev.majapahit.id/login/admin",
-        permanent: false,
-      },
-    };
-  }
 
   const permission = context?.req?.cookies?.token_permission;
 
