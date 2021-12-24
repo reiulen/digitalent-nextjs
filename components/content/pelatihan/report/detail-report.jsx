@@ -329,20 +329,9 @@ const DetailReport = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={() => {
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
                         dispatch(
                           getDetailReportTraining(
                             token,
@@ -358,8 +347,38 @@ const DetailReport = ({ token }) => {
                         );
                       }}
                     >
-                      Cari
-                    </button>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={() => {
+                          dispatch(
+                            getDetailReportTraining(
+                              token,
+                              pelatian_id,
+                              page,
+                              limit,
+                              search,
+                              statusAdmin?.label,
+                              statusSubstansi?.label,
+                              sertifikasi?.value,
+                              statusPeserta?.label
+                            )
+                          );
+                        }}
+                      >
+                        Cari
+                      </button>
                   </div>
                 </div>
 

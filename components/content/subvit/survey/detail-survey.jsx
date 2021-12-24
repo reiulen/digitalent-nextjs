@@ -105,7 +105,8 @@ const DetailSurvey = ({ token, tokenPermission }) => {
     });
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     dispatch(
       getAllSurveyQuestionDetail(id, 1, 5, search, token, tokenPermission)
     );
@@ -272,6 +273,8 @@ const DetailSurvey = ({ token, tokenPermission }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
+                    <form onSubmit={e => handleSearch(e)}>
+
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -279,13 +282,14 @@ const DetailSurvey = ({ token, tokenPermission }) => {
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(event) => handleTextSearch(event)}
                     />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={e => handleSearch(e)}
                     >
                       Cari
                     </button>

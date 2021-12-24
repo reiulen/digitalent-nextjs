@@ -10,10 +10,10 @@ var KTDualListbox = function () {
         // init dual listbox
         var dualListBox = new DualListbox(_this, {
             addEvent: function (value) {
-                console.log(value);
+                // console.log(value);
             },
             removeEvent: function (value) {
-                console.log(value);
+                // console.log(value);
             },
             availableTitle: 'Available options',
             selectedTitle: 'Selected options',
@@ -31,10 +31,10 @@ var KTDualListbox = function () {
         // init dual listbox
         var dualListBox = new DualListbox(_this, {
             addEvent: function (value) {
-                console.log(value);
+                // console.log(value);
             },
             removeEvent: function (value) {
-                console.log(value);
+                // console.log(value);
             },
             availableTitle: "Source Options",
             selectedTitle: "Destination Options",
@@ -52,10 +52,10 @@ var KTDualListbox = function () {
         // init dual listbox
         var dualListBox = new DualListbox(_this, {
             addEvent: function (value) {
-                console.log(value);
+                // console.log(value);
             },
             removeEvent: function (value) {
-                console.log(value);
+                // console.log(value);
             },
             availableTitle: 'Available options',
             selectedTitle: 'Selected options',
@@ -73,10 +73,10 @@ var KTDualListbox = function () {
         // init dual listbox
         var dualListBox = new DualListbox(_this, {
             addEvent: function (value) {
-                console.log(value);
+                // console.log(value);
             },
             removeEvent: function (value) {
-                console.log(value);
+                // console.log(value);
             },
             availableTitle: 'Available options',
             selectedTitle: 'Selected options',
