@@ -2,15 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  updateSubtanceQuestionBanksPublish,
+  updateSurveyQuestionBanksPublish,
   clearErrors,
-} from "../../../../../redux/actions/subvit/subtance.actions";
-import { UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux/types/subvit/subtance.type";
+} from "../../../../../redux/actions/subvit/survey-question.actions";
+import { UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux/types/subvit/survey-question.type";
 
 import { useRouter } from "next/router";
 import DatePicker from "react-datepicker";
 import SimpleReactValidator from "simple-react-validator";
-import Swal from "sweetalert2";
 import moment from "moment";
 import styles from "../../../../../styles/stepInput.module.css";
 import styleBtn from "../../trivia/edit/step.module.css";
@@ -25,11 +24,11 @@ const StepTwo = ({ token, tokenPermission }) => {
   const router = useRouter();
 
   let { id } = router.query;
-  const { error: detailData, subtance } = useSelector(
-    (state) => state.detailSubtanceQuestionBanks
+  const { error: detailData, survey } = useSelector(
+    (state) => state.detailSurveyQuestionBanks
   );
   const { loading, error, success } = useSelector(
-    (state) => state.updateSubtanceQuestionBanksPublish
+    (state) => state.updateSurveyQuestionBanksPublish
   );
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -40,25 +39,25 @@ const StepTwo = ({ token, tokenPermission }) => {
 
     if (success) {
       dispatch({
-        type: UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET,
+        type: UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET,
       });
       router.push({
-        pathname: `/subvit/substansi`,
+        pathname: `/subvit/survey`,
         query: { success: true },
       });
     }
   }, [dispatch, error, success, router]);
 
   const [startDate, setStartDate] = useState(
-    subtance?.start_at ? new Date(subtance.start_at) : new Date(Date.now())
+    survey?.start_at ? new Date(survey.start_at) : new Date(Date.now())
   );
   const [endDate, setEndDate] = useState(
-    subtance?.end_at ? new Date(subtance.end_at) : new Date(Date.now())
+    survey?.end_at ? new Date(survey.end_at) : new Date(Date.now())
   );
-  const [duration, setDuration] = useState(subtance?.duration);
-  const [jumlah_soal, setJumlahSoal] = useState(subtance?.questions_to_share);
-  const [passing_grade, setPassingGrade] = useState(subtance?.passing_grade);
-  const [status, setStatus] = useState(subtance?.status || 0);
+  const [duration, setDuration] = useState(survey?.duration);
+  const [jumlah_soal, setJumlahSoal] = useState(survey?.questions_to_share);
+  const [passing_grade, setPassingGrade] = useState(survey?.passing_grade);
+  const [status, setStatus] = useState(survey?.status || 0);
   const [, forceUpdate] = useState();
 
   const saveDraft = () => {
@@ -76,7 +75,7 @@ const StepTwo = ({ token, tokenPermission }) => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
+      dispatch(updateSurveyQuestionBanksPublish(data, id, token));
       localStorage.removeItem("clone1");
       localStorage.removeItem("clone3");
     } else {
@@ -103,7 +102,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       };
 
       dispatch(
-        updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
+        updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
       );
       localStorage.removeItem("clone1");
       localStorage.removeItem("clone3");
@@ -171,28 +170,28 @@ const StepTwo = ({ token, tokenPermission }) => {
           <StepInput step="4"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Publish Hasil Clone Soal Test Substansi
+              Publish Hasil Clone Survey
             </h2>
           </div>
           <div className="card-body pt-0">
             <h4 className="mt-2">
-              <b>{subtance?.training?.name}</b>
+              <b>{survey?.training?.name}</b>
             </h4>
             <table>
               <tr>
                 <td>Tanggal Pendaftaran &nbsp;</td>
                 <td>: &nbsp;</td>
                 <td>
-                  {subtance?.pendaftaran_mulai} &nbsp; s.d. &nbsp;
-                  {subtance?.pendaftaran_selesai}{" "}
+                  {survey?.pendaftaran_mulai} &nbsp; s.d. &nbsp;
+                  {survey?.pendaftaran_selesai}{" "}
                 </td>
               </tr>
               <tr>
                 <td>Tanggal Pelatihan </td>
                 <td> : </td>{" "}
                 <td>
-                  {subtance?.pelatihan_mulai} &nbsp; s.d. &nbsp;{" "}
-                  {subtance?.pelatihan_selesai}{" "}
+                  {survey?.pelatihan_mulai} &nbsp; s.d. &nbsp;{" "}
+                  {survey?.pelatihan_selesai}{" "}
                 </td>
               </tr>
             </table>
@@ -418,7 +417,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                     type="button"
                     onClick={() => {
                       router.push(
-                        `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                        `/subvit/survey/clone/step-3?id=${router.query.id}`
                       );
                     }}
                   >

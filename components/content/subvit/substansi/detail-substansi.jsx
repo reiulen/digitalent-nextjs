@@ -654,28 +654,33 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                                         <i className="ri-pencil-fill p-0 text-white"></i>
                                       </a>
                                     </Link>
-                                    <button
-                                      className={
-                                        i + 1 * (page * 5 || limit) - 4 === 1
-                                          ? "btn btn-link-action btn-secondary  text-white"
-                                          : "btn btn-link-action bg-blue-secondary text-white"
-                                      }
-                                      onClick={() =>
-                                        i + 1 * (page * 5 || limit) - 4 !== 1 &&
-                                        handleDelete(question.id)
-                                      }
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="Hapus"
-                                      style={{
-                                        cursor:
+                                    {subtance.status === 0 ? (
+                                      <button
+                                        className={
                                           i + 1 * (page * 5 || limit) - 4 === 1
-                                            ? "not-allowed"
-                                            : "pointer",
-                                      }}
-                                    >
-                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                    </button>
+                                            ? "btn btn-link-action btn-secondary  text-white"
+                                            : "btn btn-link-action bg-blue-secondary text-white"
+                                        }
+                                        onClick={() =>
+                                          i + 1 * (page * 5 || limit) - 4 !==
+                                            1 && handleDelete(question.id)
+                                        }
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Hapus"
+                                        style={{
+                                          cursor:
+                                            i + 1 * (page * 5 || limit) - 4 ===
+                                            1
+                                              ? "not-allowed"
+                                              : "pointer",
+                                        }}
+                                      >
+                                        <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                      </button>
+                                    ) : (
+                                      ""
+                                    )}
                                   </div>
                                 ) : (
                                   ""

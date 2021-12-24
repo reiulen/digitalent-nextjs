@@ -4,16 +4,14 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 import SimpleReactValidator from "simple-react-validator";
-import Swal from "sweetalert2";
 import styleBtn from "../../trivia/edit/step.module.css";
 import styles from "../../../../../styles/stepInput.module.css";
 import Select from "react-select";
 
 import {
-  newCloneSubtanceQuestionBanks,
+  newCloneSurveyQuestionBanks,
   clearErrors,
-  updatewSubtanceQuestionBanks,
-} from "../../../../../redux/actions/subvit/subtance.actions";
+} from "../../../../../redux/actions/subvit/survey-question.actions";
 import { NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/subtance.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
@@ -30,35 +28,19 @@ const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, success, subtance } = useSelector(
-    (state) => state.newCloneSubtanceQuestionBanks
+  const { loading, error, success, survey } = useSelector(
+    (state) => state.newCloneSurveyQuestionBanks
   );
 
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
 
-  const { isUpdated } = useSelector((state) => state.updateSubtanceQuestion);
-
-  const { list_substance } = useSelector(
-    (state) => state?.allSubtanceQuestionBanks?.subtance
-  );
-
-  let optionsClone = [];
-
-  let uniqueArray = list_substance.filter((item, pos) => {
-    return list_substance.indexOf(item) === pos;
-  });
-
-  uniqueArray.map((item) => {
-    optionsClone.push({ label: item.academy.name, value: item.academy.id });
-  });
-
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
 
-  let save = JSON.parse(localStorage.getItem("clone3"));
+  let save = JSON.parse(localStorage.getItem("clone1"));
 
   const [academy_id, setAcademyId] = useState(save?.academy_id);
   const [theme_id, setThemeId] = useState(save?.theme_id);
@@ -82,16 +64,16 @@ const StepOne = ({ token, tokenPermission }) => {
     // }
     dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
     dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
-    if (isUpdated) {
-      const id = router.query.id;
+    if (success) {
+      const id = survey.id;
       if (typeSave === "lanjut") {
         router.push({
-          pathname: `/subvit/substansi/clone/step-4`,
+          pathname: `/subvit/survey/clone/step-2`,
           query: { id },
         });
       } else if (typeSave === "draft") {
         router.push({
-          pathname: `/subvit/substansi`,
+          pathname: `/subvit/survey`,
           query: { success: true },
         });
       }
@@ -102,11 +84,10 @@ const StepOne = ({ token, tokenPermission }) => {
     success,
     typeSave,
     router,
-    subtance,
+    survey,
     academy_id,
     token,
     theme_id,
-    isUpdated,
     tokenPermission,
   ]);
 
@@ -149,8 +130,8 @@ const StepOne = ({ token, tokenPermission }) => {
         category,
       };
 
-      dispatch(newCloneSubtanceQuestionBanks(data, token));
-      localStorage.removeItem("clone3");
+      dispatch(newCloneSurveyQuestionBanks(data, token));
+      localStorage.removeItem("clone1");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -175,7 +156,6 @@ const StepOne = ({ token, tokenPermission }) => {
         theme_id: save ? save.theme_id : theme_id,
         training_id: save ? save.training_id : training_id,
         category: save ? save.category : category,
-        _method: "put",
       };
 
       const setData = {
@@ -187,10 +167,8 @@ const StepOne = ({ token, tokenPermission }) => {
         training_id,
         category,
       };
-
-      localStorage.setItem("clone3", JSON.stringify(setData));
-
-      dispatch(updatewSubtanceQuestionBanks(router.query.id, data, token));
+      localStorage.setItem("clone1", JSON.stringify(setData));
+      dispatch(newCloneSurveyQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -209,15 +187,10 @@ const StepOne = ({ token, tokenPermission }) => {
     }
   };
 
-  const optionsKategori = [
-    { value: "Test Substansi", label: "Test Substansi" },
-    { value: "Mid Test", label: "Mid Test" },
-  ];
-
   let optionsTema = [];
 
-  data.data &&
-    data.data.map((item) => {
+  data?.data &&
+    data?.data?.map((item) => {
       return optionsTema.push({ label: item.label, value: item.value });
     });
 
@@ -253,11 +226,9 @@ const StepOne = ({ token, tokenPermission }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="3"></StepInput>
+          <StepInput step="1"></StepInput>
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">
-              Tujuan Clone Test Substansi
-            </h2>
+            <h2 className="card-title h2 text-dark">Clone Asal Survey</h2>
           </div>
           <div className="card-body pt-0">
             <Form>
@@ -332,43 +303,9 @@ const StepOne = ({ token, tokenPermission }) => {
                   }
                 )}
               </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label className=" col-form-label font-weight-bold">
-                  Kategori
-                </Form.Label>
-                <Select
-                  placeholder={"Silahkan Pilih Kategori"}
-                  options={optionsKategori}
-                  className={styles.selectForm}
-                  onChange={(e) => setCategory(e.value)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("kategori")
-                  }
-                />
-                {simpleValidator.current.message(
-                  "kategori",
-                  category,
-                  "required",
-                  {
-                    className: "text-danger",
-                  }
-                )}
-              </Form.Group>
             </Form>
             <div className="row mt-7">
               <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
-                <button
-                  className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                  type="button"
-                  onClick={() => {
-                    router.push(
-                      `/subvit/substansi/clone/step-2?id=${router.query.id}`
-                    );
-                  }}
-                >
-                  Kembali
-                </button>
                 <div className="float-right ">
                   <div className={styles.foldResponsive}>
                     <button

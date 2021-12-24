@@ -222,7 +222,7 @@ const ReportTrivia = ({ token }) => {
                         <th>Pelatihan</th>
                         <th>Nilai</th>
                         <th>Total Pengerjaan</th>
-                        <th className="align-middle text-center">Status</th>
+                        <th className="align-middle ">Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -273,9 +273,9 @@ const ReportTrivia = ({ token }) => {
                                 </div>
                               </td>
 
-                              <td className="align-middle">
+                              <td className="align-middle ">
                                 {row.status === 1 && row.finish === 1 ? (
-                                  <td className="align-middle">
+                                  <td className="align-middle ">
                                     {/* <span className="label label-inline label-light-success font-weight-bold">
                                       Diterima
                                     </span> */}
