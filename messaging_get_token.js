@@ -22,14 +22,15 @@ const firebaseCloudMessaging = {
       const messaging = getMessaging();
       getToken(messaging, { vapidKey: process.env.FB_FCM_KEY_PAIR })
         .then((currentToken) => {
+          // console.log("masuk sini", currentToken);
           if (currentToken) {
             return currentToken;
           } else {
-            console.log("tidak ada registrasi token");
+            // console.log("tidak ada registrasi token");
           }
         })
         .catch((err) => {
-          console.log("error waktu generate token. ", err);
+          // console.log("error waktu generate token. ", err);
           return null;
         });
     }

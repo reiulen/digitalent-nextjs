@@ -39,7 +39,8 @@ const ReportTrivia = ({ token }) => {
     router.push(link);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     let link = `${router.pathname}?id=${id}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (limit) link = link.concat(`&limit=${limit}`);
@@ -174,20 +175,22 @@ const ReportTrivia = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-md-4">
                   <div className="position-relative overflow-hidden mt-2">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10 mt-2"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10 mt-2"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute mt-1"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={e => handleSearch(e)}
                     >
                       Cari
                     </button>

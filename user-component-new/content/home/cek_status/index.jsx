@@ -39,7 +39,7 @@ export default function Kontak() {
 					<Card className="rounded-xl">
 						<Row className="p-0 m-0">
 							<Col lg={7} className="p-10">
-								<p className="mb-0 fz-16 mb-4">
+								<p className="mb-0 fz-16-responsive mb-4">
 									Cek keaslian sertifikat dengan menggunakan nomor registrasi
 									pelatihan yang tertera di sertifikat atau dengan kode QR.
 									Nomor registrasi dan kode QR dapat dilihat pada bagian yang
@@ -77,7 +77,7 @@ export default function Kontak() {
 									</Button>
 								</div>
 								{data?.name ? (
-									<Card className="p-8 rounded-xl mt-8">
+									<Card className="p-0 p-md-8 rounded-xl mt-8">
 										<div className="bg-success d-flex align-items-center p-8 rounded-xl">
 											<Image
 												src={`/assets/icon/icon-status-pelatihan/Shield-check.svg`}
@@ -86,43 +86,55 @@ export default function Kontak() {
 												alt="Checked Icon"
 												objectFit="cover"
 											/>
-											<div className="text-white fz-16 ml-5">
+											<div className="text-white fz-16-responsive ml-5">
 												Sertifikat terdaftar
 											</div>
 										</div>
 
-										<div className="mt-8 fz-16">
-											<p className="fz-16 mb-8">
+										<div className="px-4 p-md-0 mt-8 fz-16-responsive ">
+											<p className="fz-16-responsive mb-8">
 												Sertifikat terdaftar di pelatihan Digital Talent
 												Scholarship dengan data berikut:
 											</p>
 											<div className="row mb-3">
-												<div className="col-4">Nama</div>
-												<div className="col-1 d-flex justify-content-end">
+												<div className="col-5 col-lg-4 pr-0 pr-md-2">Nama</div>
+												<div className="col-1 d-flex p-0 p-md-2 justify-content-end">
 													:
 												</div>
-												<div className="col-7 p-0">{data?.name}</div>
+												<div className="col-5 col-lg-7 p-md-2 p-0">
+													{data?.name}
+												</div>
 											</div>{" "}
 											<div className="row mb-3">
-												<div className="col-4">Akademi</div>
-												<div className="col-1 d-flex justify-content-end">
+												<div className="col-5 col-lg-4 pr-0 pr-md-2">
+													Akademi
+												</div>
+												<div className="col-1 d-flex p-0 p-md-2 justify-content-end">
 													:
 												</div>
-												<div className="col-7 p-0">{data?.akademi}</div>
+												<div className="col-5 col-lg-7 p-md-2 p-0">
+													{data?.akademi}
+												</div>
 											</div>
 											<div className="row mb-3">
-												<div className="col-4">Pelatihan</div>
-												<div className="col-1 d-flex justify-content-end">
+												<div className="col-5 col-lg-4 pr-0 pr-md-2">
+													Pelatihan
+												</div>
+												<div className="col-1 d-flex p-0 p-md-2 justify-content-end">
 													:
 												</div>
-												<div className="col-7 p-0">{data?.pelatihan}</div>
+												<div className="col-5 col-lg-7 p-md-2 p-0">
+													{data?.pelatihan}
+												</div>
 											</div>
 											<div className="row mb-3">
-												<div className="col-4">Tanggal Pelaksanaan</div>
-												<div className="col-1 d-flex justify-content-end">
+												<div className="col-5 col-lg-4 pr-0 pr-md-2">
+													Tanggal Pelaksanaan
+												</div>
+												<div className="col-1 d-flex p-0 p-md-2 justify-content-end">
 													:
 												</div>
-												<div className="col-7 p-0">
+												<div className="col-5 col-lg-7 p-md-2 p-0">
 													{moment(data?.pelatihan_mulai)
 														.utc()
 														.format("DD MMMM YYYY")}{" "}
@@ -144,7 +156,7 @@ export default function Kontak() {
 												alt="Not Available Icon"
 												objectFit="cover"
 											/>
-											<div className="text-white fz-16 ml-5">
+											<div className="text-white fz-16-responsive ml-5">
 												Sertifikat tidak terdaftar
 											</div>
 										</div>
@@ -157,7 +169,7 @@ export default function Kontak() {
 												objectFit="contain"
 											/>
 										</div>
-										<div className="fz-16">
+										<div className="fz-16-responsive">
 											Sertifikat tidak terdaftar pada pelatihan Digital Talent
 											Scholarship. Cek kembali nomor registrasi yang anda tulis
 										</div>

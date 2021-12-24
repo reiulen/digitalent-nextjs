@@ -9,7 +9,9 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import LoadingSidebar from "../loader/LoadingSidebar";
 
-import { firebaseCloudMessaging } from "../../../webPush";
+import { firebaseCloudMessaging } from "../../../messaging_get_token";
+import { firebaseReceiveMessage } from "../../../messaging_receive_message";
+
 import { getMessaging, onMessage } from "firebase/messaging";
 
 import {
@@ -58,6 +60,17 @@ const Navigationbar = ({ session }) => {
 
 	useEffect(() => {
 		setToken();
+		async function setToken() {
+			try {
+				const token = await firebaseCloudMessaging.init();
+				if (token) {
+					firebaseReceiveMessage.init();
+				}
+			} catch (error) {
+				// console.log(error);
+			}
+		}
+
 		if (!session) {
 			return;
 		}
@@ -96,24 +109,24 @@ const Navigationbar = ({ session }) => {
 
 	// FIREBASE NOTIFICATION
 
-	const setToken = async () => {
-		try {
-			const token = await firebaseCloudMessaging.init();
-			if (token) {
-				console.log(token);
-				getMessage();
-			}
-		} catch (err) {
-			console.log(err, "ini error");
-		}
-	};
+	//   const setToken = async () => {
+	//     try {
+	//       const token = await firebaseCloudMessaging.init();
+	//       if (token) {
+	//         // console.log(token);
+	//         getMessage();
+	//       }
+	//     } catch (err) {
+	//       // console.log(err, "ini error");
+	//     }
+	//   };
 
-	const getMessage = () => {
-		const messaging = getMessaging();
-		onMessage(messaging, (payload) => {
-			console.log("ada pesan notif", payload);
-		});
-	};
+	//   const getMessage = () => {
+	//     const messaging = getMessaging();
+	//     onMessage(messaging, (payload) => {
+	//       // console.log("ada pesan notif", payload);
+	//     });
+	//   };
 
 	const handleConnectSocket = () => {
 		let ws = new WebSocket(
@@ -428,7 +441,7 @@ const Navigationbar = ({ session }) => {
 				</Col>
 				{showSearch && (
 					<Form
-						className="w-100 my-2 mx-1 row "
+						className="w-100 my-2 mx-1 row  d-block d-lg-none"
 						onSubmit={(e) => {
 							e.preventDefault();
 							if (search != "") {
