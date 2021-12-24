@@ -288,6 +288,7 @@ const Navigationbar = ({ session }) => {
 		"artikel",
 		"galeri",
 		"video",
+		"testimoni"
 	]);
 	const [index, setIndex] = useState(0);
 

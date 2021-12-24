@@ -206,6 +206,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let data = {};
+    console.log (simpleValidator.current)
     if (
       !asalSekolah.includes("Lainnya") ||
       jengjangPendidikan.label != "SMA/Sederajat"
@@ -222,6 +223,18 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       simpleValidator.current.fields["sekolah lainnya"] = true;
       simpleValidator.current.fields["tahun masuk"] = true;
     }
+
+    if (
+      jengjangPendidikan.label === "D3" ||
+      jengjangPendidikan.label === "D4" ||
+      jengjangPendidikan.label === "S1" ||
+      jengjangPendidikan.label === "S2" ||
+      jengjangPendidikan.label === "S3"
+    ){
+      simpleValidator.current.fields["lainya ( sekolah/ pt )"] = true;
+      simpleValidator.current.errorMessages["lainya ( sekolah/ pt )"] = null;
+    }
+
     if (simpleValidator.current.allValid()) {
       if (jengjangPendidikan.label === "Tidak Sekolah") {
         data = {
@@ -305,7 +318,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         }
       }
 
-      dispatch(updateProfilePendidikan(data, token));
+      // dispatch(updateProfilePendidikan(data, token));
       window.scrollTo(0, 0);
     } else {
      

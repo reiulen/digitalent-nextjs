@@ -2,27 +2,27 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../detail-berita/detail-berita.module.css";
+import styles from "../detail-testimoni/detail-testimoni.module.css";
 import { useRouter } from "next/router";
-import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
+import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
 import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
-const DetailBerita = () => {
+const DetailTestimoni = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { id } = router.query;
 
   const { detail, loading: loadingDetail } = useSelector(
-    (state) => state.detailBerandaBerita
+    (state) => state.detailBerandaArtikel
   );
-  const { tags } = useSelector((state) => state.allTagBerandaBerita);
+  const { tags } = useSelector((state) => state.allTagBerandaArtikel);
 
   const [keyword, setKeyword] = useState(null);
   const [resultText, setResultText] = useState(null);
   const [detailContent, setDetailContent] = useState("");
-  const [tagBerita, setTagBerita] = useState([]);
+  const [tagArtikel, setTagArtikel] = useState([]);
 
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
@@ -55,7 +55,8 @@ const DetailBerita = () => {
 
   const handleLinkContent = () => {
     if (detail) {
-      let text = detail?.isi_berita;
+      let text = detail?.isi_artikel;
+
       let result = "";
 
       if (text.includes("<a")) {
@@ -98,20 +99,16 @@ const DetailBerita = () => {
       }
 
       if (result.length <= 8) {
-        setTagBerita(result);
+        setTagArtikel(result);
       } else {
         let tagResult = result.slice(0, 8);
-        setTagBerita(tagResult);
+        setTagArtikel(tagResult);
       }
     }
   };
 
   const handleFilterTag = (str) => {
-    router.push(`/berita?tag=${str}`);
-    // router.push ({
-    //   pathname:"/berita",
-    //   query: `tag=${str}`
-    // }, "/berita")
+    router.push(`/testimoni?tag=${str}`);
   };
 
   const handleHighlightWords = (e, text) => {
@@ -126,22 +123,23 @@ const DetailBerita = () => {
         if (splitWords[i].toLowerCase() === splitText[j].toLowerCase()) {
           result += `<mark>` + splitText[j] + `</mark>` + " ";
           window.scrollTo (0, 1200)
-
+          
         } else {
           result += " " + splitText[j] + " ";
         }
       }
     }
+
     setResultText(result);
   };
 
   return (
     <HomeWrapper>
       {/* BreadCrumb */}
-      <BreadcrumbComponent
+      <SubHeaderComponent
         data={[
-          { link: "/berita", name: "Berita" },
-          { link: router.asPath, name: "Detail Berita" },
+          { link: "/testimoni", name: "Testimoni" },
+          { link: router.asPath, name: "Detail Testimoni" },
         ]}
       />
 
@@ -153,13 +151,12 @@ const DetailBerita = () => {
               <div className="text-primary">{detail?.nama_kategori}</div>
             </div>
           </div>
-
           <div className="mt-5">
             <h1 
-              className={`${styles.fontTitle}font-weight-bolder`}
+              className={`${styles.fontTitle} font-weight-bolder`}
             >
               {/* Insert Title Here */}
-              {detail?.judul}
+              {detail?.judul} 
             </h1>
           </div>
 
@@ -194,24 +191,22 @@ const DetailBerita = () => {
                 />
               </div>
               <div className="d-flex flex-column ml-3">
-                <div 
-                  className="font-weight-bolder mb-2"
-                  style={{fontSize:"14px", fontFamily:"Poppins"}}
-                >
+                <div className="font-weight-bolder mb-2">
                   {/* Insert Admin Here */}
                   {detail?.dibuat}
                 </div>
                 <div className="text-muted" style={{fontSize:"14px", fontFamily:"Poppins", color:"#6C6C6C"}}>
-                  {moment(detail?.tanggal_publish).format("DD MMMM YYYY")}
+                  {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
                 </div>
               </div>
             </div>
+
             <div className="row ml-1">
               <div className="mr-3">
                 {/* SHAREOVERLAY */}
                 <ShareOverlay
-                  url={`${process.env.NEXTAUTH_URL}/berita/detail/${id}`}
-                  quote={detail.judul}
+                  url={`${process.env.NEXTAUTH_URL}/testimoni/detail/${id}`}
+                  quote={detail?.judul}
                 >
                   <button className="btn btn-sm btn-outline-light rounded-circle">
                     <i className="ri-share-line px-0 py-1"></i>
@@ -229,18 +224,19 @@ const DetailBerita = () => {
         <div className="row mt-10">
           {/* Left Side */}
           <div
+          // className="image-thumbnail-detail"
             className={
               windowDimensions &&
               windowDimensions.width &&
               windowDimensions.width > 770
-                ? "col-12 col-lg-8 pr-11"
-                : "col-12 col-lg-8"
+                ? "col-12 col-lg-8 pr-11 "
+                : "col-12 col-lg-8 "
             }
           >
+            
+            {/* Image */}
             <div className={`${styles.image_thumbnail} rounded-lg`}>
-              {/* Image */}
               <Image
-                // src="/assets/media/default-detail-image.png"
                 src={
                   process.env.END_POINT_API_IMAGE_PUBLIKASI +
                   "publikasi/images/" +
@@ -249,66 +245,65 @@ const DetailBerita = () => {
                 layout="fill"
                 objectFit="cover"
                 alt="Detail Image"
-                className="rounded-lg img-fluid"
+                className={`rounded-lg img-fluid `}
               />
             </div>
             
 
-            {/* Berita */}
-            <div 
-              className="border rounded-lg mb-5 mt-15"
-            >
-              <div
-                className="row "
-                style={{wordBreak: "break-word" }}
+              {/* Testimoni */}
+              <div 
+                className="border rounded-lg mb-5 mt-15"
               >
-                {detailContent ? (
-                  resultText ? (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: resultText }}
-                      className={`${styles.detailBerita} my-5 mx-10 text-justify`}
-                    />
-                  ) : (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: detailContent }}
-                      className={`${styles.detailBerita} my-5 mx-10 text-justify`}
-                    />
-                  )
-                ) : null}
-              </div>
-
-              <div className="row m-3 d-flex justify-content-between pb-5">
-                <div className="row d-flex justify-content-evenly ml-1">
-                  {detail && detail.tag && detail.tag.length !== 0
-                    ? detail?.tag?.map((el, i) => {
-                        return (
-                          <div
-                            className="mr-3 border p-3 rounded mb-3"
-                            key={i}
-                            style={{ height: "38px" }}
-                          >
-                            #{el.toString().toUpperCase()}
-                          </div>
-                        );
-                      })
-                    : null}
+                <div
+                  className="row"
+                  style={{wordBreak: "break-word" }}
+                >
+                  {detailContent ? (
+                    resultText ? (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: resultText }}
+                        className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
+                      />
+                    ) : (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: detailContent }}
+                        className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
+                      />
+                    )
+                  ) : null}
                 </div>
 
-                <div className="row ml-1">
-                  <div className="mr-3">
-                    {/* SHAREOVERLAY */}
-                    <ShareOverlay
-                      url={`${process.env.NEXTAUTH_URL}/berita/detail/${id}`}
-                      quote={detail.judul}
-                    >
-                      <button className="btn btn-sm btn-outline-light rounded-circle">
-                        <i className="ri-share-line px-0 py-1"></i>
-                      </button>
-                    </ShareOverlay>
+                <div className="row m-3 d-flex justify-content-between pb-5">
+                  <div className="row d-flex justify-content-between ml-1">
+                    {detail && detail.tag && detail.tag.length !== 0
+                      ? detail?.tag?.map((el, i) => {
+                          return (
+                            <div
+                              className="mr-3 border p-3 rounded mb-3"
+                              key={i}
+                              style={{ height: "38px" }}
+                            >
+                              #{el.toString().toUpperCase()}
+                            </div>
+                          );
+                        })
+                      : null}
+                  </div>
+
+                  <div className="row ml-1">
+                    <div className="mr-3">
+                      <ShareOverlay
+                        url={`${process.env.NEXTAUTH_URL}/testimoni/detail/${id}`}
+                        quote={detail.judul}
+                      >
+                        <button className="btn btn-sm btn-outline-light rounded-circle">
+                          <i className="ri-share-line px-0 py-1"></i>
+                        </button>
+                      </ShareOverlay>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
           {/* End of Left Side */}
 
@@ -329,10 +324,7 @@ const DetailBerita = () => {
                     />
                   </div>
                   <div className="col-9 my-auto">
-                    <h4 
-                      className={`font-weight-bolder`}
-                      style={{fontSize:"20px", fontFamily:"Poppins"}}
-                    >Pencarian</h4>
+                    <h4 className=" font-weight-bolder" style={{fontSize:"20px", fontFamily:"Poppins"}}>Pencarian</h4>
                   </div>
                 </div>
 
@@ -353,7 +345,7 @@ const DetailBerita = () => {
                     <input
                       type="text"
                       className="form-control border-left-0 border p-0 bg-light"
-                      placeholder="Cari Berita"
+                      placeholder="Cari Artikel"
                       onChange={(e) => setKeyword(e.target.value)}
                     />
 
@@ -368,6 +360,7 @@ const DetailBerita = () => {
                             borderTopRightRadius: "150px",
                             borderBottomRightRadius: "150px",
                           }}
+                          type="submit"
                         >
                           Cari
                         </button>
@@ -378,13 +371,13 @@ const DetailBerita = () => {
               </div>
 
               {/* Tag */}
-              <div className="row mt-10 d-flex flex-column mx-3 mx-lg-10">
+              <div className="row mt-10 d-flex flex-column mx-10">
                 <h3 className="font-weight-bolder" style={{fontSize:"20px", fontFamily:"Poppins"}}>
                   TEMUKAN LEBIH BANYAK APA YANG PENTING BAGI ANDA
                 </h3>
                 <div className=" d-flex flex-wrap flex-row">
-                  {tagBerita && tagBerita.length !== 0 ? (
-                    tagBerita.map((el, i) => {
+                  {tagArtikel && tagArtikel.length !== 0 ? (
+                    tagArtikel?.map((el, i) => {
                       return (
                         <div
                           className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center"
@@ -401,7 +394,7 @@ const DetailBerita = () => {
                       );
                     })
                   ) : (
-                    <div className="row d-flex justify-content-center text-center">
+                    <div className="row d-flex justify-content-center  text-center">
                       <h3 className="text-muted">
                         <em>Tag Belum Tersedia</em>
                       </h3>
@@ -416,7 +409,7 @@ const DetailBerita = () => {
         </div>
       ) : (
         <div className="row d-flex justify-content-center my-5">
-          <h1 className="font-weight-bolder">Berita Tidak Tersedia</h1>
+          <h1 className="font-weight-bolder">Testimoni Tidak Tersedia</h1>
         </div>
       )}
 
@@ -425,4 +418,4 @@ const DetailBerita = () => {
   );
 };
 
-export default DetailBerita;
+export default DetailTestimoni;

@@ -569,6 +569,15 @@ import {
 	kategoriBerandaFaqReducer,
 } from "../reducers/beranda/faq-content.reducers";
 
+// ========== testimoni ========
+import {
+	allBerandaTestimoniReducer,
+	detailBerandaTestimoniReducer,
+	kategoriBerandaTestimoniReducer,
+	allTagBerandaTestimoniReducer,
+	cekLulusPelatihanTestimoniReducer,
+} from "../reducers/beranda/testimoni.reducers";
+
 //END BERANDA
 
 import {
@@ -1080,6 +1089,14 @@ const reducer = combineReducers({
 	// ========== faq ========
 	allFaqContent: allFaqContentReducer,
 	kategoriBerandaFaq: kategoriBerandaFaqReducer,
+
+	// ========== testimoni ======== 
+	allBerandaTestimoni : allBerandaTestimoniReducer,
+	detailBerandaTestimoni : detailBerandaTestimoniReducer,
+	kategoriBerandaTestimoni : kategoriBerandaTestimoniReducer,
+	allTagBerandaTestimoni : allTagBerandaTestimoniReducer,
+	cekLulusPelatihanTestimoni: cekLulusPelatihanTestimoniReducer,
+
 	//END BERANDA
 
 	// ========== Riwayat Pelatihan ========
