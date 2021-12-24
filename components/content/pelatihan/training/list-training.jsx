@@ -319,7 +319,8 @@ const ListTraining = ({ token }) => {
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     setPage(1);
     dispatch(
       getAllTraining(
@@ -647,6 +648,15 @@ const ListTraining = ({ token }) => {
     }
   };
 
+	function capitalize(s) {
+		let a = s.split(" ");
+		let result = [];
+		for (let i = 0; i < a.length; i++) {
+			result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
+		}
+		return result.join(" ");
+	}
+
   const handleModalRevisi = (id) => {
     dispatch(getListRevisi(token, id));
     setShowModalRevisi(true);
@@ -730,7 +740,7 @@ const ListTraining = ({ token }) => {
             }
           />
           <CardPage
-            background="cardSetuju"
+            background="cardDisetujui"
             icon="new/done-circle.svg"
             color="#FFFFFF"
             value={cardTraining[4].count}
@@ -797,24 +807,26 @@ const ListTraining = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
                   <div className="position-relative overflow-hidden mb-2 mt-3">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      value={search}
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        value={search}
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={e => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
 
@@ -859,7 +871,9 @@ const ListTraining = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal Pendaftaran <br /> Jadwal Pelatihan</th>
+                        <th>
+                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                        </th>
                         <th>Status Publish</th>
                         <th>Status Substansi</th>
                         <th>Status Pelatihan</th>
@@ -868,8 +882,8 @@ const ListTraining = ({ token }) => {
                     </thead>
                     <tbody className="w-100">
                       {!training ||
-                        (training && training.list === null) ||
-                        training.list.length === 0 ? (
+                      (training && training.list === null) ||
+                      training.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
@@ -919,12 +933,13 @@ const ListTraining = ({ token }) => {
                                 <select
                                   name=""
                                   id=""
-                                  className={`select-pelatihan ${row.status_publish === "1"
+                                  className={`select-pelatihan ${
+                                    row.status_publish === "1"
                                       ? "select-pelatihan-success"
                                       : row.status_publish === "0"
-                                        ? "select-pelatihan-danger"
-                                        : "select-pelatihan-warning"
-                                    }`}
+                                      ? "select-pelatihan-danger"
+                                      : "select-pelatihan-warning"
+                                  }`}
                                   key={i}
                                   value={row.status_publish}
                                   onChange={(e) =>
@@ -933,7 +948,7 @@ const ListTraining = ({ token }) => {
                                   disabled={
                                     row.status_substansi === "revisi" ||
                                     row.status_pelatihan ===
-                                    "review substansi" ||
+                                      "review substansi" ||
                                     (row.status_substansi === "ditolak" && true)
                                   }
                                 >
@@ -944,16 +959,14 @@ const ListTraining = ({ token }) => {
                               </div>
                             </td>
                             <td className="align-middle text-center">
-                              {row.status_substansi === "review" ||
-                                row.status_substansi === "disetujui" ? (
-                                <span className="label label-inline label-light-success font-weight-bold text-capitalize">
-                                  {row.status_substansi}
-                                </span>
-                              ) : (
-                                <span className="label label-inline label-light-danger font-weight-bold text-capitalize">
-                                  {row.status_substansi}
-                                </span>
-                              )}
+                              <span className={
+                                row.status_substansi === "disetujui" && "select-pelatihan select-pelatihan-success" ||
+                                row.status_substansi === "revisi" && "select-pelatihan select-pelatihan-warning" ||
+                                row.status_substansi === "ditolak" && "select-pelatihan select-pelatihan-danger" ||
+                                row.status_substansi === "review" && "select-pelatihan select-pelatihan-primary"
+                              }>
+                                {capitalize(row.status_substansi)}
+                              </span>
                             </td>
                             <td className="align-middle">
                               <div className="position-relative w-max-content">
@@ -961,13 +974,22 @@ const ListTraining = ({ token }) => {
                                   name=""
                                   id=""
                                   className={
-                                    row.status_pelatihan === "selesai" && "select-pelatihan select-pelatihan-success" ||
-                                    row.status_pelatihan === "seleksi" && "select-pelatihan select-pelatihan-warning" ||
-                                    row.status_pelatihan === "menunggu pendaftaran" && "select-pelatihan select-pelatihan-warning" ||
-                                    row.status_pelatihan === "review substansi" && "select-pelatihan select-pelatihan-primary" ||
-                                    row.status_pelatihan === "pelatihan" && "select-pelatihan select-pelatihan-primary" ||
-                                    row.status_pelatihan === "pendaftaran" && "select-pelatihan select-pelatihan-primary" ||
-                                    row.status_pelatihan === "dibatalkan" && "select-pelatihan select-pelatihan-danger"
+                                    (row.status_pelatihan === "selesai" &&
+                                      "select-pelatihan select-pelatihan-success") ||
+                                    (row.status_pelatihan === "seleksi" &&
+                                      "select-pelatihan select-pelatihan-warning") ||
+                                    (row.status_pelatihan ===
+                                      "menunggu pendaftaran" &&
+                                      "select-pelatihan select-pelatihan-warning") ||
+                                    (row.status_pelatihan ===
+                                      "review substansi" &&
+                                      "select-pelatihan select-pelatihan-primary") ||
+                                    (row.status_pelatihan === "pelatihan" &&
+                                      "select-pelatihan select-pelatihan-primary") ||
+                                    (row.status_pelatihan === "pendaftaran" &&
+                                      "select-pelatihan select-pelatihan-primary") ||
+                                    (row.status_pelatihan === "dibatalkan" &&
+                                      "select-pelatihan select-pelatihan-danger")
                                   }
                                   key={i}
                                   value={row.status_pelatihan}
@@ -986,12 +1008,12 @@ const ListTraining = ({ token }) => {
                                 >
                                   {row.status_pelatihan ===
                                     "menunggu pendaftaran" && (
-                                      <>
-                                        <option value="menunggu pendaftaran">
-                                          Menunggu Pendaftaran
-                                        </option>
-                                      </>
-                                    )}
+                                    <>
+                                      <option value="menunggu pendaftaran">
+                                        Menunggu Pendaftaran
+                                      </option>
+                                    </>
+                                  )}
                                   {row.status_pelatihan === "pendaftaran" && (
                                     <option value="pendaftaran">
                                       Pendaftaran
@@ -1015,10 +1037,10 @@ const ListTraining = ({ token }) => {
                                   )}
                                   {row.status_pelatihan ===
                                     "review substansi" && (
-                                      <option value="review substansi">
-                                        Review Substansi
-                                      </option>
-                                    )}
+                                    <option value="review substansi">
+                                      Review Substansi
+                                    </option>
+                                  )}
 
                                   {row.status_pelatihan === "selesai" && (
                                     <option value="pelatihan">Pelatihan</option>
@@ -1033,146 +1055,146 @@ const ListTraining = ({ token }) => {
                                 {listPermission.includes(
                                   "pelatihan.pelatihan.manage"
                                 ) && (
-                                    <div className="d-flex flex-row">
-                                      {!(
-                                        row.status_pelatihan === "pelatihan" ||
-                                        row.status_substansi === "ditolak" ||
-                                        row.status_pelatihan === "selesai"
-                                      ) && (
-                                          <Link
-                                            href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}
-                                          >
-                                            <a
-                                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                              data-toggle="tooltip"
-                                              data-placement="bottom"
-                                              title="Edit"
-                                            >
-                                              <i className="ri-pencil-fill p-0 text-white"></i>
-                                            </a>
-                                          </Link>
-                                        )}
-                                    </div>
-                                  )}
-                                {listPermission.includes(
-                                  "pelatihan.pelatihan.view"
-                                ) && (
-                                    <Link
-                                      href={`/pelatihan/pelatihan/view-pelatihan/${row.id}`}
-                                    >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Detail"
-                                      >
-                                        <i className="ri-eye-fill text-white p-0"></i>
-                                      </a>
-                                    </Link>
-                                  )}
-
-                                {listPermission.includes(
-                                  "pelatihan.pelatihan.manage"
-                                ) && (
-                                    <div className="d-flex">
-                                      {row.status_substansi === "revisi" && (
-                                        <button
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          onClick={() =>
-                                            handleModalRevisi(row.id)
-                                          }
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Revisi"
-                                        >
-                                          <i className="ri-draft-line p-0 text-white"></i>
-                                        </button>
-                                      )}
-                                      {!(
-                                        row.status_pelatihan ===
-                                        "review substansi" ||
-                                        row.status_substansi === "ditolak"
-                                      ) && (
-                                          <Link
-                                            href={`/pelatihan/pelatihan/tambah-form-lpj/${row.id}`}
-                                          >
-                                            <a
-                                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                              data-toggle="tooltip"
-                                              data-placement="bottom"
-                                              title="Upload LPJ"
-                                            >
-                                              <i className="ri-file-text-fill p-0 text-white"></i>
-                                            </a>
-                                          </Link>
-                                        )}
-                                      {!(
-                                        row.status_substansi === "ditolak" ||
-                                        row.status_pelatihan ===
-                                        "review substansi" ||
-                                        row.status_pelatihan ===
-                                        "menunggu pendaftaran" ||
-                                        row.status_substansi === "revisi"
-                                      ) && (
-                                          <Link
-                                            href={`/pelatihan/pelatihan/view-list-peserta/${row.id}`}
-                                          >
-                                            <a
-                                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                              data-toggle="tooltip"
-                                              data-placement="bottom"
-                                              title="User"
-                                            >
-                                              <i className="ri-user-3-fill p-0 text-white"></i>
-                                            </a>
-                                          </Link>
-                                        )}
-                                      {row.status_pelatihan === "selesai" && (
-                                        <Link
-                                          href={`/pelatihan/pelatihan/upload-evidence/${row.id}`}
-                                        >
-                                          <a
-                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                            data-toggle="tooltip"
-                                            data-placement="bottom"
-                                            title="Upload Evidence"
-                                          >
-                                            <i className="ri-folder-upload-fill p-0 text-white"></i>
-                                          </a>
-                                        </Link>
-                                      )}
+                                  <div className="d-flex flex-row">
+                                    {!(
+                                      row.status_pelatihan === "pelatihan" ||
+                                      row.status_substansi === "ditolak" ||
+                                      row.status_pelatihan === "selesai"
+                                    ) && (
                                       <Link
-                                        href={`/pelatihan/pelatihan/clone-pelatihan/${row.id}`}
+                                        href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                           data-toggle="tooltip"
                                           data-placement="bottom"
-                                          title="Clone"
+                                          title="Edit"
                                         >
-                                          <i className="ri-send-backward p-0 text-white"></i>
+                                          <i className="ri-pencil-fill p-0 text-white"></i>
                                         </a>
                                       </Link>
-                                      {!(
-                                        row.status_pelatihan ===
+                                    )}
+                                  </div>
+                                )}
+                                {listPermission.includes(
+                                  "pelatihan.pelatihan.view"
+                                ) && (
+                                  <Link
+                                    href={`/pelatihan/pelatihan/view-pelatihan/${row.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Detail"
+                                    >
+                                      <i className="ri-eye-fill text-white p-0"></i>
+                                    </a>
+                                  </Link>
+                                )}
+
+                                {listPermission.includes(
+                                  "pelatihan.pelatihan.manage"
+                                ) && (
+                                  <div className="d-flex">
+                                    {row.status_substansi === "revisi" && (
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        onClick={() =>
+                                          handleModalRevisi(row.id)
+                                        }
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Revisi"
+                                      >
+                                        <i className="ri-draft-line p-0 text-white"></i>
+                                      </button>
+                                    )}
+                                    {!(
+                                      row.status_pelatihan ===
+                                        "review substansi" ||
+                                      row.status_substansi === "ditolak"
+                                    ) && (
+                                      <Link
+                                        href={`/pelatihan/pelatihan/tambah-form-lpj/${row.id}`}
+                                      >
+                                        <a
+                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                          data-toggle="tooltip"
+                                          data-placement="bottom"
+                                          title="Upload LPJ"
+                                        >
+                                          <i className="ri-file-text-fill p-0 text-white"></i>
+                                        </a>
+                                      </Link>
+                                    )}
+                                    {!(
+                                      row.status_substansi === "ditolak" ||
+                                      row.status_pelatihan ===
+                                        "review substansi" ||
+                                      row.status_pelatihan ===
                                         "menunggu pendaftaran" ||
-                                        row.status_pelatihan === "pendaftaran" ||
-                                        row.status_pelatihan === "seleksi" ||
-                                        row.status_pelatihan === "pelatihan" ||
-                                        row.status_pelatihan === "selesai"
-                                      ) && (
-                                          <button
-                                            className="btn btn-link-action bg-blue-secondary text-white"
-                                            onClick={() => handleDelete(row.id)}
-                                            data-toggle="tooltip"
-                                            data-placement="bottom"
-                                            title="Hapus"
-                                          >
-                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                          </button>
-                                        )}
-                                    </div>
-                                  )}
+                                      row.status_substansi === "revisi"
+                                    ) && (
+                                      <Link
+                                        href={`/pelatihan/pelatihan/view-list-peserta/${row.id}`}
+                                      >
+                                        <a
+                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                          data-toggle="tooltip"
+                                          data-placement="bottom"
+                                          title="User"
+                                        >
+                                          <i className="ri-user-3-fill p-0 text-white"></i>
+                                        </a>
+                                      </Link>
+                                    )}
+                                    {row.status_pelatihan === "selesai" && (
+                                      <Link
+                                        href={`/pelatihan/pelatihan/upload-evidence/${row.id}`}
+                                      >
+                                        <a
+                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                          data-toggle="tooltip"
+                                          data-placement="bottom"
+                                          title="Upload Evidence"
+                                        >
+                                          <i className="ri-folder-upload-fill p-0 text-white"></i>
+                                        </a>
+                                      </Link>
+                                    )}
+                                    <Link
+                                      href={`/pelatihan/pelatihan/clone-pelatihan/${row.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Clone"
+                                      >
+                                        <i className="ri-send-backward p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    {!(
+                                      row.status_pelatihan ===
+                                        "menunggu pendaftaran" ||
+                                      row.status_pelatihan === "pendaftaran" ||
+                                      row.status_pelatihan === "seleksi" ||
+                                      row.status_pelatihan === "pelatihan" ||
+                                      row.status_pelatihan === "selesai"
+                                    ) && (
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary text-white"
+                                        onClick={() => handleDelete(row.id)}
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Hapus"
+                                      >
+                                        <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                      </button>
+                                    )}
+                                  </div>
+                                )}
                               </div>
                             </td>
                           </tr>

@@ -155,7 +155,7 @@ var KTSweetAlert2Demo = function () {
 				}
 			}).then(function (result) {
 				if (result.dismiss === 'timer') {
-					console.log('I was closed by the timer')
+					// console.log('I was closed by the timer')
 				}
 			})
 		});

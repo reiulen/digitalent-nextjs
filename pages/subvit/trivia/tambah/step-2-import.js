@@ -6,7 +6,8 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const StepTwo = dynamic(
-  () => import("../../../../components/content/subvit/trivia/tambah/step-2-import"),
+  () =>
+    import("../../../../components/content/subvit/trivia/tambah/step-2-import"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -31,14 +32,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
 
       const permission = req.cookies.token_permission;
 

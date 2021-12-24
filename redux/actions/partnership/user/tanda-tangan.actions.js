@@ -53,7 +53,7 @@ export const fetchSignature = (token) => async (dispatch, getState) => {
     );
     dispatch(successFetchSignature(data));
   } catch (error) {
-    //console.log(error.response.data.message);
+    //// console.log(error.response.data.message);
   }
 };
 
@@ -102,7 +102,7 @@ export const deleteTandaTangan = (id, token) => {
       );
       dispatch({ type: SUCESS_DELETE_TD });
     } catch (error) {
-      // //console.log(error.response.data.message);
+      // //// console.log(error.response.data.message);
     }
   };
 };
@@ -129,7 +129,7 @@ export const changeStatusList = (formData, id, token) => {
       );
       dispatch(successChangeStatusList());
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };

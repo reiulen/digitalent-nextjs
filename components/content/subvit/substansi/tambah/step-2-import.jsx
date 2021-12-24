@@ -186,8 +186,8 @@ const StepTwo = ({ token, tokenPermission }) => {
         type: IMPORT_IMAGES_SUBTANCE_QUESTION_DETAIL_RESET,
       });
       router.push({
-        pathname: `/subvit/substansi/tambah-step-2-import`,
-        query: { id },
+        pathname: `/subvit/substansi`,
+        query: { success: true },
       });
     }
   };

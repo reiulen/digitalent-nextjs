@@ -781,7 +781,6 @@ export const helperElementRenderParent = (row, propsToken) => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            {console.log(row)}
             <select name="" className="form-control" required={row.required}>
               <option value="">--Pilih Data--</option>
               {row.option === "manual" &&

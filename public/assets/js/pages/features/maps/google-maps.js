@@ -43,7 +43,7 @@ var KTGoogleMapsDemo = function() {
                 author: 'HPNeo'
             },
             click: function(e) {
-                if (console.log) console.log(e);
+                if (console.log) // console.log(e);
                 alert('You clicked in this marker');
             }
         });
@@ -87,7 +87,7 @@ var KTGoogleMapsDemo = function() {
             lat: -12.043333,
             lng: -77.028333,
             click: function(e) {
-                console.log(e);
+                // console.log(e);
             }
         });
 

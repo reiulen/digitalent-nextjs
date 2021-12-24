@@ -25,16 +25,11 @@ import { wrapper } from "../redux/store";
 import moment from "moment";
 import "moment/locale/id";
 import { useDispatch, useSelector } from "react-redux";
-import App from "next/app";
 import { getSidebar } from "../redux/actions/site-management/role.actions";
 
 import Layout from "../components/templates/layout.component";
-import { allSidebarReducer } from "../redux/reducers/site-management/role.reducers";
-import { signOut } from "next-auth/client";
 
 function MyApp({ Component, pageProps }) {
-  const allSidebar = useSelector((state) => state.allSidebar);
-
   SimpleReactValidator.addLocale("id", {
     accepted: ":attribute harus diterima.",
     after: ":attribute harus lebih dari :date.",

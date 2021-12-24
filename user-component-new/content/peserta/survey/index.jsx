@@ -7,7 +7,7 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import styles from "./survey.module.css";
 
-const TestSubstansi = () => {
+const TestSubstansi = ({ token }) => {
   const router = useRouter();
 
   const routerTraining = router.query.id_pelatihan;
@@ -23,16 +23,22 @@ const TestSubstansi = () => {
   };
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get(
         process.env.END_POINT_API_SUBVIT +
-          `api/survey-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`
+          `api/survey-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`,
+        config
       )
       .then((res) => {
         setQuestion(res.data.total_questions);
         setTime(res.data.duration);
       });
-  }, [routerTema, routerTraining]);
+  }, [routerTema, routerTraining, token]);
 
   const [show, setShow] = useState(false);
 

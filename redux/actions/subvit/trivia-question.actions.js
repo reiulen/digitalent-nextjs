@@ -20,6 +20,14 @@ import {
   DETAIL_ONE_TRIVIA_QUESTION_BANKS_REQUEST,
   DETAIL_ONE_TRIVIA_QUESTION_BANKS_SUCCESS,
   DETAIL_ONE_TRIVIA_QUESTION_BANKS_FAIL,
+  NEW_CLONE_TRIVIA_QUESTION_BANKS_REQUEST,
+  NEW_CLONE_TRIVIA_QUESTION_BANKS_SUCCESS,
+  NEW_CLONE_TRIVIA_QUESTION_BANKS_RESET,
+  NEW_CLONE_TRIVIA_QUESTION_BANKS_FAIL,
+  DELETE_CLONE_TRIVIA_QUESTION_BANKS_REQUEST,
+  DELETE_CLONE_TRIVIA_QUESTION_BANKS_SUCCESS,
+  DELETE_CLONE_TRIVIA_QUESTION_BANKS_RESET,
+  DELETE_CLONE_TRIVIA_QUESTION_BANKS_FAIL,
   UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_REQUEST,
   UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_SUCCESS,
   UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
@@ -281,6 +289,69 @@ export const allReportTriviaQuestionBanks =
       dispatch({
         type: REPORT_TRIVIA_QUESTION_BANKS_FAIL,
         payload: error.message,
+      });
+    }
+  };
+
+export const newCloneTriviaQuestionBanks =
+  (triviaData, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({
+        type: NEW_CLONE_TRIVIA_QUESTION_BANKS_REQUEST,
+      });
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
+
+      const { data } = await axios.post(
+        process.env.END_POINT_API_SUBVIT + "api/trivia-question-banks/clone",
+        triviaData,
+        config
+      );
+
+      dispatch({
+        type: NEW_CLONE_TRIVIA_QUESTION_BANKS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: NEW_CLONE_TRIVIA_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+export const deleteCloneTriviaQuestionBanks =
+  (dataId, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_CLONE_TRIVIA_QUESTION_BANKS_REQUEST });
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
+
+      const data = await axios.post(
+        process.env.END_POINT_API_SUBVIT +
+          `api/trivia-question-bank-details/multiple-delete`,
+        dataId,
+        config
+      );
+
+      dispatch({
+        type: DELETE_CLONE_TRIVIA_QUESTION_BANKS_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_CLONE_TRIVIA_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
       });
     }
   };

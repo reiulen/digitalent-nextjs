@@ -41,11 +41,12 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
   page = Number(page);
 
   useEffect(() => {
+    localStorage.setItem("id_substansi", router.query.id);
     if (isDeleted) {
       dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, dispatch, id, token, tokenPermission]);
+  }, [isDeleted, dispatch, id, token, tokenPermission, router]);
 
   const [status, setStatus] = useState("");
   const [kategori, setKategori] = useState(null);
@@ -126,7 +127,8 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
     setShowModal(false);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     dispatch(
       getAllSubtanceQuestionDetail(
         id,
@@ -266,6 +268,31 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
 
   return (
     <PageWrapper>
+      {router.query.success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -533,13 +560,15 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                     className={`${styles.btnSearch} position-relative overflow-hidden mt-3`}
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className={`${styles.inputSearch} form-control pl-10`}
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className={`${styles.inputSearch} form-control pl-10`}
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
@@ -547,7 +576,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
 
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -654,24 +683,17 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                                         <i className="ri-pencil-fill p-0 text-white"></i>
                                       </a>
                                     </Link>
+
                                     <button
                                       className={
-                                        i + 1 * (page * 5 || limit) - 4 === 1
-                                          ? "btn btn-link-action btn-secondary  text-white"
-                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                        "btn btn-link-action bg-blue-secondary text-white"
                                       }
-                                      onClick={() =>
-                                        i + 1 * (page * 5 || limit) - 4 !== 1 &&
-                                        handleDelete(question.id)
-                                      }
+                                      onClick={() => handleDelete(question.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
                                       title="Hapus"
                                       style={{
-                                        cursor:
-                                          i + 1 * (page * 5 || limit) - 4 === 1
-                                            ? "not-allowed"
-                                            : "pointer",
+                                        cursor: "pointer",
                                       }}
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>

@@ -38,14 +38,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false,
-          },
-        };
-      }
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
