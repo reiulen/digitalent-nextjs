@@ -18,13 +18,14 @@ import {
 	newSertifikat,
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import * as moment from "moment";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import {
 	helperRegexNumber,
 	helperRemoveZeroFromIndex0,
 	SweatAlert,
 } from "../../../../../../utils/middleware/helper";
 import Cookies from "js-cookie";
+import Select from "react-select";
 
 export default function TambahMasterSertifikat({ token }) {
 	const router = useRouter();
@@ -469,6 +470,15 @@ export default function TambahMasterSertifikat({ token }) {
 		};
 	}, [hour]);
 
+	const [showModalClone, setShowModalClone] = useState(false);
+	const handleCloseClone = () => {
+		setShowModalClone(false);
+	};
+
+	useEffect(() => {
+		console.log(background.includes("base64"));
+	}, [background]);
+
 	return (
 		<PageWrapper>
 			{/* error START */}
@@ -502,7 +512,7 @@ export default function TambahMasterSertifikat({ token }) {
 			<div className="col-lg-12 order-1 px-0">
 				<div className="card card-custom card-stretch gutter-b">
 					{/* START HEADER */}
-					<div className="card-header border-0 d-flex justify-content-lg-between row p-10">
+					<div className="card-header border-0 d-flex justify-content-lg-between align-items-center row p-10">
 						<div className="card-title d-flex my-auto">
 							<div className="text-dark">Nama Sertifikat :</div>
 							<div className="px-6 p-0 w-100">
@@ -522,6 +532,43 @@ export default function TambahMasterSertifikat({ token }) {
 									{ className: "text-danger font-size-sm mt-4" }
 								)}
 							</div>
+						</div>
+						<div>
+							<button
+								className="btn btn-primary-rounded-full"
+								onClick={() => {
+									setShowModalClone(true);
+								}}
+							>
+								Clone Sertifikat
+							</button>
+							<Modal show={showModalClone} size="lg" onHide={handleCloseClone}>
+								<Modal.Header>
+									<Modal.Title>Clone Sertifikat</Modal.Title>
+								</Modal.Header>
+								<Modal.Body>
+									<div className="mb-4">
+										<p>Akademi</p>
+										<Select />
+									</div>
+									<div className="mb-4">
+										<p>Tema</p>
+										<Select />
+									</div>
+									<div className="mb-4">
+										<p>Pelatihan</p>
+										<Select />
+									</div>
+								</Modal.Body>
+								<Modal.Footer>
+									<Button variant="secondary" onClick={handleCloseClone}>
+										Close
+									</Button>
+									<Button variant="primary" onClick={handleCloseClone}>
+										Save Changes
+									</Button>
+								</Modal.Footer>
+							</Modal>
 						</div>
 					</div>
 					{/* END HEADER */}
