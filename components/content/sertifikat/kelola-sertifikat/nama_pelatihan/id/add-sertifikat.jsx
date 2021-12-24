@@ -1033,6 +1033,10 @@ export default function TambahMasterSertifikat({ token }) {
 																					}
 																				/>
 																			</div>
+																			<small>
+																				Setelah isi tandatangan, harap tekan
+																				"Buat Tanda Tangan"
+																			</small>
 																			<div className="d-flex align-items-center my-5">
 																				<a
 																					className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
@@ -1198,6 +1202,9 @@ export default function TambahMasterSertifikat({ token }) {
 												Unggah Background
 											</a>
 										</div>
+										<small className="text-muted">
+											JPG/JPEG/PNG. Resolusi A4 (842px X 595px)
+										</small>
 									</label>
 									<input
 										type="file"
@@ -1741,7 +1748,10 @@ export default function TambahMasterSertifikat({ token }) {
 																						}}
 																					/>
 																				</div>
-
+																				<small>
+																					Setelah isi tandatangan, harap tekan
+																					"Buat Tanda Tangan"
+																				</small>
 																				<div className="d-flex align-items-center my-5">
 																					<a
 																						className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
@@ -1936,6 +1946,9 @@ export default function TambahMasterSertifikat({ token }) {
 													Unggah Background
 												</a>
 											</div>
+											<small className="text-muted">
+												JPG/JPEG/PNG. Resolusi A4 (842px X 595px)
+											</small>
 										</label>
 										<input
 											type="file"
