@@ -603,6 +603,11 @@ import { TTEP12DataReducer } from "./sertifikat/TTE-P12.reducer";
 import { dropdownHelpdeskReducer } from "./beranda/helpdesk.reducer";
 
 import { CheckStatusSertifikatReducer } from "./beranda/check-sertifikat.reducer";
+import {
+	allOptionsAcademyCloneSertifikatReducer,
+	allOptionsThemeCloneSertifikatReducer,
+	allOptionsTrainingCloneSertifikatReducer,
+} from "./sertifikat/clone-sertifikat.reducer";
 
 const reducer = combineReducers({
 	// DASHBOARD KABADAN
@@ -1107,6 +1112,11 @@ const reducer = combineReducers({
 	sertifikatPeserta: sertifikatPesertaReducer,
 	dropdownHelpdesk: dropdownHelpdeskReducer,
 	CheckStatusSertifikat: CheckStatusSertifikatReducer,
+
+	//clone sertifikat
+	optionsAcademyCloneSertifikat: allOptionsAcademyCloneSertifikatReducer,
+	optionsThemeCloneSertifikat: allOptionsThemeCloneSertifikatReducer,
+	optionsTrainingCloneSertifikat: allOptionsTrainingCloneSertifikatReducer,
 });
 
 export default reducer;
