@@ -212,7 +212,8 @@ const ListReview = ({ token }) => {
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     setPage(1);
     dispatch(
       getAllListReview(
@@ -425,6 +426,8 @@ const ListReview = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-4 col-xl-4">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
+                    <form onSubmit={e => handleSearch(e)}>
+
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -438,10 +441,11 @@ const ListReview = ({ token }) => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={e => handleSearch(e)}
                     >
                       Cari
                     </button>
+                    </form>
                   </div>
                 </div>
 

@@ -94,26 +94,26 @@ const ListReport = ({ token }) => {
     e.preventDefault();
     window.open(
       process.env.END_POINT_API_PELATIHAN +
-      `api/v1/pelatihan/export-rekap-pendaftaran-data-doc?pelatihan_id=${id}`,
+        `api/v1/pelatihan/export-rekap-pendaftaran-data-doc?pelatihan_id=${id}`,
       "_blank"
     );
   };
-  
-	function capitalize(s) {
-		let a = s.split(" ");
-		let result = [];
-		for (let i = 0; i < a.length; i++) {
-			result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
-		}
-		return result.join(" ");
-	}
+
+  function capitalize(s) {
+    let a = s.split(" ");
+    let result = [];
+    for (let i = 0; i < a.length; i++) {
+      result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
+    }
+    return result.join(" ");
+  }
 
   const downloadPdf = async (e, id) => {
     e.preventDefault();
     await axios
       .get(
         process.env.END_POINT_API_PELATIHAN +
-        `api/v1/pelatihan/export-rekap-pendaftaran-data-pdf?pelatihan_id=${id}`
+          `api/v1/pelatihan/export-rekap-pendaftaran-data-pdf?pelatihan_id=${id}`
       )
       .then((res) => {
         window.open(res.data.data, "_blank");
@@ -180,15 +180,24 @@ const ListReport = ({ token }) => {
               <p className="my-0">{item.kuota_peserta} Peserta </p>
             </td>
             <td>
-              <span className={
-                item.status_pelatihan === "selesai" && "label label-inline select-pelatihan-success font-weight-bold" ||
-                item.status_pelatihan === "seleksi" && "label label-inline select-pelatihan-warning font-weight-bold" ||
-                item.status_pelatihan === "menunggu pendaftaran" && "label label-inline select-pelatihan-warning font-weight-bold" ||
-                item.status_pelatihan === "review substansi" && "label label-inline select-pelatihan-primary font-weight-bold" ||
-                item.status_pelatihan === "pelatihan" && "label label-inline select-pelatihan-primary font-weight-bold" ||
-                item.status_pelatihan === "pendaftaran" && "label label-inline select-pelatihan-primary font-weight-bold" ||
-                item.status_pelatihan === "dibatalkan" && "label label-inline select-pelatihan-danger font-weight-bold"
-              }>
+              <span
+                className={
+                  (item.status_pelatihan === "selesai" &&
+                    "label label-inline select-pelatihan-success font-weight-bold") ||
+                  (item.status_pelatihan === "seleksi" &&
+                    "label label-inline select-pelatihan-warning font-weight-bold") ||
+                  (item.status_pelatihan === "menunggu pendaftaran" &&
+                    "label label-inline select-pelatihan-warning font-weight-bold") ||
+                  (item.status_pelatihan === "review substansi" &&
+                    "label label-inline select-pelatihan-primary font-weight-bold") ||
+                  (item.status_pelatihan === "pelatihan" &&
+                    "label label-inline select-pelatihan-primary font-weight-bold") ||
+                  (item.status_pelatihan === "pendaftaran" &&
+                    "label label-inline select-pelatihan-primary font-weight-bold") ||
+                  (item.status_pelatihan === "dibatalkan" &&
+                    "label label-inline select-pelatihan-danger font-weight-bold")
+                }
+              >
                 {capitalize(item.status_pelatihan)}
               </span>
             </td>
@@ -214,37 +223,39 @@ const ListReport = ({ token }) => {
                 {listPermission.includes(
                   "pelatihan.report_pelatihan.manage"
                 ) && (
-                    <div className="d-flex">
-                      <button
-                        type="button"
-                        className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${item.status_pelatihan === "selesai" ? "" : "disabled"
-                          }`}
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Download As Word"
-                        onClick={(e) => downloadWord(e, item.id)}
-                        disabled={
-                          item.status_pelatihan === "selesai" ? false : true
-                        }
-                      >
-                        <i className="ri-file-word-fill text-white p-0"></i>
-                      </button>
-                      <button
-                        type="button"
-                        className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${item.status_pelatihan === "selesai" ? "" : "disabled"
-                          }`}
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Download As PDF"
-                        onClick={(e) => downloadPdf(e, item.id)}
-                        disabled={
-                          item.status_pelatihan === "selesai" ? false : true
-                        }
-                      >
-                        <i className="ri-file-ppt-fill text-white p-0"></i>
-                      </button>
-                    </div>
-                  )}
+                  <div className="d-flex">
+                    <button
+                      type="button"
+                      className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${
+                        item.status_pelatihan === "selesai" ? "" : "disabled"
+                      }`}
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Download As Word"
+                      onClick={(e) => downloadWord(e, item.id)}
+                      disabled={
+                        item.status_pelatihan === "selesai" ? false : true
+                      }
+                    >
+                      <i className="ri-file-word-fill text-white p-0"></i>
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${
+                        item.status_pelatihan === "selesai" ? "" : "disabled"
+                      }`}
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Download As PDF"
+                      onClick={(e) => downloadPdf(e, item.id)}
+                      disabled={
+                        item.status_pelatihan === "selesai" ? false : true
+                      }
+                    >
+                      <i className="ri-file-ppt-fill text-white p-0"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </td>
           </tr>
@@ -323,20 +334,9 @@ const ListReport = ({ token }) => {
               <div className="row align-items-center d-flex">
                 <div className="col-lg-8 col-xl-4">
                   <div className="position-relative overflow-hidden mt-3">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={(e) => {
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
                         dispatch(
                           listsReportTraining(
                             token,
@@ -350,8 +350,36 @@ const ListReport = ({ token }) => {
                         );
                       }}
                     >
-                      Cari
-                    </button>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={(e) => {
+                          dispatch(
+                            listsReportTraining(
+                              token,
+                              page,
+                              limit,
+                              search,
+                              penyelenggara.label,
+                              academy.label,
+                              theme.label
+                            )
+                          );
+                        }}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
 
@@ -382,7 +410,9 @@ const ListReport = ({ token }) => {
                       <th className="text-center ">No</th>
                       <th>ID Pelatihan</th>
                       <th>Pelatihan</th>
-                      <th>Jadwal Pendaftaran <br /> Jadwal Pelatihan</th>
+                      <th>
+                        Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                      </th>
                       <th>Kuota</th>
                       <th>Status Pelatihan</th>
                       <th>Aksi</th>
