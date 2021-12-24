@@ -1110,6 +1110,11 @@ const reducer = combineReducers({
 	sertifikatPeserta: sertifikatPesertaReducer,
 	dropdownHelpdesk: dropdownHelpdeskReducer,
 	CheckStatusSertifikat: CheckStatusSertifikatReducer,
+
+	//clone sertifikat
+	optionsAcademyCloneSertifikat: allOptionsAcademyCloneSertifikatReducer,
+	optionsThemeCloneSertifikat: allOptionsThemeCloneSertifikatReducer,
+	optionsTrainingCloneSertifikat: allOptionsTrainingCloneSertifikatReducer,
 });
 
 export default reducer;

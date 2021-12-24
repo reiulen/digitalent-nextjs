@@ -26,11 +26,13 @@ export const getOptionsAcademyCloneSertifikat =
 			};
 
 			const { data } = await axios.get(link, config);
+
 			if (data) {
 				dispatch({ type: OPTION_ACADEMY_SUCCESS, payload: data });
 			}
 			return data;
 		} catch (error) {
+			console.log(error.message);
 			dispatch({
 				type: OPTION_ACADEMY_FAIL,
 				payload: error?.response?.data?.message || error.message,

@@ -9,7 +9,7 @@ import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import { getDetailPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
-
+import { getOptionsAcademyCloneSertifikat } from "../../../redux/actions/sertifikat/clone-sertifikat.action";
 const AddSertifikat = dynamic(
 	() =>
 		import(
@@ -64,8 +64,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
 				)
 			);
 
+			await store.dispatch(getDetailPelatihan(query.id, "", "sertifikat"));
+
+			// console.log(session, "token");
 			const data = await store.dispatch(
-				getDetailPelatihan(query.id, session?.token, "sertifikat")
+				getOptionsAcademyCloneSertifikat(session.user.user.data.token)
 			);
 
 			return {

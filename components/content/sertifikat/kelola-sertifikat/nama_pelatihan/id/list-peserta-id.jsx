@@ -64,7 +64,6 @@ export default function ListPesertaID({ token }) {
 			Swal.hideLoading();
 		}
 	}, [loading]);
-	console.log(certificate);
 
 	const handleDownload = async (id, noRegis, name) => {
 		setLoading(true);
@@ -105,8 +104,6 @@ export default function ListPesertaID({ token }) {
 			}
 		} catch (e) {
 			console.log(e);
-			console.log(e.respond.data.message);
-			console.log(e.message);
 
 			setLoading(false);
 			SweatAlert("Gagal", e.message, "error");
