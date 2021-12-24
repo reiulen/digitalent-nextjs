@@ -9,7 +9,8 @@ import { getAllSubtanceQuestionBanks } from "../../../../redux/actions/subvit/su
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const StepFour = dynamic(
-  () => import("../../../../components/content/subvit/substansi/clone/step-four"),
+  () =>
+    import("../../../../components/content/subvit/substansi/clone/step-four"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -32,14 +33,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {

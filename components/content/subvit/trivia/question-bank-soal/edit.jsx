@@ -65,7 +65,7 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
         type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET,
       });
       router.push({
-        pathname: `/subvit/trivia`,
+        pathname: `/subvit/trivia/${localStorage.getItem("id_trivia")}`,
         query: { success: true },
       });
     }

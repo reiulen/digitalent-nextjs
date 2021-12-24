@@ -170,7 +170,9 @@ const StepTwo = ({ token, tokenPermission }) => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="4"></StepInput>
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Publish Soal Cloning</h2>
+            <h2 className="card-title h2 text-dark">
+              Publish Hasil Clone Soal Test Substansi
+            </h2>
           </div>
           <div className="card-body pt-0">
             <h4 className="mt-2">
