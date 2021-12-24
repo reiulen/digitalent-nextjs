@@ -10,52 +10,52 @@ import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwa
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const Survey = dynamic(
-	() => import("../../../user-component-new/content/peserta/survey"),
-	{
-		loading: function loadingNow() {
-			return <LoadingSkeleton />;
-		},
-		ssr: false,
-	}
+  () => import("../../../user-component-new/content/peserta/survey"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
 );
 
 const Layout = dynamic(() =>
-	import(
-		"../../../user-component-new/components/template/Layout-peserta.component"
-	)
+  import(
+    "../../../user-component-new/components/template/Layout-peserta.component"
+  )
 );
 
 export default function SurveyPage(props) {
-	const session = props.session.user.user.data.user;
-	return (
-		<>
-			<Layout title="Survey" session={session}>
-				<Survey session={session} />
-			</Layout>
-		</>
-	);
+  const session = props.session.user.user.data.user;
+  return (
+    <>
+      <Layout title="Survey" session={session}>
+        <Survey session={session} token={session.token} />
+      </Layout>
+    </>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-	(store) =>
-		async ({ query, req }) => {
-			const session = await getSession({ req });
-			const middleware = middlewareAuthPesertaSession(session);
+  (store) =>
+    async ({ query, req }) => {
+      const session = await getSession({ req });
+      const middleware = middlewareAuthPesertaSession(session);
 
-			if (!middleware.status) {
-				return {
-					redirect: {
-						destination: middleware.redirect,
-						permanent: false,
-					},
-				};
-			}
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
+            permanent: false,
+          },
+        };
+      }
 
-			await store.dispatch(getDataPribadi(session.user.user.data.user.token));
-			await store.dispatch(getAllAkademi());
+      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      await store.dispatch(getAllAkademi());
 
-			return {
-				props: { data: "auth", session, title: "Dashboard - Peserta" },
-			};
-		}
+      return {
+        props: { data: "auth", session, title: "Dashboard - Peserta" },
+      };
+    }
 );

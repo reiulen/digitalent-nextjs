@@ -154,8 +154,8 @@ const StepTwo = ({ token, tokenPermission }) => {
         token
       );
       router.push({
-        pathname: `/subvit/trivia/tambah/step-2-import`,
-        query: { id },
+        pathname: `/subvit/trivia`,
+        query: { success: true },
       });
     }
   };

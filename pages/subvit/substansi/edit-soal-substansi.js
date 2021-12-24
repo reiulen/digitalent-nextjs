@@ -10,7 +10,10 @@ import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.acti
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const EditSubstansiBank = dynamic(
-  () => import("../../../components/content/subvit/substansi/question-bank-soal/edit"),
+  () =>
+    import(
+      "../../../components/content/subvit/substansi/question-bank-soal/edit"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -37,14 +40,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
