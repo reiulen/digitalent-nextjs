@@ -98,7 +98,8 @@ const DetailTrivia = ({ token, tokenPermission }) => {
     });
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     dispatch(
       getAllTriviaQuestionDetail(id, 1, search, 5, token, tokenPermission)
     );
@@ -291,6 +292,8 @@ const DetailTrivia = ({ token, tokenPermission }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
+                    <form onSubmit={e => handleSearch(e)}>
+
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -298,13 +301,14 @@ const DetailTrivia = ({ token, tokenPermission }) => {
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={e => handleSearch(e)}
                     >
                       Cari
                     </button>

@@ -127,7 +127,8 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
     setShowModal(false);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     dispatch(
       getAllSubtanceQuestionDetail(
         id,
@@ -559,6 +560,8 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                     className={`${styles.btnSearch} position-relative overflow-hidden mt-3`}
                     style={{ maxWidth: "330px" }}
                   >
+                    <form onSubmit={e => handleSearch(e)}>
+
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -566,6 +569,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
@@ -573,7 +577,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
 
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={ e => handleSearch(e)}
                     >
                       Cari
                     </button>

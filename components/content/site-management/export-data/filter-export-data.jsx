@@ -98,7 +98,7 @@ const UbahRole = ({ token, name }) => {
     if (datePelaksanaanEnd !== null) {
       dispatch(postFilterExportData(token, data));
     } else {
-      Swal.fire("Oppss", "isi tahun dengan benar", "error");
+      Swal.fire("Oppss", "isi tanggal dengan benar", "error");
     }
   };
 
@@ -131,7 +131,7 @@ const UbahRole = ({ token, name }) => {
         }
       });
     } else {
-      Swal.fire("Oppss", "isi tahun dengan benar", "error");
+      Swal.fire("Oppss", "isi tanggal dengan benar", "error");
     }
   };
 
@@ -190,7 +190,7 @@ const UbahRole = ({ token, name }) => {
           <div className="card-body pt-0 px-4 px-sm-8">
             <form>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Tahun</label>
+                <label htmlFor="exampleSelect1">Tanggal</label>
                 <DatePicker
                   wrapperClassName="datepicker"
                   className="form-control"
@@ -200,7 +200,7 @@ const UbahRole = ({ token, name }) => {
                   startDate={datePelaksanaanStart}
                   endDate={datePelaksanaanEnd}
                   dateFormat="dd/MM/yyyy"
-                  placeholderText="Silahkan Pilih Tahun"
+                  placeholderText="Silahkan Pilih Tanggal"
                   autoComplete="off"
                 />
                 {/* <Select

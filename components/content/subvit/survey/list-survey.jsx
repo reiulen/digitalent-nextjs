@@ -72,7 +72,8 @@ const ListSurvey = ({ token, tokenPermission }) => {
     }
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (limit != null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
@@ -298,20 +299,22 @@ const ListSurvey = ({ token, tokenPermission }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
