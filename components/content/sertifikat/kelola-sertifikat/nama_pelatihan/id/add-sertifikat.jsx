@@ -34,8 +34,6 @@ import {
 	getOptionsTrainingCloneSertifikat,
 } from "../../../../../../redux/actions/sertifikat/clone-sertifikat.action";
 
-import Name from "./component/name";
-
 export default function TambahMasterSertifikat({ token }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
