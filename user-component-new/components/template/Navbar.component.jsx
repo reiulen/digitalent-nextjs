@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, Toast } from "react-bootstrap";
 import Link from "next/link";
 import { signOut } from "next-auth/client";
 import IconArrow from "../../../components/assets/icon/Arrow2";
@@ -8,9 +9,13 @@ import style from "./Navbar.module.css";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import LoadingSidebar from "../loader/LoadingSidebar";
+import { toast } from "react-toastify";
 
-import { firebaseCloudMessaging } from "../../../messaging_get_token";
-import { firebaseReceiveMessage } from "../../../messaging_receive_message";
+import {
+  getFirebaseToken,
+  onMessageListener,
+} from "../../../messaging_get_token";
+// import { firebaseReceiveMessage } from "../../../messaging_receive_message";
 
 import { getMessaging, onMessage } from "firebase/messaging";
 
@@ -49,27 +54,27 @@ const Navigationbar = ({ session }) => {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-  const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
   const [menu, setMenu] = useState([]);
 
-  const [socket, setSocket] = useState(null);
   const [dataNotification, setDataNotification] = useState([]);
 
   const { footer, loading } = useSelector((state) => state.berandaFooter);
 
+  const [isTokenFound, setTokenFound] = useState(false);
+  const [alertNotif, setAlertNotif] = useState(false);
+
   useEffect(() => {
-    setToken();
-    async function setToken() {
-      try {
-        const token = await firebaseCloudMessaging.init();
-        if (token) {
-          firebaseReceiveMessage.init();
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    getFirebaseToken(setTokenFound);
+
+    const messaging = getMessaging();
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload.notification);
+      toast.success("Lorem ipsum dolor", {
+        theme: "light",
+      });
+      setAlertNotif(true);
+    });
 
     if (!session) {
       return;
@@ -103,11 +108,7 @@ const Navigationbar = ({ session }) => {
         }
       }
     }
-
-    handleConnectSocket();
   }, []);
-
-  // FIREBASE NOTIFICATION
 
   //   const setToken = async () => {
   //     try {
@@ -128,35 +129,35 @@ const Navigationbar = ({ session }) => {
   //     });
   //   };
 
-  const handleConnectSocket = () => {
-    let ws = new WebSocket(
-      "ws://api-dts-dev.majapahit.id/pelatihan/api/v1/formPendaftaran/notification"
-    );
-    let timeout = 0;
-    let connectInterval;
+  // const handleConnectSocket = () => {
+  //   let ws = new WebSocket(
+  //     "ws://api-dts-dev.majapahit.id/pelatihan/api/v1/formPendaftaran/notification"
+  //   );
+  //   let timeout = 0;
+  //   let connectInterval;
 
-    ws.onopen = () => {
-      setSocket(ws);
-      timeout = 250;
-      clearTimeout(connectInterval);
-    };
+  //   ws.onopen = () => {
+  //     setSocket(ws);
+  //     timeout = 250;
+  //     clearTimeout(connectInterval);
+  //   };
 
-    ws.onmessage = (e) => {
-      let res = JSON.parse(e.data);
-      if (session && res?.To == session?.id) {
-        setAlertNotif(true);
-        GetNotifikasi();
-      }
-    };
+  //   ws.onmessage = (e) => {
+  //     let res = JSON.parse(e.data);
+  //     if (session && res?.To == session?.id) {
+  //       setAlertNotif(true);
+  //       GetNotifikasi();
+  //     }
+  //   };
 
-    ws.onclose = (e) => {
-      // connectInterval = setTimeout(handleCheckSocket, Math.min(10000, timeout));
-    };
+  //   ws.onclose = (e) => {
+  //     // connectInterval = setTimeout(handleCheckSocket, Math.min(10000, timeout));
+  //   };
 
-    ws.onerror = (err) => {
-      ws.close();
-    };
-  };
+  //   ws.onerror = (err) => {
+  //     ws.close();
+  //   };
+  // };
 
   // const data = [
   //   // { icon: "Fail", text: "test" },
@@ -293,7 +294,6 @@ const Navigationbar = ({ session }) => {
   };
 
   const [notification, setNotification] = useState(false);
-  const [alertNotif, setAlertNotif] = useState(false);
 
   const [navbarItems, setNavbarItems] = useState("");
   const [rilisMedia, setRilisMedia] = useState([

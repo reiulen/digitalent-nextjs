@@ -11,41 +11,17 @@ if (!firebase.apps.length) {
     measurementId: "G-Z43DV3R59G",
   });
 
+  // Retrieve firebase messaging
   const messaging = firebase.messaging();
 
-  //background notifications will be received here
-  messaging.setBackgroundMessageHandler(function (payload) {
-    console.log(
-      "[firebase-messaging-sw.js] Received background message ",
-      payload
-    );
-    // Customize notification here
-    const notificationTitle = "Background Message Title";
-    const notificationOptions = {
-      body: "Background Message body.",
-      icon: "/firebase-logo.png",
-    };
-
-    return self.registration.showNotification(
-      notificationTitle,
-      notificationOptions
-    );
-  });
-
   messaging.onBackgroundMessage(function (payload) {
-    console.log(
-      "[firebase-messaging-sw.js] Received background message ",
-      payload
-    );
-    const notificationTitle = "Background Message Title";
+    console.log("Received background message ", payload);
+
+    const notificationTitle = payload.notification.title;
     const notificationOptions = {
-      body: "Background Message body.",
-      icon: "/firebase-logo.png",
+      body: payload.notification.body,
     };
 
-    return self.registration.showNotification(
-      notificationTitle,
-      notificationOptions
-    );
+    self.registration.showNotification(notificationTitle, notificationOptions);
   });
 }
