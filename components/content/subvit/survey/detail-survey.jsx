@@ -39,11 +39,12 @@ const DetailSurvey = ({ token, tokenPermission }) => {
   page = Number(page);
 
   useEffect(() => {
+    localStorage.setItem("id_survey", router.query.id);
     if (isDeleted) {
       dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, id, token, dispatch, tokenPermission]);
+  }, [router, isDeleted, id, token, dispatch, tokenPermission]);
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -131,6 +132,31 @@ const DetailSurvey = ({ token, tokenPermission }) => {
 
   return (
     <PageWrapper>
+      {router.query.success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"

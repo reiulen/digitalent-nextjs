@@ -141,8 +141,8 @@ const StepTwo = ({ token, tokenPermission }) => {
         type: IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_RESET,
       });
       router.push({
-        pathname: `/subvit/survey/tambah/step-2-import`,
-        query: { id },
+        pathname: `/subvit/survey`,
+        query: { success: true },
       });
     }
   };
