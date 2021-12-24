@@ -13,32 +13,42 @@ export default function Footer() {
   const { footer, loading } = useSelector((state) => state.berandaFooter);
   const [secondary, setSecondary] = useState("1");
   const [warna, setWarna] = useState("secondary");
+  const [footerLogo, setFooterLogo] = useState("");
+  const [sosmed, setSosmed] = useState([]);
+  const [externalLink, setExternalLink] = useState([]);
 
   useEffect(() => {
-    dispatch(getBerandaFooter());
-  }, [dispatch]);
+    if (footer?.footer_logo) {
+      setFooterLogo(footer?.footer_logo);
+    }
+    if (footer?.social_media) {
+      setSosmed(footer?.social_media);
+    }
+    if (footer?.external_link) {
+      setExternalLink(footer?.external_link);
+    }
+  }, [footer]);
 
-  const getDataGeneral = async (token) => {
+  const getDataGeneral = async () => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`
       );
-
       if (data) {
         localStorage.setItem("footer", data.data.color[1].color);
+        localStorage.setItem("footer_logo", data.data.footer_logo);
       }
     } catch (error) {}
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("footer")) {
+    if (
+      !localStorage.getItem("footer") ||
+      !localStorage.getItem("footer_logo")
+    ) {
       getDataGeneral();
     }
+
     if (localStorage.getItem("footer") == "1") {
       setWarna("primary");
     } else if (localStorage.getItem("footer") == "2") {
@@ -46,6 +56,7 @@ export default function Footer() {
     } else if (localStorage.getItem("footer") == "3") {
       setWarna("extras");
     }
+    dispatch(getBerandaFooter());
   }, []);
 
   return (
@@ -56,11 +67,11 @@ export default function Footer() {
             <div className="mt-5">
               <Image
                 src={
-                  (footer &&
-                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                  footerLogo
+                    ? process.env.END_POINT_API_IMAGE_PUBLIKASI +
                       "site-management/images/" +
-                      footer.footer_logo) ||
-                  ImageWhiteLogo
+                      footerLogo
+                    : ImageWhiteLogo
                 }
                 width={120}
                 height={120}
@@ -79,10 +90,9 @@ export default function Footer() {
           <Col lg={2} md={12} sm={12}>
             <div className="h-100 w-100">
               <div className="pl-xl-20 mt-lg-0 mt-8  d-flex border-left-lg align-items-md-center justify-content-lg-end h-100 w-100">
-                {footer &&
-                  footer.social_media &&
-                  footer.social_media.length !== 0 &&
-                  footer.social_media.map((row, i) => (
+                {sosmed &&
+                  sosmed.length != 0 &&
+                  sosmed.map((row, i) => (
                     <a
                       href={row.link_social_media}
                       target="_blank"
@@ -128,9 +138,8 @@ export default function Footer() {
             md={8}
             sm={12}
             className={
-              footer &&
-              footer.external_link &&
-              footer.external_link.length < 5 &&
+              externalLink &&
+              externalLink?.length < 5 &&
               `d-flex justify-content-md-center`
             }
           >
@@ -138,20 +147,17 @@ export default function Footer() {
               <h1 className="fw-700 fz-20 text-white">Pranala Luar</h1>
               <div
                 className={
-                  footer &&
-                  footer.external_link &&
-                  footer.external_link.length > 5
+                  externalLink && externalLink?.length > 5
                     ? `row ml-0`
                     : undefined
                 }
               >
-                {footer &&
-                  footer.external_link &&
-                  footer.external_link.length > 0 &&
-                  footer.external_link.map((row, i) => (
+                {externalLink &&
+                  externalLink?.length > 0 &&
+                  externalLink?.map((row, i) => (
                     <div
                       className={
-                        footer.external_link.length > 5
+                        externalLink?.length > 5
                           ? `col-md-6 pl-0`
                           : `col-md-12 pl-0`
                       }

@@ -146,6 +146,7 @@ const FormBerhasil = ({ token }) => {
             <a
               className="text-primary font-weight-bolder"
               onClick={() => {
+                router.push("/peserta");
                 dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
               }}
             >

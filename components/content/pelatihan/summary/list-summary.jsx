@@ -380,17 +380,17 @@ const ListSummary = ({ token }) => {
                 {listPermission.includes(
                   "pelatihan.rekap_pendaftaran.manage"
                 ) && (
-                  <div className="col-md-2">
-                    <button
-                      className="d-flex justify-content-center btn w-100 btn-rounded-full bg-blue-secondary text-white"
-                      type="button"
-                      onClick={handleExportReport}
-                    >
-                      Export
-                      <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                    </button>
-                  </div>
-                )}
+                    <div className="col-md-2">
+                      <button
+                        className="d-flex justify-content-center btn w-100 btn-rounded-full bg-blue-secondary text-white"
+                        type="button"
+                        onClick={handleExportReport}
+                      >
+                        Export
+                        <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                      </button>
+                    </div>
+                  )}
               </div>
             </div>
 
@@ -410,15 +410,15 @@ const ListSummary = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal Pendaftaran - Jadwal Pelatihan</th>
+                        <th>Jadwal Pendaftaran <br /> Jadwal Pelatihan</th>
                         <th>Status Pelatihan</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {!summary ||
-                      (summary && summary.list === null) ||
-                      summary.list.length === 0 ? (
+                        (summary && summary.list === null) ||
+                        summary.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
@@ -445,24 +445,29 @@ const ListSummary = ({ token }) => {
                               <p className="my-0">
                                 {moment(row.pendaftaran_mulai)
                                   .utc()
-                                  .format("DD MMMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
                                 {moment(row.pendaftaran_selesai)
                                   .utc()
-                                  .format("DD MMMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                               <p className="my-0">
                                 {moment(row.pelatihan_mulai)
                                   .utc()
-                                  .format("DD MMMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
                                 {moment(row.pelatihan_selesai)
                                   .utc()
-                                  .format("DD MMMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                             </td>
                             <td className="align-middle">
-                              <span className="label label-inline label-light-success font-weight-bold">
+                              <span className={
+                                row.status_pelatihan === "selesai" && "select-pelatihan select-pelatihan-success font-weight-bold" ||
+                                row.status_pelatihan === "pendaftaran" && "select-pelatihan select-pelatihan-primary font-weight-bold" ||
+                                row.status_pelatihan === "seleksi" && "select-pelatihan select-pelatihan-warning font-weight-bold" ||
+                                row.status_pelatihan === "pelatihan" && "select-pelatihan select-pelatihan-primary font-weight-bold"
+                              }>
                                 {row.status_pelatihan}
                               </span>
                             </td>
@@ -471,35 +476,35 @@ const ListSummary = ({ token }) => {
                                 {listPermission.includes(
                                   "pelatihan.rekap_pendaftaran.view"
                                 ) && (
-                                  <Link
-                                    href={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${row.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="View"
+                                    <Link
+                                      href={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${row.id}`}
                                     >
-                                      <i className="ri-eye-fill text-white p-0"></i>
-                                    </a>
-                                  </Link>
-                                )}
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="View"
+                                      >
+                                        <i className="ri-eye-fill text-white p-0"></i>
+                                      </a>
+                                    </Link>
+                                  )}
                                 {listPermission.includes(
                                   "pelatihan.rekap_pendaftaran.manage"
                                 ) && (
-                                  <Link
-                                    href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="Detail"
+                                    <Link
+                                      href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
                                     >
-                                      <i className="ri-registered-fill text-white p-0"></i>
-                                    </a>
-                                  </Link>
-                                )}
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Detail"
+                                      >
+                                        <i className="ri-registered-fill text-white p-0"></i>
+                                      </a>
+                                    </Link>
+                                  )}
                               </div>
                             </td>
                           </tr>

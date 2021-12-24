@@ -75,6 +75,17 @@ module.exports = {
     TOKEN_MAP:
       "pk.eyJ1IjoiZGVuZHlsb3JkcyIsImEiOiJja3U1NHJnYjkxczdyMnZxZ2ptM2hlNXpqIn0.o5v5Ch0AFJIfeZER2vZvwA",
 
-    VERSION_APP: "2.0.0"
+    VERSION_APP: "2.0.0",
+
+    FB_API_KEY: "AIzaSyCE2YL39cNc47v0eSzmecyaAOhAKYlGjxQ",
+    FB_AUTH_DOMAIN: "dts-kominfo.firebaseapp.com",
+    FB_PROJECT_ID: "dts-kominfo",
+    FB_STORAGE_BUCKET: "dts-kominfo.appspot.com",
+    FB_MESSAGING_SENDER_ID: "38242238576",
+    FB_APP_ID: "1:38242238576:web:8043a0824ce6e1e42134b5",
+    FB_MEASUREMENT_ID: "G-Z43DV3R59G",
+
+    FB_FCM_KEY_PAIR:
+      "BAseWMZsJmdofVidmAZEOMnFjB2fZQFDmPtuMVPJEOFP5nLhogqDkMYolmQ-d4HABaS8nOakUaXt70DsrqHWR2Y",
   },
 };

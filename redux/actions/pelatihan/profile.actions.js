@@ -39,6 +39,12 @@ import {
 	GET_ASAL_SEKOLAH,
 	STORE_ALL_DATA_PRIBADI,
 	GET_DATA_PRIBADI_WIZZARD,
+
+	// UPDATE WIZZARD STATUS
+	UPDATE_WIZZARD_REQUEST,
+	UPDATE_WIZZARD_SUCCESS,
+	UPDATE_WIZZARD_FAIL, 
+	// END UPDATE WIZZARD STATUS
 } from "../../types/pelatihan/profile.type";
 import axios from "axios";
 import { ST } from "next/dist/shared/lib/utils";
@@ -348,6 +354,43 @@ export const getDataRefPekerjaan = (token) => async (dispatch) => {
 };
 
 //END PEKERJAAN
+
+// UPDATE WIZZARD STATUS
+export const updateWizzardStatus =
+	(status, token) => async (dispatch) => {
+		try {
+			dispatch({ type: UPDATE_WIZZARD_REQUEST });
+
+			let link =
+				process.env.END_POINT_API_PELATIHAN +
+				`/api/v1/auth/update-wizard?wizard=${status}`;
+
+			const config = {
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+			};
+
+			const { data } = await axios.get(link, config);
+
+			dispatch({
+				type: UPDATE_WIZZARD_SUCCESS,
+				payload: data,
+			});
+
+			if (data) {
+				return data;
+			}
+			
+		} catch (error) {
+			dispatch({
+				type: UPDATE_WIZZARD_FAIL,
+				payload: error.response.data.message,
+			});
+		}
+	};
+
+// END UPDATE WIZZARD STATUS
 
 export const clearErrors = () => async (dispatch) => {
 	dispatch({

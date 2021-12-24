@@ -17,15 +17,29 @@ export default function FormPengaduan() {
 	const router = useRouter();
 	const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 	const data = useSelector((state) => state.dropdownHelpdesk);
+	const { error: errorDataPribadi, dataPribadi } = useSelector(
+		(state) => state.getDataPribadi
+	);
 
 	const [name, setName] = useState("");
 	const [handphone, setHandphone] = useState("");
 	const [email, setEmail] = useState("");
-	const [platform, setPlatform] = useState("");
+	const [platform, setPlatform] = useState(1);
 	const [captcha, setCaptcha] = useState("");
 	const [, forceUpdate] = useState();
 	const [deskripsi, setDeskripsi] = useState("");
 	const [options, setOptions] = useState([]);
+
+	const [disable, setDisable] = useState(false);
+
+	useEffect(() => {
+		if (dataPribadi) {
+			setName(dataPribadi?.name);
+			setEmail(dataPribadi?.email);
+			setHandphone(dataPribadi?.nomor_handphone);
+			setDisable(true);
+		}
+	}, []);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -44,7 +58,7 @@ export default function FormPengaduan() {
 				);
 				if (result) {
 					SweatAlert("Berhasil", "Pengaduanmu Berhasil Terkirim", "success");
-					router.piush;
+					window.location.reload();
 				}
 			} catch (e) {
 				SweatAlert("Gagal", e.message, "error");
@@ -68,8 +82,10 @@ export default function FormPengaduan() {
 						<Form.Control
 							type="text"
 							placeholder="Nama Lengkap"
+							disabled={dataPribadi ? true : false}
 							className="rounded-full"
 							onChange={(e) => setName(e.target.value)}
+							value={name}
 						/>
 						{simpleValidator.current.message("nama", name, "required", {
 							className: "text-danger",
@@ -87,6 +103,7 @@ export default function FormPengaduan() {
 									setHandphone(e.target.value);
 								}
 							}}
+							disabled={dataPribadi ? true : false}
 							type="text"
 							placeholder="08xxxxxxxxxxxx"
 							className="rounded-full"
@@ -110,6 +127,8 @@ export default function FormPengaduan() {
 							type="email"
 							placeholder="ini@contoh.com"
 							className="rounded-full"
+							value={email}
+							disabled={dataPribadi ? true : false}
 						/>
 						{simpleValidator.current.message("Email", email, "required|email", {
 							className: "text-danger",
@@ -122,6 +141,7 @@ export default function FormPengaduan() {
 							className="rounded-full form-control"
 							aria-label="Default select example"
 							onChange={(e) => setPlatform(e.target.value)}
+							value={platform}
 						>
 							{data &&
 								data.dropdown.map((option, i) => (

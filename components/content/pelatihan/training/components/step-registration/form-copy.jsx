@@ -78,7 +78,7 @@ const FormCopy = ({
             style={{ borderRadius: "30px", fontWeight: "600" }}
             onClick={showPreviewHandler}
           >
-            Review
+            Preview
           </button>
         </div>
       </div>
