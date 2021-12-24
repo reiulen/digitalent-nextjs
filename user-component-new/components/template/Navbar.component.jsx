@@ -428,7 +428,7 @@ const Navigationbar = ({ session }) => {
 				</Col>
 				{showSearch && (
 					<Form
-						className="w-100 my-2 mx-1 row "
+						className="w-100 my-2 mx-1 row d-block d-lg-none"
 						onSubmit={(e) => {
 							e.preventDefault();
 							if (search != "") {
