@@ -32,7 +32,7 @@ export default function PenyelenggaraPelatihan(props) {
 
   return (
     <div style={{ backgroundColor: "white" }}>
-      <Layout title="Penyelenggara" session={session}>
+      <Layout title="Mitra Pelatihan" session={session}>
         <Penyelenggara session={session} />
       </Layout>
     </div>
@@ -51,7 +51,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       return {
         props: {
-          title: "Penyelenggara",
+          title: "Mitra Pelatihan",
           data: "auth",
           session,
         },

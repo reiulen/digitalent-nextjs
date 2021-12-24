@@ -392,7 +392,7 @@ const StepThree = ({ token, tokenPermission }) => {
 
                   {simpleValidator.current.message(
                     "status",
-                    status,
+                    status === 0,
                     "required",
                     { className: "text-danger" }
                   )}

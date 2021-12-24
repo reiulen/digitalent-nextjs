@@ -85,8 +85,10 @@ const EditSoalSubstansi = ({ token, tokenPermission }) => {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_DETAIL_RESET,
       });
+
+      // router.back();
       router.push({
-        pathname: `/subvit/substansi`,
+        pathname: `/subvit/substansi/${localStorage.getItem("id_substansi")}`,
         query: { success: true },
       });
     }

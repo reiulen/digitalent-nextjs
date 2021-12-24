@@ -31,14 +31,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, query }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
 
       const permission = req.cookies.token_permission;
 

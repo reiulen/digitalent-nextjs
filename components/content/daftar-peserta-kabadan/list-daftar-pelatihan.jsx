@@ -111,7 +111,8 @@ const ListDaftarPelatihan = ({ token }) => {
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     setPage(1);
     dispatch(
       getAllSummary(
@@ -289,20 +290,22 @@ const ListDaftarPelatihan = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6 col-md-6">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={e => handleSearch(e)}
                     >
                       Cari
                     </button>

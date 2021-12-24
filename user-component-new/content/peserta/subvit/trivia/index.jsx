@@ -95,9 +95,9 @@ const SubtansiUser = ({ token }) => {
   });
 
   const [times, setTimes] = useState(
-    tt[parseInt(router.query.id) - 1] > 1
-      ? tt[parseInt(router.query.id) - 1]
-      : 3000
+    tt[parseInt(router.query.id) - 1] <= 0
+      ? 3000
+      : tt[parseInt(router.query.id) - 1]
   );
 
   const [modalDone, setModalDone] = useState(false);
@@ -156,16 +156,22 @@ const SubtansiUser = ({ token }) => {
   }, [count, router, error, dispatch, token]);
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get(
         process.env.END_POINT_API_SUBVIT +
-          `api/trivia-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`
+          `api/trivia-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`,
+        config
       )
       .then((res) => {
         setQuestion(res.data.total_questions);
         setTime(res.data.duration);
       });
-  }, [routerTraining, routerTema]);
+  }, [routerTraining, routerTema, token]);
 
   useEffect(() => {
     setData(random_trivia);
@@ -437,7 +443,11 @@ const SubtansiUser = ({ token }) => {
                   (data &&
                     data.list_questions &&
                     data.list_questions[parseInt(router.query.id) - 1].type ===
-                      "fill_in_the_blank") ? (
+                      "fill_in_the_blank") ||
+                  (data &&
+                    data.list_questions &&
+                    data.list_questions[parseInt(router.query.id) - 1]
+                      .duration === 1000) ? (
                     <p className={styles.totalSoal2} id="time2">
                       {hour2 < 9 ? "0" + hour2 : hour2}:
                       {minute2 < 9 ? "0" + minute2 : minute2}:

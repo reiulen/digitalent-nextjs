@@ -77,7 +77,8 @@ const DaftarPesertaPelatihan = ({ token }) => {
     return result.join(" ");
   }
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     setPage(1);
     dispatch(getPendaftaranPeserta(token, id, search, limit, 1));
   };
@@ -139,20 +140,22 @@ const DaftarPesertaPelatihan = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6 col-md-6">
                   <div className="position-relative overflow-hidden mt-3">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -234,24 +237,44 @@ const DaftarPesertaPelatihan = ({ token }) => {
                               </p>
                             </td>
                             <td>
-                              <span className="label label-inline label-light-success font-weight-bold">
+                              <span
+                                className={
+                                  (row.administrasi === "unverified" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.administrasi === "verified" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                                  (row.administrasi === "incomplete" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize")
+                                }
+                              >
                                 {capitalize(row.administrasi)}
                               </span>
                             </td>
                             <td>
-                              <span className={
-																row.status === "tidak lulus administrasi" && "label label-inline statusPeserta-danger font-weight-bold" ||
-																row.status === "tidak lulus tes substansi" && "label label-inline statusPeserta-danger font-weight-bold" ||
-																row.status === "tidak lulus pelatihan" && "label label-inline statusPeserta-danger font-weight-bold" ||
-																row.status === "ditolak" && "label label-inline statusPeserta-danger font-weight-bold" ||
-																row.status === "seleksi administrasi" && "label label-inline select-pelatihan-warning font-weight-bold" ||
-																row.status === "tes substansi" && "label label-inline select-pelatihan-warning font-weight-bold" ||
-																row.status === "seleksi akhir" && "label label-inline select-pelatihan-warning font-weight-bold" ||
-																row.status === "administrasi akhir" && "label label-inline select-pelatihan-warning font-weight-bold" ||
-																row.status === "diterima" && "label label-inline statusPeserta-success font-weight-bold" ||
-																row.status === "lulus pelatihan" && "label label-inline statusPeserta-success font-weight-bold" ||
-																row.status === "pelatihan" && "label label-inline select-pelatihan-primary font-weight-bold"
-															}>
+                              <span
+                                className={
+                                  (row.status === "tidak lulus administrasi" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "tidak lulus tes substansi" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "tidak lulus pelatihan" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "ditolak" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "seleksi administrasi" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "tes substansi" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "seleksi akhir" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "administrasi akhir" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "diterima" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                                  (row.status === "lulus pelatihan" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize")
+                                }
+                              >
                                 {capitalize(row.status)}
                               </span>
                             </td>

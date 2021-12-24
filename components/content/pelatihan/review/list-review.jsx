@@ -711,16 +711,6 @@ const ListReview = ({ token }) => {
               }
             />
           </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Pelatihan</label>
-            <Select
-              options={optionsStatusPelatihan}
-              defaultValue={statusPelatihan}
-              onChange={(e) =>
-                setStatusPelatihan({ value: e.value, label: e.label })
-              }
-            />
-          </div>
           <div className="row">
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pendaftaran</label>

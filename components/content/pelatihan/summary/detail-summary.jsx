@@ -402,6 +402,7 @@ const DetailSummary = ({ token }) => {
 											placeholder="Ketik disini untuk Pencarian..."
 											onChange={(e) => setSearch(e.target.value)}
 										/>
+										</form>
 										<button
 											className="btn bg-blue-primary text-white right-center-absolute"
 											style={{
@@ -412,7 +413,6 @@ const DetailSummary = ({ token }) => {
 										>
 											Cari
 										</button>
-										</form>
 									</div>
 								</div>
 
@@ -551,7 +551,9 @@ const DetailSummary = ({ token }) => {
 															</p>
 														</td>
 														<td>
-															<span className="label label-inline label-light-success font-weight-bold">
+															<span className={row.administrasi === "unverified" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+																row.administrasi === "verified" && "label label-inline statusPeserta-success font-weight-bold" ||
+																row.administrasi === "incomplete" && "label label-inline statusPeserta-danger font-weight-bold"}>
 																{capitalize(row.administrasi)}
 															</span>
 														</td>
