@@ -286,11 +286,6 @@ export const updateSubtanceQuestionDetail =
           Permission: tokenPermission,
         },
       };
-<<<<<<< HEAD
-
-=======
-      // console.log(dataBankSoal);
->>>>>>> 4325f12999f2525c84277645941cd911217e146f
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT +
           `api/subtance-question-bank-details/${id}`,
