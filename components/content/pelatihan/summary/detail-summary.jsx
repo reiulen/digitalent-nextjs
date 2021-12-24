@@ -568,7 +568,8 @@ const DetailSummary = ({ token }) => {
 																row.status === "seleksi akhir" && "label label-inline select-pelatihan-warning font-weight-bold" ||
 																row.status === "administrasi akhir" && "label label-inline select-pelatihan-warning font-weight-bold" ||
 																row.status === "diterima" && "label label-inline statusPeserta-success font-weight-bold" ||
-																row.status === "lulus pelatihan" && "label label-inline statusPeserta-success font-weight-bold"
+																row.status === "lulus pelatihan" && "label label-inline statusPeserta-success font-weight-bold" ||
+																row.status === "pelatihan" && "label label-inline select-pelatihan-primary font-weight-bold"
 															}>
 																{capitalize(row.status)}
 															</span>

@@ -313,7 +313,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         {
-                                            role_permission.permissions.includes("publikasi.pengaturan.manage") || role_permission.roles.includes("Super Admin") ?
+                                            role_permission?.permissions.includes("publikasi.pengaturan.manage") || role_permission?.roles.includes("Super Admin") ?
                                                 <button
                                                     className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                                     onClick={(e) => submitSlider(e)}
