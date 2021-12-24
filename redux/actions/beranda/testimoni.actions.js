@@ -1,30 +1,31 @@
 import {
-    BERANDA_ARTIKEL_REQUEST,
-    BERANDA_ARTIKEL_SUCCESS,
-    BERANDA_ARTIKEL_FAIL,
+    BERANDA_TESTIMONI_REQUEST,
+    BERANDA_TESTIMONI_SUCCESS,
+    BERANDA_TESTIMONI_FAIL,
 
-    DETAIL_BERANDA_ARTIKEL_REQUEST,
-    DETAIL_BERANDA_ARTIKEL_SUCCESS,
-    DETAIL_BERANDA_ARTIKEL_FAIL,
+    DETAIL_BERANDA_TESTIMONI_REQUEST,
+    DETAIL_BERANDA_TESTIMONI_SUCCESS,
+    DETAIL_BERANDA_TESTIMONI_FAIL,
 
-    KATEGORI_BERANDA_ARTIKEL_REQUEST,
-    KATEGORI_BERANDA_ARTIKEL_SUCCESS,
-    KATEGORI_BERANDA_ARTIKEL_FAIL,
+    KATEGORI_BERANDA_TESTIMONI_REQUEST,
+    KATEGORI_BERANDA_TESTIMONI_SUCCESS,
+    KATEGORI_BERANDA_TESTIMONI_FAIL,
 
-    TAG_BERANDA_ARTIKEL_REQUEST,
-    TAG_BERANDA_ARTIKEL_SUCCESS,
-    TAG_BERANDA_ARTIKEL_FAIL,
+    TAG_BERANDA_TESTIMONI_REQUEST,
+    TAG_BERANDA_TESTIMONI_SUCCESS,
+    TAG_BERANDA_TESTIMONI_FAIL,
 
+    CEK_LULUS_PELATIHAN_REQUEST,
     CEK_LULUS_PELATIHAN,
     CEK_LULUS_FAIL,
 
     CLEAR_ERRORS,
-} from "../../types/beranda/artikel.type"
+} from "../../types/beranda/testimoni.type"
 
 import axios from "axios";
 
 // Get all data
-export const getAllBerandaArtikel =
+export const getAllBerandaTestimoni =
     (
         page = 1,
         keyword = "",
@@ -38,9 +39,9 @@ export const getAllBerandaArtikel =
     ) =>
         async dispatch => {
             try {
-                dispatch({ type: BERANDA_ARTIKEL_REQUEST })
+                dispatch({ type: BERANDA_TESTIMONI_REQUEST })
 
-                let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}&role=1`
+                let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}&role=0`
                 if (keyword) link = link.concat(`&keyword=${keyword}`);
                 if (limit) link = link.concat(`&limit=${limit}`);
                 if (filterPublish) link = link.concat(`&filterPublish=${filterPublish}`);
@@ -53,32 +54,32 @@ export const getAllBerandaArtikel =
                 const { data } = await axios.get(link);
 
                 dispatch({
-                    type: BERANDA_ARTIKEL_SUCCESS,
+                    type: BERANDA_TESTIMONI_SUCCESS,
                     payload: data,
                 })
 
             } catch (error) {
                 dispatch({
-                    type: BERANDA_ARTIKEL_FAIL,
+                    type: BERANDA_TESTIMONI_FAIL,
                     payload: error.response.data.message,
                 });
             }
         }
 
-export const getDetailBerandaArtikel = (id) => async dispatch => {
+export const getDetailBerandaTestimoni = (id) => async dispatch => {
     try {
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel/${id}`
 
         const { data } = await axios.get(link)
 
         dispatch({
-            type: DETAIL_BERANDA_ARTIKEL_SUCCESS,
+            type: DETAIL_BERANDA_TESTIMONI_SUCCESS,
             payload: data.data
         })
 
     } catch (error) {
         dispatch({
-            type: DETAIL_BERANDA_ARTIKEL_FAIL,
+            type: DETAIL_BERANDA_TESTIMONI_FAIL,
             payload: error.response.data.message
         })
     }
@@ -109,45 +110,45 @@ export const cekLulus = (token) => async (dispatch) => {
     }
 }
 
-export const getKategoriBerandaArtikel = () => async dispatch => {
+export const getKategoriBerandaTestimoni = () => async dispatch => {
     try {
-        dispatch({ type: KATEGORI_BERANDA_ARTIKEL_REQUEST })
+        dispatch({ type: KATEGORI_BERANDA_TESTIMONI_REQUEST })
 
         // let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Artikel&type=home&role=1`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Artikel&type=home&role=0`
 
         const { data } = await axios.get(link)
 
         dispatch({
-            type: KATEGORI_BERANDA_ARTIKEL_SUCCESS,
+            type: KATEGORI_BERANDA_TESTIMONI_SUCCESS,
             payload: data,
         })
 
     } catch (error) {
         dispatch({
-            type: KATEGORI_BERANDA_ARTIKEL_FAIL,
+            type: KATEGORI_BERANDA_TESTIMONI_FAIL,
             payload: error.response.data.message,
         });
     }
 }
 
-export const getTagBerandaArtikel = () => async dispatch => {
+export const getTagBerandaTestimoni = () => async dispatch => {
     try {
 
-        dispatch({ type: TAG_BERANDA_ARTIKEL_REQUEST })
+        dispatch({ type: TAG_BERANDA_TESTIMONI_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel&role=1`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel&role=0`
 
         const { data } = await axios.get(link)
 
         dispatch({
-            type: TAG_BERANDA_ARTIKEL_SUCCESS,
+            type: TAG_BERANDA_TESTIMONI_SUCCESS,
             payload: data,
         })
 
     } catch (error) {
         dispatch({
-            type: TAG_BERANDA_ARTIKEL_FAIL,
+            type: TAG_BERANDA_TESTIMONI_FAIL,
             payload: error.response.data.message,
         });
     }
