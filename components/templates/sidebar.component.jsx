@@ -81,57 +81,49 @@ const Sidebar = ({ session }) => {
   );
 
   useEffect(() => {
-
     let pathRoute = router.route;
-    const replacedPath = pathRoute.substring(0, 0) + "" + pathRoute.substring(0 + 1);
-    const arrPath = replacedPath.split('/');
-    
+    const replacedPath =
+      pathRoute.substring(0, 0) + "" + pathRoute.substring(0 + 1);
+    const arrPath = replacedPath.split("/");
+
     if (menu) {
-
       menu.map((row, index) => {
-
         const named = row.href;
-        const replacedIndexOne = named.substring(0, 0) + "" + named.substring(0 + 1);
-        const arrNamed = replacedIndexOne.split('/');
-        
-        if(arrNamed[0] === arrPath[0]){
+        const replacedIndexOne =
+          named.substring(0, 0) + "" + named.substring(0 + 1);
+        const arrNamed = replacedIndexOne.split("/");
 
+        if (arrNamed[0] === arrPath[0]) {
           row.selected = true;
 
-          if(session?.user?.user?.data?.user?.roles[0] !== "mitra") {
-              if(arrPath.length > 1){
-                row.child.map((rows, indexx) => {
+          if (session?.user?.user?.data?.user?.roles[0] !== "mitra") {
+            if (arrPath.length > 1) {
+              row.child.map((rows, indexx) => {
+                const named = rows.href;
+                const replacedIndexOne =
+                  named.substring(0, 0) + "" + named.substring(0 + 1);
+                const arrNamed = replacedIndexOne.split("/");
 
-                  const named = rows.href;
-                  const replacedIndexOne = named.substring(0, 0) + "" + named.substring(0 + 1);
-                  const arrNamed = replacedIndexOne.split('/');
+                if (arrNamed[1] === arrPath[1]) {
+                  rows.selected = true;
 
-                    if(arrNamed[1] === arrPath[1]){
+                  if (rows.child.length > 0 && arrPath.length > 2) {
+                    rows.child.map((rowss, indexx) => {
+                      const named = rowss.href;
+                      const replacedIndexOne =
+                        named.substring(0, 0) + "" + named.substring(0 + 1);
+                      const arrNamed = replacedIndexOne.split("/");
 
-                      rows.selected = true;
-                      
-                      if(rows.child.length > 0 && arrPath.length > 2){
-
-                        
-                        rows.child.map((rowss, indexx) => {
-
-                          const named = rowss.href;
-                          const replacedIndexOne = named.substring(0, 0) + "" + named.substring(0 + 1);
-                          const arrNamed = replacedIndexOne.split('/');
-
-                          if(arrNamed[2] === arrPath[2]){
-                            rowss.selected = true;
-                          }
-                        })
+                      if (arrNamed[2] === arrPath[2]) {
+                        rowss.selected = true;
                       }
-
-                    }
-                });
-              }
-                
+                    });
+                  }
+                }
+              });
+            }
           }
         }
-      
       });
     }
     if (menu) {
@@ -141,15 +133,12 @@ const Sidebar = ({ session }) => {
   }, []);
 
   useEffect(() => {
-
     if (!JSON.parse(localStorage.getItem("sidebar")) && session) {
-
       const config = {
         headers: {
           Authorization: "Bearer " + session.user.user.data.token,
         },
       };
-
 
       if (!session?.user?.user?.data?.user?.mitra_profile) {
         axios
@@ -182,7 +171,6 @@ const Sidebar = ({ session }) => {
     if (!menu) {
       setMenu(JSON.parse(localStorage.getItem("sidebar")));
     }
-
   }, [session]);
 
   const handleOpenMenu = (e, i, condition) => {
@@ -205,30 +193,31 @@ const Sidebar = ({ session }) => {
     setMenu(_temp);
   };
 
-  const handleActiveSubmenu = (e, iMenu, iSubMenu, status, condition, iSubSubMenu) => {
+  const handleActiveSubmenu = (
+    e,
+    iMenu,
+    iSubMenu,
+    status,
+    condition,
+    iSubSubMenu
+  ) => {
+    let _temp = [...JSON.parse(localStorage.getItem("sidebar"))];
 
-    let _temp = [
-      ...JSON.parse(localStorage.getItem("sidebar"))
-    ];
-
-    if(status === "parent"){
-
+    if (status === "parent") {
       _temp[iMenu].selected = true;
-      if(iSubSubMenu === null){
+      if (iSubSubMenu === null) {
         _temp[iMenu].child[iSubMenu].selected = !condition;
-      }else{
-        _temp[iMenu].child[iSubMenu].selected =  true;
+      } else {
+        _temp[iMenu].child[iSubMenu].selected = true;
         _temp[iMenu].child[iSubMenu].child[iSubSubMenu].selected = !condition;
       }
-      
-    }else{
+    } else {
       _temp[iMenu].selected = true;
-      _temp[iMenu].child[iSubMenu].selected = !_temp[iMenu].child[iSubMenu].selected;
+      _temp[iMenu].child[iSubMenu].selected =
+        !_temp[iMenu].child[iSubMenu].selected;
     }
- 
-    setMenu(
-      _temp
-    );
+
+    setMenu(_temp);
     e.stopPropagation();
   };
 
@@ -240,7 +229,8 @@ const Sidebar = ({ session }) => {
           : ""
       } `}
       id="kt_aside"
-      style={{ overflow: "scroll" }}>
+      style={{ overflow: "scroll" }}
+    >
       <div className="brand flex-column-auto" id="kt_brand">
         <a className="brand-logo">
           <Image
@@ -254,12 +244,14 @@ const Sidebar = ({ session }) => {
       <div
         className="aside-menu-wrapper flex-column-fluid"
         id="kt_aside_menu_wrapper"
-        style={{ zIndex: "999999999" }}>
+        style={{ zIndex: "999999999" }}
+      >
         <div
           id="kt_aside_menu"
           className="aside-menu my-4"
           data-menu-vertical="1"
-          data-menu-scroll="1">
+          data-menu-scroll="1"
+        >
           {!session ? (
             ""
           ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
@@ -271,7 +263,8 @@ const Sidebar = ({ session }) => {
                 }`}
                 onClick={() => activeMenuPartnershipMitra()}
                 aria-haspopup="true"
-                data-menu-toggle="hover">
+                data-menu-toggle="hover"
+              >
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
                   <ul className="menu-subnav">
@@ -334,7 +327,8 @@ const Sidebar = ({ session }) => {
                       id="main-menu"
                       onClick={(e) => {
                         handleOpenMenu(e, index, items.selected);
-                      }}>
+                      }}
+                    >
                       <a className="menu-link menu-toggle">
                         <span className="svg-icon menu-icon d-flex align-items-center">
                           <Image
@@ -361,7 +355,14 @@ const Sidebar = ({ session }) => {
                                   }`}
                                   aria-haspopup="true"
                                   onClick={(e) =>
-                                    handleActiveSubmenu(e, index, i, "single",  null , null)
+                                    handleActiveSubmenu(
+                                      e,
+                                      index,
+                                      i,
+                                      "single",
+                                      null,
+                                      null
+                                    )
                                   }
                                 >
                                   <Link href={item.href} passHref>
@@ -384,11 +385,20 @@ const Sidebar = ({ session }) => {
                                   data-menu-toggle="hover"
                                   id="sub-menu"
                                   onClick={(e) =>
-                                    handleActiveSubmenu(e, index, i, "parent", item.selected , null)
-                                  }>
+                                    handleActiveSubmenu(
+                                      e,
+                                      index,
+                                      i,
+                                      "parent",
+                                      item.selected,
+                                      null
+                                    )
+                                  }
+                                >
                                   <a
                                     className="menu-link menu-toggle"
-                                    style={{ paddingLeft: "5.5rem" }}>
+                                    style={{ paddingLeft: "5.5rem" }}
+                                  >
                                     <span className="menu-text">
                                       {item.name}
                                     </span>
@@ -398,14 +408,15 @@ const Sidebar = ({ session }) => {
                                     <i className="menu-arrow"></i>
                                     <ul className="menu-subnav">
                                       {item?.child?.map((child2, idx) => {
-
                                         return (
                                           <li
                                             className={`menu-item menu-item-submenu ${
-                                              child2.selected ? "menu-item-open" : ""
+                                              child2.selected
+                                                ? "menu-item-open"
+                                                : ""
                                             }`}
                                             aria-haspopup="true"
-                                            onClick={(e) =>
+                                            onClick={(e) => {
                                               handleActiveSubmenu(
                                                 e,
                                                 index,
@@ -413,8 +424,8 @@ const Sidebar = ({ session }) => {
                                                 "parent",
                                                 child2.selected,
                                                 idx
-                                              )
-                                            }
+                                              );
+                                            }}
                                             key={idx}
                                           >
                                             <Link href={child2.href} passHref>
@@ -458,11 +469,11 @@ const Sidebar = ({ session }) => {
             onClick={() => activeProfileAndOverlay()}
           />
         )}
-        <ul className="menu-nav" style={{listStyleType: "none"}}>
-            <li className="menu-text text-white">
-              DTS Version: {process.env.VERSION_APP}
-            </li>
-        </ul>
+      <ul className="menu-nav" style={{ listStyleType: "none" }}>
+        <li className="menu-text text-white">
+          DTS Version: {process.env.VERSION_APP}
+        </li>
+      </ul>
     </div>
   );
 };

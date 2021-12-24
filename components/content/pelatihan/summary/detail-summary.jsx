@@ -99,7 +99,8 @@ const DetailSummary = ({ token }) => {
 		return result.join(" ");
 	}
 
-	const handleSearch = () => {
+	const handleSearch = (e) => {
+		e.preventDefault()
 		setPage(1);
 		dispatch(
 			getPendaftaranPeserta(
@@ -392,6 +393,8 @@ const DetailSummary = ({ token }) => {
 							<div className="row align-items-center">
 								<div className="col-lg-4 col-xl-4">
 									<div className="position-relative overflow-hidden mt-3">
+										<form onSubmit={e => handleSearch(e)}>
+
 										<i className="ri-search-line left-center-absolute ml-2"></i>
 										<input
 											type="text"
@@ -405,10 +408,11 @@ const DetailSummary = ({ token }) => {
 												borderTopLeftRadius: "0",
 												borderBottomLeftRadius: "0",
 											}}
-											onClick={handleSearch}
+											onClick={e => handleSearch(e)}
 										>
 											Cari
 										</button>
+										</form>
 									</div>
 								</div>
 
