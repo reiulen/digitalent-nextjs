@@ -22,6 +22,7 @@ const firebaseCloudMessaging = {
       const messaging = getMessaging();
       getToken(messaging, { vapidKey: process.env.FB_FCM_KEY_PAIR })
         .then((currentToken) => {
+          console.log("masuk sini", currentToken);
           if (currentToken) {
             return currentToken;
           } else {

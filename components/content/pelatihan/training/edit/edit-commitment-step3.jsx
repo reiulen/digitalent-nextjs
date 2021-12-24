@@ -129,7 +129,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
                 <label className="col-form-label font-weight-bold">
                   Input Deskripsi
                 </label>
-                <div className="ckeditor">
+                {/* <div className="ckeditor">
                   {editorLoaded ? (
                     <CKEditor
                       editor={ClassicEditor}
@@ -148,13 +148,22 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
                   ) : (
                     <p>Tunggu Sebentar</p>
                   )}
-                  {simpleValidator.current.message(
-                    "deskripsi",
-                    description,
-                    "required",
-                    { className: "text-danger" }
-                  )}
-                </div>
+                </div> */}
+                <textarea
+                  className="form-control"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("deskripsi")
+                  }
+                  rows="10"
+                />
+                {simpleValidator.current.message(
+                  "deskripsi",
+                  description,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
             )}
             <div className="form-group">

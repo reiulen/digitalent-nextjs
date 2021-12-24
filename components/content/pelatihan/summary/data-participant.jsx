@@ -102,6 +102,7 @@ const DataParticipant = ({ token }) => {
     { value: "tes substansi", label: "Tes Substansi" },
     { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
     { value: "seleksi akhir", label: "Seleksi Akhir" },
+
     { value: "ditolak", label: "Ditolak" },
     { value: "diterima", label: "Diterima" },
     { value: "pelatihan", label: "Pelatihan" },
@@ -169,6 +170,26 @@ const DataParticipant = ({ token }) => {
         { value: "administrasi akhir", label: "Administrasi Akhir" },
         { value: "lulus pelatihan", label: "Lulus Pelatihan" },
         { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
+      ];
+      break;
+    case "seleksi administrasi":
+    case "tidak lulus administrasi":
+    case "tes substansi":
+    case "tidak lulus tes substansi":
+      optionsPeserta = [
+        { value: "seleksi administrasi", label: "Seleksi Administrasi" },
+        {
+          value: "tidak lulus administrasi",
+          label: "Tidak Lulus Administrasi",
+        },
+        { value: "tes substansi", label: "Tes Substansi" },
+        {
+          value: "tidak lulus tes substansi",
+          label: "Tidak Lulus Tes Substansi",
+        },
+        { value: "seleksi akhir", label: "Seleksi Akhir" },
+        { value: "diterima", label: "Diterima" },
+        { value: "ditolak", label: "Ditolak" },
       ];
       break;
     case "tidak lulus pelatihan":
@@ -461,16 +482,16 @@ const DataParticipant = ({ token }) => {
                       onChange={(e) =>
                         setStatusPeserta({ label: e.label, value: e.value })
                       }
-                      isDisabled={
-                        peserta.list[0].status === "tes substansi" ||
-                        peserta.list[0].status ===
-                          "tidak lulus tes substansi" ||
-                        peserta.list[0].status === "seleksi administrasi" ||
-                        peserta.list[0].status === "tidak lulus administrasi" ||
-                        peserta.list[0].status === "tes substansi"
-                          ? true
-                          : false
-                      }
+                      // isDisabled={
+                      //   peserta.list[0].status === "tes substansi" ||
+                      //   peserta.list[0].status ===
+                      //     "tidak lulus tes substansi" ||
+                      //   peserta.list[0].status === "seleksi administrasi" ||
+                      //   peserta.list[0].status === "tidak lulus administrasi" ||
+                      //   peserta.list[0].status === "tes substansi"
+                      //     ? true
+                      //     : false
+                      // }
                     />
                   </div>
                 </div>
@@ -521,14 +542,14 @@ const DataParticipant = ({ token }) => {
                       onChange={(e) =>
                         setStatusPeserta({ label: e.label, value: e.value })
                       }
-                      isDisabled={
-                        peserta.list[0].status === "seleksi administrasi" ||
-                        peserta.list[0].status === "tidak lulus administrasi" ||
-                        peserta.list[0].status === "tes substansi" ||
-                        peserta.list[0].status === "tidak lulus tes substansi"
-                          ? true
-                          : false
-                      }
+                      // isDisabled={
+                      //   peserta.list[0].status === "seleksi administrasi" ||
+                      //   peserta.list[0].status === "tidak lulus administrasi" ||
+                      //   peserta.list[0].status === "tes substansi" ||
+                      //   peserta.list[0].status === "tidak lulus tes substansi"
+                      //     ? true
+                      //     : false
+                      // }
                     />
                   </div>
                 </div>

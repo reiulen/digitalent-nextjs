@@ -11,6 +11,7 @@ import {
   clearErrors,
   getDataAsalSekolah,
   getDataRefPekerjaan,
+  updateWizzardStatus,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 import router from "next/router";
@@ -36,9 +37,15 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     useSelector((state) => state.drowpdownStatusPekerjaan);
   const {
     error: errorUpdateData,
-    loading,
-    success,
+    loading: loadingUpdateData,
+    success: successUpdateData,
   } = useSelector((state) => state.updatePekerjaan);
+
+  const {
+		error: errorStatusWizzard,
+		loading: loadingStatusWizzard,
+		success: successStatusWizard,
+	} = useSelector((state) => state.updateStatusWizzard);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -97,7 +104,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
       dispatch(clearErrors());
     }
 
-    if (success) {
+    if (successUpdateData) {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
       if (wizzard) {
         router.push("/peserta");
@@ -107,7 +114,21 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorUpdateData, success, dispatch, funcViewEdit, token]);
+  }, [errorUpdateData, successUpdateData, dispatch, funcViewEdit, token]);
+
+  const stepBack = async () => {
+    let status = 3
+
+    const data = await dispatch (updateWizzardStatus(status, token))
+
+    if (data?.status === true){
+      router.push("/peserta/wizzard/pendidikan");
+
+    } else {
+      SweatAlert("Gagal", errorStatusWizzard, "error");
+			dispatch(clearErrors());
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -129,7 +150,6 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
       simpleValidator.current.fields["sekolah"] = true; //pelajar
       simpleValidator.current.fields["sekolah lainnya"] = true;
     }
-
     if (simpleValidator.current.allValid()) {
       let data = {};
       if (
@@ -290,7 +310,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
             />
             {simpleValidator.current.message(
               "status pekerjaan",
-              statusPekerjaan,
+              statusPekerjaan && statusPekerjaan?.label,
               "required",
               {
                 className: "text-danger",
@@ -512,8 +532,17 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
         ) : (
           <div className="button-aksi mt-5 float-right">
             <Button
+							className={`${style.button_profile_batal} rounded-xl mr-2`}
+							type="button"
+							onClick={() => stepBack()}
+							disabled={loadingStatusWizzard ? true : false}
+						>
+							Kembali
+						</Button>
+            <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
+              disabled = {loadingUpdateData ? true : false}
             >
               Simpan
             </Button>

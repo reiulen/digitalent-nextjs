@@ -152,7 +152,7 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <div className="row w-100 ml-0 ml-sm-0">
+                  <div className="row w-100">
                     <div className="col-12 col-xl-4">
                       <div className="position-relative overflow-hidden w-100">
                         <form onSubmit={e => handleSearch(e)}>

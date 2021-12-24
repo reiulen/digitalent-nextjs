@@ -133,7 +133,8 @@ const ListSummary = ({ token }) => {
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     setPage(1);
     dispatch(
       getAllSummary(
@@ -341,23 +342,25 @@ const ListSummary = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={e => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
 
@@ -447,24 +450,35 @@ const ListSummary = ({ token }) => {
                               <p className="my-0">
                                 {moment(row.pendaftaran_mulai)
                                   .utc()
-                                  .format("DD MMMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
                                 {moment(row.pendaftaran_selesai)
                                   .utc()
-                                  .format("DD MMMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                               <p className="my-0">
                                 {moment(row.pelatihan_mulai)
                                   .utc()
-                                  .format("DD MMMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
                                 {moment(row.pelatihan_selesai)
                                   .utc()
-                                  .format("DD MMMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                             </td>
                             <td className="align-middle">
-                              <span className="label label-inline label-light-success font-weight-bold">
+                              <span
+                                className={
+                                  (row.status_pelatihan === "selesai" &&
+                                    "select-pelatihan select-pelatihan-success font-weight-bold") ||
+                                  (row.status_pelatihan === "pendaftaran" &&
+                                    "select-pelatihan select-pelatihan-primary font-weight-bold") ||
+                                  (row.status_pelatihan === "seleksi" &&
+                                    "select-pelatihan select-pelatihan-warning font-weight-bold") ||
+                                  (row.status_pelatihan === "pelatihan" &&
+                                    "select-pelatihan select-pelatihan-primary font-weight-bold")
+                                }
+                              >
                                 {row.status_pelatihan}
                               </span>
                             </td>

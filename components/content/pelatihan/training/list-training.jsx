@@ -319,7 +319,8 @@ const ListTraining = ({ token }) => {
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     setPage(1);
     dispatch(
       getAllTraining(
@@ -706,43 +707,7 @@ const ListTraining = ({ token }) => {
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
           <CardPage
-            background="bg-primary"
-            icon="new/add-user.svg"
-            color="#FFFFFF"
-            value={cardTraining[0].count}
-            titleValue=""
-            title="Selesai"
-            publishedVal={cardTraining[0].status}
-            routePublish={() =>
-              handlePublish(cardTraining[0].status, cardTraining[0].condisi)
-            }
-          />
-          <CardPage
-            background="bg-secondary"
-            icon="new/done-circle.svg"
-            color="#FFFFFF"
-            value={cardTraining[4].count}
-            titleValue=""
-            title="Disetujui"
-            publishedVal={cardTraining[4].status}
-            routePublish={() =>
-              handlePublish(cardTraining[4].status, cardTraining[4].condisi)
-            }
-          />
-          <CardPage
-            background="bg-success"
-            icon="new/open-book.svg"
-            color="#FFFFFF"
-            value={cardTraining[3].count}
-            titleValue=""
-            title="Revisi"
-            publishedVal={cardTraining[3].status}
-            routePublish={() =>
-              handlePublish(cardTraining[3].status, cardTraining[3].condisi)
-            }
-          />
-          <CardPage
-            background="bg-warning"
+            background="cardMenunggu"
             icon="new/mail-white.svg"
             color="#FFFFFF"
             value={cardTraining[1].count}
@@ -754,7 +719,31 @@ const ListTraining = ({ token }) => {
             }
           />
           <CardPage
-            background="bg-extras"
+            background="cardRevisi"
+            icon="new/open-book.svg"
+            color="#FFFFFF"
+            value={cardTraining[3].count}
+            titleValue=""
+            title="Revisi"
+            publishedVal={cardTraining[3].status}
+            routePublish={() =>
+              handlePublish(cardTraining[3].status, cardTraining[3].condisi)
+            }
+          />
+          <CardPage
+            background="cardSetuju"
+            icon="new/done-circle.svg"
+            color="#FFFFFF"
+            value={cardTraining[4].count}
+            titleValue=""
+            title="Disetujui"
+            publishedVal={cardTraining[4].status}
+            routePublish={() =>
+              handlePublish(cardTraining[4].status, cardTraining[4].condisi)
+            }
+          />
+          <CardPage
+            background="cardBerjalan"
             icon="new/block-white.svg"
             color="#FFFFFF"
             value={cardTraining[2].count}
@@ -763,6 +752,18 @@ const ListTraining = ({ token }) => {
             publishedVal={cardTraining[2].status}
             routePublish={() =>
               handlePublish(cardTraining[2].status, cardTraining[2].condisi)
+            }
+          />
+          <CardPage
+            background="cardSelesai"
+            icon="new/add-user.svg"
+            color="#FFFFFF"
+            value={cardTraining[0].count}
+            titleValue=""
+            title="Selesai"
+            publishedVal={cardTraining[0].status}
+            routePublish={() =>
+              handlePublish(cardTraining[0].status, cardTraining[0].condisi)
             }
           />
         </div>
@@ -797,24 +798,26 @@ const ListTraining = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
                   <div className="position-relative overflow-hidden mb-2 mt-3">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      value={search}
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        value={search}
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={e => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
 
@@ -963,7 +966,24 @@ const ListTraining = ({ token }) => {
                                 <select
                                   name=""
                                   id=""
-                                  className="select-pelatihan select-pelatihan-success"
+                                  className={
+                                    (row.status_pelatihan === "selesai" &&
+                                      "select-pelatihan select-pelatihan-success") ||
+                                    (row.status_pelatihan === "seleksi" &&
+                                      "select-pelatihan select-pelatihan-warning") ||
+                                    (row.status_pelatihan ===
+                                      "menunggu pendaftaran" &&
+                                      "select-pelatihan select-pelatihan-warning") ||
+                                    (row.status_pelatihan ===
+                                      "review substansi" &&
+                                      "select-pelatihan select-pelatihan-primary") ||
+                                    (row.status_pelatihan === "pelatihan" &&
+                                      "select-pelatihan select-pelatihan-primary") ||
+                                    (row.status_pelatihan === "pendaftaran" &&
+                                      "select-pelatihan select-pelatihan-primary") ||
+                                    (row.status_pelatihan === "dibatalkan" &&
+                                      "select-pelatihan select-pelatihan-danger")
+                                  }
                                   key={i}
                                   value={row.status_pelatihan}
                                   onChange={(e) =>
@@ -975,7 +995,6 @@ const ListTraining = ({ token }) => {
                                   disabled={
                                     (row.status_pelatihan ===
                                       "review substansi" ||
-                                      row.status_pelatihan === "selesai" ||
                                       row.status_substansi === "ditolak") &&
                                     true
                                   }
@@ -1017,7 +1036,7 @@ const ListTraining = ({ token }) => {
                                   )}
 
                                   {row.status_pelatihan === "selesai" && (
-                                    <option value="selesai">Selesai</option>
+                                    <option value="pelatihan">Pelatihan</option>
                                   )}
 
                                   <option value="dibatalkan">Dibatalkan</option>

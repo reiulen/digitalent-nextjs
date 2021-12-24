@@ -122,6 +122,8 @@ const DetailArtikel = () => {
       for (let j = 0; j < splitText.length; j++) {
         if (splitWords[i].toLowerCase() === splitText[j].toLowerCase()) {
           result += `<mark>` + splitText[j] + `</mark>` + " ";
+          window.scrollTo (0, 1200)
+          
         } else {
           result += " " + splitText[j] + " ";
         }
