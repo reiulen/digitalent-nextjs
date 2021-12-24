@@ -405,7 +405,9 @@ const Sidebar = ({ session }) => {
                                               child2.selected ? "menu-item-open" : ""
                                             }`}
                                             aria-haspopup="true"
-                                            onClick={(e) =>
+                                            onClick={(e) =>{
+                                              e.preventDefault()
+                                              location.reload();
                                               handleActiveSubmenu(
                                                 e,
                                                 index,
@@ -414,7 +416,7 @@ const Sidebar = ({ session }) => {
                                                 child2.selected,
                                                 idx
                                               )
-                                            }
+                                            }}
                                             key={idx}
                                           >
                                             <Link href={child2.href} passHref>
