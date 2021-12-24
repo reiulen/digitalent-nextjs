@@ -7,7 +7,6 @@ import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
-
 const StepTwo = dynamic(
   () => import("/components/content/subvit/substansi/clone/step-two"),
   {
@@ -33,14 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
+
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {

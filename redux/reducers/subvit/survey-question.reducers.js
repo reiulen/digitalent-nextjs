@@ -1,273 +1,330 @@
 import {
-    SURVEY_QUESTION_BANKS_REQUEST,
-    SURVEY_QUESTION_BANKS_SUCCESS,
-    SURVEY_QUESTION_BANKS_FAIL,
+  SURVEY_QUESTION_BANKS_REQUEST,
+  SURVEY_QUESTION_BANKS_SUCCESS,
+  SURVEY_QUESTION_BANKS_FAIL,
+  NEW_SURVEY_QUESTION_BANKS_REQUEST,
+  NEW_SURVEY_QUESTION_BANKS_SUCCESS,
+  NEW_SURVEY_QUESTION_BANKS_RESET,
+  NEW_SURVEY_QUESTION_BANKS_FAIL,
+  UPDATE_SURVEY_QUESTION_BANKS_REQUEST,
+  UPDATE_SURVEY_QUESTION_BANKS_SUCCESS,
+  UPDATE_SURVEY_QUESTION_BANKS_RESET,
+  UPDATE_SURVEY_QUESTION_BANKS_FAIL,
+  DELETE_SURVEY_QUESTION_BANKS_REQUEST,
+  DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
+  DELETE_SURVEY_QUESTION_BANKS_RESET,
+  DELETE_SURVEY_QUESTION_BANKS_FAIL,
+  DETAIL_SURVEY_QUESTION_BANKS_REQUEST,
+  DETAIL_SURVEY_QUESTION_BANKS_SUCCESS,
+  DETAIL_SURVEY_QUESTION_BANKS_FAIL,
+  DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST,
+  DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS,
+  DETAIL_ONE_SURVEY_QUESTION_BANKS_FAIL,
+  UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
+  UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_SUCCESS,
+  UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET,
+  UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_FAIL,
+  NEW_CLONE_SURVEY_QUESTION_BANKS_REQUEST,
+  NEW_CLONE_SURVEY_QUESTION_BANKS_SUCCESS,
+  NEW_CLONE_SURVEY_QUESTION_BANKS_RESET,
+  NEW_CLONE_SURVEY_QUESTION_BANKS_FAIL,
+  DELETE_CLONE_SURVEY_QUESTION_BANKS_REQUEST,
+  DELETE_CLONE_SURVEY_QUESTION_BANKS_SUCCESS,
+  DELETE_CLONE_SURVEY_QUESTION_BANKS_RESET,
+  DELETE_CLONE_SURVEY_QUESTION_BANKS_FAIL,
+  REPORT_SURVEY_QUESTION_BANKS_REQUEST,
+  REPORT_SURVEY_QUESTION_BANKS_SUCCESS,
+  REPORT_SURVEY_QUESTION_BANKS_FAIL,
+  CLEAR_ERRORS,
+} from "../../types/subvit/survey-question.type";
 
-    NEW_SURVEY_QUESTION_BANKS_REQUEST,
-    NEW_SURVEY_QUESTION_BANKS_SUCCESS,
-    NEW_SURVEY_QUESTION_BANKS_RESET,
-    NEW_SURVEY_QUESTION_BANKS_FAIL,
+export const allSurveyQuestionBanksReducer = (
+  state = { survey: [] },
+  action
+) => {
+  switch (action.type) {
+    case SURVEY_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-    UPDATE_SURVEY_QUESTION_BANKS_REQUEST,
-    UPDATE_SURVEY_QUESTION_BANKS_SUCCESS,
-    UPDATE_SURVEY_QUESTION_BANKS_RESET,
-    UPDATE_SURVEY_QUESTION_BANKS_FAIL,
+    case SURVEY_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        survey: action.payload.data,
+      };
 
-    DELETE_SURVEY_QUESTION_BANKS_REQUEST,
-    DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
-    DELETE_SURVEY_QUESTION_BANKS_RESET,
-    DELETE_SURVEY_QUESTION_BANKS_FAIL,
+    case SURVEY_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-    DETAIL_SURVEY_QUESTION_BANKS_REQUEST,
-    DETAIL_SURVEY_QUESTION_BANKS_SUCCESS,
-    DETAIL_SURVEY_QUESTION_BANKS_FAIL,
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-    DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST,
-    DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS,
-    DETAIL_ONE_SURVEY_QUESTION_BANKS_FAIL,
+    default:
+      return state;
+  }
+};
 
-    UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
-    UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_SUCCESS,
-    UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET,
-    UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_FAIL,
+export const newSurveyQuestionBanksReducer = (
+  state = { survey: {} },
+  action
+) => {
+  switch (action.type) {
+    case NEW_SURVEY_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-    REPORT_SURVEY_QUESTION_BANKS_REQUEST,
-    REPORT_SURVEY_QUESTION_BANKS_SUCCESS,
-    REPORT_SURVEY_QUESTION_BANKS_FAIL,
+    case NEW_SURVEY_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        survey: action.payload.data,
+      };
 
-    CLEAR_ERRORS,
-} from '../../types/subvit/survey-question.type'
+    case NEW_SURVEY_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-export const allSurveyQuestionBanksReducer = (state = { survey: [] }, action) => {
-    switch (action.type) {
-        case SURVEY_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+    case NEW_SURVEY_QUESTION_BANKS_RESET:
+      return {
+        success: false,
+      };
 
-        case SURVEY_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                survey: action.payload.data
-            }
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-        case SURVEY_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    default:
+      return state;
+  }
+};
 
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
+export const detailSurveyQuestionBanksReducer = (
+  state = { survey: {} },
+  action
+) => {
+  switch (action.type) {
+    case DETAIL_SURVEY_QUESTION_BANKS_REQUEST:
+    case DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        default:
-            return state
-    }
-}
+    case DETAIL_SURVEY_QUESTION_BANKS_SUCCESS:
+    case DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        survey: action.payload,
+      };
 
-export const newSurveyQuestionBanksReducer = (state = { survey: {} }, action) => {
-    switch (action.type) {
-        case NEW_SURVEY_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+    case DETAIL_SURVEY_QUESTION_BANKS_FAIL:
+    case DETAIL_ONE_SURVEY_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case NEW_SURVEY_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                success: action.payload.message,
-                survey: action.payload.data
-            }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
 
-        case NEW_SURVEY_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
-
-        case NEW_SURVEY_QUESTION_BANKS_RESET:
-            return {
-                success: false
-            }
-
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
-
-        default:
-            return state
-    }
-}
-
-export const detailSurveyQuestionBanksReducer = (state = { survey: {} }, action) => {
-    switch (action.type) {
-        case DETAIL_SURVEY_QUESTION_BANKS_REQUEST:
-        case DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
-
-        case DETAIL_SURVEY_QUESTION_BANKS_SUCCESS:
-        case DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                survey: action.payload
-            }
-
-        case DETAIL_SURVEY_QUESTION_BANKS_FAIL:
-        case DETAIL_ONE_SURVEY_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
-
-        case CLEAR_ERRORS:
-            return {
-                ...state,
-                error: null
-            }
-
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
 
 export const updateSurveyQuestionReducer = (state = {}, action) => {
-    switch (action.type) {
-        case UPDATE_SURVEY_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+  switch (action.type) {
+    case UPDATE_SURVEY_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case UPDATE_SURVEY_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                isUpdated: action.payload
-            }
+    case UPDATE_SURVEY_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        isUpdated: action.payload,
+      };
 
-        case UPDATE_SURVEY_QUESTION_BANKS_RESET:
-            return {
-                loading: false,
-                isUpdated: false
-            }
+    case UPDATE_SURVEY_QUESTION_BANKS_RESET:
+      return {
+        loading: false,
+        isUpdated: false,
+      };
 
-        case UPDATE_SURVEY_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case UPDATE_SURVEY_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                ...state,
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
 
 export const deleteSurveyQuestionBanksReducer = (state = {}, action) => {
-    switch (action.type) {
-        case DELETE_SURVEY_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+  switch (action.type) {
+    case DELETE_SURVEY_QUESTION_BANKS_REQUEST:
+    case DELETE_CLONE_SURVEY_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case DELETE_SURVEY_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                isDeleted: action.payload
-            }
+    case DELETE_SURVEY_QUESTION_BANKS_SUCCESS:
+    case DELETE_CLONE_SURVEY_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        isDeleted: action.payload,
+      };
 
-        case DELETE_SURVEY_QUESTION_BANKS_RESET:
-            return {
-                loading: false,
-                isDeleted: false
-            }
+    case DELETE_SURVEY_QUESTION_BANKS_RESET:
+    case DELETE_CLONE_SURVEY_QUESTION_BANKS_RESET:
+      return {
+        loading: false,
+        isDeleted: false,
+      };
 
-        case DELETE_SURVEY_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case DELETE_SURVEY_QUESTION_BANKS_FAIL:
+    case DELETE_CLONE_SURVEY_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                ...state,
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
 
 // ======================================================================================================================
-export const updateSurveyQuestionBanksPublishReducer = (state = { survey: {} }, action) => {
-    switch (action.type) {
-        case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST:
-            return {
-                loading: true
-            }
+export const updateSurveyQuestionBanksPublishReducer = (
+  state = { survey: {} },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_SUCCESS:
-            return {
-                loading: false,
-                success: action.payload.message,
-                survey: action.payload.data
-            }
+    case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        survey: action.payload.data,
+      };
 
-        case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET:
-            return {
-                success: false
-            }
+    case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET:
+      return {
+        success: false,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
 
-export const allReportSurveyQuestionBanksReducer = (state = { survey: [] }, action) => {
-    switch (action.type) {
-        case REPORT_SURVEY_QUESTION_BANKS_REQUEST:
-            return {
-                loading: true
-            }
+export const allReportSurveyQuestionBanksReducer = (
+  state = { survey: [] },
+  action
+) => {
+  switch (action.type) {
+    case REPORT_SURVEY_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case REPORT_SURVEY_QUESTION_BANKS_SUCCESS:
-            return {
-                loading: false,
-                survey: action.payload.data
-            }
+    case REPORT_SURVEY_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        survey: action.payload.data,
+      };
 
-        case REPORT_SURVEY_QUESTION_BANKS_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case REPORT_SURVEY_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
+
+export const newCloneSurveyQuestionBanksReducer = (
+  state = { survey: {} },
+  action
+) => {
+  switch (action.type) {
+    case NEW_CLONE_SURVEY_QUESTION_BANKS_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case NEW_CLONE_SURVEY_QUESTION_BANKS_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        survey: action.payload.data,
+      };
+
+    case NEW_CLONE_SURVEY_QUESTION_BANKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case NEW_CLONE_SURVEY_QUESTION_BANKS_RESET:
+      return {
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};

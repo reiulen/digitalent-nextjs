@@ -49,6 +49,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
   useEffect(() => {
     localStorage.removeItem("step1");
     localStorage.removeItem("clone1");
+    localStorage.removeItem("id_substansi");
     if (isDeleted) {
       dispatch({
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET,
@@ -67,7 +68,8 @@ const ListSubstansi = ({ token, tokenPermission }) => {
     router.push(link);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (limit != null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
@@ -315,20 +317,22 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                   <div
                     className={`${styles.baseSearch} position-relative overflow-hidden mt-3`}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className={`${styles.inputSearch} form-control pl-10`}
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className={`${styles.inputSearch} form-control pl-10`}
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -459,9 +463,9 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="Detail"
+                                        title="List Soal"
                                       >
-                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                        <i className="ri-file-list-line p-0 text-white"></i>
                                       </a>
                                     </Link>
                                     {subtance?.bank_soal !== 0 && (
@@ -491,7 +495,17 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      disabled={subtance?.status}
+                                      className={
+                                        subtance?.status
+                                          ? "btn btn-link-action btn-secondary  text-white"
+                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                      }
+                                      style={{
+                                        cursor: subtance?.status
+                                          ? "not-allowed"
+                                          : "pointer",
+                                      }}
                                       onClick={() => handleDelete(subtance.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"

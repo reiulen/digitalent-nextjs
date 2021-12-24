@@ -970,7 +970,7 @@ const Galeri = () => {
 
                                                             <div className="col-3 text-right">
                                                                 <ShareOverlay
-                                                                    url={`http://dts-dev.majapahit.id/detail/pelatihan`}
+                                                                    url={`${process.env.NEXTAUTH_URL}/detail/pelatihan`}
                                                                 >
                                                                     <button className="btn btn-outline-light rounded-circle" style={{ width: "40px", height: "40px" }}>
                                                                         <i className="ri-share-line p-auto m-auto"></i>
@@ -1035,7 +1035,7 @@ const Galeri = () => {
 
                                                                             <div className="col-3 text-right">
                                                                                 <ShareOverlay
-                                                                                    url={`http://dts-dev.majapahit.id/detail/pelatihan`}
+                                                                                    url={`${process.env.NEXTAUTH_URL}/detail/pelatihan`}
                                                                                 >
                                                                                     <button className="btn btn-outline-light rounded-circle" style={{ width: "40px", height: "40px" }}>
                                                                                         <i className="ri-share-line p-auto m-auto"></i>
@@ -1093,7 +1093,7 @@ const Galeri = () => {
 
                                     <div className="col-3 text-right">
                                         <ShareOverlay
-                                            url={`http://dts-dev.majapahit.id/detail/pelatihan`}
+                                             url={`${process.env.NEXTAUTH_URL}/detail/pelatihan`}
                                         >
                                             <button className="btn btn-outline-light rounded-circle" style={{ width: "40px", height: "40px" }}>
                                                 <i className="ri-share-line p-auto m-auto"></i>

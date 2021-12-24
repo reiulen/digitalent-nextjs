@@ -40,7 +40,7 @@ export const getAllBerandaArtikel =
             try {
                 dispatch({ type: BERANDA_ARTIKEL_REQUEST })
 
-                let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}`
+                let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}&role=1`
                 if (keyword) link = link.concat(`&keyword=${keyword}`);
                 if (limit) link = link.concat(`&limit=${limit}`);
                 if (filterPublish) link = link.concat(`&filterPublish=${filterPublish}`);
@@ -114,7 +114,7 @@ export const getKategoriBerandaArtikel = () => async dispatch => {
         dispatch({ type: KATEGORI_BERANDA_ARTIKEL_REQUEST })
 
         // let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Artikel&type=home`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Artikel&type=home&role=1`
 
         const { data } = await axios.get(link)
 
@@ -136,7 +136,7 @@ export const getTagBerandaArtikel = () => async dispatch => {
 
         dispatch({ type: TAG_BERANDA_ARTIKEL_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel&role=1`
 
         const { data } = await axios.get(link)
 

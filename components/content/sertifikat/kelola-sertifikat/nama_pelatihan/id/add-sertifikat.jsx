@@ -15,22 +15,49 @@ import { toPng } from "html-to-image";
 import { useDispatch } from "react-redux";
 import {
 	clearErrors,
+	getPublishedSertifikat,
+	getSingleSertifikat,
 	newSertifikat,
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import * as moment from "moment";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import {
 	helperRegexNumber,
 	helperRemoveZeroFromIndex0,
 	SweatAlert,
 } from "../../../../../../utils/middleware/helper";
 import Cookies from "js-cookie";
+import Select from "react-select";
+import axios from "axios";
+import {
+	getOptionsThemeCloneSertifikat,
+	getOptionsTrainingCloneSertifikat,
+} from "../../../../../../redux/actions/sertifikat/clone-sertifikat.action";
 
 export default function TambahMasterSertifikat({ token }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const { query } = router;
 	const token_permission = Cookies.get("token_permission");
+	const config = {
+		headers: {
+			Authorization: "Bearer " + token.token,
+		},
+	};
+
+	const allOptionAcademy = useSelector(
+		(state) => state.optionsAcademyCloneSertifikat
+	);
+
+	const allOptionTheme = useSelector(
+		(state) => state.optionsThemeCloneSertifikat
+	);
+
+	const allOptionTraining = useSelector(
+		(state) => state.optionsTrainingCloneSertifikat
+	);
+
+	const publishedCertificate = useSelector((state) => state.publishCertificate);
 
 	// #Div Reference Lembar 1
 	const divReference = useRef(null);
@@ -389,10 +416,12 @@ export default function TambahMasterSertifikat({ token }) {
 							signature_certificate_image_syllabus[i]
 						);
 					}
+					if (enableSyllabus) {
+						syllabus.forEach((item, i) => {
+							formData.append(`syllabus[${i}]`, item);
+						});
+					}
 				}
-				syllabus.forEach((item, i) => {
-					formData.append(`syllabus[${i}]`, item);
-				});
 
 				formData.append("status_migrate_id", status);
 
@@ -469,6 +498,152 @@ export default function TambahMasterSertifikat({ token }) {
 		};
 	}, [hour]);
 
+	//CLONE DATA SERTIFIKAT
+
+	const [showModalClone, setShowModalClone] = useState(false);
+	const handleCloseClone = () => {
+		setShowModalClone(false);
+	};
+	const [cloneData, setCloneData] = useState();
+	const [optionAcademy, setOptionAcademy] = useState(null);
+	const [disableTheme, setDisableTheme] = useState(true);
+	const [disableTraining, setDisableTraining] = useState(true);
+	const [optionTheme, setOptionTheme] = useState(null);
+	const [academy, setAcademy] = useState();
+	const [theme, setTheme] = useState();
+	const [optionTraining, setOptionTraining] = useState(null);
+	const [training, setTraining] = useState(null);
+	const [imagePreviewClone, setImagePreviewClone] = useState(null);
+	const [imagePreviewSyllabusClone, setImagePreviewSyllabusClone] =
+		useState(null);
+
+	const [disableSimpan, setDisableSimpan] = useState(false);
+
+	useEffect(() => {
+		if (allOptionAcademy?.academy?.data) {
+			setOptionAcademy(allOptionAcademy?.academy?.data);
+		}
+	}, [allOptionAcademy]);
+
+	useEffect(() => {
+		if (allOptionTheme.theme && Object.keys(allOptionTheme.theme).length != 0) {
+			setOptionTheme(allOptionTheme?.theme);
+			setDisableTheme(false);
+			// setOptionAcademy(allOptionAcademy?.academy?.data);
+		}
+	}, [allOptionTheme]);
+
+	useEffect(() => {
+		if (
+			allOptionTraining?.training &&
+			Object.keys(allOptionTraining?.training).length != 0
+		) {
+			setDisableTraining(false);
+			setOptionTraining(allOptionTraining?.training);
+		}
+	}, [allOptionTraining]);
+
+	useEffect(() => {
+		if (training) {
+			dispatch(getPublishedSertifikat(training?.value, token?.token));
+		}
+	}, [training]);
+
+	useEffect(() => {
+		if (publishedCertificate?.certificate?.status) {
+			setCloneData(publishedCertificate?.certificate?.data);
+			setImagePreviewClone(
+				publishedCertificate?.certificate?.data?.certificate?.certificate_result
+			);
+			if (
+				publishedCertificate?.certificate?.data?.certificate
+					?.certificate_result_syllabus
+			) {
+				setImagePreviewSyllabusClone(
+					publishedCertificate?.certificate?.data?.certificate
+						?.certificate_result_syllabus
+				);
+			}
+			setDisableSimpan(false);
+		}
+	}, [publishedCertificate]);
+
+	const handleClickSimpanClone = () => {
+		// setShowModalClone(false);
+		setCertificate_type(cloneData.certificate.certificate_type);
+		setCertificate_name(cloneData.certificate.name);
+		setNumber_of_signatures(cloneData.certificate.number_of_signatures);
+		setHour(cloneData.certificate.training_hours);
+		if (cloneData.certificate.background != null) {
+			setBackground(
+				`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${cloneData.certificate.background}`
+			);
+		} else {
+			setBackground("");
+		}
+		//name
+		setSignature_certificate_name((prev) => {
+			const arr = [];
+			const data = cloneData.signature.filter((item) => item != "name");
+			console.log(data);
+			cloneData.signature.forEach((item) => arr.push(item.name));
+			return arr;
+		});
+
+		//jabatan
+		setSignature_certificate_position((prev) => {
+			const arr = [];
+			cloneData.signature.forEach((item) => arr.push(item.position));
+			return arr;
+		});
+
+		//image
+		setSignature_certificate_image((prev) => {
+			const arr = [];
+			cloneData.signature.forEach((item) =>
+				arr.push(
+					`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${item.signature}`
+				)
+			);
+			return arr;
+		});
+		//posisi translate
+		setSignature_certificate_set_position((prev) => {
+			const arr = [];
+			cloneData.signature.forEach((item) => arr.push(item.set_position));
+			return arr;
+		});
+
+		//background
+
+		//Lembar 2
+		if (cloneData.certificate.certificate_type == "2 lembar") {
+			if (cloneData.certificate.background_syllabus != null) {
+				setBackground_syllabus(
+					`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${cloneData.certificate.background_syllabus}`
+				);
+			} else {
+				setBackground_syllabus("");
+			}
+
+			if (cloneData.certificate.syllabus) {
+				setSyllabus((prev) => {
+					let arr = [];
+					arr = [...cloneData.certificate.syllabus];
+					// cloneData.certificate.syllabus.forEach((item) => arr.push(item));
+					return arr;
+				});
+			}
+		}
+		// handleClickSimpanClone();
+		//background syllabus
+
+		// return console.log(cloneData, "ini data cuy");
+
+		// console.log(data);
+		// setNumber_of_signatures();
+	};
+
 	return (
 		<PageWrapper>
 			{/* error START */}
@@ -502,7 +677,7 @@ export default function TambahMasterSertifikat({ token }) {
 			<div className="col-lg-12 order-1 px-0">
 				<div className="card card-custom card-stretch gutter-b">
 					{/* START HEADER */}
-					<div className="card-header border-0 d-flex justify-content-lg-between row p-10">
+					<div className="card-header border-0 d-flex justify-content-lg-between align-items-center row p-10">
 						<div className="card-title d-flex my-auto">
 							<div className="text-dark">Nama Sertifikat :</div>
 							<div className="px-6 p-0 w-100">
@@ -511,9 +686,8 @@ export default function TambahMasterSertifikat({ token }) {
 									className="form-control"
 									placeholder="Masukan Nama Sertifikat"
 									onChange={(e) => setCertificate_name(e.target.value)}
-									onBlur={() => {
-										simpleValidator.current.showMessageFor("nama sertifikat");
-									}}
+									// value={certificate_name}
+									value={certificate_name}
 								/>
 								{simpleValidator.current.message(
 									"nama sertifikat",
@@ -522,6 +696,111 @@ export default function TambahMasterSertifikat({ token }) {
 									{ className: "text-danger font-size-sm mt-4" }
 								)}
 							</div>
+						</div>
+						<div>
+							<button
+								className="btn btn-primary-rounded-full"
+								onClick={() => {
+									setShowModalClone(true);
+								}}
+							>
+								Clone Sertifikat
+							</button>
+							<Modal show={showModalClone} size="lg" onHide={handleCloseClone}>
+								<Modal.Header>
+									<Modal.Title>Clone Sertifikat</Modal.Title>
+								</Modal.Header>
+								<Modal.Body>
+									<div className="mb-4">
+										<p>Akademi</p>
+										<Select
+											options={optionAcademy ? optionAcademy : {}}
+											onChange={(e) => {
+												setAcademy(e);
+												dispatch(
+													getOptionsThemeCloneSertifikat(token?.token, e?.value)
+												);
+												setTraining(null);
+												setTheme(null);
+											}}
+											value={academy}
+										/>
+									</div>
+									<div className="mb-4">
+										<p>Tema</p>
+										<Select
+											isDisabled={disableTheme ? true : false}
+											options={optionTheme ? optionTheme : {}}
+											value={theme}
+											onChange={(e) => {
+												setTheme(e);
+												dispatch(
+													getOptionsTrainingCloneSertifikat(
+														token?.token,
+														academy?.value,
+														e?.value
+													)
+												);
+												setTraining(null);
+											}}
+										/>
+									</div>
+									<div className="mb-4">
+										<p>Pelatihan</p>
+										<Select
+											options={optionTraining ? optionTraining : {}}
+											value={training}
+											isDisabled={disableTraining ? true : false}
+											onChange={(e) => {
+												setTraining(e);
+												setDisableSimpan(true);
+											}}
+										/>
+									</div>
+									{imagePreviewClone && (
+										<div style={{ border: "1px solid black" }}>
+											<Image
+												src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${imagePreviewClone}`}
+												alt="Preview Sertifikat"
+												width={842}
+												height={595}
+												objectFit="contain"
+											/>
+										</div>
+									)}
+
+									{cloneData?.certificate?.certificate_type == "2 lembar" &&
+										imagePreviewSyllabusClone && (
+											<div style={{ border: "1px solid black" }}>
+												<Image
+													src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${imagePreviewSyllabusClone}`}
+													alt="Preview Syllabus"
+													width={842}
+													height={595}
+													objectFit="contain"
+												/>
+											</div>
+										)}
+								</Modal.Body>
+								<Modal.Footer>
+									<Button
+										className="rounded-full"
+										variant="secondary"
+										onClick={handleCloseClone}
+									>
+										Tutup
+									</Button>
+									<button
+										className="btn btn-primary-rounded-full"
+										onClick={(e) => {
+											handleClickSimpanClone();
+										}}
+										disabled={disableSimpan ? true : false}
+									>
+										Simpan
+									</button>
+								</Modal.Footer>
+							</Modal>
 						</div>
 					</div>
 					{/* END HEADER */}
@@ -690,8 +969,13 @@ export default function TambahMasterSertifikat({ token }) {
 																			}}
 																			className="my-auto m-0 p-0 test"
 																			style={{ margin: "0px" }}
+																			key={signature_certificate_name[i]}
+																			id={i}
 																		></div>
 																	) : (
+																		// <Name
+																		// 	name={signature_certificate_name[i]}
+																		// />
 																		"Nama"
 																	)}
 																</div>
@@ -986,6 +1270,10 @@ export default function TambahMasterSertifikat({ token }) {
 																					}
 																				/>
 																			</div>
+																			<small>
+																				Setelah isi tandatangan, harap tekan
+																				"Buat Tanda Tangan"
+																			</small>
 																			<div className="d-flex align-items-center my-5">
 																				<a
 																					className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
@@ -1151,6 +1439,9 @@ export default function TambahMasterSertifikat({ token }) {
 												Unggah Background
 											</a>
 										</div>
+										<small className="text-muted">
+											JPG/JPEG/PNG. Resolusi A4 (842px X 595px)
+										</small>
 									</label>
 									<input
 										type="file"
@@ -1694,7 +1985,10 @@ export default function TambahMasterSertifikat({ token }) {
 																						}}
 																					/>
 																				</div>
-
+																				<small>
+																					Setelah isi tandatangan, harap tekan
+																					"Buat Tanda Tangan"
+																				</small>
 																				<div className="d-flex align-items-center my-5">
 																					<a
 																						className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
@@ -1889,6 +2183,9 @@ export default function TambahMasterSertifikat({ token }) {
 													Unggah Background
 												</a>
 											</div>
+											<small className="text-muted">
+												JPG/JPEG/PNG. Resolusi A4 (842px X 595px)
+											</small>
 										</label>
 										<input
 											type="file"

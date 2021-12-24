@@ -210,7 +210,7 @@ const DetailBerita = () => {
               <div className="mr-3">
                 {/* SHAREOVERLAY */}
                 <ShareOverlay
-                  url={`http://dts-dev.majapahit.id/berita/detail/${id}`}
+                  url={`${process.env.NEXTAUTH_URL}/berita/detail/${id}`}
                   quote={detail.judul}
                 >
                   <button className="btn btn-sm btn-outline-light rounded-circle">
@@ -298,7 +298,7 @@ const DetailBerita = () => {
                   <div className="mr-3">
                     {/* SHAREOVERLAY */}
                     <ShareOverlay
-                      url={`http://dts-dev.majapahit.id/berita/detail/${id}`}
+                      url={`${process.env.NEXTAUTH_URL}/berita/detail/${id}`}
                       quote={detail.judul}
                     >
                       <button className="btn btn-sm btn-outline-light rounded-circle">

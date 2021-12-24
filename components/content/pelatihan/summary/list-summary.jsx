@@ -133,7 +133,8 @@ const ListSummary = ({ token }) => {
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     setPage(1);
     dispatch(
       getAllSummary(
@@ -341,23 +342,25 @@ const ListSummary = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={e => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
 
@@ -380,17 +383,17 @@ const ListSummary = ({ token }) => {
                 {listPermission.includes(
                   "pelatihan.rekap_pendaftaran.manage"
                 ) && (
-                    <div className="col-md-2">
-                      <button
-                        className="d-flex justify-content-center btn w-100 btn-rounded-full bg-blue-secondary text-white"
-                        type="button"
-                        onClick={handleExportReport}
-                      >
-                        Export
-                        <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                      </button>
-                    </div>
-                  )}
+                  <div className="col-md-2">
+                    <button
+                      className="d-flex justify-content-center btn w-100 btn-rounded-full bg-blue-secondary text-white"
+                      type="button"
+                      onClick={handleExportReport}
+                    >
+                      Export
+                      <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -410,15 +413,17 @@ const ListSummary = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal Pendaftaran <br /> Jadwal Pelatihan</th>
+                        <th>
+                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                        </th>
                         <th>Status Pelatihan</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {!summary ||
-                        (summary && summary.list === null) ||
-                        summary.list.length === 0 ? (
+                      (summary && summary.list === null) ||
+                      summary.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
@@ -462,12 +467,18 @@ const ListSummary = ({ token }) => {
                               </p>
                             </td>
                             <td className="align-middle">
-                              <span className={
-                                row.status_pelatihan === "selesai" && "select-pelatihan select-pelatihan-success font-weight-bold" ||
-                                row.status_pelatihan === "pendaftaran" && "select-pelatihan select-pelatihan-primary font-weight-bold" ||
-                                row.status_pelatihan === "seleksi" && "select-pelatihan select-pelatihan-warning font-weight-bold" ||
-                                row.status_pelatihan === "pelatihan" && "select-pelatihan select-pelatihan-primary font-weight-bold"
-                              }>
+                              <span
+                                className={
+                                  (row.status_pelatihan === "selesai" &&
+                                    "select-pelatihan select-pelatihan-success font-weight-bold") ||
+                                  (row.status_pelatihan === "pendaftaran" &&
+                                    "select-pelatihan select-pelatihan-primary font-weight-bold") ||
+                                  (row.status_pelatihan === "seleksi" &&
+                                    "select-pelatihan select-pelatihan-warning font-weight-bold") ||
+                                  (row.status_pelatihan === "pelatihan" &&
+                                    "select-pelatihan select-pelatihan-primary font-weight-bold")
+                                }
+                              >
                                 {row.status_pelatihan}
                               </span>
                             </td>
@@ -476,35 +487,35 @@ const ListSummary = ({ token }) => {
                                 {listPermission.includes(
                                   "pelatihan.rekap_pendaftaran.view"
                                 ) && (
-                                    <Link
-                                      href={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${row.id}`}
+                                  <Link
+                                    href={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${row.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="View"
                                     >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="View"
-                                      >
-                                        <i className="ri-eye-fill text-white p-0"></i>
-                                      </a>
-                                    </Link>
-                                  )}
+                                      <i className="ri-eye-fill text-white p-0"></i>
+                                    </a>
+                                  </Link>
+                                )}
                                 {listPermission.includes(
                                   "pelatihan.rekap_pendaftaran.manage"
                                 ) && (
-                                    <Link
-                                      href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
+                                  <Link
+                                    href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Detail"
                                     >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Detail"
-                                      >
-                                        <i className="ri-registered-fill text-white p-0"></i>
-                                      </a>
-                                    </Link>
-                                  )}
+                                      <i className="ri-registered-fill text-white p-0"></i>
+                                    </a>
+                                  </Link>
+                                )}
                               </div>
                             </td>
                           </tr>
@@ -617,16 +628,7 @@ const ListSummary = ({ token }) => {
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
           </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Substansi</label>
-            <Select
-              options={optionsStatusSubstansi}
-              defaultValue={statusSubstansi}
-              onChange={(e) =>
-                setStatusSubstansi({ value: e.value, label: e.label })
-              }
-            />
-          </div>
+          
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
             <Select

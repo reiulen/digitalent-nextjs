@@ -47,6 +47,7 @@ const ListSurvey = ({ token, tokenPermission }) => {
   useEffect(() => {
     localStorage.removeItem("step1");
     localStorage.removeItem("clone1");
+    localStorage.removeItem("id_survey");
     if (isDeleted) {
       dispatch({
         type: DELETE_SURVEY_QUESTION_BANKS_RESET,
@@ -72,7 +73,8 @@ const ListSurvey = ({ token, tokenPermission }) => {
     }
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (limit != null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
@@ -262,7 +264,8 @@ const ListSurvey = ({ token, tokenPermission }) => {
           <div className="card-header row border-0 mt-3">
             {/* <h1 className="card-title text-dark mt-2" style={{ fontSize: "24px" }}> */}
             <h1
-              className={`${styles.headTitle} col-sm-12 col-md-8 col-lg-8 col-xl-9`}
+              className="card-title text-dark mt-2 ml-5"
+              style={{ fontSize: "24px" }}
             >
               List Survey
             </h1>
@@ -270,17 +273,22 @@ const ListSurvey = ({ token, tokenPermission }) => {
               dataPermission.permissions.includes(
                 "subvit.manage" && "subvit.survey.manage"
               ) && (
-                <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
-                  <Link href="/subvit/survey/tambah">
-                    {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
-                    <a
-                      className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
-                    >
-                      <i className="ri-add-fill"></i>
-                      Tambah Survey
-                    </a>
-                  </Link>
-                </div>
+                <>
+                  <div className=" card-toolbar">
+                    <Link href="/subvit/survey/tambah">
+                      <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                        <i className="ri-add-fill"></i>
+                        Tambah Survey
+                      </a>
+                    </Link>
+                    <Link href="/subvit/survey/clone">
+                      <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                        <i className="ri-mastercard-fill"></i>
+                        Clone Survey
+                      </a>
+                    </Link>
+                  </div>
+                </>
               )}
           </div>
 
@@ -292,20 +300,22 @@ const ListSurvey = ({ token, tokenPermission }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -420,9 +430,9 @@ const ListSurvey = ({ token, tokenPermission }) => {
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="Detail"
+                                        title="List Soal"
                                       >
-                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                        <i className="ri-file-list-line p-0 text-white"></i>
                                       </a>
                                     </Link>
                                     {row?.bank_soal !== 0 && (
@@ -449,11 +459,21 @@ const ListSurvey = ({ token, tokenPermission }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      className={
+                                        row?.status
+                                          ? "btn btn-link-action btn-secondary  text-white"
+                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                      }
                                       onClick={() => handleDelete(row.id)}
+                                      disabled={row?.status}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
                                       title="Hapus"
+                                      style={{
+                                        cursor: row?.status
+                                          ? "not-allowed"
+                                          : "pointer",
+                                      }}
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>

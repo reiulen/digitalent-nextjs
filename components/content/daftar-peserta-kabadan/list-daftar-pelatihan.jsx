@@ -111,7 +111,8 @@ const ListDaftarPelatihan = ({ token }) => {
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     setPage(1);
     dispatch(
       getAllSummary(
@@ -213,6 +214,15 @@ const ListDaftarPelatihan = ({ token }) => {
       dispatch(clearErrors());
     }
   };
+  
+	function capitalize(s) {
+		let a = s.split(" ");
+		let result = [];
+		for (let i = 0; i < a.length; i++) {
+			result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
+		}
+		return result.join(" ");
+	}
 
   return (
     <PageWrapper>
@@ -280,20 +290,22 @@ const ListDaftarPelatihan = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6 col-md-6">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={e => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -335,15 +347,15 @@ const ListDaftarPelatihan = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal</th>
+                        <th>Jadwal Pendaftaran <br /> Jadwal Pelatihan</th>
                         <th>Status Pelatihan</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {!summary ||
-                      (summary && summary.list === null) ||
-                      summary.list.length === 0 ? (
+                        (summary && summary.list === null) ||
+                        summary.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
@@ -387,8 +399,13 @@ const ListDaftarPelatihan = ({ token }) => {
                               </p>
                             </td>
                             <td className="align-middle">
-                              <span className="label label-inline label-light-success font-weight-bold">
-                                {row.status_pelatihan}
+                              <span className={
+                                row.status_pelatihan === "selesai" && "label label-inline select-pelatihan-success font-weight-bold" ||
+                                row.status_pelatihan === "pendaftaran" && "label label-inline select-pelatihan-primary font-weight-bold" ||
+                                row.status_pelatihan === "seleksi" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+                                row.status_pelatihan === "pelatihan" && "label label-inline select-pelatihan-primary font-weight-bold"
+                              }>
+                                {capitalize(row.status_pelatihan)}
                               </span>
                             </td>
                             <td className="align-middle ml-4">
