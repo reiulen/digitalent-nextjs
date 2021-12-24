@@ -235,16 +235,18 @@ const DetailPelatihan = ({ session }) => {
                   .format("DD MMM YYYY")}
               </span>
               <div className="mt-7">
-                {pelatihan?.status !== "Closed" && (
                   <button
                     className="btn btn-primary-dashboard rounded-pill btn-block fw-500"
                     onClick={() =>
                       handleCheckPelatihanReg(pelatihan?.id, session)
                     }
+                    disabled={pelatihan?.Status === "Ditutup"}
+                    style={{
+                      cursor: pelatihan?.Status === "Ditutup" ? "not-allowed" : ""
+                    }}
                   >
                     Daftar Pelatihan
                   </button>
-                )}
                 <button
                   className="btn btn-outline-primary-new rounded-pill btn-block fw-500 d-flex justify-content-center align-items-center p-1"
                   onClick={() => handleDownloadSilabus()}

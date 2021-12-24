@@ -460,12 +460,44 @@ const DetailSummary = ({ token }) => {
                               </p>
                             </td>
                             <td>
-                              <span className="label label-inline label-light-success font-weight-bold">
+                              <span
+                                className={
+                                  (row.administrasi === "unverified" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.administrasi === "verified" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                                  (row.administrasi === "incomplete" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize")
+                                }
+                              >
                                 {capitalize(row.administrasi)}
                               </span>
                             </td>
                             <td>
-                              <span className="label label-inline label-light-success font-weight-bold">
+                              <span
+                                className={
+                                  (row.status === "tidak lulus administrasi" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "tidak lulus tes substansi" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "tidak lulus pelatihan" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "ditolak" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "seleksi administrasi" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "tes substansi" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "seleksi akhir" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "administrasi akhir" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "diterima" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                                  (row.status === "lulus pelatihan" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize")
+                                }
+                              >
                                 {capitalize(row.status)}
                               </span>
                             </td>
