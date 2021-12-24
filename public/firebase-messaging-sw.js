@@ -15,7 +15,7 @@ if (!firebase.apps.length) {
 
   //background notifications will be received here
   messaging.setBackgroundMessageHandler(function (payload) {
-    console.log(
+    // console.log(
       "[firebase-messaging-sw.js] Received background message ",
       payload
     );
@@ -33,7 +33,7 @@ if (!firebase.apps.length) {
   });
 
   messaging.onBackgroundMessage(function (payload) {
-    console.log(
+    // console.log(
       "[firebase-messaging-sw.js] Received background message ",
       payload
     );

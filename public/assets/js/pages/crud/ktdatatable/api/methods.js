@@ -173,7 +173,7 @@ var KTDefaultDatatableDemo = function() {
 			if (datatable.nodes().length > 0) {
 				// get column by field name and get the column nodes
 				var value = datatable.columns('CompanyName').nodes().text();
-				console.log(value);
+				// console.log(value);
 			}
 		});
 

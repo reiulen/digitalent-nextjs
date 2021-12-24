@@ -648,6 +648,15 @@ const ListTraining = ({ token }) => {
     }
   };
 
+	function capitalize(s) {
+		let a = s.split(" ");
+		let result = [];
+		for (let i = 0; i < a.length; i++) {
+			result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
+		}
+		return result.join(" ");
+	}
+
   const handleModalRevisi = (id) => {
     dispatch(getListRevisi(token, id));
     setShowModalRevisi(true);
@@ -731,7 +740,7 @@ const ListTraining = ({ token }) => {
             }
           />
           <CardPage
-            background="cardSetuju"
+            background="cardDisetujui"
             icon="new/done-circle.svg"
             color="#FFFFFF"
             value={cardTraining[4].count}
@@ -950,16 +959,14 @@ const ListTraining = ({ token }) => {
                               </div>
                             </td>
                             <td className="align-middle text-center">
-                              {row.status_substansi === "review" ||
-                              row.status_substansi === "disetujui" ? (
-                                <span className="label label-inline label-light-success font-weight-bold text-capitalize">
-                                  {row.status_substansi}
-                                </span>
-                              ) : (
-                                <span className="label label-inline label-light-danger font-weight-bold text-capitalize">
-                                  {row.status_substansi}
-                                </span>
-                              )}
+                              <span className={
+                                row.status_substansi === "disetujui" && "select-pelatihan select-pelatihan-success" ||
+                                row.status_substansi === "revisi" && "select-pelatihan select-pelatihan-warning" ||
+                                row.status_substansi === "ditolak" && "select-pelatihan select-pelatihan-danger" ||
+                                row.status_substansi === "review" && "select-pelatihan select-pelatihan-primary"
+                              }>
+                                {capitalize(row.status_substansi)}
+                              </span>
                             </td>
                             <td className="align-middle">
                               <div className="position-relative w-max-content">

@@ -427,7 +427,7 @@ const StepThree = ({ token, tokenPermission }) => {
                   </select>
                   {simpleValidator.current.message(
                     "status",
-                    passing_grade,
+                    status === 0,
                     "required",
                     { className: "text-danger" }
                   )}

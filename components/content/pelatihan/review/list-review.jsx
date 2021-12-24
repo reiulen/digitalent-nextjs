@@ -543,22 +543,22 @@ const ListReview = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               {row.status_substansi === "review" && (
-                                <span className="label label-inline label-light-success font-weight-bold">
+                                <span className="label label-inline select-pelatihan-primary font-weight-bold">
                                   Review
                                 </span>
                               )}
                               {row.status_substansi === "disetujui" && (
-                                <span className="label label-inline label-light-success font-weight-bold">
+                                <span className="label label-inline select-pelatihan-success font-weight-bold">
                                   Disetujui
                                 </span>
                               )}
                               {row.status_substansi === "revisi" && (
-                                <span className="label label-inline label-light-warning font-weight-bold">
+                                <span className="label label-inline select-pelatihan-warning font-weight-bold">
                                   Revisi
                                 </span>
                               )}
                               {row.status_substansi === "ditolak" && (
-                                <span className="label label-inline label-light-danger font-weight-bold">
+                                <span className="label label-inline select-pelatihan-danger font-weight-bold">
                                   Ditolak
                                 </span>
                               )}
@@ -708,16 +708,6 @@ const ListReview = ({ token }) => {
               defaultValue={statusSubstansi}
               onChange={(e) =>
                 setStatusSubstansi({ value: e.value, label: e.label })
-              }
-            />
-          </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Pelatihan</label>
-            <Select
-              options={optionsStatusPelatihan}
-              defaultValue={statusPelatihan}
-              onChange={(e) =>
-                setStatusPelatihan({ value: e.value, label: e.label })
               }
             />
           </div>

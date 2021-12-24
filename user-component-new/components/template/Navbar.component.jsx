@@ -67,7 +67,7 @@ const Navigationbar = ({ session }) => {
 					firebaseReceiveMessage.init();
 				}
 			} catch (error) {
-				console.log(error);
+				// console.log(error);
 			}
 		}
 
@@ -113,18 +113,18 @@ const Navigationbar = ({ session }) => {
 	//     try {
 	//       const token = await firebaseCloudMessaging.init();
 	//       if (token) {
-	//         console.log(token);
+	//         // console.log(token);
 	//         getMessage();
 	//       }
 	//     } catch (err) {
-	//       console.log(err, "ini error");
+	//       // console.log(err, "ini error");
 	//     }
 	//   };
 
 	//   const getMessage = () => {
 	//     const messaging = getMessaging();
 	//     onMessage(messaging, (payload) => {
-	//       console.log("ada pesan notif", payload);
+	//       // console.log("ada pesan notif", payload);
 	//     });
 	//   };
 

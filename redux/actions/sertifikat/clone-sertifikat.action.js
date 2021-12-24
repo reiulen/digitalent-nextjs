@@ -32,7 +32,7 @@ export const getOptionsAcademyCloneSertifikat =
 			}
 			return data;
 		} catch (error) {
-			console.log(error.message);
+			// console.log(error.message);
 			dispatch({
 				type: OPTION_ACADEMY_FAIL,
 				payload: error?.response?.data?.message || error.message,
