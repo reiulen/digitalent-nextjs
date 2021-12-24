@@ -628,16 +628,7 @@ const ListSummary = ({ token }) => {
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
           </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Substansi</label>
-            <Select
-              options={optionsStatusSubstansi}
-              defaultValue={statusSubstansi}
-              onChange={(e) =>
-                setStatusSubstansi({ value: e.value, label: e.label })
-              }
-            />
-          </div>
+          
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
             <Select
