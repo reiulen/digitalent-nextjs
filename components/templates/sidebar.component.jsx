@@ -416,7 +416,9 @@ const Sidebar = ({ session }) => {
                                                 : ""
                                             }`}
                                             aria-haspopup="true"
-                                            onClick={(e) => {
+                                            onClick={(e) =>{
+                                              e.preventDefault()
+                                              location.reload();
                                               handleActiveSubmenu(
                                                 e,
                                                 index,
@@ -424,7 +426,7 @@ const Sidebar = ({ session }) => {
                                                 "parent",
                                                 child2.selected,
                                                 idx
-                                              );
+                                              )
                                             }}
                                             key={idx}
                                           >
