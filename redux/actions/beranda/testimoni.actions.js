@@ -41,7 +41,7 @@ export const getAllBerandaTestimoni =
             try {
                 dispatch({ type: BERANDA_TESTIMONI_REQUEST })
 
-                let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}`
+                let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}&role=0`
                 if (keyword) link = link.concat(`&keyword=${keyword}`);
                 if (limit) link = link.concat(`&limit=${limit}`);
                 if (filterPublish) link = link.concat(`&filterPublish=${filterPublish}`);
@@ -115,7 +115,7 @@ export const getKategoriBerandaTestimoni = () => async dispatch => {
         dispatch({ type: KATEGORI_BERANDA_TESTIMONI_REQUEST })
 
         // let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Artikel&type=home`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Artikel&type=home&role=0`
 
         const { data } = await axios.get(link)
 
@@ -137,7 +137,7 @@ export const getTagBerandaTestimoni = () => async dispatch => {
 
         dispatch({ type: TAG_BERANDA_TESTIMONI_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel&role=0`
 
         const { data } = await axios.get(link)
 

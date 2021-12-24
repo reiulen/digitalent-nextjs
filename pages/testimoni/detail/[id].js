@@ -3,7 +3,8 @@ import { getSession } from "next-auth/client";
 
 import { wrapper } from "../../../redux/store";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions"
-import { getDetailBerandaArtikel, getKategoriBerandaArtikel,  getTagBerandaArtikel} from "../../../redux/actions/beranda/artikel.actions"
+// import { getDetailBerandaArtikel, getKategoriBerandaArtikel,  getTagBerandaArtikel} from "../../../redux/actions/beranda/artikel.actions"
+import { getDetailBerandaTestimoni, getKategoriBerandaTestimoni,  getTagBerandaTestimoni} from "../../../redux/actions/beranda/testimoni.actions"
 import LoadingDetailAkademi from "../../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const DetailTestimoni = dynamic (() => 
@@ -50,15 +51,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
             await store.dispatch(getDataPribadi(sessionToken));
 
             await store.dispatch(
-                getDetailBerandaArtikel(params.id)
+                getDetailBerandaTestimoni(params.id)
             )
 
             await store.dispatch (
-                getKategoriBerandaArtikel()
+                getKategoriBerandaTestimoni()
             )
 
             await store.dispatch(
-                getTagBerandaArtikel()
+                getTagBerandaTestimoni()
             )
 
             return {

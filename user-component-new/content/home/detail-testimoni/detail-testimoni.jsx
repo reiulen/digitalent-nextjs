@@ -15,9 +15,9 @@ const DetailTestimoni = () => {
   const { id } = router.query;
 
   const { detail, loading: loadingDetail } = useSelector(
-    (state) => state.detailBerandaArtikel
+    (state) => state.detailBerandaTestimoni
   );
-  const { tags } = useSelector((state) => state.allTagBerandaArtikel);
+  const { tags } = useSelector((state) => state.allTagBerandaTestimoni);
 
   const [keyword, setKeyword] = useState(null);
   const [resultText, setResultText] = useState(null);
