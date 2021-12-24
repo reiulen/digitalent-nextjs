@@ -52,7 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
 			await store.dispatch(getAllAkademi());
 
-			console.log(query, "ini query");
+			// console.log(query, "ini query");
 			// }
 			if (query.registrasi) {
 				await store.dispatch(getCheckStatusSertifikat(query.registrasi));

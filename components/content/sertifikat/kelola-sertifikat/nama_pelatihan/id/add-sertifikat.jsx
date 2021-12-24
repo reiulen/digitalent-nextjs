@@ -560,16 +560,16 @@ export default function TambahMasterSertifikat({ token }) {
 						?.certificate_result_syllabus
 				);
 			}
-			console.log(
-				publishedCertificate?.certificate?.data?.certificate?.certificate_result
-			);
+			// console.log(
+			// 	publishedCertificate?.certificate?.data?.certificate?.certificate_result
+			// );
 		}
 	}, [publishedCertificate]);
 
 	const handleClickSimpanClone = () => {
 		// setShowModalClone(false);
 		const data = cloneData;
-		console.log(data, "ini data cuy");
+		// console.log(data, "ini data cuy");
 		setCertificate_type(cloneData.certificate.certificate_type);
 		setCertificate_name(cloneData.certificate.name);
 		setNumber_of_signatures(cloneData.certificate.number_of_signatures);

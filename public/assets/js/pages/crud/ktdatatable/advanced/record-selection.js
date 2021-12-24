@@ -216,7 +216,7 @@ var KTDatatableRecordSelectionDemo = function() {
             map(function(i, chk) {
                 return $(chk).val();
             });
-            console.log(ids);
+            // console.log(ids);
             var c = document.createDocumentFragment();
             for (var i = 0; i < ids.length; i++) {
                 var li = document.createElement('li');
