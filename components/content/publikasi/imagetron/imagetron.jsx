@@ -435,7 +435,7 @@ const Imagetron = ({ token }) => {
                             Imagetron
                         </h3>
                         {
-                            role_permission.permissions.includes("publikasi.imagetron.manage") || role_permission.roles.includes("Super Admin") ?
+                            role_permission?.permissions.includes("publikasi.imagetron.manage") || role_permission?.roles.includes("Super Admin") ?
                                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                                     <Link href="/publikasi/imagetron/tambah-imagetron">
                                         <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>

@@ -704,7 +704,7 @@ const Galeri = ({ token }) => {
                     <div className="card-header row border-0">
                         <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Galeri</h3>
                         {
-                            role_permission.permissions.includes("publikasi.gallery.manage") || role_permission.roles.includes("Super Admin") ?
+                            role_permission?.permissions.includes("publikasi.gallery.manage") || role_permission?.roles.includes("Super Admin") ?
                                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                                     <Link href="/publikasi/galeri/tambah-galeri">
                                         <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>

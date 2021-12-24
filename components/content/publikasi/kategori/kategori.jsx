@@ -255,7 +255,7 @@ const Kategori = ({ token }) => {
               Kategori
             </h3>
             {
-              role_permission.permissions.includes("publikasi.kategori.manage") || role_permission.roles.includes("Super Admin") ?
+              role_permission?.permissions.includes("publikasi.kategori.manage") || role_permission?.roles.includes("Super Admin") ?
                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                   <Link href="/publikasi/kategori/tambah-kategori">
                     <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
@@ -332,7 +332,7 @@ const Kategori = ({ token }) => {
                         <th>Nama</th>
                         <th>Jenis Kategori</th>
                         {
-                          role_permission.permissions.includes("publikasi.kategori.manage") || role_permission.roles.includes("Super Admin") ?
+                          role_permission?.permissions.includes("publikasi.kategori.manage") || role_permission?.roles.includes("Super Admin") ?
                             <th className="text-center">Aksi</th>
                             : null
                         }

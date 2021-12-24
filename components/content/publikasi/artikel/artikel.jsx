@@ -436,7 +436,7 @@ const Artikel = ({ token }) => {
               Artikel
             </h3>
             {
-              role_permission.permissions.includes("publikasi.artikel.manage") || role_permission.roles.includes("Super Admin") ?
+              role_permission?.permissions.includes("publikasi.artikel.manage") || role_permission?.roles.includes("Super Admin") ?
                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                   <Link href="/publikasi/artikel/tambah-artikel">
                     <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
@@ -518,7 +518,7 @@ const Artikel = ({ token }) => {
                         <th>Status</th>
                         <th>Role</th>
                         {
-                          role_permission.permissions.includes("publikasi.artikel.manage") || role_permission.roles.includes("Super Admin") ?
+                          role_permission?.permissions.includes("publikasi.artikel.manage") || role_permission?.roles.includes("Super Admin") ?
                             <th style={{ width: '9.5vw' }}>Aksi</th>
                             : null
                         }
@@ -596,7 +596,7 @@ const Artikel = ({ token }) => {
                                 {artikel.role[0].name}
                               </td>
                               {
-                                role_permission.permissions.includes("publikasi.artikel.manage") || role_permission.roles.includes("Super Admin") ?
+                                role_permission?.permissions.includes("publikasi.artikel.manage") || role_permission?.roles.includes("Super Admin") ?
                                   <td className="align-middle d-flex">
 
                                     <Link
