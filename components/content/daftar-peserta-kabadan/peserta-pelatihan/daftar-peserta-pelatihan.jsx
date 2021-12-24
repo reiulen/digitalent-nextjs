@@ -239,7 +239,19 @@ const DaftarPesertaPelatihan = ({ token }) => {
                               </span>
                             </td>
                             <td>
-                              <span className="label label-inline label-light-success font-weight-bold">
+                              <span className={
+																row.status === "tidak lulus administrasi" && "label label-inline statusPeserta-danger font-weight-bold" ||
+																row.status === "tidak lulus tes substansi" && "label label-inline statusPeserta-danger font-weight-bold" ||
+																row.status === "tidak lulus pelatihan" && "label label-inline statusPeserta-danger font-weight-bold" ||
+																row.status === "ditolak" && "label label-inline statusPeserta-danger font-weight-bold" ||
+																row.status === "seleksi administrasi" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+																row.status === "tes substansi" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+																row.status === "seleksi akhir" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+																row.status === "administrasi akhir" && "label label-inline select-pelatihan-warning font-weight-bold" ||
+																row.status === "diterima" && "label label-inline statusPeserta-success font-weight-bold" ||
+																row.status === "lulus pelatihan" && "label label-inline statusPeserta-success font-weight-bold" ||
+																row.status === "pelatihan" && "label label-inline select-pelatihan-primary font-weight-bold"
+															}>
                                 {capitalize(row.status)}
                               </span>
                             </td>
