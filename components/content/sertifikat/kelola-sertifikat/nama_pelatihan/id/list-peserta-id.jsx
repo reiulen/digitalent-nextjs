@@ -64,6 +64,7 @@ export default function ListPesertaID({ token }) {
 			Swal.hideLoading();
 		}
 	}, [loading]);
+	console.log(certificate);
 
 	const handleDownload = async (id, noRegis, name) => {
 		setLoading(true);

@@ -26,13 +26,18 @@ import {
 } from "../../../../../../utils/middleware/helper";
 import Cookies from "js-cookie";
 import Select from "react-select";
+import axios from "axios";
 
 export default function TambahMasterSertifikat({ token }) {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const { query } = router;
 	const token_permission = Cookies.get("token_permission");
-
+	const config = {
+		headers: {
+			Authorization: "Bearer " + token.token,
+		},
+	};
 	// #Div Reference Lembar 1
 	const divReference = useRef(null);
 	const divReferenceSilabus = useRef(null);
@@ -475,10 +480,28 @@ export default function TambahMasterSertifikat({ token }) {
 		setShowModalClone(false);
 	};
 
+	const [optionAcademy, setOptionAcademy] = useState({
+		label: "VSGA",
+		value: "1",
+	});
+
 	useEffect(() => {
 		console.log(background.includes("base64"));
 	}, [background]);
 
+	const getOptionsAcademy = async () => {
+		try {
+			const { data } = await axios.get(
+				`${process.env.END_POINT_API_SERTIFIKAT}api/option/clone-academy`,
+				config
+			);
+			if (data) {
+				console.log(data);
+			}
+		} catch (e) {
+			throw e;
+		}
+	};
 	return (
 		<PageWrapper>
 			{/* error START */}
@@ -538,6 +561,7 @@ export default function TambahMasterSertifikat({ token }) {
 								className="btn btn-primary-rounded-full"
 								onClick={() => {
 									setShowModalClone(true);
+									getOptionsAcademy();
 								}}
 							>
 								Clone Sertifikat
