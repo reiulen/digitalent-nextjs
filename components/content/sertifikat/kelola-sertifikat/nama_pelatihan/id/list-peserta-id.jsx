@@ -13,10 +13,12 @@ import axios from "axios";
 import { SweatAlert } from "../../../../../../utils/middleware/helper";
 // #Icon
 import QRCode from "qrcode.react";
+import { useDispatch } from "react-redux";
+
 export default function ListPesertaID({ token }) {
 	const router = useRouter();
 	const { query } = router;
-
+	const dispatch = useDispatch();
 	const { error, certificate } = useSelector(
 		(state) => state.publishCertificate
 	);

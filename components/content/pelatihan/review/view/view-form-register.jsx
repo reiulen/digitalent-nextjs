@@ -6,10 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepReviewPelatihan from "../../../../StepReviewPelatihan";
 import LoadingPage from "../../../../LoadingPage";
-import OptionsReference from "../../training/components/option-reference.component";
-import CheckboxReference from "../../training/components/checkbox-reference.component";
-import RadioReference from "../../training/components/radio-reference.component";
-
 import ViewStep2Component from "../../training/components/view-training/view-step2.component";
 
 import {
@@ -21,7 +17,9 @@ import {
   REVISI_REVIEW_RESET,
   TOLAK_REVIEW_RESET,
 } from "../../../../../redux/types/pelatihan/review.type";
+
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 const ReviewFormRegister = ({ token }) => {
   const router = useRouter();
@@ -119,7 +117,20 @@ const ReviewFormRegister = ({ token }) => {
       pelatian_id: parseInt(id),
       status: "ditolak",
     };
-    dispatch(tolakReviewPelatihan(data, token, token_permission));
+    Swal.fire({
+      title: "Apakah anda yakin?",
+      text: "Menolak pelatihan ini",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yakin",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(tolakReviewPelatihan(data, token, token_permission));
+      }
+    });
   };
 
   const handleSetuju = () => {
@@ -127,7 +138,20 @@ const ReviewFormRegister = ({ token }) => {
       pelatian_id: parseInt(id),
       status: "disetujui",
     };
-    dispatch(tolakReviewPelatihan(data, token, token_permission));
+    Swal.fire({
+      title: "Apakah anda yakin?",
+      text: "Menyetujui pelatihan ini",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yakin",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(tolakReviewPelatihan(data, token, token_permission));
+      }
+    });
   };
 
   const handleResetError = () => {
