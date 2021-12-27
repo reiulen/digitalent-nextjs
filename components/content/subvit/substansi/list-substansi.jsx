@@ -714,7 +714,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                                       </div>
                                       <div style={{ width: "100%" }}>
                                         <Card
-                                          onClick={() => setOpen(true)}
+                                          // onClick={() => setOpen(true)}
                                           style={{
                                             padding: "5px",
                                             marginTop: "15px",
