@@ -25,17 +25,11 @@ import { wrapper } from "../redux/store";
 import moment from "moment";
 import "moment/locale/id";
 import { useDispatch, useSelector } from "react-redux";
-import App from "next/app";
 import { getSidebar } from "../redux/actions/site-management/role.actions";
 
 import Layout from "../components/templates/layout.component";
-import { allSidebarReducer } from "../redux/reducers/site-management/role.reducers";
-import { signOut } from "next-auth/client";
-import { firebaseCloudMessaging } from "../messaging_get_token";
 
 function MyApp({ Component, pageProps }) {
-  const allSidebar = useSelector((state) => state.allSidebar);
-
   SimpleReactValidator.addLocale("id", {
     accepted: ":attribute harus diterima.",
     after: ":attribute harus lebih dari :date.",
@@ -80,7 +74,6 @@ function MyApp({ Component, pageProps }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // setToken();
     if (pageProps?.session?.user?.user?.data?.token) {
       if (!localStorage.getItem("sidebar")) {
         dispatch(getSidebar(pageProps?.session?.user?.user?.data?.token));
@@ -88,25 +81,6 @@ function MyApp({ Component, pageProps }) {
     }
   }, [dispatch, pageProps?.session?.user?.user?.data?.token]);
   moment.locale("id");
-
-  const setToken = async () => {
-    try {
-      const token = await firebaseCloudMessaging.init();
-      if (token) {
-        // console.log(token);
-        getMessage();
-      }
-    } catch (err) {
-      // console.log(err, "ini error");
-    }
-  };
-
-  const getMessage = () => {
-    const messaging = getMessaging();
-    onMessage(messaging, (payload) => {
-      // console.log("ada pesan notif", payload);
-    });
-  };
 
   return (
     <>

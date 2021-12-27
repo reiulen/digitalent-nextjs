@@ -168,28 +168,33 @@ const Table = ({ token }) => {
                     <div className="row my-5">
                       <div className="col-12 col-xl-6">
                         <div className="position-relative overflow-hidden">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Cari.."
-                            onChange={(e) => setKeyWord(e.target.value)}
-                          />
-                          <button
-                            type="button"
-                            onClick={(e)=>handleSubmit(e)}
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
+                          <form
+                            onSubmit={(e) => handleSubmit(e)}
                           >
-                            Cari
-                          </button>
+                            <IconSearch
+                              style={{ left: "10" }}
+                              className="left-center-absolute"
+                            />
+                            <input
+                              id="kt_datatable_search_query"
+                              type="text"
+                              className="form-control pl-10"
+                              placeholder="Cari.."
+                              onChange={(e) => setKeyWord(e.target.value)}
+                            />
+                            <button
+                              type="button"
+                              onClick={(e)=>handleSubmit(e)}
+                              className="btn bg-blue-primary text-white right-center-absolute"
+                              style={{
+                                borderTopLeftRadius: "0",
+                                borderBottomLeftRadius: "0",
+                              }}
+                            >
+                              Cari
+                            </button>
+                          </form>
+                          
                         </div>
                       </div>
                     </div>

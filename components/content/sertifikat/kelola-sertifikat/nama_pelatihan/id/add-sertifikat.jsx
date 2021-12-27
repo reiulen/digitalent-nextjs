@@ -416,10 +416,12 @@ export default function TambahMasterSertifikat({ token }) {
 							signature_certificate_image_syllabus[i]
 						);
 					}
+					if (enableSyllabus) {
+						syllabus.forEach((item, i) => {
+							formData.append(`syllabus[${i}]`, item);
+						});
+					}
 				}
-				syllabus.forEach((item, i) => {
-					formData.append(`syllabus[${i}]`, item);
-				});
 
 				formData.append("status_migrate_id", status);
 
@@ -515,6 +517,8 @@ export default function TambahMasterSertifikat({ token }) {
 	const [imagePreviewSyllabusClone, setImagePreviewSyllabusClone] =
 		useState(null);
 
+	const [disableSimpan, setDisableSimpan] = useState(false);
+
 	useEffect(() => {
 		if (allOptionAcademy?.academy?.data) {
 			setOptionAcademy(allOptionAcademy?.academy?.data);
@@ -560,35 +564,42 @@ export default function TambahMasterSertifikat({ token }) {
 						?.certificate_result_syllabus
 				);
 			}
-			// console.log(
-			// 	publishedCertificate?.certificate?.data?.certificate?.certificate_result
-			// );
+			setDisableSimpan(false);
 		}
 	}, [publishedCertificate]);
 
 	const handleClickSimpanClone = () => {
 		// setShowModalClone(false);
-		const data = cloneData;
-		// console.log(data, "ini data cuy");
 		setCertificate_type(cloneData.certificate.certificate_type);
 		setCertificate_name(cloneData.certificate.name);
 		setNumber_of_signatures(cloneData.certificate.number_of_signatures);
 		setHour(cloneData.certificate.training_hours);
-
+		if (cloneData.certificate.background != null) {
+			setBackground(
+				`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${cloneData.certificate.background}`
+			);
+		} else {
+			setBackground("");
+		}
+		//name
 		setSignature_certificate_name((prev) => {
-			let arr = [];
+			const arr = [];
+			const data = cloneData.signature.filter((item) => item != "name");
+			console.log(data);
 			cloneData.signature.forEach((item) => arr.push(item.name));
 			return arr;
 		});
 
+		//jabatan
 		setSignature_certificate_position((prev) => {
-			let arr = [];
+			const arr = [];
 			cloneData.signature.forEach((item) => arr.push(item.position));
 			return arr;
 		});
 
+		//image
 		setSignature_certificate_image((prev) => {
-			let arr = [];
+			const arr = [];
 			cloneData.signature.forEach((item) =>
 				arr.push(
 					`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${item.signature}`
@@ -596,19 +607,38 @@ export default function TambahMasterSertifikat({ token }) {
 			);
 			return arr;
 		});
+		//posisi translate
+		setSignature_certificate_set_position((prev) => {
+			const arr = [];
+			cloneData.signature.forEach((item) => arr.push(item.set_position));
+			return arr;
+		});
 
-		if (cloneData.certificate.background)
-			setBackground(
-				`${proccess.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${cloneData.certificate.background}`
-			);
+		//background
 
-		if (cloneData.certificate.background_syllabus) {
-			setBackground_syllabus(
-				`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${cloneData.certificate.background_syllabus}`
-			);
-		} else {
-			setBackground("");
+		//Lembar 2
+		if (cloneData.certificate.certificate_type == "2 lembar") {
+			if (cloneData.certificate.background_syllabus != null) {
+				setBackground_syllabus(
+					`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${cloneData.certificate.background_syllabus}`
+				);
+			} else {
+				setBackground_syllabus("");
+			}
+
+			if (cloneData.certificate.syllabus) {
+				setSyllabus((prev) => {
+					let arr = [];
+					arr = [...cloneData.certificate.syllabus];
+					// cloneData.certificate.syllabus.forEach((item) => arr.push(item));
+					return arr;
+				});
+			}
 		}
+		// handleClickSimpanClone();
+		//background syllabus
+
+		// return console.log(cloneData, "ini data cuy");
 
 		// console.log(data);
 		// setNumber_of_signatures();
@@ -723,6 +753,7 @@ export default function TambahMasterSertifikat({ token }) {
 											isDisabled={disableTraining ? true : false}
 											onChange={(e) => {
 												setTraining(e);
+												setDisableSimpan(true);
 											}}
 										/>
 									</div>
@@ -761,9 +792,10 @@ export default function TambahMasterSertifikat({ token }) {
 									</Button>
 									<button
 										className="btn btn-primary-rounded-full"
-										onClick={() => {
+										onClick={(e) => {
 											handleClickSimpanClone();
 										}}
+										disabled={disableSimpan ? true : false}
 									>
 										Simpan
 									</button>
@@ -937,8 +969,13 @@ export default function TambahMasterSertifikat({ token }) {
 																			}}
 																			className="my-auto m-0 p-0 test"
 																			style={{ margin: "0px" }}
+																			key={signature_certificate_name[i]}
+																			id={i}
 																		></div>
 																	) : (
+																		// <Name
+																		// 	name={signature_certificate_name[i]}
+																		// />
 																		"Nama"
 																	)}
 																</div>

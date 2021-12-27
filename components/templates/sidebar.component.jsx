@@ -417,8 +417,8 @@ const Sidebar = ({ session }) => {
                                             }`}
                                             aria-haspopup="true"
                                             onClick={(e) =>{
-                                              e.preventDefault()
-                                              location.reload();
+                                              // e.preventDefault()
+                                              // location.reload();
                                               handleActiveSubmenu(
                                                 e,
                                                 index,
