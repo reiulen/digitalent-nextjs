@@ -18,6 +18,7 @@ import {
 import { NEW_TRAINING_STEP1_RESET } from "../../../../../redux/types/pelatihan/training.type";
 
 import { putTrainingStep3 } from "../../../../../redux/actions/pelatihan/training.actions";
+import moment from "moment";
 
 const EditCommitmentStep3 = ({ token, propsStep }) => {
   const editorRef = useRef();
