@@ -143,7 +143,7 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allMitraSite.data?.list_mitras.length === 0 ? (
+                      {allMitraSite.data?.list_mitras.length === 0 || allMitraSite.data?.list_mitras === undefined ? (
                         <td className="align-middle text-center" colSpan="6">
                           Data Kosong
                         </td>

@@ -7,7 +7,7 @@ import SimpleReactValidator from 'simple-react-validator'
 import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from "next/router";
-// import { withContext as ReactTags } from "react-tag-input"
+import moment from "moment";
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import DatePicker from 'react-datepicker'
