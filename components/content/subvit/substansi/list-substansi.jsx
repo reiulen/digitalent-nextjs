@@ -364,7 +364,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.substansi.manage"
                         ) ? (
-                          <th>Aksi</th>
+                          <th style={{ width: "250px" }}>Aksi</th>
                         ) : dataPermission &&
                           dataPermission.permissions.includes(
                             "subvit.view" && "subvit.substansi.view"

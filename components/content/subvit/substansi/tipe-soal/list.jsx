@@ -16,6 +16,7 @@ import {
   clearErrors,
 } from "../../../../../redux/actions/subvit/subtance-question-type.actions";
 import { DELETE_SUBTANCE_QUESTION_TYPE_RESET } from "../../../../../redux/types/subvit/subtance-question-type.type";
+import Swal from "sweetalert2";
 
 const ListTipeSoal = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
