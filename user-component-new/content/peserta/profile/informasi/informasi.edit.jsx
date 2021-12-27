@@ -78,7 +78,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 		(dataPribadi && dataPribadi.File_ktp) || "Belum ada file"
 	);
 	// const [ktp, setKtp] = useState("");
-  const [ktp, setKtp] = useState((dataPribadi && dataPribadi?.File_ktp) || "");
+	const [ktp, setKtp] = useState((dataPribadi && dataPribadi?.File_ktp) || "");
 	const [ktpPreview, setKtpPreview] = useState(
 		(dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
 	);
@@ -458,14 +458,16 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 						<Form.Group as={Col} md={6}>
 							<div className="d-flex justify-content-between">
 								<Form.Label className={style.label}>Email</Form.Label>
-								<a
-									className={`${style.label} text-primary cursor-pointer`}
-									onClick={() => {
-										router.push("/peserta/pengaturan");
-									}}
-								>
-									Ubah
-								</a>
+								{!wizzard && (
+									<a
+										className={`${style.label} text-primary cursor-pointer`}
+										onClick={() => {
+											router.push("/peserta/pengaturan");
+										}}
+									>
+										Ubah
+									</a>
+								)}
 							</div>{" "}
 							<Form.Control
 								className={style.formControl}
@@ -526,14 +528,16 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 						<Form.Group as={Col} md={6} controlId="formGridPassword">
 							<div className="d-flex justify-content-between">
 								<Form.Label className={style.label}>Nomor Handphone</Form.Label>
-								<a
-									className={`${style.label} text-primary cursor-pointer`}
-									onClick={() => {
-										router.push("/peserta/pengaturan");
-									}}
-								>
-									Ubah
-								</a>
+								{!wizzard && (
+									<a
+										className={`${style.label} text-primary cursor-pointer`}
+										onClick={() => {
+											router.push("/peserta/pengaturan");
+										}}
+									>
+										Ubah
+									</a>
+								)}
 							</div>
 
 							<Form.Control

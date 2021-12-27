@@ -28,7 +28,7 @@ export default function DashboardPage(props) {
       loading: function loadingNow() {
         return <LoadingSkeleton />;
       },
-      ssr: false
+      ssr: false,
     }
   );
   const MyMap = dynamic(

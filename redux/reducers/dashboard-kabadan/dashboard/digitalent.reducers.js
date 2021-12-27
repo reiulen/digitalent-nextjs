@@ -45,7 +45,7 @@ import {
 
 // TOTAL DATA PENDAFTAR
 export const digitalentTotalDataPendaftarReducer = (
-  state = { totalPendaftar: [] },
+  state = { totalPendaftar: null },
   action
 ) => {
   switch (action.type) {
@@ -79,7 +79,7 @@ export const digitalentTotalDataPendaftarReducer = (
 
 // TOTAL PENGGUNA
 export const digitalentTotalPenggunaReducer = (
-  state = { totalPengguna: [] },
+  state = { totalPengguna: null },
   action
 ) => {
   switch (action.type) {
@@ -113,7 +113,7 @@ export const digitalentTotalPenggunaReducer = (
 
 // STATISTIK PESERTA
 export const digitalentStatistikAkademiPesertaReducer = (
-  state = { statistikAkademiPeserta: [] },
+  state = { statistikAkademiPeserta: null },
   action
 ) => {
   switch (action.type) {
@@ -146,7 +146,7 @@ export const digitalentStatistikAkademiPesertaReducer = (
 };
 
 export const digitalentStatistikAkademiPendaftarReducer = (
-  state = { statistikAkademiPendaftar: [] },
+  state = { statistikAkademiPendaftar: null },
   action
 ) => {
   switch (action.type) {
@@ -180,7 +180,7 @@ export const digitalentStatistikAkademiPendaftarReducer = (
 
 //   STATISTIK MITRA
 export const digitalentStatistikMitraPesertaReducer = (
-  state = { statistikMitraPeserta: [] },
+  state = { statistikMitraPeserta: null },
   action
 ) => {
   switch (action.type) {
@@ -213,7 +213,7 @@ export const digitalentStatistikMitraPesertaReducer = (
 };
 
 export const digitalentStatistikMitraPendaftarReducer = (
-  state = { statistikMitraPendaftar: [] },
+  state = { statistikMitraPendaftar: null },
   action
 ) => {
   switch (action.type) {
@@ -247,7 +247,7 @@ export const digitalentStatistikMitraPendaftarReducer = (
 
 //   TABLE PENDAFTARAN DIBUKA
 export const digitalentTablePendaftaranReducer = (
-  state = { tablePendaftar: [] },
+  state = { tablePendaftar: null },
   action
 ) => {
   switch (action.type) {
@@ -281,7 +281,7 @@ export const digitalentTablePendaftaranReducer = (
 
 // PENYEBARAN PESERTA WILAYAH
 export const digitalentPesertaWilayahReducer = (
-  state = { wilayah: [] },
+  state = { wilayah: null },
   action
 ) => {
   switch (action.type) {
@@ -315,7 +315,7 @@ export const digitalentPesertaWilayahReducer = (
 
 // PROVINSI PENDAFTAR || PESERTA
 export const digitalentProvinsiPesertaReducer = (
-  state = { provinsiPeserta: [] },
+  state = { provinsiPeserta: null },
   action
 ) => {
   switch (action.type) {
@@ -347,7 +347,7 @@ export const digitalentProvinsiPesertaReducer = (
   }
 };
 export const digitalentProvinsiPendaftarReducer = (
-  state = { provinsiPendaftar: [] },
+  state = { provinsiPendaftar: null },
   action
 ) => {
   switch (action.type) {
@@ -381,7 +381,7 @@ export const digitalentProvinsiPendaftarReducer = (
 
 // DATA PRIBADI UMUR | JENIS KELAMIN | PEKERJAAN
 export const digitalentDataPribadiReducer = (
-  state = { dataPribadi: [] },
+  state = { dataPribadi: null },
   action
 ) => {
   switch (action.type) {
