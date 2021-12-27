@@ -129,7 +129,7 @@ const Table = ({ token }) => {
         sessionStorage.setItem("array2", JSON.stringify(data.data));
         localStorage.setItem("array2", data.data);
       } catch (error) {
-        Swal.fire("Oops...", `${error.response.data.message}`, "error");
+        // Swal.fire("Oops...", `${error.response.data.message}`, "error");
       }
     }
     getDataMenu(token);
@@ -148,184 +148,182 @@ const Table = ({ token }) => {
             {localStorage
               .getItem("permissions")
               .includes("site_management.setting.menu.manage") && (
-              <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
-                <button
-                  className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
-                  onClick={() => firstPush()}
-                >
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Menu
-                </button>
-              </div>
-            )}
+                <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
+                  <button
+                    className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
+                    onClick={() => firstPush()}
+                  >
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah Menu
+                  </button>
+                </div>
+              )}
           </div>
           <div className="card-body">
             <form onSubmit={submit}>
-              {array.map((parrent, i) => {
-                return (
-                  <div key={i}>
-                    <div>
-                      <div className="row">
-                        <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                          <div className="form-group">
-                            <label>Menu {i + 1}</label>
-                            <input
-                              value={parrent.name}
-                              name="inputName"
-                              onChange={(e) => handleChangeInput(e, i)}
-                              type="text"
-                              className="form-control"
-                              placeholder="Masukkan Menu"
-                              onBlur={() =>
-                                simpleValidator.current.showMessageFor("menu")
-                              }
-                            />
-                            {simpleValidator.current.message(
-                              "menu",
-                              parrent.name,
-                              "required",
-                              { className: "text-danger" }
-                            )}
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                          <div className="form-group">
-                            <label>Halaman {i + 1}</label>
-                            <select
-                              name=""
-                              id=""
-                              className="form-control"
-                              defaultValue={parrent.page_id}
-                              // value={parrent.page_id}
-                              onChange={(e) => handleChangeInput(e, i)}
-                              onBlur={(e) => {
-                                simpleValidator.current.showMessageFor(
-                                  "halaman"
-                                );
-                              }}
-                            >
-                              <option selected disabled value="">
-                                -- Halaman --
-                              </option>
-                              {!allPage ||
-                              (allPage &&
-                                allPage.data?.setting_page.length === 0) ? (
-                                <option value="">Data kosong</option>
-                              ) : (
-                                allPage &&
-                                allPage.data?.setting_page
-                                  .filter((row) => {
-                                    if (row.status === 1) {
-                                      return row;
-                                    }
-                                  })
-                                  .map((item) => {
-                                    return (
-                                      <option key={item.id} value={item.id}>
-                                        {item.name}
-                                      </option>
-                                    );
-                                  })
+              {array.length > 0 ? (
+                array.map((parrent, i) => {
+                  return (
+                    <div key={i}>
+                      <div>
+                        <div className="row">
+                          <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <div className="form-group">
+                              <label>Menu {i + 1}</label>
+                              <input
+                                value={parrent.name}
+                                name="inputName"
+                                onChange={(e) => handleChangeInput(e, i)}
+                                type="text"
+                                className="form-control"
+                                placeholder="Masukkan Menu"
+                                onBlur={() =>
+                                  simpleValidator.current.showMessageFor("menu")
+                                }
+                              />
+                              {simpleValidator.current.message(
+                                "menu",
+                                parrent.name,
+                                "required",
+                                { className: "text-danger" }
                               )}
-                            </select>
-
-                            {simpleValidator.current.message(
-                              "halaman",
-                              parrent.page_id || parrent.id,
-                              "required",
-                              { className: "text-danger" }
-                            )}
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                          <div className="form-group">
-                            <label>Status</label>
-                            <select
-                              className="form-control"
-                              name="status"
-                              key={i}
-                              defaultValue={parrent.status}
-                              onChange={(e) => handleChangeInput(e, i)}
-                              onBlur={(e) => {
-                                simpleValidator.current.showMessageFor(
-                                  "status"
-                                );
-                              }}
-                            >
-                              <option value="" disabled>
-                                Pilih Status
-                              </option>
-                              <option value="1">Aktif</option>
-                              <option value="0">Tidak Aktif</option>
-                            </select>
-                            {simpleValidator.current.message(
-                              "status",
-                              parrent.status,
-                              "required",
-                              { className: "text-danger" }
-                            )}
-                          </div>
-                        </div>
-                        {localStorage
-                          .getItem("permissions")
-                          .includes("site_management.setting.menu.manage") && (
-                          <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                            <div className="d-flex align-items-center h-100">
-                              <div className={`${styles.deleteMenu}`}>
-                                <button
-                                  type="button"
-                                  className="col-11 col-sm-8 col-md-4 col-lg-4 col-xl-3 btn"
-                                  style={{
-                                    backgroundColor: "#EE2D41",
-                                    position: "absolute",
-                                    top: "25px",
-                                  }}
-                                  onClick={() => handleDeleteMenu(i)}
-                                >
-                                  <IconDelete />
-                                </button>
-                              </div>
-                              <Modal />
                             </div>
                           </div>
-                        )}
+                          <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <div className="form-group">
+                              <label>Halaman {i + 1}</label>
+                              <select
+                                name=""
+                                id=""
+                                className="form-control"
+                                defaultValue={parrent.page_id}
+                                // value={parrent.page_id}
+                                onChange={(e) => handleChangeInput(e, i)}
+                                onBlur={(e) => {
+                                  simpleValidator.current.showMessageFor(
+                                    "halaman"
+                                  );
+                                }}
+                              >
+                                <option selected disabled value="">
+                                  -- Halaman --
+                                </option>
+                                {!allPage ||
+                                  (allPage &&
+                                    allPage.data?.setting_page.length === 0) ? (
+                                  <option value="">Data kosong</option>
+                                ) : (
+                                  allPage &&
+                                  allPage.data?.setting_page
+                                    .filter((row) => {
+                                      if (row.status === 1) {
+                                        return row;
+                                      }
+                                    })
+                                    .map((item) => {
+                                      return (
+                                        <option key={item.id} value={item.id}>
+                                          {item.name}
+                                        </option>
+                                      );
+                                    })
+                                )}
+                              </select>
+
+                              {simpleValidator.current.message(
+                                "halaman",
+                                parrent.page_id || parrent.id,
+                                "required",
+                                { className: "text-danger" }
+                              )}
+                            </div>
+                          </div>
+                          <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                            <div className="form-group">
+                              <label>Status</label>
+                              <select
+                                className="form-control"
+                                name="status"
+                                key={i}
+                                defaultValue={parrent.status}
+                                onChange={(e) => handleChangeInput(e, i)}
+                                onBlur={(e) => {
+                                  simpleValidator.current.showMessageFor(
+                                    "status"
+                                  );
+                                }}
+                              >
+                                <option value="" disabled>
+                                  Pilih Status
+                                </option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
+                              </select>
+                              {simpleValidator.current.message(
+                                "status",
+                                parrent.status,
+                                "required",
+                                { className: "text-danger" }
+                              )}
+                            </div>
+                          </div>
+                          {localStorage
+                            .getItem("permissions")
+                            .includes(
+                              "site_management.setting.menu.manage"
+                            ) && (
+                              <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                                <div className="d-flex align-items-center h-100">
+                                  <div className={`${styles.deleteMenu}`}>
+                                    <button
+                                      type="button"
+                                      className="col-11 col-sm-8 col-md-4 col-lg-4 col-xl-3 btn"
+                                      style={{
+                                        backgroundColor: "#EE2D41",
+                                        position: "absolute",
+                                        top: "25px",
+                                      }}
+                                      onClick={() => handleDeleteMenu(i)}
+                                    >
+                                      <IconDelete />
+                                    </button>
+                                  </div>
+                                  <Modal />
+                                </div>
+                              </div>
+                            )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-
-              {!array.length ? (
+                  );
+                })
+              ) : (
                 <div className="d-flex justify-content-center py-5">
                   Data kosong
                 </div>
-              ) : (
-                ""
               )}
 
-              {!array.length ? null : (
-                <div className="form-group row mt-10 mt-sm-5">
-                  <div className="col-sm-12 d-flex justify-content-end">
-                    <button
-                      className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 ${localStorage
-                        .getItem("permissions")
-                        .includes("site_management.setting.menu.manage") ? "" : "d-none"}`}
-                      type="button"
-                      onClick={() => cancel()}
-                    >
-                      Batal
-                    </button>
-                    <button
-                      type="submit"
-                      className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill ${localStorage
-                        .getItem("permissions")
-                        .includes("site_management.setting.menu.manage") ? "" : "d-none"}`}
-                    >
-                      Simpan
-                    </button>
-                  </div>
+              <div className="form-group row mt-10 mt-sm-5">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <button
+                    className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 ${localStorage
+                      .getItem("permissions")
+                      .includes("site_management.setting.menu.manage") ? "" : "d-none"}`}
+                    type="button"
+                    onClick={() => cancel()}
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="submit"
+                    className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill ${localStorage
+                      .getItem("permissions")
+                      .includes("site_management.setting.menu.manage") ? "" : "d-none"}`}
+                  >
+                    Simpan
+                  </button>
                 </div>
-              )}
+              </div>
             </form>
           </div>
         </div>

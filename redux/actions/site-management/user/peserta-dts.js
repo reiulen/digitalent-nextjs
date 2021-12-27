@@ -26,7 +26,7 @@ export const getAllListsPeserta =
         };
 
         const { data } = await axios.get(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/participant/all`,
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/participant/all`,
           {
             params,
             headers: {
@@ -41,6 +41,7 @@ export const getAllListsPeserta =
         });
 
       } catch (error) {
+        console.log("peserta", error)
         dispatch({
           type: LIST_PESERTA_FAIL,
         });

@@ -39,25 +39,27 @@ const EditSoalTrivia = ({ token, tokenPermission }) => {
   );
   let { id } = router.query;
 
-  const [methodAdd, setMethodAdd] = useState(trivia_question_detail.type);
+  const [methodAdd, setMethodAdd] = useState(trivia_question_detail?.type);
 
-  const [question, setQuestion] = useState(trivia_question_detail.question);
+  const [question, setQuestion] = useState(trivia_question_detail?.question);
   const [question_image, setQuestionImage] = useState(
-    trivia_question_detail.question_image
+    trivia_question_detail?.question_image
   );
   const [question_image_preview, setQuestionImagePreview] = useState(
     process.env.END_POINT_API_IMAGE_SUBVIT +
-      trivia_question_detail.question_image_preview
+      trivia_question_detail?.question_image_preview
   );
   const [question_image_name, setQuestionImageName] = useState("Pilih Gambar");
 
   const [answer, setAnswer] = useState(
-    JSON.parse(trivia_question_detail.answer)
+    JSON.parse(trivia_question_detail?.answer)
   );
 
-  const [duration, setDuration] = useState(trivia_question_detail.duration);
-  const [answerKey, setAnswerKey] = useState(trivia_question_detail.answer_key);
-  const [status, setStatus] = useState(trivia_question_detail.status);
+  const [duration, setDuration] = useState(trivia_question_detail?.duration);
+  const [answerKey, setAnswerKey] = useState(
+    trivia_question_detail?.answer_key
+  );
+  const [status, setStatus] = useState(trivia_question_detail?.status);
 
   useEffect(() => {
     if (success) {
