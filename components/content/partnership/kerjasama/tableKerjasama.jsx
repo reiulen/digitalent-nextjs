@@ -23,6 +23,7 @@ import moment from "moment";
 import Image from "next/image";
 import Select from "react-select";
 import AlertBar from "../components/BarAlert";
+import {Modal} from "react-bootstrap"
 
 import {
   fetchAllMK,
@@ -59,6 +60,7 @@ const Table = ({ token }) => {
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
   const [isChangeOption, setIsChangeOption] = useState(false);
+  const [showModal, setShowModal] = useState(false)
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -67,11 +69,13 @@ const Table = ({ token }) => {
     dispatch(changeValueMitra(valueMitra));
     dispatch(changeValueStatus(valueStatus));
     dispatch(changeValueKerjaSama(valueKerjaSama));
+    setShowModal(false)
   };
   const resetValueSort = () => {
     selectRefKerjasama.select.clearValue();
     selectRefMitra.select.clearValue();
     selectRefStatus.select.clearValue();
+    setShowModal(false)
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
@@ -376,6 +380,7 @@ const Table = ({ token }) => {
                           data-toggle="modal"
                           data-target="#exampleModalCenter"
                           style={{ color: "#464646"}}
+                          onClick={() => setShowModal(true)}
                         >
                           <div className="d-flex align-items-center">
                             <IconFilter className="mr-3" />
@@ -385,97 +390,104 @@ const Table = ({ token }) => {
                         </button>
 
                         {/* modal */}
-                        <form className="form text-left">
-                          <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div className="modal-dialog modal-dialog-centered" role="document">
-                              <div className="modal-content">
-                                <div className="modal-header">
-                                  <h5 className="modal-title" id="exampleModalLongTitle">
-                                    Filter
-                                  </h5>
-                                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <IconClose />
-                                  </button>
-                                </div>
-                                <div className="modal-body text-left" style={{ height: "400px" }}>
-                                  <div className="fv-row mb-10">
-                                    <label className="required fw-bold fs-6 mb-2">Mitra</label>
-                                    <Select
-                                      ref={(ref) => (selectRefMitra = ref)}
-                                      className="basic-single"
-                                      classNamePrefix="select"
-                                      placeholder="Semua"
-                                      isDisabled={false}
-                                      isLoading={false}
-                                      isClearable={false}
-                                      isRtl={false}
-                                      isSearchable={true}
-                                      name="color"
-                                      onChange={(e) => setValueMitra(e?.name)}
-                                      options={allMK?.stateListMitra}
-                                    />
-                                  </div>
-                                  <div className="fv-row mb-10">
-                                    <label className="required fw-bold fs-6 mb-2">Kategori Kerjasama</label>
-                                    <Select
-                                      ref={(ref) => (selectRefKerjasama = ref)}
-                                      className="basic-single"
-                                      classNamePrefix="select"
-                                      placeholder="Semua"
-                                      isDisabled={false}
-                                      isLoading={false}
-                                      isClearable={false}
-                                      isRtl={false}
-                                      isSearchable={true}
-                                      name="color"
-                                      onChange={(e) => setValueKerjaSama(e?.cooperation_categories)}
-                                      options={allMK?.stateListKerjaSama}
-                                    />
-                                  </div>
-                                  <div className="fv-row mb-10">
-                                    <label className="required fw-bold fs-6 mb-2">Status</label>
-                                    <Select
-                                      ref={(ref) => (selectRefStatus = ref)}
-                                      className="basic-single"
-                                      classNamePrefix="select"
-                                      placeholder="Semua"
-                                      isDisabled={false}
-                                      isLoading={false}
-                                      isClearable={false}
-                                      isRtl={false}
-                                      isSearchable={true}
-                                      name="color"
-                                      onChange={(e) => setValueStatus(e?.name_en)}
-                                      options={allMK?.stateListStatus}
-                                    />
-                                  </div>
-                                </div>
-                                <div className="modal-footer">
-                                  <div className="d-flex justify-content-end align-items-center">
-                                    <button
-                                      className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
-                                      type="button"
-                                      data-dismiss="modal"
-                                      aria-label="Close"
-                                      onClick={() => resetValueSort()}
-                                    >
-                                      Reset
-                                    </button>
-                                    <button
-                                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                                      type="button"
-                                      data-dismiss="modal"
-                                      aria-label="Close"
-                                      onClick={(e) => handleSubmitSearchMany(e)}
-                                    >
-                                      Terapkan
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
+                        <Modal
+                          centered={true}
+                          show={showModal}
+                          onHide={() => setShowModal(false)}
+                        >
+                          <Modal.Header>
+                            <h5 className="modal-title" id="exampleModalLongTitle">
+                              Filter
+                            </h5>
+                            <button 
+                              type="button" 
+                              className="close" 
+                              data-dismiss="modal" 
+                              aria-label="Close"
+                              onClick={() => setShowModal(false)}
+                            >
+                              <IconClose />
+                            </button>
+                          </Modal.Header>
+                          <Modal.Body
+                            style={{ height: "400px" }}
+                            className="text-left"
+                          >
+                            <div className="fv-row mb-10">
+                              <label className="required fw-bold fs-6 mb-2">Mitra</label>
+                              <Select
+                                ref={(ref) => (selectRefMitra = ref)}
+                                className="basic-single"
+                                classNamePrefix="select"
+                                placeholder="Semua"
+                                isDisabled={false}
+                                isLoading={false}
+                                isClearable={false}
+                                isRtl={false}
+                                isSearchable={true}
+                                name="color"
+                                onChange={(e) => setValueMitra(e?.name)}
+                                options={allMK?.stateListMitra}
+                              />
                             </div>
-                          </div>
-                        </form>
+                            <div className="fv-row mb-10">
+                              <label className="required fw-bold fs-6 mb-2">Kategori Kerjasama</label>
+                              <Select
+                                ref={(ref) => (selectRefKerjasama = ref)}
+                                className="basic-single"
+                                classNamePrefix="select"
+                                placeholder="Semua"
+                                isDisabled={false}
+                                isLoading={false}
+                                isClearable={false}
+                                isRtl={false}
+                                isSearchable={true}
+                                name="color"
+                                onChange={(e) => setValueKerjaSama(e?.cooperation_categories)}
+                                options={allMK?.stateListKerjaSama}
+                              />
+                            </div>
+                            <div className="fv-row mb-10">
+                              <label className="required fw-bold fs-6 mb-2">Status</label>
+                              <Select
+                                ref={(ref) => (selectRefStatus = ref)}
+                                className="basic-single"
+                                classNamePrefix="select"
+                                placeholder="Semua"
+                                isDisabled={false}
+                                isLoading={false}
+                                isClearable={false}
+                                isRtl={false}
+                                isSearchable={true}
+                                name="color"
+                                onChange={(e) => setValueStatus(e?.name_en)}
+                                options={allMK?.stateListStatus}
+                              />
+                            </div>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <div className="d-flex justify-content-end align-items-center">
+                              <button
+                                className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
+                                type="button"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={() => resetValueSort()}
+                              >
+                                Reset
+                              </button>
+                              <button
+                                className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                                type="button"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={(e) => handleSubmitSearchMany(e)}
+                              >
+                                Terapkan
+                              </button>
+                            </div>
+                          </Modal.Footer>
+                        </Modal>
                         {/* end modal */}
 
                         {/* btn export */}

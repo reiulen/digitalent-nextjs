@@ -301,8 +301,17 @@ export default function DashboardPage({ token }) {
               Berdasarkan Pengajuan Aktif & Tidak Aktif
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              {allDashboard?.data_dashboard?.data?.cooperation_active +
-                allDashboard?.data_dashboard?.data?.cooperation_approved}
+              {
+                allDashboard && 
+                allDashboard.data_dashboard && 
+                allDashboard.data_dashboard.data && 
+                allDashboard.data_dashboard.data.cooperation_active && 
+                allDashboard.data_dashboard.data.cooperation_approved ?
+                  allDashboard?.data_dashboard?.data?.cooperation_active +
+                  allDashboard?.data_dashboard?.data?.cooperation_approved
+                :
+                  0
+              }
               &nbsp; Total Aktif dan Tidak Aktif
             </h5>
             <div className="wrapper-chart-pie">
@@ -399,14 +408,32 @@ export default function DashboardPage({ token }) {
               Berdasarkan Pengajuan Akan Berakhir & Ditolak
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              {allDashboard?.data_dashboard?.data?.cooperation_will_expired +
-                allDashboard?.data_dashboard?.data?.cooperation_rejected}{" "}
-              Total Akan Berakhir & Ditolak
+              {
+                allDashboard &&
+                allDashboard.data_dashboard &&
+                allDashboard.data_dashboard.data &&
+                allDashboard.data_dashboard.data.cooperation_will_expired &&
+                allDashboard.data_dashboard.data.cooperation_rejected ?
+                  allDashboard?.data_dashboard?.data?.cooperation_will_expired +
+                  allDashboard?.data_dashboard?.data?.cooperation_rejected
+                :
+                  0
+              }
+              &nbsp;Total Akan Berakhir & Ditolak
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
-                {allDashboard?.data_dashboard?.data?.cooperation_will_expired +
-                  allDashboard?.data_dashboard?.data?.cooperation_rejected}
+              {
+                allDashboard &&
+                allDashboard.data_dashboard &&
+                allDashboard.data_dashboard.data &&
+                allDashboard.data_dashboard.data.cooperation_will_expired &&
+                allDashboard.data_dashboard.data.cooperation_rejected ?
+                  allDashboard?.data_dashboard?.data?.cooperation_will_expired +
+                  allDashboard?.data_dashboard?.data?.cooperation_rejected
+                :
+                  0
+              }
               </span>
 
               <div className="col-12">
