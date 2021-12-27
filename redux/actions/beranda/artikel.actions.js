@@ -124,6 +124,7 @@ export const getKategoriBerandaArtikel = () => async dispatch => {
         })
 
     } catch (error) {
+        console.log (error)
         dispatch({
             type: KATEGORI_BERANDA_ARTIKEL_FAIL,
             payload: error.response.data.message,
