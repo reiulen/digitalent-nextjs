@@ -457,6 +457,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                 {successFile ? (
                   <div className="mb-5">
                     <h2 className="text-success">Sukses Import Soal</h2>
+
                     <span className="text-muted">
                       {survey_question_file.success +
                         survey_question_file.failed}{" "}
@@ -464,6 +465,15 @@ const StepTwo = ({ token, tokenPermission }) => {
                       Import | {survey_question_file.failed} Gagal di import
                     </span>
                   </div>
+                ) : successImages ? (
+                  <>
+                    {" "}
+                    {successImages ? (
+                      <h2 className="text-success">Sukses Import Images</h2>
+                    ) : (
+                      <h2 className="text-success">Sukses Import Soal</h2>
+                    )}
+                  </>
                 ) : (
                   ""
                 )}

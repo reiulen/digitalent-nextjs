@@ -344,12 +344,12 @@ const ListSurvey = ({ token, tokenPermission }) => {
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.survey.manage"
                         ) ? (
-                          <th style={{ width: "10px" }}>Aksi</th>
+                          <th style={{ width: "250px" }}>Aksi</th>
                         ) : dataPermission &&
                           dataPermission.permissions.includes(
                             "subvit.view" && "subvit.survey.view"
                           ) ? (
-                          <th style={{ width: "10px" }}>Aksi</th>
+                          <th style={{ width: "250px" }}>Aksi</th>
                         ) : (
                           ""
                         )}
