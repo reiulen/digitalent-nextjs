@@ -10,6 +10,7 @@ import { fetchListCooperationSelect, changeCooperationSelectByID, fetchListCoope
 import axios from "axios";
 import AlertBar from "../../components/BarAlert";
 import Cookies from "js-cookie"
+import moment from "moment";
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();

@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
+import moment from "moment";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 

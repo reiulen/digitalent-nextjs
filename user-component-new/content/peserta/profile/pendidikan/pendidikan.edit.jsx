@@ -206,7 +206,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let data = {};
-    console.log (simpleValidator.current)
     if (
       !asalSekolah.includes("Lainnya") ||
       jengjangPendidikan.label != "SMA/Sederajat"
@@ -318,7 +317,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         }
       }
 
-      // dispatch(updateProfilePendidikan(data, token));
+      dispatch(updateProfilePendidikan(data, token));
       window.scrollTo(0, 0);
     } else {
      
