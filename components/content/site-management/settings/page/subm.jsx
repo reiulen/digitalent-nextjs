@@ -295,6 +295,8 @@ export default function SUBM(props) {
     
   };
 
+  console.log(listTraining)
+
   return (
     <div className="row">
       <div className="col-xl-11 styling-content-pelatihan mt-5">

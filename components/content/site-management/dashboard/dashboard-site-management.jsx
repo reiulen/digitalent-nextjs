@@ -93,7 +93,9 @@ const DashboardSiteManagement = ({ token, user }) => {
 		);
 	});
 
-	const tablePeserta = allDataPeserta.map((item, index) => {
+	const tablePeserta = allDataPeserta.filter(item => {
+		return item.provinsi !== ""
+	}).map((item, index) => {
 		return (
 			<tr className="" key={index}>
 				<div className="row justify-content-between align-items-center ml-0 mr-10">
@@ -256,7 +258,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 										{/* {allDataPeserta &&
 											allDataPeserta.length > 0 &&
 											allDataPeserta[0].totalPeserta}{" "} */}
-										{allListPeserta?.data?.data?.total} User
+										{allDataPeserta[0]?.totalPeserta ? allDataPeserta[0].totalPeserta : 0 } User
 									</p>
 									<div className="ml-auto mx-7 my-4">
 										<button
