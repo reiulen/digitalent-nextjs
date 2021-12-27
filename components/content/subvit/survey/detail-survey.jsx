@@ -18,6 +18,7 @@ import {
   clearErrors,
   getAllSurveyQuestionDetail,
 } from "../../../../redux/actions/subvit/survey-question-detail.action";
+import Swal from "sweetalert2";
 
 const DetailSurvey = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();

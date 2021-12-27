@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
+import ViewStep3Component from "../components/view-training/view-step3.component";
 
 const ViewTrainingStep3 = () => {
   const router = useRouter();
@@ -14,9 +14,6 @@ const ViewTrainingStep3 = () => {
   );
 
   const { id } = router.query;
-
-  const [komitmenPeserta] = useState(review.komitmen === "1" ? "Ya" : "Tidak");
-  const [formKomitmen] = useState(review.deskripsi || "-");
 
   return (
     <PageWrapper>
@@ -35,26 +32,7 @@ const ViewTrainingStep3 = () => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
-
-            <div className="row">
-              <div className="col-md-12">
-                <p className="text-neutral-body mb-2 fz-14">Komitmen Peserta</p>
-                <p className="fz-16" style={{ color: "#1f1f1f" }}>
-                  {komitmenPeserta}
-                </p>
-              </div>
-              {review.komitmen === "1" && (
-                <div className="col-md-12 mt-4">
-                  <p className="text-neutral-body mb-2 fz-14">Form Komitmen</p>
-                  <div
-                    className="border px-4 py-4 rounded text-gray"
-                    dangerouslySetInnerHTML={{ __html: formKomitmen }}
-                  />
-                </div>
-              )}
-            </div>
-
+            <ViewStep3Component review={review} />
             <div className="button my-5">
               <div className="text-right">
                 <button

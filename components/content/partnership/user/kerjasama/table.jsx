@@ -16,6 +16,7 @@ import IconTodoLine from "../../../../assets/icon/TodoLine";
 import axios from "axios";
 import moment from "moment";
 import Cookies from "js-cookie"
+import {Modal} from "react-bootstrap"
 
 import {
   reqCooperationUser,
@@ -57,6 +58,7 @@ const Table = ({ token }) => {
   const [valueKerjaSama, setValueKerjaSama] = useState("");
 
   const [deleteBar, setDeleteBar] = useState(false);
+  const [showModal, setShowModal] = useState(false)
   const onNewReset = () => {
     setDeleteBar(false);
     router.replace("/partnership/user/kerjasama", undefined, { shallow: true });
@@ -74,11 +76,13 @@ const Table = ({ token }) => {
     event.preventDefault();
     dispatch(changeValueStatus(valueStatus));
     dispatch(changeValueKerjaSama(valueKerjaSama));
+    setShowModal(false)
   };
 
   const resetValueSort = () => {
     selectRefKerjasama.select.clearValue();
     selectRefStatus.select.clearValue();
+    setShowModal(false)
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
@@ -336,6 +340,7 @@ const Table = ({ token }) => {
                           data-target="#exampleModalCenter"
                           style={{ color: "#464646", minWidth: "230px" }}
                           type="button"
+                          onClick={() => setShowModal(true)}
                         >
                           <div className="d-flex align-items-center">
                             <IconFilter className="mr-3" />
@@ -343,76 +348,95 @@ const Table = ({ token }) => {
                           </div>
                           <IconArrow fill="#E4E6EF" width="11" height="11" />
                         </button>
+                        
                         {/* modal */}
-                        <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                          <div className="modal-dialog modal-dialog-centered" role="document">
-                            <div className="modal-content">
-                              <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLongTitle">
-                                  Filter
-                                </h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                  <IconClose />
-                                </button>
-                              </div>
+                        <Modal
+                          centered={true}
+                          show={showModal}
+                          onHide={() => setShowModal(false)}
+                        >
+                          <Modal.Header>
+                            <h5 
+                              className="modal-title"
+                            >
+                              Filter
+                            </h5>
 
-                              <div className="modal-body text-left" style={{ height: "400px" }}>
-                                <div className="fv-row mb-10">
-                                  <label className="required fw-bold fs-6 mb-2">Kategori</label>
-                                  <Select
-                                    ref={(ref) => (selectRefKerjasama = ref)}
-                                    className="basic-single"
-                                    classNamePrefix="select"
-                                    placeholder="Semua"
-                                    defaultValue={allCooperationUser?.stateListKerjaSama[0]}
-                                    isDisabled={false}
-                                    isLoading={false}
-                                    isClearable={false}
-                                    isRtl={false}
-                                    isSearchable={true}
-                                    name="color"
-                                    onChange={(e) => setValueKerjaSama(e?.cooperation_categories)}
-                                    options={allCooperationUser?.stateListKerjaSama}
-                                  />
-                                </div>
-                                <div className="fv-row mb-10">
-                                  <label className="required fw-bold fs-6 mb-2">Status</label>
-                                  <Select
-                                    ref={(ref) => (selectRefStatus = ref)}
-                                    className="basic-single"
-                                    classNamePrefix="select"
-                                    placeholder="Semua"
-                                    defaultValue={allCooperationUser?.stateListStatus[0]}
-                                    isDisabled={false}
-                                    isLoading={false}
-                                    isClearable={false}
-                                    isRtl={false}
-                                    isSearchable={true}
-                                    name="color"
-                                    onChange={(e) => setValueStatus(e?.name_en)}
-                                    options={allCooperationUser?.stateListStatus}
-                                  />
-                                </div>
-                              </div>
-                              <div className="modal-footer">
-                                <div className="d-flex justify-content-end align-items-center">
-                                  <button
-                                    className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
-                                    type="button"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                    onClick={() => resetValueSort()}
-                                  >
-                                    Reset
-                                  </button>
-                                  <button data-dismiss="modal" className="btn btn-sm btn-rounded-full bg-blue-primary text-white " type="button" onClick={(e) => handleSubmitSearchMany(e)}>
-                                    Terapkan
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
+                            <button 
+                              type="button" 
+                              className="close" 
+                              data-dismiss="modal" 
+                              aria-label="Close"
+                              onClick={() => setShowModal(false)}
+                            >
+                              <IconClose />
+                            </button>
+                          </Modal.Header>
+                          <Modal.Body
+                            style={{ height: "400px" }}
+                            className="text-left"
+                          >
+                          <div className="fv-row mb-10">
+                            <label className="required fw-bold fs-6 mb-2">Kategori</label>
+                            <Select
+                              ref={(ref) => (selectRefKerjasama = ref)}
+                              className="basic-single"
+                              classNamePrefix="select"
+                              placeholder="Semua"
+                              defaultValue={allCooperationUser?.stateListKerjaSama[0]}
+                              isDisabled={false}
+                              isLoading={false}
+                              isClearable={false}
+                              isRtl={false}
+                              isSearchable={true}
+                              name="color"
+                              onChange={(e) => setValueKerjaSama(e?.cooperation_categories)}
+                              options={allCooperationUser?.stateListKerjaSama}
+                            />
                           </div>
-                        </div>
+                          <div className="fv-row mb-10">
+                            <label className="required fw-bold fs-6 mb-2">Status</label>
+                            <Select
+                              ref={(ref) => (selectRefStatus = ref)}
+                              className="basic-single"
+                              classNamePrefix="select"
+                              placeholder="Semua"
+                              defaultValue={allCooperationUser?.stateListStatus[0]}
+                              isDisabled={false}
+                              isLoading={false}
+                              isClearable={false}
+                              isRtl={false}
+                              isSearchable={true}
+                              name="color"
+                              onChange={(e) => setValueStatus(e?.name_en)}
+                              options={allCooperationUser?.stateListStatus}
+                            />
+                          </div>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <div className="d-flex justify-content-end align-items-center">
+                              <button
+                                className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
+                                type="button"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={() => resetValueSort()}
+                              >
+                                Reset
+                              </button>
+                              <button 
+                                data-dismiss="modal" 
+                                className="btn btn-sm btn-rounded-full bg-blue-primary text-white " 
+                                type="button"
+                                onClick={
+                                  (e) => handleSubmitSearchMany(e)
+                                }
+                              >
+                                Terapkan
+                              </button>
+                            </div>
+                          </Modal.Footer>
+                        </Modal>
 
                         {/* end modal */}
                       </div>
@@ -762,11 +786,11 @@ const Table = ({ token }) => {
                   </div>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>
       </div>
+      
     </PageWrapper>
   );
 };

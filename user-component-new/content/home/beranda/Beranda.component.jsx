@@ -575,7 +575,7 @@ const Beranda = ({ session }) => {
                                               <div className="align-self-start">
                                                 <Badge
                                                   bg={`py-3 px-4 badge-card-pelatihan-new`}
-                                                  classNam="d-flex "
+                                                  className="d-flex "
                                                 >
                                                   Pelatihan{" "}
                                                   {row.metode_pelatihan}

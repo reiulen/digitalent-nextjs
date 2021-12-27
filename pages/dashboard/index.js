@@ -84,12 +84,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
           yearNow
         )
       );
-      await store.dispatch(
-        getDigitalentStatistikMitraPeserta(session.user.user.data.token)
-      );
-      await store.dispatch(
-        getDigitalentStatistikMitraPendaftar(session.user.user.data.token)
-      );
+      // await store.dispatch(
+      //   getDigitalentStatistikMitraPeserta(session.user.user.data.token)
+      // );
+      // await store.dispatch(
+      //   getDigitalentStatistikMitraPendaftar(session.user.user.data.token)
+      // );
       await store.dispatch(
         getDigitalentTablePendaftaran(session.user.user.data.token)
       );
