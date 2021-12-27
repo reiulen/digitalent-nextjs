@@ -132,6 +132,7 @@ export const loadDataListZonasi = (token, page = 1) => {
 				page,
 			});
 		} catch (error) {
+			console.log("haha", error)
 			// notify(error.response.data.message);
 		}
 	};
