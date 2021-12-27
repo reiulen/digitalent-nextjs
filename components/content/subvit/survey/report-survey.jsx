@@ -48,7 +48,7 @@ const ReportSurvey = ({ token }) => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (limit != null) {
       router.push(
         `${router.pathname}?id=${id}&page=1&keyword=${search}&limit=${limit}`
@@ -208,7 +208,7 @@ const ReportSurvey = ({ token }) => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={e => handleSearch(e)}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -249,7 +249,7 @@ const ReportSurvey = ({ token }) => {
                       {survey && survey.data.reports.length === 0 ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Tidak Ditemukan
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (

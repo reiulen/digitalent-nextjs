@@ -54,7 +54,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (limit != null) {
       router.push(
         `${router.pathname}?id=${id}&page=1&keyword=${search}&limit=${limit}`
@@ -275,15 +275,14 @@ const ListSubstansi = ({ token, tokenPermission }) => {
               <div className="row align-items-center">
                 <div className="col-md-4">
                   <div className="position-relative overflow-hidden mt-2">
-                    <form onSubmit={e => handleSearch(e)}>
-
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10 mt-2"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10 mt-2"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
                     </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute mt-1"
@@ -291,7 +290,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={e => handleSearch(e)}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -349,7 +348,7 @@ const ListSubstansi = ({ token, tokenPermission }) => {
                       {subtance && subtance.data.reports.length === 0 ? (
                         <tr>
                           <td className="text-center" colSpan={7}>
-                            Data Tidak Ditemukan
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (
