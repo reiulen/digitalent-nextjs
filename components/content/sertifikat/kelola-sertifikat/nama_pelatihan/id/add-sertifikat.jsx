@@ -160,6 +160,26 @@ export default function TambahMasterSertifikat({ token }) {
 	const [tanggal, setTanggal] = useState("--/--/----");
 	const [tahun, setTahun] = useState("----");
 
+	//CLONE DATA SERTIFIKAT
+
+	const [showModalClone, setShowModalClone] = useState(false);
+	const handleCloseClone = () => {
+		setShowModalClone(false);
+	};
+	const [cloneData, setCloneData] = useState();
+	const [optionAcademy, setOptionAcademy] = useState(null);
+	const [disableTheme, setDisableTheme] = useState(true);
+	const [disableTraining, setDisableTraining] = useState(true);
+	const [optionTheme, setOptionTheme] = useState(null);
+	const [academy, setAcademy] = useState();
+	const [theme, setTheme] = useState();
+	const [optionTraining, setOptionTraining] = useState(null);
+	const [training, setTraining] = useState(null);
+	const [imagePreviewClone, setImagePreviewClone] = useState(null);
+	const [imagePreviewSyllabusClone, setImagePreviewSyllabusClone] =
+		useState(null);
+	const [disableSimpan, setDisableSimpan] = useState(false);
+
 	// RESET TTD
 	useEffect(() => {
 		setSignature_certificate_set_position([0, 0, 0, 0]);
@@ -469,14 +489,6 @@ export default function TambahMasterSertifikat({ token }) {
 	const [enableSyllabus, setEnableSyllabus] = useState(true);
 	const [hour, setHour] = useState("");
 
-	const handleJam = (e) => {
-		if (e === "" || helperRegexNumber.test(e)) {
-			setHour(e);
-		} else {
-			return;
-		}
-	};
-
 	useEffect(() => {
 		const number = document.getElementById("jam_pelatihan");
 		number.onkeydown = (e) => {
@@ -498,27 +510,7 @@ export default function TambahMasterSertifikat({ token }) {
 		};
 	}, [hour]);
 
-	//CLONE DATA SERTIFIKAT
-
-	const [showModalClone, setShowModalClone] = useState(false);
-	const handleCloseClone = () => {
-		setShowModalClone(false);
-	};
-	const [cloneData, setCloneData] = useState();
-	const [optionAcademy, setOptionAcademy] = useState(null);
-	const [disableTheme, setDisableTheme] = useState(true);
-	const [disableTraining, setDisableTraining] = useState(true);
-	const [optionTheme, setOptionTheme] = useState(null);
-	const [academy, setAcademy] = useState();
-	const [theme, setTheme] = useState();
-	const [optionTraining, setOptionTraining] = useState(null);
-	const [training, setTraining] = useState(null);
-	const [imagePreviewClone, setImagePreviewClone] = useState(null);
-	const [imagePreviewSyllabusClone, setImagePreviewSyllabusClone] =
-		useState(null);
-
-	const [disableSimpan, setDisableSimpan] = useState(false);
-
+	// Clone data Sertifikat
 	useEffect(() => {
 		if (allOptionAcademy?.academy?.data) {
 			setOptionAcademy(allOptionAcademy?.academy?.data);
@@ -584,8 +576,6 @@ export default function TambahMasterSertifikat({ token }) {
 		//name
 		setSignature_certificate_name((prev) => {
 			const arr = [];
-			const data = cloneData.signature.filter((item) => item != "name");
-			console.log(data);
 			cloneData.signature.forEach((item) => arr.push(item.name));
 			return arr;
 		});
