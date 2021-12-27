@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import { Container } from "react-bootstrap";
+import { Container, Accordion } from "react-bootstrap";
 import Image from "next/image";
 import { getAllFaq } from "../../../../redux/actions/beranda/faq-content.actions";
 import PulseLoaderRender from "../../../../user-component-new/components/loader/PulseLoader";
@@ -364,9 +364,10 @@ const FaqPage = () => {
                 {faq?.faq.length > 0 ? (
                   faq?.faq.map((row, i) => {
                     return (
-                      <div className="accordion" id="selector" key={i}>
-                        <div
-                          className="accordion-item"
+                      <Accordion
+                        key={i}
+                      >
+                        <Accordion.Item
                           style={{
                             marginTop: "30px",
                             borderRadius: "6px",
@@ -383,53 +384,45 @@ const FaqPage = () => {
                               })
                             );
                           }}
-                          data-toggle="collapse"
-                          data-target={
-                            i === 0
-                              ? "#collapseExample"
-                              : `#collapseExample${i}`
-                          }
-                          key={i}
-                          data-parent="#selector"
-                          aria-expanded="false"
-                          aria-controls="collapseExample"
+                          eventKey={`${i}`}
                         >
-                          <div
-                            className={
-                              row.isShow === true
-                                ? "accordion-header d-flex justify-content-between align-items-center pt-5 "
-                                : "accordion-header d-flex justify-content-between align-items-center py-5"
-                            }
-                            style={{ marginLeft: "30px" }}
-                          >
-                            <h4 style={{ fontWeight: "600", fontSize: "20px" }}>
-                              {row.judul}
-                            </h4>
-                            <button
-                              className="accordion-button btn"
-                              type="button"
-                            >
-                              <i
-                                className={
-                                  row.isShow === true
-                                    ? "fas fa-minus-circle"
-                                    : "fas fa-plus-circle"
-                                }
-                                style={{ color: "#3699ff" }}
-                              ></i>
-                            </button>
-                          </div>
-                          <div
-                            className="collapse"
-                            id={
-                              i === 0
-                                ? "collapseExample"
-                                : `collapseExample${i}`
-                            }
-                            key={i}
+                          <Accordion.Header
+                            style={{ marginLeft: "20px" }}
+                            className="d-flex justify-content-between flex-row align-items-center"
                           >
                             <div
-                              className={`accordion-body mx-9 border-0 mb-5 mt-3 text-justify ${styles.detailFaq}`}
+                              className={
+                                row.isShow === true
+                                  ? "d-flex justify-content-between flex-row align-items-center pt-5"
+                                  : "d-flex justify-content-between flex-row align-items-center py-5"
+                              }
+                            >
+                              <h4
+                                className="my-auto" 
+                                style={{ fontWeight: "600", fontSize: "20px" }}
+                              >
+                                {row.judul}
+                              </h4>
+                  
+                              <button
+                                className="accordion-button btn my-auto"
+                                type="button"
+                              >
+                                <i
+                                  className={
+                                    row.isShow === true
+                                      ? "fas fa-minus-circle"
+                                      : "fas fa-plus-circle"
+                                  }
+                                  style={{ color: "#3699ff" }}
+                                ></i>
+                              </button>
+                            </div>
+                            
+                          </Accordion.Header>
+                          <Accordion.Body>
+                            <div
+                              className={`mx-9 border-0 mb-5 mt-3 text-justify ${styles.detailFaq}`}
                               style={{
                                 fontFamily: "Poppins",
                                 fontSize: "16px",
@@ -438,10 +431,13 @@ const FaqPage = () => {
                               dangerouslySetInnerHTML={{
                                 __html: handleLinkContent(row.jawaban),
                               }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
+                            >
+                            </div>
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      </Accordion>
+
+                      
                     );
                   })
                 ) : (
