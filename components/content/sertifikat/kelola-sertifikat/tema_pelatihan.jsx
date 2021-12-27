@@ -23,6 +23,7 @@ import {
 	setValueLimit,
 	setValuePage,
 	setValueTheme,
+	clearErrors,
 } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
 import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
@@ -98,7 +99,7 @@ export default function NamaPelatihan({ token }) {
 
 	const handleResetError = () => {
 		if (error) {
-			dispatch(clearErrors);
+			dispatch(clearErrors());
 		}
 	};
 

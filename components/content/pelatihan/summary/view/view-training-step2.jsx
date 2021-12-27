@@ -27,10 +27,10 @@ const ViewTrainingStep2 = ({ token }) => {
         title2="Form Pendaftaran"
         title3="Form Komitmen"
         title4="Parameter"
-        link1={`/pelatihan/pelatihan/view-pelatihan/${id}`}
-        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
-        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`}
-        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${id}`}
+        link1={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${id}`}
+        link2={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-komitmen/${id}`}
+        link4={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-parameter/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">
@@ -46,9 +46,7 @@ const ViewTrainingStep2 = ({ token }) => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() =>
-                    router.push(`/pelatihan/pelatihan/view-pelatihan/${id}`)
-                  }
+                  onClick={() => router.push(`/pelatihan/rekap-pendaftaran`)}
                 >
                   Kembali
                 </button>

@@ -20,16 +20,14 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allListPeserta = useSelector((state) => state.allListPeserta);
-
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState(null);
-
+  
   const getWindowDimensions = () => {
     // if (typeof window === 'undefined') {
     //     global.window = {}
     // }
-
     const { innerWidth: width, innerHeight: height } = window;
     return {
       width,
