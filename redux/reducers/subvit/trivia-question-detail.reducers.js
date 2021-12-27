@@ -337,7 +337,7 @@ export const importImagesTriviaQuestionDetailReducer = (
       return {
         loading: false,
         success: action.payload.message,
-        trivia_question_images: action.payload.data,
+        trivia_question_images: action.payload,
       };
 
     case IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_FAIL:
