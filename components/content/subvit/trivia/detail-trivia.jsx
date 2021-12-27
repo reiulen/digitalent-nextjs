@@ -13,6 +13,7 @@ import {
   clearErrors,
   getAllTriviaQuestionDetail,
 } from "../../../../redux/actions/subvit/trivia-question-detail.action";
+import Swal from "sweetalert2";
 
 const DetailTrivia = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
@@ -40,7 +41,9 @@ const DetailTrivia = ({ token, tokenPermission }) => {
   useEffect(() => {
     localStorage.setItem("id_trivia", router.query.id);
     if (isDeleted) {
-      dispatch(getAllTriviaQuestionDetail(id, token, tokenPermission));
+      dispatch(
+        getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
   }, [router, isDeleted, trivia, id, token, dispatch, tokenPermission]);

@@ -268,16 +268,16 @@ const ListTrivia = ({ token, tokenPermission }) => {
               "subvit.manage" && "subvit.trivia.manage"
             ) ? (
               <div className=" card-toolbar">
-                <Link href="/subvit/trivia/tambah">
-                  <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                    <i className="ri-add-fill"></i>
-                    Tambah TRIVIA
-                  </a>
-                </Link>
                 <Link href="/subvit/trivia/clone">
                   <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
                     <i className="ri-mastercard-fill"></i>
                     Clone TRIVIA
+                  </a>
+                </Link>
+                <Link href="/subvit/trivia/tambah">
+                  <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                    <i className="ri-add-fill"></i>
+                    Tambah TRIVIA
                   </a>
                 </Link>
               </div>
@@ -353,7 +353,7 @@ const ListTrivia = ({ token, tokenPermission }) => {
                       {!trivia ||
                       (trivia && trivia.list_trivia.length === 0) ? (
                         <td className="align-middle text-center" colSpan={6}>
-                          Data Tidak Ditemukan
+                          Data Kosong
                         </td>
                       ) : (
                         trivia &&

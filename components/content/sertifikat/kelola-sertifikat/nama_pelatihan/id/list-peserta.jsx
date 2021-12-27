@@ -11,10 +11,12 @@ import Pagination from "react-js-pagination";
 import { useSelector } from "react-redux";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
 
 export default function ListPeserta() {
 	const router = useRouter();
 	const { query } = router;
+	const dispatch = useDispatch();
 	// #DatePicker
 	const { loading, error, participant } = useSelector(
 		(state) => state.allParticipant
