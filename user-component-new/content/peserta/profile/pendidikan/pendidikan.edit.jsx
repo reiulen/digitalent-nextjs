@@ -318,7 +318,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         }
       }
 
-      // dispatch(updateProfilePendidikan(data, token));
+      dispatch(updateProfilePendidikan(data, token));
       window.scrollTo(0, 0);
     } else {
      

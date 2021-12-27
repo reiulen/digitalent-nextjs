@@ -180,7 +180,7 @@ export const newSertifikat =
 		}
 	};
 
-export const clearErrors = () => async (dispatch) => {
+export const clearErrors = () => (dispatch) => {
 	dispatch({
 		type: CLEAR_ERRORS,
 	});
