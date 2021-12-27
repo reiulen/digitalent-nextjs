@@ -177,11 +177,7 @@ const ViewTrainingStep4 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() =>
-                    router.push(
-                      `/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/view-komitmen/${id}`
-                    )
-                  }
+                  onClick={() => router.push(`/pelatihan/rekap-pendaftaran`)}
                 >
                   Kembali
                 </button>

@@ -18,6 +18,7 @@ import {
 import { DELETE_SURVEY_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/survey-question.type";
 import { getAllSurveyQuestionDetail } from "../../../../redux/actions/subvit/survey-question-detail.action";
 import { Card, Col, Collapse, Form, Modal, Row } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const ListSurvey = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
