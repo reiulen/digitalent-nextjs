@@ -183,7 +183,7 @@ export default function MasterPelatihan({ token }) {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Master Pendaftaran
+              List Form Master Pendaftaran
             </h1>
             {listPermission.includes("pelatihan.master_pendaftaran.manage") && (
               <div className="card-toolbar">
