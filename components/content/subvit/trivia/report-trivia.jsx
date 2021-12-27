@@ -40,7 +40,7 @@ const ReportTrivia = ({ token }) => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let link = `${router.pathname}?id=${id}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (limit) link = link.concat(`&limit=${limit}`);
@@ -190,7 +190,7 @@ const ReportTrivia = ({ token }) => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={e => handleSearch(e)}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -232,7 +232,7 @@ const ReportTrivia = ({ token }) => {
                       {trivia && trivia.data.reports.length === 0 ? (
                         <tr>
                           <td className="text-center" colSpan={7}>
-                            Data Tidak Ditemukan
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (
