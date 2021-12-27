@@ -419,6 +419,7 @@ const Sidebar = ({ session }) => {
                                             onClick={(e) =>{
                                               // e.preventDefault()
                                               // location.reload();
+                                              window.location = child2.href
                                               handleActiveSubmenu(
                                                 e,
                                                 index,
