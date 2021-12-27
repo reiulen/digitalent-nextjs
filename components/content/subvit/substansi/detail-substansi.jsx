@@ -14,6 +14,7 @@ import {
   clearErrors,
   getAllSubtanceQuestionDetail,
 } from "../../../../redux/actions/subvit/subtance-question-detail.action";
+import Swal from "sweetalert2";
 
 const DetailSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
