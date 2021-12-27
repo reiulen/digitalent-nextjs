@@ -201,7 +201,7 @@ const Tambah = ({ token }) => {
             } catch (error) {
               Swal.fire(
                 "Gagal simpan",
-                `${error.response.data.message}`,
+                `${error.response.data.message.includes("PDO") ? "Service Error" : error.response.data.message}`,
                 "error"
               );
             }
