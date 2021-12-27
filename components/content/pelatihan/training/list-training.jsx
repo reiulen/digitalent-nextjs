@@ -320,7 +320,7 @@ const ListTraining = ({ token }) => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setPage(1);
     dispatch(
       getAllTraining(
@@ -460,23 +460,6 @@ const ListTraining = ({ token }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteTraining(id, token));
-      }
-    });
-  };
-
-  const handleClone = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      text: "Data ini akan di Clone !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Ya !",
-      cancelButtonText: "Batal",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(cloneTrainingAction(id, token));
       }
     });
   };
@@ -648,14 +631,14 @@ const ListTraining = ({ token }) => {
     }
   };
 
-	function capitalize(s) {
-		let a = s.split(" ");
-		let result = [];
-		for (let i = 0; i < a.length; i++) {
-			result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
-		}
-		return result.join(" ");
-	}
+  function capitalize(s) {
+    let a = s.split(" ");
+    let result = [];
+    for (let i = 0; i < a.length; i++) {
+      result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
+    }
+    return result.join(" ");
+  }
 
   const handleModalRevisi = (id) => {
     dispatch(getListRevisi(token, id));
@@ -822,7 +805,7 @@ const ListTraining = ({ token }) => {
                           borderTopLeftRadius: "0",
                           borderBottomLeftRadius: "0",
                         }}
-                        onClick={e => handleSearch(e)}
+                        onClick={(e) => handleSearch(e)}
                       >
                         Cari
                       </button>
@@ -959,12 +942,18 @@ const ListTraining = ({ token }) => {
                               </div>
                             </td>
                             <td className="align-middle text-center">
-                              <span className={
-                                row.status_substansi === "disetujui" && "select-pelatihan select-pelatihan-success" ||
-                                row.status_substansi === "revisi" && "select-pelatihan select-pelatihan-warning" ||
-                                row.status_substansi === "ditolak" && "select-pelatihan select-pelatihan-danger" ||
-                                row.status_substansi === "review" && "select-pelatihan select-pelatihan-primary"
-                              }>
+                              <span
+                                className={
+                                  (row.status_substansi === "disetujui" &&
+                                    "select-pelatihan select-pelatihan-success") ||
+                                  (row.status_substansi === "revisi" &&
+                                    "select-pelatihan select-pelatihan-warning") ||
+                                  (row.status_substansi === "ditolak" &&
+                                    "select-pelatihan select-pelatihan-danger") ||
+                                  (row.status_substansi === "review" &&
+                                    "select-pelatihan select-pelatihan-primary")
+                                }
+                              >
                                 {capitalize(row.status_substansi)}
                               </span>
                             </td>

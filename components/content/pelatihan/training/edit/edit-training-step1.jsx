@@ -456,6 +456,14 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
       simpleValidator.current.fields["kota/kabupaten"] = true;
     }
     if (simpleValidator.current.allValid()) {
+      if (!umum && !tuna_daksa && !tuna_netra && !tuna_rungu) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Disabilitas tidak boleh kosong !",
+        });
+        return;
+      }
       const data = {
         program_dts: program,
         ketentuan_peserta: ketentuan,
