@@ -494,12 +494,16 @@ const StepTwo = ({ token, tokenPermission }) => {
               <div className="table-page" style={{ marginTop: "20px" }}>
                 {successFile ? (
                   <div className="mb-5">
-                    <h2 className="text-success">Sukses Import Soal</h2>
+                    {successImages ? (
+                      <h2 className="text-success">Sukses Import Gambar</h2>
+                    ) : (
+                      <h2 className="text-success">Sukses Import Soal</h2>
+                    )}
                     <span className="text-muted">
-                      {subtance_question_file.success +
-                        subtance_question_file.failed}{" "}
-                      Total Import | {subtance_question_file.success} Sukses di
-                      Import | {subtance_question_file.failed} Gagal di import
+                      {subtance_question_file?.success +
+                        subtance_question_file?.failed}{" "}
+                      Total Import | {subtance_question_file?.success} Sukses di
+                      Import | {subtance_question_file?.failed} Gagal di import
                     </span>
                   </div>
                 ) : (
