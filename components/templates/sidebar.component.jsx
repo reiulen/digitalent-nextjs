@@ -433,7 +433,7 @@ const Sidebar = ({ session }) => {
                                             <Link href={child2.href} passHref>
                                               <a
                                                 className="menu-link"
-                                                style={{
+                                                r                          style={{
                                                   paddingLeft: "6.5rem",
                                                 }}
                                               >
