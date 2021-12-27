@@ -49,7 +49,7 @@ const CardPelatihanClose = ({ row }) => {
               width={60}
               height={60}
               objectFit="cover"
-              thumbnail="true"
+              // thumbnail="true"
               // roundedCircle
               className={`mitra-pelatihan-image-new-close`}
               alt="Image Mitra"

@@ -148,16 +148,16 @@ const Table = ({ token }) => {
             {localStorage
               .getItem("permissions")
               .includes("site_management.setting.menu.manage") && (
-              <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
-                <button
-                  className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
-                  onClick={() => firstPush()}
-                >
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Menu
-                </button>
-              </div>
-            )}
+                <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
+                  <button
+                    className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
+                    onClick={() => firstPush()}
+                  >
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah Menu
+                  </button>
+                </div>
+              )}
           </div>
           <div className="card-body">
             <form onSubmit={submit}>
@@ -209,8 +209,8 @@ const Table = ({ token }) => {
                                   -- Halaman --
                                 </option>
                                 {!allPage ||
-                                (allPage &&
-                                  allPage.data?.setting_page.length === 0) ? (
+                                  (allPage &&
+                                    allPage.data?.setting_page.length === 0) ? (
                                   <option value="">Data kosong</option>
                                 ) : (
                                   allPage &&
@@ -272,26 +272,26 @@ const Table = ({ token }) => {
                             .includes(
                               "site_management.setting.menu.manage"
                             ) && (
-                            <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                              <div className="d-flex align-items-center h-100">
-                                <div className={`${styles.deleteMenu}`}>
-                                  <button
-                                    type="button"
-                                    className="col-11 col-sm-8 col-md-4 col-lg-4 col-xl-3 btn"
-                                    style={{
-                                      backgroundColor: "#EE2D41",
-                                      position: "absolute",
-                                      top: "25px",
-                                    }}
-                                    onClick={() => handleDeleteMenu(i)}
-                                  >
-                                    <IconDelete />
-                                  </button>
+                              <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                                <div className="d-flex align-items-center h-100">
+                                  <div className={`${styles.deleteMenu}`}>
+                                    <button
+                                      type="button"
+                                      className="col-11 col-sm-8 col-md-4 col-lg-4 col-xl-3 btn"
+                                      style={{
+                                        backgroundColor: "#EE2D41",
+                                        position: "absolute",
+                                        top: "25px",
+                                      }}
+                                      onClick={() => handleDeleteMenu(i)}
+                                    >
+                                      <IconDelete />
+                                    </button>
+                                  </div>
+                                  <Modal />
                                 </div>
-                                <Modal />
                               </div>
-                            </div>
-                          )}
+                            )}
                         </div>
                       </div>
                     </div>
@@ -303,41 +303,27 @@ const Table = ({ token }) => {
                 </div>
               )}
 
-              {!array.length ? null : (
-                <div className="form-group row mt-10 mt-sm-5">
-                  <div className="col-sm-12 d-flex justify-content-end">
-                    <button
-                      className={`${
-                        styles.btnKembali
-                      } btn btn-white-ghost-rounded-full rounded-pill mr-2 ${
-                        localStorage
-                          .getItem("permissions")
-                          .includes("site_management.setting.menu.manage")
-                          ? ""
-                          : "d-none"
-                      }`}
-                      type="button"
-                      onClick={() => cancel()}
-                    >
-                      Batal
-                    </button>
-                    <button
-                      type="submit"
-                      className={`${
-                        styles.btnSimpan
-                      } btn btn-primary-rounded-full rounded-pill ${
-                        localStorage
-                          .getItem("permissions")
-                          .includes("site_management.setting.menu.manage")
-                          ? ""
-                          : "d-none"
-                      }`}
-                    >
-                      Simpan
-                    </button>
-                  </div>
+              <div className="form-group row mt-10 mt-sm-5">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <button
+                    className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 ${localStorage
+                      .getItem("permissions")
+                      .includes("site_management.setting.menu.manage") ? "" : "d-none"}`}
+                    type="button"
+                    onClick={() => cancel()}
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="submit"
+                    className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill ${localStorage
+                      .getItem("permissions")
+                      .includes("site_management.setting.menu.manage") ? "" : "d-none"}`}
+                  >
+                    Simpan
+                  </button>
                 </div>
-              )}
+              </div>
             </form>
           </div>
         </div>
