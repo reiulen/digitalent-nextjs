@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator"
 import Swal from 'sweetalert2'
+import moment from "moment";
 import DatePicker from 'react-datepicker'
 
 import styles from "../../../../styles/previewGaleri.module.css";
