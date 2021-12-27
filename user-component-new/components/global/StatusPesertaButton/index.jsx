@@ -146,7 +146,18 @@ export default function ButtonStatusPeserta({ data, token }) {
 						<i className="ri-arrow-right-s-line mr-2"></i>
 					</CustomButton>
 				</Fragment>
-			) : data?.status == "pelatihan" && data?.trivia && data?.midtest ? (
+			): data?.status.includes('tidak') ? (
+				<Fragment>
+					<CustomButton
+						outline
+						disabled
+						click={() => handleClick("download", data?.id_pendaftaran)}
+					>
+						<i className="ri-download-2-fill mr-2"></i>
+						Bukti Pendaftaran
+					</CustomButton>
+				</Fragment>
+			)  : data?.status == "pelatihan" && data?.trivia && data?.midtest ? (
 				<Fragment>
 					<CustomButton
 						click={() => {
