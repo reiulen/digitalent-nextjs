@@ -58,6 +58,7 @@ export default function TambahMasterSertifikat({ token }) {
 	);
 
 	const publishedCertificate = useSelector((state) => state.publishCertificate);
+	const [, forceUpdate] = useState();
 
 	// #Div Reference Lembar 1
 	const divReference = useRef(null);
@@ -330,7 +331,6 @@ export default function TambahMasterSertifikat({ token }) {
 			}
 		}
 	};
-	const [, forceUpdate] = useState();
 
 	const convertDivToPng = async (div) => {
 		const data = await toPng(div, {
