@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { PENDAFTARAN_PELATIHAN_RESET } from "../../../../redux/types/pelatihan/register-training.type";
+import moment from "moment";
 
 const FormBerhasil = ({ token }) => {
   const router = useRouter();
