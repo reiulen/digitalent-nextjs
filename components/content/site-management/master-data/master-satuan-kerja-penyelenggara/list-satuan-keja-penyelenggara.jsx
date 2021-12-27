@@ -72,7 +72,7 @@ const Table = ({ token }) => {
             </h3>
             {localStorage
               .getItem("permissions")
-              .includes("site_management.master-data.manage") && (
+              .includes("site_management.master_data.master_satuan_kerja_penyelenggara.manage") && (
               <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
                 <Link
                   href="/site-management/master-data/master-satuan-kerja-penyelenggara/tambah-satuan-kerja-penyelenggara"
@@ -217,7 +217,7 @@ const Table = ({ token }) => {
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
-                                      "site_management.master-data.manage"
+                                      "site_management.master_data.master_satuan_kerja_penyelenggara.manage"
                                     ) && (
                                     <Link
                                       href={`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara/${items.id}`}
@@ -234,7 +234,7 @@ const Table = ({ token }) => {
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
-                                      "site_management.master-data.view"
+                                      "site_management.master_data.master_satuan_kerja_penyelenggara.view"
                                     ) && (
                                     <Link
                                       href={`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara/${items.id}`}
