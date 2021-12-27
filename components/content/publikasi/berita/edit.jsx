@@ -5,6 +5,7 @@ import Image from 'next/image'
 import dynamic from "next/dynamic";
 import SimpleReactValidator from 'simple-react-validator'
 import Swal from "sweetalert2";
+import moment from "moment";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 import { TagsInput } from 'react-tag-input-component';

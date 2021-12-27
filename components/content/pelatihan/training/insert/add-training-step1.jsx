@@ -350,7 +350,16 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       simpleValidator.current.fields.provinsi = true;
       simpleValidator.current.fields["kota/kabupaten"] = true;
     }
+
     if (simpleValidator.current.allValid()) {
+      if (!umum && !tuna_daksa && !tuna_netra && !tuna_rungu) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Disabilitas tidak boleh kosong !",
+        });
+        return;
+      }
       const data = {
         program_dts: program,
         ketentuan_peserta: ketentuan,
@@ -1182,7 +1191,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   }
                 />
                 <label className="form-check-label" htmlFor="plotRegistration3">
-                  Tanpa Tes Substansi & Administrasi
+                  Administrasi
                 </label>
               </div>
               {simpleValidator.current.message(

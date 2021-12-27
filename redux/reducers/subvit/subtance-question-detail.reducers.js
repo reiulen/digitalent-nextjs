@@ -373,7 +373,7 @@ export const importImagesSubtanceQuestionDetailReducer = (
       return {
         loading: false,
         success: action.payload.message,
-        subtance_question_images: action.payload.data,
+        subtance_question_images: action.payload,
       };
 
     case IMPORT_IMAGES_SUBTANCE_QUESTION_DETAIL_FAIL:

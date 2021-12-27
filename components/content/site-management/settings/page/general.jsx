@@ -23,7 +23,7 @@ const GeneralPage = ({ token }) => {
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [imageLogoApi, setImageLogoApi] = useState("");
-  const [imageLogoApi2, setImageLogoApi2] = useState(data_general.footer_logo);
+  const [imageLogoApi2, setImageLogoApi2] = useState(data_general?.footer_logo);
   const [imageLogoApiOld, setImageLogoApiOld] = useState("");
   const [imageLogoApiOld2, setImageLogoApiOld2] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
@@ -52,7 +52,7 @@ const GeneralPage = ({ token }) => {
   ]);
 
   const [formSocialMedia, setFormSocialMedia] = useState(
-    data_general.social_media
+    data_general?.social_media
   );
   const [formExternalLink, setFormExternalLink] = useState([
     {

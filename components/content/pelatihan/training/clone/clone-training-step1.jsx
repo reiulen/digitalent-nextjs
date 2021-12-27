@@ -433,6 +433,14 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     e.preventDefault();
     // router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-registrasi");
     if (simpleValidator.current.allValid()) {
+      if (!umum && !tuna_daksa && !tuna_netra && !tuna_rungu) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Disabilitas tidak boleh kosong !",
+        });
+        return;
+      }
       const data = {
         program_dts: program,
         ketentuan_peserta: ketentuan,
@@ -1191,7 +1199,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   }
                 />
                 <label className="form-check-label" htmlFor="plotRegistration3">
-                  Tanpa Tes Substansi & Administrasi
+                  Administrasi
                 </label>
               </div>
               {simpleValidator.current.message(

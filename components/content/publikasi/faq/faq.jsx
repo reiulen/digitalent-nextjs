@@ -9,6 +9,8 @@ import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import { Modal } from "react-bootstrap";
+import moment from "moment";
+import Swal from "sweetalert2";
 import LoadingTable from '../../../LoadingTable';
 import styles from "../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";

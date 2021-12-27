@@ -54,7 +54,7 @@ const Table = ({ token }) => {
             </h3>
             {localStorage
               .getItem("permissions")
-              .includes("site_management.master-data.master_zonasi.manage") && (
+              .includes("site_management.master_data.master_zonasi.manage") && (
               <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
                 <Link
                   href="/site-management/master-data/master-zonasi/tambah-zonasi"
@@ -198,7 +198,7 @@ const Table = ({ token }) => {
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
-                                      "site_management.master-data.master_zonasi.manage"
+                                      "site_management.master_data.master_zonasi.manage"
                                     ) && (
                                     <Link
                                       href={`/site-management/master-data/master-zonasi/ubah-zonasi/${items.value}`}
@@ -215,7 +215,7 @@ const Table = ({ token }) => {
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
-                                      "site_management.master-data.master_zonasi.view"
+                                      "site_management.master_data.master_zonasi.view"
                                     ) && (
                                     <Link
                                       href={`/site-management/master-data/master-zonasi/detail-zonasi/${items.value}`}

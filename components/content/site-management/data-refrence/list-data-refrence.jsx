@@ -50,7 +50,7 @@ const Table = ({ token }) => {
               {localStorage
                 .getItem("permissions")
                 .includes(
-                  "site_management.master-data.master_zonasi.manage"
+                  "site_management.reference.manage"
                 ) && (
                 <div className="card-toolbar mr-4 mt-2">
                   <Link href="/site-management/reference/tambah-reference-tanpa-relasi">
@@ -73,7 +73,7 @@ const Table = ({ token }) => {
               {localStorage
                 .getItem("permissions")
                 .includes(
-                  "site_management.master-data.master_zonasi.manage"
+                  "site_management.reference.manage"
                 ) && (
                 <div className="card-toolbar mt-2">
                   <Link href="/site-management/reference/tambah-reference-dengan-relasi">
@@ -193,7 +193,7 @@ const Table = ({ token }) => {
                                             localStorage
                                               .getItem("permissions")
                                               .includes(
-                                                "site_management.master-data.master_zonasi.manage"
+                                                "site_management.reference.manage"
                                               )
                                               ? ""
                                               : "d-none"
@@ -215,7 +215,7 @@ const Table = ({ token }) => {
                                             localStorage
                                               .getItem("permissions")
                                               .includes(
-                                                "site_management.master-data.master_zonasi.manage"
+                                                "site_management.reference.manage"
                                               )
                                               ? ""
                                               : "d-none"
@@ -231,7 +231,7 @@ const Table = ({ token }) => {
                                     {localStorage
                                       .getItem("permissions")
                                       .includes(
-                                        "site_management.master-data.master_zonasi.view"
+                                        "site_management.reference.view"
                                       ) && (
                                       <Link
                                         href={`/site-management/reference/detail-reference?id=${items.id}`}
