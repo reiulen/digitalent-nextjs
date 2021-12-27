@@ -275,16 +275,16 @@ const ListSurvey = ({ token, tokenPermission }) => {
               ) && (
                 <>
                   <div className=" card-toolbar">
-                    <Link href="/subvit/survey/tambah">
-                      <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                        <i className="ri-add-fill"></i>
-                        Tambah Survey
-                      </a>
-                    </Link>
                     <Link href="/subvit/survey/clone">
                       <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
                         <i className="ri-mastercard-fill"></i>
                         Clone Survey
+                      </a>
+                    </Link>
+                    <Link href="/subvit/survey/tambah">
+                      <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                        <i className="ri-add-fill"></i>
+                        Tambah Survey
                       </a>
                     </Link>
                   </div>
