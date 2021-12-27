@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import {
+  helperRegexNumber,
+  helperTextLimitMax,
+} from "../../../../../../utils/middleware/helper";
 
 const BlankComponent = ({
   propsAnswer,
@@ -53,6 +57,12 @@ const BlankComponent = ({
     }
     setAnswer(list);
     sendPropsAnswer(list);
+  };
+
+  const handleDuration = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setDuration(e);
+    }
   };
 
   return (
@@ -151,13 +161,16 @@ const BlankComponent = ({
         <div className="col-sm-12 col-md-12">
           <span className="font-weight-bold">Durasi (Detik)</span>
           <input
-            type="number"
+            type="text"
             min={0}
             value={duration}
             onChange={(e) => {
-              setDuration(e.target.value);
+              handleDuration(e.target.value);
               sendPropsDuration(e.target.value);
             }}
+            onKeyUp={(e) =>
+              helperTextLimitMax(e.target.value, 0, 360, setDuration)
+            }
             className="form-control"
           />
         </div>
