@@ -11,6 +11,7 @@ import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola
 import Cookies from "js-cookie";
 import { getAllPermission } from "../../../../redux/actions/utils/utils.actions";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import { getOptionsAcademyCloneSertifikat } from "../../../../redux/actions/sertifikat/clone-sertifikat.action";
 
 const KelolaSertifikatNamaPelatihanID = dynamic(
   () =>
@@ -62,6 +63,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token,
           token_permission
         )
+      );
+      await store.dispatch(
+        getOptionsAcademyCloneSertifikat(session.user.user.data.token)
       );
 
       await store.dispatch(getAllPermission(session.user.user.data.token));
