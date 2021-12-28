@@ -18,7 +18,7 @@ export const getFirebaseToken = (setTokenFound) => {
   return getToken(messaging, { vapidKey: process.env.FB_FCM_KEY_PAIR })
     .then((currentToken) => {
       if (currentToken) {
-        console.log("current token for client: ", currentToken);
+        // console.log("current token for client: ", currentToken);
         setTokenFound(true);
       } else {
         console.log(
