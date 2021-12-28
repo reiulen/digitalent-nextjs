@@ -17,7 +17,6 @@ import Image from "next/image";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import moment from "moment";
-import Swal from "sweetalert2";
 import {
   dropdownKabupaten,
   dropdownPelatihanbyTema,
