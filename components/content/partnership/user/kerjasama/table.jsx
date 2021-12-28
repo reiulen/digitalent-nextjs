@@ -383,7 +383,7 @@ const Table = ({ token }) => {
                               className="basic-single"
                               classNamePrefix="select"
                               placeholder="Semua"
-                              defaultValue={allCooperationUser?.stateListKerjaSama[0]}
+                              // defaultValue={allCooperationUser?.stateListKerjaSama[0]}
                               isDisabled={false}
                               isLoading={false}
                               isClearable={false}
@@ -401,7 +401,7 @@ const Table = ({ token }) => {
                               className="basic-single"
                               classNamePrefix="select"
                               placeholder="Semua"
-                              defaultValue={allCooperationUser?.stateListStatus[0]}
+                              // defaultValue={allCooperationUser?.stateListStatus[0]}
                               isDisabled={false}
                               isLoading={false}
                               isClearable={false}

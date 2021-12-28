@@ -120,6 +120,7 @@ const Table = ({ token }) => {
                                 handleChangeValueSearch(e.target.value)
                               }
                             />
+                          </form>
                             <button
                               type="button"
                               onClick={(e) => handleSubmit(e)}
@@ -131,7 +132,6 @@ const Table = ({ token }) => {
                             >
                               Cari
                             </button>
-                          </form>
                         </div>
                       </div>
                     </div>

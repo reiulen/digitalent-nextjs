@@ -65,14 +65,14 @@ const Navigationbar = ({ session }) => {
   const [alertNotif, setAlertNotif] = useState(false);
 
   useEffect(() => {
-    getFirebaseToken(setTokenFound);
+    // getFirebaseToken(setTokenFound);
 
-    const messaging = getMessaging();
-    onMessage(messaging, (payload) => {
-      console.log("Message received. ", payload.notification);
-      toast.info(payload.notification.title);
-      setAlertNotif(true);
-    });
+    // const messaging = getMessaging();
+    // onMessage(messaging, (payload) => {
+    //   console.log("Message received. ", payload.notification);
+    //   toast.info(payload.notification.title);
+    //   setAlertNotif(true);
+    // });
 
     if (!session) {
       return;
@@ -380,7 +380,7 @@ const Navigationbar = ({ session }) => {
                       style={{ color: "#6C6C6C" }}
                     >
                       <div className="d-flex align-items-center fz-12 justify-content-between mb-9">
-                        <div>Notification</div>
+                        <div>Notifikasi</div>
                         <img
                           src="/assets/media/notification/Close_Button.png"
                           alt="close_button"
@@ -710,7 +710,7 @@ const Navigationbar = ({ session }) => {
                   style={{ color: "#6C6C6C" }}
                 >
                   <div className="d-flex align-items-center fz-20 justify-content-between mb-9">
-                    <div>Notification</div>
+                    <div>Notifikasi</div>
                     <img
                       src="/assets/media/notification/Close_Button.png"
                       alt="close_button"
