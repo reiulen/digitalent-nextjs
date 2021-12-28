@@ -50,7 +50,7 @@ const DashboardDetailTema = () => {
         </h2>
         <div className="row mt-5">
           {["big data", "robot", "data analyst"].map((row, i) => (
-            <div className="col-md-4 mb-8">
+            <div className="col-md-4 mb-8" key={i}>
               <TotalPerAkademi
                 group={row}
                 link={`/pelatihan/dashboard/${akademi_id}/${row}`}
