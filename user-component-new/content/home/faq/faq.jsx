@@ -84,7 +84,6 @@ const FaqPage = () => {
     } else {
       result = text;
     }
-
     return result;
   };
 

@@ -417,7 +417,7 @@ const StepTwo = ({ token, tokenPermission }) => {
                     type="button"
                     onClick={() => {
                       router.push(
-                        `/subvit/survey/clone/step-3?id=${router.query.id}`
+                        `/subvit/trivia/clone/step-3?id=${router.query.id}`
                       );
                     }}
                   >

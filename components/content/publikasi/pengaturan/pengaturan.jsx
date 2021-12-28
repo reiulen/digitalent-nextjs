@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from 'react-redux'
+import Swal from "sweetalert2";
 
 import styles from '../../../../styles/preview.module.css'
 
@@ -175,11 +176,11 @@ const Pengaturan = ({ token }) => {
     }
 
     // disable enter on input
-    $("input").keydown(function (event) {
-        if (event.keyCode == 13) {
-            event.preventDefault();
-        }
-    });
+    // $("input").keydown(function (event) {
+    //     if (event.keyCode == 13) {
+    //         event.preventDefault();
+    //     }
+    // });
 
     return (
         <PageWrapper>

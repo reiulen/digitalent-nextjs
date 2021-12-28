@@ -477,7 +477,6 @@ const Artikel = () => {
             <SubHeaderComponent 
                 data={[{ link: router.asPath, name: "Artikel" }]}
             />
-
             {/* Header */}
             <div className="col-12 mt-5 ml-n3">
                 <h1 className="fw-700" style={{fontSize: "40px", fontFamily:"Poppins"}}>
