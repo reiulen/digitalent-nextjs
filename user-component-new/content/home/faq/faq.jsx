@@ -368,11 +368,12 @@ const FaqPage = () => {
                         key={i}
                       >
                         <Accordion.Item
+                          // className="border border-dark"
                           style={{
                             marginTop: "30px",
                             borderRadius: "6px",
                             border: "1px solid #D7E1EA",
-                            cursor: "pointer",
+                            // cursor: "pointer",
                           }}
                           onClick={() => {
                             setContent(
@@ -388,13 +389,13 @@ const FaqPage = () => {
                         >
                           <Accordion.Header
                             style={{ marginLeft: "20px" }}
-                            className="d-flex justify-content-between flex-row align-items-center"
+                            className=""
                           >
                             <div
                               className={
                                 row.isShow === true
-                                  ? "d-flex justify-content-between flex-row align-items-center pt-5"
-                                  : "d-flex justify-content-between flex-row align-items-center py-5"
+                                  ? "d-flex justify-content-between flex-row align-items-center pt-5 border border-dark"
+                                  : "d-flex justify-content-between flex-row align-items-center py-5 border border-dark"
                               }
                             >
                               <h4
