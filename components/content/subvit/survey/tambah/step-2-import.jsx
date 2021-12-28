@@ -249,7 +249,8 @@ const StepTwo = ({ token, tokenPermission }) => {
   const handleDownloadTemplate = async () => {
     await axios
       .get(
-        "http://dts-subvit-dev.majapahit.id/api/survey-question-bank-details/template"
+        proccess.env.END_POINT_API_SUBVIT +
+          "api/survey-question-bank-details/template"
       )
       .then((res) => {
         window.location.href = res.data.data;
@@ -455,43 +456,31 @@ const StepTwo = ({ token, tokenPermission }) => {
                 </div>
               </div>
               <div className="table-page" style={{ marginTop: "20px" }}>
-                {successFile ? (
-                  <div className="mb-5">
-                    {successImages ? (
-                      <h2 className="text-success">Sukses Import Gambar</h2>
-                    ) : (
-                      <h2 className="text-success">Sukses Import Soal</h2>
-                    )}
+                <div className="mb-5">
+                  {!successFile || successImages ? (
+                    <h2 className="text-success">Sukses Import Gambar</h2>
+                  ) : (
+                    <h2 className="text-success">Sukses Import Soal</h2>
+                  )}
 
-                    <span className="text-muted">
-                      {survey_question_file.success +
-                        survey_question_file.failed}{" "}
-                      Total Import | {survey_question_file.success} Sukses di
-                      Import | {survey_question_file.failed} Gagal di import
-                    </span>
-                  </div>
-                ) : successImages ? (
-                  <>
-                    {" "}
-                    {successImages ? (
-                      <div className="mb-5">
-                        <h2 className="text-success">Sukses Import Gambar</h2>
+                  <span className="text-muted">
+                    {!successFile || successImages
+                      ? survey_question_images?.success +
+                        survey_question_images?.failed
+                      : survey_question_file?.success +
+                        survey_question_file?.failed}{" "}
+                    Total Import |{" "}
+                    {!successFile || successImages
+                      ? survey_question_images?.success
+                      : survey_question_file?.success}{" "}
+                    Sukses di Import |{" "}
+                    {!successFile || successImages
+                      ? survey_question_images?.failed
+                      : survey_question_file?.failed}{" "}
+                    Gagal di import
+                  </span>
+                </div>
 
-                        <span className="text-muted">
-                          {survey_question_images.success +
-                            survey_question_images.failed}{" "}
-                          Total Import | {survey_question_images.success} Sukses
-                          di Import | {survey_question_images.failed} Gagal di
-                          import
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </>
-                ) : (
-                  ""
-                )}
                 <div className="table-responsive">
                   <LoadingTable loading={loading} />
 

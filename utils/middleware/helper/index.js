@@ -5,6 +5,10 @@ import CheckboxReference from "../../../components/content/pelatihan/training/co
 
 import { options, element, size } from "./data";
 
+export const helperHandlePercentage = (totalAdd, total) => {
+  return Math.ceil((100 * totalAdd) / total);
+};
+
 export const disablePlusMinusPeriod = (e) => {
   if (e.code == "Minus") {
     return false;
