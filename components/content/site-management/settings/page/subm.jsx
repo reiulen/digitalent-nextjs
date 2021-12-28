@@ -5,6 +5,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
 import styles from "../../../../../styles/previewGaleri.module.css";
+import Swal from "sweetalert2";
 
 import {
   postViaFilter,
@@ -329,8 +330,8 @@ export default function SUBM(props) {
                   id="template"
                   value="template"
                   checked={via === "template"}
-                  onChange={(e) => {
-                    setVia(e.target.value);
+                  onClick={(e) => {
+                    setVia("template");
                   }}
                 />
                 <h3 className="judul">Via Template</h3>
@@ -342,8 +343,8 @@ export default function SUBM(props) {
                   name="via"
                   id="filter"
                   value="filter"
-                  onChange={(e) => {
-                    setVia(e.target.value);
+                  onClick={(e) => {
+                    setVia("filter");
                   }}
                 />
                 <h3 className="judul">Via Filter</h3>
