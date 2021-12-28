@@ -47,7 +47,13 @@ export const getAllVideoContent = (
         if (category_name) link = link.concat(`&category_name=${category_name}`);
         if (tag) link = link.concat(`&tag=${tag}`);
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: BERANDA_VIDEO_SUCCESS,
@@ -68,7 +74,13 @@ export const getDetailBerandaVideo = (id) => async dispatch => {
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/video/${id}`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch ({
             type: DETAIL_BERANDA_VIDEO_SUCCESS,
@@ -90,8 +102,14 @@ export const getKategoriVideoContent = () => async (dispatch) => {
         dispatch({ type: KATEGORI_BERANDA_VIDEO_REQUEST })
         
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
+
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
         
-        const { data } = await axios.get(link)
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: KATEGORI_BERANDA_VIDEO_SUCCESS,
@@ -112,8 +130,14 @@ export const getTagVideo = () => async (dispatch) => {
         dispatch({ type: TAG_BERANDA_VIDEO_REQUEST })
         
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/video`
+
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
         
-        const { data } = await axios.get(link)
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: TAG_BERANDA_VIDEO_SUCCESS,
@@ -133,8 +157,14 @@ export const playVideoContent = (videoData) => async (dispatch) => {
         dispatch({ type: PLAY_BERANDA_VIDEO_REQUEST })
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/video/play/${videoData.id}`
+
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
        
-        const { data } = await axios.post(link, videoData)
+        const { data } = await axios.post(link, videoData, config)
 
         dispatch({
             type: PLAY_BERANDA_VIDEO_SUCCESS,

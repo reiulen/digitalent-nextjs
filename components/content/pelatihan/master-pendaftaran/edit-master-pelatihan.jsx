@@ -205,7 +205,7 @@ const EditRegistrationStep2 = ({ token }) => {
               className="font-weight-bolder card-title"
               style={{ fontSize: "20px" }}
             >
-              Edit Form Pendaftaran
+              Edit Form Master Pendaftaran
             </h1>
             <div className="card-toolbar justify-content-between d-flex">
               <button

@@ -10,6 +10,7 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import Swal from "sweetalert2";
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../../styles/pagination.module.css";

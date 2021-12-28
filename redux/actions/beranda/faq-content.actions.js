@@ -20,9 +20,11 @@ export const getAllFaq =
       if (pinned) link = link.concat(`?pinned=${pinned}`);
       if (category_name) link = link.concat(`?category_name=${category_name}`);
       if (keyword) link = link.concat(`?keyword=${keyword}`);
+
       const config = {
         headers: {
-          Authorization: "Bearer " + token,
+          // Authorization: "Bearer " + token,
+          apikey: process.env.API_KEY_PUBLIKASI,
         },
       };
       const { data } = await axios.get(link, config);
@@ -46,7 +48,13 @@ export const getKategoriBerandaFaq = () => async (dispatch) => {
 
     let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`;
 
-    const { data } = await axios.get(link);
+    const config = {
+      headers: {
+        apikey: process.env.API_KEY_PUBLIKASI,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
 
     dispatch({
       type: KATEGORI_BERANDA_FAQ_SUCCESS,
