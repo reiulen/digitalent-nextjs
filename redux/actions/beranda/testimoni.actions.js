@@ -51,7 +51,13 @@ export const getAllBerandaTestimoni =
                 if (category_akademi) link = link.concat(`&category_akademi=${category_akademi}`);
                 if (tag) link = link.concat(`&tag=${tag}`);
 
-                const { data } = await axios.get(link);
+                const config = {
+                    headers: {
+                      apikey: process.env.API_KEY_PUBLIKASI,
+                    },
+                };
+
+                const { data } = await axios.get(link, config);
 
                 dispatch({
                     type: BERANDA_TESTIMONI_SUCCESS,
@@ -70,7 +76,13 @@ export const getDetailBerandaTestimoni = (id) => async dispatch => {
     try {
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel/${id}`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: DETAIL_BERANDA_TESTIMONI_SUCCESS,
@@ -117,7 +129,13 @@ export const getKategoriBerandaTestimoni = () => async dispatch => {
         // let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Artikel&type=home&role=0`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: KATEGORI_BERANDA_TESTIMONI_SUCCESS,
@@ -139,7 +157,13 @@ export const getTagBerandaTestimoni = () => async dispatch => {
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel&role=0`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: TAG_BERANDA_TESTIMONI_SUCCESS,
