@@ -25,7 +25,8 @@ module.exports = {
 
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_PUBLIKASI: "http://api-dts-dev.majapahit.id/publikasi/",
-    END_POINT_API_PUBLIKASI_1: "http://dts-publikasi-dev.majapahit.id/",
+    END_POINT_API_PUBLIKASI_1: "http://api-dts-dev.majapahit.id/publikasi-view/",
+    API_KEY_PUBLIKASI: "I8aylVChtrUB15Sp5v8TsjDOvb8kGcML",
     END_POINT_API_IMAGE_PUBLIKASI:
       "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
