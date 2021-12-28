@@ -16,3 +16,8 @@
 .detailFaq a {
     color:#007CFF !important;
 }
+
+.btn_white {
+    background-color: white !important; 
+    border: none !important;
+}
