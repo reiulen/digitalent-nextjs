@@ -366,6 +366,7 @@ const FaqPage = () => {
                     return (
                       <Accordion
                         key={i}
+                        // className="col-12"
                       >
                         <Accordion.Item
                           // className="border border-dark"
@@ -394,19 +395,19 @@ const FaqPage = () => {
                             <div
                               className={
                                 row.isShow === true
-                                  ? "d-flex justify-content-between flex-row align-items-center pt-5 border border-dark"
-                                  : "d-flex justify-content-between flex-row align-items-center py-5 border border-dark"
+                                  ? "d-flex justify-content-between align-items-center pt-5"
+                                  : "d-flex justify-content-between align-items-center py-5"
                               }
                             >
                               <h4
-                                className="my-auto" 
+                                className="my-auto text-left" 
                                 style={{ fontWeight: "600", fontSize: "20px" }}
                               >
                                 {row.judul}
                               </h4>
                   
                               <button
-                                className="accordion-button btn my-auto"
+                                className="btn my-auto"
                                 type="button"
                               >
                                 <i

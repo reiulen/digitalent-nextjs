@@ -13,11 +13,17 @@ export const getKategoriVideoContent = (token) => async (dispatch) => {
         dispatch({ type: KATEGORI_VIDEO_CONTENT_REQUEST })
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
+        // const config = {
+        //     headers: {
+        //         Authorization: 'Bearer ' + token,
+        //     },
+        // };
+
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+              apikey: process.env.API_KEY_PUBLIKASI,
             },
-        };
+          };
 
         const { data } = await axios.get(link, config)
 
