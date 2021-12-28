@@ -16,6 +16,7 @@ import ProfileUser from "./participant/profile";
 import HistoryPage from "./participant/history";
 import FileRegister from "./participant/file-register";
 import SuportDocument from "./participant/suport-document";
+import Swal from "sweetalert2";
 
 import {
   updateStatusPeserta,
@@ -215,8 +216,6 @@ const DataParticipant = ({ token }) => {
     peserta.list[0].status || null
   );
 
-  const [socket, setSocket] = useState(null);
-
   useEffect(() => {
     if (peserta) {
       dispatch(getDataPribadi(token, peserta.list[0].id));
@@ -247,8 +246,6 @@ const DataParticipant = ({ token }) => {
       dispatch(getFormLpj(token, peserta.list[0].id));
       dispatch({ type: UPDATE_REMINDER_RESET });
     }
-
-    handleConnectSocket();
   }, [
     dispatch,
     peserta,
@@ -267,7 +264,6 @@ const DataParticipant = ({ token }) => {
       dispatch(getFormKomitmen(token, peserta.list[0].id));
       dispatch(getFormLpj(token, peserta.list[0].id));
       dispatch({ type: UPDATE_STATUS_RESET });
-      handleSendNotification();
       Swal.fire({
         icon: "success",
         title: "Berhasil",
@@ -278,45 +274,6 @@ const DataParticipant = ({ token }) => {
       });
     }
   }, [successStatus]);
-
-  const handleConnectSocket = () => {
-    let ws = new WebSocket(
-      "ws://api-dts-dev.majapahit.id/pelatihan/api/v1/formPendaftaran/notification"
-    );
-    let timeout = 0;
-    let connectInterval;
-    ws.onopen = () => {
-      setSocket(ws);
-      timeout = 250;
-      clearTimeout(connectInterval);
-    };
-
-    ws.onclose = (e) => {
-      timeout = timeout + timeout;
-      connectInterval = setTimeout(handleCheckSocket, Math.min(10000, timeout));
-    };
-
-    ws.onerror = (err) => {
-      ws.close();
-    };
-  };
-
-  const handleCheckSocket = () => {
-    if (!socket || socket.readyState === WebSocket.CLOSED)
-      handleConnectSocket();
-  };
-
-  const handleSendNotification = () => {
-    const data = {
-      pelatihan_id: pelatihan_id,
-      status: statusPeserta.value || statusPeserta,
-      User_id: peserta.list[0].user_id,
-    };
-    try {
-      socket.send(JSON.stringify({ Message: JSON.stringify(data) }));
-      handleConnectSocket();
-    } catch (err) {}
-  };
 
   const handleResetError = () => {
     if (error) {

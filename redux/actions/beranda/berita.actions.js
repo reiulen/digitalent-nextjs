@@ -51,7 +51,13 @@ export const getAllBerandaBerita =
             if (category_akademi) link = link.concat(`&category_akademi=${category_akademi}`);
             if (tag) link = link.concat(`&tag=${tag}`);
 
-            const { data } = await axios.get(link);
+            const config = {
+                headers: {
+                  apikey: process.env.API_KEY_PUBLIKASI,
+                },
+            };
+
+            const { data } = await axios.get(link, config);
 
             dispatch({
                 type: BERANDA_BERITA_SUCCESS,
@@ -70,7 +76,13 @@ export const getDetailBerandaBerita = (id) => async dispatch => {
     try {
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/berita/${id}`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch ({
             type: DETAIL_BERANDA_BERITA_SUCCESS,
@@ -92,7 +104,13 @@ export const getKategoriBerandaBerita = () => async dispatch => {
         // let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Berita&type=home`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: KATEGORI_BERANDA_BERITA_SUCCESS,
@@ -114,7 +132,13 @@ export const getTagBerandaBerita = () => async dispatch => {
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/berita`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: TAG_BERANDA_BERITA_SUCCESS,

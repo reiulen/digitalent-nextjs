@@ -26,6 +26,14 @@ mark {
     color: white;
 }
 
+.accordion-button {
+	background-color: white !important;
+	border: none !important;
+	position: relative;
+  	width: 100%;
+	
+}
+
 .aside-menu .menu-nav > .menu-item > .menu-heading .menu-text,
 .aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
 	font-weight: 500 !important;

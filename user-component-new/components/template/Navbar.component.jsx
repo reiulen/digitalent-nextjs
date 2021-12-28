@@ -69,9 +69,9 @@ const Navigationbar = ({ session }) => {
 
     // const messaging = getMessaging();
     // onMessage(messaging, (payload) => {
-    // 	console.log("Message received. ", payload.notification);
-    // 	toast.info(payload.notification.title);
-    // 	setAlertNotif(true);
+    //   console.log("Message received. ", payload.notification);
+    //   toast.info(payload.notification.title);
+    //   setAlertNotif(true);
     // });
 
     if (!session) {
@@ -380,7 +380,7 @@ const Navigationbar = ({ session }) => {
                       style={{ color: "#6C6C6C" }}
                     >
                       <div className="d-flex align-items-center fz-12 justify-content-between mb-9">
-                        <div>Notification</div>
+                        <div>Notifikasi</div>
                         <img
                           src="/assets/media/notification/Close_Button.png"
                           alt="close_button"
@@ -598,7 +598,7 @@ const Navigationbar = ({ session }) => {
                   </Col>
                   <Col
                     className={`p-0 m-0 ${
-                      menu?.length > 0 ? `h-350px` : "h-300px"
+                      menu?.length > 0 ? `h-350px` : "h-350px"
                     } overflow-auto ${style.scrollbar_navbar}`}
                   >
                     {navbarItems &&
@@ -710,7 +710,7 @@ const Navigationbar = ({ session }) => {
                   style={{ color: "#6C6C6C" }}
                 >
                   <div className="d-flex align-items-center fz-20 justify-content-between mb-9">
-                    <div>Notification</div>
+                    <div>Notifikasi</div>
                     <img
                       src="/assets/media/notification/Close_Button.png"
                       alt="close_button"

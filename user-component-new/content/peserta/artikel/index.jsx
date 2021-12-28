@@ -6,6 +6,7 @@ import { Row, Col, Card, Button, Badge, Modal, Select } from "react-bootstrap";
 import Pagination from "react-js-pagination";
 import PaginationPeserta from "../../../components/global/PaginationPeserta";
 import DatePicker from "react-datepicker";
+import Swal from "sweetalert2";
 
 import CardPill from "../../../components/global/CardPill";
 import CardPage from "../../../components/global/CardPage";
