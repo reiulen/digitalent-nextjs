@@ -137,7 +137,7 @@ export const getTagBerandaArtikel = () => async dispatch => {
 
         dispatch({ type: TAG_BERANDA_ARTIKEL_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel&role=1`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel`
 
         const { data } = await axios.get(link)
 
