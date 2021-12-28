@@ -120,7 +120,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 	}, [errorUpdateData, success, dispatch, funcViewEdit]);
 
 	const onChangeKtp = (e) => {
-		const type = ["image/jpg", "image/png", "image/jpeg"];
+		const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
 		if (e.target.files[0]) {
 			if (type.includes(e.target.files[0].type)) {
 				if (e.target.files[0].size > 2000000) {
@@ -286,7 +286,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 		<>
 			<Form onSubmit={handleSubmit}>
 				<div className="informasi-pribadi">
-					<h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
+					<h3 className="font-weight-bolder mb-5">Informasi Pribadi xxx</h3>
 
 					<Row className="mb-3">
 						{wizzard && (
@@ -739,7 +739,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 									type="file"
 									className="custom-file-input"
 									name="question_image"
-									accept="image/png, image/jpeg , image/jpg"
+									accept="image/png, image/jpeg , image/jpg, application/pdf"
 									onChange={onChangeKtp}
 									onBlur={() => simpleValidator.current.showMessageFor("ktp")}
 								/>
