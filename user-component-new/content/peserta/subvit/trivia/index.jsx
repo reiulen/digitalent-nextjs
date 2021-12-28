@@ -84,7 +84,8 @@ const SubtansiUser = ({ token }) => {
     tt.push(it.duration / 1000);
   });
 
-  // $(window).on("popstate", function (event) {
+  // MASIH DIPAKE
+  // $(window).on("popstate", function () {
   //   router.push("/peserta/done-trivia");
   //   const setData = {
   //     list: null,
@@ -93,7 +94,7 @@ const SubtansiUser = ({ token }) => {
   //   };
   //   dispatch(postResultTrivia(setData, token));
   // });
-  console.log(tt);
+
   const [times, setTimes] = useState(
     tt[parseInt(router.query.id) - 1] <= 0
       ? 3000

@@ -286,7 +286,8 @@ const StepTwo = ({ token, tokenPermission }) => {
   const handleDownloadTemplate = async () => {
     await axios
       .get(
-        "http://dts-subvit-dev.majapahit.id/api/subtance-question-bank-details/template"
+        process.env.END_POINT_API_SUBVIT +
+          "api/subtance-question-bank-details/template"
       )
       .then((res) => {
         window.location.href = res.data.data[0];
