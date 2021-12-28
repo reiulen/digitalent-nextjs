@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios'
 import { useDispatch } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 

@@ -5,6 +5,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
 import styles from "../../../../../styles/previewGaleri.module.css";
+import Swal from "sweetalert2";
 
 import {
   postViaFilter,

@@ -415,7 +415,7 @@ export default function MasterPelatihan({ token }) {
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                     onClick={() =>
                                       router.push(
-                                        `/pelatihan/master-pendaftaran/edit-form-pendaftaran?id=${item.id}`
+                                        `/pelatihan/form-master-pendaftaran/edit-form-master-pendaftaran?id=${item.id}`
                                       )
                                     }
                                     data-toggle="tooltip"
@@ -430,7 +430,7 @@ export default function MasterPelatihan({ token }) {
                                   "pelatihan.master_pendaftaran.view"
                                 ) && (
                                   <Link
-                                    href={`/pelatihan/master-pendaftaran/view-master-pendaftaran?id=${item.id}`}
+                                    href={`/pelatihan/form-master-pendaftaran/view-form-master-pendaftaran?id=${item.id}`}
                                     passHref
                                   >
                                     <a

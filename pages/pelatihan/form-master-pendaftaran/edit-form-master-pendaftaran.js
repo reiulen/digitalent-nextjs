@@ -60,7 +60,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 			);
 
 			return {
-				props: { session, title: "Tambah Pelatihan - Pelatihan" },
+				props: { session, title: "Edit Form Master Pendaftaran - Pelatihan" },
 			};
 		}
 );
