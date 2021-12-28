@@ -167,26 +167,6 @@ export default function TambahMasterSertifikat({ token }) {
   const [tanggal, setTanggal] = useState("--/--/----");
   const [tahun, setTahun] = useState("----");
 
-  //CLONE DATA SERTIFIKAT
-
-  const [showModalClone, setShowModalClone] = useState(false);
-  const handleCloseClone = () => {
-    setShowModalClone(false);
-  };
-  const [cloneData, setCloneData] = useState();
-  const [optionAcademy, setOptionAcademy] = useState(null);
-  const [disableTheme, setDisableTheme] = useState(true);
-  const [disableTraining, setDisableTraining] = useState(true);
-  const [optionTheme, setOptionTheme] = useState(null);
-  const [academy, setAcademy] = useState();
-  const [theme, setTheme] = useState();
-  const [optionTraining, setOptionTraining] = useState(null);
-  const [training, setTraining] = useState(null);
-  const [imagePreviewClone, setImagePreviewClone] = useState(null);
-  const [imagePreviewSyllabusClone, setImagePreviewSyllabusClone] =
-    useState(null);
-  const [disableSimpan, setDisableSimpan] = useState(false);
-
   const [akademi, setAkademi] = useState(
     certificate?.data?.tema?.akademi || "-"
   );

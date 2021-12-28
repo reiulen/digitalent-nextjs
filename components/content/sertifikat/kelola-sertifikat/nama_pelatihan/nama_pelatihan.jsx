@@ -25,6 +25,8 @@ import {
   getOptionsThemeCloneSertifikat,
   getOptionsTrainingCloneSertifikat,
 } from "../../../../../redux/actions/sertifikat/clone-sertifikat.action";
+import axios from "axios";
+import { SweatAlert } from "../../../../../utils/middleware/helper";
 
 export default function NamaPelatihanID({ token }) {
   const router = useRouter();
@@ -73,7 +75,7 @@ export default function NamaPelatihanID({ token }) {
   const [imagePreviewClone, setImagePreviewClone] = useState(null);
   const [imagePreviewSyllabusClone, setImagePreviewSyllabusClone] =
     useState(null);
-  const [disableSimpan, setDisableSimpan] = useState(false);
+  const [disableSimpan, setDisableSimpan] = useState(true);
 
   useEffect(() => {
     if (allOptionAcademy?.academy?.data) {
@@ -165,6 +167,7 @@ export default function NamaPelatihanID({ token }) {
     if (!status) {
       Swal.fire("Oops !", "Harap memilih Status terlebih dahulu.", "error");
     } else {
+      setShowModalFilter(false);
       let link = `/sertifikat/kelola-sertifikat/${
         router.query.tema_pelatihan_id
       }?id=${router.query.id || ""}&page=${page}`;
@@ -206,6 +209,52 @@ export default function NamaPelatihanID({ token }) {
       { shallow: true }
     );
   };
+  const [showModalFilter, setShowModalFilter] = useState(false);
+
+  const [id, setId] = useState(null);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      // Permission: token_permission,
+    },
+  };
+
+  const postClone = async () => {
+    const data = await axios.post(
+      `${process.env.END_POINT_API_SERTIFIKAT}api/manage_certificates/clone`,
+      formdata,
+      config
+    );
+    return data;
+  };
+
+  const handlePostClone = async () => {
+    try {
+      const formData = new FormData();
+
+      formData.append("training_id", cloneData.pelatihan.id);
+      formData.append("academy_id_target", id.academy_id);
+      formData.append("theme_id_target", id.theme_id);
+      formData.append("training_id_target", id.id);
+
+      const data = await axios.post(
+        `${process.env.END_POINT_API_SERTIFIKAT}api/manage_certificates/clone`,
+        formData,
+        config
+      );
+
+      if (data) {
+        console.log(data, "ini data");
+        router.push(
+          `/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${id.name}?id=${id.id}&theme_id=${id.theme_id}&status=edit`
+        );
+      }
+    } catch (e) {
+      console.log(e);
+      SweatAlert("Gagal", e.response.data.message || e.message, "error");
+    }
+  };
+
   return (
     <PageWrapper>
       {/* error START */}
@@ -341,6 +390,9 @@ export default function NamaPelatihanID({ token }) {
                         color: "#464646",
                         minWidth: "230px",
                       }}
+                      onClick={() => {
+                        setShowModalFilter(true);
+                      }}
                     >
                       <div className="d-flex align-items-center">
                         <IconFilter className="mr-3" />
@@ -350,83 +402,75 @@ export default function NamaPelatihanID({ token }) {
                     </button>
 
                     <form className="form text-left">
-                      <div
-                        className="modal fade"
-                        id="exampleModalCenter"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-labelledby="exampleModalCenterTitle"
-                        aria-hidden="true"
-                      >
-                        <div
-                          className="modal-dialog modal-dialog-centered"
-                          role="document"
-                        >
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5
-                                className="modal-title"
-                                id="exampleModalLongTitle"
-                              >
-                                Filter
-                              </h5>
-                              <button
-                                type="button"
-                                className="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                              >
-                                <IconClose />
-                              </button>
-                            </div>
+                      <Modal centered show={showModalFilter}>
+                        <Modal.Body>
+                          <div className="modal-header">
+                            <h5
+                              className="modal-title"
+                              id="exampleModalLongTitle"
+                            >
+                              Filter
+                            </h5>
+                            <button
+                              type="button"
+                              className="close"
+                              onClick={() => {
+                                setShowModalFilter(false);
+                              }}
+                            >
+                              <IconClose />
+                            </button>
+                          </div>
 
-                            <div className="modal-body text-left">
-                              <div className="fv-row mb-10">
-                                <label className="required fw-bold fs-6 mb-2">
-                                  Status
-                                </label>
-                                <Select
-                                  ref={(ref) => (refSelect = ref)}
-                                  className="basic-single"
-                                  classNamePrefix="select"
-                                  placeholder="Semua"
-                                  isDisabled={false}
-                                  isLoading={false}
-                                  isClearable={false}
-                                  isRtl={false}
-                                  isSearchable={true}
-                                  name="color"
-                                  onChange={(e) => {
-                                    setStatus(e?.value);
-                                  }}
-                                  options={options}
-                                />
-                              </div>
-                            </div>
-                            <div className="modal-footer">
-                              <div className="d-flex justify-content-end align-items-center">
-                                <button
-                                  className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
-                                  type="button"
-                                  data-dismiss="modal"
-                                  aria-label="Close"
-                                  onClick={() => resetValueSort()}
-                                >
-                                  Reset
-                                </button>
-                                <button
-                                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                                  type="button"
-                                  onClick={handleFilter}
-                                  data-dismiss="modal"
-                                >
-                                  Terapkan
-                                </button>
-                              </div>
+                          <div className="modal-body text-left">
+                            <div className="fv-row mb-10">
+                              <label className="required fw-bold fs-6 mb-2">
+                                Status
+                              </label>
+                              <Select
+                                ref={(ref) => (refSelect = ref)}
+                                className="basic-single"
+                                classNamePrefix="select"
+                                placeholder="Semua"
+                                isDisabled={false}
+                                isLoading={false}
+                                isClearable={false}
+                                isRtl={false}
+                                isSearchable={true}
+                                name="color"
+                                onChange={(e) => {
+                                  setStatus(e?.value);
+                                }}
+                                options={options}
+                              />
                             </div>
                           </div>
-                        </div>
-                      </div>
+                          <div className="modal-footer">
+                            <div className="d-flex justify-content-end align-items-center">
+                              <button
+                                className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
+                                type="button"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={() => {
+                                  setShowModalFilter(false);
+                                  resetValueSort();
+                                }}
+                              >
+                                Reset
+                              </button>
+                              <button
+                                className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                                type="button"
+                                onClick={handleFilter}
+                                data-dismiss="modal"
+                              >
+                                Terapkan
+                              </button>
+                            </div>
+                          </div>
+                        </Modal.Body>
+                      </Modal>
                     </form>
                     {/* END modal */}
                   </div>
@@ -605,153 +649,18 @@ export default function NamaPelatihanID({ token }) {
                                             data-placement="bottom"
                                             title="Tambah"
                                             onClick={() => {
+                                              setId({
+                                                id: certificate.id,
+                                                theme_id: certificate.theme_id,
+                                                academy_id:
+                                                  certificate.academy_id,
+                                                name: certificate.training,
+                                              });
                                               setShowModalClone(true);
                                             }}
                                           >
                                             <i className="ri-send-backward p-0 text-white"></i>
                                           </a>
-                                          <Modal
-                                            show={showModalClone}
-                                            size="lg"
-                                            onHide={handleCloseClone}
-                                            id="showModalClone"
-                                            key={"ModalClone"}
-                                          >
-                                            <Modal.Header>
-                                              <Modal.Title>
-                                                Clone Sertifikat
-                                              </Modal.Title>
-                                            </Modal.Header>
-                                            <Modal.Body>
-                                              <Fragment>
-                                                <div className="mb-4">
-                                                  <p>Akademi</p>
-                                                  <Select
-                                                    options={
-                                                      optionAcademy
-                                                        ? optionAcademy
-                                                        : {}
-                                                    }
-                                                    onChange={(e) => {
-                                                      setAcademy(e);
-                                                      dispatch(
-                                                        getOptionsThemeCloneSertifikat(
-                                                          token,
-                                                          e?.value
-                                                        )
-                                                      );
-                                                      setTraining(null);
-                                                      setTheme(null);
-                                                    }}
-                                                    value={academy}
-                                                  />
-                                                </div>
-                                                <div className="mb-4">
-                                                  <p>Tema</p>
-                                                  <Select
-                                                    isDisabled={
-                                                      disableTheme
-                                                        ? true
-                                                        : false
-                                                    }
-                                                    options={
-                                                      optionTheme
-                                                        ? optionTheme
-                                                        : {}
-                                                    }
-                                                    value={theme}
-                                                    onChange={(e) => {
-                                                      setTheme(e);
-                                                      dispatch(
-                                                        getOptionsTrainingCloneSertifikat(
-                                                          token,
-                                                          academy?.value,
-                                                          e?.value
-                                                        )
-                                                      );
-                                                      setTraining(null);
-                                                    }}
-                                                  />
-                                                </div>
-                                                <div className="mb-4">
-                                                  <p>Pelatihan</p>
-                                                  <Select
-                                                    options={
-                                                      optionTraining
-                                                        ? optionTraining
-                                                        : {}
-                                                    }
-                                                    value={training}
-                                                    isDisabled={
-                                                      disableTraining
-                                                        ? true
-                                                        : false
-                                                    }
-                                                    onChange={(e) => {
-                                                      setTraining(e);
-                                                      setDisableSimpan(true);
-                                                    }}
-                                                  />
-                                                </div>
-                                                {imagePreviewClone && (
-                                                  <div
-                                                    style={{
-                                                      border: "1px solid black",
-                                                    }}
-                                                  >
-                                                    <Image
-                                                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${imagePreviewClone}`}
-                                                      alt="Preview Sertifikat"
-                                                      width={842}
-                                                      height={595}
-                                                    />
-                                                  </div>
-                                                )}
-
-                                                {cloneData?.certificate
-                                                  ?.certificate_type ==
-                                                  "2 lembar" &&
-                                                  imagePreviewSyllabusClone && (
-                                                    <div
-                                                      style={{
-                                                        border:
-                                                          "1px solid black",
-                                                      }}
-                                                    >
-                                                      <Image
-                                                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${imagePreviewSyllabusClone}`}
-                                                        alt="Preview Syllabus"
-                                                        width={842}
-                                                        height={595}
-                                                        objectFit="contain"
-                                                      />
-                                                    </div>
-                                                  )}
-                                              </Fragment>
-                                            </Modal.Body>
-                                            <Modal.Footer>
-                                              <Button
-                                                className="rounded-full"
-                                                variant="secondary"
-                                                onClick={handleCloseClone}
-                                              >
-                                                Tutup
-                                              </Button>
-                                              <button
-                                                className="btn btn-primary-rounded-full"
-                                                onClick={(e) => {
-                                                  router.push(
-                                                    `/sertifikat/kelola-sertifikat/clone-sertifikat?id=${certificate.id}&theme_id=${certificates.data.tema.id}&theme_name=${certificate.training}&id_clone=${training?.value}`
-                                                  );
-                                                }}
-                                                disabled={
-                                                  disableSimpan ? true : false
-                                                }
-                                              >
-                                                Lanjut
-                                              </button>
-                                            </Modal.Footer>
-                                          </Modal>
                                         </Fragment>
                                         // </Link>
                                       )}
@@ -832,6 +741,117 @@ export default function NamaPelatihanID({ token }) {
           {/* START MODAL */}
         </div>
       </div>
+      <Modal
+        show={showModalClone}
+        size="lg"
+        onHide={handleCloseClone}
+        id="showModalClone"
+        key={"ModalClone"}
+      >
+        <Modal.Header>
+          <Modal.Title>Clone Sertifikat</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Fragment>
+            <div className="mb-4">
+              <p>Akademi</p>
+              <Select
+                options={optionAcademy ? optionAcademy : {}}
+                onChange={(e) => {
+                  setAcademy(e);
+                  dispatch(getOptionsThemeCloneSertifikat(token, e?.value));
+                  setTraining(null);
+                  setTheme(null);
+                }}
+                value={academy}
+              />
+            </div>
+            <div className="mb-4">
+              <p>Tema</p>
+              <Select
+                isDisabled={disableTheme ? true : false}
+                options={optionTheme ? optionTheme : {}}
+                value={theme}
+                onChange={(e) => {
+                  setTheme(e);
+                  dispatch(
+                    getOptionsTrainingCloneSertifikat(
+                      token,
+                      academy?.value,
+                      e?.value
+                    )
+                  );
+                  setTraining(null);
+                }}
+              />
+            </div>
+            <div className="mb-4">
+              <p>Pelatihan</p>
+              <Select
+                options={optionTraining ? optionTraining : {}}
+                value={training}
+                isDisabled={disableTraining ? true : false}
+                onChange={(e) => {
+                  setTraining(e);
+                  setDisableSimpan(true);
+                }}
+              />
+            </div>
+            {imagePreviewClone && (
+              <div
+                style={{
+                  border: "1px solid black",
+                }}
+              >
+                <Image
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${imagePreviewClone}`}
+                  alt="Preview Sertifikat"
+                  width={842}
+                  height={595}
+                />
+              </div>
+            )}
+
+            {cloneData?.certificate?.certificate_type == "2 lembar" &&
+              imagePreviewSyllabusClone && (
+                <div
+                  style={{
+                    border: "1px solid black",
+                  }}
+                >
+                  <Image
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${imagePreviewSyllabusClone}`}
+                    alt="Preview Syllabus"
+                    width={842}
+                    height={595}
+                    objectFit="contain"
+                  />
+                </div>
+              )}
+          </Fragment>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="rounded-full"
+            variant="secondary"
+            onClick={handleCloseClone}
+          >
+            Tutup
+          </Button>
+          <button
+            className="btn btn-primary-rounded-full"
+            onClick={(e) => {
+              // router.push(
+              //   `/sertifikat/kelola-sertifikat/clone-sertifikat?id=${certificate.id}&theme_id=${certificates.data.tema.id}&theme_name=${certificate.training}&id_clone=${training?.value}`
+              // );
+              handlePostClone();
+            }}
+            disabled={disableSimpan ? true : false}
+          >
+            Lanjut
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 }
