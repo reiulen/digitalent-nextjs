@@ -14,6 +14,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import moment from "moment";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import {
   dropdownKabupaten,

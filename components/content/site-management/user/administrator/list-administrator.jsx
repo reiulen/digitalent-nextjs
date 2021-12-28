@@ -12,6 +12,7 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
 import IconArrow from "../../../../assets/icon/Arrow";
+import Swal from "sweetalert2";
 import {
   deleteAdminSite,
   getAllAdminSite,
