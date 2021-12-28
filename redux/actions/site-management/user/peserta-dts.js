@@ -41,7 +41,6 @@ export const getAllListsPeserta =
         });
 
       } catch (error) {
-        console.log("peserta", error)
         dispatch({
           type: LIST_PESERTA_FAIL,
         });
