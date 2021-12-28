@@ -383,6 +383,8 @@ export default function EditSertifikat({ token }) {
 
         if (localBackground) {
           formData.append("background", localBackground);
+        } else if (background) {
+          formData.append("background", background);
         }
 
         if (localBackgroundSyllabus) {
@@ -458,9 +460,9 @@ export default function EditSertifikat({ token }) {
         }
 
         formData.append("status_migrate_id", status);
-        // for (var pair of formData.entries()) {
-        //   console.log(pair[0] + ", " + pair[1]);
-        // }
+        for (var pair of formData.entries()) {
+          console.log(pair[0] + ", " + pair[1]);
+        }
         dispatch(newSertifikat(id, formData, token.token, token_permission));
         // return;
         // dispatch(updateSertifikat(id, formData, token, token_permission));

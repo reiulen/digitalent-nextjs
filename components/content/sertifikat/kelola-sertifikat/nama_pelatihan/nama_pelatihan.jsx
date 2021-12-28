@@ -614,6 +614,8 @@ export default function NamaPelatihanID({ token }) {
                                             show={showModalClone}
                                             size="lg"
                                             onHide={handleCloseClone}
+                                            id="showModalClone"
+                                            key={"ModalClone"}
                                           >
                                             <Modal.Header>
                                               <Modal.Title>
@@ -621,107 +623,111 @@ export default function NamaPelatihanID({ token }) {
                                               </Modal.Title>
                                             </Modal.Header>
                                             <Modal.Body>
-                                              <div className="mb-4">
-                                                <p>Akademi</p>
-                                                <Select
-                                                  options={
-                                                    optionAcademy
-                                                      ? optionAcademy
-                                                      : {}
-                                                  }
-                                                  onChange={(e) => {
-                                                    setAcademy(e);
-                                                    dispatch(
-                                                      getOptionsThemeCloneSertifikat(
-                                                        token,
-                                                        e?.value
-                                                      )
-                                                    );
-                                                    setTraining(null);
-                                                    setTheme(null);
-                                                  }}
-                                                  value={academy}
-                                                />
-                                              </div>
-                                              <div className="mb-4">
-                                                <p>Tema</p>
-                                                <Select
-                                                  isDisabled={
-                                                    disableTheme ? true : false
-                                                  }
-                                                  options={
-                                                    optionTheme
-                                                      ? optionTheme
-                                                      : {}
-                                                  }
-                                                  value={theme}
-                                                  onChange={(e) => {
-                                                    setTheme(e);
-                                                    dispatch(
-                                                      getOptionsTrainingCloneSertifikat(
-                                                        token,
-                                                        academy?.value,
-                                                        e?.value
-                                                      )
-                                                    );
-                                                    setTraining(null);
-                                                  }}
-                                                />
-                                              </div>
-                                              <div className="mb-4">
-                                                <p>Pelatihan</p>
-                                                <Select
-                                                  options={
-                                                    optionTraining
-                                                      ? optionTraining
-                                                      : {}
-                                                  }
-                                                  value={training}
-                                                  isDisabled={
-                                                    disableTraining
-                                                      ? true
-                                                      : false
-                                                  }
-                                                  onChange={(e) => {
-                                                    setTraining(e);
-                                                    setDisableSimpan(true);
-                                                  }}
-                                                />
-                                              </div>
-                                              {imagePreviewClone && (
-                                                <div
-                                                  style={{
-                                                    border: "1px solid black",
-                                                  }}
-                                                >
-                                                  <Image
-                                                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${imagePreviewClone}`}
-                                                    alt="Preview Sertifikat"
-                                                    width={842}
-                                                    height={595}
-                                                    objectFit="contain"
+                                              <Fragment>
+                                                <div className="mb-4">
+                                                  <p>Akademi</p>
+                                                  <Select
+                                                    options={
+                                                      optionAcademy
+                                                        ? optionAcademy
+                                                        : {}
+                                                    }
+                                                    onChange={(e) => {
+                                                      setAcademy(e);
+                                                      dispatch(
+                                                        getOptionsThemeCloneSertifikat(
+                                                          token,
+                                                          e?.value
+                                                        )
+                                                      );
+                                                      setTraining(null);
+                                                      setTheme(null);
+                                                    }}
+                                                    value={academy}
                                                   />
                                                 </div>
-                                              )}
-
-                                              {cloneData?.certificate
-                                                ?.certificate_type ==
-                                                "2 lembar" &&
-                                                imagePreviewSyllabusClone && (
+                                                <div className="mb-4">
+                                                  <p>Tema</p>
+                                                  <Select
+                                                    isDisabled={
+                                                      disableTheme
+                                                        ? true
+                                                        : false
+                                                    }
+                                                    options={
+                                                      optionTheme
+                                                        ? optionTheme
+                                                        : {}
+                                                    }
+                                                    value={theme}
+                                                    onChange={(e) => {
+                                                      setTheme(e);
+                                                      dispatch(
+                                                        getOptionsTrainingCloneSertifikat(
+                                                          token,
+                                                          academy?.value,
+                                                          e?.value
+                                                        )
+                                                      );
+                                                      setTraining(null);
+                                                    }}
+                                                  />
+                                                </div>
+                                                <div className="mb-4">
+                                                  <p>Pelatihan</p>
+                                                  <Select
+                                                    options={
+                                                      optionTraining
+                                                        ? optionTraining
+                                                        : {}
+                                                    }
+                                                    value={training}
+                                                    isDisabled={
+                                                      disableTraining
+                                                        ? true
+                                                        : false
+                                                    }
+                                                    onChange={(e) => {
+                                                      setTraining(e);
+                                                      setDisableSimpan(true);
+                                                    }}
+                                                  />
+                                                </div>
+                                                {imagePreviewClone && (
                                                   <div
                                                     style={{
                                                       border: "1px solid black",
                                                     }}
                                                   >
                                                     <Image
-                                                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${imagePreviewSyllabusClone}`}
-                                                      alt="Preview Syllabus"
+                                                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${imagePreviewClone}`}
+                                                      alt="Preview Sertifikat"
                                                       width={842}
                                                       height={595}
-                                                      objectFit="contain"
                                                     />
                                                   </div>
                                                 )}
+
+                                                {cloneData?.certificate
+                                                  ?.certificate_type ==
+                                                  "2 lembar" &&
+                                                  imagePreviewSyllabusClone && (
+                                                    <div
+                                                      style={{
+                                                        border:
+                                                          "1px solid black",
+                                                      }}
+                                                    >
+                                                      <Image
+                                                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${imagePreviewSyllabusClone}`}
+                                                        alt="Preview Syllabus"
+                                                        width={842}
+                                                        height={595}
+                                                        objectFit="contain"
+                                                      />
+                                                    </div>
+                                                  )}
+                                              </Fragment>
                                             </Modal.Body>
                                             <Modal.Footer>
                                               <Button
