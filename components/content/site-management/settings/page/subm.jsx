@@ -5,7 +5,6 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
 import styles from "../../../../../styles/previewGaleri.module.css";
-import Swal from "sweetalert2";
 
 import {
   postViaFilter,
@@ -55,8 +54,7 @@ export default function SUBM(props) {
   const [namapenyelenggara, setnamapenyelenggara] = useState(null);
   const [namapelatihan, setnamapelatihan] = useState(null);
   const [namastatusseleksi, setnamastatusseleksi] = useState(null);
-  const [nameFile, setNameFile] = useState(null);
-  const [selectedTraining, setSelectedTraining] = useState(null)
+  const [nameFile, setNameFile] = useState(null)
 
   const optionsStatus = [
     { value: "seleksi administrasi", label: "Seleksi Administrasi" },
@@ -93,7 +91,7 @@ export default function SUBM(props) {
             namaakademi ? namaakademi : "",
             namatema ? namatema : "",
             namapenyelenggara ? namapenyelenggara : "",
-            training,
+            namapelatihan ? namapelatihan : "",
             profileStatus ? profileStatus : "",
             selectionStatus ? selectionStatus : "",
             participantSelectionStatusUpdate ||
@@ -173,7 +171,7 @@ export default function SUBM(props) {
     axios
       .get(
         process.env.END_POINT_API_PELATIHAN +
-          `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
+        `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
@@ -207,7 +205,7 @@ export default function SUBM(props) {
     axios
       .get(
         process.env.END_POINT_API_PELATIHAN +
-          `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme}`,
+        `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme}`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
@@ -281,55 +279,21 @@ export default function SUBM(props) {
   });
 
   const onChangeFile = (e) => {
-    if (e.target.files[0].size > "10000000") {
-      e.target.value = null;
-      Swal.fire("Oops !", "File Size Melebihi 10 MB", "error");
-    } else {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-      setFile(e.target.files[0]);
-      setNameFile(e.target.files[0].name);
-    }
-  };
-
-  const trainingOpt = listTraining?.map((item, index) => {
-    return {
-      ...item,
-      icon: (
-        <span className={`text-${item.status ? "success" : "danger"} ml-auto font-weight-bolder`}>
-          <i className={`fas fa-circle text-${item.status ? "success" : "danger"}`}></i> {item.status ? "Aktif" : "Tidak Aktif"}
-        </span>
-      ),
-    };
-  });
-
-  
-  const formatLabel = (e) => {
-   return <div style={{ display: "flex", alignItems: "center" }}>
-      <span style={{paddingRight: 6 }}>{e.label}</span>
-      {e.icon}
-    </div>;
-  };
-
-  const changeTraining = (e) => {
-    let data = e.map((item) => {
-      return { ...item, value: item.value }
-    })
-    const datas = data.map((items) => {
-      return items.label
-    })
-    setTraining(datas)
-    setSelectedTraining(data.map(item => {
-      return {
-        value: item.value,
-        label: item.label
+      if (e.target.files[0].size > "10000000") {
+        e.target.value = null;
+        Swal.fire("Oops !", "File Size Melebihi 10 MB", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setFile(e.target.files[0])
+        setNameFile(e.target.files[0].name);
       }
-    }))
-  }
+    
+  };
 
   return (
     <div className="row">
@@ -365,8 +329,8 @@ export default function SUBM(props) {
                   id="template"
                   value="template"
                   checked={via === "template"}
-                  onClick={(e) => {
-                    setVia("template");
+                  onChange={(e) => {
+                    setVia(e.target.value);
                   }}
                 />
                 <h3 className="judul">Via Template</h3>
@@ -378,8 +342,8 @@ export default function SUBM(props) {
                   name="via"
                   id="filter"
                   value="filter"
-                  onClick={(e) => {
-                    setVia("filter");
+                  onChange={(e) => {
+                    setVia(e.target.value);
                   }}
                 />
                 <h3 className="judul">Via Filter</h3>
@@ -441,7 +405,7 @@ export default function SUBM(props) {
                           type="file"
                           required
                           onChange={(e) => {
-                            onChangeFile(e);
+                            onChangeFile(e)
                           }}
                           style={{ width: "100%" }}
                         />
@@ -567,27 +531,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-12">
                   <h3 className="judul">Pelatihan</h3>
-                  <Select
-                    placeholder="Pilih Pelatihan"
-                    options={trainingOpt}
-                    value={selectedTraining}
-                    isMulti
-                    onChange={(e) => {
-                      // setnamapelatihan(e.target.selectedOptions[0].innerText);
-                      setTraining(e?.label);
-                      changeTraining(e)
-                      // setSelectedTraining({value: e?.label, label: e?.label})
-                      setDisablePelatihan(false);
-                    }}
-                    required
-                    isDisabled={
-                      disablePenyelenggara === true ||
-                      disablePenyelenggara === ""
-                    }
-                    getOptionLabel={e => formatLabel(e)}
-                  />
-
-                  {/* <select
+                  <select
                     className="form-control"
                     onChange={(e) => {
                       setnamapelatihan(e.target.selectedOptions[0].innerText);
@@ -611,9 +555,9 @@ export default function SUBM(props) {
                       PILIH PELATIHAN
                     </option>
                     {optTraining}
-                  </select> */}
+                  </select>
                   {disablePenyelenggara === true ||
-                  disablePenyelenggara === "" ? (
+                    disablePenyelenggara === "" ? (
                     <small className="text-muted">
                       Mohon isi penyelenggara terlebih dahulu
                     </small>
@@ -779,40 +723,40 @@ export default function SUBM(props) {
           {localStorage
             .getItem("permissions")
             .includes("site_management.setting.pelatihan.manage") && (
-            <div className="d-flex justify-content-end mb-4 mr-4">
-              <button
-                type="reset"
-                className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
-                onClick={() => {
-                  setVia("template");
-                  setTitle("");
-                  setYear("");
-                  setAcademy("");
-                  setTheme("");
-                  setOrganizer("");
-                  setTraining("");
-                  setProfileStatus("");
-                  setSelectionStatus("");
-                  setParticipantSelectionStatusUpdate(0);
-                  setStatus("");
-                  setBroadcastEmailSendNotification(0);
-                  setEmailSubject("");
-                  setEmailContent("");
-                  setFile("");
-                  setLink("");
-                }}
-              >
-                Reset
-              </button>
-              <button
-                type="button"
-                onClick={(e) => handleSubmit(e)}
-                className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-              >
-                Kirim
-              </button>
-            </div>
-          )}
+              <div className="d-flex justify-content-end mb-4 mr-4">
+                <button
+                  type="reset"
+                  className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                  onClick={() => {
+                    setVia("template");
+                    setTitle("");
+                    setYear("");
+                    setAcademy("");
+                    setTheme("");
+                    setOrganizer("");
+                    setTraining("");
+                    setProfileStatus("");
+                    setSelectionStatus("");
+                    setParticipantSelectionStatusUpdate(0);
+                    setStatus("");
+                    setBroadcastEmailSendNotification(0);
+                    setEmailSubject("");
+                    setEmailContent("");
+                    setFile("");
+                    setLink("");
+                  }}
+                >
+                  Reset
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => handleSubmit(e)}
+                  className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+                >
+                  Kirim
+                </button>
+              </div>
+            )}
         </form>
       </div>
     </div>
