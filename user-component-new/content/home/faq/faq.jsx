@@ -398,7 +398,7 @@ const FaqPage = () => {
                           <div
                             className={
                               row.isShow === true
-                                ? "accordion-header d-flex justify-content-between align-items-center pt-5 "
+                                ? "accordion-header d-flex justify-content-between align-items-center pt-5"
                                 : "accordion-header d-flex justify-content-between align-items-center py-5"
                             }
                             style={{ marginLeft: "30px" }}
