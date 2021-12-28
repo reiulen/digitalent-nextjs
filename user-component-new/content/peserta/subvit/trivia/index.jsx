@@ -84,15 +84,16 @@ const SubtansiUser = ({ token }) => {
     tt.push(it.duration / 1000);
   });
 
-  $(window).on("popstate", function (event) {
-    router.push("/peserta/done-trivia");
-    const setData = {
-      list: null,
-      training_id: router.query.training_id,
-      type: "trivia",
-    };
-    dispatch(postResultTrivia(setData, token));
-  });
+  // MASIH DIPAKE
+  // $(window).on("popstate", function () {
+  //   router.push("/peserta/done-trivia");
+  //   const setData = {
+  //     list: null,
+  //     training_id: router.query.training_id,
+  //     type: "trivia",
+  //   };
+  //   dispatch(postResultTrivia(setData, token));
+  // });
 
   const [times, setTimes] = useState(
     tt[parseInt(router.query.id) - 1] <= 0
@@ -114,6 +115,7 @@ const SubtansiUser = ({ token }) => {
   const [hour2, setHour2] = useState(0);
   const [minute2, setMinute2] = useState(0);
   const [second2, setSecond2] = useState(0);
+  const [close, setClose] = useState(0);
 
   const [question, setQuestion] = useState("");
   const [time, setTime] = useState("");
@@ -277,6 +279,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
+    setClose(1);
     const setData = {
       list: JSON.stringify(
         data.list_questions.map((item, index) => {
@@ -443,16 +446,19 @@ const SubtansiUser = ({ token }) => {
                   (data &&
                     data.list_questions &&
                     data.list_questions[parseInt(router.query.id) - 1].type ===
-                      "fill_in_the_blank") ||
-                  (data &&
+                      "fill_in_the_blank") ? (
+                    data &&
                     data.list_questions &&
                     data.list_questions[parseInt(router.query.id) - 1]
-                      .duration === 1000) ? (
-                    <p className={styles.totalSoal2} id="time2">
-                      {hour2 < 9 ? "0" + hour2 : hour2}:
-                      {minute2 < 9 ? "0" + minute2 : minute2}:
-                      {second2 < 9 ? "0" + second2 : second2}
-                    </p>
+                      .duration !== 0 ? (
+                      <p className={styles.totalSoal2} id="time2">
+                        {hour2 < 9 ? "0" + hour2 : hour2}:
+                        {minute2 < 9 ? "0" + minute2 : minute2}:
+                        {second2 < 9 ? "0" + second2 : second2}
+                      </p>
+                    ) : (
+                      ""
+                    )
                   ) : (
                     ""
                   )}
@@ -1048,7 +1054,11 @@ const SubtansiUser = ({ token }) => {
             >
               Batal
             </Button>
-            <Button onClick={handlePage} className={styles.btnMulai}>
+            <Button
+              onClick={handlePage}
+              className={styles.btnMulai}
+              disabled={close === 1}
+            >
               Selesai
             </Button>
           </div>

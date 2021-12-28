@@ -251,7 +251,8 @@ const StepTwo = ({ token, tokenPermission }) => {
   const handleDownloadTemplate = async () => {
     await axios
       .get(
-        "http://dts-subvit-dev.majapahit.id/api/trivia-question-bank-details/template"
+        process.env.END_POINT_API_SUBVIT +
+          "api/trivia-question-bank-details/template"
       )
       .then((res) => {
         window.location.href = res.data.data;
@@ -460,43 +461,30 @@ const StepTwo = ({ token, tokenPermission }) => {
               </div>
 
               <div className="table-page" style={{ marginTop: "20px" }}>
-                {successFile ? (
-                  <div className="mb-5">
-                    {successImages ? (
-                      <h2 className="text-success">Sukses Import Gambar</h2>
-                    ) : (
-                      <h2 className="text-success">Sukses Import Soal</h2>
-                    )}
+                <div className="mb-5">
+                  {!successFile || successImages ? (
+                    <h2 className="text-success">Sukses Import Gambar</h2>
+                  ) : (
+                    <h2 className="text-success">Sukses Import Soal</h2>
+                  )}
 
-                    <span className="text-muted">
-                      {trivia_question_file.success +
-                        trivia_question_file.failed}{" "}
-                      Total Import | {trivia_question_file.success} Sukses di
-                      Import | {trivia_question_file.failed} Gagal di import
-                    </span>
-                  </div>
-                ) : successImages ? (
-                  <>
-                    {" "}
-                    {successImages ? (
-                      <div className="mb-5">
-                        <h2 className="text-success">Sukses Import Gambar</h2>
-
-                        <span className="text-muted">
-                          {trivia_question_images.success +
-                            trivia_question_images.failed}{" "}
-                          Total Import | {trivia_question_images.success} Sukses
-                          di Import | {trivia_question_images.failed} Gagal di
-                          import
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </>
-                ) : (
-                  ""
-                )}
+                  <span className="text-muted">
+                    {!successFile || successImages
+                      ? trivia_question_images?.success +
+                        trivia_question_images?.failed
+                      : trivia_question_file?.success +
+                        trivia_question_file?.failed}{" "}
+                    Total Import |{" "}
+                    {!successFile || successImages
+                      ? trivia_question_images?.success
+                      : trivia_question_file?.success}{" "}
+                    Sukses di Import |{" "}
+                    {!successFile || successImages
+                      ? trivia_question_images?.failed
+                      : trivia_question_file?.failed}{" "}
+                    Gagal di import
+                  </span>
+                </div>
                 <div className="table-responsive">
                   <LoadingTable loading={loading} />
 
