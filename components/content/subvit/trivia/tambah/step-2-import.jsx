@@ -52,6 +52,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     loading: loadingImages,
     error: errorImages,
     success: successImages,
+    trivia_question_images,
   } = useSelector((state) => state.importImagesTriviaQuestionDetail);
   let { page = 1, id } = router.query;
   page = Number(page);
@@ -461,7 +462,11 @@ const StepTwo = ({ token, tokenPermission }) => {
               <div className="table-page" style={{ marginTop: "20px" }}>
                 {successFile ? (
                   <div className="mb-5">
-                    <h2 className="text-success">Sukses Import Soal</h2>
+                    {successImages ? (
+                      <h2 className="text-success">Sukses Import Gambar</h2>
+                    ) : (
+                      <h2 className="text-success">Sukses Import Soal</h2>
+                    )}
 
                     <span className="text-muted">
                       {trivia_question_file.success +
@@ -474,9 +479,19 @@ const StepTwo = ({ token, tokenPermission }) => {
                   <>
                     {" "}
                     {successImages ? (
-                      <h2 className="text-success">Sukses Import Images</h2>
+                      <div className="mb-5">
+                        <h2 className="text-success">Sukses Import Gambar</h2>
+
+                        <span className="text-muted">
+                          {trivia_question_images.success +
+                            trivia_question_images.failed}{" "}
+                          Total Import | {trivia_question_images.success} Sukses
+                          di Import | {trivia_question_images.failed} Gagal di
+                          import
+                        </span>
+                      </div>
                     ) : (
-                      <h2 className="text-success">Sukses Import Soal</h2>
+                      ""
                     )}
                   </>
                 ) : (
