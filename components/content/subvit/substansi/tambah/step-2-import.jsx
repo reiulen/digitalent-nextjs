@@ -493,43 +493,30 @@ const StepTwo = ({ token, tokenPermission }) => {
               </div>
 
               <div className="table-page" style={{ marginTop: "20px" }}>
-                {successFile ? (
-                  <div className="mb-5">
-                    {successImages ? (
-                      <h2 className="text-success">Sukses Import Gambar</h2>
-                    ) : (
-                      <h2 className="text-success">Sukses Import Soal</h2>
-                    )}
+                <div className="mb-5">
+                  {!successFile || successImages ? (
+                    <h2 className="text-success">Sukses Import Gambar</h2>
+                  ) : (
+                    <h2 className="text-success">Sukses Import Soal</h2>
+                  )}
 
-                    <span className="text-muted">
-                      {subtance_question_file?.success +
+                  <span className="text-muted">
+                    {!successFile || successImages
+                      ? subtance_question_images?.success +
+                        subtance_question_images?.failed
+                      : subtance_question_file?.success +
                         subtance_question_file?.failed}{" "}
-                      Total Import | {subtance_question_file?.success} Sukses di
-                      Import | {subtance_question_file?.failed} Gagal di import
-                    </span>
-                  </div>
-                ) : successImages ? (
-                  <>
-                    {" "}
-                    {successImages ? (
-                      <div className="mb-5">
-                        <h2 className="text-success">Sukses Import Images</h2>
-
-                        <span className="text-muted">
-                          {subtance_question_images?.success +
-                            subtance_question_images?.failed}{" "}
-                          Total Import | {subtance_question_images?.success}{" "}
-                          Sukses di Import | {subtance_question_images?.failed}{" "}
-                          Gagal di import
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </>
-                ) : (
-                  ""
-                )}
+                    Total Import |{" "}
+                    {!successFile || successImages
+                      ? subtance_question_images?.success
+                      : subtance_question_file?.success}{" "}
+                    Sukses di Import |{" "}
+                    {!successFile || successImages
+                      ? subtance_question_images?.failed
+                      : subtance_question_file?.failed}{" "}
+                    Gagal di import
+                  </span>
+                </div>
                 <div className="table-responsive">
                   <LoadingTable loading={loading} />
 
