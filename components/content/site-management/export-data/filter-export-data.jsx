@@ -15,6 +15,7 @@ import IconPlus from "../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../public/assets/icon/Minus.svg";
 import Image from "next/image";
 import Select from "react-select";
+import Swal from "sweetalert2";
 import moment from "moment";
 import {
   dropdownKabupaten,
@@ -272,7 +273,7 @@ const UbahRole = ({ token, name }) => {
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Provinsi</label>
                 <Select
-                  placeholder="Silahkan Pilih Tahun"
+                  placeholder="Silahkan Pilih Provinsi"
                   options={drowpdownProvinsi.data.data.map((item) => {
                     return {
                       label: item.label,
@@ -289,7 +290,7 @@ const UbahRole = ({ token, name }) => {
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Kota/Kabupaten</label>
                 <Select
-                  placeholder="Silahkan Pilih Tahun"
+                  placeholder="Silahkan Pilih Kota"
                   value={kota}
                   isDisabled={provinsi === null}
                   options={drowpdownKabupaten?.data?.data?.map((item) => {

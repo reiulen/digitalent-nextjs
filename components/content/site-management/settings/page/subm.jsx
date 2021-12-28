@@ -91,7 +91,7 @@ export default function SUBM(props) {
             namaakademi ? namaakademi : "",
             namatema ? namatema : "",
             namapenyelenggara ? namapenyelenggara : "",
-            namapelatihan ? namapelatihan : "",
+            training,
             profileStatus ? profileStatus : "",
             selectionStatus ? selectionStatus : "",
             participantSelectionStatusUpdate ||
@@ -531,7 +531,14 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-12">
                   <h3 className="judul">Pelatihan</h3>
-                  <select
+                  <Select placeholder="Pilih Pelatihan" options={listTraining} onChange={e => {
+                      // setnamapelatihan(e.target.selectedOptions[0].innerText);
+                      setTraining(e?.label);
+                      setDisablePelatihan(false);
+                  }} required isDisabled={ disablePenyelenggara === true ||
+                    disablePenyelenggara === ""} />
+
+                  {/* <select
                     className="form-control"
                     onChange={(e) => {
                       setnamapelatihan(e.target.selectedOptions[0].innerText);
@@ -555,7 +562,7 @@ export default function SUBM(props) {
                       PILIH PELATIHAN
                     </option>
                     {optTraining}
-                  </select>
+                  </select> */}
                   {disablePenyelenggara === true ||
                     disablePenyelenggara === "" ? (
                     <small className="text-muted">
