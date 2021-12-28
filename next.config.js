@@ -82,7 +82,7 @@ module.exports = {
     TOKEN_MAP:
       "pk.eyJ1IjoiZGVuZHlsb3JkcyIsImEiOiJja3U1NHJnYjkxczdyMnZxZ2ptM2hlNXpqIn0.o5v5Ch0AFJIfeZER2vZvwA",
 
-    ROOT_URL: "http://dts-dev.majapahit.id/",
+    ROOT_URL: "https://dts-dev.majapahit.id/",
 
     VERSION_APP: "2.0.0",
 
