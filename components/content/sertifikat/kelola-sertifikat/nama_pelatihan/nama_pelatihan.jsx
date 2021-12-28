@@ -610,7 +610,6 @@ export default function NamaPelatihanID({ token }) {
                                           >
                                             <i className="ri-send-backward p-0 text-white"></i>
                                           </a>
-
                                           <Modal
                                             show={showModalClone}
                                             size="lg"
