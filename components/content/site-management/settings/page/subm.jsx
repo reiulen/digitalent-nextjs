@@ -655,7 +655,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Tema</h3>
-                  <div style={{ zIndex: "4", position: "relative" }}>
+                  <div style={{ zIndex: "3", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
@@ -684,7 +684,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Penyelenggara</h3>
-                  <div style={{ zIndex: "4", position: "relative" }}>
+                  <div style={{ zIndex: "3", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
