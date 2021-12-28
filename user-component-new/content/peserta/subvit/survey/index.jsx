@@ -224,6 +224,8 @@ const SubtansiUser = ({ token }) => {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
 
+  const [close, setClose] = useState(0);
+
   const routerTraining = router.query.training_id;
   const routerTema = router.query.theme_id;
 
@@ -431,6 +433,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
+    setClose(1);
     const setData = {
       list: JSON.stringify(
         data.list_questions.map((item, index) => {
@@ -1560,7 +1563,11 @@ const SubtansiUser = ({ token }) => {
             >
               Batal
             </Button>
-            <Button onClick={handlePage} className={styles.btnMulai}>
+            <Button
+              onClick={handlePage}
+              className={styles.btnMulai}
+              disabled={close === 1}
+            >
               Selesai
             </Button>
           </div>

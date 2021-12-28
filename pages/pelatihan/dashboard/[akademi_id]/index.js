@@ -1,12 +1,14 @@
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../components/LoadingSkeleton";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
-import { wrapper } from "../../redux/store";
-import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
+import { wrapper } from "../../../../redux/store";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
-const DashboardPelatihan = dynamic(
+const DashboardDetailTema = dynamic(
   () =>
-    import("../../components/content/pelatihan/dashboard/dashboard-pelatihan"),
+    import(
+      "../../../../components/content/pelatihan/dashboard/dashboard-detail-tema"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -20,7 +22,7 @@ export default function Dashboard(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DashboardPelatihan token={session.token} />
+        <DashboardDetailTema token={session.token} />
       </div>
     </>
   );
