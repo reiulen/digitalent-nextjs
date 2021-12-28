@@ -23,7 +23,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <input
               type={row.element}
@@ -55,7 +55,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <select
               name=""
@@ -96,7 +96,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="my-auto">
               {row.option === "manual" ? (
@@ -153,7 +153,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <textarea
               name=""
@@ -185,7 +185,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="my-auto">
               {row.option === "manual" ? (
@@ -243,7 +243,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="custom-file">
               <input
@@ -287,7 +287,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="custom-file">
               <input
@@ -329,7 +329,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <input
               type={row.element}
@@ -356,7 +356,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold d-flex">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
               <p
                 className="text-primary ml-3 mb-0"
                 style={{ cursor: "pointer" }}
@@ -429,7 +429,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <input
               type={row.element}
@@ -459,7 +459,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <select
               name=""
@@ -498,7 +498,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="my-auto">
               {row.option === "manual" ? (
@@ -551,7 +551,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <textarea
               name=""
@@ -581,7 +581,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="my-auto">
               {row.option === "manual" ? (
@@ -635,7 +635,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="custom-file">
               <input
@@ -677,7 +677,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="custom-file">
               <input
@@ -717,7 +717,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <input
               type={row.element}
@@ -747,7 +747,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               className={`form-group  mt-0 mb-0 ${row.size}`}
             >
               <label className="col-form-label font-weight-bold">
-                {row.name}
+                {row.name} {row.required !== "1" && "(Optional)"}
               </label>
               <select
                 name=""
@@ -800,7 +800,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold d-flex">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
               <p
                 className="text-primary ml-3 mb-0"
                 style={{ cursor: "pointer" }}
@@ -869,7 +869,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <input
               type={row.element}
@@ -892,7 +892,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <select
               name=""
@@ -924,7 +924,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="my-auto">
               {row.option === "manual" ? (
@@ -963,7 +963,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <textarea
               name=""
@@ -986,7 +986,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="my-auto">
               {row.option === "manual" ? (
@@ -1026,7 +1026,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="custom-file">
               <input
@@ -1059,7 +1059,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="custom-file">
               <input
@@ -1090,7 +1090,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
             className={`form-group  mt-0 mb-0 ${row.size}`}
           >
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <input
               type={row.element}
@@ -1113,7 +1113,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
               className={`form-group  mt-0 mb-0 ${row.size}`}
             >
               <label className="col-form-label font-weight-bold">
-                {row.name}
+                {row.name} {row.required !== "1" && "(Optional)"}
               </label>
               <select
                 name=""
@@ -1157,7 +1157,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold d-flex">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
               <p
                 className="text-primary ml-3 mb-0"
                 style={{ cursor: "pointer" }}
@@ -1208,7 +1208,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <input
               type={row.element}
@@ -1226,7 +1226,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <select
               name=""
@@ -1254,7 +1254,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="my-auto">
               {row.option === "manual" ? (
@@ -1286,7 +1286,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <textarea
               name=""
@@ -1304,7 +1304,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="my-auto">
               {row.option === "manual" ? (
@@ -1337,7 +1337,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="custom-file">
               <input
@@ -1367,7 +1367,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <div className="custom-file">
               <input
@@ -1395,7 +1395,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
             </label>
             <input
               type={row.element}
@@ -1413,7 +1413,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
           <>
             <div className={`form-group mt-0 mb-0 ${row.size}`}>
               <label className="col-form-label font-weight-bold">
-                {row.name}
+                {row.name} {row.required !== "1" && "(Optional)"}
               </label>
               <select
                 name=""
@@ -1453,7 +1453,7 @@ const FormBuilderComponent = ({ formBuilder, token, funcChangeInput }) => {
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
             <label className="col-form-label font-weight-bold d-flex">
-              {row.name}
+              {row.name} {row.required !== "1" && "(Optional)"}
               <p
                 className="text-primary ml-3 mb-0"
                 style={{ cursor: "pointer" }}

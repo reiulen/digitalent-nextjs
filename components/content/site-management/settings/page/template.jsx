@@ -10,6 +10,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
+import Swal from "sweetalert2";
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 import { postTemplate } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";

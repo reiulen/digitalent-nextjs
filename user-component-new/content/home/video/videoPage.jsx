@@ -964,8 +964,8 @@ const VideoPage = () => {
                                         className="ml-2 d-inline-block text-truncate FW-600"
                                         style={{ maxWidth: "120px", color: "#6C6C6C", fontFamily: "Poppins", fontSize: "16px" }}
                                       >
-                                        {row.dibuat.name}
-                                        {/* row.dibuat */}
+                                        {/* {row.dibuat.name} */}
+                                        {row.dibuat}
                                       </span>
                                     </div>
                                     <span

@@ -13,6 +13,7 @@ import IconSearch from "../../../assets/icon/Search";
 import IconPlus from "../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../public/assets/icon/Minus.svg";
 import Image from "next/image";
+import Swal from "sweetalert2";
 import { postRoles } from "../../../../redux/actions/site-management/role.actions";
 import SimpleReactValidator from "simple-react-validator";
 

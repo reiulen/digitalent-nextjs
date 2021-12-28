@@ -268,7 +268,13 @@ export const getAllPublikasi = () => async (dispatch) => {
 
 		let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home`;
 
-		const { data } = await axios.get(link);
+		const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+		const { data } = await axios.get(link, config);
 
 		dispatch({
 			type: BERANDA_PUBLIKASI_SUCCESS,

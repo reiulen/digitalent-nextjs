@@ -65,14 +65,14 @@ const Navigationbar = ({ session }) => {
   const [alertNotif, setAlertNotif] = useState(false);
 
   useEffect(() => {
-    // getFirebaseToken(setTokenFound);
+    getFirebaseToken(setTokenFound);
 
-    // const messaging = getMessaging();
-    // onMessage(messaging, (payload) => {
-    //   console.log("Message received. ", payload.notification);
-    //   toast.info(payload.notification.title);
-    //   setAlertNotif(true);
-    // });
+    const messaging = getMessaging();
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload.notification);
+      toast.info(payload.notification.title);
+      setAlertNotif(true);
+    });
 
     if (!session) {
       return;
@@ -107,71 +107,6 @@ const Navigationbar = ({ session }) => {
       }
     }
   }, []);
-
-  //   const setToken = async () => {
-  //     try {
-  //       const token = await firebaseCloudMessaging.init();
-  //       if (token) {
-  //         console.log(token);
-  //         getMessage();
-  //       }
-  //     } catch (err) {
-  //       console.log(err, "ini error");
-  //     }
-  //   };
-
-  //   const getMessage = () => {
-  //     const messaging = getMessaging();
-  //     onMessage(messaging, (payload) => {
-  //       // console.log("ada pesan notif", payload);
-  //     });
-  //   };
-
-  // const handleConnectSocket = () => {
-  //   let ws = new WebSocket(
-  //     "ws://api-dts-dev.majapahit.id/pelatihan/api/v1/formPendaftaran/notification"
-  //   );
-  //   let timeout = 0;
-  //   let connectInterval;
-
-  //   ws.onopen = () => {
-  //     setSocket(ws);
-  //     timeout = 250;
-  //     clearTimeout(connectInterval);
-  //   };
-
-  //   ws.onmessage = (e) => {
-  //     let res = JSON.parse(e.data);
-  //     if (session && res?.To == session?.id) {
-  //       setAlertNotif(true);
-  //       GetNotifikasi();
-  //     }
-  //   };
-
-  //   ws.onclose = (e) => {
-  //     // connectInterval = setTimeout(handleCheckSocket, Math.min(10000, timeout));
-  //   };
-
-  //   ws.onerror = (err) => {
-  //     ws.close();
-  //   };
-  // };
-
-  // const data = [
-  //   // { icon: "Fail", text: "test" },
-  //   // { icon: "Success", text: "test" },
-  //   // { icon: "Warning", text: "test" },
-  //   // { icon: "File", text: "test" },
-  //   // { icon: "Fail", text: "test" },
-  //   // { icon: "Success", text: "test" },
-  //   // { icon: "Warning", text: "test" },
-  //   // { icon: "File", text: "test" },
-  // ];
-
-  // const handleCheckSocket = () => {
-  //   if (!socket || socket.readyState === WebSocket.CLOSED)
-  //     handleConnectSocket();
-  // };
 
   const getDataGeneral = async (token) => {
     try {
@@ -380,7 +315,7 @@ const Navigationbar = ({ session }) => {
                       style={{ color: "#6C6C6C" }}
                     >
                       <div className="d-flex align-items-center fz-12 justify-content-between mb-9">
-                        <div>Notification</div>
+                        <div>Notifikasi</div>
                         <img
                           src="/assets/media/notification/Close_Button.png"
                           alt="close_button"
@@ -710,7 +645,7 @@ const Navigationbar = ({ session }) => {
                   style={{ color: "#6C6C6C" }}
                 >
                   <div className="d-flex align-items-center fz-20 justify-content-between mb-9">
-                    <div>Notification</div>
+                    <div>Notifikasi</div>
                     <img
                       src="/assets/media/notification/Close_Button.png"
                       alt="close_button"

@@ -90,6 +90,7 @@ import {
 } from "../../types/pelatihan/training.type";
 
 import axios from "axios";
+import Swal from "sweetalert2";
 
 //ALL TRAINING
 export const getAllTraining =
