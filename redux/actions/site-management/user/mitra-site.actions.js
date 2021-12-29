@@ -32,7 +32,7 @@ import {
 
 import axios from "axios";
 
-export const getAllMitraSite = (token) => async (dispatch, getState) => {
+export const getAllMitraSite = (token, tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: MITRA_SITE_REQUEST });
 
@@ -52,6 +52,7 @@ export const getAllMitraSite = (token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          "Permission": tokenPermission
         },
       }
     );
@@ -115,7 +116,7 @@ export const limitCooporation = (value) => {
   };
 };
 
-export const getDetailMitraSite = (id, token) => async (dispatch) => {
+export const getDetailMitraSite = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: DETAIL_MITRA_SITE_REQUEST,
@@ -123,6 +124,7 @@ export const getDetailMitraSite = (id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Permission": tokenPermission
       },
     };
 

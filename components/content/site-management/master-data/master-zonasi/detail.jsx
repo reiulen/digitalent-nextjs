@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import axios from "axios";
+import Cookies from 'js-cookie'
 
 const Table = ({ token }) => {
   const router = useRouter();
@@ -17,6 +18,7 @@ const Table = ({ token }) => {
           {
             headers: {
               authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         );

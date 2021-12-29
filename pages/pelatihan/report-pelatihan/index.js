@@ -51,10 +51,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      await store.dispatch(listsReportTraining(session.user.user.data.token));
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
-      await store.dispatch(dropdownTema(session.user.user.data.token));
-      await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
+
+      const token_permission = req.cookies.token_permission;
+
+      await store.dispatch(
+        listsReportTraining(session.user.user.data.token, token_permission)
+      );
+      await store.dispatch(
+        dropdownAkademi(session.user.user.data.token, token_permission)
+      );
+      await store.dispatch(
+        dropdownTema(session.user.user.data.token, token_permission)
+      );
+      await store.dispatch(
+        dropdownPenyelenggara(session.user.user.data.token, token_permission)
+      );
       await store.dispatch(getAllPermission(session.user.user.data.token));
 
       return {

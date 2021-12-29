@@ -21,6 +21,7 @@ import {
 	loadDataZonasiNext,
 	loadDataListZonasi
 } from "../../../../redux/actions/site-management/dashboard.actions";
+import  Cookies  from "js-cookie";
 
 const DashboardSiteManagement = ({ token, user }) => {
 	const [participant, setParticipant] = useState(0);
@@ -33,38 +34,29 @@ const DashboardSiteManagement = ({ token, user }) => {
 	const [dataZonasi, setDataZonasi] = useState(null)
 	const [totalZonasi, setTotalZonasi] = useState(null)
 
+	let dispatch = useDispatch()
 
-	let dispatch = useDispatch();
 
-	useEffect(() => {
-		axios
-			.get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/card`, {
-				headers: {
-					authorization: `Bearer ${token}`,
-					// Permission: localStorage.getItem("token-permission"),
-				},
-			})
-			.then((items) => {
-				setParticipant(items.data.data.participant);
-				setAdministrator(items.data.data.administrator);
-				setMitra(items.data.data.mitra);
-			});
+  useEffect(() => {
+    axios
+      .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/card`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Permission": Cookies.get("token_permission")
+        },
+      })
+      .then((items) => {
+        setParticipant(items.data.data.participant);
+        setAdministrator(items.data.data.administrator);
+        setMitra(items.data.data.mitra);
+      });
 
-		dispatch(loadDataZonasi(token, type, pageZonasi));
-		dispatch(loadDataPeserta(token, typePeserta, pagePeserta));
-	}, [dispatch, token, type, pageZonasi, typePeserta, pagePeserta]);
+    dispatch(loadDataZonasi(token, type, pageZonasi, Cookies.get("token_permission")));
+    dispatch(loadDataPeserta(token, typePeserta, pagePeserta, Cookies.get("token_permission")));
+  }, [dispatch, token, type, pageZonasi, typePeserta, pagePeserta]);
 
-	useEffect(() => {
-		axios
-			.get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/zonasi-participant`, {
-				headers: {
-					authorization: `Bearer ${token}`,
-				},
-			})
-			.then((items) => {
-				setTotalZonasi(items.data.data.total);
-			});
-	}, [dispatch, token, pageZonasi]);
+
+
 
 	const { allDataZonasi, allDataPeserta, allDataListZonasi } = useSelector(
 		(state) => ({

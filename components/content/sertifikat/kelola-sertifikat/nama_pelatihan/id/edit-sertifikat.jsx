@@ -490,24 +490,6 @@ export default function EditSertifikat({ token }) {
 
   const url = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[0].signature}`;
 
-  const toBase64 = async () => {
-    // belom berhasil coba
-    try {
-      // const data = await axios.get(encodeURI(url), {
-      //   responseType: "document",
-      // });
-      const data = await axios.get(url, {
-        headers: {
-          accept: "application/json",
-          "Access-Control-Allow-Origin": "true",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        },
-      });
-    } catch (e) {
-      throw e;
-    }
-  };
-
   const [test, setTest] = useState();
   const [enableSyllabus, setEnableSyllabus] = useState(true);
   const [hour, setHour] = useState(

@@ -508,8 +508,8 @@ const AddMasterPelatihan = ({ token }) => {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
       try {
         const result = await axios.post(

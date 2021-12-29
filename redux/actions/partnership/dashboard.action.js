@@ -16,7 +16,7 @@ export const fetchDashboard = (token, permission) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // Permission: permission
+            Permission: permission
           },
         }
       );

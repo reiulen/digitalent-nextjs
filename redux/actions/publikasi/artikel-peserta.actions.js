@@ -45,7 +45,7 @@ export const getAllArtikelPeserta =
         const config = {
           headers: {
             Authorization: "Bearer " + token,
-            // "Permission": permission
+            "Permission": permission
           },
         };
 
@@ -69,6 +69,7 @@ export const getDetailArtikelPeserta = (id, token, permission) => async (dispatc
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Permission": permission
       },
     };
 
@@ -95,6 +96,7 @@ export const newArtikelPeserta = (artikelPesertaData, token, permission) => asyn
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Permission": permission
       },
     };
 
@@ -125,6 +127,7 @@ export const updateArtikelPeserta = (artikelPesertaData, token, permission) => a
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Permission": permission
       },
     };
 
@@ -149,6 +152,7 @@ export const deleteArtikelPeserta = (id, token, permission) => async (dispatch) 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        "Permission": permission
       },
     };
 

@@ -38,7 +38,8 @@ import {
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
 export const getAllSertifikat =
-  (token, token_permission) => async (dispatch, getState) => {
+  (token, token_permission = "") =>
+  async (dispatch, getState) => {
     try {
       dispatch({ type: SERTIFIKAT_REQUEST });
       let link =
@@ -61,7 +62,7 @@ export const getAllSertifikat =
         params,
         headers: {
           Authorization: `Bearer ${token}`,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 
@@ -135,7 +136,7 @@ export const getDetailSertifikat =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
       const { data } = await axios.get(link, config);
@@ -163,7 +164,7 @@ export const newSertifikat =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 
@@ -200,7 +201,7 @@ export const getSingleSertifikat =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 
@@ -229,7 +230,7 @@ export const getPublishedSertifikat =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 
@@ -262,7 +263,7 @@ export const updateSertifikat =
       const config = {
         headers: {
           Authorization: `Bearer ${token.token}`,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 
@@ -288,7 +289,7 @@ export const getOptionsAcademy =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 
@@ -315,7 +316,7 @@ export const getOptionsTheme =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 

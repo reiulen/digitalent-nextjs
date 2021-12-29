@@ -13,7 +13,12 @@ import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
 import Image from "next/image";
 import IconArrow from "../../../../assets/icon/Arrow";
+<<<<<<< HEAD
+import {getPelatihanWithPagination} from '../../../../../redux/actions/site-management/user/peserta-dts'
+import Cookies from "js-cookie";
+=======
 import { getPelatihanWithPagination } from "../../../../../redux/actions/site-management/user/peserta-dts";
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -49,8 +54,8 @@ const Table = ({ token }) => {
   const [search, setSearch] = useState(null);
 
   const listPelatihan =
-    allListPelatihanPagination.data.data.list.length > 0 ? (
-      allListPelatihanPagination.data.data.list.map((item, index) => {
+    allListPelatihanPagination.data?.data?.list.length > 0 ? (
+      allListPelatihanPagination.data?.data?.list.map((item, index) => {
         return (
           <tr key={index}>
             <td className="align-middle text-left">
@@ -102,6 +107,60 @@ const Table = ({ token }) => {
     );
 
   return (
+<<<<<<< HEAD
+    <PageWrapper>
+      <div
+        className="col-12 col-xl-12 order-1 p-0"
+        style={{ marginLeft: "-10px" }}
+      >
+        <div className="card card-custom card-stretch gutter-b">
+          <div className="card-header border-0">
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
+              List Data Pelatihan
+            </h3>
+          </div>
+          <div className="card-body pt-0">
+            <div className="table-filter">
+              <div className="row align-items-center">
+                <div className="col-lg-12 col-xl-12">
+                  <form
+                    // onSubmit={handleSubmit}
+                    className="d-flex align-items-center w-100"
+                  >
+                    <div className="row w-100">
+                      <div className="col-12 col-sm-6">
+                        <div className="position-relative overflow-hidden w-100">
+                          <IconSearch
+                            style={{ left: "10" }}
+                            className="left-center-absolute"
+                          />
+                          <input
+                            id="kt_datatable_search_query"
+                            type="text"
+                            value={search}
+                            className="form-control pl-10"
+                            placeholder="Ketik disini untuk Pencarian..."
+                            onChange={(e) =>
+                              setSearch(e.target.value)
+                            }
+                          />
+                          <button
+                            type="button"
+                            onClick={e => {
+                              dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, page, Cookies.get("token_permission")))  
+                            }}
+                            className="btn bg-blue-primary text-white right-center-absolute"
+                            style={{
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                            }}
+                          >
+                            Cari
+                          </button>
+=======
         <div className="col-12 col-lg-12 col-xl-9" style={{height: "max-content"}}>
           <div
             className="card card-custom card-stretch gutter-b"
@@ -156,10 +215,54 @@ const Table = ({ token }) => {
                               </button>
                             </div>
                           </div>
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
                         </div>
                       </form>
                     </div>
+<<<<<<< HEAD
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div className="table-page mt-5">
+              <div className="table-responsive">
+                <table className="table table-separate table-head-custom table-checkable">
+                  <thead style={{ background: "#F3F6F9" }}>
+                    <tr>
+                      <th className="text-left">No</th>
+                      <th className="text-left align-middle">Nama Pelatihan</th>
+                      <th className="text-left align-middle">ID Pelatihan</th>
+                      <th className="text-left align-middle">Status</th>
+                      <th className="text-left align-middle">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>{allListPelatihanPagination.loading ? <td colSpan="8"><LoadingTable /></td> : listPelatihan}</tbody>
+                </table>
+              </div>
+
+              <div className="row">
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={
+                      allListPelatihanPagination.data.data.perPage
+                    }
+                    totalItemsCount={allListPelatihanPagination.data.data.total}
+                    pageRangeDisplayed={3}
+                    onChange={(e) => {
+                      setPage(e);
+                      dispatch(getPelatihanWithPagination(token, router.query.id, search, limit, e, Cookies.get("token_permission")))  
+                    }}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+=======
                   </div>
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
                 </div>
                 <div className="table-page mt-5">
                   <div className="table-responsive">
@@ -215,6 +318,19 @@ const Table = ({ token }) => {
                             )
                           );
                         }}
+<<<<<<< HEAD
+                        onChange={e => {
+                          setLimit(e.target.value)
+                          dispatch(getPelatihanWithPagination(token, router.query.id, search, e.target.value, page, Cookies.get("token_permission")))
+                        }}
+                      >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                      </select>
+=======
                         nextPageText={">"}
                         prevPageText={"<"}
                         firstPageText={"<<"}
@@ -222,6 +338,7 @@ const Table = ({ token }) => {
                         itemClass="page-item"
                         linkClass="page-link"
                       />
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
                     </div>
 
                     <div className="table-total ml-auto">
