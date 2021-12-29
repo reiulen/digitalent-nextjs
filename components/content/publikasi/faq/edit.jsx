@@ -20,7 +20,7 @@ import LoadingPage from '../../../LoadingPage';
 
 import "../../../../styles/publikasi.module.css"
 
-const EditFaq = ({ token }) => {
+const EditFaq = ({ token, permission }) => {
     const editorRef = useRef();
     const dispatch = useDispatch()
     const router = useRouter()
@@ -151,7 +151,7 @@ const EditFaq = ({ token }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(updateFaq(data, faq.id, token))
+                            dispatch(updateFaq(data, faq.id, token, permission))
                         }
                     });
 
@@ -178,7 +178,7 @@ const EditFaq = ({ token }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(updateFaq(data, faq.id, token))
+                            dispatch(updateFaq(data, faq.id, token, permission))
                         }
                     });
             }

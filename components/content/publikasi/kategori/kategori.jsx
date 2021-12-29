@@ -28,7 +28,7 @@ import {
 } from "../../../../redux/actions/publikasi/kategori.actions";
 import { DELETE_KATEGORI_RESET } from "../../../../redux/types/publikasi/kategori.type";
 
-const Kategori = ({ token }) => {
+const Kategori = ({ token, permission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -109,7 +109,7 @@ const Kategori = ({ token }) => {
       cancelButtonText: "Batal",
     }).then(result => {
       if (result.isConfirmed) {
-        dispatch(deleteKategori(id, token));
+        dispatch(deleteKategori(id, token, permission));
       }
     });
   };

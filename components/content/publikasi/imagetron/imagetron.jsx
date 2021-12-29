@@ -31,7 +31,7 @@ import {
 
 import { DELETE_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron.type";
 
-const Imagetron = ({ token }) => {
+const Imagetron = ({ token, permission }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -124,7 +124,7 @@ const Imagetron = ({ token }) => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteImagetron(id, token));
+                dispatch(deleteImagetron(id, token, permission));
             }
         });
     };

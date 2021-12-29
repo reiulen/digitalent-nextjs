@@ -25,7 +25,7 @@ import {
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditArtikel = ({ token, idUser }) => {
+const EditArtikel = ({ token, idUser, permission }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -232,7 +232,7 @@ const EditArtikel = ({ token, idUser }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token));
+              dispatch(updateArtikel(data, token, permission));
             }
           });
         } else {
@@ -261,7 +261,7 @@ const EditArtikel = ({ token, idUser }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token));
+              dispatch(updateArtikel(data, token, permission));
             }
           });
         }
@@ -295,7 +295,7 @@ const EditArtikel = ({ token, idUser }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token));
+              dispatch(updateArtikel(data, token, permission));
             }
           });
         } else {
@@ -324,7 +324,7 @@ const EditArtikel = ({ token, idUser }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token));
+              dispatch(updateArtikel(data, token, permission));
             }
           });
         }
@@ -425,7 +425,7 @@ const EditArtikel = ({ token, idUser }) => {
                         <div style={{ width: "100%", height: "300px" }}>
                           <div
                             ref={quillRef}
-                            style={{fontFamily:'Poppins'}}
+                            style={{ fontFamily: 'Poppins' }}
                           />
                         </div>
                       ) : (

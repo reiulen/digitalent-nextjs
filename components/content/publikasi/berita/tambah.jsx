@@ -21,7 +21,7 @@ import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 import { useQuill } from "react-quilljs";
 
-const TambahBerita = ({ token, id }) => {
+const TambahBerita = ({ token, id, permission }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -203,7 +203,7 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newBerita(data, token))
+                            dispatch(newBerita(data, token, permission))
                         }
                     });
             } else {
@@ -231,7 +231,7 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newBerita(data, token))
+                            dispatch(newBerita(data, token, permission))
                         }
                     });
             }

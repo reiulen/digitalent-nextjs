@@ -19,7 +19,7 @@ import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahVidio = ({ token, id }) => {
+const TambahVidio = ({ token, id, permission }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -169,7 +169,7 @@ const TambahVidio = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newVideo(data, token))
+                            dispatch(newVideo(data, token, permission))
                         }
                     });
             } else {
@@ -197,7 +197,7 @@ const TambahVidio = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newVideo(data, token))
+                            dispatch(newVideo(data, token, permission))
                         }
                     });
             }

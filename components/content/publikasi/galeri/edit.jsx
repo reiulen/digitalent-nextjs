@@ -59,7 +59,7 @@ const img = {
 };
 
 
-const EditGaleri = ({ token }) => {
+const EditGaleri = ({ token, permission }) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -292,7 +292,7 @@ const EditGaleri = ({ token }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(onCall(data, token))
+                        dispatch(onCall(data, token, permission))
                     }
                 });
         } else {
@@ -321,7 +321,7 @@ const EditGaleri = ({ token }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(onCall(data, token))
+                        dispatch(onCall(data, token, permission))
                     }
                 });
         }
