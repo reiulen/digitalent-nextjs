@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 import Link from "next/link";
 import styles from "./substansi.module.css";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import LoadingPage from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -44,7 +43,19 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
   useEffect(() => {
     localStorage.setItem("id_substansi", router.query.id);
     if (isDeleted) {
-      dispatch(getAllSubtanceQuestionDetail(id, token, tokenPermission));
+      dispatch(
+        getAllSubtanceQuestionDetail(
+          id,
+          1,
+          null,
+          null,
+          "",
+          "",
+          "",
+          token,
+          tokenPermission
+        )
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
   }, [isDeleted, dispatch, id, token, tokenPermission, router]);
@@ -55,6 +66,7 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState(false);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
@@ -87,27 +99,20 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
   };
 
   const handleModal = () => {
-    Swal.fire({
-      title: "Silahkan Pilih Metode Entry",
-      icon: "info",
-      showDenyButton: true,
-      showCloseButton: true,
-      confirmButtonText: `Entry`,
-      denyButtonText: `Import`,
-      confirmButtonColor: "#3085d6",
-      denyButtonColor: "#d33",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-2-entry`,
-          query: { id },
-        });
-      } else if (result.isDenied) {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-2-import`,
-          query: { id },
-        });
-      }
+    setModalType(true);
+  };
+
+  const handleEntry = () => {
+    router.push({
+      pathname: `/subvit/substansi/tambah-step-2-entry`,
+      query: { id },
+    });
+  };
+
+  const handleImport = () => {
+    router.push({
+      pathname: `/subvit/substansi/tambah-step-2-import`,
+      query: { id },
     });
   };
 
@@ -877,6 +882,43 @@ const DetailSubstansi = ({ token, tokenPermission }) => {
             Terapkan
           </button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={modalType}
+        onHide={() => setModalType(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Body>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setModalType(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+          <center>
+            <i
+              className="ri-information-line"
+              style={{ fontSize: "100px", color: "#17a2b8" }}
+            ></i>
+            <h3>Silahkan Pilih Metode Entry</h3>
+            <Button
+              className="btn btn-outline-primary font-weight-bolder px-7 py-3 mt-5 mr-5"
+              style={{ borderRadius: "5px", border: "1px solid" }}
+              onClick={handleImport}
+            >
+              Import
+            </Button>
+            <Button
+              className="btn btn-primary font-weight-bolder px-7 py-3 mt-5 "
+              onClick={handleEntry}
+            >
+              Entry
+            </Button>
+          </center>
+        </Modal.Body>
       </Modal>
     </PageWrapper>
   );

@@ -1032,7 +1032,12 @@ const ListTraining = ({ token }) => {
                                   )}
 
                                   {row.status_pelatihan === "selesai" && (
-                                    <option value="pelatihan">Pelatihan</option>
+                                    <>
+                                      <option value="selesai">Selesai</option>
+                                      <option value="pelatihan">
+                                        Pelatihan
+                                      </option>
+                                    </>
                                   )}
 
                                   <option value="dibatalkan">Dibatalkan</option>
