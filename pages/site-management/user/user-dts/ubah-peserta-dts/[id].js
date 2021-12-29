@@ -7,12 +7,8 @@ import {
   getPelatihanByPeserta,
   getPelatihanWithPagination,
 } from "../../../../../redux/actions/site-management/user/peserta-dts";
-<<<<<<< HEAD
 import { dropdownProvinsi } from "../../../../../redux/actions/pelatihan/function.actions";
-=======
-import {dropdownProvinsi} from '../../../../../redux/actions/pelatihan/function.actions'
 import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
->>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
 
 const PageUbah = dynamic(
   () =>

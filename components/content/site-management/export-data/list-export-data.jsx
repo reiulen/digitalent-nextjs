@@ -61,16 +61,12 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
     dispatch(getAllExportData(token , Cookies.get("token_permission")));
     if (deleteExportData?.isDeleted) {
       Swal.fire("Berhasil", "Data berhasil dihapus", "success").then(() => {
-        dispatch(getAllExportData(token));
+        dispatch(getAllExportData(token, Cookies.get("token_permission")));
       });
     }
-=======
-    dispatch(getAllExportData(token));
->>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
   }, [
     dispatch,
     allExportData.cari,
