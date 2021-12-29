@@ -34,6 +34,8 @@ const DashboardSiteManagement = ({ token, user }) => {
 	const [dataZonasi, setDataZonasi] = useState(null)
 	const [totalZonasi, setTotalZonasi] = useState(null)
 
+	let dispatch = useDispatch()
+
 
   useEffect(() => {
     axios
