@@ -244,13 +244,11 @@ export default function NamaPelatihanID({ token }) {
       );
 
       if (data) {
-        console.log(data, "ini data");
         router.push(
           `/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${id.name}?id=${id.id}&theme_id=${id.theme_id}&status=edit`
         );
       }
     } catch (e) {
-      console.log(e);
       SweatAlert("Gagal", e.response.data.message || e.message, "error");
     }
   };
@@ -647,7 +645,7 @@ export default function NamaPelatihanID({ token }) {
                                             className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                             data-toggle="tooltip"
                                             data-placement="bottom"
-                                            title="Tambah"
+                                            title="Clone Sertifikat"
                                             onClick={() => {
                                               setId({
                                                 id: certificate.id,
