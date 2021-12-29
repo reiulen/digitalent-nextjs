@@ -288,6 +288,11 @@ const Dashboard = ({ session, success }) => {
 						<div className="row align-items-center d-flex">
 							<div className="col-lg-5 col-xl-5 mb-4 px-10 ">
 								<div className="position-relative overflow-hidden mb-2 mt-3">
+									<form onSubmit={(e) => {
+										e.preventDefault();
+										handleSearch
+										}}
+									>
 									<i className="ri-search-line left-center-absolute ml-2"></i>
 									<input
 										type="text"
@@ -308,6 +313,7 @@ const Dashboard = ({ session, success }) => {
 									>
 										Cari
 									</button>
+									</form>
 								</div>
 							</div>
 
