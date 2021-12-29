@@ -83,10 +83,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       await store.dispatch(
-        getEditTrainingStep2(query.id, session.user.user.data.token)
+        getEditTrainingStep2(
+          query.id,
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
-        getEditTrainingStep3(query.id, session.user.user.data.token)
+        getEditTrainingStep3(
+          query.id,
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
         dropdownLevelPelatihan(session.user.user.data.token)
@@ -94,7 +102,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(dropdownAkademi(session.user.user.data.token));
       await store.dispatch(drowpdownFormBuilder(session.user.user.data.token));
       await store.dispatch(
-        getAllDataReference(session.user.user.data.token, true)
+        getAllDataReference(
+          session.user.user.data.token,
+          true,
+          token_permission
+        )
       );
       return {
         props: { session, title: "Clone Pelatihan - Pelatihan" },

@@ -12,11 +12,13 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 import { postEvidence } from "../../../../redux/actions/pelatihan/training.actions";
 import { generatePath } from "react-router";
+import Cookies from "js-cookie";
 
 const UploadEvidence = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
@@ -183,7 +185,7 @@ const UploadEvidence = ({ token }) => {
         pengajar: teachers,
         pelatian_id: parseInt(router.query.id),
       };
-      dispatch(postEvidence(token, data));
+      dispatch(postEvidence(token, data, token_permission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

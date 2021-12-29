@@ -19,11 +19,13 @@ import { NEW_TRAINING_STEP1_RESET } from "../../../../../redux/types/pelatihan/t
 
 import { putTrainingStep3 } from "../../../../../redux/actions/pelatihan/training.actions";
 import moment from "moment";
+import Cookies from "js-cookie";
 
 const EditCommitmentStep3 = ({ token, propsStep }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { data: getEditTraining3 } = useSelector(
     (state) => state.getEditTraining3
@@ -118,7 +120,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
       data.pelatihan_selesai = moment(data.pelatihan_selesai).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      dispatch(newTrainingStep1(data, token));
+      dispatch(newTrainingStep1(data, token, token_permission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

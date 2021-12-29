@@ -17,11 +17,13 @@ import { NEW_TRAINING_STEP1_RESET } from "../../../../../redux/types/pelatihan/t
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
+import Cookies from "js-cookie";
 
 const AddCommitmentStep3 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { trainingData } = useSelector((state) => state.trainingStep1);
   const { registrationData } = useSelector((state) => state.registrationStep2);
@@ -116,7 +118,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.pelatihan_selesai = moment(data.pelatihan_selesai).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      dispatch(newTrainingStep1(data, token));
+      dispatch(newTrainingStep1(data, token, token_permission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

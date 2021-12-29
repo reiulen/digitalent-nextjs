@@ -25,10 +25,12 @@ import {
   options,
 } from "../../../../../utils/middleware/helper/data";
 import { getEditTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
+import Cookies from "js-cookie";
 
 const EditRegistrationStep2 = ({ token, propsStep }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { data: getEditTraining2, loading } = useSelector(
     (state) => state.getEditTraining2
@@ -138,7 +140,7 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
         formBuilder: valueForm,
         type_form: viewForm,
       };
-      dispatch(putTrainingStep2(token, data));
+      dispatch(putTrainingStep2(token, data, token_permission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

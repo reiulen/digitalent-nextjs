@@ -23,11 +23,12 @@ const EditCommitment = dynamic(
   }
 );
 
-export default function EditCommitmentPage() {
+export default function EditCommitmentPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditCommitment />
+        <EditCommitment token={session.token} />
       </div>
     </>
   );
@@ -38,6 +39,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
+      const token_permission = req.cookies.token_permission;
+
       if (!middleware.status) {
         return {
           redirect: {
@@ -48,7 +51,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getEditTrainingStep3(query.id, session.user.user.data.token)
+        getEditTrainingStep3(
+          query.id,
+          session.user.user.data.token,
+          token_permission
+        )
       );
 
       return {

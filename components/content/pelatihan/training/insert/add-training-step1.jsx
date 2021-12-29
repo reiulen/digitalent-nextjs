@@ -21,6 +21,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+
   const [today, setToday] = useState(new Date());
   const drowpdownTemabyAkademi = useSelector(
     (state) => state.drowpdownTemabyAkademi
