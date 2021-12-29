@@ -64,7 +64,7 @@ export default function EditTTEP12({ setUbah, data, token }) {
       const data = await axios.post(link, formData, config);
       if (data.data.data) {
         SweatAlert("Berhasil", "Anda berhasil mengunggah file p12", "success");
-        const success = await dispatch(getTTEP12(token));
+        const success = await dispatch(getTTEP12(token, token_permission));
         if (success.status) {
           setUbah(false);
         }
