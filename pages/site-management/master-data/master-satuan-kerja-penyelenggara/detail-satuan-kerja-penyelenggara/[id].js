@@ -45,7 +45,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailUnitWork(params.id, session.user.user.data.token)
+        getDetailUnitWork(params.id, session.user.user.data.token, req.cookies.token_permission)
       );
 
       return {

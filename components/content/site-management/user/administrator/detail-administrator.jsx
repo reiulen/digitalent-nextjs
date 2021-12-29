@@ -145,33 +145,28 @@ const DetailAdmin = ({ token }) => {
                 <div className="table-responsive">
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ backgroundColor: "#F2F7FC" }}>
-                      <tr>
-                        <th rowSpan="2" className="align-middle fz-16 fw-600">
-                          No
-                        </th>
-                        <th rowSpan="2" className="align-middle fz-16 fw-600">
-                          ID Pelatihan
-                        </th>
-                        <th rowSpan="2" className="align-middle fz-16 fw-600">
-                          Nama Pelatihan
-                        </th>
-                        <th
-                          rowSpan="2"
-                          className="align-middle text-center fz-16 fw-600"
-                        >
-                          Access
-                        </th>
-                        <th
-                          colSpan="2"
-                          className="text-center border-0 fz-16 fw-600"
-                        >
-                          Permission
-                        </th>
-                      </tr>
-                      <tr>
-                        <th className="text-center fz-16 fw-600">Manage</th>
-                        <th className="text-center fz-16 fw-600">View</th>
-                      </tr>
+                    <tr>
+                            <th
+                              className="align-middle fz-16 fw-600"
+                            >
+                              No
+                            </th>
+                            <th
+                              className="align-middle fz-16 fw-600"
+                            >
+                              ID Pelatihan
+                            </th>
+                            <th
+                              className="align-middle fz-16 fw-600"
+                            >
+                              Nama Pelatihan
+                            </th>
+                            <th
+                              className="align-middle text-center fz-16 fw-600"
+                            >
+                              Access
+                            </th>
+                          </tr>
                     </thead>
 
                     <tbody>
@@ -192,28 +187,6 @@ const DetailAdmin = ({ token }) => {
                                     type="checkbox"
                                     disabled="disabled"
                                     checked={items.manage && items.view}
-                                    name="Checkboxes1"
-                                  />
-                                  <span></span>
-                                </label>
-                              </td>
-                              <td className="text-center py-8 border-bottom">
-                                <label className="checkbox checkbox-disabled d-flex justify-content-center">
-                                  <input
-                                    type="checkbox"
-                                    disabled="disabled"
-                                    checked={items.manage}
-                                    name="Checkboxes1"
-                                  />
-                                  <span></span>
-                                </label>
-                              </td>
-                              <td className="text-center py-8 border-bottom">
-                                <label className="checkbox checkbox-disabled d-flex justify-content-center">
-                                  <input
-                                    type="checkbox"
-                                    disabled="disabled"
-                                    checked={items.view}
                                     name="Checkboxes1"
                                   />
                                   <span></span>

@@ -73,6 +73,21 @@ const BlankComponent = ({ props_answer, props_duration }) => {
     ]);
   };
 
+  const handleUpDuration = (e) => {
+    e.target.value = Math.max(
+      Number(e.target.min),
+      Math.min(Number(e.target.max), Number(e.target.value))
+    );
+
+    if (e.target.value < 30) {
+      setDuration(e.target.value);
+      props_duration(30);
+    } else {
+      setDuration(e.target.value);
+      props_duration(e.target.value);
+    }
+  };
+
   return (
     <>
       <div className="form-group mt-5">
@@ -217,23 +232,17 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                   e.target.value === "" ||
                   helperRegexNumber.test(e.target.value)
                 ) {
-                  setDuration(e.target.value);
-                  props_duration(e.target.value);
+                  handleUpDuration(e);
                 }
               }}
-              min={1}
-              maxLength={3}
+              min="0"
+              max="300"
               placeholder="300"
               onKeyUp={(e) =>
-                helperTextLimitMax(
-                  e.target.value,
-                  0,
-                  300,
-
-                  setDuration
-                )
+                helperTextLimitMax(e.target.value, 0, 300, setDuration)
               }
             />
+
             <div className="input-group-append">
               <span
                 className="input-group-text bg-primary text-white"
@@ -243,6 +252,11 @@ const BlankComponent = ({ props_answer, props_duration }) => {
               </span>
             </div>
           </div>
+          {duration < 30 && duration > 0 && (
+            <span className="text-danger">
+              Jika waktu kurang dari 30 detik, Waktu akan otomatis 30 detik
+            </span>
+          )}
         </div>
       </div>
     </>

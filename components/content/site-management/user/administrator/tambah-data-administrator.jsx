@@ -15,6 +15,7 @@ import {
   getListAcademy,
   getAllListPelatihan,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
+import Cookies from 'js-cookie'
 
 const TambahApi = ({ token }) => {
   const router = useRouter();
@@ -160,6 +161,7 @@ const TambahApi = ({ token }) => {
                   {
                     headers: {
                       authorization: `Bearer ${token}`,
+                      "Permission": Cookies.get("token_permission")
                     },
                   }
                 );
@@ -202,6 +204,7 @@ const TambahApi = ({ token }) => {
                   {
                     headers: {
                       authorization: `Bearer ${token}`,
+                      "Permission": Cookies.get("token_permission")
                     },
                   }
                 );
@@ -602,39 +605,25 @@ const TambahApi = ({ token }) => {
                         <thead style={{ backgroundColor: "#F2F7FC" }}>
                           <tr>
                             <th
-                              rowSpan="2"
                               className="align-middle fz-16 fw-600"
                             >
                               No
                             </th>
                             <th
-                              rowSpan="2"
                               className="align-middle fz-16 fw-600"
                             >
                               ID Pelatihan
                             </th>
                             <th
-                              rowSpan="2"
                               className="align-middle fz-16 fw-600"
                             >
                               Nama Pelatihan
                             </th>
                             <th
-                              rowSpan="2"
                               className="align-middle text-center fz-16 fw-600"
                             >
                               Access
                             </th>
-                            <th
-                              colSpan="2"
-                              className="text-center border-0 fz-16 fw-600"
-                            >
-                              Permission
-                            </th>
-                          </tr>
-                          <tr>
-                            <th className="text-center fz-16 fw-600">Manage</th>
-                            <th className="text-center fz-16 fw-600">View</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -657,32 +646,6 @@ const TambahApi = ({ token }) => {
                                       type="checkbox"
                                       checked={items.allSelect}
                                       name="select-all"
-                                      onChange={(e) =>
-                                        handleChangePelatihan(e, index)
-                                      }
-                                    />
-                                    <span></span>
-                                  </label>
-                                </td>
-                                <td className="text-center py-8 border-bottom">
-                                  <label className="checkbox d-flex justify-content-center">
-                                    <input
-                                      type="checkbox"
-                                      checked={items.manage}
-                                      name="select-manage"
-                                      onChange={(e) =>
-                                        handleChangePelatihan(e, index)
-                                      }
-                                    />
-                                    <span></span>
-                                  </label>
-                                </td>
-                                <td className="text-center py-8 border-bottom">
-                                  <label className="checkbox d-flex justify-content-center">
-                                    <input
-                                      type="checkbox"
-                                      checked={items.view}
-                                      name="select-view"
                                       onChange={(e) =>
                                         handleChangePelatihan(e, index)
                                       }

@@ -1,4 +1,4 @@
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
@@ -7,12 +7,13 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 import SimpleReactValidator from "simple-react-validator";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
-   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
@@ -75,49 +76,50 @@ const Tambah = ({ token }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      let formData = new FormData();
+    let formData = new FormData();
 
-      formData.append("id", router.query.id);
-      formData.append("name", nameReference);
-      formData.append("status", status);
+    formData.append("id", router.query.id);
+    formData.append("name", nameReference);
+    formData.append("status", status);
 
-      formInput.forEach((element, index) => {
-        if (!element.value_old.length) {
-          element.value_old = values[index].value;
+    formInput.forEach((element, index) => {
+      if (!element.value_old.length) {
+        element.value_old = values[index].value;
+      }
+    });
+
+    formInput.forEach((element, i) => {
+      formData.append(`value_old[${i}]`, element.value_old);
+    });
+
+    formInput.forEach((element, i) => {
+      formData.append(`value[${i}]`, element.value);
+    });
+
+    try {
+      let { data } = await axios.post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/update`,
+        formData,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission"),
+          },
         }
+      );
+
+      Swal.fire("Berhasil", "Data berhasil diubah", "success").then(() => {
+        router.push("/site-management/reference");
       });
-
-      formInput.forEach((element, i) => {
-        formData.append(`value_old[${i}]`, element.value_old);
-      });
-
-      formInput.forEach((element, i) => {
-        formData.append(`value[${i}]`, element.value);
-      });
-
-      try {
-        let { data } = await axios.post(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/update`,
-          formData,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        Swal.fire("Berhasil", "Data berhasil diubah", "success").then(() => {
-          router.push("/site-management/reference");
-        });
-      } catch (error) {
-        simpleValidator.current.showMessages();
+    } catch (error) {
+      simpleValidator.current.showMessages();
       forceUpdate(1);
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Isi data dengan benar !",
       });
-      }
+    }
     // }
   };
 
@@ -160,9 +162,10 @@ const Tambah = ({ token }) => {
                 {detailDataReference.dataReference.status == 1 ? (
                   <select
                     onChange={(e) => setStatus(e.target.value)}
-                    className="form-control" onBlur={() =>
-                    simpleValidator.current.showMessageFor("status")
-                  }
+                    className="form-control"
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("status")
+                    }
                   >
                     <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
@@ -170,9 +173,10 @@ const Tambah = ({ token }) => {
                 ) : (
                   <select
                     onChange={(e) => setStatus(e.target.value)}
-                    className="form-control" onBlur={() =>
-                    simpleValidator.current.showMessageFor("status")
-                  }
+                    className="form-control"
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("status")
+                    }
                   >
                     <option value="0">Tidak Aktif</option>
                     <option value="1">Aktif</option>
@@ -187,7 +191,7 @@ const Tambah = ({ token }) => {
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor="staticEmail" className="col-form-label">
-                      Value {index+1} 
+                      Value {index + 1}
                       {/* {items.name} */}
                     </label>
                     <div className="position-relative d-flex align-items-center">
