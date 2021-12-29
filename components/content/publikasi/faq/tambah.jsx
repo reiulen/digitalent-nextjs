@@ -20,7 +20,7 @@ import LoadingPage from '../../../LoadingPage';
 
 import "../../../../styles/publikasi.module.css"
 
-const TambahFaq = ({ token, id }) => {
+const TambahFaq = ({ token, id, permission }) => {
     const editorRef = useRef();
     const dispatch = useDispatch()
     const router = useRouter()
@@ -154,7 +154,7 @@ const TambahFaq = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newFaq(data, token))
+                            dispatch(newFaq(data, token, permission))
                         }
                     });
 
@@ -180,7 +180,7 @@ const TambahFaq = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newFaq(data, token))
+                            dispatch(newFaq(data, token, permission))
                         }
                     });
             }

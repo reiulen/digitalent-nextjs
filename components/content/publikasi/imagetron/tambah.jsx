@@ -22,7 +22,7 @@ import { NEW_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahImagetron = ({ token, id }) => {
+const TambahImagetron = ({ token, id, permission }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -151,7 +151,7 @@ const TambahImagetron = ({ token, id }) => {
           cancelButtonText: "Batal",
         }).then((result) => {
           if (result.isConfirmed) {
-            dispatch(newImagetron(data, token));
+            dispatch(newImagetron(data, token, permission));
           }
         });
       } else {
@@ -176,7 +176,7 @@ const TambahImagetron = ({ token, id }) => {
           cancelButtonText: "Batal",
         }).then((result) => {
           if (result.isConfirmed) {
-            dispatch(newImagetron(data, token));
+            dispatch(newImagetron(data, token, permission));
           }
         });
       }
@@ -411,9 +411,8 @@ const TambahImagetron = ({ token, id }) => {
                           onChange={(e) => handleChangePublish(e)}
                         />
                         <span
-                          className={`sliders round ${
-                            publish ? "text-white" : "pl-2"
-                          }`}
+                          className={`sliders round ${publish ? "text-white" : "pl-2"
+                            }`}
                         ></span>
                       </label>
                     </div>

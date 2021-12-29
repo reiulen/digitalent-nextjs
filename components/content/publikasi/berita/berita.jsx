@@ -28,7 +28,7 @@ import { deleteBerita, clearErrors } from '../../../../redux/actions/publikasi/b
 
 import { DELETE_BERITA_RESET } from "../../../../redux/types/publikasi/berita.type";
 
-const Berita = ({ token }) => {
+const Berita = ({ token, permission }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -120,7 +120,7 @@ const Berita = ({ token }) => {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteBerita(id, token))
+                dispatch(deleteBerita(id, token, permission))
             }
         })
     }

@@ -14,7 +14,7 @@ import { UPDATE_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategor
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditKategori = ({ token }) => {
+const EditKategori = ({ token, permission }) => {
 
     const dispatch = useDispatch()
     const router = useRouter();
@@ -73,7 +73,7 @@ const EditKategori = ({ token }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(updateKategori(data, kategori.id, token))
+                        dispatch(updateKategori(data, kategori.id, token, permission))
                     }
                 });
         } else {

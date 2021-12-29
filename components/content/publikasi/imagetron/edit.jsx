@@ -19,7 +19,7 @@ import { NEW_IMAGETRON_RESET, UPDATE_IMAGETRON_RESET } from '../../../../redux/t
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
 
-const EditImagetron = ({ token, idUser }) => {
+const EditImagetron = ({ token, idUser, permission }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -156,7 +156,7 @@ const EditImagetron = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateImagetron(data, token));
+                                dispatch(updateImagetron(data, token, permission));
                             }
                         });
                 } else {
@@ -184,7 +184,7 @@ const EditImagetron = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateImagetron(data, token));
+                                dispatch(updateImagetron(data, token, permission));
                             }
                         });
                 }
@@ -219,7 +219,7 @@ const EditImagetron = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateImagetron(data, token));
+                                dispatch(updateImagetron(data, token, permission));
                             }
                         });
                 } else {
@@ -247,7 +247,7 @@ const EditImagetron = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateImagetron(data, token));
+                                dispatch(updateImagetron(data, token, permission));
                             }
                         });
                 }

@@ -16,7 +16,7 @@ import { useQuill } from "react-quilljs";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
-const TambahArtikelPeserta = ({ session }) => {
+const TambahArtikelPeserta = ({ session, permission }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -105,7 +105,7 @@ const TambahArtikelPeserta = ({ session }) => {
         kategori_id: kategori,
         tag: tag,
       };
-      dispatch(newArtikelPeserta(data, session.token));
+      dispatch(newArtikelPeserta(data, session.token, permission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -252,8 +252,8 @@ const TambahArtikelPeserta = ({ session }) => {
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <div style={{ width: "100%", height: "300px" }}>
-                          <div ref={quillRef} 
-                            style={{fontFamily:'Poppins'}}/>
+                          <div ref={quillRef}
+                            style={{ fontFamily: 'Poppins' }} />
                         </div>
                       ) : (
                         <p>Tunggu Sebentar</p>

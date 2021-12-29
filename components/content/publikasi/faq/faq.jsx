@@ -26,7 +26,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteFaq, updatePinFaq, getAllFaqPagination } from '../../../../redux/actions/publikasi/faq.actions'
 import { DELETE_FAQ_RESET, UPDATE_PIN_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
-const Faq = ({ token }) => {
+const Faq = ({ token, permission }) => {
     const importSwitch = () => import("bootstrap-switch-button-react");
     const SwitchButton = dynamic(importSwitch, {
         ssr: false,
@@ -123,7 +123,7 @@ const Faq = ({ token }) => {
             tanggal_publish: data.tanggal_publish,
         }
 
-        dispatch(updatePinFaq(dataToSend, data.id, token))
+        dispatch(updatePinFaq(dataToSend, data.id, token, permission))
     };
 
     const onNewReset = () => {
@@ -142,7 +142,7 @@ const Faq = ({ token }) => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteFaq(id, token));
+                dispatch(deleteFaq(id, token, permission));
             }
         });
     };
