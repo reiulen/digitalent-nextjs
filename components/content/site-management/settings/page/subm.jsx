@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import Select from "react-select";
 import styles from "../../../../../styles/previewGaleri.module.css";
 import Swal from "sweetalert2";
+import SimpleReactValidator from "simple-react-validator";
 
 import {
   postViaFilter,
@@ -14,6 +15,7 @@ import {
 
 export default function SUBM(props) {
   let dispatch = useDispatch();
+  let selectRefYear = null;
 
   const [via, setVia] = useState("template");
   const [title, setTitle] = useState("");
@@ -72,77 +74,102 @@ export default function SUBM(props) {
     { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
 
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
+
   const handleSubmit = async (e) => {
-    if (via === "filter") {
+    if (
+      (!participantSelectionStatusUpdate ||
+        participantSelectionStatusUpdate === 0) &&
+      (!broadcastEmailSendNotification || broadcastEmailSendNotification === 0)
+    ) {
       Swal.fire({
-        title: "Apakah anda yakin ingin mengirim ?",
-        // text: "Data ini tidak bisa dikembalikan !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Batal",
-        confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
-      }).then((result) => {
-        dispatch(
-          postViaFilter(
-            props.token,
-            title,
-            year,
-            academy,
-            theme,
-            organizer,
-            training,
-            profileStatus,
-            selectionStatus,
-            participantSelectionStatusUpdate ||
-              participantSelectionStatusUpdate === 1
-              ? true
-              : false,
-            status.value ? status.value : "",
-            broadcastEmailSendNotification ||
-              broadcastEmailSendNotification === 1
-              ? true
-              : false,
-            emailSubject,
-            emailContent,
-            `via ${via}`
-          )
-        );
+        icon: "error",
+        title: "Oops...",
+        text: "Aktifkan status atau broadcast email",
       });
     } else {
-      Swal.fire({
-        title: "Apakah anda yakin ingin mengirim ?",
-        // text: "Data ini tidak bisa dikembalikan !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Batal",
-        confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
-      }).then((result) => {
-        dispatch(
-          postViaTemplate(
-            props.token,
-            title,
-            file,
-            participantSelectionStatusUpdate ||
-              participantSelectionStatusUpdate === 1
-              ? true
-              : false,
-            status.value,
-            broadcastEmailSendNotification ||
-              broadcastEmailSendNotification === 1
-              ? true
-              : false,
-            emailSubject,
-            emailContent,
-            `via ${via}`
-          )
-        );
-      });
+      if (simpleValidator.current.allValid()) {
+        if (via === "filter") {
+          Swal.fire({
+            title: "Apakah anda yakin ingin mengirim ?",
+            // text: "Data ini tidak bisa dikembalikan !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Batal",
+            confirmButtonText: "Ya !",
+            dismissOnDestroy: false,
+          }).then((result) => {
+            dispatch(
+              postViaFilter(
+                props.token,
+                title,
+                year,
+                academy,
+                theme,
+                organizer,
+                training,
+                profileStatus,
+                selectionStatus,
+                participantSelectionStatusUpdate ||
+                  participantSelectionStatusUpdate === 1
+                  ? true
+                  : false,
+                status.value ? status.value : "",
+                broadcastEmailSendNotification ||
+                  broadcastEmailSendNotification === 1
+                  ? true
+                  : false,
+                emailSubject,
+                emailContent,
+                `via ${via}`
+              )
+            );
+          });
+        } else {
+          Swal.fire({
+            title: "Apakah anda yakin ingin mengirim ?",
+            // text: "Data ini tidak bisa dikembalikan !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Batal",
+            confirmButtonText: "Ya !",
+            dismissOnDestroy: false,
+          }).then((result) => {
+            dispatch(
+              postViaTemplate(
+                props.token,
+                title,
+                file,
+                participantSelectionStatusUpdate ||
+                  participantSelectionStatusUpdate === 1
+                  ? true
+                  : false,
+                status.value,
+                broadcastEmailSendNotification ||
+                  broadcastEmailSendNotification === 1
+                  ? true
+                  : false,
+                emailSubject,
+                emailContent,
+                `via ${via}`
+              )
+            );
+          });
+        }
+      } else {
+        simpleValidator.current.showMessages();
+        forceUpdate(1);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data dengan benar !",
+        });
+      }
     }
   };
 
@@ -298,7 +325,7 @@ export default function SUBM(props) {
       return { ...item, value: item.value };
     });
     const datas = data.map((items) => {
-      return items.label;
+      return items.value.toString();
     });
     setTraining(datas);
     setSelectedTraining(
@@ -333,38 +360,18 @@ export default function SUBM(props) {
 
   const listYears = listYear.map((items, index) => {
     return { label: items.value, value: items.value, id: items.id };
-    // return (
-    //   <option value={item.value} key={index}>
-    //     {item.value}
-    //   </option>
-    // );
   });
 
   const optAcademy = listAcademy?.map((items, index) => {
     return { label: items.label, value: items.label, akademi: items.label };
-    // return (
-    //   <option value={item.value} key={index} akademi={item.label}>
-    //     {item.label}
-    //   </option>
-    // );
   });
 
   const optTheme = listTheme?.map((items, index) => {
     return { label: items.label, value: items.label };
-    // return (
-    //   <option value={item.value} key={index}>
-    //     {item.label}
-    //   </option>
-    // );
   });
 
   const optOrganizer = listOrganizer?.map((items, index) => {
     return { label: items.label, value: items.label };
-    // return (
-    //   <option value={item.label} key={index}>
-    //     {item.label}
-    //   </option>
-    // );
   });
 
   const optTraining = listTraining?.map((item, index) => {
@@ -394,6 +401,7 @@ export default function SUBM(props) {
       setNameFile(e.target.files[0].name);
     }
   };
+  console.log(listTraining)
 
   const trainingOpt = listTraining?.map((item, index) => {
     return {
@@ -794,7 +802,12 @@ export default function SUBM(props) {
                   name="select"
                   checked={participantSelectionStatusUpdate}
                   onChange={(e) => {
-                    setParticipantSelectionStatusUpdate(e.target.checked);
+                    if (e.target.checked) {
+                      setParticipantSelectionStatusUpdate(e.target.checked);
+                    } else {
+                      setParticipantSelectionStatusUpdate(e.target.checked);
+                      setStatus("");
+                    }
                   }}
                 />
                 <span></span>
@@ -814,11 +827,25 @@ export default function SUBM(props) {
                 <Select
                   placeholder="PILIH STATUS PESERTA"
                   options={optionsStatus}
-                  defaultValue={status}
+                  value={status}
                   onChange={(e) => {
                     setStatus({ value: e.value, label: e.label });
                   }}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("statusPeserta")
+                  }
+                  isDisabled={ participantSelectionStatusUpdate === 0 ||
+                    participantSelectionStatusUpdate === false}
                 />
+                {simpleValidator.current.message(
+                  "statusPeserta",
+                  status,
+                  participantSelectionStatusUpdate === 1 ||
+                    participantSelectionStatusUpdate === true
+                    ? "required"
+                    : "",
+                  { className: "text-danger" }
+                )}
               </div>
               {/* <select
                 className={`${styles.selectKategori} form-control`}
@@ -859,10 +886,17 @@ export default function SUBM(props) {
                   name="select"
                   checked={broadcastEmailSendNotification}
                   onChange={(e) => {
-                    setBroadcastEmailSendNotification(e.target.checked);
+                    if (e.target.checked) {
+                      setBroadcastEmailSendNotification(e.target.checked);
+                    } else {
+                      setBroadcastEmailSendNotification(e.target.checked);
+                      setEmailContent("")
+                      setEmailSubject("")
+                    }
                   }}
                   required
                 />
+
                 <span></span>
               </label>
               <h3 className="mt-2 judul">
@@ -876,13 +910,27 @@ export default function SUBM(props) {
               type="text"
               name="subjekEmail"
               className="form-control"
+              value={emailSubject}
               id="subjekEmail"
               placeholder="Subjek Email"
               onChange={(e) => {
                 setEmailSubject(e.target.value);
               }}
-              required
+              onBlur={() =>
+                simpleValidator.current.showMessageFor("subjekEmail")
+              }
+              disabled={ broadcastEmailSendNotification === 0 ||
+                broadcastEmailSendNotification === false}
             />
+            {simpleValidator.current.message(
+              "subjekEmail",
+              emailSubject,
+              broadcastEmailSendNotification === 1 ||
+                broadcastEmailSendNotification === true
+                ? "required"
+                : "",
+              { className: "text-danger" }
+            )}
           </div>
           <div className="form-group mr-4">
             <h3 className="judul">Konten Email</h3>
@@ -894,7 +942,21 @@ export default function SUBM(props) {
                   let data = editor.getData();
                   setEmailContent(data);
                 }}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kontenEmail")
+                }
+                disabled={ broadcastEmailSendNotification === 0 ||
+                  broadcastEmailSendNotification === false}
               />
+              {simpleValidator.current.message(
+                "kontenEmail",
+                emailContent,
+                broadcastEmailSendNotification === 1 ||
+                  broadcastEmailSendNotification === true
+                  ? "required"
+                  : "",
+                { className: "text-danger" }
+              )}
             </div>
           </div>
           {localStorage
@@ -907,13 +969,13 @@ export default function SUBM(props) {
                 onClick={() => {
                   setVia("template");
                   setTitle("");
-                  setYear([])
-                  setAcademy([])
-                  setTheme([])
-                  setOrganizer([])
-                  setTraining([])
-                  setProfileStatus([])
-                  setSelectionStatus([])
+                  setYear([]);
+                  setAcademy([]);
+                  setTheme([]);
+                  setOrganizer([]);
+                  setTraining([]);
+                  setProfileStatus([]);
+                  setSelectionStatus([]);
                   setParticipantSelectionStatusUpdate(0);
                   setStatus("");
                   setBroadcastEmailSendNotification(0);
@@ -921,11 +983,11 @@ export default function SUBM(props) {
                   setEmailContent("");
                   setFile("");
                   setLink("");
-                  setSelectedTraining([])
-                  setDisableOption(true)
-                  setDisableAkademi(true)
-                  setDisableTema(true)
-                  setDisablePenyelenggara(true)
+                  setSelectedTraining([]);
+                  setDisableOption(true);
+                  setDisableAkademi(true);
+                  setDisableTema(true);
+                  setDisablePenyelenggara(true);
                 }}
               >
                 Reset

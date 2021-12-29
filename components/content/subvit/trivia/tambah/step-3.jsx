@@ -158,8 +158,13 @@ const StepThree = ({ token, tokenPermission }) => {
   };
 
   const handleDuration = (e) => {
-    if (e === "" || helperRegexNumber.test(e)) {
-      setDuration(e);
+    if (e.target.value === "" || helperRegexNumber.test(e.target.value)) {
+      e.target.value = Math.max(
+        Number(e.target.min),
+        Math.min(Number(e.target.max), Number(e.target.value))
+      );
+
+      setDuration(e.target.value);
     }
   };
 
@@ -336,6 +341,7 @@ const StepThree = ({ token, tokenPermission }) => {
                     <input
                       type="text"
                       maxLength={3}
+                      min="0"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
@@ -344,11 +350,9 @@ const StepThree = ({ token, tokenPermission }) => {
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
-                      min={1}
-                      onKeyUp={(e) =>
-                        helperTextLimitMax(e.target.value, 0, 360, setDuration)
-                      }
+                      max="300"
                     />
+
                     <div className="input-group-append bg-sedondary">
                       <span
                         className="input-group-text bg-primary text-white"

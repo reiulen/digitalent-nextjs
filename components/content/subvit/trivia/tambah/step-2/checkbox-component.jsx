@@ -121,6 +121,16 @@ const CheckboxComponent = ({
     ]);
   };
 
+  const handleDuration = (e) => {
+    e.target.value = Math.max(
+      Number(e.target.min),
+      Math.min(Number(e.target.max), Number(e.target.value))
+    );
+
+    setDuration(e.target.value);
+    props_duration(e.target.value);
+  };
+
   return (
     <>
       <div className="form-group">
@@ -255,23 +265,15 @@ const CheckboxComponent = ({
                   e.target.value === "" ||
                   helperRegexNumber.test(e.target.value)
                 ) {
-                  setDuration(e.target.value);
-                  props_duration(e.target.value);
+                  handleDuration(e);
                 }
               }}
-              min={1}
+              min="0"
+              max="300"
               maxLength={3}
               placeholder="300"
-              onKeyUp={(e) =>
-                helperTextLimitMax(
-                  e.target.value,
-                  0,
-                  300,
-
-                  setDuration
-                )
-              }
             />
+
             <div className="input-group-append">
               <span
                 className="input-group-text bg-primary text-white"
@@ -281,6 +283,11 @@ const CheckboxComponent = ({
               </span>
             </div>
           </div>
+          {duration < 30 && duration > 0 && (
+            <span className="text-danger">
+              Jika waktu kurang dari 30 detik, Waktu akan otomatis 30 detik
+            </span>
+          )}
         </div>
       </div>
     </>

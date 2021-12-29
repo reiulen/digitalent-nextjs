@@ -281,14 +281,12 @@ const SubtansiUser = ({ token }) => {
   const handlePage = () => {
     setClose(1);
     const setData = {
-      list: JSON.stringify(
-        data.list_questions.map((item, index) => {
-          return {
-            ...item,
-            participant_answer: sessionStorage.getItem(index + 1),
-          };
-        })
-      ),
+      list: data.list_questions.map((item, index) => {
+        return {
+          ...item,
+          participant_answer: sessionStorage.getItem(index + 1),
+        };
+      }),
       training_id: router.query.training_id,
       type: "trivia",
     };
@@ -315,7 +313,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePageNext = () => {
-    setTimes(tt[router.query.id]);
+    // setTimes(tt[router.query.id]);
     const page = parseInt(router.query.id) + 1;
     if (parseInt(router.query.id) === data?.total_questions) {
       const setData = {
@@ -521,9 +519,24 @@ const SubtansiUser = ({ token }) => {
                     </div>
                   </div>
                 ) : (
-                  data &&
-                  data.list_questions &&
-                  data.list_questions[parseInt(router.query.id) - 1].question
+                  <>
+                    {data &&
+                      data.list_questions &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .question}
+                    {data &&
+                      data.list_questions &&
+                      data.list_questions[parseInt(router.query.id) - 1]
+                        .type === "checkbox" && (
+                        <>
+                          <br />
+                          <br />
+                          <span className={styles.multipleChoice}>
+                            Anda dapat memilih lebih dari 1 jawaban
+                          </span>
+                        </>
+                      )}
+                  </>
                 )}
               </h1>
               <hr />
