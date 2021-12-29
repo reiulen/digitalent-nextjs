@@ -108,7 +108,7 @@ export default function MasterPelatihan({ token }) {
   };
 
   useEffect(() => {
-    dispatch(getAllListMasterPelatihan(token));
+    dispatch(getAllListMasterPelatihan(token, token_permission));
   }, [
     dispatch,
     token,
@@ -133,7 +133,7 @@ export default function MasterPelatihan({ token }) {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteMasterTraining(id, token));
+        dispatch(deleteMasterTraining(id, token, token_permission));
       }
     });
   };
@@ -143,7 +143,7 @@ export default function MasterPelatihan({ token }) {
       status: value,
       id: id,
     };
-    dispatch(updateStatusPublishMaster(data, token));
+    dispatch(updateStatusPublishMaster(data, token, token_permission));
   };
 
   return (
