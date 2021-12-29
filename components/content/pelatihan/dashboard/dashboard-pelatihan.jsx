@@ -52,7 +52,7 @@ const DashboardPelatihan = () => {
         <h2 className="title-section-dashboard">total per akademi</h2>
         <div className="row mt-5">
           {["vsga", "proa", "dla", "ls", "pb", "dgn"].map((row, i) => (
-            <div className="col-md-4 mb-8">
+            <div className="col-md-4 mb-8" key={i}>
               <TotalPerAkademi
                 group={"VSGA"}
                 link={`/pelatihan/dashboard/${row}`}

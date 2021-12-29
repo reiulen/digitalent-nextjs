@@ -65,7 +65,7 @@ const DashboardDetailPelatihan = () => {
                 </thead>
                 <tbody className="w-100">
                   {[1, 2, 3, 4, 5].map((row, i) => (
-                    <tr>
+                    <tr key={i}>
                       <td className="text-center">{i + 1}</td>
                       <td>Junior Graphi</td>
                       <td>200</td>

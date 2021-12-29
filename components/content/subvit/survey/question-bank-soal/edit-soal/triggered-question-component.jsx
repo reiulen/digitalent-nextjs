@@ -312,7 +312,7 @@ const TriggeredQuestionComponent = ({
                             className="custom-file-label"
                             htmlFor="customFile"
                           >
-                            {row.imageName || "Pilih Gambar"}
+                            {row.image_name ? row.image_name : "Pilih Gambar"}
                           </label>
                         </div>
                       </div>
@@ -416,7 +416,9 @@ const TriggeredQuestionComponent = ({
                                   className="custom-file-label"
                                   htmlFor="customFile"
                                 >
-                                  {rowY.imageName || "Pilih Gambar"}
+                                  {rowY.image_name
+                                    ? rowY.image_name
+                                    : "Pilih Gambar"}
                                 </label>
                               </div>
                             </div>
@@ -468,21 +470,25 @@ const TriggeredQuestionComponent = ({
                                             className="col-md-2 p-0 pl-3"
                                             key={k}
                                           >
-                                            <Image
-                                              src={
-                                                rowX.image_preview &&
-                                                rowX.image_preview.includes(
-                                                  "blob"
-                                                )
-                                                  ? rowX.image_preview
-                                                  : process.env
-                                                      .END_POINT_API_IMAGE_SUBVIT +
-                                                    rowX.image_preview
-                                              }
-                                              alt="logo"
-                                              width={148}
-                                              height={90}
-                                            />
+                                            {rowX.image_preview === "" ? (
+                                              ""
+                                            ) : (
+                                              <Image
+                                                src={
+                                                  rowX.image_preview &&
+                                                  rowX.image_preview.includes(
+                                                    "blob"
+                                                  )
+                                                    ? rowX.image_preview
+                                                    : process.env
+                                                        .END_POINT_API_IMAGE_SUBVIT +
+                                                      rowX.image_preview
+                                                }
+                                                alt="logo"
+                                                width={148}
+                                                height={90}
+                                              />
+                                            )}
                                           </div>
                                           <div className="col-md-4 pt-2">
                                             <input
@@ -513,8 +519,11 @@ const TriggeredQuestionComponent = ({
                                                 className="custom-file-label"
                                                 htmlFor="customFile"
                                               >
-                                                {rowX.imageName ||
-                                                  "Pilih Gambar"}
+                                                {rowX.image_preview
+                                                  ? rowX.image_preview.split(
+                                                      "survey/images/"
+                                                    )
+                                                  : "Pilih Gambar"}
                                               </label>
                                             </div>
                                           </div>
