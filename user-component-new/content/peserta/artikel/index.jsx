@@ -79,9 +79,8 @@ const Dashboard = ({ session, success }) => {
 						<td className="align-middle">
 							{" "}
 							<span
-								className={`label label-inline label-light-${
-									item.publish === 1 ? "success" : "danger"
-								} font-weight-bold`}
+								className={`label label-inline label-light-${item.publish === 1 ? "success" : "danger"
+									} font-weight-bold`}
 							>
 								{item.publish === 1 ? "Publish" : "Unpublish"}
 							</span>
