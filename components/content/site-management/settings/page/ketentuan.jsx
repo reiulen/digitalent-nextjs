@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import Select from "react-select";
+import Cookies from "js-cookie";
+
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 
@@ -36,6 +38,7 @@ export default function Ketentuan(props) {
       {
         headers: {
           authorization: `Bearer ${props.token}`,
+          Permission: Cookies.get("token_permission")
         },
       }
     ).then(items => {

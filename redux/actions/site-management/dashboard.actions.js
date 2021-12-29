@@ -111,7 +111,7 @@ export const loadDataZonasiNext = (token, type, page) => {
   };
 };
 
-export const loadDataListZonasi = (token, page = 1) => {
+export const loadDataListZonasi = (token, page = 1,tokenPermission="") => {
 	const params = {
 		page,
 	};
@@ -125,6 +125,7 @@ export const loadDataListZonasi = (token, page = 1) => {
 					params,
 					headers: {
 						authorization: `Bearer ${token}`,
+						Permission: tokenPermission
 					},
 				}
 			);
@@ -133,8 +134,7 @@ export const loadDataListZonasi = (token, page = 1) => {
 				payload: data,
 				page,
 			});
-		} catch (error) {
-			console.log("haha", error)
+		} catch (error) {	
 			// notify(error.response.data.message);
 		}
 	};

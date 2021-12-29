@@ -11,6 +11,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 import { postTemplate } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
@@ -87,6 +88,7 @@ export default function Template(props) {
           {
             headers: {
               authorization: `Bearer ${props.token}`,
+              Permission: Cookies.get("token_permission")
             },
           }
         )

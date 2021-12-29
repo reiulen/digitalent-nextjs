@@ -54,7 +54,7 @@ export const postTemplate = (token, subject, body, status) => {
   };
 };
 
-export const putDataPrompt = (token, notification, email) => {
+export const putDataPrompt = (token, notification, email, tokenPermission) => {
   return async (dispatch) => {
     try {
       await axios.post(
@@ -74,6 +74,7 @@ export const putDataPrompt = (token, notification, email) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission
           },
         }
       );

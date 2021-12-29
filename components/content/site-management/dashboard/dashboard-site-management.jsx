@@ -360,10 +360,10 @@ const DashboardSiteManagement = ({ token, user }) => {
 												e.preventDefault();
 												if (pageZonasi === 1) {
 													setPageZonasi(pageZonasi);
-													dispatch(loadDataListZonasi(token, pageZonasi))
+													dispatch(loadDataListZonasi(token, pageZonasi, Cookies.get("token_permission")))
 												} else {
 													setPageZonasi(pageZonasi - 1);
-													dispatch(loadDataListZonasi(token, pageZonasi - 1))
+													dispatch(loadDataListZonasi(token, pageZonasi - 1,Cookies.get("token_permission")))
 												}
 											}}
 											style={{
@@ -387,10 +387,10 @@ const DashboardSiteManagement = ({ token, user }) => {
 													Math.ceil(totalZonasi / 5)
 												) {
 													setPageZonasi(pageZonasi);
-													dispatch(loadDataListZonasi(token, pageZonasi))
+													dispatch(loadDataListZonasi(token, pageZonasi,Cookies.get("token_permission")))
 												} else {
 													setPageZonasi(pageZonasi + 1);
-													dispatch(loadDataListZonasi(token, pageZonasi + 1))
+													dispatch(loadDataListZonasi(token, pageZonasi + 1, Cookies.get("token_permission")))
 												}
 											}}
 											style={{

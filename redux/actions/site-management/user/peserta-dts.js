@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 
 export const getAllListsPeserta =
-  (token, limit = 5, page = 1, search = "", tokenPermission) =>
+  (token, limit = 5, page = 1, search = "", tokenPermission="") =>
   async (dispatch) => {
     try {
       dispatch({ type: LIST_PESERTA_REQUEST });
