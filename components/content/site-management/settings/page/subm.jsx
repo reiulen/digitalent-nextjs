@@ -85,7 +85,7 @@ export default function SUBM(props) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Pilih antara Update Status Seleksi Peserta atau Broadcast Email & Send Notification",
+        text: "Aktifkan status atau broadcast email",
       });
     } else {
       if (simpleValidator.current.allValid()) {
