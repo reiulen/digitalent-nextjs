@@ -94,32 +94,34 @@ export const getAllSummary =
   };
 //END ALL SUMMARY
 
-export const getAkademiByPelatihan = (token, id) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/akademi/akademi-by-pelatihan?pelatian_id=${id}`;
+export const getAkademiByPelatihan =
+  (token, id, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/akademi/akademi-by-pelatihan?pelatian_id=${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: GET_AKADEMI_BY_PELATIHAN_SUCCESS,
-      payload: data,
-    });
-    return data;
-  } catch (error) {
-    dispatch({
-      type: GET_AKADEMI_BY_PELATIHAN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_AKADEMI_BY_PELATIHAN_SUCCESS,
+        payload: data,
+      });
+      return data;
+    } catch (error) {
+      dispatch({
+        type: GET_AKADEMI_BY_PELATIHAN_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getPendaftaranPeserta =
   (
@@ -197,7 +199,8 @@ export const getStatusPendaftar = (token, id) => async (dispatch) => {
 };
 
 export const getReminderBerkas =
-  (token, index, token_permission) => async (dispatch) => {
+  (token, index, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +
@@ -225,7 +228,8 @@ export const getReminderBerkas =
   };
 
 export const getDataPribadi =
-  (token, index, token_permission) => async (dispatch) => {
+  (token, index, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +

@@ -38,7 +38,7 @@ export const getAllListReview =
     akademi,
     tema,
     token,
-    token_permission
+    token_permission = ""
   ) =>
   async (dispatch) => {
     try {
