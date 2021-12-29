@@ -553,7 +553,7 @@ const AddMasterPelatihan = ({ token }) => {
               className="font-weight-bolder card-title"
               style={{ fontSize: "20px" }}
             >
-              Form Pendaftaran
+              Form Master Pendaftaran
             </h1>
             <div className="card-toolbar justify-content-between d-flex">
               <button

@@ -4,6 +4,7 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { getDataPribadi } from "../../../../../redux/actions/pelatihan/function.actions";
 import Image from "next/image";
+import { PDFReader } from "react-read-pdf";
 const Informasi = ({ funcViewEdit, token }) => {
 	const dispatch = useDispatch();
 	const { error: errorDataPribadi, dataPribadi } = useSelector(
@@ -110,17 +111,37 @@ const Informasi = ({ funcViewEdit, token }) => {
 				</Row>
 			</div>
 
-			<Modal show={showModalKtp} onHide={handleClose} centered>
+			<Modal 
+				show={showModalKtp} 
+				onHide={handleClose} 
+				centered
+			>
 				<Modal.Header>
 					<Modal.Title>KTP</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<div className="d-flex justify-content-center">
-						<img
-							src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${dataPribadi.File_ktp}`}
-							alt="file ktp"
-							className="img-fluid"
-						/>
+						{
+							dataPribadi.File_ktp.includes("pdf") ?
+								<div
+									className="overflow-auto mx-auto px-auto"
+									style={{
+										height: 250 
+									}}
+								>
+									<PDFReader
+										url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${dataPribadi.File_ktp}`}
+										scale={0.9}
+									/>
+								</div>
+								
+							:
+								<img
+									src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${dataPribadi.File_ktp}`}
+									alt="file ktp"
+									className="img-fluid"
+								/>
+						}
 					</div>
 				</Modal.Body>
 				<Modal.Footer>
