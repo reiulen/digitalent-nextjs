@@ -330,7 +330,10 @@ export default function Bookmark({ session }) {
                 itemsCountPerPage={allBookmark?.bookmark?.perPage}
                 totalItemsCount={allBookmark?.bookmark?.total}
                 pageRangeDisplayed={3}
-                onChange={(page) => dispatch(setValuePage(page))}
+                onChange={(page) => {
+                  dispatch(setValuePage(page));
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
                 nextPageText={">"}
                 prevPageText={"<"}
                 firstPageText={"<<"}
