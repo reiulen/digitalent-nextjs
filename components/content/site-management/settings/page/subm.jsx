@@ -748,7 +748,7 @@ export default function SUBM(props) {
                     style={{ zIndex: "13", position: "relative" }}
                   >
                     <Select
-                      placeholder="Pilih Status Administrasi"
+                      placeholder="Pilih Status Peserta"
                       options={optionsStatus}
                       isMulti
                       onChange={(e) => {
