@@ -180,6 +180,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     if (valid) {
       localStorage.removeItem("method");
       localStorage.removeItem("step2");
+      localStorage.removeItem("clone");
       dispatch({
         type: IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_RESET,
       });
@@ -215,7 +216,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     if (valid) {
-      localStorage.setItem("method", router.query.metode);
+      localStorage.setItem("method", "import" || router.query.metode);
       router.push({
         pathname: `/subvit/substansi/tambah-step-3`,
         query: { id },
@@ -284,10 +285,18 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handleDownloadTemplate = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+        Permission: tokenPermission || "",
+      },
+    };
+
     await axios
       .get(
         process.env.END_POINT_API_SUBVIT +
-          "api/subtance-question-bank-details/template"
+          "api/subtance-question-bank-details/template",
+        config
       )
       .then((res) => {
         window.location.href = res.data.data[0];
@@ -681,7 +690,13 @@ const StepTwo = ({ token, tokenPermission }) => {
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="button"
                     onClick={() => {
-                      router.push("/subvit/substansi/tambah-step-1");
+                      if (localStorage.getItem("clone") === "true") {
+                        router.push(
+                          `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                        );
+                      } else {
+                        router.push("/subvit/substansi/tambah-step-1");
+                      }
                     }}
                   >
                     Kembali
