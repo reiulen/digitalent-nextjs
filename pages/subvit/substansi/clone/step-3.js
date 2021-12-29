@@ -7,10 +7,11 @@ import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.ac
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import { getAllSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { getAllSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
 const StepFour = dynamic(
   () =>
-    import("../../../../components/content/subvit/substansi/clone/step-four"),
+    import("../../../../components/content/subvit/substansi/clone/step-two"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -50,7 +51,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getAllSubtanceQuestionBanks(
           query.page,
           query.keyword,
-          (query.limit = 100),
+          query.limit,
+          session.user.user.data.token,
+          permission
+        )
+      );
+
+      await store.dispatch(
+        getAllSubtanceQuestionDetail(
+          query.id,
+          query.page,
+          query.keyword,
+          query.limit,
+          query.status,
+          query.category,
+          query.pelatihan,
           session.user.user.data.token,
           permission
         )

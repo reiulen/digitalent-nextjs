@@ -66,14 +66,32 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 		success: successStatusWizard,
 	} = useSelector((state) => state.updateStatusWizzard);
 
-  const [isValid, setIsValid] = useState(false);
+  // const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(
+    alamat && 
+    alamat?.address &&
+    alamat?.provinsi &&
+    alamat?.kota &&
+    alamat?.kecamatan &&
+    alamat?.kelurahan &&
+    alamat?.kode_pos !== "" ?
+      true
+    :
+      false
+  );
 
   const [isProvinsi, setIsProvinsi] = useState(false);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [sesuai, setSesuai] = useState(false);
+  // const [sesuai, setSesuai] = useState(false);
+  const [sesuai, setSesuai] = useState(
+    alamat && alamat?.address_ktp === alamat?.address ? 
+      true
+    : 
+      false
+    );
 
   const [alamatKtp, setAlamatKtp] = useState(
     (alamat && alamat.address_ktp) || ""
@@ -258,6 +276,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Provinsi</Form.Label>
               <Select
                 isDisabled={isValid}
+                // isDisabled={isValid && provinsiDomisili ? true : false}
                 key={1}
                 placeholder={
                   (alamat && alamat.provinsi) || "Silahkan Pilih Provinsi"
@@ -287,6 +306,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
                 isDisabled={isValid}
+                // isDisabled={isValid && kotaDomisili ? true : false}
                 key={1}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
                 placeholder={
@@ -320,6 +340,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
               <Select
                 isDisabled={isValid}
+                // isDisabled={isValid && kecamatanDomisili ? true : false}
                 placeholder={
                   kecamatanKtp === null
                     ? "Silahkan Pilih Kecamatan"
@@ -351,6 +372,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
               <Select
                 isDisabled={isValid}
+                // isDisabled={isValid && kelurahanDomisili ? true : false}
                 placeholder={
                   kelurahanKtp === null
                     ? "Silahkan Pilih Kelurahan"
@@ -383,6 +405,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Kode Pos</Form.Label>
               <Form.Control
                 disabled={isValid}
+                // disabled={isValid && kodePosDomisili ? true : false}
                 type="text"
                 placeholder="Silahkan Masukkan Kode Pos"
                 value={kodePosDomisili}

@@ -63,7 +63,7 @@ const CardPelatihanOpen = ({
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(
@@ -93,7 +93,7 @@ const CardPelatihanOpen = ({
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
           dispatch(
@@ -183,7 +183,15 @@ const CardPelatihanOpen = ({
                       if (!session) {
                         router.push("/peserta");
                       } else {
-                        handleBookmark(row);
+                        if (!session?.roles?.includes("user")) {
+                          SweatAlert(
+                            "Gagal",
+                            "Anda sedang login sebagai Admin",
+                            "error"
+                          );
+                        } else {
+                          handleBookmark(row);
+                        }
                       }
                     }}
                   ></i>

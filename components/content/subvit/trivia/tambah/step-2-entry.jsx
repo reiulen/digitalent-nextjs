@@ -322,7 +322,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
           };
           localStorage.setItem("step2", JSON.stringify(data));
-          localStorage.setItem("method", metode);
+          localStorage.setItem("method", "entry" || metode);
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -350,7 +350,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
           };
           localStorage.setItem("step2", JSON.stringify(data));
-          localStorage.setItem("method", metode);
+          localStorage.setItem("method", "entry" || metode);
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -368,7 +368,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             answer_key: null,
           };
           localStorage.setItem("step2", JSON.stringify(data));
-          localStorage.setItem("method", metode);
+          localStorage.setItem("method", "entry" || metode);
           dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -555,7 +555,13 @@ const StepTwo = ({ token, tokenPermission }) => {
                         className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                         type="button"
                         onClick={() => {
-                          router.push("/subvit/trivia/tambah");
+                          if (localStorage.getItem("clone") === "true") {
+                            router.push(
+                              `/subvit/trivia/clone/step-3?id=${router.query.id}`
+                            );
+                          } else {
+                            router.push("/subvit/trivia/tambah");
+                          }
                         }}
                       >
                         Kembali

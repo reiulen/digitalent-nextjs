@@ -78,6 +78,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       dispatch(updateTriviaQuestionBanksPublish(data, id, token));
       localStorage.removeItem("clone1");
       localStorage.removeItem("clone3");
+      localStorage.removeItem("clone");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

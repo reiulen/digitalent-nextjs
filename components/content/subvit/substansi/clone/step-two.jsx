@@ -21,6 +21,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInputClone";
 import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
+import { Button, Modal } from "react-bootstrap";
 
 const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const StepTwo = ({ token, tokenPermission }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [checkedDelete, setCheckedDelete] = useState([]);
+  const [modalType, setModalType] = useState(false);
 
   useEffect(() => {
     if (limit) {
@@ -76,7 +78,7 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
   const saveLanjut = () => {
     router.push({
-      pathname: `/subvit/substansi/clone/step-3`,
+      pathname: `/subvit/substansi/clone/step-4`,
       query: { id },
     });
   };
@@ -160,28 +162,23 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handleModal = () => {
-    Swal.fire({
-      title: "Silahkan Pilih Metode Entry",
-      icon: "info",
-      showDenyButton: true,
-      showCloseButton: true,
-      confirmButtonText: `Entry`,
-      denyButtonText: `Import`,
-      confirmButtonColor: "#3085d6",
-      denyButtonColor: "#d33",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-2-entry`,
-          query: { id },
-        });
-      } else if (result.isDenied) {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-2-import`,
-          query: { id },
-        });
-      }
+    setModalType(true);
+  };
+
+  const handleEntry = () => {
+    router.push({
+      pathname: `/subvit/substansi/tambah-step-2-entry`,
+      query: { id },
     });
+    localStorage.setItem("clone", true);
+  };
+
+  const handleImport = () => {
+    router.push({
+      pathname: `/subvit/substansi/tambah-step-2-import`,
+      query: { id },
+    });
+    localStorage.setItem("clone", true);
   };
 
   const handleResetError = () => {
@@ -220,7 +217,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="3"></StepInput>
           <div className="card-body">
             <div className="table-filter">
               <div className="row align-items-center">
@@ -309,7 +306,6 @@ const StepTwo = ({ token, tokenPermission }) => {
                         subtance_question_detail?.list_questions &&
                         subtance_question_detail?.list_questions?.map(
                           (question, i) => {
-                            console.log(question);
                             return (
                               <tr key={question.id}>
                                 <td className="align-middle text-center">
@@ -425,7 +421,9 @@ const StepTwo = ({ token, tokenPermission }) => {
                     className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="button"
                     onClick={() => {
-                      router.push("/subvit/substansi/clone");
+                      router.push(
+                        `/subvit/substansi/clone/step-2?id=${router.query.id}`
+                      );
                     }}
                   >
                     Kembali
@@ -475,6 +473,43 @@ const StepTwo = ({ token, tokenPermission }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={modalType}
+        onHide={() => setModalType(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Body>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setModalType(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+          <center>
+            <i
+              className="ri-information-line"
+              style={{ fontSize: "100px", color: "#17a2b8" }}
+            ></i>
+            <h3>Silahkan Pilih Metode Entry</h3>
+            <Button
+              className="btn btn-outline-primary font-weight-bolder px-7 py-3 mt-5 mr-5"
+              style={{ borderRadius: "5px", border: "1px solid" }}
+              onClick={handleImport}
+            >
+              Import
+            </Button>
+            <Button
+              className="btn btn-primary font-weight-bolder px-7 py-3 mt-5 "
+              onClick={handleEntry}
+            >
+              Entry
+            </Button>
+          </center>
+        </Modal.Body>
+      </Modal>
     </PageWrapper>
   );
 };
