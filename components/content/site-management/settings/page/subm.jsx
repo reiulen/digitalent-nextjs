@@ -324,7 +324,7 @@ export default function SUBM(props) {
       return { ...item, value: item.value };
     });
     const datas = data.map((items) => {
-      return items.value;
+      return items.value.toString();
     });
     setTraining(datas);
     setSelectedTraining(
