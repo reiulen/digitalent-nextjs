@@ -321,6 +321,7 @@ const StepOne = ({ token, tokenPermission }) => {
                   options={optionsKategori}
                   className={styles.selectForm}
                   onChange={(e) => setCategory(e.value)}
+                  value={{ label: category }}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("kategori")
                   }

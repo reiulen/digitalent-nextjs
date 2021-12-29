@@ -539,21 +539,22 @@ const Navigationbar = ({ session }) => {
                     {navbarItems &&
                       navbarItems?.map((el, i) => {
                         return (
-                          <Link
+                          <a
                             key={i}
-                            href={
-                              el.slug
-                                ? `/detail/akademi/${el.id}`
-                                : el.name
-                                ? `/lainnya/${el.url}`
-                                : `/${el}`
-                            }
-                            passHref
+                            onClick={() => {
+                              if (el.slug) {
+                                window.location.href = `/detail/akademi/${el.id}`;
+                              } else if (el.name) {
+                                window.location.href = `/lainnya/${el.url}`;
+                              } else {
+                                window.location.href = `/${el}`;
+                              }
+                            }}
                           >
                             <NavDropdown.Item className={`navdropdown-child `}>
                               {el.slug ? el.slug : el.name ? el.name : el}
                             </NavDropdown.Item>
-                          </Link>
+                          </a>
                         );
                       })}
                   </Col>

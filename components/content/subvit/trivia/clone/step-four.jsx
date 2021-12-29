@@ -71,7 +71,7 @@ const StepOne = ({ token, tokenPermission }) => {
       const id = router.query.id;
       if (typeSave === "lanjut") {
         router.push({
-          pathname: `/subvit/trivia/clone/step-4`,
+          pathname: `/subvit/trivia/clone/step-3`,
           query: { id },
         });
       } else if (typeSave === "draft") {
@@ -233,7 +233,7 @@ const StepOne = ({ token, tokenPermission }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="3"></StepInput>
+          <StepInput step="2"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Tujuan Clone TRIVIA</h2>
           </div>
@@ -317,9 +317,7 @@ const StepOne = ({ token, tokenPermission }) => {
                   className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                   type="button"
                   onClick={() => {
-                    router.push(
-                      `/subvit/trivia/clone/step-2?id=${router.query.id}`
-                    );
+                    router.push(`/subvit/trivia/clone`);
                   }}
                 >
                   Kembali

@@ -126,7 +126,15 @@ const DetailPelatihan = ({ session }) => {
 
                 <div className="d-flex align-items-center mt-5 mt-md-1">
                   <p className="mr-6 fz-18 fw-500">{pelatihan?.akademi}</p>
-                  <p className="badgess-green">{pelatihan?.Status}</p>
+                  <p
+                    className={
+                      pelatihan?.Status === "Dibuka"
+                        ? `badgess-green`
+                        : `badgess-red`
+                    }
+                  >
+                    {pelatihan?.Status}
+                  </p>
                 </div>
 
                 <Row className="mt-5">
@@ -175,21 +183,33 @@ const DetailPelatihan = ({ session }) => {
                         url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
                         quote={pelatihan?.name}
                       >
-                        <button className="btn btn-white roundedss-border mr-4">
+                        <button
+                          className="btn btn-white roundedss-border mr-4"
+                          disabled={pelatihan?.Status !== "Dibuka" && true}
+                        >
                           <IconShare />
                         </button>
                       </ShareOverlay>
                       <button
+                        disabled={pelatihan?.Status !== "Dibuka" && true}
                         className="btn btn-white roundedss-border"
                         onClick={() => {
                           if (!session) {
                             router.push("/login");
                           } else {
-                            const pelatihanObj = {
-                              bookmark: pelatihan?.bookmart,
-                              id: pelatihan?.id,
-                            };
-                            handleBookmark(pelatihanObj);
+                            if (!session?.roles?.includes("user")) {
+                              SweatAlert(
+                                "Gagal",
+                                "Anda sedang login sebagai Admin",
+                                "error"
+                              );
+                            } else {
+                              const pelatihanObj = {
+                                bookmark: pelatihan?.bookmart,
+                                id: pelatihan?.id,
+                              };
+                              handleBookmark(pelatihanObj);
+                            }
                           }
                         }}
                       >
@@ -235,16 +255,28 @@ const DetailPelatihan = ({ session }) => {
                   .format("DD MMM YYYY")}
               </span>
               <div className="mt-7">
-                {pelatihan?.status !== "Closed" && (
-                  <button
-                    className="btn btn-primary-dashboard rounded-pill btn-block fw-500"
-                    onClick={() =>
-                      handleCheckPelatihanReg(pelatihan?.id, session)
+                <button
+                  disabled={pelatihan?.Status !== "Dibuka" && true}
+                  className="btn btn-primary-dashboard rounded-pill btn-block fw-500"
+                  onClick={() => {
+                    if (!session) {
+                      return router.push("/login");
+                    } else {
+                      if (!session?.roles?.includes("user")) {
+                        SweatAlert(
+                          "Gagal",
+                          "Anda sedang login sebagai Admin",
+                          "error"
+                        );
+                      } else {
+                        handleCheckPelatihanReg(pelatihan?.id, session);
+                      }
                     }
-                  >
-                    Daftar Pelatihan
-                  </button>
-                )}
+                  }}
+                >
+                  Daftar Pelatihan
+                </button>
+
                 <button
                   className="btn btn-outline-primary-new rounded-pill btn-block fw-500 d-flex justify-content-center align-items-center p-1"
                   onClick={() => handleDownloadSilabus()}

@@ -542,69 +542,82 @@ const Beranda = ({ session }) => {
                                             );
                                       }}
                                     >
-                                      {row.status !== "Dibuka" ? (
+                                      {/* {row.status !== "Dibuka" ? (
                                         <CardPelatihanClose row={row} />
-                                      ) : (
-                                        <>
-                                          <div
-                                            className={
-                                              pelatihan[i].pelatihan[j]
-                                                .hover !== true
+                                      ) : ( */}
+                                      <>
+                                        <div
+                                          className={
+                                            row.status === "Dibuka"
+                                              ? pelatihan[i].pelatihan[j]
+                                                  .hover !== true
                                                 ? `parent-image-pelatihan-new`
                                                 : `parent-image-pelatihan-new-hover`
+                                              : "parent-image-pelatihan-new-close"
+                                          }
+                                        >
+                                          <Image
+                                            className={`image-list-pelatihan-new`}
+                                            src={
+                                              (row.gambar &&
+                                                row.gambar !==
+                                                  "Belum ada file" &&
+                                                process.env
+                                                  .END_POINT_API_IMAGE_BEASISWA +
+                                                  row.gambar) ||
+                                              "/assets/media/default-card.png"
                                             }
-                                          >
-                                            <Image
-                                              className={`image-list-pelatihan-new`}
-                                              src={
-                                                (row.gambar &&
-                                                  row.gambar !==
-                                                    "Belum ada file" &&
-                                                  process.env
-                                                    .END_POINT_API_IMAGE_BEASISWA +
-                                                    row.gambar) ||
-                                                "/assets/media/default-card.png"
-                                              }
-                                              layout="fill"
-                                              objectFit="cover"
-                                              alt="Image Thumbnail"
-                                            />
-                                          </div>
-                                          <Card.ImgOverlay>
-                                            <div className="d-flex justify-content-between">
-                                              <div className="align-self-start">
-                                                <Badge
-                                                  bg={`py-3 px-4 badge-card-pelatihan-new`}
-                                                  className="d-flex "
-                                                >
-                                                  Pelatihan{" "}
-                                                  {row.metode_pelatihan}
-                                                </Badge>
-                                              </div>
+                                            layout="fill"
+                                            objectFit="cover"
+                                            alt="Image Thumbnail"
+                                          />
+                                        </div>
+                                        <Card.ImgOverlay>
+                                          <div className="d-flex justify-content-between">
+                                            <div className="align-self-start">
+                                              <Badge
+                                                bg={`py-3 px-4 ${
+                                                  row.status === "Dibuka"
+                                                    ? "badge-card-pelatihan-new"
+                                                    : "badge-card-pelatihan-new-close"
+                                                } `}
+                                                className="d-flex "
+                                              >
+                                                Pelatihan {row.metode_pelatihan}
+                                              </Badge>
+                                            </div>
 
-                                              {pelatihan[i].pelatihan[j]
-                                                .hover &&
-                                                row.status === "Dibuka" && (
-                                                  <div className="whishlist align-self-end">
-                                                    <Button
-                                                      variant="light"
-                                                      className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
-                                                    >
-                                                      <i
-                                                        className={`${
-                                                          pelatihan[i]
-                                                            .pelatihan[j]
-                                                            .bookmark
-                                                            ? "ri-heart-fill text-danger"
-                                                            : "ri-heart-line"
-                                                        }  p-0`}
-                                                        style={{
-                                                          color: "#6C6C6C",
-                                                        }}
-                                                        onClick={() => {
-                                                          if (!session) {
-                                                            router.push(
-                                                              "/login"
+                                            {pelatihan[i].pelatihan[j].hover &&
+                                              row.status === "Dibuka" && (
+                                                <div className="whishlist align-self-end">
+                                                  <Button
+                                                    variant="light"
+                                                    className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
+                                                  >
+                                                    <i
+                                                      className={`${
+                                                        pelatihan[i].pelatihan[
+                                                          j
+                                                        ].bookmark
+                                                          ? "ri-heart-fill text-danger"
+                                                          : "ri-heart-line"
+                                                      }  p-0`}
+                                                      style={{
+                                                        color: "#6C6C6C",
+                                                      }}
+                                                      onClick={() => {
+                                                        if (!session) {
+                                                          router.push("/login");
+                                                        } else {
+                                                          if (
+                                                            !session?.roles?.includes(
+                                                              "user"
+                                                            )
+                                                          ) {
+                                                            SweatAlert(
+                                                              "Gagal",
+                                                              "Anda sedang login sebagai Admin",
+                                                              "error"
                                                             );
                                                           } else {
                                                             handleBookmark(
@@ -612,159 +625,158 @@ const Beranda = ({ session }) => {
                                                                 .pelatihan[j]
                                                             );
                                                           }
+                                                        }
+                                                      }}
+                                                    ></i>
+                                                  </Button>
+                                                  {/* SHAREOVERLAY */}
+                                                  <ShareOverlay
+                                                    url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
+                                                    quote={row.name}
+                                                  >
+                                                    <Button
+                                                      variant="light"
+                                                      className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                                                    >
+                                                      <i
+                                                        className="ri-share-line p-0"
+                                                        style={{
+                                                          color: "#6C6C6C",
                                                         }}
                                                       ></i>
                                                     </Button>
-                                                    {/* SHAREOVERLAY */}
-                                                    <ShareOverlay
-                                                      url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
-                                                      quote={row.name}
-                                                    >
-                                                      <Button
-                                                        variant="light"
-                                                        className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
-                                                      >
-                                                        <i
-                                                          className="ri-share-line p-0"
-                                                          style={{
-                                                            color: "#6C6C6C",
-                                                          }}
-                                                        ></i>
-                                                      </Button>
-                                                    </ShareOverlay>
-                                                  </div>
-                                                )}
-                                            </div>
-                                          </Card.ImgOverlay>
-                                          <Card.Body className="position-relative">
-                                            <div className="mitra-pelatihan-new">
-                                              <Image
-                                                src={
-                                                  (row.gambar_mitra &&
-                                                    row.gambar_mitra !==
-                                                      "Belum ada file" &&
-                                                    row.file_path +
-                                                      row.gambar_mitra) ||
-                                                  "/assets/media/mitra-default.png"
-                                                }
-                                                width={60}
-                                                height={60}
-                                                objectFit="cover"
-                                                thumbnail
-                                                roundedCircle
-                                                className={`mitra-pelatihan-image-new`}
-                                                alt="Image Mitra"
-                                              />
-                                            </div>
-                                            <div
-                                              className="d-flex justify-content-between position-relative pb-0 mb-0"
-                                              style={{ top: "-15px" }}
-                                            >
-                                              <div className="module-pelatihan-mitra">
-                                                <p
-                                                  className={`pl-18 my-0 text-mitra-new`}
-                                                >
-                                                  {row.mitra}
-                                                </p>
-                                              </div>
-                                              <div className="status align-self-center">
-                                                <p
-                                                  className={`${
-                                                    row.status === "Dibuka"
-                                                      ? "status-mitra-open-new"
-                                                      : "status-mitra-close-new"
-                                                  } text-uppercase my-0`}
-                                                >
-                                                  {row.status}
-                                                </p>
-                                              </div>
-                                            </div>
-                                            <div className="module-pelatihan-name">
+                                                  </ShareOverlay>
+                                                </div>
+                                              )}
+                                          </div>
+                                        </Card.ImgOverlay>
+                                        <Card.Body className="position-relative">
+                                          <div className="mitra-pelatihan-new">
+                                            <Image
+                                              src={
+                                                (row.gambar_mitra &&
+                                                  row.gambar_mitra !==
+                                                    "Belum ada file" &&
+                                                  row.file_path +
+                                                    row.gambar_mitra) ||
+                                                "/assets/media/mitra-default.png"
+                                              }
+                                              width={60}
+                                              height={60}
+                                              objectFit="cover"
+                                              thumbnail
+                                              roundedCircle
+                                              className={
+                                                row.status === "Dibuka"
+                                                  ? `mitra-pelatihan-image-new`
+                                                  : `mitra-pelatihan-image-new-close`
+                                              }
+                                              alt="Image Mitra"
+                                            />
+                                          </div>
+                                          <div
+                                            className="d-flex justify-content-between position-relative pb-0 mb-0"
+                                            style={{ top: "-15px" }}
+                                          >
+                                            <div className="module-pelatihan-mitra">
                                               <p
-                                                className={`my-0 title-card-new`}
+                                                className={`pl-18 my-0 text-mitra-new`}
                                               >
-                                                {row.name}
+                                                {row.mitra}
                                               </p>
                                             </div>
-                                            <div className="module-pelatihan-name">
+                                            <div className="status align-self-center">
                                               <p
-                                                style={{
-                                                  fontSize: "14px",
-                                                  color: "#6C6C6C",
+                                                className={`${
+                                                  row.status === "Dibuka"
+                                                    ? "status-mitra-open-new"
+                                                    : "status-mitra-close-new"
+                                                } text-uppercase my-0`}
+                                              >
+                                                {row.status}
+                                              </p>
+                                            </div>
+                                          </div>
+                                          <div className="module-pelatihan-name">
+                                            <p
+                                              className={`my-0 title-card-new`}
+                                            >
+                                              {row.name}
+                                            </p>
+                                          </div>
+                                          <div className="module-pelatihan-name">
+                                            <p
+                                              style={{
+                                                fontSize: "14px",
+                                                color: "#6C6C6C",
+                                              }}
+                                            >
+                                              {row.akademi}
+                                            </p>
+                                          </div>
+                                          <hr />
+                                          {pelatihan[i].pelatihan[j].hover !==
+                                          true ? (
+                                            <div className="d-flex flex-column">
+                                              <div className="date d-flex align-items-center align-middle">
+                                                <i className="ri-time-line"></i>
+                                                <span
+                                                  className={`text-date-register-new pl-2`}
+                                                >
+                                                  Registrasi:{" "}
+                                                  {moment(row.pendaftaran_mulai)
+                                                    .utc()
+                                                    .format("DD MMM YYYY")}{" "}
+                                                  -{" "}
+                                                  {moment(
+                                                    row.pendaftaran_selesai
+                                                  )
+                                                    .utc()
+                                                    .format("DD MMM YYYY")}
+                                                </span>
+                                              </div>
+                                              <div className="date d-flex align-items-center align-middle">
+                                                <i className="ri-group-line"></i>
+                                                <span
+                                                  className={`text-date-register-new pl-2`}
+                                                >
+                                                  Kuota: {row.kuota_peserta}{" "}
+                                                  Peserta
+                                                </span>
+                                              </div>
+                                            </div>
+                                          ) : (
+                                            <div style={{ marginTop: "21px" }}>
+                                              <Button
+                                                className={`btn-block rounded-xl my-auto btn-quick-view-new`}
+                                                onClick={() => {
+                                                  handleQuickView(
+                                                    i,
+                                                    row.gambar,
+                                                    row.status,
+                                                    row.gambar_mitra,
+                                                    row.file_path,
+                                                    row.akademi,
+                                                    row.deskripsi,
+                                                    row.name,
+                                                    row.kuota_peserta,
+                                                    row.mitra,
+                                                    row.alamat,
+                                                    row.pendaftaran_mulai,
+                                                    row.pendaftaran_selesai,
+                                                    row.id,
+                                                    row.metode_pelatihan,
+                                                    row.bookmark
+                                                  );
                                                 }}
                                               >
-                                                {row.akademi}
-                                              </p>
+                                                LIHAT
+                                              </Button>
                                             </div>
-                                            <hr />
-                                            {pelatihan[i].pelatihan[j].hover !==
-                                            true ? (
-                                              <div className="d-flex flex-column">
-                                                <div className="date d-flex align-items-center align-middle">
-                                                  <i className="ri-time-line"></i>
-                                                  <span
-                                                    className={`text-date-register-new pl-2`}
-                                                  >
-                                                    Registrasi:{" "}
-                                                    {moment(
-                                                      row.pendaftaran_mulai
-                                                    )
-                                                      .utc()
-                                                      .format(
-                                                        "DD MMM YYYY"
-                                                      )}{" "}
-                                                    -{" "}
-                                                    {moment(
-                                                      row.pendaftaran_selesai
-                                                    )
-                                                      .utc()
-                                                      .format("DD MMM YYYY")}
-                                                  </span>
-                                                </div>
-                                                <div className="date d-flex align-items-center align-middle">
-                                                  <i className="ri-group-line"></i>
-                                                  <span
-                                                    className={`text-date-register-new pl-2`}
-                                                  >
-                                                    Kuota: {row.kuota_peserta}{" "}
-                                                    Peserta
-                                                  </span>
-                                                </div>
-                                              </div>
-                                            ) : (
-                                              <div
-                                                style={{ marginTop: "21px" }}
-                                              >
-                                                <Button
-                                                  className={`btn-block rounded-xl my-auto btn-quick-view-new`}
-                                                  onClick={() => {
-                                                    handleQuickView(
-                                                      i,
-                                                      row.gambar,
-                                                      row.status,
-                                                      row.gambar_mitra,
-                                                      row.file_path,
-                                                      row.akademi,
-                                                      row.deskripsi,
-                                                      row.name,
-                                                      row.kuota_peserta,
-                                                      row.mitra,
-                                                      row.alamat,
-                                                      row.pendaftaran_mulai,
-                                                      row.pendaftaran_selesai,
-                                                      row.id,
-                                                      row.metode_pelatihan,
-                                                      row.bookmark
-                                                    );
-                                                  }}
-                                                >
-                                                  LIHAT
-                                                </Button>
-                                              </div>
-                                            )}
-                                          </Card.Body>
-                                        </>
-                                      )}
+                                          )}
+                                        </Card.Body>
+                                      </>
+                                      {/* )} */}
                                     </Card>
                                   </Col>
                                 ))
@@ -846,6 +858,36 @@ const Beranda = ({ session }) => {
                                             <div className="d-flex align-items-start">
                                               <div className="whislist mr-5">
                                                 <Button
+                                                  disabled={
+                                                    cardStatus === "Ditutup" &&
+                                                    true
+                                                  }
+                                                  onClick={() => {
+                                                    if (!session) {
+                                                      router.push("/login");
+                                                    } else {
+                                                      if (
+                                                        !session?.roles?.includes(
+                                                          "user"
+                                                        )
+                                                      ) {
+                                                        SweatAlert(
+                                                          "Gagal",
+                                                          "Anda sedang login sebagai Admin",
+                                                          "error"
+                                                        );
+                                                      } else {
+                                                        const pelatihan = {
+                                                          id: cardId,
+                                                          bookmark:
+                                                            cardBookmark,
+                                                        };
+                                                        handleBookmark(
+                                                          pelatihan
+                                                        );
+                                                      }
+                                                    }
+                                                  }}
                                                   variant="light"
                                                   className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
                                                 >
@@ -858,20 +900,6 @@ const Beranda = ({ session }) => {
                                                     style={{
                                                       color: "#6C6C6C",
                                                     }}
-                                                    onClick={() => {
-                                                      if (!session) {
-                                                        router.push("/login");
-                                                      } else {
-                                                        const pelatihan = {
-                                                          id: cardId,
-                                                          bookmark:
-                                                            cardBookmark,
-                                                        };
-                                                        handleBookmark(
-                                                          pelatihan
-                                                        );
-                                                      }
-                                                    }}
                                                   ></i>
                                                 </Button>
                                                 {/* SHAREOVERLAY */}
@@ -880,6 +908,10 @@ const Beranda = ({ session }) => {
                                                   quote={cardName}
                                                 >
                                                   <Button
+                                                    disabled={
+                                                      cardStatus ===
+                                                        "Ditutup" && true
+                                                    }
                                                     variant="light"
                                                     className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new mr-5`}
                                                   >
@@ -978,21 +1010,39 @@ const Beranda = ({ session }) => {
                                               </Link>
                                             </div>
 
-                                            {cardStatus !== "Ditutup" && (
-                                              <div className="col-6">
-                                                <button
-                                                  onClick={() =>
-                                                    handleCheckPelatihanReg(
-                                                      cardId,
-                                                      session
-                                                    )
+                                            <div className="col-6">
+                                              <button
+                                                disabled={
+                                                  cardStatus === "Ditutup" &&
+                                                  true
+                                                }
+                                                onClick={() => {
+                                                  if (!session) {
+                                                    router.push("/login");
+                                                  } else {
+                                                    if (
+                                                      !session?.roles?.includes(
+                                                        "user"
+                                                      )
+                                                    ) {
+                                                      SweatAlert(
+                                                        "Gagal",
+                                                        "Anda sedang login sebagai Admin",
+                                                        "error"
+                                                      );
+                                                    } else {
+                                                      handleCheckPelatihanReg(
+                                                        cardId,
+                                                        session
+                                                      );
+                                                    }
                                                   }
-                                                  className="d-flex justify-content-center  btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100"
-                                                >
-                                                  Daftar Pelatihan
-                                                </button>
-                                              </div>
-                                            )}
+                                                }}
+                                                className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100 font-weight-bolder"
+                                              >
+                                                Daftar Pelatihan
+                                              </button>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>

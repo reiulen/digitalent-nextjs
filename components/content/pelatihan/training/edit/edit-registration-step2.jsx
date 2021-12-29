@@ -24,12 +24,13 @@ import {
   size,
   options,
 } from "../../../../../utils/middleware/helper/data";
+import { getEditTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
 
 const EditRegistrationStep2 = ({ token, propsStep }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { data: getEditTraining2 } = useSelector(
+  const { data: getEditTraining2, loading } = useSelector(
     (state) => state.getEditTraining2
   );
   const { data: dataForm, error: errorDropdownForm } = useSelector(
@@ -51,7 +52,7 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
 
   //  FORM BUILDER
   const [formBuilderManual, setFormBuilderManual] = useState(
-    getEditTraining2.FormBuilder || []
+    !loading ? getEditTraining2.FormBuilder || [] : []
   );
   const [formBuilderCopy, setFormBuilderCopy] = useState(
     getEditTraining2.FormBuilder || []
@@ -61,6 +62,7 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   const [viewForm, setViewForm] = useState(getEditTraining2.type_form);
 
   useEffect(() => {
+    dispatch(getEditTrainingStep2(router.query.id, token));
     const dataOptionsArr = [];
     if (dataReferenceOption) {
       dataReferenceOption.list_reference.map((row, i) => {
@@ -137,7 +139,6 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
         type_form: viewForm,
       };
       dispatch(putTrainingStep2(token, data));
-      propsStep(3);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -212,132 +213,143 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   };
 
   return (
-    <div className="col-lg-12 order-1 px-0">
-      <div className="card card-custom card-stretch gutter-b">
-        <div className="card-header border-0">
-          <h1
-            className="font-weight-bolder card-title"
-            style={{ fontSize: "20px" }}
-          >
-            Form Pendaftaran
-          </h1>
-          <div className="card-toolbar justify-content-between d-flex">
-            <button
-              className="btn btn-warning px-6 font-weight-bolder"
-              style={{ borderRadius: "30px" }}
-              data-toggle="modal"
-              data-target="#modalProfile"
-              type="button"
+    <PageWrapper>
+      <StepInputPelatihan
+        step={2}
+        title1="Edit Pelatihan"
+        title2="Edit Form Pendaftaran"
+        title3="Edit Form Komitmen"
+      />
+      <div className="col-lg-12 order-1 px-0">
+        <div className="card card-custom card-stretch gutter-b">
+          <div className="card-header border-0">
+            <h1
+              className="font-weight-bolder card-title"
+              style={{ fontSize: "20px" }}
             >
-              Harap dibaca!
-            </button>
+              Form Pendaftaran
+            </h1>
+            <div className="card-toolbar justify-content-between d-flex">
+              <button
+                className="btn btn-warning px-6 font-weight-bolder"
+                style={{ borderRadius: "30px" }}
+                data-toggle="modal"
+                data-target="#modalProfile"
+                type="button"
+              >
+                Harap dibaca!
+              </button>
+            </div>
+          </div>
+          <div className="card-body py-4">
+            <form onSubmit={submitHandler}>
+              <div className="form-group mb-4">
+                <label className="col-form-label font-weight-bold">
+                  Tambah Form
+                </label>
+                <div className="type-form">
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="0-1"
+                      value="0"
+                      checked={
+                        (viewForm === "0" && true) || (viewForm === "2" && true)
+                      }
+                      onChange={(e) => setViewForm(e.target.value)}
+                    />
+                    <label className="form-check-label" htmlFor="0-1">
+                      Buat Manual || Copy & Edit
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="1-2"
+                      value="1"
+                      checked={viewForm === "1" && true}
+                      onChange={(e) => setViewForm(e.target.value)}
+                    />
+                    <label className="form-check-label" htmlFor="1-2">
+                      Copy Form
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {viewRegistrationHandler()}
+
+              <div className="form-group mt-9">
+                <div className="text-right">
+                  <button
+                    className="btn btn-light-ghost-rounded-full mr-2"
+                    type="button"
+                    onClick={() => router.back()}
+                  >
+                    Kembali
+                  </button>
+                  <button
+                    className="btn btn-primary-rounded-full"
+                    type="submit"
+                  >
+                    Simpan & Lanjut
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-        <div className="card-body py-4">
-          <form onSubmit={submitHandler}>
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">
-                Tambah Form
-              </label>
-              <div className="type-form">
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="0-1"
-                    value="0"
-                    checked={
-                      (viewForm === "0" && true) || (viewForm === "2" && true)
-                    }
-                    onChange={(e) => setViewForm(e.target.value)}
-                  />
-                  <label className="form-check-label" htmlFor="0-1">
-                    Buat Manual || Copy & Edit
-                  </label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="1-2"
-                    value="1"
-                    checked={viewForm === "1" && true}
-                    onChange={(e) => setViewForm(e.target.value)}
-                  />
-                  <label className="form-check-label" htmlFor="1-2">
-                    Copy Form
-                  </label>
-                </div>
-              </div>
-            </div>
+        <Modal
+          show={modalShow}
+          onHide={closePreviewHandler}
+          size="xl"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <ModalPreview
+            propsTitle={
+              viewForm === "0"
+                ? titleManual
+                : viewForm === "1"
+                ? titleCopy
+                : viewForm === "2" && titleManual
+            }
+            propsForm={
+              viewForm === "0"
+                ? formBuilderManual
+                : viewForm === "1"
+                ? formBuilderCopy
+                : viewForm === "2" && formBuilderManual
+            }
+            propsModalShow={modalShow}
+            sendPropsFormBuilder={(form) => {
+              viewForm === "0"
+                ? setFormBuilderManual(form)
+                : viewForm === "1"
+                ? setFormBuilderCopy(form)
+                : viewForm === "2" && setFormBuilderManual(form);
+            }}
+            sendPropsModalShow={(value) => setModalShow(value)}
+            propsToken={token}
+          />
+        </Modal>
 
-            {viewRegistrationHandler()}
-
-            <div className="form-group mt-9">
-              <div className="text-right">
-                <button
-                  className="btn btn-light-ghost-rounded-full mr-2"
-                  type="button"
-                  onClick={() => router.back()}
-                >
-                  Kembali
-                </button>
-                <button className="btn btn-primary-rounded-full" type="submit">
-                  Simpan & Lanjut
-                </button>
-              </div>
-            </div>
-          </form>
+        <div
+          className="modal fade"
+          id="modalProfile"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalProfile"
+          aria-hidden="true"
+        >
+          <ModalProfile />
         </div>
       </div>
-      <Modal
-        show={modalShow}
-        onHide={closePreviewHandler}
-        size="xl"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <ModalPreview
-          propsTitle={
-            viewForm === "0"
-              ? titleManual
-              : viewForm === "1"
-              ? titleCopy
-              : viewForm === "2" && titleManual
-          }
-          propsForm={
-            viewForm === "0"
-              ? formBuilderManual
-              : viewForm === "1"
-              ? formBuilderCopy
-              : viewForm === "2" && formBuilderManual
-          }
-          propsModalShow={modalShow}
-          sendPropsFormBuilder={(form) => {
-            viewForm === "0"
-              ? setFormBuilderManual(form)
-              : viewForm === "1"
-              ? setFormBuilderCopy(form)
-              : viewForm === "2" && setFormBuilderManual(form);
-          }}
-          sendPropsModalShow={(value) => setModalShow(value)}
-          propsToken={token}
-        />
-      </Modal>
-
-      <div
-        className="modal fade"
-        id="modalProfile"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="modalProfile"
-        aria-hidden="true"
-      >
-        <ModalProfile />
-      </div>
-    </div>
+    </PageWrapper>
   );
 };
 

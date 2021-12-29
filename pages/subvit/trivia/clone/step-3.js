@@ -7,9 +7,10 @@ import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.ac
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import { getAllSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { getAllTriviaQuestionDetail } from "../../../../redux/actions/subvit/trivia-question-detail.action";
 
 const StepFour = dynamic(
-  () => import("../../../../components/content/subvit/trivia/clone/step-four"),
+  () => import("../../../../components/content/subvit/trivia/clone/step-two"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -47,6 +48,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(
         dropdownAkademi(session.user.user.data.token, permission)
+      );
+
+      await store.dispatch(
+        getAllTriviaQuestionDetail(
+          query.id,
+          query.page,
+          query.keyword,
+          query.limit,
+          session.user.user.data.token,
+          permission
+        )
       );
 
       return {
