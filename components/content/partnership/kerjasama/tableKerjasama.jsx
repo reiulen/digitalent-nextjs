@@ -124,7 +124,8 @@ const Table = ({ token }) => {
       // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteCooperation(token, id));
+        // dispatch(deleteCooperation(token, id));
+        dispatch(deleteCooperation(token, id, cookiePermission));
         setDeleteBar(true);
         setIsStatusBar(false);
         router.replace("/partnership/kerjasama");
@@ -174,7 +175,7 @@ const Table = ({ token }) => {
       // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(rejectCooperation(token, id));
+        dispatch(rejectCooperation(token, id, cookiePermission));
         setIsStatusBar(true);
       } else {
         dispatch(reloadTable());
@@ -192,6 +193,7 @@ const Table = ({ token }) => {
       let { data } = await axios.get(`${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`, {
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission"),
         },
       });
       setSumWillExpire(data?.data?.total);
@@ -497,7 +499,8 @@ const Table = ({ token }) => {
                               <button
                                 className="btn btn-rounded-full bg-blue-secondary text-white mt-5 mt-md-2"
                                 type="button"
-                                onClick={() => dispatch(exportFileCSV(token))}
+                                // onClick={() => dispatch(exportFileCSV(token))}
+                                onClick={() => dispatch(exportFileCSV(token, cookiePermission))}
                               >
                                 Export .xlsx
                               </button>

@@ -113,7 +113,7 @@ const SubmitKerjasama = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
-                  Permission: Cookies.get("token_permission")
+                  // Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -170,7 +170,7 @@ const SubmitKerjasama = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            Permission: Cookies.get("token_permission")
+            // Permission: Cookies.get("token_permission")
           },
         }
       );
