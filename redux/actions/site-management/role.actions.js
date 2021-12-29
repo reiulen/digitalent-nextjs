@@ -122,27 +122,13 @@ export const postRoles = (sendData, token, tokenPermission) => {
         Swal.fire("Oopss", data.message, "error").then(() => {});
       }
     } catch (error) {
-<<<<<<< HEAD
-      Swal.fire(
-        "Oopss",
-        "Jika Sub Menu di Pilih, Menu juga harus dipilih !",
-        "error"
-      ).then(() => {});
-=======
       if (error.message.includes("400")) {
-        Swal.fire(
-          "Oopss",
-          "Nama Role Sudah ada Sebelumnya !",
-          "error"
-        ).then(() => {});
-      }else{
-        Swal.fire(
-          "Oopss",
-          error.message,
-          "error"
-        ).then(() => {});
+        Swal.fire("Oopss", "Nama Role Sudah ada Sebelumnya !", "error").then(
+          () => {}
+        );
+      } else {
+        Swal.fire("Oopss", error.message, "error").then(() => {});
       }
->>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
       dispatch({
         type: POST_ROLES_FAIL,
       });
@@ -150,33 +136,34 @@ export const postRoles = (sendData, token, tokenPermission) => {
   };
 };
 
-export const getDetailRoles = (id, token, tokenPermission) => async (dispatch) => {
-  try {
-    dispatch({
-      type: DETAIL_ROLES_REQUEST,
-    });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-        Permission: tokenPermission,
-      },
-    };
+export const getDetailRoles =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({
+        type: DETAIL_ROLES_REQUEST,
+      });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/detail/${id}`;
+      let link =
+        process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/detail/${id}`;
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_ROLES_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_ROLES_FAIL,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_ROLES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_ROLES_FAIL,
+      });
+    }
+  };
 
 export const getAllPermission = (token) => async (dispatch) => {
   try {
@@ -198,37 +185,38 @@ export const getAllPermission = (token) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const updateRoles = (sendData, token, tokenPermission) => async (dispatch) => {
-  try {
-    dispatch({
-      type: UPDATE_ROLES_REQUEST,
-    });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-        Permission: tokenPermission,
-      },
-    };
+export const updateRoles =
+  (sendData, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({
+        type: UPDATE_ROLES_REQUEST,
+      });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/update`,
-      sendData,
-      config
-    );
-    Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
-      window.location = "/site-management/role";
-    });
+      const { data } = await axios.post(
+        process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/update`,
+        sendData,
+        config
+      );
+      Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+        window.location = "/site-management/role";
+      });
 
-    dispatch({
-      type: UPDATE_ROLES_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_ROLES_FAIL,
-    });
-  }
-};
+      dispatch({
+        type: UPDATE_ROLES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_ROLES_FAIL,
+      });
+    }
+  };
 
 export const getSidebar = (token) => async (dispatch) => {
   try {
@@ -245,10 +233,6 @@ export const getSidebar = (token) => async (dispatch) => {
     localStorage.setItem("sidebar", JSON.stringify(data.data.menu));
     localStorage.setItem("token-permission", data.data.tokenPermission);
     localStorage.setItem("permissions", data.data.permissions);
-<<<<<<< HEAD
-=======
-
->>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
     Cookies.set("token_permission", data.data.tokenPermission);
     dispatch({
       type: GET_SIDEBAR,

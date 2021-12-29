@@ -110,12 +110,8 @@ const Table = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-<<<<<<< HEAD
             dispatch(getAllAdminSite(token, Cookies.get("token_permission")));
-=======
-            dispatch(getAllAdminSite(token));
             window.location.reload();
->>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
           }
         }
       );

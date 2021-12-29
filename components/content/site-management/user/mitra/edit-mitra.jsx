@@ -11,14 +11,9 @@ import { Modal } from "react-bootstrap";
 import ReactCrop from "react-image-crop";
 import IconClose from "../../../../../components/assets/icon/Close";
 
-<<<<<<< HEAD
 import styles from "../../../../../styles/sitemanagement/userMitra.module.css"
 import styles2 from "../../../../../styles/previewGaleri.module.css"
 import Cookies from 'js-cookie'
-=======
-import styles from "../../../../../styles/sitemanagement/userMitra.module.css";
-import styles2 from "../../../../../styles/previewGaleri.module.css";
->>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
 
 const TambahApi = ({ token, id }) => {
   const router = useRouter();

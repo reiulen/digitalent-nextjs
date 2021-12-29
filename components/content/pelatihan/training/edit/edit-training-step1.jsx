@@ -13,6 +13,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 import { SweatAlert } from "../../../../../utils/middleware/helper";
+import Cookies from "js-cookie";
 
 import {
   putTrainingStep1,
@@ -39,6 +40,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const today = new Date();
+  const token_permission = Cookies.get("token_permission");
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
@@ -517,7 +519,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         pelatian_id: parseInt(router.query.id),
       };
       // dispatch(getEditTrainingStep2(router.query.id, token));
-      dispatch(updateTrainingStep1(data, token));
+      dispatch(updateTrainingStep1(data, token, token_permission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

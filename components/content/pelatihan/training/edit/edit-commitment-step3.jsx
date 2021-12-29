@@ -15,11 +15,13 @@ import {
   putTrainingStep3,
   getEditTrainingStep2,
 } from "../../../../../redux/actions/pelatihan/training.actions";
+import Cookies from "js-cookie";
 
-const EditCommitmentStep3 = ({ token, propsStep }) => {
+const EditCommitmentStep3 = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { data: getEditTraining3 } = useSelector(
     (state) => state.getEditTraining3
@@ -38,6 +40,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
   );
 
   useEffect(() => {
+    console.log(getEditTraining3);
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
@@ -64,7 +67,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
         komitmen: commitment,
         deskripsi: commitment === "1" ? description : "",
       };
-      dispatch(putTrainingStep3(token, data));
+      dispatch(putTrainingStep3(token, data, token_permission));
       router.push("/pelatihan/pelatihan");
     } else {
       simpleValidator.current.showMessages();
@@ -87,7 +90,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
         komitmen: commitment,
         deskripsi: commitment === "1" ? description : "",
       };
-      dispatch(putTrainingStep3(token, data));
+      dispatch(putTrainingStep3(token, data, token_permission));
       router.back();
     } else {
       simpleValidator.current.showMessages();

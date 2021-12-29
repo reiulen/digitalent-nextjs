@@ -6,7 +6,7 @@ import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../redux/store";
-import { getFormLPJ } from '../../../../redux/actions/pelatihan/training.actions'
+import { getFormLPJ } from "../../../../redux/actions/pelatihan/training.actions";
 const AddFormLpj = dynamic(
   () =>
     import("../../../../components/content/pelatihan/training/add-form-lpj"),
@@ -34,6 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
+      const token_permission = req.cookies.token_permission;
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {
@@ -43,7 +44,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      await store.dispatch(getFormLPJ(session.user.user.data.token, query.id))
+      await store.dispatch(
+        getFormLPJ(session.user.user.data.token, query.id, token_permission)
+      );
       return {
         props: { session, title: "Tambah Form LPJ - Pelatihan" },
       };

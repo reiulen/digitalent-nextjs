@@ -8,6 +8,7 @@ import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getAllDataReference } from "../../../../../redux/actions/site-management/data-reference.actions";
 import { getEditTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
+import { drowpdownFormBuilder } from "../../../../../redux/actions/pelatihan/function.actions";
 
 const EditRegistration = dynamic(
   () =>
@@ -37,6 +38,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
+      const token_permission = req.cookies.token_permission;
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -49,11 +51,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getAllDataReference(session.user.user.data.token, true)
+        getAllDataReference(
+          session.user.user.data.token,
+          true,
+          token_permission
+        )
       );
       await store.dispatch(
-        getEditTrainingStep2(query.id, session.user.user.data.token)
+        getEditTrainingStep2(
+          query.id,
+          session.user.user.data.token,
+          token_permission
+        )
       );
+      await store.dispatch(drowpdownFormBuilder(session.user.user.data.token));
 
       return {
         props: { session, title: "Edit Registrasi - Pelatihan" },

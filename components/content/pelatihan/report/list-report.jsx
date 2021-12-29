@@ -16,7 +16,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 import { listsReportTraining } from "../../../../redux/actions/pelatihan/report-training.actions";
-import Cookies, { set } from "js-cookie";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 const ListReport = ({ token }) => {
@@ -341,13 +341,13 @@ const ListReport = ({ token }) => {
                         dispatch(
                           listsReportTraining(
                             token,
+                            token_permission,
                             page,
                             limit,
                             search,
                             penyelenggara.label,
                             academy.label,
-                            theme.label,
-                            token_permission
+                            theme.label
                           )
                         );
                       }}

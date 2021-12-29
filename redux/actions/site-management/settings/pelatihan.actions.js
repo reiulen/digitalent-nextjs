@@ -138,7 +138,8 @@ export const postViaFilter = (
   broadcastEmailSendNotification,
   emailSubject,
   emailContent,
-  via
+  via,
+   tokenPermission
 ) => {
   let data = {
     title,
@@ -164,6 +165,7 @@ export const postViaFilter = (
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission
           },
         }
       )
@@ -191,7 +193,7 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
   status,
   broadcastEmailSendNotification,
   emailSubject,
-  emailContent, via) => {
+  emailContent, via, tokenPermission) => {
   const data = {
     title,
     tahun: "",
@@ -228,6 +230,7 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
           headers: {
             authorization: `Bearer ${token}`,
             "content-type": "multipart/form-data",
+            Permission: tokenPermission
           },
         }
       )

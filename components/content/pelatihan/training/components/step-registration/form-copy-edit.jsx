@@ -10,6 +10,7 @@ import {
   helperAddFieldTriggered,
   helperRemoveField,
 } from "../../../../../../utils/middleware/helper";
+import Cookies from "js-cookie";
 
 import RenderFormElement from "../render-form-element.component";
 
@@ -35,6 +36,7 @@ const FormCopyEdit = ({
   const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
+  const token_permission = Cookies.get("token_permission");
 
   useEffect(() => {
     // dispatch(getDetailMasterPelatihan(99999, token));
@@ -158,7 +160,9 @@ const FormCopyEdit = ({
           }
           onChange={(e) => {
             funcTitle(e.label);
-            dispatch(getDetailMasterCopyEditPelatihan(e.value, token));
+            dispatch(
+              getDetailMasterCopyEditPelatihan(e.value, token, token_permission)
+            );
           }}
         />
 

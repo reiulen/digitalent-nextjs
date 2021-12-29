@@ -56,6 +56,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
+      const token_permission = req.cookies.token_permission;
       const middleware = middlewareAuthAdminSession(session);
       const yearNow = new Date().getFullYear();
       if (!middleware.status) {
@@ -81,45 +82,73 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDigitalentTotalDataPendaftar(session.user.user.data.token)
+        getDigitalentTotalDataPendaftar(
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
-        getDigitalentTotalPengguna(session.user.user.data.token)
+        getDigitalentTotalPengguna(
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
         getDigitalentStatistikAkademiPeserta(
           session.user.user.data.token,
+          token_permission,
           yearNow
         )
       );
       await store.dispatch(
         getDigitalentStatistikAkademiPendaftar(
           session.user.user.data.token,
+          token_permission,
           yearNow
         )
       );
       await store.dispatch(
-        getDigitalentStatistikMitraPeserta(session.user.user.data.token)
+        getDigitalentStatistikMitraPeserta(
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
-        getDigitalentStatistikMitraPendaftar(session.user.user.data.token)
+        getDigitalentStatistikMitraPendaftar(
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
-        getDigitalentTablePendaftaran(session.user.user.data.token)
+        getDigitalentTablePendaftaran(
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
-        getDigitalentPesertaWilayah(session.user.user.data.token)
+        getDigitalentPesertaWilayah(
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
-        getDigitalentProvinsiPeserta(session.user.user.data.token)
+        getDigitalentProvinsiPeserta(
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
-        getDigitalentProvinsiPendaftar(session.user.user.data.token)
+        getDigitalentProvinsiPendaftar(
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
-        getDigitalentDataPribadi(session.user.user.data.token)
+        getDigitalentDataPribadi(session.user.user.data.token, token_permission)
       );
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      await store.dispatch(
+        dropdownAkademi(session.user.user.data.token, token_permission)
+      );
 
       return {
         props: { session, title: "Dashboard - Digitalent" },

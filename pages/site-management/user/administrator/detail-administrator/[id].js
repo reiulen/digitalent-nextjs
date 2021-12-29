@@ -48,11 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   getDetailAdminSite(query.id, session.user.user.data.token)
       // );
       await store.dispatch(
-<<<<<<< HEAD
         getDetailAdminSite(query.id, session.user.user.data.token, req.cookies.token_permission)
-=======
-        getEditAdminSite(query.id, session.user.user.data.token)
->>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
       );
 
       return {

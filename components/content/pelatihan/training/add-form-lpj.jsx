@@ -9,10 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 import { postLpj } from "../../../../redux/actions/pelatihan/training.actions";
+import Cookies from "js-cookie";
 
 const AddFormLpj = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -72,7 +74,7 @@ const AddFormLpj = ({ token }) => {
       data: form,
     };
 
-    dispatch(postLpj(token, data));
+    dispatch(postLpj(token, data, token_permission));
     // if (simpleValidator.current.allValid()) {
     // } else {
     //   simpleValidator.current.showMessages();

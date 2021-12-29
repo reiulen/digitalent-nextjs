@@ -54,8 +54,8 @@ export const getAllListMasterPelatihan =
         params,
         headers: {
           Authorization: `Bearer ${token}`,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
