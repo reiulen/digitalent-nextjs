@@ -614,7 +614,7 @@ export const exportFileCSV = (token,permission) => {
           paramssz,
           headers: {
             authorization: `Bearer ${token}`,
-            // Permission: permission
+            Permission: permission
           },
         }
       );

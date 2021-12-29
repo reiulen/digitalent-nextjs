@@ -193,6 +193,7 @@ const Table = ({ token }) => {
       let { data } = await axios.get(`${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`, {
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission"),
         },
       });
       setSumWillExpire(data?.data?.total);

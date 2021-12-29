@@ -20,7 +20,7 @@ export async function fetchSignatureApi(params, token) {
       params,
       headers: {
         authorization: `Bearer ${token}`,
-        Permission: Cookies.get ("token_permission")
+        // Permission: Cookies.get ("token_permission")
       },
     }
   );
@@ -53,7 +53,7 @@ export const fetchSignature = (token) => async (dispatch, getState) => {
     );
     dispatch(successFetchSignature(data));
   } catch (error) {
-    //// console.log(error.response.data.message);
+    // console.log(error.response.data.message);
   }
 };
 
@@ -96,7 +96,7 @@ export const deleteTandaTangan = (id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            Permission: Cookies.get ("token_permission")
+            // Permission: Cookies.get ("token_permission")
           },
         }
       );
@@ -123,7 +123,7 @@ export const changeStatusList = (formData, id, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            Permission: Cookies.get ("token_permission")
+            // Permission: Cookies.get ("token_permission")
           },
         }
       );
