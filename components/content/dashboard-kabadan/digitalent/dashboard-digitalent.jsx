@@ -33,6 +33,7 @@ import {
 import moment from "moment";
 
 import PaginationDashboard from "../component/pagination-dashbaord.component";
+import Cookies from "js-cookie";
 
 const DashboardDigitalent = ({ token }) => {
   const MyMap = dynamic(() => import("../component/map-digitalent.component"), {

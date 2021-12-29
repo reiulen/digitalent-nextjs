@@ -57,6 +57,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req, params }) => {
       const session = await getSession({ req });
 
+      const token_permission = req.cookies.token_permission;
+
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {
@@ -74,7 +76,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(dropdownZonasi(session.user.user.data.token));
       await store.dispatch(dropdownProvinsi(session.user.user.data.token));
       await store.dispatch(
-        getEditTrainingStep1(query.id, session.user.user.data.token)
+        getEditTrainingStep1(
+          query.id,
+          session.user.user.data.token,
+          token_permission
+        )
       );
       await store.dispatch(
         getEditTrainingStep2(query.id, session.user.user.data.token)

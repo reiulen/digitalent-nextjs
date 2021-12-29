@@ -105,7 +105,7 @@ const ListAcademy = ({ token }) => {
   };
 
   const handleSearch = (e) => {
-	  e.preventDefault()
+    e.preventDefault();
     setPage(1);
     dispatch(getAllAcademy(1, search, limit, token, token_permission));
   };

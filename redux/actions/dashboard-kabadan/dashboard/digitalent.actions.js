@@ -44,63 +44,65 @@ import {
 } from "../../../types/dashboard-kabadan/dashboard/digitalent.type";
 import axios from "axios";
 
-export const getDigitalentTotalDataPendaftar = (token) => async (dispatch) => {
-  try {
-    dispatch({ type: DTS_TOTAL_PENDAFTAR_REQUEST });
+export const getDigitalentTotalDataPendaftar =
+  (token, token_permission) => async (dispatch) => {
+    try {
+      dispatch({ type: DTS_TOTAL_PENDAFTAR_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/auth/dashboard-pengguna`;
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/auth/dashboard-pengguna`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DTS_TOTAL_PENDAFTAR_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DTS_TOTAL_PENDAFTAR_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DTS_TOTAL_PENDAFTAR_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DTS_TOTAL_PENDAFTAR_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getDigitalentTotalPengguna = (token) => async (dispatch) => {
-  try {
-    dispatch({ type: DTS_TOTAL_PENGGUNA_REQUEST });
+export const getDigitalentTotalPengguna =
+  (token, token_permission) => async (dispatch) => {
+    try {
+      dispatch({ type: DTS_TOTAL_PENGGUNA_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/auth/dashboard-total-pengguna`;
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/auth/dashboard-total-pengguna`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DTS_TOTAL_PENGGUNA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DTS_TOTAL_PENGGUNA_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DTS_TOTAL_PENGGUNA_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DTS_TOTAL_PENGGUNA_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getDigitalentStatistikAkademiPeserta =
-  (token, tahun) => async (dispatch) => {
+  (token, token_permission, tahun) => async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_AKADEMI_PESERTA_REQUEST });
 
@@ -129,7 +131,7 @@ export const getDigitalentStatistikAkademiPeserta =
   };
 
 export const getDigitalentStatistikAkademiPendaftar =
-  (token, tahun) => async (dispatch) => {
+  (token, token_permission, tahun) => async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_AKADEMI_PENDAFTAR_REQUEST });
 
@@ -159,7 +161,7 @@ export const getDigitalentStatistikAkademiPendaftar =
   };
 
 export const getDigitalentStatistikMitraPeserta =
-  (token, page = null) =>
+  (token, token_permission, page = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_MITRA_PESERTA_REQUEST });
@@ -190,7 +192,7 @@ export const getDigitalentStatistikMitraPeserta =
   };
 
 export const getDigitalentStatistikMitraPendaftar =
-  (token, page = null) =>
+  (token, token_permission, page = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_MITRA_PENDAFTAR_REQUEST });
@@ -221,7 +223,7 @@ export const getDigitalentStatistikMitraPendaftar =
   };
 
 export const getDigitalentTablePendaftaran =
-  (token, page = null, keyword = "", limit = null) =>
+  (token, token_permission, page = null, keyword = "", limit = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_LIST_PENDAFTARAN_REQUEST });
@@ -254,7 +256,7 @@ export const getDigitalentTablePendaftaran =
   };
 
 export const getDigitalentPesertaWilayah =
-  (token, akademi = null, tema = "", tahun = null) =>
+  (token, token_permission, akademi = null, tema = "", tahun = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_LIST_PESERTA_WILAYAH_REQUEST });
@@ -287,7 +289,7 @@ export const getDigitalentPesertaWilayah =
   };
 
 export const getDigitalentProvinsiPeserta =
-  (token, page = null) =>
+  (token, token_permission, page = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_PROVINSI_PESERTA_REQUEST });
@@ -318,7 +320,7 @@ export const getDigitalentProvinsiPeserta =
   };
 
 export const getDigitalentProvinsiPendaftar =
-  (token, page = null) =>
+  (token, token_permission, page = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_PROVINSI_PENDAFTAR_REQUEST });
@@ -348,33 +350,34 @@ export const getDigitalentProvinsiPendaftar =
     }
   };
 
-export const getDigitalentDataPribadi = (token) => async (dispatch) => {
-  try {
-    dispatch({ type: DTS_PRIBADI_PESERTA_REQUEST });
+export const getDigitalentDataPribadi =
+  (token, token_permission) => async (dispatch) => {
+    try {
+      dispatch({ type: DTS_PRIBADI_PESERTA_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/formPendaftaran/data-pendaftran-user-pelatihan`;
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/data-pendaftran-user-pelatihan`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DTS_PRIBADI_PESERTA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DTS_PRIBADI_PESERTA_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DTS_PRIBADI_PESERTA_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DTS_PRIBADI_PESERTA_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({

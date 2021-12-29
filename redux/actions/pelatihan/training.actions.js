@@ -167,7 +167,7 @@ export const getCardTraining =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 
@@ -740,29 +740,31 @@ export const clearErrors = () => async (dispatch) => {
   });
 };
 
-export const getEditTrainingStep1 = (id, token) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-satu`;
+export const getEditTrainingStep1 =
+  (id, token, token_permission) => async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-satu`;
 
-    const config = {
-      params: {
-        pelatian_id: id,
-      },
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        params: {
+          pelatian_id: id,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
-    dispatch({
-      type: GET_EDIT_DATA_TRAINING,
-      payload: data,
-    });
-  } catch (error) {
-    throw error;
-  }
-};
+      const { data } = await axios.get(link, config);
+      dispatch({
+        type: GET_EDIT_DATA_TRAINING,
+        payload: data,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
 
 export const getEditTrainingStep2 = (id, token) => async (dispatch) => {
   try {
