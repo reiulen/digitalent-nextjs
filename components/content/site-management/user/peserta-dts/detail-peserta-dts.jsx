@@ -15,6 +15,7 @@ import Image from "next/image";
 import ListPeserta from "./list-peserta-pelatihan";
 import Tables from "./detail-list-peserta-pelatihan";
 import UbahPelatihan from "./ubah-list-peserta-pelatihan";
+import moment from 'moment'
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();

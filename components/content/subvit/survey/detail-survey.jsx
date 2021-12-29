@@ -19,6 +19,7 @@ import {
   getAllSurveyQuestionDetail,
 } from "../../../../redux/actions/subvit/survey-question-detail.action";
 import Swal from "sweetalert2";
+import { Button, Modal } from "react-bootstrap";
 
 const DetailSurvey = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
@@ -42,13 +43,16 @@ const DetailSurvey = ({ token, tokenPermission }) => {
   useEffect(() => {
     localStorage.setItem("id_survey", router.query.id);
     if (isDeleted) {
-      dispatch(getAllSurveyQuestionDetail(id, token, tokenPermission));
+      dispatch(
+        getAllSurveyQuestionDetail(id, 1, null, "", token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
   }, [router, isDeleted, id, token, dispatch, tokenPermission]);
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [modalType, setModalType] = useState(false);
 
   const handlePagination = (pageNumber) => {
     router.push({
@@ -83,27 +87,20 @@ const DetailSurvey = ({ token, tokenPermission }) => {
   };
 
   const handleModal = () => {
-    Swal.fire({
-      title: "Silahkan Pilih Metode Entry",
-      icon: "info",
-      showDenyButton: true,
-      showCloseButton: true,
-      confirmButtonText: `Entry`,
-      denyButtonText: `Import`,
-      confirmButtonColor: "#3085d6",
-      denyButtonColor: "#d33",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        router.push({
-          pathname: `/subvit/survey/tambah/step-2-entry`,
-          query: { id },
-        });
-      } else if (result.isDenied) {
-        router.push({
-          pathname: `/subvit/survey/tambah/step-2-import`,
-          query: { id },
-        });
-      }
+    setModalType(true);
+  };
+
+  const handleEntry = () => {
+    router.push({
+      pathname: `/subvit/survey/tambah/step-2-entry`,
+      query: { id },
+    });
+  };
+
+  const handleImport = () => {
+    router.push({
+      pathname: `/subvit/survey/tambah/step-2-import`,
+      query: { id },
     });
   };
 
@@ -499,6 +496,43 @@ const DetailSurvey = ({ token, tokenPermission }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={modalType}
+        onHide={() => setModalType(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Body>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setModalType(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+          <center>
+            <i
+              className="ri-information-line"
+              style={{ fontSize: "100px", color: "#17a2b8" }}
+            ></i>
+            <h3>Silahkan Pilih Metode Entry</h3>
+            <Button
+              className="btn btn-outline-primary font-weight-bolder px-7 py-3 mt-5 mr-5"
+              style={{ borderRadius: "5px", border: "1px solid" }}
+              onClick={handleImport}
+            >
+              Import
+            </Button>
+            <Button
+              className="btn btn-primary font-weight-bolder px-7 py-3 mt-5 "
+              onClick={handleEntry}
+            >
+              Entry
+            </Button>
+          </center>
+        </Modal.Body>
+      </Modal>
     </PageWrapper>
   );
 };
