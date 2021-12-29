@@ -438,6 +438,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 								Nama Lengkap (Sesuai KTP)
 							</Form.Label>
 							<Form.Control
+								disabled={dataPribadi?.status_verified === true ? true : false}
 								className={style.formControl}
 								placeholder="Masukkan Nama Lengkap"
 								value={name}
