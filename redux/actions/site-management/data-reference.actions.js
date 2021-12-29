@@ -26,17 +26,11 @@ import {
 
 import axios from "axios";
 
-<<<<<<< HEAD
-export const getAllDataReference = (token,tokenPermission) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: DATA_REFERENCE_REQUEST });
-=======
 export const getAllDataReference =
-  (token, paginate = null) =>
+  (token, paginate = null, token_permission = "") =>
   async (dispatch, getState) => {
     try {
       dispatch({ type: DATA_REFERENCE_REQUEST });
->>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
 
       let pageState = getState().allDataReference.page || 1;
       let cariState = getState().allDataReference.cari || "";
@@ -56,7 +50,7 @@ export const getAllDataReference =
         params,
         headers: {
           authorization: `Bearer ${token}`,
-          Permission: tokenPermission,
+          Permission: token_permission,
         },
       });
 
@@ -72,35 +66,38 @@ export const getAllDataReference =
   };
 
 // deelte tidak ada
-export const deleteDataReference = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_DATA_REFERENCE_REQUEST });
+export const deleteDataReference =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_DATA_REFERENCE_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/delete/${id}`,
-      config
-    );
+      const { data } = await axios.delete(
+        process.env.END_POINT_API_SITE_MANAGEMENT +
+          `api/setting-page/delete/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DELETE_DATA_REFERENCE_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_DATA_REFERENCE_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DELETE_DATA_REFERENCE_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_DATA_REFERENCE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const postDataReference = (sendData, token) => {
+export const postDataReference = (sendData, token, token_permission = "") => {
   return async (dispatch) => {
     try {
       dispatch({
@@ -128,36 +125,40 @@ export const postDataReference = (sendData, token) => {
   };
 };
 
-export const getDetailDataReference = (id, token, tokenPermission) => async (dispatch) => {
-  try {
-    dispatch({
-      type: DETAIL_DATA_REFERENCE_REQUEST,
-    });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-        Permission: tokenPermission
-      },
-    };
+export const getDetailDataReference =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: DETAIL_DATA_REFERENCE_REQUEST,
+      });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
 
-    let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/${id}`;
+      let link =
+        process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/reference/detail/${id}`;
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_DATA_REFERENCE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_DATA_REFERENCE_FAIL,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_DATA_REFERENCE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_DATA_REFERENCE_FAIL,
+      });
+    }
+  };
 
 export const updateDataReference =
-  (sendData, id, token) => async (dispatch) => {
+  (sendData, id, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_DATA_REFERENCE_REQUEST,
@@ -165,6 +166,7 @@ export const updateDataReference =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
