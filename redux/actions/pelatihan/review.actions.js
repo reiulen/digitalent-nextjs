@@ -64,7 +64,7 @@ export const getAllListReview =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          // Permission: token_permission,
+          Permission: token_permission,
         },
       };
 
@@ -156,7 +156,7 @@ export const getReviewStep1Revisi =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          //   Permission: token_permission,
+          Permission: token_permission,
         },
       };
 

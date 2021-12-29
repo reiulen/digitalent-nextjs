@@ -18,11 +18,13 @@ import {
 } from "../../../../redux/actions/pelatihan/report-training.actions";
 import axios from "axios";
 import { PDFReader } from "react-read-pdf";
+import Cookies from "js-cookie";
 
 const DetailReport = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const pelatian_id = parseInt(router.query.id);
+  const token_permission = Cookies.get("token_permission");
 
   const { data: detailReportTraining } = useSelector(
     (state) => state.detailReportTraining
@@ -232,9 +234,14 @@ const DetailReport = ({ token }) => {
             </td>
             <td className="align-middle">
               <span
-                className={item.administrasi === "unverified" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
-                item.administrasi === "verified" && "label label-inline statusPeserta-success font-weight-bold text-capitalize" ||
-                item.administrasi === "incomplete" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize"}
+                className={
+                  (item.administrasi === "unverified" &&
+                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                  (item.administrasi === "verified" &&
+                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                  (item.administrasi === "incomplete" &&
+                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize")
+                }
               >
                 {item.administrasi}
               </span>
@@ -242,16 +249,26 @@ const DetailReport = ({ token }) => {
             <td className="align-middle">
               <span
                 className={
-                  item.status === "tidak lulus administrasi" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
-                  item.status === "tidak lulus tes substansi" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
-                  item.status === "tidak lulus pelatihan" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
-                  item.status === "ditolak" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
-                  item.status === "seleksi administrasi" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
-                  item.status === "tes substansi" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
-                  item.status === "seleksi akhir" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
-                  item.status === "administrasi akhir" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
-                  item.status === "diterima" && "label label-inline statusPeserta-success font-weight-bold text-capitalize" ||
-                  item.status === "lulus pelatihan" && "label label-inline statusPeserta-success font-weight-bold text-capitalize"
+                  (item.status === "tidak lulus administrasi" &&
+                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                  (item.status === "tidak lulus tes substansi" &&
+                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                  (item.status === "tidak lulus pelatihan" &&
+                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                  (item.status === "ditolak" &&
+                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                  (item.status === "seleksi administrasi" &&
+                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                  (item.status === "tes substansi" &&
+                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                  (item.status === "seleksi akhir" &&
+                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                  (item.status === "administrasi akhir" &&
+                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                  (item.status === "diterima" &&
+                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                  (item.status === "lulus pelatihan" &&
+                    "label label-inline statusPeserta-success font-weight-bold text-capitalize")
                 }
               >
                 {item.status}
@@ -344,7 +361,8 @@ const DetailReport = ({ token }) => {
                             statusAdmin?.label,
                             statusSubstansi?.label,
                             sertifikasi?.value,
-                            statusPeserta?.label
+                            statusPeserta?.label,
+                            token_permission
                           )
                         );
                       }}
@@ -357,30 +375,31 @@ const DetailReport = ({ token }) => {
                         onChange={(e) => setSearch(e.target.value)}
                       />
                     </form>
-                      <button
-                        className="btn bg-blue-primary text-white right-center-absolute"
-                        style={{
-                          borderTopLeftRadius: "0",
-                          borderBottomLeftRadius: "0",
-                        }}
-                        onClick={() => {
-                          dispatch(
-                            getDetailReportTraining(
-                              token,
-                              pelatian_id,
-                              page,
-                              limit,
-                              search,
-                              statusAdmin?.label,
-                              statusSubstansi?.label,
-                              sertifikasi?.value,
-                              statusPeserta?.label
-                            )
-                          );
-                        }}
-                      >
-                        Cari
-                      </button>
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={() => {
+                        dispatch(
+                          getDetailReportTraining(
+                            token,
+                            pelatian_id,
+                            page,
+                            limit,
+                            search,
+                            statusAdmin?.label,
+                            statusSubstansi?.label,
+                            sertifikasi?.value,
+                            statusPeserta?.label,
+                            token_permission
+                          )
+                        );
+                      }}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
 
@@ -455,7 +474,8 @@ const DetailReport = ({ token }) => {
                               statusAdmin.label,
                               statusSubstansi.label,
                               sertifikasi.value,
-                              statusPeserta.label
+                              statusPeserta.label,
+                              token_permission
                             )
                           );
                         }}
@@ -492,7 +512,8 @@ const DetailReport = ({ token }) => {
                                   statusAdmin.label,
                                   statusSubstansi.label,
                                   sertifikasi.value,
-                                  statusPeserta.label
+                                  statusPeserta.label,
+                                  token_permission
                                 )
                               );
                             }}
@@ -599,7 +620,8 @@ const DetailReport = ({ token }) => {
                   null,
                   null,
                   null,
-                  null
+                  null,
+                  token_permission
                 )
               );
               setShowModal(false);
@@ -621,7 +643,8 @@ const DetailReport = ({ token }) => {
                   statusAdmin?.label,
                   statusSubstansi?.label,
                   sertifikasi?.value,
-                  statusPeserta?.label
+                  statusPeserta?.label,
+                  token_permission
                 )
               );
               setShowModal(false);
@@ -721,7 +744,9 @@ const DetailReport = ({ token }) => {
                 Sertifikasi: isLulus,
                 file_sertifikat: sertifkatBase,
               };
-              dispatch(uploadSertifikat(token, data, router.query.id));
+              dispatch(
+                uploadSertifikat(token, data, router.query.id, token_permission)
+              );
               setShowModalSertifikasi(false);
             }}
           >
