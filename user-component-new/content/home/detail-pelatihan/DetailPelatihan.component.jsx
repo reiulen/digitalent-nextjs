@@ -126,7 +126,15 @@ const DetailPelatihan = ({ session }) => {
 
                 <div className="d-flex align-items-center mt-5 mt-md-1">
                   <p className="mr-6 fz-18 fw-500">{pelatihan?.akademi}</p>
-                  <p className="badgess-green">{pelatihan?.Status}</p>
+                  <p
+                    className={
+                      pelatihan?.Status === "Dibuka"
+                        ? `badgess-green`
+                        : `badgess-red`
+                    }
+                  >
+                    {pelatihan?.Status}
+                  </p>
                 </div>
 
                 <Row className="mt-5">
@@ -235,16 +243,16 @@ const DetailPelatihan = ({ session }) => {
                   .format("DD MMM YYYY")}
               </span>
               <div className="mt-7">
-                {pelatihan?.status !== "Closed" && (
-                  <button
-                    className="btn btn-primary-dashboard rounded-pill btn-block fw-500"
-                    onClick={() =>
-                      handleCheckPelatihanReg(pelatihan?.id, session)
-                    }
-                  >
-                    Daftar Pelatihan
-                  </button>
-                )}
+                <button
+                  disabled={pelatihan?.Status !== "Dibuka" && true}
+                  className="btn btn-primary-dashboard rounded-pill btn-block fw-500"
+                  onClick={() =>
+                    handleCheckPelatihanReg(pelatihan?.id, session)
+                  }
+                >
+                  Daftar Pelatihan
+                </button>
+
                 <button
                   className="btn btn-outline-primary-new rounded-pill btn-block fw-500 d-flex justify-content-center align-items-center p-1"
                   onClick={() => handleDownloadSilabus()}
