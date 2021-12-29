@@ -75,8 +75,19 @@ const CheckboxComponent = ({
   };
 
   const handleDuration = (e) => {
-    if (e === "" || helperRegexNumber.test(e)) {
-      setDuration(e);
+    if (e.target.value === "" || helperRegexNumber.test(e.target.value)) {
+      e.target.value = Math.max(
+        Number(e.target.min),
+        Math.min(Number(e.target.max), Number(e.target.value))
+      );
+
+      if (e.target.value < 30) {
+        setDuration(e.target.value);
+        sendPropsDuration(30);
+      } else {
+        setDuration(e.target.value);
+        sendPropsDuration(e.target.value);
+      }
     }
   };
 
@@ -189,14 +200,19 @@ const CheckboxComponent = ({
           <span className="font-weight-bold">Durasi (Detik)</span>
           <input
             type="text"
-            min={0}
+            min="0"
+            max="300"
             value={duration}
             onChange={(e) => {
-              handleDuration(e.target.value);
-              sendPropsDuration(e.target.value);
+              handleDuration(e);
             }}
             className="form-control"
           />
+          {duration < 30 && duration > 0 && (
+            <span className="text-danger">
+              Jika waktu kurang dari 30 detik, Waktu akan otomatis 30 detik
+            </span>
+          )}
         </div>
         <div className="col-sm-12 col-md-12 mt-3">
           <span className="font-weight-bold">Status</span>
