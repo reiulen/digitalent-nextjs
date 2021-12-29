@@ -6,9 +6,10 @@ import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 const StepTwo = dynamic(
-  () => import("/components/content/subvit/substansi/clone/step-two"),
+  () => import("/components/content/subvit/substansi/clone/step-four.jsx"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -58,6 +59,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           permission
         )
       );
+      await store.dispatch(
+        dropdownAkademi(session.user.user.data.token, permission)
+      );
+
       return {
         props: {
           session,

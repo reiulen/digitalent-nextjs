@@ -7,9 +7,10 @@ import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getAllSurveyQuestionDetail } from "../../../../redux/actions/subvit/survey-question-detail.action";
+import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 const StepTwo = dynamic(
-  () => import("/components/content/subvit/survey/clone/step-two"),
+  () => import("/components/content/subvit/survey/clone/step-four.jsx"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -57,6 +58,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token,
           permission
         )
+      );
+
+      await store.dispatch(
+        dropdownAkademi(session.user.user.data.token, permission)
       );
       return {
         props: {
