@@ -37,6 +37,7 @@ export default function NamaPelatihanID({ token }) {
     error,
     certificate: certificates,
   } = useSelector((state) => state.detailCertificates);
+  const token_permission = Cookies.get("token_permission");
 
   const allCertificates = useSelector((state) => state.detailCertificates);
   // #Pagination
@@ -103,7 +104,9 @@ export default function NamaPelatihanID({ token }) {
 
   useEffect(() => {
     if (training) {
-      dispatch(getPublishedSertifikat(training?.value, token));
+      dispatch(
+        getPublishedSertifikat(training?.value, token, token_permission)
+      );
     }
   }, [training]);
 
@@ -215,17 +218,8 @@ export default function NamaPelatihanID({ token }) {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      // Permission: token_permission,
+      Permission: token_permission,
     },
-  };
-
-  const postClone = async () => {
-    const data = await axios.post(
-      `${process.env.END_POINT_API_SERTIFIKAT}api/manage_certificates/clone`,
-      formdata,
-      config
-    );
-    return data;
   };
 
   const handlePostClone = async () => {
@@ -244,13 +238,11 @@ export default function NamaPelatihanID({ token }) {
       );
 
       if (data) {
-        console.log(data, "ini data");
         router.push(
           `/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${id.name}?id=${id.id}&theme_id=${id.theme_id}&status=edit`
         );
       }
     } catch (e) {
-      console.log(e);
       SweatAlert("Gagal", e.response.data.message || e.message, "error");
     }
   };
@@ -647,7 +639,7 @@ export default function NamaPelatihanID({ token }) {
                                             className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                             data-toggle="tooltip"
                                             data-placement="bottom"
-                                            title="Tambah"
+                                            title="Clone Sertifikat"
                                             onClick={() => {
                                               setId({
                                                 id: certificate.id,
@@ -759,7 +751,13 @@ export default function NamaPelatihanID({ token }) {
                 options={optionAcademy ? optionAcademy : {}}
                 onChange={(e) => {
                   setAcademy(e);
-                  dispatch(getOptionsThemeCloneSertifikat(token, e?.value));
+                  dispatch(
+                    getOptionsThemeCloneSertifikat(
+                      token,
+                      e?.value,
+                      token_permission
+                    )
+                  );
                   setTraining(null);
                   setTheme(null);
                 }}
@@ -778,7 +776,8 @@ export default function NamaPelatihanID({ token }) {
                     getOptionsTrainingCloneSertifikat(
                       token,
                       academy?.value,
-                      e?.value
+                      e?.value,
+                      token_permission
                     )
                   );
                   setTraining(null);

@@ -66,7 +66,9 @@ const ReportSurvey = ({ token }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/survey-question-banks/report/export/${id}?`;
+    let link =
+      process.env.END_POINT_API_SUBVIT +
+      `api/survey-question-banks/report/export/${id}?`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
     if (router.query.card) link = link.concat(`&card=${router.query.card}`);

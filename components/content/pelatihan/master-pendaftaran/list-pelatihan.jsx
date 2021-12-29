@@ -108,7 +108,7 @@ export default function MasterPelatihan({ token }) {
   };
 
   useEffect(() => {
-    dispatch(getAllListMasterPelatihan(token));
+    dispatch(getAllListMasterPelatihan(token, token_permission));
   }, [
     dispatch,
     token,
@@ -133,7 +133,7 @@ export default function MasterPelatihan({ token }) {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteMasterTraining(id, token));
+        dispatch(deleteMasterTraining(id, token, token_permission));
       }
     });
   };
@@ -143,7 +143,7 @@ export default function MasterPelatihan({ token }) {
       status: value,
       id: id,
     };
-    dispatch(updateStatusPublishMaster(data, token));
+    dispatch(updateStatusPublishMaster(data, token, token_permission));
   };
 
   return (
@@ -188,7 +188,7 @@ export default function MasterPelatihan({ token }) {
             {listPermission.includes("pelatihan.master_pendaftaran.manage") && (
               <div className="card-toolbar">
                 <Link
-                  href="/pelatihan/master-pendaftaran/tambah-form-pendaftaran"
+                  href="/pelatihan/form-master-pendaftaran/tambah-form-master-pendaftaran"
                   passHref
                 >
                   <a
@@ -196,7 +196,7 @@ export default function MasterPelatihan({ token }) {
                     className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
                   >
                     <i className="ri-add-fill"></i>
-                    Form Pendaftaran
+                    Form Master Pendaftaran
                   </a>
                 </Link>
               </div>

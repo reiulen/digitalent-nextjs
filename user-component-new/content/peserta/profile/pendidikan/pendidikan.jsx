@@ -3,7 +3,7 @@ import { Row, Col, Modal, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { getProfilePendidikan } from "../../../../../redux/actions/pelatihan/profile.actions";
-
+import { PDFReader } from "react-read-pdf";
 const Pendidikan = ({ token }) => {
 	const dispatch = useDispatch();
 
@@ -387,11 +387,31 @@ const Pendidikan = ({ token }) => {
 										</Modal.Header>
 										<Modal.Body>
 											<div className="d-flex justify-content-center">
-												<img
+												{
+													pendidikan.ijasah.includes("pdf") ?
+														<div
+															className="overflow-auto mx-auto px-auto"
+															style={{
+																height: 250 
+															}}
+														>
+															<PDFReader
+																url={`${process.env.END_POINT_API_IMAGE_BEASISWA}${pendidikan.ijasah}`}
+																scale={0.9}
+															/>
+														</div>
+													:
+														<img
+															src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${pendidikan.ijasah}`}
+															alt="file ijasah"
+															className="img-fluid"
+														/>
+												}
+												{/* <img
 													src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${pendidikan.ijasah}`}
 													alt="file ijasah"
 													className="img-fluid"
-												/>
+												/> */}
 											</div>
 										</Modal.Body>
 										<Modal.Footer>

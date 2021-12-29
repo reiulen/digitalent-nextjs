@@ -33,7 +33,7 @@ export default function EditSertifikat({ token }) {
   const dispatch = useDispatch();
   const { query } = router;
   const token_permission = Cookies.get("token_permission");
-
+  const [disablePublish, setDisablePublish] = useState(false);
   // #Div Reference Lembar 1
   const { error, certificate } = useSelector(
     (state) => state.singleCertificate
@@ -62,8 +62,14 @@ export default function EditSertifikat({ token }) {
           message: isUpdated.message,
         },
       });
+    } else {
+      setDisablePublish(false);
     }
   }, [isUpdated, query.tema_pelatihan_id, query.theme_id, router]);
+
+  useEffect(() => {
+    setDisablePublish(false);
+  }, [error]);
 
   const [confirmModal, setConfirmModal] = useState(false);
   const divReference = useRef(null);
@@ -330,7 +336,7 @@ export default function EditSertifikat({ token }) {
   const handlePost = async (e, status) => {
     try {
       e.preventDefault();
-
+      setDisablePublish(true);
       if (certificate_type == "1 lembar") {
         simpleValidator.current.fields.Jabatan = true;
         simpleValidator.current.fields.Nama = true;
@@ -438,8 +444,10 @@ export default function EditSertifikat({ token }) {
         simpleValidator.current.showMessages();
         forceUpdate(1);
         SweatAlert("Gagal", "Isi data dengan benar.", "error");
+        setDisablePublish(false);
       }
     } catch (e) {
+      setDisablePublish(false);
       SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
@@ -481,24 +489,6 @@ export default function EditSertifikat({ token }) {
   };
 
   const url = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[0].signature}`;
-
-  const toBase64 = async () => {
-    // belom berhasil coba
-    try {
-      // const data = await axios.get(encodeURI(url), {
-      //   responseType: "document",
-      // });
-      const data = await axios.get(url, {
-        headers: {
-          accept: "application/json",
-          "Access-Control-Allow-Origin": "true",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        },
-      });
-    } catch (e) {
-      throw e;
-    }
-  };
 
   const [test, setTest] = useState();
   const [enableSyllabus, setEnableSyllabus] = useState(true);
@@ -2208,7 +2198,8 @@ export default function EditSertifikat({ token }) {
             >
               Batal
             </button>
-            <a
+            <button
+              disabled={disablePublish ? true : false}
               className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 text-center"
               onClick={(e) => {
                 setConfirmModal(false);
@@ -2216,7 +2207,7 @@ export default function EditSertifikat({ token }) {
               }}
             >
               Publish
-            </a>
+            </button>
           </Modal.Footer>
         </Modal>
       </>

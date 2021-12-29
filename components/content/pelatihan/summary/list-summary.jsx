@@ -70,7 +70,7 @@ const ListSummary = ({ token }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy?.value, token));
+    dispatch(dropdownTemabyAkademi(academy?.value, token, token_permission));
     const filterPermission = permission?.permissions?.filter((item) =>
       item.includes("pelatihan")
     );
@@ -356,7 +356,7 @@ const ListSummary = ({ token }) => {
                           borderTopLeftRadius: "0",
                           borderBottomLeftRadius: "0",
                         }}
-                        onClick={e => handleSearch(e)}
+                        onClick={(e) => handleSearch(e)}
                       >
                         Cari
                       </button>
@@ -628,7 +628,7 @@ const ListSummary = ({ token }) => {
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
           </div>
-          
+
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
             <Select
