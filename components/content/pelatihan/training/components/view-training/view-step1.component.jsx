@@ -375,6 +375,7 @@ const ViewStep1Component = ({ review }) => {
         onHide={() => setShowModalPreview(false)}
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        size="xl"
       >
         <Modal.Header>
           <Modal.Title>Preview Silabus</Modal.Title>
