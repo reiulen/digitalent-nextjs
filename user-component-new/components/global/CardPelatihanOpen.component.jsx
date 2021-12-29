@@ -136,9 +136,11 @@ const CardPelatihanOpen = ({
       >
         <div
           className={
-            show[i] !== true && row.status === "Dibuka"
-              ? `parent-image-pelatihan-new`
-              : `parent-image-pelatihan-new-hover`
+            row.status === "Dibuka"
+              ? show[i] !== true
+                ? `parent-image-pelatihan-new`
+                : `parent-image-pelatihan-new-hover`
+              : `parent-image-pelatihan-new-close`
           }
         >
           <Image
@@ -158,7 +160,11 @@ const CardPelatihanOpen = ({
           <div className="d-flex justify-content-between">
             <div className="align-self-start">
               <Badge
-                bg={`py-3 px-4 badge-card-pelatihan-new`}
+                bg={`py-3 px-4 ${
+                  row.status === "Dibuka"
+                    ? "badge-card-pelatihan-new"
+                    : "badge-card-pelatihan-new-close"
+                }`}
                 className="d-flex "
               >
                 Pelatihan {row.metode_pelatihan}
@@ -168,6 +174,7 @@ const CardPelatihanOpen = ({
               <div className="whishlist align-self-end float-right">
                 <Button
                   variant="light"
+                  disabled={row.status !== "Dibuka" && true}
                   className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
                 >
                   <i
@@ -195,6 +202,7 @@ const CardPelatihanOpen = ({
                 >
                   <Button
                     variant="light"
+                    disabled={row.status !== "Dibuka" && true}
                     className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
                   >
                     <i
@@ -223,7 +231,11 @@ const CardPelatihanOpen = ({
               objectFit="cover"
               thumbnail
               roundedCircle
-              className={`mitra-pelatihan-image-new`}
+              className={
+                row.status === "Dibuka"
+                  ? `mitra-pelatihan-image-new`
+                  : `mitra-pelatihan-image-new-close`
+              }
               alt="Image Mitra"
             />
           </div>
