@@ -5,8 +5,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import { wrapper } from "../../../../redux/store";
-import { getDetailReportTraining } from '../../../../redux/actions/pelatihan/report-training.actions'
-
+import { getDetailReportTraining } from "../../../../redux/actions/pelatihan/report-training.actions";
 
 const DetailReport = dynamic(
   () => import("../../../../components/content/pelatihan/report/detail-report"),
@@ -43,7 +42,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      await store.dispatch(getDetailReportTraining(session.user.user.data.token, query.id))
+
+      const token_permission = req.cookies.token_permission;
+
+      await store.dispatch(
+        getDetailReportTraining(
+          session.user.user.data.token,
+          query.id,
+          token_permission
+        )
+      );
       return {
         props: { session, title: "Detail Report - Pelatihan" },
       };

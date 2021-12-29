@@ -43,8 +43,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      await store.dispatch(
+        dropdownAkademi(session.user.user.data.token, token_permission)
+      );
 
       return {
         props: { session, title: "Tambah Tema - Pelatihan" },
