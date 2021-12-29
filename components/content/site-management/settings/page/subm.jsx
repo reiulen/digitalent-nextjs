@@ -20,8 +20,8 @@ export default function SUBM(props) {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState([]);
   const [academy, setAcademy] = useState([]);
-  const [theme, setTheme] = useState([]);
-  const [organizer, setOrganizer] = useState([]);
+  const [theme, setTheme] = useState("");
+  const [organizer, setOrganizer] = useState("");
   const [training, setTraining] = useState("");
   const [profileStatus, setProfileStatus] = useState("");
   const [selectionStatus, setSelectionStatus] = useState("");
@@ -72,46 +72,6 @@ export default function SUBM(props) {
     { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
 
-  const changeYear = (e) => {
-    let data = e.map((item) => {
-      return { ...item, value: item.value }
-    })
-    const datas = data.map((items) => {
-      return items.value
-    })
-    setYear(datas)
-  }
-
-  const changeAkademi = (e) => {
-    let data = e.map((item) => {
-      return { ...item, value: item.value }
-    })
-    const datas = data.map((items) => {
-      return items.value
-    })
-    setAcademy(datas)
-  }
-
-  const changeTema = (e) => {
-    let data = e.map((item) => {
-      return { ...item, value: item.value }
-    })
-    const datas = data.map((items) => {
-      return items.value
-    })
-    setTheme(datas)
-  }
-
-  const changePenyelenggara = (e) => {
-    let data = e.map((item) => {
-      return { ...item, value: item.value }
-    })
-    const datas = data.map((items) => {
-      return items.value
-    })
-    setOrganizer(datas)
-  }
-
   const handleSubmit = async (e) => {
     if (via === "filter") {
       Swal.fire({
@@ -125,53 +85,31 @@ export default function SUBM(props) {
         confirmButtonText: "Ya !",
         dismissOnDestroy: false,
       }).then((result) => {
-        console.log(
-          title,
-          year,
-          academy,
-          theme,
-          organizer,
-          training,
-          profileStatus ? profileStatus : "",
-          selectionStatus ? selectionStatus : "",
-          participantSelectionStatusUpdate ||
-            participantSelectionStatusUpdate === 1
-            ? true
-            : false,
-          status.value ? status.value : "",
-          broadcastEmailSendNotification ||
-            broadcastEmailSendNotification === 1
-            ? true
-            : false,
-          emailSubject,
-          emailContent,
-          `via ${via}`
-        )
-        // dispatch(
-        //   postViaFilter(
-        //     props.token,
-        //     title,
-        //     year,
-        //     namaakademi ? namaakademi : "",
-        //     namatema ? namatema : "",
-        //     namapenyelenggara ? namapenyelenggara : "",
-        //     training,
-        //     profileStatus ? profileStatus : "",
-        //     selectionStatus ? selectionStatus : "",
-        //     participantSelectionStatusUpdate ||
-        //       participantSelectionStatusUpdate === 1
-        //       ? true
-        //       : false,
-        //     status.value ? status.value : "",
-        //     broadcastEmailSendNotification ||
-        //       broadcastEmailSendNotification === 1
-        //       ? true
-        //       : false,
-        //     emailSubject,
-        //     emailContent,
-        //     `via ${via}`
-        //   )
-        // );
+        dispatch(
+          postViaFilter(
+            props.token,
+            title,
+            year,
+            namaakademi ? namaakademi : "",
+            namatema ? namatema : "",
+            namapenyelenggara ? namapenyelenggara : "",
+            training,
+            profileStatus ? profileStatus : "",
+            selectionStatus ? selectionStatus : "",
+            participantSelectionStatusUpdate ||
+              participantSelectionStatusUpdate === 1
+              ? true
+              : false,
+            status.value ? status.value : "",
+            broadcastEmailSendNotification ||
+              broadcastEmailSendNotification === 1
+              ? true
+              : false,
+            emailSubject,
+            emailContent,
+            `via ${via}`
+          )
+        );
       });
     } else {
       Swal.fire({
@@ -294,40 +232,36 @@ export default function SUBM(props) {
       });
   }, [props.token, academy, theme]);
 
-  const listYears = listYear.map((items, index) => {
-    return { label: items.value, value: items.value, id: items.id };
-    // return (
-    //   <option value={item.value} key={index}>
-    //     {item.value}
-    //   </option>
-    // );
+  const listYears = listYear.map((item, index) => {
+    return (
+      <option value={item.value} key={index}>
+        {item.value}
+      </option>
+    );
   });
 
-  const optAcademy = listAcademy?.map((items, index) => {
-    return { label: items.label, value: items.label, akademi: items.label };
-    // return (
-    //   <option value={item.value} key={index} akademi={item.label}>
-    //     {item.label}
-    //   </option>
-    // );
+  const optAcademy = listAcademy?.map((item, index) => {
+    return (
+      <option value={item.value} key={index} akademi={item.label}>
+        {item.label}
+      </option>
+    );
   });
 
-  const optTheme = listTheme?.map((items, index) => {
-    return { label: items.label, value: items.label };
-    // return (
-    //   <option value={item.value} key={index}>
-    //     {item.label}
-    //   </option>
-    // );
+  const optTheme = listTheme?.map((item, index) => {
+    return (
+      <option value={item.value} key={index}>
+        {item.label}
+      </option>
+    );
   });
 
-  const optOrganizer = listOrganizer?.map((items, index) => {
-    return { label: items.label, value: items.label };
-    // return (
-    //   <option value={item.label} key={index}>
-    //     {item.label}
-    //   </option>
-    // );
+  const optOrganizer = listOrganizer?.map((item, index) => {
+    return (
+      <option value={item.label} key={index}>
+        {item.label}
+      </option>
+    );
   });
 
   const optTraining = listTraining?.map((item, index) => {
@@ -494,24 +428,7 @@ export default function SUBM(props) {
               <div className="row border-bottom mr-2">
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Tahun</h3>
-                  <Select
-                    className={`basic-single`}
-                    classNamePrefix="select"
-                    placeholder="Pilih Tahun"
-                    isMulti
-                    isDisabled={false}
-                    isLoading={false}
-                    isClearable={false}
-                    isRtl={false}
-                    isSearchable={true}
-                    name="color"
-                    onChange={(e) => {
-                      changeYear(e);
-                      setDisableOption(false);
-                    }}
-                    options={listYears}
-                  />
-                  {/* <select
+                  <select
                     className="form-control"
                     onChange={(e) => {
                       setYear(e.target.value);
@@ -523,28 +440,11 @@ export default function SUBM(props) {
                       PILIH TAHUN
                     </option>
                     {listYears}
-                  </select> */}
+                  </select>
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Akademi</h3>
-                  <Select
-                    className={`basic-single`}
-                    classNamePrefix="select"
-                    placeholder="Pilih Akademi"
-                    isMulti
-                    isDisabled={disableOption === true || disableOption === ""}
-                    isLoading={false}
-                    isClearable={false}
-                    isRtl={false}
-                    isSearchable={true}
-                    name="color"
-                    onChange={(e) => {
-                      changeAkademi(e);
-                      setDisableAkademi(false);
-                    }}
-                    options={optAcademy}
-                  />
-                  {/* <select
+                  <select
                     className="form-control"
                     onChange={(e) => {
                       setnamakademi(e.target.selectedOptions[0].innerText);
@@ -564,7 +464,7 @@ export default function SUBM(props) {
                       PILIH AKADEMI
                     </option>
                     {optAcademy}
-                  </select> */}
+                  </select>
                   {disableOption === true || disableOption === "" ? (
                     <small className="text-muted">
                       Mohon isi tahun terlebih dahulu
@@ -573,24 +473,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Tema</h3>
-                  <Select
-                    className={`basic-single`}
-                    classNamePrefix="select"
-                    placeholder="Pilih Akademi"
-                    isMulti
-                    isDisabled={disableAkademi === true || disableAkademi === ""}
-                    isLoading={false}
-                    isClearable={false}
-                    isRtl={false}
-                    isSearchable={true}
-                    name="color"
-                    onChange={(e) => {
-                      changeTema(e);
-                      setDisableTema(false);
-                    }}
-                    options={optTheme}
-                  />
-                  {/* <select
+                  <select
                     className="form-control"
                     onChange={(e) => {
                       setnamatema(e.target.selectedOptions[0].innerText);
@@ -610,7 +493,7 @@ export default function SUBM(props) {
                       PILIH TEMA
                     </option>
                     {optTheme}
-                  </select> */}
+                  </select>
                   {disableAkademi === true || disableAkademi === "" ? (
                     <small className="text-muted">
                       Mohon isi akademi terlebih dahulu
@@ -619,24 +502,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Penyelenggara</h3>
-                  <Select
-                    className={`basic-single`}
-                    classNamePrefix="select"
-                    placeholder="Pilih Akademi"
-                    isMulti
-                    isDisabled={disableTema === true || disableTema === ""}
-                    isLoading={false}
-                    isClearable={false}
-                    isRtl={false}
-                    isSearchable={true}
-                    name="color"
-                    onChange={(e) => {
-                      changePenyelenggara(e);
-                      setDisablePenyelenggara(false);
-                    }}
-                    options={optOrganizer}
-                  />
-                  {/* <select
+                  <select
                     className="form-control"
                     onChange={(e) => {
                       setnamapenyelenggara(
@@ -658,7 +524,7 @@ export default function SUBM(props) {
                       PILIH PENYELENGGARA
                     </option>
                     {optOrganizer}
-                  </select> */}
+                  </select>
                   {disableTema === true || disableTema === "" ? (
                     <small className="text-muted">
                       Mohon isi tema terlebih dahulu
