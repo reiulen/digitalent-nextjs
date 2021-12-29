@@ -170,7 +170,7 @@ const StepTwo = ({ token, tokenPermission }) => {
     }
 
     if (valid) {
-      localStorage.setItem("method", router.query.metode);
+      localStorage.setItem("method", "import" || router.query.metode);
       router.push({
         pathname: `/subvit/survey/tambah/step-3`,
         query: { id },
@@ -247,10 +247,17 @@ const StepTwo = ({ token, tokenPermission }) => {
   };
 
   const handleDownloadTemplate = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+        Permission: tokenPermission || "",
+      },
+    };
     await axios
       .get(
         proccess.env.END_POINT_API_SUBVIT +
-          "api/survey-question-bank-details/template"
+          "api/survey-question-bank-details/template",
+        config
       )
       .then((res) => {
         window.location.href = res.data.data;
@@ -643,7 +650,13 @@ const StepTwo = ({ token, tokenPermission }) => {
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="button"
                     onClick={() => {
-                      router.push("/subvit/survey/tambah");
+                      if (localStorage.getItem("clone") === "true") {
+                        router.push(
+                          `/subvit/survey/clone/step-3?id=${router.query.id}`
+                        );
+                      } else {
+                        router.push("/subvit/survey/tambah");
+                      }
                     }}
                   >
                     Kembali

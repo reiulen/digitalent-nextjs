@@ -71,7 +71,9 @@ const ListSubstansi = ({ token, tokenPermission }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}?`;
+    let link =
+      process.env.END_POINT_API_SUBVIT +
+      `api/subtance-question-banks/report/export/${id}?`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
     if (nilai) link = link.concat(`&nilai=${nilai}`);

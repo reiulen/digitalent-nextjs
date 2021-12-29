@@ -54,7 +54,9 @@ const ReportTrivia = ({ token }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/trivia-question-banks/report/export/${id}?`;
+    let link =
+      process.env.END_POINT_API_SUBVIT +
+      `api/trivia-question-banks/report/export/${id}?`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (router.query.card) link = link.concat(`&card=${router.query.card}`);
 
