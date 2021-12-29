@@ -127,7 +127,6 @@ export default function NamaPelatihanID({ token }) {
       }
       setDisableSimpan(false);
     }
-    console.log(publishedCertificate, "ini spublish");
   }, [publishedCertificate]);
   //
 

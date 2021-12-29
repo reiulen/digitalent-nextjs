@@ -1499,7 +1499,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   simpleValidator.current.message(
                     "ipk",
                     ipk,
-                    `required`,
+                    `required|numeric`,
                     {
                       className: "text-danger",
                     }
@@ -1597,7 +1597,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   "ipk",
                   ipk,
                   // ipk === null ? "required|integer" : "",
-                  "required",
+                  "required|numeric",
                   {
                     className: "text-danger",
                   }
@@ -1633,7 +1633,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   "ipk",
                   ipk,
                   // ipk === null ? "required|integer" : "",
-                  "required",
+                  "required|numeric",
                   {
                     className: "text-danger",
                   }
@@ -1728,7 +1728,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   "ipk",
                   ipk,
                   // ipk === null ? "required|integer" : "",
-                  "required",
+                  "required|numeric",
                   {
                     className: "text-danger",
                   }
@@ -1764,7 +1764,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   "ipk",
                   ipk,
                   // ipk === null ? "required|integer" : "",
-                  "required",
+                  "required|numeric",
                   {
                     className: "text-danger",
                   }
@@ -1859,7 +1859,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   "ipk",
                   ipk,
                   // ipk === null ? "required|integer" : "",
-                  "required",
+                  "required|numeric",
                   {
                     className: "text-danger",
                   }
@@ -1896,7 +1896,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   "ipk",
                   ipk,
                   // ipk === null ? "required|integer" : "",
-                  "required",
+                  "required|numeric",
                   {
                     className: "text-danger",
                   }
@@ -1992,7 +1992,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   "ipk",
                   ipk,
                   // ipk === null ? "required|integer" : "",
-                  "required",
+                  "required|numeric",
                   {
                     className: "text-danger",
                   }
@@ -2029,7 +2029,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   "ipk",
                   ipk,
                   // ipk === null ? "required|integer" : "",
-                  "required",
+                  "required|numeric",
                   {
                     className: "text-danger",
                   }
@@ -2126,7 +2126,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   "ipk",
                   ipk,
                   // ipk === null ? "required|integer" : "",
-                  "required",
+                  "required|numeric",
                   {
                     className: "text-danger",
                   }

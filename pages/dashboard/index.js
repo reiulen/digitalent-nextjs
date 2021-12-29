@@ -17,6 +17,7 @@ import {
 } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 import { dropdownAkademi } from "../../redux/actions/pelatihan/function.actions";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
+import { getAllPermission } from "../../redux/actions/utils/utils.actions";
 
 export default function DashboardPage(props) {
   const DashboardDigitalent = dynamic(
@@ -61,6 +62,19 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return {
           redirect: {
             destination: middleware.redirect,
+            permanent: false,
+          },
+        };
+      }
+      const data = await store.dispatch(
+        getAllPermission(session.user.user.data.token)
+      );
+
+      const url = data.data.redirect;
+      if (url != "/dashboard") {
+        return {
+          redirect: {
+            destination: url,
             permanent: false,
           },
         };

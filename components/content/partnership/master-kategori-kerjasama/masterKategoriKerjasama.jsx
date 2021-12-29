@@ -61,7 +61,7 @@ const Table = ({ token }) => {
     });
   };
   useEffect(() => {
-    dispatch(fetchAllMKCooporation(token));
+    dispatch(fetchAllMKCooporation(token, cookiePermission));
   }, [
     dispatch,
     allMKCooporation?.keyword,
