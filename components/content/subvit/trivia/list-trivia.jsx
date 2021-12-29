@@ -46,7 +46,11 @@ const ListTrivia = ({ token, tokenPermission }) => {
 
   useEffect(() => {
     localStorage.removeItem("step1");
+    localStorage.removeItem("step2");
     localStorage.removeItem("clone1");
+    localStorage.removeItem("clone3");
+    localStorage.removeItem("method");
+    localStorage.removeItem("clone");
     localStorage.removeItem("id_trivia");
     if (isDeleted) {
       dispatch({

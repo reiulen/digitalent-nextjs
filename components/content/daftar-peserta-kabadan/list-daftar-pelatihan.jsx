@@ -112,7 +112,7 @@ const ListDaftarPelatihan = ({ token }) => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setPage(1);
     dispatch(
       getAllSummary(
@@ -214,15 +214,15 @@ const ListDaftarPelatihan = ({ token }) => {
       dispatch(clearErrors());
     }
   };
-  
-	function capitalize(s) {
-		let a = s.split(" ");
-		let result = [];
-		for (let i = 0; i < a.length; i++) {
-			result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
-		}
-		return result.join(" ");
-	}
+
+  function capitalize(s) {
+    let a = s.split(" ");
+    let result = [];
+    for (let i = 0; i < a.length; i++) {
+      result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
+    }
+    return result.join(" ");
+  }
 
   return (
     <PageWrapper>
@@ -281,7 +281,7 @@ const ListDaftarPelatihan = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Rekap Pendaftaran
+              List Pelatihan
             </h1>
           </div>
 
@@ -305,7 +305,7 @@ const ListDaftarPelatihan = ({ token }) => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={e => handleSearch(e)}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -347,15 +347,17 @@ const ListDaftarPelatihan = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal Pendaftaran <br /> Jadwal Pelatihan</th>
+                        <th>
+                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                        </th>
                         <th>Status Pelatihan</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {!summary ||
-                        (summary && summary.list === null) ||
-                        summary.list.length === 0 ? (
+                      (summary && summary.list === null) ||
+                      summary.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
@@ -399,12 +401,18 @@ const ListDaftarPelatihan = ({ token }) => {
                               </p>
                             </td>
                             <td className="align-middle">
-                              <span className={
-                                row.status_pelatihan === "selesai" && "label label-inline select-pelatihan-success font-weight-bold" ||
-                                row.status_pelatihan === "pendaftaran" && "label label-inline select-pelatihan-primary font-weight-bold" ||
-                                row.status_pelatihan === "seleksi" && "label label-inline select-pelatihan-warning font-weight-bold" ||
-                                row.status_pelatihan === "pelatihan" && "label label-inline select-pelatihan-primary font-weight-bold"
-                              }>
+                              <span
+                                className={
+                                  (row.status_pelatihan === "selesai" &&
+                                    "label label-inline select-pelatihan-success font-weight-bold") ||
+                                  (row.status_pelatihan === "pendaftaran" &&
+                                    "label label-inline select-pelatihan-primary font-weight-bold") ||
+                                  (row.status_pelatihan === "seleksi" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold") ||
+                                  (row.status_pelatihan === "pelatihan" &&
+                                    "label label-inline select-pelatihan-primary font-weight-bold")
+                                }
+                              >
                                 {capitalize(row.status_pelatihan)}
                               </span>
                             </td>
@@ -537,7 +545,7 @@ const ListDaftarPelatihan = ({ token }) => {
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
           </div>
-          <div className="form-group mb-5">
+          {/* <div className="form-group mb-5">
             <label className="p-0">Status Substansi</label>
             <Select
               options={optionsStatusSubstansi}
@@ -546,7 +554,7 @@ const ListDaftarPelatihan = ({ token }) => {
                 setStatusSubstansi({ value: e.value, label: e.label })
               }
             />
-          </div>
+          </div> */}
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
             <Select

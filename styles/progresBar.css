@@ -136,7 +136,7 @@
   padding-top: 5px;
   padding-bottom: 5px;
   padding-right: 10px;
-  padding-left: 10px;
+  padding-left: 5px;
   cursor: pointer;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -458,18 +458,18 @@
   }
 }
 
-.scroll-form-login{
-height: 100vh;
-overflow: scroll;
-display: flex;
-flex-direction: column;
-justify-content: center;
+.scroll-form-login {
+  height: 100vh;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .scroll-form-login::-webkit-scrollbar {
   display: none;
 }
 
-.css-yk16xz-control{
-    border-color: hsl(229deg 26% 92%) !important;
+.css-yk16xz-control {
+  border-color: hsl(229deg 26% 92%) !important;
 }

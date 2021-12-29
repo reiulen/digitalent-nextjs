@@ -183,21 +183,33 @@ const DetailPelatihan = ({ session }) => {
                         url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
                         quote={pelatihan?.name}
                       >
-                        <button className="btn btn-white roundedss-border mr-4">
+                        <button
+                          className="btn btn-white roundedss-border mr-4"
+                          disabled={pelatihan?.Status !== "Dibuka" && true}
+                        >
                           <IconShare />
                         </button>
                       </ShareOverlay>
                       <button
+                        disabled={pelatihan?.Status !== "Dibuka" && true}
                         className="btn btn-white roundedss-border"
                         onClick={() => {
                           if (!session) {
                             router.push("/login");
                           } else {
-                            const pelatihanObj = {
-                              bookmark: pelatihan?.bookmart,
-                              id: pelatihan?.id,
-                            };
-                            handleBookmark(pelatihanObj);
+                            if (!session?.roles?.includes("user")) {
+                              SweatAlert(
+                                "Gagal",
+                                "Anda sedang login sebagai Admin",
+                                "error"
+                              );
+                            } else {
+                              const pelatihanObj = {
+                                bookmark: pelatihan?.bookmart,
+                                id: pelatihan?.id,
+                              };
+                              handleBookmark(pelatihanObj);
+                            }
                           }
                         }}
                       >
@@ -246,9 +258,21 @@ const DetailPelatihan = ({ session }) => {
                 <button
                   disabled={pelatihan?.Status !== "Dibuka" && true}
                   className="btn btn-primary-dashboard rounded-pill btn-block fw-500"
-                  onClick={() =>
-                    handleCheckPelatihanReg(pelatihan?.id, session)
-                  }
+                  onClick={() => {
+                    if (!session) {
+                      return router.push("/login");
+                    } else {
+                      if (!session?.roles?.includes("user")) {
+                        SweatAlert(
+                          "Gagal",
+                          "Anda sedang login sebagai Admin",
+                          "error"
+                        );
+                      } else {
+                        handleCheckPelatihanReg(pelatihan?.id, session);
+                      }
+                    }
+                  }}
                 >
                   Daftar Pelatihan
                 </button>

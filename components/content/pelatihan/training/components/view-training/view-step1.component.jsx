@@ -349,7 +349,7 @@ const ViewStep1Component = ({ review }) => {
         </div>
         <div className="col-md-12">
           <p className="text-neutral-body mb-2 fz-14">Link Detail Pelatihan</p>
-          {review.status_publish === 0 ? (
+          {review.status_publish === "0" ? (
             <p className="fz-16 ">
               {`http://dts-dev.majapahit.id/detail/pelatihan/${review.id}?akademiId=${review.akademi_id}`}
             </p>

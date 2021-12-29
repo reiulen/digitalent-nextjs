@@ -11,7 +11,10 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 
-import { putTrainingStep3 } from "../../../../../redux/actions/pelatihan/training.actions";
+import {
+  putTrainingStep3,
+  getEditTrainingStep2,
+} from "../../../../../redux/actions/pelatihan/training.actions";
 
 const EditCommitmentStep3 = ({ token, propsStep }) => {
   const editorRef = useRef();
@@ -74,62 +77,92 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
     }
   };
 
+  const viewBackHandler = () => {
+    if (commitment !== "1") {
+      simpleValidator.current.fields.deskripsi = true;
+    }
+    if (simpleValidator.current.allValid()) {
+      const data = {
+        Pelatian_id: parseInt(router.query.id),
+        komitmen: commitment,
+        deskripsi: commitment === "1" ? description : "",
+      };
+      dispatch(putTrainingStep3(token, data));
+      router.back();
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Tolong isi data dengan benar !",
+      });
+    }
+  };
+
   return (
-    <div className="col-lg-12 order-1 px-0">
-      <div className="card card-custom card-stretch gutter-b">
-        <div className="card-body py-4">
-          <form onSubmit={submitHandler}>
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
-            <div className="form-group row mb-4">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Komitmen Peserta
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="commitment"
-                    className="form-check-input"
-                    value="1"
-                    checked={commitment === "1"}
-                    onClick={() => setCommitment("1")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("komitmen")
-                    }
-                  />
-                  <label className="form-check-label">Ya</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="commitment"
-                    value="0"
-                    className="form-check-input"
-                    checked={commitment === "0"}
-                    onClick={() => {
-                      setCommitment("0");
-                      setDescription("");
-                    }}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("komitmen")
-                    }
-                  />
-                  <label className="form-check-label">Tidak</label>
-                </div>
-                {simpleValidator.current.message(
-                  "komitmen",
-                  commitment,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-            {commitment === "1" && (
-              <div className="form-group mb-4">
-                <label className="col-form-label font-weight-bold">
-                  Input Deskripsi
+    <PageWrapper>
+      <StepInputPelatihan
+        step={3}
+        title1="Edit Pelatihan"
+        title2="Edit Form Pendaftaran"
+        title3="Edit Form Komitmen"
+      />
+      <div className="col-lg-12 order-1 px-0">
+        <div className="card card-custom card-stretch gutter-b">
+          <div className="card-body py-4">
+            <form onSubmit={submitHandler}>
+              <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
+              <div className="form-group row mb-4">
+                <label className="col-form-label font-weight-bold col-sm-2">
+                  Komitmen Peserta
                 </label>
-                {/* <div className="ckeditor">
+                <div className="col-sm-10 my-auto">
+                  <div className="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      name="commitment"
+                      className="form-check-input"
+                      value="1"
+                      checked={commitment === "1"}
+                      onClick={() => setCommitment("1")}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("komitmen")
+                      }
+                    />
+                    <label className="form-check-label">Ya</label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      name="commitment"
+                      value="0"
+                      className="form-check-input"
+                      checked={commitment === "0"}
+                      onClick={() => {
+                        setCommitment("0");
+                        setDescription("");
+                      }}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("komitmen")
+                      }
+                    />
+                    <label className="form-check-label">Tidak</label>
+                  </div>
+                  {simpleValidator.current.message(
+                    "komitmen",
+                    commitment,
+                    "required",
+                    { className: "text-danger" }
+                  )}
+                </div>
+              </div>
+              {commitment === "1" && (
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Input Deskripsi
+                  </label>
+                  {/* <div className="ckeditor">
                   {editorLoaded ? (
                     <CKEditor
                       editor={ClassicEditor}
@@ -149,41 +182,45 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
                     <p>Tunggu Sebentar</p>
                   )}
                 </div> */}
-                <textarea
-                  className="form-control"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("deskripsi")
-                  }
-                  rows="10"
-                />
-                {simpleValidator.current.message(
-                  "deskripsi",
-                  description,
-                  "required",
-                  { className: "text-danger" }
-                )}
+                  <textarea
+                    className="form-control"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("deskripsi")
+                    }
+                    rows="10"
+                  />
+                  {simpleValidator.current.message(
+                    "deskripsi",
+                    description,
+                    "required",
+                    { className: "text-danger" }
+                  )}
+                </div>
+              )}
+              <div className="form-group">
+                <div className="text-right">
+                  <button
+                    className="btn btn-light-ghost-rounded-full mr-2"
+                    type="button"
+                    onClick={() => router.back()}
+                  >
+                    Kembali
+                  </button>
+                  <button
+                    className="btn btn-primary-rounded-full"
+                    type="submit"
+                  >
+                    Simpan & Lanjut
+                  </button>
+                </div>
               </div>
-            )}
-            <div className="form-group">
-              <div className="text-right">
-                <button
-                  className="btn btn-light-ghost-rounded-full mr-2"
-                  type="button"
-                  onClick={() => router.back()}
-                >
-                  Batal
-                </button>
-                <button className="btn btn-primary-rounded-full" type="submit">
-                  Simpan & Lanjut
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

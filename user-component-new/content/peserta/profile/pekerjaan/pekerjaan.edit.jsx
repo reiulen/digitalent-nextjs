@@ -67,7 +67,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     (pekerjaan && pekerjaan.perusahaan) || ""
   );
   const [penghasilan, setPenghasilan] = useState(
-    (pekerjaan && pekerjaan.penghasilan) || "1"
+    (pekerjaan && pekerjaan.penghasilan) || "0"
   );
   const [sekolah, setSekolah] = useState(
     (pekerjaan && pekerjaan.sekolah) || ""
@@ -101,6 +101,11 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   useEffect(() => {
     if (errorUpdateData) {
       SweatAlert("Gagal", errorUpdateData, "error");
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops...",
+      //   text: "Isi data dengan benar !",
+      // });
       dispatch(clearErrors());
     }
 
@@ -160,7 +165,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
           status_pekerjaan: statusPekerjaan.label || statusPekerjaan,
           pekerjaan: "-",
           perusahaan: "-",
-          penghasilan: "1",
+          penghasilan: "0",
           sekolah: "-",
           tahun_masuk: parseInt(0),
           wizard: 5,
@@ -187,7 +192,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
             status_pekerjaan: statusPekerjaan.label || statusPekerjaan,
             pekerjaan: "-",
             perusahaan: "-",
-            penghasilan: "1",
+            penghasilan: "0",
             sekolah: sekolahLainnya,
             tahun_masuk: parseInt(tahunMasuk),
             wizard: 5,
@@ -197,7 +202,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
             status_pekerjaan: statusPekerjaan.label || statusPekerjaan,
             pekerjaan: "-",
             perusahaan: "-",
-            penghasilan: "1",
+            penghasilan: "0",
             sekolah,
             tahun_masuk: parseInt(tahunMasuk),
             wizard: 5,

@@ -331,7 +331,11 @@ const StepTwo = ({ token, tokenPermission }) => {
       };
 
       localStorage.setItem("step2", JSON.stringify(data));
-      localStorage.setItem("method", metode);
+
+      if (router.pathname.includes("entry")) {
+        localStorage.setItem("method", "entry" || metode);
+      }
+
       dispatch(newSubtanceQuestionDetail(data, token));
     }
   };
@@ -571,7 +575,13 @@ const StepTwo = ({ token, tokenPermission }) => {
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="button"
                     onClick={() => {
-                      router.push("/subvit/substansi/tambah-step-1");
+                      if (localStorage.getItem("clone") === "true") {
+                        router.push(
+                          `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                        );
+                      } else {
+                        router.push("/subvit/substansi/tambah-step-1");
+                      }
                     }}
                   >
                     Kembali

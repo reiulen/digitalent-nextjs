@@ -115,7 +115,12 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     dispatch(getDataAsalSekolah(token));
 
     if (errorUpdateData) {
-      SweatAlert("Gagal", errorUpdateData, "error");
+      // SweatAlert("Gagal", errorUpdateData, "error");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
       dispatch(clearErrors());
     }
 
@@ -161,12 +166,12 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   };
 
   const onChangeIjazah = (e) => {
-    const type = ["image/jpg", "image/jpeg"];
+    const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
         if (e.target.files[0].size > 5000000) {
           e.target.value = null;
-          Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+          Swal.fire("Oops !", "Ukuran file maksimal 5 MB.", "error");
         } else {
           const reader = new FileReader();
           reader.onload = () => {
@@ -182,7 +187,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         e.target.value = null;
         Swal.fire(
           "Oops !",
-          "Data yang bisa dimasukkan hanya berupa image.",
+          "Data yang bisa dimasukkan hanya berupa data gambar atau pdf.",
           "error"
         );
       }
@@ -1353,7 +1358,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -1376,7 +1381,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -1389,7 +1394,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -1412,7 +1417,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -1425,7 +1430,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -1448,7 +1453,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2140,7 +2145,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -2163,7 +2168,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2211,7 +2216,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2235,7 +2240,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>
@@ -2250,7 +2255,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -2273,7 +2278,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2321,7 +2326,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2345,7 +2350,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>
@@ -2360,7 +2365,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -2383,7 +2388,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2431,7 +2436,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2455,7 +2460,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>
@@ -2470,7 +2475,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -2493,7 +2498,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2541,7 +2546,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2565,7 +2570,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>
@@ -2580,7 +2585,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -2603,7 +2608,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2651,7 +2656,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept=" image/jpeg, image/jpg"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2675,7 +2680,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>

@@ -54,7 +54,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // );
       await store.dispatch(getAllDataReference(session.user.user.data.token));
       return {
-        props: { session, title: "List Refrence - Site Management" },
+        props: { session, title: "List Reference - Site Management" },
       };
     }
 );

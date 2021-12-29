@@ -120,12 +120,12 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 	}, [errorUpdateData, success, dispatch, funcViewEdit]);
 
 	const onChangeKtp = (e) => {
-		const type = ["image/jpg", "image/png", "image/jpeg"];
+		const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
 		if (e.target.files[0]) {
 			if (type.includes(e.target.files[0].type)) {
 				if (e.target.files[0].size > 2000000) {
 					e.target.value = null;
-					Swal.fire("Oops !", "Gambar maksimal 2 MB.", "error");
+					Swal.fire("Oops !", "Ukuran file maksimal 2 MB.", "error");
 				} else {
 					const reader = new FileReader();
 					reader.onload = () => {
@@ -141,7 +141,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 				e.target.value = null;
 				Swal.fire(
 					"Oops !",
-					"Data yang bisa dimasukkan hanya berupa data gambar.",
+					"Data yang bisa dimasukkan hanya berupa data gambar atau pdf.",
 					"error"
 				);
 			}
@@ -438,6 +438,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 								Nama Lengkap (Sesuai KTP)
 							</Form.Label>
 							<Form.Control
+								disabled={dataPribadi?.status_verified === true ? true : false}
 								className={style.formControl}
 								placeholder="Masukkan Nama Lengkap"
 								value={name}
@@ -739,7 +740,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 									type="file"
 									className="custom-file-input"
 									name="question_image"
-									accept="image/png, image/jpeg , image/jpg"
+									accept="image/png, image/jpeg, image/jpg, application/pdf"
 									onChange={onChangeKtp}
 									onBlur={() => simpleValidator.current.showMessageFor("ktp")}
 								/>
@@ -759,7 +760,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 							</div>
 						</div>
 						<small className="text-muted">
-							* JPG/PNG (Maksimal ukuran file 2 MB)
+							* JPG/JPEG/PNG/PDF (Maksimal ukuran file 2 MB)
 						</small>
 					</div>
 					{/* <div className="form-group mb-5">

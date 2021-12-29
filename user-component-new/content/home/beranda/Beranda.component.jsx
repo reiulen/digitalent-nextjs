@@ -609,10 +609,22 @@ const Beranda = ({ session }) => {
                                                         if (!session) {
                                                           router.push("/login");
                                                         } else {
-                                                          handleBookmark(
-                                                            pelatihan[i]
-                                                              .pelatihan[j]
-                                                          );
+                                                          if (
+                                                            !session?.roles?.includes(
+                                                              "user"
+                                                            )
+                                                          ) {
+                                                            SweatAlert(
+                                                              "Gagal",
+                                                              "Anda sedang login sebagai Admin",
+                                                              "error"
+                                                            );
+                                                          } else {
+                                                            handleBookmark(
+                                                              pelatihan[i]
+                                                                .pelatihan[j]
+                                                            );
+                                                          }
                                                         }
                                                       }}
                                                     ></i>
@@ -846,6 +858,36 @@ const Beranda = ({ session }) => {
                                             <div className="d-flex align-items-start">
                                               <div className="whislist mr-5">
                                                 <Button
+                                                  disabled={
+                                                    cardStatus === "Ditutup" &&
+                                                    true
+                                                  }
+                                                  onClick={() => {
+                                                    if (!session) {
+                                                      router.push("/login");
+                                                    } else {
+                                                      if (
+                                                        !session?.roles?.includes(
+                                                          "user"
+                                                        )
+                                                      ) {
+                                                        SweatAlert(
+                                                          "Gagal",
+                                                          "Anda sedang login sebagai Admin",
+                                                          "error"
+                                                        );
+                                                      } else {
+                                                        const pelatihan = {
+                                                          id: cardId,
+                                                          bookmark:
+                                                            cardBookmark,
+                                                        };
+                                                        handleBookmark(
+                                                          pelatihan
+                                                        );
+                                                      }
+                                                    }
+                                                  }}
                                                   variant="light"
                                                   className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
                                                 >
@@ -858,20 +900,6 @@ const Beranda = ({ session }) => {
                                                     style={{
                                                       color: "#6C6C6C",
                                                     }}
-                                                    onClick={() => {
-                                                      if (!session) {
-                                                        router.push("/login");
-                                                      } else {
-                                                        const pelatihan = {
-                                                          id: cardId,
-                                                          bookmark:
-                                                            cardBookmark,
-                                                        };
-                                                        handleBookmark(
-                                                          pelatihan
-                                                        );
-                                                      }
-                                                    }}
                                                   ></i>
                                                 </Button>
                                                 {/* SHAREOVERLAY */}
@@ -880,6 +908,10 @@ const Beranda = ({ session }) => {
                                                   quote={cardName}
                                                 >
                                                   <Button
+                                                    disabled={
+                                                      cardStatus ===
+                                                        "Ditutup" && true
+                                                    }
                                                     variant="light"
                                                     className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new mr-5`}
                                                   >
@@ -984,12 +1016,28 @@ const Beranda = ({ session }) => {
                                                   cardStatus === "Ditutup" &&
                                                   true
                                                 }
-                                                onClick={() =>
-                                                  handleCheckPelatihanReg(
-                                                    cardId,
-                                                    session
-                                                  )
-                                                }
+                                                onClick={() => {
+                                                  if (!session) {
+                                                    router.push("/login");
+                                                  } else {
+                                                    if (
+                                                      !session?.roles?.includes(
+                                                        "user"
+                                                      )
+                                                    ) {
+                                                      SweatAlert(
+                                                        "Gagal",
+                                                        "Anda sedang login sebagai Admin",
+                                                        "error"
+                                                      );
+                                                    } else {
+                                                      handleCheckPelatihanReg(
+                                                        cardId,
+                                                        session
+                                                      );
+                                                    }
+                                                  }
+                                                }}
                                                 className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100 font-weight-bolder"
                                               >
                                                 Daftar Pelatihan

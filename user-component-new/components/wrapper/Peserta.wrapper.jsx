@@ -9,7 +9,9 @@ const PesertaWrapper = ({ children, padding }) => {
         md={12}
         lg={9}
         // style={{ marginTop: "-5%" }}
-        className={`${styles.responsive} ${padding ? "pt-10 pt-lg-0" : ""}`}
+        className={`${styles.responsive} ${
+          padding ? "pt-10 pt-lg-0 position-relative" : "position-relative"
+        }`}
       >
         {children}
       </Col>
