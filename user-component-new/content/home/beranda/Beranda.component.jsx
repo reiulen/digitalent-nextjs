@@ -609,10 +609,22 @@ const Beranda = ({ session }) => {
                                                         if (!session) {
                                                           router.push("/login");
                                                         } else {
-                                                          handleBookmark(
-                                                            pelatihan[i]
-                                                              .pelatihan[j]
-                                                          );
+                                                          if (
+                                                            !session?.roles?.includes(
+                                                              "user"
+                                                            )
+                                                          ) {
+                                                            SweatAlert(
+                                                              "Gagal",
+                                                              "Anda sedang login sebagai Admin",
+                                                              "error"
+                                                            );
+                                                          } else {
+                                                            handleBookmark(
+                                                              pelatihan[i]
+                                                                .pelatihan[j]
+                                                            );
+                                                          }
                                                         }
                                                       }}
                                                     ></i>
@@ -854,11 +866,26 @@ const Beranda = ({ session }) => {
                                                     if (!session) {
                                                       router.push("/login");
                                                     } else {
-                                                      const pelatihan = {
-                                                        id: cardId,
-                                                        bookmark: cardBookmark,
-                                                      };
-                                                      handleBookmark(pelatihan);
+                                                      if (
+                                                        !session?.roles?.includes(
+                                                          "user"
+                                                        )
+                                                      ) {
+                                                        SweatAlert(
+                                                          "Gagal",
+                                                          "Anda sedang login sebagai Admin",
+                                                          "error"
+                                                        );
+                                                      } else {
+                                                        const pelatihan = {
+                                                          id: cardId,
+                                                          bookmark:
+                                                            cardBookmark,
+                                                        };
+                                                        handleBookmark(
+                                                          pelatihan
+                                                        );
+                                                      }
                                                     }
                                                   }}
                                                   variant="light"
@@ -989,12 +1016,28 @@ const Beranda = ({ session }) => {
                                                   cardStatus === "Ditutup" &&
                                                   true
                                                 }
-                                                onClick={() =>
-                                                  handleCheckPelatihanReg(
-                                                    cardId,
-                                                    session
-                                                  )
-                                                }
+                                                onClick={() => {
+                                                  if (!session) {
+                                                    router.push("/login");
+                                                  } else {
+                                                    if (
+                                                      !session?.roles?.includes(
+                                                        "user"
+                                                      )
+                                                    ) {
+                                                      SweatAlert(
+                                                        "Gagal",
+                                                        "Anda sedang login sebagai Admin",
+                                                        "error"
+                                                      );
+                                                    } else {
+                                                      handleCheckPelatihanReg(
+                                                        cardId,
+                                                        session
+                                                      );
+                                                    }
+                                                  }
+                                                }}
                                                 className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100 font-weight-bolder"
                                               >
                                                 Daftar Pelatihan

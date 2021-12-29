@@ -298,7 +298,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
           };
           localStorage.setItem("step2", JSON.stringify(data));
-          localStorage.setItem("method", metode);
+          localStorage.setItem("method", "entry" || metode);
           dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -325,7 +325,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
           };
           localStorage.setItem("step2", JSON.stringify(data));
-          localStorage.setItem("method", metode);
+          localStorage.setItem("method", "entry" || metode);
           dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -338,7 +338,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
           };
           localStorage.setItem("step2", JSON.stringify(data));
-          localStorage.setItem("method", metode);
+          localStorage.setItem("method", "entry" || metode);
           dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
         break;
@@ -365,7 +365,7 @@ const StepTwo = ({ token, tokenPermission }) => {
             type: methodAdd,
           };
           localStorage.setItem("step2", JSON.stringify(data));
-          localStorage.setItem("method", metode);
+          localStorage.setItem("method", "entry" || metode);
           dispatch(newSurveyQuestionDetail(data, token, tokenPermission));
         }
       default:
@@ -621,7 +621,13 @@ const StepTwo = ({ token, tokenPermission }) => {
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="button"
                     onClick={() => {
-                      router.push("/subvit/survey/tambah");
+                      if (localStorage.getItem("clone") === "true") {
+                        router.push(
+                          `/subvit/survey/clone/step-3?id=${router.query.id}`
+                        );
+                      } else {
+                        router.push("/subvit/survey/tambah");
+                      }
                     }}
                   >
                     Kembali

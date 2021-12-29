@@ -61,7 +61,7 @@ const CardPelatihanQuickView = ({
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(
@@ -91,7 +91,7 @@ const CardPelatihanQuickView = ({
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
           dispatch(
@@ -173,7 +173,15 @@ const CardPelatihanQuickView = ({
                         if (!session) {
                           router.push("/login");
                         } else {
-                          handleBookmark(row);
+                          if (!session?.roles?.includes("user")) {
+                            SweatAlert(
+                              "Gagal",
+                              "Anda sedang login sebagai Admin",
+                              "error"
+                            );
+                          } else {
+                            handleBookmark(row);
+                          }
                         }
                       }}
                     >
@@ -260,7 +268,20 @@ const CardPelatihanQuickView = ({
                   <div className="col-6">
                     <button
                       disabled={row.status !== "Dibuka" && true}
-                      onClick={() => funcCheckPelatihan(row.id)}
+                      onClick={() => {
+                        if (!session) {
+                          return router.push("/login");
+                        }
+                        if (!session?.roles?.includes("user")) {
+                          SweatAlert(
+                            "Gagal",
+                            "Anda sedang login sebagai Admin",
+                            "error"
+                          );
+                        } else {
+                          funcCheckPelatihan(row.id);
+                        }
+                      }}
                       className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100 fw-600"
                     >
                       Daftar Pelatihan

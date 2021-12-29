@@ -44,16 +44,6 @@ const StepOne = ({ token, tokenPermission }) => {
     (state) => state?.allSubtanceQuestionBanks?.subtance
   );
 
-  let optionsClone = [];
-
-  let uniqueArray = list_substance.filter((item, pos) => {
-    return list_substance.indexOf(item) === pos;
-  });
-
-  uniqueArray.map((item) => {
-    optionsClone.push({ label: item.academy.name, value: item.academy.id });
-  });
-
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
@@ -86,7 +76,7 @@ const StepOne = ({ token, tokenPermission }) => {
       const id = router.query.id;
       if (typeSave === "lanjut") {
         router.push({
-          pathname: `/subvit/substansi/clone/step-4`,
+          pathname: `/subvit/substansi/clone/step-3`,
           query: { id },
         });
       } else if (typeSave === "draft") {
@@ -253,7 +243,7 @@ const StepOne = ({ token, tokenPermission }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="3"></StepInput>
+          <StepInput step="2"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
               Tujuan Clone Test Substansi
@@ -341,6 +331,7 @@ const StepOne = ({ token, tokenPermission }) => {
                   placeholder={"Silahkan Pilih Kategori"}
                   options={optionsKategori}
                   className={styles.selectForm}
+                  value={{ label: category }}
                   onChange={(e) => setCategory(e.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("kategori")
@@ -362,9 +353,7 @@ const StepOne = ({ token, tokenPermission }) => {
                   className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                   type="button"
                   onClick={() => {
-                    router.push(
-                      `/subvit/substansi/clone/step-2?id=${router.query.id}`
-                    );
+                    router.push(`/subvit/substansi/clone`);
                   }}
                 >
                   Kembali

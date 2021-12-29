@@ -177,7 +177,7 @@ const RegisterUser = () => {
               </form>
               <div className="bottom mt-9 text-center mb-7">
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
-                  Sisa waktu OTP :
+                  Generate OTP baru :
                   <span
                     className={`${
                       second <= 5 && minute <= 0
