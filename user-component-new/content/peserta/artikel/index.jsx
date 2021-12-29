@@ -290,28 +290,28 @@ const Dashboard = ({ session, success }) => {
 									<form onSubmit={(e) => {
 										e.preventDefault();
 										handleSearch
-									}}
+										}}
 									>
-										<i className="ri-search-line left-center-absolute ml-2"></i>
-										<input
-											type="text"
-											className="form-control pl-10"
-											placeholder="Ketik disini untuk Pencarian..."
-											value={keyword}
-											onChange={(e) => {
-												setKeyword(e.target.value);
-											}}
-										/>
-										<button
-											className="btn btn-primary text-white right-center-absolute"
-											style={{
-												borderTopLeftRadius: "0",
-												borderBottomLeftRadius: "0",
-											}}
-											onClick={handleSearch}
-										>
-											Cari
-										</button>
+									<i className="ri-search-line left-center-absolute ml-2"></i>
+									<input
+										type="text"
+										className="form-control pl-10"
+										placeholder="Ketik disini untuk Pencarian..."
+										value={keyword}
+										onChange={(e) => {
+											setKeyword(e.target.value);
+										}}
+									/>
+									<button
+										className="btn btn-primary text-white right-center-absolute"
+										style={{
+											borderTopLeftRadius: "0",
+											borderBottomLeftRadius: "0",
+										}}
+										onClick={handleSearch}
+									>
+										Cari
+									</button>
 									</form>
 								</div>
 							</div>

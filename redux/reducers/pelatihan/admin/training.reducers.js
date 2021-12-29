@@ -91,6 +91,7 @@ import {
   CLONE_TRAINING_FAIL,
   CLEAR_ERRORS,
   GET_EDIT_DATA_TRAINING,
+  REQUEST_EDIT_DATA_TRAINING2,
   GET_EDIT_DATA_TRAINING2,
   GET_EDIT_DATA_TRAINING3,
   GET_FORM_LPJ,
@@ -542,9 +543,15 @@ export const getEditTraining2Reducer = (
   action
 ) => {
   switch (action.type) {
+    case REQUEST_EDIT_DATA_TRAINING2:
+      return {
+        ...state,
+        loading: true,
+      };
     case GET_EDIT_DATA_TRAINING2:
       return {
         ...state,
+        loading: false,
         data: action.payload.data,
       };
 

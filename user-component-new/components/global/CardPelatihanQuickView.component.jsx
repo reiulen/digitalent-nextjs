@@ -61,7 +61,7 @@ const CardPelatihanQuickView = ({
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menambahkan pelatihan ke bookmark",
+            "Anda berhasil menambahkan pelatihan ke favorit",
             "success"
           );
           dispatch(
@@ -91,7 +91,7 @@ const CardPelatihanQuickView = ({
         if (data) {
           SweatAlert(
             "Berhasil",
-            "Anda berhasil menghapus pelatihan dari bookmark",
+            "Anda berhasil menghapus pelatihan dari favorit",
             "success"
           );
           dispatch(
@@ -167,12 +167,21 @@ const CardPelatihanQuickView = ({
                   </div>
                   <div className="d-flex align-items-start">
                     <button
+                      disabled={row.status !== "Dibuka" && true}
                       className="roundedss-border btn btn-white"
                       onClick={() => {
                         if (!session) {
                           router.push("/login");
                         } else {
-                          handleBookmark(row);
+                          if (!session?.roles?.includes("user")) {
+                            SweatAlert(
+                              "Gagal",
+                              "Anda sedang login sebagai Admin",
+                              "error"
+                            );
+                          } else {
+                            handleBookmark(row);
+                          }
                         }
                       }}
                     >
@@ -188,7 +197,10 @@ const CardPelatihanQuickView = ({
                       url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
                       quote={row.name}
                     >
-                      <button className="roundedss-border btn btn-white mx-6">
+                      <button
+                        className="roundedss-border btn btn-white mx-6"
+                        disabled={row.status !== "Dibuka" && true}
+                      >
                         <IconShare className="cursor-pointer" />
                       </button>
                     </ShareOverlay>
@@ -253,16 +265,28 @@ const CardPelatihanQuickView = ({
                     </Link>
                   </div>
 
-                  {row.status !== "Closed" ? (
-                    <div className="col-6">
-                      <button
-                        onClick={() => funcCheckPelatihan(row.id)}
-                        className="d-flex justify-content-center btn-primary btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100"
-                      >
-                        Daftar Pelatihan
-                      </button>
-                    </div>
-                  ) : null}
+                  <div className="col-6">
+                    <button
+                      disabled={row.status !== "Dibuka" && true}
+                      onClick={() => {
+                        if (!session) {
+                          return router.push("/login");
+                        }
+                        if (!session?.roles?.includes("user")) {
+                          SweatAlert(
+                            "Gagal",
+                            "Anda sedang login sebagai Admin",
+                            "error"
+                          );
+                        } else {
+                          funcCheckPelatihan(row.id);
+                        }
+                      }}
+                      className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100 fw-600"
+                    >
+                      Daftar Pelatihan
+                    </button>
+                  </div>
                 </div>
               </div>
             </Col>

@@ -491,26 +491,26 @@ const DetailAkademi = ({ session }) => {
                               key={i}
                             >
                               <Card className="h-100 shadow-sm">
-                                {el.status !== "Dibuka" ? (
+                                {/* {el.status !== "Dibuka" ? (
                                   <CardPelatihanClose row={el} />
-                                ) : (
-                                  <CardPelatihanOpen
-                                    funcMouseEnter={(index) =>
-                                      handleMouseEnter(index)
-                                    }
-                                    funcMouseLeave={(index) =>
-                                      handleMouseLeave(index)
-                                    }
-                                    funcQuickView={(index) =>
-                                      handleQuickView(index)
-                                    }
-                                    session={session}
-                                    show={show}
-                                    row={el}
-                                    i={i}
-                                    akademi={akademi}
-                                  />
-                                )}
+                                ) : ( */}
+                                <CardPelatihanOpen
+                                  funcMouseEnter={(index) =>
+                                    handleMouseEnter(index)
+                                  }
+                                  funcMouseLeave={(index) =>
+                                    handleMouseLeave(index)
+                                  }
+                                  funcQuickView={(index) =>
+                                    handleQuickView(index)
+                                  }
+                                  session={session}
+                                  show={show}
+                                  row={el}
+                                  i={i}
+                                  akademi={akademi}
+                                />
+                                {/* )} */}
                               </Card>
                             </Col>
                           </>

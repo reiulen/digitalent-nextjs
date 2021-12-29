@@ -158,50 +158,60 @@ export default function RiwayatPelatihan({ session }) {
             <LoadingTable />
           </div>
         )}
-        {dataRiwayatPelatihan?.listPelatihan?.list?.length > 0 ? (
-          dataRiwayatPelatihan?.listPelatihan?.list?.map((el, i) => {
-            return (
-              <Fragment key={i}>
-                <CardPeserta status={"test"} data={el} session={session} />
-              </Fragment>
-            );
-          })
-        ) : (
-          <div className="row mx-auto bg-white rounded">
-            <div className="col col-12 d-flex flex-column justify-content-center">
-              <Image
-                src={`/assets/media/gambar-belum-tersedia-page.svg`}
-                width={525}
-                height={350}
-                alt="Tidak Tersedia"
-              />
-              <h1
-                className="font-weight-bolder text-capitalize mt-15 text-center fw-600 mb-10"
-                style={{ fontFamily: "Poppins", fontSize: "24px" }}
-              >
-                Data pelatihan tidak ditemukan
-              </h1>
-            </div>
-          </div>
-        )}
-        <div className="d-flex justify-content-center mt-8 mb-40">
-          {dataRiwayatPelatihan?.listPelatihan?.total > 5 && (
-            <div className="table-pagination my-auto">
-              <Pagination
-                activePage={dataRiwayatPelatihan?.page}
-                itemsCountPerPage={dataRiwayatPelatihan?.listPelatihan?.perPage}
-                totalItemsCount={dataRiwayatPelatihan?.listPelatihan?.total}
-                pageRangeDisplayed={3}
-                onChange={(page) => dispatch(setValuePage(page))}
-                nextPageText={">"}
-                prevPageText={"<"}
-                firstPageText={"<<"}
-                lastPageText={">>"}
-                itemClass="page-item-dashboard"
-                linkClass="page-link-dashboard"
-              />
+        <div className="mb-40">
+          {dataRiwayatPelatihan?.listPelatihan?.list?.length > 0 ? (
+            dataRiwayatPelatihan?.listPelatihan?.list?.map((el, i) => {
+              return (
+                <Fragment key={i}>
+                  <CardPeserta status={"test"} data={el} session={session} />
+                </Fragment>
+              );
+            })
+          ) : (
+            <div className="row mx-auto bg-white rounded">
+              <div className="col col-12 d-flex flex-column justify-content-center">
+                <Image
+                  src={`/assets/media/gambar-belum-tersedia-page.svg`}
+                  width={525}
+                  height={350}
+                  alt="Tidak Tersedia"
+                />
+                <h1
+                  className="font-weight-bolder text-capitalize mt-15 text-center fw-600 mb-10"
+                  style={{ fontFamily: "Poppins", fontSize: "24px" }}
+                >
+                  Data pelatihan tidak ditemukan
+                </h1>
+              </div>
             </div>
           )}
+        </div>
+
+        <div className="position-absolute bottom-0 w-100">
+          <div className="d-flex justify-content-center ">
+            {dataRiwayatPelatihan?.listPelatihan?.total > 5 && (
+              <div className="table-pagination my-auto">
+                <Pagination
+                  activePage={dataRiwayatPelatihan?.page}
+                  itemsCountPerPage={
+                    dataRiwayatPelatihan?.listPelatihan?.perPage
+                  }
+                  totalItemsCount={dataRiwayatPelatihan?.listPelatihan?.total}
+                  pageRangeDisplayed={3}
+                  onChange={(page) => {
+                    dispatch(setValuePage(page));
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  nextPageText={">"}
+                  prevPageText={"<"}
+                  firstPageText={"<<"}
+                  lastPageText={">>"}
+                  itemClass="page-item-dashboard"
+                  linkClass="page-link-dashboard"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>

@@ -7,6 +7,7 @@ import { middlewareAuthAdminSession } from "../../../../../utils/middleware/auth
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getAllDataReference } from "../../../../../redux/actions/site-management/data-reference.actions";
+import { getEditTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
 
 const EditRegistration = dynamic(
   () =>
@@ -49,6 +50,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(
         getAllDataReference(session.user.user.data.token, true)
+      );
+      await store.dispatch(
+        getEditTrainingStep2(query.id, session.user.user.data.token)
       );
 
       return {
