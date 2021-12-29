@@ -321,6 +321,8 @@ const TambahArtikel = ({ token, id }) => {
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
+                    </div>
+                    <div className={`${styles.validQuill}`}>
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
@@ -530,9 +532,8 @@ const TambahArtikel = ({ token, id }) => {
                             onChange={(e) => handleChangePublish(e)}
                           />
                           <span
-                            className={`sliders round ${
-                              publish ? "text-white" : "pl-2"
-                            }`}
+                            className={`sliders round ${publish ? "text-white" : "pl-2"
+                              }`}
                           ></span>
                         </label>
                       </div>

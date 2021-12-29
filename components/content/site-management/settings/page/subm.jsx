@@ -15,6 +15,7 @@ import {
 
 export default function SUBM(props) {
   let dispatch = useDispatch();
+  let selectRefYear = null;
 
   const [via, setVia] = useState("template");
   const [title, setTitle] = useState("");
@@ -359,38 +360,18 @@ export default function SUBM(props) {
 
   const listYears = listYear.map((items, index) => {
     return { label: items.value, value: items.value, id: items.id };
-    // return (
-    //   <option value={item.value} key={index}>
-    //     {item.value}
-    //   </option>
-    // );
   });
 
   const optAcademy = listAcademy?.map((items, index) => {
     return { label: items.label, value: items.label, akademi: items.label };
-    // return (
-    //   <option value={item.value} key={index} akademi={item.label}>
-    //     {item.label}
-    //   </option>
-    // );
   });
 
   const optTheme = listTheme?.map((items, index) => {
     return { label: items.label, value: items.label };
-    // return (
-    //   <option value={item.value} key={index}>
-    //     {item.label}
-    //   </option>
-    // );
   });
 
   const optOrganizer = listOrganizer?.map((items, index) => {
     return { label: items.label, value: items.label };
-    // return (
-    //   <option value={item.label} key={index}>
-    //     {item.label}
-    //   </option>
-    // );
   });
 
   const optTraining = listTraining?.map((item, index) => {
