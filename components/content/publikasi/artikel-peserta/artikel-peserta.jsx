@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteArtikelPeserta, clearErrors } from '../../../../redux/actions/publikasi/artikel-peserta.actions'
 import { DELETE_ARTIKEL_PESERTA_RESET } from "../../../../redux/types/publikasi/artikel-peserta.type";
 
-const ArtikelPeserta = ({ token }) => {
+const ArtikelPeserta = ({ token, permission }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -84,7 +84,7 @@ const ArtikelPeserta = ({ token }) => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteArtikelPeserta(id, token));
+                dispatch(deleteArtikelPeserta(id, token, permission));
             }
         });
     };

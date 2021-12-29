@@ -28,7 +28,7 @@ import { deleteVideo, playVideo, clearErrors, changeStatusCard, filterCard } fro
 import { DELETE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 import { viewGaleri } from '../../../../redux/actions/publikasi/galeri.actions';
 
-const Vidio = ({ token }) => {
+const Vidio = ({ token, permission }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -139,7 +139,7 @@ const Vidio = ({ token }) => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteVideo(id, token));
+                dispatch(deleteVideo(id, token, permission));
             }
         });
     };
@@ -343,7 +343,7 @@ const Vidio = ({ token }) => {
             _method: "PUT",
             isplay: "1"
         }
-        dispatch(playVideo(data, token))
+        dispatch(playVideo(data, token, permission))
     }
 
     const handleToggleModal = () => {

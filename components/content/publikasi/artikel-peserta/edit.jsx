@@ -27,7 +27,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 import { useQuill } from "react-quilljs";
 
-const EditArtikel = ({ token }) => {
+const EditArtikel = ({ token, permission }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -214,7 +214,7 @@ const EditArtikel = ({ token }) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                dispatch(updateArtikelPeserta(data, token));
+                dispatch(updateArtikelPeserta(data, token, permission));
               }
             });
 
@@ -245,7 +245,7 @@ const EditArtikel = ({ token }) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                dispatch(updateArtikelPeserta(data, token));
+                dispatch(updateArtikelPeserta(data, token, permission));
               }
             });
         }
@@ -280,7 +280,7 @@ const EditArtikel = ({ token }) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                dispatch(updateArtikelPeserta(data, token));
+                dispatch(updateArtikelPeserta(data, token, permission));
               }
             });
         } else {
@@ -310,7 +310,7 @@ const EditArtikel = ({ token }) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                dispatch(updateArtikelPeserta(data, token));
+                dispatch(updateArtikelPeserta(data, token, permission));
               }
             });
         }
@@ -413,7 +413,7 @@ const EditArtikel = ({ token }) => {
                         <div style={{ width: "100%", height: "300px" }}>
                           <div
                             ref={quillRef}
-                            style={{fontFamily:'Poppins'}}
+                            style={{ fontFamily: 'Poppins' }}
                           />
                         </div>
                       ) : (

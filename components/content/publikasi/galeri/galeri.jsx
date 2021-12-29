@@ -32,7 +32,7 @@ import {
 
 import { DELETE_GALERI_RESET } from "../../../../redux/types/publikasi/galeri.type";
 
-const Galeri = ({ token }) => {
+const Galeri = ({ token, permission }) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -137,7 +137,7 @@ const Galeri = ({ token }) => {
             cancelButtonText: "Batal",
         }).then(result => {
             if (result.isConfirmed) {
-                dispatch(deleteGaleri(id, token));
+                dispatch(deleteGaleri(id, token, permission));
             }
         });
     };
@@ -501,7 +501,7 @@ const Galeri = ({ token }) => {
         const data = {
             id,
         };
-        dispatch(viewGaleri(data, token));
+        dispatch(viewGaleri(data, token, permission));
         setIndexGalleri(i);
     };
 

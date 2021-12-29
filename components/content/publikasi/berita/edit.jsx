@@ -20,7 +20,7 @@ import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 import { useQuill } from "react-quilljs";
 
-const EditBerita = ({ token, idUser }) => {
+const EditBerita = ({ token, idUser, permission }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -207,7 +207,7 @@ const EditBerita = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateBerita(data, token));
+                                dispatch(updateBerita(data, token, permission));
                             }
                         });
 
@@ -239,7 +239,7 @@ const EditBerita = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateBerita(data, token));
+                                dispatch(updateBerita(data, token, permission));
                             }
                         });
                 }
@@ -276,7 +276,7 @@ const EditBerita = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateBerita(data, token));
+                                dispatch(updateBerita(data, token, permission));
                             }
                         });
 
@@ -307,7 +307,7 @@ const EditBerita = ({ token, idUser }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateBerita(data, token));
+                                dispatch(updateBerita(data, token, permission));
                             }
                         });
                 }
@@ -380,7 +380,7 @@ const EditBerita = ({ token, idUser }) => {
                                                 <div style={{ width: "100%", height: "300px" }}>
                                                     <div
                                                         ref={quillRef}
-                                                        style={{fontFamily:'Poppins'}}
+                                                        style={{ fontFamily: 'Poppins' }}
                                                     />
                                                 </div>
                                                 :
