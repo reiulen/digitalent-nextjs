@@ -644,7 +644,7 @@ export const exportFileCSV = (token,permission) => {
   };
 };
 
-export const rejectCooperation = (token, id) => {
+export const rejectCooperation = (token, id, permission) => {
   return async dispatch => {
     try {
       let { data } = await axios.put(
@@ -653,7 +653,7 @@ export const rejectCooperation = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // Permission: permission
+            Permission: permission
           },
         }
       );
