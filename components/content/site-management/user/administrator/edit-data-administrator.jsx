@@ -685,41 +685,27 @@ const TambahApi = ({ token }) => {
 
                       <table className="table table-separate table-head-custom table-checkable mt-5">
                         <thead style={{ backgroundColor: "#F2F7FC" }}>
-                          <tr>
+                        <tr>
                             <th
-                              rowSpan="2"
                               className="align-middle fz-16 fw-600"
                             >
                               No
                             </th>
                             <th
-                              rowSpan="2"
                               className="align-middle fz-16 fw-600"
                             >
                               ID Pelatihan
                             </th>
                             <th
-                              rowSpan="2"
                               className="align-middle fz-16 fw-600"
                             >
                               Nama Pelatihan
                             </th>
                             <th
-                              rowSpan="2"
                               className="align-middle text-center fz-16 fw-600"
                             >
                               Access
                             </th>
-                            <th
-                              colSpan="2"
-                              className="text-center border-0 fz-16 fw-600"
-                            >
-                              Permission
-                            </th>
-                          </tr>
-                          <tr>
-                            <th className="text-center fz-16 fw-600">Manage</th>
-                            <th className="text-center fz-16 fw-600">View</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -742,32 +728,6 @@ const TambahApi = ({ token }) => {
                                       type="checkbox"
                                       checked={items.allSelect}
                                       name="select-all"
-                                      onChange={(e) =>
-                                        handleChangePelatihan(e, index)
-                                      }
-                                    />
-                                    <span></span>
-                                  </label>
-                                </td>
-                                <td className="text-center py-8 border-bottom">
-                                  <label className="checkbox d-flex justify-content-center">
-                                    <input
-                                      type="checkbox"
-                                      checked={items.manage}
-                                      name="select-manage"
-                                      onChange={(e) =>
-                                        handleChangePelatihan(e, index)
-                                      }
-                                    />
-                                    <span></span>
-                                  </label>
-                                </td>
-                                <td className="text-center py-8 border-bottom">
-                                  <label className="checkbox d-flex justify-content-center">
-                                    <input
-                                      type="checkbox"
-                                      checked={items.view}
-                                      name="select-view"
                                       onChange={(e) =>
                                         handleChangePelatihan(e, index)
                                       }
