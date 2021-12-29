@@ -611,7 +611,7 @@ export default function SUBM(props) {
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
-                      placeholder="Pilih Akademi"
+                      placeholder="Pilih Tema"
                       isMulti
                       isDisabled={
                         disableAkademi === true || disableAkademi === ""
@@ -640,7 +640,7 @@ export default function SUBM(props) {
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
-                      placeholder="Pilih Akademi"
+                      placeholder="Pilih Penyelenggara"
                       isMulti
                       isDisabled={disableTema === true || disableTema === ""}
                       isLoading={false}
