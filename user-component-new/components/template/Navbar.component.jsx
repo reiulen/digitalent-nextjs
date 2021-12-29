@@ -963,6 +963,15 @@ const Navigationbar = ({ session }) => {
                       }}
                     >
                       Video
+                    </div>{" "}
+                    <hr className="w-100 p-0 m-0" />
+                    <div
+                      className="p-4 fz-12"
+                      onClick={() => {
+                        router.push("/testimoni");
+                      }}
+                    >
+                      Testimoni
                     </div>
                   </Dropdown.Menu>
                 </Dropdown>
