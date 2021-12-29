@@ -94,7 +94,6 @@ const FormLPJ = ({ token }) => {
             router.push("/peserta/riwayat-pelatihan");
           })
           .catch((err) => {
-            console.log(err, "ini errornya");
             SweatAlert("Gagal", err.response.data.message, "error");
           });
       }
