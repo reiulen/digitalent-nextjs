@@ -45,7 +45,8 @@ import {
 import axios from "axios";
 
 export const getDigitalentTotalDataPendaftar =
-  (token, token_permission) => async (dispatch) => {
+  (token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({ type: DTS_TOTAL_PENDAFTAR_REQUEST });
 
@@ -55,6 +56,7 @@ export const getDigitalentTotalDataPendaftar =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -73,7 +75,8 @@ export const getDigitalentTotalDataPendaftar =
   };
 
 export const getDigitalentTotalPengguna =
-  (token, token_permission) => async (dispatch) => {
+  (token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({ type: DTS_TOTAL_PENGGUNA_REQUEST });
 
@@ -84,6 +87,7 @@ export const getDigitalentTotalPengguna =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -102,7 +106,8 @@ export const getDigitalentTotalPengguna =
   };
 
 export const getDigitalentStatistikAkademiPeserta =
-  (token, token_permission, tahun) => async (dispatch) => {
+  (token, token_permission = "", tahun) =>
+  async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_AKADEMI_PESERTA_REQUEST });
 
@@ -113,6 +118,7 @@ export const getDigitalentStatistikAkademiPeserta =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -131,7 +137,8 @@ export const getDigitalentStatistikAkademiPeserta =
   };
 
 export const getDigitalentStatistikAkademiPendaftar =
-  (token, token_permission, tahun) => async (dispatch) => {
+  (token, token_permission = "", tahun) =>
+  async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_AKADEMI_PENDAFTAR_REQUEST });
 
@@ -143,6 +150,7 @@ export const getDigitalentStatistikAkademiPendaftar =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -161,7 +169,7 @@ export const getDigitalentStatistikAkademiPendaftar =
   };
 
 export const getDigitalentStatistikMitraPeserta =
-  (token, token_permission, page = null) =>
+  (token, token_permission = "", page = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_MITRA_PESERTA_REQUEST });
@@ -174,6 +182,7 @@ export const getDigitalentStatistikMitraPeserta =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -192,7 +201,7 @@ export const getDigitalentStatistikMitraPeserta =
   };
 
 export const getDigitalentStatistikMitraPendaftar =
-  (token, token_permission, page = null) =>
+  (token, token_permission = "", page = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_STATISTIK_MITRA_PENDAFTAR_REQUEST });
@@ -205,6 +214,7 @@ export const getDigitalentStatistikMitraPendaftar =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -223,7 +233,7 @@ export const getDigitalentStatistikMitraPendaftar =
   };
 
 export const getDigitalentTablePendaftaran =
-  (token, token_permission, page = null, keyword = "", limit = null) =>
+  (token, token_permission = "", page = null, keyword = "", limit = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_LIST_PENDAFTARAN_REQUEST });
@@ -238,6 +248,7 @@ export const getDigitalentTablePendaftaran =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -256,7 +267,7 @@ export const getDigitalentTablePendaftaran =
   };
 
 export const getDigitalentPesertaWilayah =
-  (token, token_permission, akademi = null, tema = "", tahun = null) =>
+  (token, token_permission = "", akademi = null, tema = "", tahun = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_LIST_PESERTA_WILAYAH_REQUEST });
@@ -271,6 +282,7 @@ export const getDigitalentPesertaWilayah =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -289,7 +301,7 @@ export const getDigitalentPesertaWilayah =
   };
 
 export const getDigitalentProvinsiPeserta =
-  (token, token_permission, page = null) =>
+  (token, token_permission = "", page = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_PROVINSI_PESERTA_REQUEST });
@@ -302,6 +314,7 @@ export const getDigitalentProvinsiPeserta =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -320,7 +333,7 @@ export const getDigitalentProvinsiPeserta =
   };
 
 export const getDigitalentProvinsiPendaftar =
-  (token, token_permission, page = null) =>
+  (token, token_permission = "", page = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: DTS_PROVINSI_PENDAFTAR_REQUEST });
@@ -333,6 +346,7 @@ export const getDigitalentProvinsiPendaftar =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -351,7 +365,8 @@ export const getDigitalentProvinsiPendaftar =
   };
 
 export const getDigitalentDataPribadi =
-  (token, token_permission) => async (dispatch) => {
+  (token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({ type: DTS_PRIBADI_PESERTA_REQUEST });
 
@@ -362,6 +377,7 @@ export const getDigitalentDataPribadi =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 

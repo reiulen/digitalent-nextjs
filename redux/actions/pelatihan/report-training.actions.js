@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 export const listsReportTraining =
   (
     token,
+    token_permission,
     page = 1,
     limit = 5,
     cari = "",
@@ -16,8 +17,7 @@ export const listsReportTraining =
     tema = "",
     pendaftaran_mulai = "",
     pelatihan_mulai = "",
-    status_pelatihan = "",
-    token_permission = ""
+    status_pelatihan = ""
   ) =>
   async (dispatch) => {
     try {
