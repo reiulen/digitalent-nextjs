@@ -298,11 +298,13 @@ const TambahBerita = ({ token, id }) => {
                                             <div style={{ width: "100%", height: "300px" }}>
                                                 <div
                                                     ref={quillRef}
-                                                    style={{fontFamily:'Poppins'}}
+                                                    style={{ fontFamily: 'Poppins' }}
                                                 />
                                             </div>
                                             :
                                             <p>Tunggu Sebentar</p>}
+                                    </div>
+                                    <div className={`${styles.validQuill}`}>
                                         {simpleValidator.current.message(
                                             "isi_berita",
                                             isi_berita,

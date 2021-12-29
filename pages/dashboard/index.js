@@ -17,6 +17,7 @@ import {
 } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 import { dropdownAkademi } from "../../redux/actions/pelatihan/function.actions";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
+import { getAllPermission } from "../../redux/actions/utils/utils.actions";
 
 export default function DashboardPage(props) {
   const DashboardDigitalent = dynamic(
@@ -65,6 +66,19 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const data = await store.dispatch(
+        getAllPermission(session.user.user.data.token)
+      );
+
+      const url = data.data.redirect;
+      if (url != "/dashboard") {
+        return {
+          redirect: {
+            destination: url,
+            permanent: false,
+          },
+        };
+      }
 
       await store.dispatch(
         getDigitalentTotalDataPendaftar(session.user.user.data.token)
@@ -84,12 +98,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
           yearNow
         )
       );
-      // await store.dispatch(
-      //   getDigitalentStatistikMitraPeserta(session.user.user.data.token)
-      // );
-      // await store.dispatch(
-      //   getDigitalentStatistikMitraPendaftar(session.user.user.data.token)
-      // );
+      await store.dispatch(
+        getDigitalentStatistikMitraPeserta(session.user.user.data.token)
+      );
+      await store.dispatch(
+        getDigitalentStatistikMitraPendaftar(session.user.user.data.token)
+      );
       await store.dispatch(
         getDigitalentTablePendaftaran(session.user.user.data.token)
       );

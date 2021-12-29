@@ -18,6 +18,7 @@ import {
   putTrainingStep1,
   updateTrainingStep1,
   getEditTrainingStep1,
+  getEditTrainingStep2,
   clearErrors,
 } from "../../../../../redux/actions/pelatihan/training.actions";
 import { UPDATE_TRAINING_STEP1_RESET } from "../../../../../redux/types/pelatihan/training.type";
@@ -30,6 +31,7 @@ import {
   dropdownTemabyAkademi,
   dropdownKabupaten,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+
 import { useQuill } from "react-quilljs";
 
 const EditTrainingStep1 = ({ propsStep, token }) => {
@@ -237,8 +239,11 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     setEditorLoaded(true);
 
     if (isUpdated) {
-      propsStep(2);
+      // propsStep(2);
       dispatch({ type: UPDATE_TRAINING_STEP1_RESET });
+      router.push(
+        `/pelatihan/pelatihan/edit-pelatihan/edit-registrasi?id=${router.query.id}`
+      );
     }
 
     if (error) {
@@ -511,6 +516,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         tuna_daksa,
         pelatian_id: parseInt(router.query.id),
       };
+      // dispatch(getEditTrainingStep2(router.query.id, token));
       dispatch(updateTrainingStep1(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -535,737 +541,785 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   }, [targetKuotaRegister, targetKuotaUser]);
 
   return (
-    <div className="col-lg-12 order-1 px-0">
-      {loading && <LoadingPage loading={loading} />}
-      <div className="card card-custom card-stretch gutter-b">
-        <div className="card-body py-4">
-          <form onSubmit={submitHandler}>
-            <h3 className="font-weight-bolder pb-5 pt-4">Data Pelatihan</h3>
+    <PageWrapper>
+      <StepInputPelatihan
+        step={1}
+        title1="Edit Pelatihan"
+        title2="Edit Form Pendaftaran"
+        title3="Edit Form Komitmen"
+      />
+      <div className="col-lg-12 order-1 px-0">
+        <div className="col-lg-12 order-1 px-0">
+          {loading && <LoadingPage loading={loading} />}
+          <div className="card card-custom card-stretch gutter-b">
+            <div className="card-body py-4">
+              <form onSubmit={submitHandler}>
+                <h3 className="font-weight-bolder pb-5 pt-4">Data Pelatihan</h3>
 
-            <div className="form-group row mb-4">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Program DTS
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline">
-                  <input
-                    disabled
-                    type="radio"
-                    name="program"
-                    className="form-check-input"
-                    value="1"
-                    checked={program === "1"}
-                    onClick={(e) => {
-                      setProgram("1");
-                    }}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("program dts")
-                    }
-                  />
-                  <label className="form-check-label">Ya</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    disabled
-                    type="radio"
-                    name="program"
-                    value="0"
-                    checked={program === "0"}
-                    onClick={() => {
-                      setProgram("0");
-                    }}
-                    className="form-check-input"
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("program dts")
-                    }
-                  />
-                  <label className="form-check-label">Tidak</label>
-                </div>
-                {simpleValidator.current.message(
-                  "program dts",
-                  program,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">
-                Nama Pelatihan
-              </label>
-              <input
-                type="text"
-                placeholder="Silahkan Masukkan Nama Pelatihan"
-                className="form-control"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("nama pelatihan")
-                }
-              />
-              {simpleValidator.current.message(
-                "nama pelatihan",
-                name,
-                "required|max:100",
-                { className: "text-danger" }
-              )}
-            </div>
-
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">
-                Level Pelatihan
-              </label>
-              <div className="position-relative" style={{ zIndex: "6" }}>
-                <Select
-                  options={optionsLevelPelatihan}
-                  defaultValue={level}
-                  onChange={(e) =>
-                    setLevel({ value: e?.value, label: e?.label })
-                  }
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("level pelatihan")
-                  }
-                />
-              </div>
-              {simpleValidator.current.message(
-                "level pelatihan",
-                level,
-                "required",
-                { className: "text-danger" }
-              )}
-            </div>
-
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">Akademi</label>
-              <div className="position-relative" style={{ zIndex: "5" }}>
-                <Select
-                  options={optionsAkademi}
-                  defaultValue={academy}
-                  onChange={(e) => {
-                    setAcademy({ value: e?.value, label: e?.label });
-                    if (e?.value === academy.value) {
-                      return;
-                    } else {
-                      setTheme(null);
-                    }
-                  }}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("akademi")
-                  }
-                />
-              </div>
-              {simpleValidator.current.message("akademi", academy, "required", {
-                className: "text-danger",
-              })}
-            </div>
-
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">Tema</label>
-              <div className="position-relative" style={{ zIndex: "4" }}>
-                <Select
-                  placeholder="Silahkan Pilih Tema"
-                  options={drowpdownTemabyAkademi.data.data}
-                  defaultValue={theme}
-                  value={theme}
-                  onChange={(e) =>
-                    setTheme({ value: e?.value, label: e?.label })
-                  }
-                  onBlur={() => simpleValidator.current.showMessageFor("tema")}
-                />
-              </div>
-              {simpleValidator.current.message("tema", theme, "required", {
-                className: "text-danger",
-              })}
-            </div>
-
-            <div className="form-group mb-3">
-              <label className="col-form-label font-weight-bold">
-                Logo Reference (Optional)
-              </label>
-              <div className="d-flex">
-                <div className="custom-file">
-                  <input
-                    type="file"
-                    className="custom-file-input"
-                    accept="image/png, image/jpeg , image/jpg"
-                    onChange={onLogoHandler}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("logo reference")
-                    }
-                    id="logoReference"
-                  />
-                  <label className="custom-file-label" htmlFor="customFile">
-                    {logoName.includes("logo")
-                      ? logoName.split("/")[2]
-                      : logoName}
+                <div className="form-group row mb-4">
+                  <label className="col-form-label font-weight-bold col-sm-2">
+                    Program DTS
                   </label>
-                  <label style={{ marginTop: "15px" }}>
+                  <div className="col-sm-10 my-auto">
+                    <div className="form-check form-check-inline">
+                      <input
+                        disabled
+                        type="radio"
+                        name="program"
+                        className="form-check-input"
+                        value="1"
+                        checked={program === "1"}
+                        onClick={(e) => {
+                          setProgram("1");
+                        }}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("program dts")
+                        }
+                      />
+                      <label className="form-check-label">Ya</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        disabled
+                        type="radio"
+                        name="program"
+                        value="0"
+                        checked={program === "0"}
+                        onClick={() => {
+                          setProgram("0");
+                        }}
+                        className="form-check-input"
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("program dts")
+                        }
+                      />
+                      <label className="form-check-label">Tidak</label>
+                    </div>
                     {simpleValidator.current.message(
-                      "logo reference",
-                      logoFile,
-                      "",
+                      "program dts",
+                      program,
+                      "required",
                       { className: "text-danger" }
                     )}
-                  </label>
-                </div>
-                <button
-                  className="btn btn-link-action bg-danger text-white ml-3"
-                  type="button"
-                  onClick={() => onDeleteHandler("LOGO")}
-                >
-                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                </button>
-              </div>
-              <small className="text-muted">
-                Format Image (.png/.jpg), Rekomendasi 1024x1024
-              </small>
-            </div>
-
-            <div className="form-group mb-3">
-              <label className="col-form-label font-weight-bold">
-                Upload Thumbnail (Optional)
-              </label>
-              <div className="d-flex">
-                <div className="custom-file">
-                  <input
-                    type="file"
-                    className="custom-file-input"
-                    accept="image/png, image/jpeg , image/jpg"
-                    onChange={onThumbnailHandler}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("thumbnail")
-                    }
-                    id="uploadThumbnail"
-                  />
-                  <label className="custom-file-label" htmlFor="customFile">
-                    {thumbnailName.includes("thumbnail")
-                      ? thumbnailName.split("/")[2]
-                      : thumbnailName}
-                  </label>
-                  <label style={{ marginTop: "15px" }}>
-                    {simpleValidator.current.message(
-                      "thumbnail",
-                      thumbnailFile,
-                      "",
-                      { className: "text-danger" }
-                    )}
-                  </label>
-                </div>
-                <button
-                  className="btn btn-link-action bg-danger text-white ml-3"
-                  type="button"
-                  onClick={() => onDeleteHandler("THUMBNAIL")}
-                >
-                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                </button>
-              </div>
-              <small className="text-muted">
-                Format Image (.png/.jpg), Rekomendasi 837 x 380
-              </small>
-            </div>
-
-            <div className="form-group mb-3">
-              <label className="col-form-label font-weight-bold">
-                Upload Silabus
-              </label>
-              <div className="d-flex">
-                <div className="custom-file">
-                  <input
-                    type="file"
-                    className="custom-file-input"
-                    accept="application/pdf"
-                    onChange={onSilabusHandler}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("upload silabus")
-                    }
-                    id="uploadSilabus"
-                  />
-                  <label className="custom-file-label" htmlFor="customFile">
-                    {silabusName.includes("silabus")
-                      ? silabusName.split("/")[2]
-                      : silabusName}
-                  </label>
-                  <label style={{ marginTop: "15px" }}></label>
-                </div>
-                <button
-                  className="btn btn-link-action bg-danger text-white ml-3"
-                  type="button"
-                  onClick={() => onDeleteHandler("SILABUS")}
-                >
-                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                </button>
-              </div>
-              <small className="text-muted">Format File (.pdf)</small>
-            </div>
-
-            <div className="form-group row mb-0 pt-2">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Metode Pelaksanaan
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="metode"
-                    value="Swakelola"
-                    checked={metodeImplementation === "Swakelola"}
-                    onClick={() => setMetodeImplementation("Swakelola")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor(
-                        "metode pelaksanaan"
-                      )
-                    }
-                    className="form-check-input"
-                  />
-                  <label className="form-check-label">Swakelola</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="metode"
-                    className="form-check-input"
-                    value="Mitra"
-                    checked={metodeImplementation === "Mitra"}
-                    onClick={() => setMetodeImplementation("Mitra")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor(
-                        "metode pelaksanaan"
-                      )
-                    }
-                  />
-                  <label className="form-check-label">Mitra</label>
-                </div>
-                {simpleValidator.current.message(
-                  "metode pelaksanaan",
-                  metodeImplementation,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">
-                Penyelenggara
-              </label>
-              <Select
-                options={optionsPenyelenggara}
-                defaultValue={organizer}
-                onChange={(e) =>
-                  setOrganizer({ value: e?.value, label: e?.label })
-                }
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("penyelenggara")
-                }
-              />
-              {simpleValidator.current.message(
-                "penyelenggara",
-                organizer,
-                "required",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </div>
-
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">
-                Pilih Mitra
-              </label>
-              <Select
-                options={optionsMitra}
-                defaultValue={mitra}
-                onChange={(e) => setMitra({ value: e?.value, label: e?.label })}
-                onBlur={() => simpleValidator.current.showMessageFor("mitra")}
-              />
-              {simpleValidator.current.message(
-                "mitra",
-                mitra,
-                metodeImplementation === "Swakelola" ? "" : "required",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </div>
-
-            <h3 className="font-weight-bolder pt-3">Tanggal Pendaftaran</h3>
-
-            <div className="form-group row mb-2">
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Tanggal Mulai
-                </label>
-                <DatePicker
-                  selected={startDateRegistration}
-                  value={startDateRegistration}
-                  onChange={(date) => setStartDateRegistration(date)}
-                  showTimeSelect
-                  minDate={today}
-                  locale="pt-BR"
-                  timeFormat="HH:mm"
-                  dateFormat="d MMMM yyyy - HH:mm"
-                  className="form-control w-100 d-block"
-                  placeholderText="Silahkan Pilih Tanggal Dari"
-                />
-                {simpleValidator.current.message(
-                  "tanggal mulai",
-                  startDateRegistration,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Tanggal Sampai
-                </label>
-                <DatePicker
-                  selected={
-                    startDateRegistration > endDateRegistration
-                      ? ""
-                      : endDateRegistration
-                  }
-                  value={
-                    startDateRegistration > endDateRegistration
-                      ? ""
-                      : endDateRegistration
-                  }
-                  onChange={(date) => setEndDateRegistration(date)}
-                  minDate={startDateRegistration}
-                  showTimeSelect
-                  className="form-control w-100 d-block"
-                  locale="pt-BR"
-                  timeFormat="HH:mm"
-                  dateFormat="d MMMM yyyy - HH:mm"
-                  placeholderText="Silahkan Pilih Tanggal Sampai"
-                />
-                {simpleValidator.current.message(
-                  "tanggal sampai",
-                  endDateRegistration,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-
-            <h3 className="font-weight-bolder pt-3">Tanggal Pelatihan</h3>
-
-            <div className="form-group row mb-2">
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Tanggal Mulai
-                </label>
-                <DatePicker
-                  selected={startDateTraining}
-                  onChange={(date) => setStartDateTraining(date)}
-                  minDate={endDateRegistration}
-                  showTimeSelect
-                  value={startDateTraining}
-                  className="form-control w-100 d-block"
-                  locale="pt-BR"
-                  timeFormat="HH:mm"
-                  dateFormat="d MMMM yyyy - HH:mm"
-                  placeholderText="Silahkan Pilih Tanggal Dari"
-                />
-                {simpleValidator.current.message(
-                  "tanggal mulai",
-                  startDateTraining,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Tanggal Sampai
-                </label>
-                <DatePicker
-                  onChange={(date) => setEndDateTraining(date)}
-                  minDate={startDateTraining}
-                  selected={
-                    startDateTraining > endDateTraining ? "" : endDateTraining
-                  }
-                  value={
-                    startDateTraining > endDateTraining ? "" : endDateTraining
-                  }
-                  showTimeSelect
-                  className="form-control w-100 d-block"
-                  locale="pt-BR"
-                  timeFormat="HH:mm"
-                  dateFormat="d MMMM yyyy - HH:mm"
-                  placeholderText="Silahkan Pilih Tanggal Sampai"
-                />
-                {simpleValidator.current.message(
-                  "tanggal sampai",
-                  endDateTraining,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">
-                Deskripsi
-              </label>
-              <div className="ckeditor">
-                {editorLoaded ? (
-                  // <CKEditor
-                  //   editor={ClassicEditor}
-                  //   data={description}
-                  //   onReady={(editor) => {
-                  //     // You can store the "editor" and use when it is needed.
-                  //   }}
-                  //   onChange={(event, editor) => {
-                  //     const data = editor.getData();
-                  //     setDescription(data);
-                  //   }}
-                  //   onBlur={() =>
-                  //     simpleValidator.current.showMessageFor("deskripsi")
-                  //   }
-                  //   config={{
-                  //     placeholder: "Silahkan Masukan Deskripsi Detail",
-                  //   }}
-                  // />
-                  <div style={{ width: "100%", height: "250px" }}>
-                    <div ref={quillRef} style={{ fontFamily: "Poppins" }} />
                   </div>
-                ) : (
-                  <p>Tunggu Sebentar</p>
-                )}
-                {simpleValidator.current.message(
-                  "deskripsi",
-                  description,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-
-            <h3 className="font-weight-bolder style-quill-margin">Kuota</h3>
-
-            <div className="form-group row mb-2">
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Kuota Target Pendaftar
-                </label>
-                <input
-                  type="number"
-                  value={targetKuotaRegister}
-                  onChange={(e) => setTargetKuotaRegister(e.target.value)}
-                  className="form-control"
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor(
-                      "kuota target pendaftar"
-                    )
-                  }
-                />
-
-                {simpleValidator.current.message(
-                  "kuota target pendaftar",
-                  targetKuotaRegister,
-                  "required|integer",
-                  { className: "text-danger" }
-                )}
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Kuota Target Peserta
-                </label>
-                <input
-                  type="number"
-                  value={targetKuotaUser}
-                  onChange={(e) => setTargetKuotaUser(e.target.value)}
-                  className="form-control"
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor(
-                      "kuota target peserta"
-                    )
-                  }
-                />
-                {errorMessageKuota && (
-                  <p className="text-danger">
-                    Kuota user tidak boleh lebih dari kuota register
-                  </p>
-                )}
-                {simpleValidator.current.message(
-                  "kuota target peserta",
-                  targetKuotaUser,
-                  "required|integer",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-
-            <div className="form-group row mb-0">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Status Kuota
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="statusKuota"
-                    className="form-check-input"
-                    value="Available"
-                    checked={statusKuota === "Available"}
-                    onClick={() => setStatusKuota("Available")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("status kuota")
-                    }
-                  />
-                  <label className="form-check-label">Available</label>
                 </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="statusKuota"
-                    className="form-check-input"
-                    value="Full"
-                    checked={statusKuota === "Full"}
-                    onClick={() => setStatusKuota("Full")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("status kuota")
-                    }
-                  />
-                  <label className="form-check-label">Full</label>
-                </div>
-                {simpleValidator.current.message(
-                  "status kuota",
-                  statusKuota,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
 
-            <div className="form-group row mb-0">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Alur Pendaftaran
-              </label>
-              <div className="col-sm-10">
-                <div className="form-check mt-3">
-                  <input
-                    type="radio"
-                    name="plotRegistration"
-                    disabled
-                    className="form-check-input"
-                    value="Administrasi - Test Substansi"
-                    checked={
-                      plotRegistration === "Administrasi - Test Substansi"
-                    }
-                    onClick={() =>
-                      setPlotRegistration("Administrasi - Test Substansi")
-                    }
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("alur pendaftaran")
-                    }
-                  />
-                  <label className="form-check-label">
-                    Administrasi - Test Substansi
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Nama Pelatihan
                   </label>
-                </div>
-                <div className="form-check">
                   <input
-                    type="radio"
-                    name="plotRegistration"
-                    disabled
-                    className="form-check-input"
-                    value="Tes Substansi - Administrasi"
-                    checked={
-                      plotRegistration === "Tes Substansi - Administrasi"
-                    }
-                    onClick={() =>
-                      setPlotRegistration("Tes Substansi - Administrasi")
-                    }
+                    type="text"
+                    placeholder="Silahkan Masukkan Nama Pelatihan"
+                    className="form-control"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     onBlur={() =>
-                      simpleValidator.current.showMessageFor("alur pendaftaran")
+                      simpleValidator.current.showMessageFor("nama pelatihan")
                     }
                   />
-                  <label className="form-check-label">
-                    Tes Substansi - Administrasi
-                  </label>
+                  {simpleValidator.current.message(
+                    "nama pelatihan",
+                    name,
+                    "required|max:100",
+                    { className: "text-danger" }
+                  )}
                 </div>
-                <div className="form-check">
-                  <input
-                    type="radio"
-                    name="plotRegistration"
-                    disabled
-                    className="form-check-input"
-                    value="Administrasi"
-                    checked={plotRegistration === "Administrasi"}
-                    onClick={() => setPlotRegistration("Administrasi")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("alur pendaftaran")
-                    }
-                  />
-                  <label className="form-check-label">Administrasi</label>
-                </div>
-                {simpleValidator.current.message(
-                  "alur pendaftaran",
-                  plotRegistration,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
 
-            <div className="form-group row mb-0 mt-2">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Sertifikasi
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline">
-                  <input
-                    id="sertification1"
-                    type="radio"
-                    name="sertification"
-                    className="form-check-input"
-                    value="global"
-                    checked={sertification === "global"}
-                    onClick={() => setSertification("global")}
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Level Pelatihan
+                  </label>
+                  <div className="position-relative" style={{ zIndex: "6" }}>
+                    <Select
+                      options={optionsLevelPelatihan}
+                      defaultValue={level}
+                      onChange={(e) =>
+                        setLevel({ value: e?.value, label: e?.label })
+                      }
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor(
+                          "level pelatihan"
+                        )
+                      }
+                    />
+                  </div>
+                  {simpleValidator.current.message(
+                    "level pelatihan",
+                    level,
+                    "required",
+                    { className: "text-danger" }
+                  )}
+                </div>
+
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Akademi
+                  </label>
+                  <div className="position-relative" style={{ zIndex: "5" }}>
+                    <Select
+                      options={optionsAkademi}
+                      defaultValue={academy}
+                      onChange={(e) => {
+                        setAcademy({ value: e?.value, label: e?.label });
+                        if (e?.value === academy.value) {
+                          return;
+                        } else {
+                          setTheme(null);
+                        }
+                      }}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("akademi")
+                      }
+                    />
+                  </div>
+                  {simpleValidator.current.message(
+                    "akademi",
+                    academy,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </div>
+
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Tema
+                  </label>
+                  <div className="position-relative" style={{ zIndex: "4" }}>
+                    <Select
+                      placeholder="Silahkan Pilih Tema"
+                      options={drowpdownTemabyAkademi.data.data}
+                      defaultValue={theme}
+                      value={theme}
+                      onChange={(e) =>
+                        setTheme({ value: e?.value, label: e?.label })
+                      }
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("tema")
+                      }
+                    />
+                  </div>
+                  {simpleValidator.current.message("tema", theme, "required", {
+                    className: "text-danger",
+                  })}
+                </div>
+
+                <div className="form-group mb-3">
+                  <label className="col-form-label font-weight-bold">
+                    Logo Reference (Optional)
+                  </label>
+                  <div className="d-flex">
+                    <div className="custom-file">
+                      <input
+                        type="file"
+                        className="custom-file-input"
+                        accept="image/png, image/jpeg , image/jpg"
+                        onChange={onLogoHandler}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "logo reference"
+                          )
+                        }
+                        id="logoReference"
+                      />
+                      <label className="custom-file-label" htmlFor="customFile">
+                        {logoName.includes("logo")
+                          ? logoName.split("/")[2]
+                          : logoName}
+                      </label>
+                      <label style={{ marginTop: "15px" }}>
+                        {simpleValidator.current.message(
+                          "logo reference",
+                          logoFile,
+                          "",
+                          { className: "text-danger" }
+                        )}
+                      </label>
+                    </div>
+                    <button
+                      className="btn btn-link-action bg-danger text-white ml-3"
+                      type="button"
+                      onClick={() => onDeleteHandler("LOGO")}
+                    >
+                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                    </button>
+                  </div>
+                  <small className="text-muted">
+                    Format Image (.png/.jpg), Rekomendasi 1024x1024
+                  </small>
+                </div>
+
+                <div className="form-group mb-3">
+                  <label className="col-form-label font-weight-bold">
+                    Upload Thumbnail (Optional)
+                  </label>
+                  <div className="d-flex">
+                    <div className="custom-file">
+                      <input
+                        type="file"
+                        className="custom-file-input"
+                        accept="image/png, image/jpeg , image/jpg"
+                        onChange={onThumbnailHandler}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("thumbnail")
+                        }
+                        id="uploadThumbnail"
+                      />
+                      <label className="custom-file-label" htmlFor="customFile">
+                        {thumbnailName.includes("thumbnail")
+                          ? thumbnailName.split("/")[2]
+                          : thumbnailName}
+                      </label>
+                      <label style={{ marginTop: "15px" }}>
+                        {simpleValidator.current.message(
+                          "thumbnail",
+                          thumbnailFile,
+                          "",
+                          { className: "text-danger" }
+                        )}
+                      </label>
+                    </div>
+                    <button
+                      className="btn btn-link-action bg-danger text-white ml-3"
+                      type="button"
+                      onClick={() => onDeleteHandler("THUMBNAIL")}
+                    >
+                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                    </button>
+                  </div>
+                  <small className="text-muted">
+                    Format Image (.png/.jpg), Rekomendasi 837 x 380
+                  </small>
+                </div>
+
+                <div className="form-group mb-3">
+                  <label className="col-form-label font-weight-bold">
+                    Upload Silabus
+                  </label>
+                  <div className="d-flex">
+                    <div className="custom-file">
+                      <input
+                        type="file"
+                        className="custom-file-input"
+                        accept="application/pdf"
+                        onChange={onSilabusHandler}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "upload silabus"
+                          )
+                        }
+                        id="uploadSilabus"
+                      />
+                      <label className="custom-file-label" htmlFor="customFile">
+                        {silabusName.includes("silabus")
+                          ? silabusName.split("/")[2]
+                          : silabusName}
+                      </label>
+                      <label style={{ marginTop: "15px" }}></label>
+                    </div>
+                    <button
+                      className="btn btn-link-action bg-danger text-white ml-3"
+                      type="button"
+                      onClick={() => onDeleteHandler("SILABUS")}
+                    >
+                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                    </button>
+                  </div>
+                  <small className="text-muted">Format File (.pdf)</small>
+                </div>
+
+                <div className="form-group row mb-0 pt-2">
+                  <label className="col-form-label font-weight-bold col-sm-2">
+                    Metode Pelaksanaan
+                  </label>
+                  <div className="col-sm-10 my-auto">
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="metode"
+                        value="Swakelola"
+                        checked={metodeImplementation === "Swakelola"}
+                        onClick={() => setMetodeImplementation("Swakelola")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "metode pelaksanaan"
+                          )
+                        }
+                        className="form-check-input"
+                      />
+                      <label className="form-check-label">Swakelola</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="metode"
+                        className="form-check-input"
+                        value="Mitra"
+                        checked={metodeImplementation === "Mitra"}
+                        onClick={() => setMetodeImplementation("Mitra")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "metode pelaksanaan"
+                          )
+                        }
+                      />
+                      <label className="form-check-label">Mitra</label>
+                    </div>
+                    {simpleValidator.current.message(
+                      "metode pelaksanaan",
+                      metodeImplementation,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                </div>
+
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Penyelenggara
+                  </label>
+                  <Select
+                    options={optionsPenyelenggara}
+                    defaultValue={organizer}
+                    onChange={(e) =>
+                      setOrganizer({ value: e?.value, label: e?.label })
+                    }
                     onBlur={() =>
-                      simpleValidator.current.showMessageFor("sertifikasi")
+                      simpleValidator.current.showMessageFor("penyelenggara")
                     }
                   />
-                  <label className="form-check-label" htmlFor="sertification1">
-                    Global
-                  </label>
+                  {simpleValidator.current.message(
+                    "penyelenggara",
+                    organizer,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    id="sertification2"
-                    type="radio"
-                    name="sertification"
-                    className="form-check-input"
-                    value="skkni"
-                    checked={sertification === "skkni"}
-                    onClick={() => setSertification("skkni")}
+
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Pilih Mitra
+                  </label>
+                  <Select
+                    options={optionsMitra}
+                    defaultValue={mitra}
+                    onChange={(e) =>
+                      setMitra({ value: e?.value, label: e?.label })
+                    }
                     onBlur={() =>
-                      simpleValidator.current.showMessageFor("sertifikasi")
+                      simpleValidator.current.showMessageFor("mitra")
                     }
                   />
-                  <label className="form-check-label" htmlFor="sertification2">
-                    SKKNI (Nasional)
-                  </label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    id="sertification3"
-                    type="radio"
-                    name="sertification"
-                    className="form-check-input"
-                    value="industri"
-                    checked={sertification === "industri"}
-                    onClick={() => setSertification("industri")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("sertifikasi")
+                  {simpleValidator.current.message(
+                    "mitra",
+                    mitra,
+                    metodeImplementation === "Swakelola" ? "" : "required",
+                    {
+                      className: "text-danger",
                     }
-                  />
-                  <label className="form-check-label" htmlFor="sertification3">
-                    Industri
-                  </label>
+                  )}
                 </div>
-                {/* <div className="form-check form-check-inline">
+
+                <h3 className="font-weight-bolder pt-3">Tanggal Pendaftaran</h3>
+
+                <div className="form-group row mb-2">
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Tanggal Mulai
+                    </label>
+                    <DatePicker
+                      selected={startDateRegistration}
+                      value={startDateRegistration}
+                      onChange={(date) => setStartDateRegistration(date)}
+                      showTimeSelect
+                      minDate={today}
+                      locale="pt-BR"
+                      timeFormat="HH:mm"
+                      dateFormat="d MMMM yyyy - HH:mm"
+                      className="form-control w-100 d-block"
+                      placeholderText="Silahkan Pilih Tanggal Dari"
+                    />
+                    {simpleValidator.current.message(
+                      "tanggal mulai",
+                      startDateRegistration,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Tanggal Sampai
+                    </label>
+                    <DatePicker
+                      selected={
+                        startDateRegistration > endDateRegistration
+                          ? ""
+                          : endDateRegistration
+                      }
+                      value={
+                        startDateRegistration > endDateRegistration
+                          ? ""
+                          : endDateRegistration
+                      }
+                      onChange={(date) => setEndDateRegistration(date)}
+                      minDate={startDateRegistration}
+                      showTimeSelect
+                      className="form-control w-100 d-block"
+                      locale="pt-BR"
+                      timeFormat="HH:mm"
+                      dateFormat="d MMMM yyyy - HH:mm"
+                      placeholderText="Silahkan Pilih Tanggal Sampai"
+                    />
+                    {simpleValidator.current.message(
+                      "tanggal sampai",
+                      endDateRegistration,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                </div>
+
+                <h3 className="font-weight-bolder pt-3">Tanggal Pelatihan</h3>
+
+                <div className="form-group row mb-2">
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Tanggal Mulai
+                    </label>
+                    <DatePicker
+                      selected={startDateTraining}
+                      onChange={(date) => setStartDateTraining(date)}
+                      minDate={endDateRegistration}
+                      showTimeSelect
+                      value={startDateTraining}
+                      className="form-control w-100 d-block"
+                      locale="pt-BR"
+                      timeFormat="HH:mm"
+                      dateFormat="d MMMM yyyy - HH:mm"
+                      placeholderText="Silahkan Pilih Tanggal Dari"
+                    />
+                    {simpleValidator.current.message(
+                      "tanggal mulai",
+                      startDateTraining,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Tanggal Sampai
+                    </label>
+                    <DatePicker
+                      onChange={(date) => setEndDateTraining(date)}
+                      minDate={startDateTraining}
+                      selected={
+                        startDateTraining > endDateTraining
+                          ? ""
+                          : endDateTraining
+                      }
+                      value={
+                        startDateTraining > endDateTraining
+                          ? ""
+                          : endDateTraining
+                      }
+                      showTimeSelect
+                      className="form-control w-100 d-block"
+                      locale="pt-BR"
+                      timeFormat="HH:mm"
+                      dateFormat="d MMMM yyyy - HH:mm"
+                      placeholderText="Silahkan Pilih Tanggal Sampai"
+                    />
+                    {simpleValidator.current.message(
+                      "tanggal sampai",
+                      endDateTraining,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                </div>
+
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Deskripsi
+                  </label>
+                  <div className="ckeditor">
+                    {editorLoaded ? (
+                      // <CKEditor
+                      //   editor={ClassicEditor}
+                      //   data={description}
+                      //   onReady={(editor) => {
+                      //     // You can store the "editor" and use when it is needed.
+                      //   }}
+                      //   onChange={(event, editor) => {
+                      //     const data = editor.getData();
+                      //     setDescription(data);
+                      //   }}
+                      //   onBlur={() =>
+                      //     simpleValidator.current.showMessageFor("deskripsi")
+                      //   }
+                      //   config={{
+                      //     placeholder: "Silahkan Masukan Deskripsi Detail",
+                      //   }}
+                      // />
+                      <div style={{ width: "100%", height: "250px" }}>
+                        <div ref={quillRef} style={{ fontFamily: "Poppins" }} />
+                      </div>
+                    ) : (
+                      <p>Tunggu Sebentar</p>
+                    )}
+                    {simpleValidator.current.message(
+                      "deskripsi",
+                      description,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                </div>
+
+                <h3 className="font-weight-bolder style-quill-margin">Kuota</h3>
+
+                <div className="form-group row mb-2">
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Kuota Target Pendaftar
+                    </label>
+                    <input
+                      type="number"
+                      value={targetKuotaRegister}
+                      onChange={(e) => setTargetKuotaRegister(e.target.value)}
+                      className="form-control"
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor(
+                          "kuota target pendaftar"
+                        )
+                      }
+                    />
+
+                    {simpleValidator.current.message(
+                      "kuota target pendaftar",
+                      targetKuotaRegister,
+                      "required|integer",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Kuota Target Peserta
+                    </label>
+                    <input
+                      type="number"
+                      value={targetKuotaUser}
+                      onChange={(e) => setTargetKuotaUser(e.target.value)}
+                      className="form-control"
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor(
+                          "kuota target peserta"
+                        )
+                      }
+                    />
+                    {errorMessageKuota && (
+                      <p className="text-danger">
+                        Kuota user tidak boleh lebih dari kuota register
+                      </p>
+                    )}
+                    {simpleValidator.current.message(
+                      "kuota target peserta",
+                      targetKuotaUser,
+                      "required|integer",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                </div>
+
+                <div className="form-group row mb-0">
+                  <label className="col-form-label font-weight-bold col-sm-2">
+                    Status Kuota
+                  </label>
+                  <div className="col-sm-10 my-auto">
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="statusKuota"
+                        className="form-check-input"
+                        value="Available"
+                        checked={statusKuota === "Available"}
+                        onClick={() => setStatusKuota("Available")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("status kuota")
+                        }
+                      />
+                      <label className="form-check-label">Available</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="statusKuota"
+                        className="form-check-input"
+                        value="Full"
+                        checked={statusKuota === "Full"}
+                        onClick={() => setStatusKuota("Full")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("status kuota")
+                        }
+                      />
+                      <label className="form-check-label">Full</label>
+                    </div>
+                    {simpleValidator.current.message(
+                      "status kuota",
+                      statusKuota,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                </div>
+
+                <div className="form-group row mb-0">
+                  <label className="col-form-label font-weight-bold col-sm-2">
+                    Alur Pendaftaran
+                  </label>
+                  <div className="col-sm-10">
+                    <div className="form-check mt-3">
+                      <input
+                        type="radio"
+                        name="plotRegistration"
+                        disabled
+                        className="form-check-input"
+                        value="Administrasi - Test Substansi"
+                        checked={
+                          plotRegistration === "Administrasi - Test Substansi"
+                        }
+                        onClick={() =>
+                          setPlotRegistration("Administrasi - Test Substansi")
+                        }
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "alur pendaftaran"
+                          )
+                        }
+                      />
+                      <label className="form-check-label">
+                        Administrasi - Test Substansi
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        type="radio"
+                        name="plotRegistration"
+                        disabled
+                        className="form-check-input"
+                        value="Tes Substansi - Administrasi"
+                        checked={
+                          plotRegistration === "Tes Substansi - Administrasi"
+                        }
+                        onClick={() =>
+                          setPlotRegistration("Tes Substansi - Administrasi")
+                        }
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "alur pendaftaran"
+                          )
+                        }
+                      />
+                      <label className="form-check-label">
+                        Tes Substansi - Administrasi
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        type="radio"
+                        name="plotRegistration"
+                        disabled
+                        className="form-check-input"
+                        value="Administrasi"
+                        checked={plotRegistration === "Administrasi"}
+                        onClick={() => setPlotRegistration("Administrasi")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "alur pendaftaran"
+                          )
+                        }
+                      />
+                      <label className="form-check-label">Administrasi</label>
+                    </div>
+                    {simpleValidator.current.message(
+                      "alur pendaftaran",
+                      plotRegistration,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                </div>
+
+                <div className="form-group row mb-0 mt-2">
+                  <label className="col-form-label font-weight-bold col-sm-2">
+                    Sertifikasi
+                  </label>
+                  <div className="col-sm-10 my-auto">
+                    <div className="form-check form-check-inline">
+                      <input
+                        id="sertification1"
+                        type="radio"
+                        name="sertification"
+                        className="form-check-input"
+                        value="global"
+                        checked={sertification === "global"}
+                        onClick={() => setSertification("global")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("sertifikasi")
+                        }
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="sertification1"
+                      >
+                        Global
+                      </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        id="sertification2"
+                        type="radio"
+                        name="sertification"
+                        className="form-check-input"
+                        value="skkni"
+                        checked={sertification === "skkni"}
+                        onClick={() => setSertification("skkni")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("sertifikasi")
+                        }
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="sertification2"
+                      >
+                        SKKNI (Nasional)
+                      </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        id="sertification3"
+                        type="radio"
+                        name="sertification"
+                        className="form-check-input"
+                        value="industri"
+                        checked={sertification === "industri"}
+                        onClick={() => setSertification("industri")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("sertifikasi")
+                        }
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="sertification3"
+                      >
+                        Industri
+                      </label>
+                    </div>
+                    {/* <div className="form-check form-check-inline">
                   <input
                     type="radio"
                     name="sertification"
@@ -1279,222 +1333,89 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   />
                   <label className="form-check-label">Ya</label>
                 </div> */}
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="sertification"
-                    className="form-check-input"
-                    value="Tidak"
-                    checked={sertification === "0"}
-                    onClick={() => setSertification("0")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("sertifikasi")
-                    }
-                  />
-                  <label className="form-check-label">Tidak</label>
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="sertification"
+                        className="form-check-input"
+                        value="Tidak"
+                        checked={sertification === "0"}
+                        onClick={() => setSertification("0")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("sertifikasi")
+                        }
+                      />
+                      <label className="form-check-label">Tidak</label>
+                    </div>
+                    {simpleValidator.current.message(
+                      "sertifikasi",
+                      sertification,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
                 </div>
-                {simpleValidator.current.message(
-                  "sertifikasi",
-                  sertification,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
 
-            <div className="form-group row mb-0">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                LPJ Peserta
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="lpjPeserta"
-                    className="form-check-input"
-                    value="Ya"
-                    checked={lpjUser === "1"}
-                    onClick={() => setLpjUser("1")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("lpj peserta")
-                    }
-                  />
-                  <label className="form-check-label">Ya</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="lpjPeserta"
-                    className="form-check-input"
-                    value="Tidak"
-                    checked={lpjUser === "0"}
-                    onClick={() => setLpjUser("0")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("lpj peserta")
-                    }
-                  />
-                  <label className="form-check-label">Tidak</label>
-                </div>
-                {simpleValidator.current.message(
-                  "lpj peserta",
-                  lpjUser,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-            <div className="form-group row mb-2">
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Zonasi
-                </label>
-                <Select
-                  options={optionsZonasi}
-                  defaultValue={zonasi}
-                  onChange={(e) =>
-                    setZonasi({ value: e?.value, label: e?.label })
-                  }
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("zonasi")
-                  }
-                />
-                {simpleValidator.current.message("zonasi", zonasi, "required", {
-                  className: "text-danger",
-                })}
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">Batch</label>
-                <Select
-                  options={optionBatch}
-                  defaultValue={batch}
-                  onChange={(e) =>
-                    setBatch({ value: e?.value, label: e?.label })
-                  }
-                  onBlur={() => simpleValidator.current.showMessageFor("batch")}
-                />
-                {simpleValidator.current.message("batch", batch, "required", {
-                  className: "text-danger",
-                })}
-              </div>
-            </div>
-
-            <div className="form-group row mb-0 mt-3">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Metode Pelatihan
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="metodeTraining"
-                    className="form-check-input"
-                    value="Offline"
-                    checked={metodeTraining === "Offline"}
-                    onClick={() => {
-                      setMetodeTraining("Offline");
-                      setAddress("");
-                      setProvince("");
-                      setCity("");
-                    }}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("metode pelatihan")
-                    }
-                  />
-                  <label className="form-check-label">Offline</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="metodeTraining"
-                    className="form-check-input"
-                    value="Online"
-                    checked={metodeTraining === "Online"}
-                    onClick={() => setMetodeTraining("Online")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("metode pelatihan")
-                    }
-                  />
-                  <label className="form-check-label">Online</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="metodeTraining"
-                    className="form-check-input"
-                    value="Online&Offline"
-                    checked={metodeTraining === "Online dan Offline"}
-                    onClick={() => {
-                      setMetodeTraining("Online dan Offline");
-                      setAddress("");
-                      setProvince("");
-                      setCity("");
-                    }}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("metode pelatihan")
-                    }
-                  />
-                  <label className="form-check-label">Online & Offline</label>
-                </div>
-                {simpleValidator.current.message(
-                  "metode pelatihan",
-                  metodeTraining,
-                  "required",
-                  {
-                    className: "text-danger",
-                  }
-                )}
-              </div>
-            </div>
-
-            {metodeTraining !== "Online" && (
-              <>
-                <h3 className="font-weight-bolder pt-3">Lokasi Pelatihan</h3>
-
-                <div className="form-group mb-4">
-                  <label className="col-form-label font-weight-bold">
-                    Alamat
+                <div className="form-group row mb-0">
+                  <label className="col-form-label font-weight-bold col-sm-2">
+                    LPJ Peserta
                   </label>
-                  <textarea
-                    value={address}
-                    rows="6"
-                    className="form-control"
-                    onChange={(e) => setAddress(e.target.value)}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("alamat")
-                    }
-                    placeholder="Silahkan Masukan Alamat Disini"
-                  />
-                  {simpleValidator.current.message(
-                    "alamat",
-                    address,
-                    metodeTraining !== "Online" ? "required" : "",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
+                  <div className="col-sm-10 my-auto">
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="lpjPeserta"
+                        className="form-check-input"
+                        value="Ya"
+                        checked={lpjUser === "1"}
+                        onClick={() => setLpjUser("1")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("lpj peserta")
+                        }
+                      />
+                      <label className="form-check-label">Ya</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="lpjPeserta"
+                        className="form-check-input"
+                        value="Tidak"
+                        checked={lpjUser === "0"}
+                        onClick={() => setLpjUser("0")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("lpj peserta")
+                        }
+                      />
+                      <label className="form-check-label">Tidak</label>
+                    </div>
+                    {simpleValidator.current.message(
+                      "lpj peserta",
+                      lpjUser,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
                 </div>
-
                 <div className="form-group row mb-2">
                   <div className="col-sm-12 col-md-6">
                     <label className="col-form-label font-weight-bold">
-                      Provinsi
+                      Zonasi
                     </label>
                     <Select
-                      options={optionsProvinsi}
-                      defaultValue={province}
-                      onChange={(e) => {
-                        setProvince({ label: e?.label, value: e?.value });
-                        setCity(null);
-                        dispatch(dropdownKabupaten(token, e.value));
-                      }}
+                      options={optionsZonasi}
+                      defaultValue={zonasi}
+                      onChange={(e) =>
+                        setZonasi({ value: e?.value, label: e?.label })
+                      }
                       onBlur={() =>
-                        simpleValidator.current.showMessageFor("provinsi")
+                        simpleValidator.current.showMessageFor("zonasi")
                       }
                     />
                     {simpleValidator.current.message(
-                      "provinsi",
-                      province,
-                      metodeTraining !== "Online" ? "required" : "",
+                      "zonasi",
+                      zonasi,
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -1502,111 +1423,275 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   </div>
                   <div className="col-sm-12 col-md-6">
                     <label className="col-form-label font-weight-bold">
-                      Kota / Kabupaten
+                      Batch
                     </label>
                     <Select
-                      ref={(ref) => (selectRefKabupaten = ref)}
-                      options={optionsKabupaten}
-                      defaultValue={city}
-                      value={city}
+                      options={optionBatch}
+                      defaultValue={batch}
                       onChange={(e) =>
-                        setCity({ value: e?.value, label: e?.label })
+                        setBatch({ value: e?.value, label: e?.label })
                       }
                       onBlur={() =>
-                        simpleValidator.current.showMessageFor("kota/kabupaten")
+                        simpleValidator.current.showMessageFor("batch")
                       }
                     />
                     {simpleValidator.current.message(
-                      "kota/kabupaten",
-                      city,
-                      metodeTraining !== "Online" ? "required" : "",
+                      "batch",
+                      batch,
+                      "required",
                       {
                         className: "text-danger",
                       }
                     )}
                   </div>
                 </div>
-              </>
-            )}
 
-            <div className="form-group row mb-0">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Disabilitas
-              </label>
-              <div className="col-sm-10">
-                <div className="form-check mt-3">
-                  <input
-                    type="checkbox"
-                    name="plotRegistration"
-                    className="form-check-input"
-                    defaultChecked={umum === "1"}
-                    value={umum}
-                    onChange={(e) => {
-                      setUmum(e.target.checked === true ? "1" : "0");
-                    }}
-                  />
-                  <label className="form-check-label">Umum</label>
+                <div className="form-group row mb-0 mt-3">
+                  <label className="col-form-label font-weight-bold col-sm-2">
+                    Metode Pelatihan
+                  </label>
+                  <div className="col-sm-10 my-auto">
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="metodeTraining"
+                        className="form-check-input"
+                        value="Offline"
+                        checked={metodeTraining === "Offline"}
+                        onClick={() => {
+                          setMetodeTraining("Offline");
+                          setAddress("");
+                          setProvince("");
+                          setCity("");
+                        }}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "metode pelatihan"
+                          )
+                        }
+                      />
+                      <label className="form-check-label">Offline</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="metodeTraining"
+                        className="form-check-input"
+                        value="Online"
+                        checked={metodeTraining === "Online"}
+                        onClick={() => setMetodeTraining("Online")}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "metode pelatihan"
+                          )
+                        }
+                      />
+                      <label className="form-check-label">Online</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        name="metodeTraining"
+                        className="form-check-input"
+                        value="Online&Offline"
+                        checked={metodeTraining === "Online dan Offline"}
+                        onClick={() => {
+                          setMetodeTraining("Online dan Offline");
+                          setAddress("");
+                          setProvince("");
+                          setCity("");
+                        }}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor(
+                            "metode pelatihan"
+                          )
+                        }
+                      />
+                      <label className="form-check-label">
+                        Online & Offline
+                      </label>
+                    </div>
+                    {simpleValidator.current.message(
+                      "metode pelatihan",
+                      metodeTraining,
+                      "required",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
+                  </div>
                 </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    name="plotRegistration"
-                    className="form-check-input"
-                    defaultChecked={tuna_netra === "1"}
-                    value={tuna_netra}
-                    onClick={(e) => {
-                      setTunaNetra(e.target.checked === true ? "1" : "0");
-                    }}
-                  />
-                  <label className="form-check-label">Tuna Netra</label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    name="plotRegistration"
-                    className="form-check-input"
-                    defaultChecked={tuna_rungu === "1"}
-                    value={tuna_rungu}
-                    onClick={(e) =>
-                      setTunaRungu(e.target.checked === true ? "1" : "0")
-                    }
-                  />
-                  <label className="form-check-label">Tuna Rungu</label>
-                </div>
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    name="plotRegistration"
-                    className="form-check-input"
-                    defaultChecked={tuna_daksa === "1"}
-                    value={tuna_daksa}
-                    onClick={(e) =>
-                      setTunaDaksa(e.target.checked === true ? "1" : "0")
-                    }
-                  />
-                  <label className="form-check-label">Tuna Daksa</label>
-                </div>
-              </div>
-            </div>
 
-            <div className="form-group">
-              <div className="text-right">
-                <button
-                  className="btn btn-light-ghost-rounded-full mr-2"
-                  type="button"
-                  onClick={() => router.back()}
-                >
-                  Batal
-                </button>
-                <button className="btn btn-primary-rounded-full" type="submit">
-                  Simpan
-                </button>
-              </div>
+                {metodeTraining !== "Online" && (
+                  <>
+                    <h3 className="font-weight-bolder pt-3">
+                      Lokasi Pelatihan
+                    </h3>
+
+                    <div className="form-group mb-4">
+                      <label className="col-form-label font-weight-bold">
+                        Alamat
+                      </label>
+                      <textarea
+                        value={address}
+                        rows="6"
+                        className="form-control"
+                        onChange={(e) => setAddress(e.target.value)}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("alamat")
+                        }
+                        placeholder="Silahkan Masukan Alamat Disini"
+                      />
+                      {simpleValidator.current.message(
+                        "alamat",
+                        address,
+                        metodeTraining !== "Online" ? "required" : "",
+                        {
+                          className: "text-danger",
+                        }
+                      )}
+                    </div>
+
+                    <div className="form-group row mb-2">
+                      <div className="col-sm-12 col-md-6">
+                        <label className="col-form-label font-weight-bold">
+                          Provinsi
+                        </label>
+                        <Select
+                          options={optionsProvinsi}
+                          defaultValue={province}
+                          onChange={(e) => {
+                            setProvince({ label: e?.label, value: e?.value });
+                            setCity(null);
+                            dispatch(dropdownKabupaten(token, e.value));
+                          }}
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor("provinsi")
+                          }
+                        />
+                        {simpleValidator.current.message(
+                          "provinsi",
+                          province,
+                          metodeTraining !== "Online" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                      <div className="col-sm-12 col-md-6">
+                        <label className="col-form-label font-weight-bold">
+                          Kota / Kabupaten
+                        </label>
+                        <Select
+                          ref={(ref) => (selectRefKabupaten = ref)}
+                          options={optionsKabupaten}
+                          defaultValue={city}
+                          value={city}
+                          onChange={(e) =>
+                            setCity({ value: e?.value, label: e?.label })
+                          }
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor(
+                              "kota/kabupaten"
+                            )
+                          }
+                        />
+                        {simpleValidator.current.message(
+                          "kota/kabupaten",
+                          city,
+                          metodeTraining !== "Online" ? "required" : "",
+                          {
+                            className: "text-danger",
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                <div className="form-group row mb-0">
+                  <label className="col-form-label font-weight-bold col-sm-2">
+                    Disabilitas
+                  </label>
+                  <div className="col-sm-10">
+                    <div className="form-check mt-3">
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        defaultChecked={umum === "1"}
+                        value={umum}
+                        onChange={(e) => {
+                          setUmum(e.target.checked === true ? "1" : "0");
+                        }}
+                      />
+                      <label className="form-check-label">Umum</label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        defaultChecked={tuna_netra === "1"}
+                        value={tuna_netra}
+                        onClick={(e) => {
+                          setTunaNetra(e.target.checked === true ? "1" : "0");
+                        }}
+                      />
+                      <label className="form-check-label">Tuna Netra</label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        defaultChecked={tuna_rungu === "1"}
+                        value={tuna_rungu}
+                        onClick={(e) =>
+                          setTunaRungu(e.target.checked === true ? "1" : "0")
+                        }
+                      />
+                      <label className="form-check-label">Tuna Rungu</label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        type="checkbox"
+                        name="plotRegistration"
+                        className="form-check-input"
+                        defaultChecked={tuna_daksa === "1"}
+                        value={tuna_daksa}
+                        onClick={(e) =>
+                          setTunaDaksa(e.target.checked === true ? "1" : "0")
+                        }
+                      />
+                      <label className="form-check-label">Tuna Daksa</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <div className="text-right">
+                    <button
+                      className="btn btn-light-ghost-rounded-full mr-2"
+                      type="button"
+                      onClick={() => router.back()}
+                    >
+                      Batal
+                    </button>
+                    <button
+                      className="btn btn-primary-rounded-full"
+                      type="submit"
+                    >
+                      Simpan
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

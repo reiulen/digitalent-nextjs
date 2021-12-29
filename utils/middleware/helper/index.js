@@ -2219,9 +2219,10 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
                           // THIRD FORM BUILDER OBJECT
                           if (
                             rowFormChildren.element === "checkbox" &&
-                            rowFormChildren.element !== ""
+                            rowFormChildren.value !== ""
                           ) {
                             let val = rowFormChildren.value.join(",");
+
                             rowFormChildren.value = val;
                           }
                           rowFormChildren.triggered_index.length > 0 &&
@@ -2234,7 +2235,7 @@ export const helperUnformatCheckbox = (formBuilderCheck) => {
                                       // FOURTH FORM BUILDER OBJECT
                                       if (
                                         rowFormIndex.element === "checkbox" &&
-                                        rowFormIndex.element !== ""
+                                        rowFormIndex.value !== ""
                                       ) {
                                         let val = rowFormIndex.value.join(",");
                                         rowFormIndex.value = val;
