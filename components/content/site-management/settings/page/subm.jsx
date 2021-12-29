@@ -170,54 +170,6 @@ export default function SUBM(props) {
         setListYear(data.data.data);
       });
 
-    // axios
-    //   .get(
-    //     process.env.END_POINT_API_PELATIHAN +
-    //       `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
-    //     {
-    //       headers: {
-    //         authorization: `Bearer ${props.token}`,
-    //       },
-    //     }
-    //   )
-    //   .then((data) => {
-    //     setListTheme(data.data.data);
-    //   });
-
-    // axios
-    //   .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/academy`, {
-    //     headers: {
-    //       authorization: `Bearer ${props.token}`,
-    //     },
-    //   })
-    //   .then((data) => {
-    //     setListAcademy(data.data.data);
-    //   });
-
-    // axios
-    //   .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/organizer`, {
-    //     headers: {
-    //       authorization: `Bearer ${props.token}`,
-    //     },
-    //   })
-    //   .then((data) => {
-    //     setListOrganizer(data.data.data);
-    //   });
-
-    // axios
-    //   .get(
-    //     process.env.END_POINT_API_PELATIHAN +
-    //       `api/v1/pelatihan/dropdown-pelatihan-tema?id=${131}`,
-    //     {
-    //       headers: {
-    //         authorization: `Bearer ${props.token}`,
-    //       },
-    //     }
-    //   )
-    //   .then((data) => {
-    //     setListTraining(data.data.data);
-    //   });
-
     axios
       .get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/status-profile`,
@@ -604,7 +556,7 @@ export default function SUBM(props) {
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Tahun</h3>
 
-                  <div style={{ zIndex: "4", position: "relative" }}>
+                  <div style={{ zIndex: "20", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
@@ -626,7 +578,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Akademi</h3>
-                  <div style={{ zIndex: "4", position: "relative" }}>
+                  <div style={{ zIndex: "19", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
@@ -655,7 +607,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Tema</h3>
-                  <div style={{ zIndex: "3", position: "relative" }}>
+                  <div style={{ zIndex: "18", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
@@ -684,7 +636,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Penyelenggara</h3>
-                  <div style={{ zIndex: "3", position: "relative" }}>
+                  <div style={{ zIndex: "15", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
@@ -711,7 +663,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-12">
                   <h3 className="judul">Pelatihan</h3>
-                  <div style={{ zIndex: "3", position: "relative" }}>
+                  <div style={{ zIndex: "14", position: "relative" }}>
                     <Select
                       placeholder="Pilih Pelatihan"
                       options={trainingOpt}
@@ -793,7 +745,7 @@ export default function SUBM(props) {
                   <h3 className="judul">Status Peserta</h3>
                   <div
                     className=""
-                    style={{ zIndex: "2", position: "relative" }}
+                    style={{ zIndex: "13", position: "relative" }}
                   >
                     <Select
                       placeholder="Pilih Status Administrasi"
@@ -857,7 +809,7 @@ export default function SUBM(props) {
               <h3 className="mb-4 judul">Status Peserta</h3>
               <div
                 className="mr-4"
-                style={{ zIndex: "1", position: "relative" }}
+                style={{ zIndex: "10", position: "relative" }}
               >
                 <Select
                   placeholder="PILIH STATUS PESERTA"
@@ -934,7 +886,7 @@ export default function SUBM(props) {
           </div>
           <div className="form-group mr-4">
             <h3 className="judul">Konten Email</h3>
-            <div style={{ zIndex: "0", position: "relative" }}>
+            <div style={{ zIndex: "2", position: "relative" }}>
               <CKEditor
                 editor={ClassicEditor}
                 data={emailContent}
@@ -955,13 +907,13 @@ export default function SUBM(props) {
                 onClick={() => {
                   setVia("template");
                   setTitle("");
-                  setYear("");
-                  setAcademy("");
-                  setTheme("");
-                  setOrganizer("");
-                  setTraining("");
-                  setProfileStatus("");
-                  setSelectionStatus("");
+                  setYear([])
+                  setAcademy([])
+                  setTheme([])
+                  setOrganizer([])
+                  setTraining([])
+                  setProfileStatus([])
+                  setSelectionStatus([])
                   setParticipantSelectionStatusUpdate(0);
                   setStatus("");
                   setBroadcastEmailSendNotification(0);
@@ -969,6 +921,11 @@ export default function SUBM(props) {
                   setEmailContent("");
                   setFile("");
                   setLink("");
+                  setSelectedTraining([])
+                  setDisableOption(true)
+                  setDisableAkademi(true)
+                  setDisableTema(true)
+                  setDisablePenyelenggara(true)
                 }}
               >
                 Reset
