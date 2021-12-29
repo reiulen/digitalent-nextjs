@@ -17,18 +17,20 @@ import LoadingPage from "../../../../LoadingPage";
 import { FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID } from "../../../../../redux/types/partnership/management_cooporation.type";
 import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
-const TambahTipeSoal = ({ token }) => {
+const TambahTipeSoal = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { loading, error, success } = useSelector(
     (state) => state.newSubtanceQuestionType
   );
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
     // if (error) {
-    //     dispatch(clearErrors())
+    //   // dispatch(clearErrors())
+    //   alert();
     // }
 
     if (success) {
@@ -58,7 +60,7 @@ const TambahTipeSoal = ({ token }) => {
         status: 0,
       };
 
-      dispatch(newSubtanceQuestionBanksType(data, token));
+      dispatch(newSubtanceQuestionBanksType(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -73,7 +75,7 @@ const TambahTipeSoal = ({ token }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (error) {
-      dispatch(clearErrors());
+      // dispatch(clearErrors());
     }
     if (simpleValidator.current.allValid()) {
       const data = {
@@ -81,7 +83,7 @@ const TambahTipeSoal = ({ token }) => {
         value,
         status: status_,
       };
-      dispatch(newSubtanceQuestionBanksType(data, token));
+      dispatch(newSubtanceQuestionBanksType(data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

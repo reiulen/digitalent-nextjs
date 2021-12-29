@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
 import { wrapper } from "../../redux/store";
 import {
+  getDigitalentTotalDataPendaftar,
   getDigitalentTotalPengguna,
   getDigitalentStatistikAkademiPeserta,
   getDigitalentStatistikAkademiPendaftar,
@@ -12,21 +13,24 @@ import {
   getDigitalentPesertaWilayah,
   getDigitalentProvinsiPeserta,
   getDigitalentProvinsiPendaftar,
-  getDigitalentUmurPeserta,
-  getDigitalentUmurPendaftar,
-  getDigitalentJenisKelaminPeserta,
-  getDigitalentJenisKelaminPendaftar,
-  getDigitalentPendidikanPeserta,
-  getDigitalentPendidikanPendaftar,
+  getDigitalentDataPribadi,
 } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
+import { dropdownAkademi } from "../../redux/actions/pelatihan/function.actions";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
+import { getAllPermission } from "../../redux/actions/utils/utils.actions";
 
-export default function DashboardPage() {
+export default function DashboardPage(props) {
   const DashboardDigitalent = dynamic(
     () =>
       import(
         "../../components/content/dashboard-kabadan/digitalent/dashboard-digitalent"
       ),
-    { ssr: false }
+    {
+      loading: function loadingNow() {
+        return <LoadingSkeleton />;
+      },
+      ssr: false,
+    }
   );
   const MyMap = dynamic(
     () =>
@@ -35,13 +39,14 @@ export default function DashboardPage() {
       ),
     { ssr: false }
   );
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         <div id="map" style={{ display: "none" }}>
           <MyMap />
         </div>
-        <DashboardDigitalent />
+        <DashboardDigitalent token={session.token} />
       </div>
     </>
   );
@@ -52,7 +57,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
-      // console.log(session.user.user.data);
+      const yearNow = new Date().getFullYear();
       if (!middleware.status) {
         return {
           redirect: {
@@ -61,15 +66,37 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const data = await store.dispatch(
+        getAllPermission(session.user.user.data.token)
+      );
 
+      const url = data.data.redirect;
+      if (url != "/dashboard") {
+        return {
+          redirect: {
+            destination: url,
+            permanent: false,
+          },
+        };
+      }
+
+      await store.dispatch(
+        getDigitalentTotalDataPendaftar(session.user.user.data.token)
+      );
       await store.dispatch(
         getDigitalentTotalPengguna(session.user.user.data.token)
       );
       await store.dispatch(
-        getDigitalentStatistikAkademiPeserta(session.user.user.data.token)
+        getDigitalentStatistikAkademiPeserta(
+          session.user.user.data.token,
+          yearNow
+        )
       );
       await store.dispatch(
-        getDigitalentStatistikAkademiPendaftar(session.user.user.data.token)
+        getDigitalentStatistikAkademiPendaftar(
+          session.user.user.data.token,
+          yearNow
+        )
       );
       await store.dispatch(
         getDigitalentStatistikMitraPeserta(session.user.user.data.token)
@@ -90,23 +117,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDigitalentProvinsiPendaftar(session.user.user.data.token)
       );
       await store.dispatch(
-        getDigitalentUmurPeserta(session.user.user.data.token)
+        getDigitalentDataPribadi(session.user.user.data.token)
       );
-      await store.dispatch(
-        getDigitalentUmurPendaftar(session.user.user.data.token)
-      );
-      await store.dispatch(
-        getDigitalentJenisKelaminPeserta(session.user.user.data.token)
-      );
-      await store.dispatch(
-        getDigitalentJenisKelaminPendaftar(session.user.user.data.token)
-      );
-      await store.dispatch(
-        getDigitalentPendidikanPeserta(session.user.user.data.token)
-      );
-      await store.dispatch(
-        getDigitalentPendidikanPendaftar(session.user.user.data.token)
-      );
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
 
       return {
         props: { session, title: "Dashboard - Digitalent" },

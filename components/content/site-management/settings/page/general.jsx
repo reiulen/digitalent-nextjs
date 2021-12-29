@@ -12,26 +12,29 @@ import SimpleReactValidator from "simple-react-validator";
 import styles from "../../../../../styles/previewGaleri.module.css";
 import styles2 from "../../../../../styles/sitemanagement/userMitra.module.css";
 import { set } from "lodash";
-
+import { useSelector } from "react-redux";
 const GeneralPage = ({ token }) => {
   const router = useRouter();
+
+  const { data_general } = useSelector((state) => state.allDataGeneral);
 
   const [imageLogo, setImageLogo] = useState("");
   const [imageLogo2, setImageLogo2] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [imageLogoApi, setImageLogoApi] = useState("");
-  const [imageLogoApi2, setImageLogoApi2] = useState("");
+  const [imageLogoApi2, setImageLogoApi2] = useState(data_general?.footer_logo);
   const [imageLogoApiOld, setImageLogoApiOld] = useState("");
   const [imageLogoApiOld2, setImageLogoApiOld2] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
+  const [update, setUpdate] = useState(false);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [colorPrimary, setColorPrimary] = useState(null)
-  const [colorSecondary, setColorSecondary] = useState(null)
-  const [colorExtras, setColorExtras] = useState(null)
+  const [colorPrimary, setColorPrimary] = useState(null);
+  const [colorSecondary, setColorSecondary] = useState(null);
+  const [colorExtras, setColorExtras] = useState(null);
 
   const [color, setColor] = useState([
     {
@@ -48,25 +51,9 @@ const GeneralPage = ({ token }) => {
     },
   ]);
 
-  const changeColor = (e, i) => {
-    let _temp = [...color];
-
-    _temp.map((items, idx) => {
-      if (idx === i) {
-        _temp[i].color = e.target.value;
-      }
-    });
-
-    setColor(_temp);
-  };
-
-  const [formSocialMedia, setFormSocialMedia] = useState([
-    {
-      image_logo: "",
-      name: "",
-      link_social_media: "",
-    },
-  ]);
+  const [formSocialMedia, setFormSocialMedia] = useState(
+    data_general?.social_media
+  );
   const [formExternalLink, setFormExternalLink] = useState([
     {
       name: "",
@@ -76,68 +63,108 @@ const GeneralPage = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    if (simpleValidator.current.allValid()) {
 
-      if (description === "") {
-        Swal.fire("Oops !", "Form description tidak boleh kosong", "error");
+    let dataSosmedImage = formSocialMedia.map((row, i) => {
+      return row.image_logo;
+    });
+
+    let dataSosmedName = formSocialMedia.map((row, i) => {
+      return row.name;
+    });
+
+    let dataSosmedLink = formSocialMedia.map((row, i) => {
+      return row.link_social_media;
+    });
+
+    let dataExternal = formExternalLink.map((row, i) => {
+      return row.name;
+    });
+
+    let dataExternalLink = formExternalLink.map((row, i) => {
+      return row.link;
+    });
+
+    let link = []
+    let linkSosmed = []
+
+    formExternalLink.filter((item) => {
+      if (!item.link.includes("http")) {
+        link.push(item.link)
+      }
+    })
+
+    formSocialMedia.filter((item) => {
+      if (!item.link_social_media.includes("http")) {
+        linkSosmed.push(item.link_social_media)
+      }
+    })
+
+    if (simpleValidator.current.allValid() && link.length === 0 && linkSosmed.length === 0) {
+      if (dataExternal.includes("") || dataExternalLink.includes("")) {
+        Swal.fire("Oops !", "Isi data dengan benar !", "error");
+      } else if (
+        dataSosmedImage.includes("") ||
+        dataSosmedName.includes("") ||
+        dataSosmedLink.includes("")
+      ) {
+        Swal.fire("Oops !", "Isi data dengan benar !", "error");
       } else {
-        Swal.fire({
-          title: "Apakah anda yakin simpan ?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          cancelButtonText: "Batal",
-          confirmButtonText: "Ya !",
-          dismissOnDestroy: false,
-        }).then(async (result) => {
-          if (result.value) {
-            const sendData = {
-              logo: {
-                header_logo: !imageLogo ? imageLogoApi : imageLogo,
-                footer_logo: !imageLogo2 ? imageLogoApi2 : imageLogo2,
-              },
-              logo_description: description,
-              social_media: formSocialMedia,
-              external_link: formExternalLink,
-              alamat: address,
-              color: [
-                {
-                  name: "Primary",
-                  color: colorPrimary,
+        if (description === "") {
+          Swal.fire("Oops !", "Isi data dengan benar !", "error");
+        } else {
+          Swal.fire({
+            title: "Apakah anda yakin simpan ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Batal",
+            confirmButtonText: "Ya !",
+            dismissOnDestroy: false,
+          }).then(async (result) => {
+            if (result.value) {
+              const sendData = {
+                logo: {
+                  header_logo: !imageLogo ? imageLogoApi : imageLogo,
+                  footer_logo: !imageLogo2 ? imageLogoApi2 : imageLogo2,
                 },
-                {
-                  name: "Secondary",
-                  color: colorSecondary,
-                },
-                {
-                  name: "Extras",
-                  color: colorExtras,
-                },
-              ],
-            };
-
-            try {
-              const { data } = await axios.post(
-                `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
-                sendData,
-                {
-                  headers: {
-                    authorization: `Bearer ${token}`,
+                logo_description: description,
+                social_media: formSocialMedia,
+                external_link: formExternalLink,
+                alamat: address,
+                color: [
+                  {
+                    name: "Primary",
+                    color: colorPrimary,
                   },
-                }
-              );
-              Swal.fire("Berhasil", "Berhasil simpan data", "success");
-              window.location.reload()
-            } catch (error) {
-              Swal.fire(
-                "Oops !",
-                `${error.response.data.message}`,
-                "error"
-              );
+                  {
+                    name: "Secondary",
+                    color: colorSecondary,
+                  },
+                  {
+                    name: "Extras",
+                    color: colorExtras,
+                  },
+                ],
+              };
+              try {
+                const { data } = await axios.post(
+                  `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
+                  sendData,
+                  {
+                    headers: {
+                      authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+                Swal.fire("Berhasil", "Berhasil simpan data", "success");
+                window.location.reload();
+              } catch (error) {
+                Swal.fire("Oops !", `${error.response.data.message}`, "error");
+              }
             }
-          }
-        });
+          });
+        }
       }
     } else {
       simpleValidator.current.showMessages();
@@ -203,7 +230,11 @@ const GeneralPage = ({ token }) => {
             setImageLogo(e.target.result);
           };
         } else {
-          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+          Swal.fire(
+            "Oops !",
+            "Gambar harus PNG atau JPG dan max size 5MB",
+            "error"
+          );
         }
       } else {
         Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -218,7 +249,11 @@ const GeneralPage = ({ token }) => {
             setImageLogo(e.target.result);
           };
         } else {
-          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+          Swal.fire(
+            "Oops !",
+            "Gambar harus PNG atau JPG dan max size 5MB",
+            "error"
+          );
         }
       } else {
         Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -237,7 +272,11 @@ const GeneralPage = ({ token }) => {
             setImageLogo2(e.target.result);
           };
         } else {
-          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+          Swal.fire(
+            "Oops !",
+            "Gambar harus PNG atau JPG dan max size 5MB",
+            "error"
+          );
         }
       } else {
         Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -252,7 +291,11 @@ const GeneralPage = ({ token }) => {
             setImageLogo2(e.target.result);
           };
         } else {
-          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+          Swal.fire(
+            "Oops !",
+            "Gambar harus PNG atau JPG dan max size 5MB",
+            "error"
+          );
         }
       } else {
         Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -335,9 +378,14 @@ const GeneralPage = ({ token }) => {
               setImageSocialTemp(e.target.result);
               _temp[index].image_logo = e.target.result;
               setFormSocialMedia(_temp);
+              setUpdate(true);
             };
           } else {
-            Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
+            Swal.fire(
+              "Oops !",
+              "Gambar harus PNG atau JPG dan max size 5MB",
+              "error"
+            );
           }
         } else {
           Swal.fire("Oops !", "Upload Gambar Dulu", "error");
@@ -368,19 +416,18 @@ const GeneralPage = ({ token }) => {
           }
         );
 
-
         if (data) {
           setIsUpdate(true);
           setAddress(data.data.alamat);
           setColor(data.data.color);
           setFormExternalLink(data.data.external_link);
           setImageLogoApi(data.data.header_logo);
-          setImageLogoApi2(data.data.footer_logo);
+          // setImageLogoApi2(data.data.footer_logo);
           setDescription(data.data.logo_description);
-          setFormSocialMedia(data.data.social_media);
-          setColorPrimary(data.data.color[0].color)
-          setColorSecondary(data.data.color[1].color)
-          setColorExtras(data.data.color[2].color)
+          // setFormSocialMedia(data.data.social_media);
+          setColorPrimary(data.data.color[0].color);
+          setColorSecondary(data.data.color[1].color);
+          setColorExtras(data.data.color[2].color);
         }
       } catch (error) {
         Swal.fire("Oops !", `${error.response.data.message}`, "error");
@@ -389,14 +436,15 @@ const GeneralPage = ({ token }) => {
     getDataGeneral(token);
   }, [token]);
 
-
   return (
     <PageWrapper>
       <div className="row">
         <div className="col-12 order-1">
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header row border-0">
-              <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>
+              <h3
+                className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}
+              >
                 General
               </h3>
             </div>
@@ -422,6 +470,7 @@ const GeneralPage = ({ token }) => {
                               )
                               : imageLogoApi && (
                                 <Image
+                                  // src={imageLogo}
                                   src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
                                   layout="fill"
                                   objectFit="fill"
@@ -429,38 +478,39 @@ const GeneralPage = ({ token }) => {
                                 />
                               )}
                           </div>
+                          {localStorage
+                            .getItem("permissions")
+                            .includes(
+                              "site_management.setting.general.manage"
+                            ) && (
+                              <label
+                                className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                data-action="change"
+                                data-toggle="tooltip"
+                                title=""
+                                data-original-title="Change avatar"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width="12"
+                                  height="12"
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z" />
+                                  <path
+                                    d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                    fill="rgba(108,108,108,1)"
+                                  />
+                                </svg>
+                                <input
+                                  type="file"
+                                  accept=".png, .jpg, .jpeg .svg"
+                                  onChange={(e) => onChangeImage(e)}
+                                />
 
-                          <label
-                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                            data-action="change"
-                            data-toggle="tooltip"
-                            title=""
-                            data-original-title="Change avatar"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              width="12"
-                              height="12"
-                            >
-                              <path fill="none" d="M0 0h24v24H0z" />
-                              <path
-                                d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
-                                fill="rgba(108,108,108,1)"
-                              />
-                            </svg>
-                            <input
-                              type="file"
-                              name="profile_avatar"
-                              accept=".png, .jpg, .jpeg .svg"
-                              onChange={(e) => onChangeImage(e)}
-                              onBlur={() =>
-                                simpleValidator.current.showMessageFor("logoHeader")
-                              }
-                            />
-
-                            <input type="hidden" name="profile_avatar_remove" />
-                          </label>
+                                <input type="hidden" />
+                              </label>
+                            )}
 
                           <span
                             className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -470,18 +520,10 @@ const GeneralPage = ({ token }) => {
                           >
                             <i className="ki ki-bold-close icon-xs text-muted"></i>
                           </span>
-
                         </div>
                         <span className="form-text text-muted mt-6">
                           (Maksimal ukuran file 5 MB)
                         </span>
-
-                        {/* {simpleValidator.current.message(
-                          "logoHeader",
-                          imageLogo,
-                          "required",
-                          { className: "text-danger" }
-                        )} */}
                       </div>
                     </div>
 
@@ -510,38 +552,39 @@ const GeneralPage = ({ token }) => {
                                 />
                               )}
                           </div>
+                          {localStorage
+                            .getItem("permissions")
+                            .includes(
+                              "site_management.setting.general.manage"
+                            ) && (
+                              <label
+                                className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                data-action="change"
+                                data-toggle="tooltip"
+                                title=""
+                                data-original-title="Change avatar"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width="12"
+                                  height="12"
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z" />
+                                  <path
+                                    d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                    fill="rgba(108,108,108,1)"
+                                  />
+                                </svg>
 
-                          <label
-                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                            data-action="change"
-                            data-toggle="tooltip"
-                            title=""
-                            data-original-title="Change avatar"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              width="12"
-                              height="12"
-                            >
-                              <path fill="none" d="M0 0h24v24H0z" />
-                              <path
-                                d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
-                                fill="rgba(108,108,108,1)"
-                              />
-                            </svg>
-
-                            <input
-                              type="file"
-                              name="profile_avatar"
-                              accept=".png, .jpg, .jpeg .svg"
-                              onChange={(e) => onChangeImage2(e)}
-                              onBlur={() =>
-                                simpleValidator.current.showMessageFor("logoFooter")
-                              }
-                            />
-                            <input type="hidden" name="profile_avatar_remove" />
-                          </label>
+                                <input
+                                  type="file"
+                                  accept=".png, .jpg, .jpeg .svg"
+                                  onChange={(e) => onChangeImage2(e)}
+                                />
+                                <input type="hidden" />
+                              </label>
+                            )}
 
                           <span
                             className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -581,13 +624,13 @@ const GeneralPage = ({ token }) => {
                     {simpleValidator.current.message(
                       "description",
                       description,
-                      "required",
+                      "required|min:10|max:500",
                       { className: "text-danger" }
                     )}
                   </div>
 
                   {/* start social media */}
-                  <div className="mt-10">
+                  <div className="mt-10 position-relative">
                     <h4 className="fw-600 fz-20">Social Media</h4>
                     <label className="mb-6 mt-4" style={{ fontSize: "16px" }}>
                       Logo Social Media
@@ -613,50 +656,57 @@ const GeneralPage = ({ token }) => {
                                     )
                                     : items.image_logo && (
                                       <Image
-                                        src={items.image_logo}
+                                        src={
+                                          update === true
+                                            ? items.image_logo
+                                            : `/${items.image_logo}`
+                                        }
                                         layout="fill"
                                         objectFit="fill"
                                         alt="imageLogo"
                                       />
                                     )}
                                 </div>
+                                {localStorage
+                                  .getItem("permissions")
+                                  .includes(
+                                    "site_management.setting.general.manage"
+                                  ) && (
+                                    <label
+                                      className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                      data-action="change"
+                                      data-toggle="tooltip"
+                                      title=""
+                                      data-original-title="Change avatar"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        width="12"
+                                        height="12"
+                                      >
+                                        <path fill="none" d="M0 0h24v24H0z" />
+                                        <path
+                                          d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                          fill="rgba(108,108,108,1)"
+                                        />
+                                      </svg>
 
-                                <label
-                                  className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                  data-action="change"
-                                  data-toggle="tooltip"
-                                  title=""
-                                  data-original-title="Change avatar"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    width="12"
-                                    height="12"
-                                  >
-                                    <path fill="none" d="M0 0h24v24H0z" />
-                                    <path
-                                      d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
-                                      fill="rgba(108,108,108,1)"
-                                    />
-                                  </svg>
-
-                                  <input
-                                    type="file"
-                                    name="profile_avatar"
-                                    accept=".png, .jpg, .jpeg"
-                                    onChange={(e) =>
-                                      handleChangeSocialMedia(e, index)
-                                    }
-                                    onBlur={() =>
-                                      simpleValidator.current.showMessageFor("logoSocialMedia")
-                                    }
-                                  />
-                                  <input
-                                    type="hidden"
-                                    name="profile_avatar_remove"
-                                  />
-                                </label>
+                                      <input
+                                        type="file"
+                                        accept=".png, .jpg, .jpeg"
+                                        onChange={(e) =>
+                                          handleChangeSocialMedia(e, index)
+                                        }
+                                        onBlur={() =>
+                                          simpleValidator.current.showMessageFor(
+                                            "logoSocialMedia"
+                                          )
+                                        }
+                                      />
+                                      <input type="hidden" />
+                                    </label>
+                                  )}
 
                                 <span
                                   className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -692,7 +742,9 @@ const GeneralPage = ({ token }) => {
                                   className="form-control"
                                   placeholder="Masukkan Nama"
                                   onBlur={() =>
-                                    simpleValidator.current.showMessageFor("namaSocialMedia")
+                                    simpleValidator.current.showMessageFor(
+                                      "namaSocialMedia"
+                                    )
                                   }
                                 />
 
@@ -704,7 +756,10 @@ const GeneralPage = ({ token }) => {
                                 )}
                               </div>
                             </div>
-                            <div className="col-12 col-md-6 col-xl-6" style={{ position: 'relative' }}>
+                            <div
+                              className="col-12 col-md-6 col-xl-6"
+                              style={{ position: "relative" }}
+                            >
                               <div className="row">
                                 <div className="col-12 col-md-11">
                                   <div className="form-group">
@@ -720,7 +775,9 @@ const GeneralPage = ({ token }) => {
                                       className="form-control pr-10"
                                       placeholder="Masukkan Link"
                                       onBlur={() =>
-                                        simpleValidator.current.showMessageFor("link")
+                                        simpleValidator.current.showMessageFor(
+                                          "link"
+                                        )
                                       }
                                     />
                                   </div>
@@ -731,25 +788,36 @@ const GeneralPage = ({ token }) => {
                                 ) : (
                                   <div className="col-12 col-md-1 col-xl-1">
                                     <div className="d-flex align-items-center h-100 justify-content-end ml-14 mb-8">
-                                      <button
-                                        type="button"
-                                        onClick={() => removeSocialMedia(index)}
-                                        className="btn"
-                                        style={{ backgroundColor: "#EE2D41" }}
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          width="16"
-                                          height="16"
-                                        >
-                                          <path fill="none" d="M0 0h24v24H0z" />
-                                          <path
-                                            d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
-                                            fill="rgba(255,255,255,1)"
-                                          />
-                                        </svg>
-                                      </button>
+                                      {localStorage
+                                        .getItem("permissions")
+                                        .includes(
+                                          "site_management.setting.general.manage"
+                                        ) && (
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              removeSocialMedia(index)
+                                            }
+                                            className="btn"
+                                            style={{ backgroundColor: "#EE2D41" }}
+                                          >
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              viewBox="0 0 24 24"
+                                              width="16"
+                                              height="16"
+                                            >
+                                              <path
+                                                fill="none"
+                                                d="M0 0h24v24H0z"
+                                              />
+                                              <path
+                                                d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                                fill="rgba(255,255,255,1)"
+                                              />
+                                            </svg>
+                                          </button>
+                                        )}
                                     </div>
                                   </div>
                                 )}
@@ -767,18 +835,22 @@ const GeneralPage = ({ token }) => {
                         </div>
                       );
                     })}
-                    <div className="form-group row mt-2">
-                      <div className="col-sm-12 d-flex justify-content-end">
-                        <button
-                          type="button"
-                          className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
-                          onClick={() => addSocialMedia()}
-                        >
-                          <IconAdd className="mr-3" width="14" height="14" />
-                          Tambah Social Media
-                        </button>
-                      </div>
-                    </div>
+                    {localStorage
+                      .getItem("permissions")
+                      .includes("site_management.setting.general.manage") && (
+                        <div className="form-group row mt-2">
+                          <div className="col-sm-12 d-flex justify-content-end">
+                            <button
+                              type="button"
+                              className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
+                              onClick={() => addSocialMedia()}
+                            >
+                              <IconAdd className="mr-3" width="14" height="14" />
+                              Tambah Social Media
+                            </button>
+                          </div>
+                        </div>
+                      )}
                   </div>
                   {/* end social media */}
 
@@ -802,7 +874,9 @@ const GeneralPage = ({ token }) => {
                                   className="form-control"
                                   placeholder="Masukkan Nama"
                                   onBlur={() =>
-                                    simpleValidator.current.showMessageFor("namaExternalLinks")
+                                    simpleValidator.current.showMessageFor(
+                                      "namaExternalLinks"
+                                    )
                                   }
                                 />
 
@@ -830,7 +904,9 @@ const GeneralPage = ({ token }) => {
                                       className="form-control pr-10"
                                       placeholder="Masukkan Link"
                                       onBlur={() =>
-                                        simpleValidator.current.showMessageFor("linkExternalLinks")
+                                        simpleValidator.current.showMessageFor(
+                                          "linkExternalLinks"
+                                        )
                                       }
                                     />
                                   </div>
@@ -841,27 +917,36 @@ const GeneralPage = ({ token }) => {
                                 ) : (
                                   <div className="col-12 col-md-1 col-xl-1">
                                     <div className="d-flex align-items-center h-100 justify-content-end ml-14 mb-10">
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          removeExternalLink(index)
-                                        }
-                                        className="btn"
-                                        style={{ backgroundColor: "#EE2D41" }}
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          width="16"
-                                          height="16"
-                                        >
-                                          <path fill="none" d="M0 0h24v24H0z" />
-                                          <path
-                                            d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
-                                            fill="rgba(255,255,255,1)"
-                                          />
-                                        </svg>
-                                      </button>
+                                      {localStorage
+                                        .getItem("permissions")
+                                        .includes(
+                                          "site_management.setting.general.manage"
+                                        ) && (
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              removeExternalLink(index)
+                                            }
+                                            className="btn"
+                                            style={{ backgroundColor: "#EE2D41" }}
+                                          >
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              viewBox="0 0 24 24"
+                                              width="16"
+                                              height="16"
+                                            >
+                                              <path
+                                                fill="none"
+                                                d="M0 0h24v24H0z"
+                                              />
+                                              <path
+                                                d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                                fill="rgba(255,255,255,1)"
+                                              />
+                                            </svg>
+                                          </button>
+                                        )}
                                     </div>
                                   </div>
                                 )}
@@ -879,19 +964,22 @@ const GeneralPage = ({ token }) => {
                         </div>
                       );
                     })}
-
-                    <div className="form-group row">
-                      <div className="col-sm-12 d-flex justify-content-end">
-                        <button
-                          type="button"
-                          className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
-                          onClick={() => addExternalLink()}
-                        >
-                          <IconAdd className="mr-3" width="14" height="14" />
-                          Tambah External Links
-                        </button>
-                      </div>
-                    </div>
+                    {localStorage
+                      .getItem("permissions")
+                      .includes("site_management.setting.general.manage") && (
+                        <div className="form-group row">
+                          <div className="col-sm-12 d-flex justify-content-end">
+                            <button
+                              type="button"
+                              className={`${styles2.btnTambahContent} col-sm-12 col-md-4 col-lg-4 col-xl-3 btn btn-rounded-full bg-blue-secondary text-white d-block`}
+                              onClick={() => addExternalLink()}
+                            >
+                              <IconAdd className="mr-3" width="14" height="14" />
+                              Tambah External Links
+                            </button>
+                          </div>
+                        </div>
+                      )}
                   </div>
                   {/* end External Links */}
 
@@ -905,7 +993,6 @@ const GeneralPage = ({ token }) => {
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder="Masukkan alamat lengkap"
                         className="form-control"
-                        name=""
                         id=""
                         cols="30"
                         rows="10"
@@ -917,7 +1004,7 @@ const GeneralPage = ({ token }) => {
                       {simpleValidator.current.message(
                         "alamat",
                         address,
-                        "required",
+                        "required|min:5|max:255",
                         { className: "text-danger" }
                       )}
                     </div>
@@ -931,7 +1018,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Primary</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorPrimary(e.target.value)}
@@ -946,7 +1032,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Secondary</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorSecondary(e.target.value)}
@@ -961,7 +1046,6 @@ const GeneralPage = ({ token }) => {
                       <label className="mt-4">Extras</label>
                       <div className="mb-10">
                         <select
-                          name=""
                           id=""
                           className={`${styles.selectKategori} form-control dropdownArt`}
                           onChange={(e) => setColorExtras(e.target.value)}
@@ -977,17 +1061,22 @@ const GeneralPage = ({ token }) => {
                   {/* end Alamat */}
 
                   {/* start footer btn */}
-                  <div className="form-group row mt-10">
-                    <div className="col-sm-12 d-flex justify-content-end">
-                      <button
-                        type="button"
-                        className={`${styles2.btnTambahContent} btn btn-sm btn-rounded-full bg-blue-primary text-white`}
-                        onClick={(e) => submit(e)}
-                      >
-                        Simpan
-                      </button>
-                    </div>
-                  </div>
+                  {localStorage
+                    .getItem("permissions")
+                    .includes("site_management.setting.general.manage") && (
+                      <div className="form-group row mt-10">
+                        <div className="col-sm-12 d-flex justify-content-end">
+                          <button
+                            type="button"
+                            className={`${styles2.btnTambahContent} btn btn-sm btn-rounded-full bg-blue-primary text-white`}
+                            onClick={(e) => submit(e)}
+                          >
+                            Simpan
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
                   {/* end footer btn */}
                 </form>
               </div>

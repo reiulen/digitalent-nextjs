@@ -20,7 +20,7 @@ import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -75,15 +75,12 @@ const StepTwo = ({ token }) => {
         status: 0,
         questions_to_share: jumlah_soal,
       };
-      dispatch(updateSurveyQuestionBanksPublish(data, id, token));
+      dispatch(
+        updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -124,15 +121,12 @@ const StepTwo = ({ token }) => {
           status: status,
           questions_to_share: jumlah_soal,
         };
-        dispatch(updateSurveyQuestionBanksPublish(data, id, token));
+        dispatch(
+          updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
+        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Isi data dengan benar !",
-        });
       }
     }
   };
@@ -183,6 +177,27 @@ const StepTwo = ({ token }) => {
             <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
           <div className="card-body pt-0">
+            <h4 className="mt-2">
+              <b>{survey?.training?.name}</b>
+            </h4>
+            <table>
+              <tr>
+                <td>Tanggal Pendaftaran &nbsp;</td>
+                <td>: &nbsp;</td>
+                <td>
+                  {survey?.pendaftaran_mulai} &nbsp; s.d. &nbsp;{" "}
+                  {survey?.pendaftaran_selesai}{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>Tanggal Pelatihan </td>
+                <td> : </td>{" "}
+                <td>
+                  {survey?.pelatihan_mulai}&nbsp; s.d. &nbsp;
+                  {survey?.pelatihan_selesai}{" "}
+                </td>
+              </tr>
+            </table>
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
@@ -378,7 +393,18 @@ const StepTwo = ({ token }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  {" "}
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push(`/subvit/survey/edit?id=${router.query.id}`);
+                    }}
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

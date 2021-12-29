@@ -15,6 +15,8 @@ import CardPage from "../../../../CardPage";
 import IconTodoLine from "../../../../assets/icon/TodoLine";
 import axios from "axios";
 import moment from "moment";
+import Cookies from "js-cookie"
+import {Modal} from "react-bootstrap"
 
 import {
   reqCooperationUser,
@@ -56,6 +58,7 @@ const Table = ({ token }) => {
   const [valueKerjaSama, setValueKerjaSama] = useState("");
 
   const [deleteBar, setDeleteBar] = useState(false);
+  const [showModal, setShowModal] = useState(false)
   const onNewReset = () => {
     setDeleteBar(false);
     router.replace("/partnership/user/kerjasama", undefined, { shallow: true });
@@ -73,11 +76,13 @@ const Table = ({ token }) => {
     event.preventDefault();
     dispatch(changeValueStatus(valueStatus));
     dispatch(changeValueKerjaSama(valueKerjaSama));
+    setShowModal(false)
   };
 
   const resetValueSort = () => {
     selectRefKerjasama.select.clearValue();
     selectRefStatus.select.clearValue();
+    setShowModal(false)
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
@@ -87,14 +92,14 @@ const Table = ({ token }) => {
     dispatch(reqCooperationUser(token));
   }, [
     dispatch,
-    allCooperationUser.page,
-    allCooperationUser.keyword,
-    allCooperationUser.status,
-    allCooperationUser.categories_cooporation,
-    allCooperationUser.limit,
-    allCooperationUser.status,
-    allCooperationUser.card,
-    allCooperationUser.status_delete,
+    allCooperationUser?.page,
+    allCooperationUser?.keyword,
+    allCooperationUser?.status,
+    allCooperationUser?.categories_cooporation,
+    allCooperationUser?.limit,
+    allCooperationUser?.status,
+    allCooperationUser?.card,
+    allCooperationUser?.status_delete,
     token,
   ]);
 
@@ -104,6 +109,7 @@ const Table = ({ token }) => {
       let { data } = await axios.get(`${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`, {
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission")
         },
       });
       if (data.data.pic_email === "-") {
@@ -112,7 +118,21 @@ const Table = ({ token }) => {
         setIsProfile(true);
       }
     } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      // Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      Swal.fire({
+        icon: 'error',
+        title: `Gagal`,
+        text: `${error.response.data.message}`,
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          router.back()
+        }
+      })
+      
     }
   };
 
@@ -122,11 +142,12 @@ const Table = ({ token }) => {
       let { data } = await axios.get(`${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`, {
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission")
         },
       });
-      setSumWillExpire(data.data.total);
+      setSumWillExpire(data?.data?.total);
     } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
     }
   };
 
@@ -203,7 +224,7 @@ const Table = ({ token }) => {
               background="bg-light-success "
               icon="Done-circle1.svg"
               color="#ffffff"
-              value={allCooperationUser.totalDataActive}
+              value={allCooperationUser?.totalDataActive}
               titleValue=""
               title="Kerjasama Aktif"
               publishedVal="1"
@@ -218,7 +239,7 @@ const Table = ({ token }) => {
               background="bg-light-warning"
               icon="Info-circle.svg"
               color="#ffffff"
-              value={allCooperationUser.totalDataAnother}
+              value={allCooperationUser?.totalDataAnother}
               titleValue=""
               title="Pengajuan Kerjasama"
               publishedVal="1"
@@ -285,25 +306,29 @@ const Table = ({ token }) => {
                   <div className="row mb-3">
                     <div className="col-12 col-xl-4 ">
                       <div className="position-relative overflow-hidden w-100 mt-5">
-                        <IconSearch style={{ left: "10" }} className="left-center-absolute" />
-                        <input
-                          id="kt_datatable_search_query"
-                          type="text"
-                          className="form-control pl-10"
-                          placeholder="Cari..."
-                          onChange={(e) => handleChangeValueSearch(e.target.value)}
-                        />
-                        <button
-                          type="button"
-                          onClick={(e) => handleSubmit(e)}
-                          className="btn bg-blue-primary text-white right-center-absolute"
-                          style={{
-                            borderTopLeftRadius: "0",
-                            borderBottomLeftRadius: "0",
-                          }}
+                        <form
+                          onSubmit={(e) => handleSubmit(e)}
                         >
-                          Cari
-                        </button>
+                          <IconSearch style={{ left: "10" }} className="left-center-absolute" />
+                          <input
+                            id="kt_datatable_search_query"
+                            type="text"
+                            className="form-control pl-10"
+                            placeholder="Cari..."
+                            onChange={(e) => handleChangeValueSearch(e.target.value)}
+                          />
+                          <button
+                            type="button"
+                            onClick={(e) => handleSubmit(e)}
+                            className="btn bg-blue-primary text-white right-center-absolute"
+                            style={{
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                            }}
+                          >
+                            Cari
+                          </button>
+                        </form>
                       </div>
                     </div>
                     <div className="col-12 col-xl-8 ">
@@ -315,6 +340,7 @@ const Table = ({ token }) => {
                           data-target="#exampleModalCenter"
                           style={{ color: "#464646", minWidth: "230px" }}
                           type="button"
+                          onClick={() => setShowModal(true)}
                         >
                           <div className="d-flex align-items-center">
                             <IconFilter className="mr-3" />
@@ -322,76 +348,95 @@ const Table = ({ token }) => {
                           </div>
                           <IconArrow fill="#E4E6EF" width="11" height="11" />
                         </button>
+                        
                         {/* modal */}
-                        <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                          <div className="modal-dialog modal-dialog-centered" role="document">
-                            <div className="modal-content">
-                              <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLongTitle">
-                                  Filter
-                                </h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                  <IconClose />
-                                </button>
-                              </div>
+                        <Modal
+                          centered={true}
+                          show={showModal}
+                          onHide={() => setShowModal(false)}
+                        >
+                          <Modal.Header>
+                            <h5 
+                              className="modal-title"
+                            >
+                              Filter
+                            </h5>
 
-                              <div className="modal-body text-left" style={{ height: "400px" }}>
-                                <div className="fv-row mb-10">
-                                  <label className="required fw-bold fs-6 mb-2">Kategori</label>
-                                  <Select
-                                    ref={(ref) => (selectRefKerjasama = ref)}
-                                    className="basic-single"
-                                    classNamePrefix="select"
-                                    placeholder="Semua"
-                                    defaultValue={allCooperationUser.stateListKerjaSama[0]}
-                                    isDisabled={false}
-                                    isLoading={false}
-                                    isClearable={false}
-                                    isRtl={false}
-                                    isSearchable={true}
-                                    name="color"
-                                    onChange={(e) => setValueKerjaSama(e?.cooperation_categories)}
-                                    options={allCooperationUser.stateListKerjaSama}
-                                  />
-                                </div>
-                                <div className="fv-row mb-10">
-                                  <label className="required fw-bold fs-6 mb-2">Status</label>
-                                  <Select
-                                    ref={(ref) => (selectRefStatus = ref)}
-                                    className="basic-single"
-                                    classNamePrefix="select"
-                                    placeholder="Semua"
-                                    defaultValue={allCooperationUser.stateListStatus[0]}
-                                    isDisabled={false}
-                                    isLoading={false}
-                                    isClearable={false}
-                                    isRtl={false}
-                                    isSearchable={true}
-                                    name="color"
-                                    onChange={(e) => setValueStatus(e?.name_en)}
-                                    options={allCooperationUser.stateListStatus}
-                                  />
-                                </div>
-                              </div>
-                              <div className="modal-footer">
-                                <div className="d-flex justify-content-end align-items-center">
-                                  <button
-                                    className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
-                                    type="button"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                    onClick={() => resetValueSort()}
-                                  >
-                                    Reset
-                                  </button>
-                                  <button data-dismiss="modal" className="btn btn-sm btn-rounded-full bg-blue-primary text-white " type="button" onClick={(e) => handleSubmitSearchMany(e)}>
-                                    Terapkan
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
+                            <button 
+                              type="button" 
+                              className="close" 
+                              data-dismiss="modal" 
+                              aria-label="Close"
+                              onClick={() => setShowModal(false)}
+                            >
+                              <IconClose />
+                            </button>
+                          </Modal.Header>
+                          <Modal.Body
+                            style={{ height: "400px" }}
+                            className="text-left"
+                          >
+                          <div className="fv-row mb-10">
+                            <label className="required fw-bold fs-6 mb-2">Kategori</label>
+                            <Select
+                              ref={(ref) => (selectRefKerjasama = ref)}
+                              className="basic-single"
+                              classNamePrefix="select"
+                              placeholder="Semua"
+                              // defaultValue={allCooperationUser?.stateListKerjaSama[0]}
+                              isDisabled={false}
+                              isLoading={false}
+                              isClearable={false}
+                              isRtl={false}
+                              isSearchable={true}
+                              name="color"
+                              onChange={(e) => setValueKerjaSama(e?.cooperation_categories)}
+                              options={allCooperationUser?.stateListKerjaSama}
+                            />
                           </div>
-                        </div>
+                          <div className="fv-row mb-10">
+                            <label className="required fw-bold fs-6 mb-2">Status</label>
+                            <Select
+                              ref={(ref) => (selectRefStatus = ref)}
+                              className="basic-single"
+                              classNamePrefix="select"
+                              placeholder="Semua"
+                              // defaultValue={allCooperationUser?.stateListStatus[0]}
+                              isDisabled={false}
+                              isLoading={false}
+                              isClearable={false}
+                              isRtl={false}
+                              isSearchable={true}
+                              name="color"
+                              onChange={(e) => setValueStatus(e?.name_en)}
+                              options={allCooperationUser?.stateListStatus}
+                            />
+                          </div>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <div className="d-flex justify-content-end align-items-center">
+                              <button
+                                className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
+                                type="button"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={() => resetValueSort()}
+                              >
+                                Reset
+                              </button>
+                              <button 
+                                data-dismiss="modal" 
+                                className="btn btn-sm btn-rounded-full bg-blue-primary text-white " 
+                                type="button"
+                                onClick={
+                                  (e) => handleSubmitSearchMany(e)
+                                }
+                              >
+                                Terapkan
+                              </button>
+                            </div>
+                          </Modal.Footer>
+                        </Modal>
 
                         {/* end modal */}
                       </div>
@@ -427,7 +472,7 @@ const Table = ({ token }) => {
                     </thead>
 
                     <tbody>
-                      {allCooperationUser.cooperationMitra.data && allCooperationUser?.cooperationMitra?.data?.list_cooperations?.length === 0 ? (
+                      {allCooperationUser?.cooperationMitra?.data && allCooperationUser?.cooperationMitra?.data?.list_cooperations?.length === 0 ? (
                         valueSearch ?
                             <tr>
                               <td colSpan="8" className="text-center">
@@ -444,75 +489,75 @@ const Table = ({ token }) => {
                         allCooperationUser?.cooperationMitra?.data?.list_cooperations?.map((items, index) => {
                           return (
                             <tr key={index}>
-                              <td>{allCooperationUser.page === 1 ? index + 1 : (allCooperationUser.page - 1) * allCooperationUser.limit + (index + 1)}</td>
+                              <td>{allCooperationUser?.page === 1 ? index + 1 : (allCooperationUser?.page - 1) * allCooperationUser?.limit + (index + 1)}</td>
                               <td className="d-flex justify-content-start">
                                 <div className="d-flex align-items-start justify-content-center flex-column">
                                   <p className="p-part-t text-overflow-ens">{items.title}</p>
                                   <p className="p-part-d text-overflow-ens">
-                                    ({items.cooperation_category === null ? "tidak ada kategori kerjasama" : items.cooperation_category.cooperation_categories})
+                                    ({items?.cooperation_category === null ? "tidak ada kategori kerjasama" : items?.cooperation_category?.cooperation_categories})
                                   </p>
                                 </div>
                                 <br />
                               </td>
                               <td className="align-middle text-left">
                                 <p className="p-part-t">
-                                  {items.period} {items.period_unit}
+                                  {items?.period} {items?.period_unit}
                                 </p>{" "}
                               </td>
                               <td className="align-middle text-left">
-                                <p className="p-part-t">{items.period_date_start === null ? "-" : moment(items.period_date_start).format("DD MMMM YYYY")}</p>
+                                <p className="p-part-t">{items?.period_date_start === null ? "-" : moment(items?.period_date_start).format("DD MMMM YYYY")}</p>
                               </td>
                               <td className="align-middle text-left">
-                                <p className="p-part-t">{items.period_date_end === null ? "-" : moment(items.period_date_end).format("DD MMMM YYYY")}</p>
+                                <p className="p-part-t">{items?.period_date_end === null ? "-" : moment(items?.period_date_end).format("DD MMMM YYYY")}</p>
                               </td>
                               <td className="align-middle text-left">
-                                {items.status.name === "aktif" && moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD") ? (
+                                {items?.status.name === "aktif" && moment(items?.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD") ? (
                                   <div className="position-relative w-max-content">
                                     <select name="" id="" disabled className="form-control remove-icon-default dropdown-arrows-green" key={index}>
                                       <option value="1">Disetujui</option>
                                       <option value="2">Tidak Aktif</option>
                                     </select>
                                   </div>
-                                ) : items.status.name === "aktif" && moment(items.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ? (
+                                ) : items?.status.name === "aktif" && moment(items?.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ? (
                                   <div className="position-relative w-max-content">
                                     <select disabled name="" id="" className="form-control remove-icon-default dropdown-arrows-green" key={index}>
                                       <option value="1">Aktif</option>
                                       <option value="2">Tidak Aktif</option>
                                     </select>
                                   </div>
-                                ) : items.status.name === "tidak aktif" ? (
+                                ) : items?.status.name === "tidak aktif" ? (
                                   <div className="position-relative w-max-content">
                                     <select disabled name="" id="" className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10" key={index}>
                                       <option value="2">Tidak Aktif</option>
                                       <option value="1">Aktif</option>
                                     </select>
                                   </div>
-                                ) : items.status.name === "pengajuan-review" ? (
+                                ) : items?.status.name === "pengajuan-review" ? (
                                   <div className="position-relative w-max-content">
                                     <select disabled name="" id="" className="form-control remove-icon-default dropdown-arrows-blue">
                                       <option value="">Pengajuan - Review</option>
                                     </select>
                                   </div>
-                                ) : items.status.name === "pengajuan-revisi" ? (
+                                ) : items?.status.name === "pengajuan-revisi" ? (
                                   <div className="position-relative w-max-content">
                                     <select disabled name="" id="" className="form-control remove-icon-default dropdown-arrows-yellow">
                                       <option value="">Pengajuan - Revisi</option>
                                     </select>
                                   </div>
-                                ) : items.status.name === "pengajuan-pembahasan" ? (
+                                ) : items?.status.name === "pengajuan-pembahasan" ? (
                                   <div className="position-relative w-max-content">
                                     <select disabled name="" id="" className="form-control remove-icon-default dropdown-arrows-blue pr-10">
                                       <option value="5">Pengajuan-Pembahasan</option>
                                       <option value="6">Pengajuan-Selesai</option>
                                     </select>
                                   </div>
-                                ) : items.status.name === "pengajuan-selesai" ? (
+                                ) : items?.status.name === "pengajuan-selesai" ? (
                                   <div className="position-relative w-max-content">
                                     <select disabled name="" id="" className="form-control remove-icon-default dropdown-arrows-blue">
                                       <option value="">Pengajuan - Selesai</option>
                                     </select>
                                   </div>
-                                ) : items.status.name === "pengajuan-document" ? (
+                                ) : items?.status.name === "pengajuan-document" ? (
                                   <div className="position-relative w-max-content">
                                     <select disabled name="" id="" className="form-control remove-icon-default dropdown-arrows-blue">
                                       <option value="">Pengajuan - Dokumen</option>
@@ -529,7 +574,7 @@ const Table = ({ token }) => {
 
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  {items.status.name === "aktif" && moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD") ? (
+                                  {items?.status.name === "aktif" && moment(items?.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD") ? (
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
@@ -542,8 +587,8 @@ const Table = ({ token }) => {
                                         href={{
                                           pathname: "/partnership/user/kerjasama/hasil",
                                           query: {
-                                            statusKerjasama: items.status.name,
-                                            id: items.id,
+                                            statusKerjasama: items?.status?.name,
+                                            id: items?.id,
                                           },
                                         }}
                                       >
@@ -553,11 +598,11 @@ const Table = ({ token }) => {
                                         </a>
                                       </Link>
                                     </div>
-                                  ) : items.status.name === "aktif" && moment(items.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ? (
+                                  ) : items?.status?.name === "aktif" && moment(items?.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ? (
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                        onClick={() => router.push(`/partnership/user/kerjasama/${items.id}`)}
+                                        onClick={() => router.push(`/partnership/user/kerjasama/${items?.id}`)}
                                       >
                                         <IconEye width="16" height="16" fill="rgba(255,255,255,1)" />
                                         <div className="text-hover-show-hapus">Detail</div>
@@ -566,8 +611,8 @@ const Table = ({ token }) => {
                                         href={{
                                           pathname: "/partnership/user/kerjasama/hasil",
                                           query: {
-                                            statusKerjasama: items.status.name,
-                                            id: items.id,
+                                            statusKerjasama: items?.status?.name,
+                                            id: items?.id,
                                           },
                                         }}
                                       >
@@ -583,8 +628,8 @@ const Table = ({ token }) => {
                                         href={{
                                           pathname: "/partnership/user/kerjasama/hasil",
                                           query: {
-                                            statusKerjasama: items.status.name,
-                                            id: items.id,
+                                            statusKerjasama: items?.status?.name,
+                                            id: items?.id,
                                           },
                                         }}
                                       >
@@ -629,7 +674,7 @@ const Table = ({ token }) => {
                                     <Link
                                       href={{
                                         pathname: "/partnership/user/kerjasama/pembahasan",
-                                        query: { id: items.id },
+                                        query: { id: items?.id },
                                       }}
                                       passHref
                                     >
@@ -642,7 +687,7 @@ const Table = ({ token }) => {
                                     <Link
                                       href={{
                                         pathname: "/partnership/user/kerjasama/pembahasan",
-                                        query: { id: items.id },
+                                        query: { id: items?.id },
                                       }}
                                       passHref
                                     >
@@ -655,7 +700,7 @@ const Table = ({ token }) => {
                                     <Link
                                       href={{
                                         pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama",
-                                        query: { id: items.id },
+                                        query: { id: items?.id },
                                       }}
                                       passHref
                                     >
@@ -670,8 +715,8 @@ const Table = ({ token }) => {
                                         href={{
                                           pathname: "/partnership/user/kerjasama/hasil",
                                           query: {
-                                            statusKerjasama: items.status.name,
-                                            id: items.id,
+                                            statusKerjasama: items?.status?.name,
+                                            id: items?.id,
                                           },
                                         }}
                                       >
@@ -699,7 +744,7 @@ const Table = ({ token }) => {
               <div className="row">
                 <div className="table-pagination col-12 col-md-8 overflow-auto">
                   <Pagination
-                    activePage={allCooperationUser.page}
+                    activePage={allCooperationUser?.page}
                     itemsCountPerPage={allCooperationUser?.cooperationMitra?.data?.perPage}
                     totalItemsCount={allCooperationUser?.cooperationMitra?.data?.total}
                     pageRangeDisplayed={3}
@@ -735,7 +780,7 @@ const Table = ({ token }) => {
                     </div>
                     <div className="col-8 my-auto">
                       <p className="align-middle mt-3" style={{ color: "#B5B5C3" }}>
-                        Total Data {allCooperationUser.cooperationMitra.data && allCooperationUser.cooperationMitra.data.total}
+                        Total Data {allCooperationUser?.cooperationMitra?.data && allCooperationUser?.cooperationMitra?.data?.total}
                       </p>
                     </div>
                   </div>
@@ -745,6 +790,7 @@ const Table = ({ token }) => {
           </div>
         </div>
       </div>
+      
     </PageWrapper>
   );
 };

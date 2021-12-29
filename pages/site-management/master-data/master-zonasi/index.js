@@ -1,10 +1,11 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 
 import { getAllZonasi } from "../../../../redux/actions/site-management/zonasi.actions";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const ListRole = dynamic(
   () =>
@@ -13,7 +14,7 @@ const ListRole = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
@@ -34,10 +35,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

@@ -17,10 +17,12 @@ import {
   clearErrors,
 } from "../../../../redux/actions/pelatihan/academy.actions";
 import { DELETE_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
+import Cookies from "js-cookie";
 
 const ListAcademy = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { permission } = useSelector((state) => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
@@ -80,7 +82,7 @@ const ListAcademy = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            dispatch(getAllAcademy(1, null, null, token));
+            dispatch(getAllAcademy(1, null, null, token, token_permission));
           }
         }
       );
@@ -99,18 +101,19 @@ const ListAcademy = ({ token }) => {
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
-    dispatch(getAllAcademy(pageNumber, search, limit, token));
+    dispatch(getAllAcademy(pageNumber, search, limit, token, token_permission));
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+	  e.preventDefault()
     setPage(1);
-    dispatch(getAllAcademy(1, search, limit, token));
+    dispatch(getAllAcademy(1, search, limit, token, token_permission));
   };
 
   const handleLimit = (val) => {
     setLimit(val);
     setPage(1);
-    dispatch(getAllAcademy(1, search, val, token));
+    dispatch(getAllAcademy(1, search, val, token, token_permission));
   };
 
   const onNewReset = () => {
@@ -129,7 +132,7 @@ const ListAcademy = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteAcademy(id, token));
+        dispatch(deleteAcademy(id, token, token_permission));
       }
     });
   };
@@ -200,14 +203,16 @@ const ListAcademy = ({ token }) => {
             >
               List Akademi
             </h1>
-            <div className="card-toolbar">
-              <Link href="/pelatihan/akademi/tambah-akademi">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-add-fill"></i>
-                  Tambah Akademi
-                </a>
-              </Link>
-            </div>
+            {listPermission.includes("pelatihan.akademi.manage") && (
+              <div className="card-toolbar">
+                <Link href="/pelatihan/akademi/tambah-akademi">
+                  <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
+                    <i className="ri-add-fill"></i>
+                    Tambah Akademi
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -218,23 +223,25 @@ const ListAcademy = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={(e) => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>

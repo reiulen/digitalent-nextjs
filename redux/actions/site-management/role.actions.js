@@ -122,11 +122,27 @@ export const postRoles = (sendData, token, tokenPermission) => {
         Swal.fire("Oopss", data.message, "error").then(() => {});
       }
     } catch (error) {
+<<<<<<< HEAD
       Swal.fire(
         "Oopss",
         "Jika Sub Menu di Pilih, Menu juga harus dipilih !",
         "error"
       ).then(() => {});
+=======
+      if (error.message.includes("400")) {
+        Swal.fire(
+          "Oopss",
+          "Nama Role Sudah ada Sebelumnya !",
+          "error"
+        ).then(() => {});
+      }else{
+        Swal.fire(
+          "Oopss",
+          error.message,
+          "error"
+        ).then(() => {});
+      }
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
       dispatch({
         type: POST_ROLES_FAIL,
       });
@@ -229,6 +245,10 @@ export const getSidebar = (token) => async (dispatch) => {
     localStorage.setItem("sidebar", JSON.stringify(data.data.menu));
     localStorage.setItem("token-permission", data.data.tokenPermission);
     localStorage.setItem("permissions", data.data.permissions);
+<<<<<<< HEAD
+=======
+
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
     Cookies.set("token_permission", data.data.tokenPermission);
     dispatch({
       type: GET_SIDEBAR,

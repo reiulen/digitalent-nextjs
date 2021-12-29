@@ -46,7 +46,7 @@ const LoginAdmin = () => {
       if (result.error) {
         SweatAlert("Gagal", result.error, "error");
       } else {
-        if (data.role === "admin") {
+        if (data?.role === "admin") {
           router.push("/dashboard");
         } else {
           router.push("/partnership/user/kerjasama");

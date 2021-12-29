@@ -24,52 +24,78 @@ module.exports = {
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
 
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
-    END_POINT_API_PUBLIKASI: "http://api-dts-dev.majapahit.id/publikasi/",
-    END_POINT_API_PUBLIKASI_1: "http://dts-publikasi-dev.majapahit.id/",
+    END_POINT_API_PUBLIKASI: "https://api-dts-dev.majapahit.id/publikasi/",
+    END_POINT_API_PUBLIKASI_1:
+      "https://api-dts-dev.majapahit.id/publikasi-view/",
+    API_KEY_PUBLIKASI: "I8aylVChtrUB15Sp5v8TsjDOvb8kGcML",
     END_POINT_API_IMAGE_PUBLIKASI:
       "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     //subvit
-    END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
-    // END_POINT_API_SUBVIT: "http://api-dts-dev.majapahit.id/subvit/",
+    // END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
+    END_POINT_API_SUBVIT: "https://api-dts-dev.majapahit.id/subvit/",
+
     END_POINT_API_IMAGE_SUBVIT:
       "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // partnership
-    END_POINT_API_PARTNERSHIP: "http://api-dts-dev.majapahit.id/partnership/",
+    END_POINT_API_PARTNERSHIP: "https://api-dts-dev.majapahit.id/partnership/",
 
-    END_POINT_API_PARTNERSHIP_MITRA: "http://dts-partnership-dev.majapahit.id/",
+    END_POINT_API_PARTNERSHIP_MITRA:
+      "https://api-dts-dev.majapahit.id/partnership/",
 
     END_POINT_API_IMAGE_PARTNERSHIP:
-      "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
+      "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
+    // END_POINT_API_IMAGE_PARTNERSHIP:
+    //   "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
 
     // site management
-    END_POINT_API_SITE_MANAGEMENT: "http://api-dts-dev.majapahit.id/sso/",
+    END_POINT_API_SITE_MANAGEMENT: "https://api-dts-dev.majapahit.id/sso/",
     END_POINT_API_IMAGE_SITE_MANAGEMENT:
       "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // pelatihan
     // END_POINT_API_PELATIHAN: "http://192.168.11.44:83/",
-    END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
+    END_POINT_API_PELATIHAN: "https://api-dts-dev.majapahit.id/pelatihan/",
 
     //sertifikat
-    END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
+    END_POINT_API_SERTIFIKAT: "https://api-dts-dev.majapahit.id/sertifikat/",
+    // END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
     // END_POINT_API_SERTIFIKAT: "http://http://192.168.11.96:8000/",
 
     END_POINT_API_IMAGE_SERTIFIKAT:
       "https://dts-sertifikat-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // Beasiswa
-    END_POINT_API_BEASISWA: "http://api-dts-dev.majapahit.id/beasiswa/api/v1/",
+    END_POINT_API_BEASISWA: "https://api-dts-dev.majapahit.id/beasiswa/api/v1/",
     END_POINT_API_IMAGE_BEASISWA:
       "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com",
+    END_POINT_API_BEASISWA_SCHOLARSHIP:
+      "http://api-dts-dev.majapahit.id/beasiswa/api/get-scholarship-data",
 
-    END_POINT_API_SIMONAS: "http://api-dts-dev.majapahit.id/simonas/api/v1/",
+    END_POINT_API_SIMONAS: "https://api-dts-dev.majapahit.id/simonas/api/v1/",
+
+    END_POINT_API_SIMONAS_JOB:
+      "http://api-dts-dev.majapahit.id/simonas/api/job",
 
     END_POINT_API_IMAGE_LOGO_MITRA:
       "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
 
     TOKEN_MAP:
       "pk.eyJ1IjoiZGVuZHlsb3JkcyIsImEiOiJja3U1NHJnYjkxczdyMnZxZ2ptM2hlNXpqIn0.o5v5Ch0AFJIfeZER2vZvwA",
+
+    ROOT_URL: "https://dts-dev.majapahit.id/",
+
+    VERSION_APP: "2.0.0",
+
+    FB_API_KEY: "AIzaSyCE2YL39cNc47v0eSzmecyaAOhAKYlGjxQ",
+    FB_AUTH_DOMAIN: "dts-kominfo.firebaseapp.com",
+    FB_PROJECT_ID: "dts-kominfo",
+    FB_STORAGE_BUCKET: "dts-kominfo.appspot.com",
+    FB_MESSAGING_SENDER_ID: "38242238576",
+    FB_APP_ID: "1:38242238576:web:8043a0824ce6e1e42134b5",
+    FB_MEASUREMENT_ID: "G-Z43DV3R59G",
+    FB_FCM_KEY_PAIR:
+      "BAseWMZsJmdofVidmAZEOMnFjB2fZQFDmPtuMVPJEOFP5nLhogqDkMYolmQ-d4HABaS8nOakUaXt70DsrqHWR2Y",
   },
 };

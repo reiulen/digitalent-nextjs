@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-// import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../../redux/store";
-import LoadingPage from "../../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { getListApi } from "../../../../../redux/actions/site-management/settings/api.actions";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
+
 const TambahApi = dynamic(
   () =>
     import(
@@ -11,7 +12,7 @@ const TambahApi = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
@@ -32,10 +33,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

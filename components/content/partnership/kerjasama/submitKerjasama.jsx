@@ -9,117 +9,118 @@ import axios from "axios";
 import IconCalender from "../../../assets/icon/Calender";
 
 import moment from "moment";
+import Cookies from "js-cookie";
 
 const SubmitKerjasama = ({ token }) => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  // pdf file
-  // Create new plugin instance
-  const [pdfFile, setPdfFile] = useState(null);
-  const [pdfFileError, setPdfFileError] = useState("");
-  const [viewPDF, setViewPDF] = useState(null);
-  const [error, setError] = useState({
-    period_date_start: "",
-    agreement_number_partner: "",
-    agreement_number_kemkominfo: "",
-    signing_date: "",
-    document: "",
-  });
+	const [startDate, setStartDate] = useState(null);
+	const [endDate, setEndDate] = useState(null);
+	// pdf file
+	// Create new plugin instance
+	const [pdfFile, setPdfFile] = useState(null);
+	const [pdfFileError, setPdfFileError] = useState("");
+	const [viewPDF, setViewPDF] = useState(null);
+	const [error, setError] = useState({
+		period_date_start: "",
+		agreement_number_partner: "",
+		agreement_number_kemkominfo: "",
+		signing_date: "",
+		document: "",
+	});
 
-  const router = useRouter();
-  const [period_date_start, setPeriod_date_start] = useState("");
-  const [agreement_number_partner, setAgreement_number_partner] = useState("");
-  const [agreement_number_kemkominfo, setAgreement_number_kemkominfo] =
-    useState("");
-  const [signing_date, setSigning_date] = useState("");
-  const [document, setDocument] = useState("");
-  // form data send
+	const router = useRouter();
+	const [period_date_start, setPeriod_date_start] = useState("");
+	const [agreement_number_partner, setAgreement_number_partner] = useState("");
+	const [agreement_number_kemkominfo, setAgreement_number_kemkominfo] =
+		useState("");
+	const [signing_date, setSigning_date] = useState("");
+	const [document, setDocument] = useState("");
+	// form data send
 
-  const [NamePDF, setNamePDF] = useState(null);
-  // onchange pdf
+	const [NamePDF, setNamePDF] = useState(null);
+	// onchange pdf
 
-  const fileType = ["application/pdf"];
-  const handlePdfFileChange = (e) => {
-    let selectedFile = e.target.files[0];
-    setDocument(selectedFile);
-    setViewPDF("");
-    if (selectedFile) {
-      if (selectedFile && fileType.includes(selectedFile.type)) {
-        let reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onloadend = (e) => {
-          setPdfFile(e.target.result);
-          setPdfFileError("");
-          setNamePDF(selectedFile.name);
-        };
-      } else {
-        setNamePDF(null);
-        setPdfFile(null);
-        setPdfFileError("Please selet valid pdf file");
-      }
-    } else {
-      Swal.fire("Gagal", `select your file`, "error");
-    }
-  };
+	const fileType = ["application/pdf"];
+	const handlePdfFileChange = (e) => {
+		let selectedFile = e.target.files[0];
+		setDocument(selectedFile);
+		setViewPDF("");
+		if (selectedFile) {
+			if (selectedFile && fileType.includes(selectedFile.type)) {
+				let reader = new FileReader();
+				reader.readAsDataURL(selectedFile);
+				reader.onloadend = (e) => {
+					setPdfFile(e.target.result);
+					setPdfFileError("");
+					setNamePDF(selectedFile.name);
+				};
+			} else {
+				setNamePDF(null);
+				setPdfFile(null);
+				setPdfFileError("Please selet valid pdf file");
+			}
+		} else {
+			Swal.fire("Gagal", `select your file`, "error");
+		}
+	};
 
-  const submit = (e) => {
-    e.preventDefault();
+	const submit = (e) => {
+		e.preventDefault();
 
-    if (period_date_start === "") {
-      setError({
-        ...error,
-        period_date_start: "Harus isi tanggal priode kerjasama",
-      });
-    } else if (agreement_number_partner === "") {
-      setError({
-        ...error,
-        agreement_number_partner: "Harus isi nomor perjanjian lembaga",
-      });
-    } else if (agreement_number_kemkominfo === "") {
-      setError({
-        ...error,
-        agreement_number_kemkominfo: "Harus isi nomor perjanjian kemkominfo",
-      });
-    } else if (signing_date === "") {
-      setError({ ...error, signing_date: "Harus isi tanggal penandatanganan" });
-    } else if (document === "") {
-      setError({ ...error, document: "Harus unggah file" });
-    } else {
-      Swal.fire({
-        title: "Apakah anda yakin ?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Batal",
-        confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
-      }).then(async (result) => {
-        if (result.value) {
-          let formData = new FormData();
-          formData.append("institution_name", institution_name);
-          formData.append("date", date);
-          formData.append("title", title);
-          formData.append("period", period);
-          formData.append("period_unit", periodUnit);
-          formData.append("cooperation_category_id", cooperationC_id);
+		if (period_date_start === "") {
+			setError({
+				...error,
+				period_date_start: "Harus isi tanggal priode kerjasama",
+			});
+		} else if (agreement_number_partner === "") {
+			setError({
+				...error,
+				agreement_number_partner: "Harus isi nomor perjanjian lembaga",
+			});
+		} else if (agreement_number_kemkominfo === "") {
+			setError({
+				...error,
+				agreement_number_kemkominfo: "Harus isi nomor perjanjian kemkominfo",
+			});
+		} else if (signing_date === "") {
+			setError({ ...error, signing_date: "Harus isi tanggal penandatanganan" });
+		} else if (document === "") {
+			setError({ ...error, document: "Harus unggah file" });
+		} else {
+			Swal.fire({
+				title: "Apakah anda yakin ?",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				cancelButtonText: "Batal",
+				confirmButtonText: "Ya !",
+				// dismissOnDestroy: false,
+			}).then(async (result) => {
+				if (result.value) {
+					let formData = new FormData();
+					formData.append("institution_name", institution_name);
+					formData.append("date", date);
+					formData.append("title", title);
+					formData.append("period", period);
+					formData.append("period_unit", periodUnit);
+					formData.append("cooperation_category_id", cooperationC_id);
 
-          formData.append("period_date_start", period_date_start);
-          formData.append("period_date_end", newDate);
-          formData.append("agreement_number_partner", agreement_number_partner);
-          formData.append(
-            "agreement_number_kemkominfo",
-            agreement_number_kemkominfo
-          );
-          formData.append("signing_date", signing_date);
-          formData.append("document", document);
-          let parseAllCooperation = AllCooperation;
-          let dataee = parseAllCooperation.map((items, i) => {
-            return items.cooperation;
-          });
-          dataee.forEach((item, i) => {
-            formData.append(`cooperation_form_content[${i}]`, item);
-          });
+					formData.append("period_date_start", period_date_start);
+					formData.append("period_date_end", newDate);
+					formData.append("agreement_number_partner", agreement_number_partner);
+					formData.append(
+						"agreement_number_kemkominfo",
+						agreement_number_kemkominfo
+					);
+					formData.append("signing_date", signing_date);
+					formData.append("document", document);
+					let parseAllCooperation = AllCooperation;
+					let dataee = parseAllCooperation.map((items, i) => {
+						return items.cooperation;
+					});
+					dataee.forEach((item, i) => {
+						formData.append(`cooperation_form_content[${i}]`, item);
+					});
 
           try {
             let { data } = await axios.post(
@@ -134,7 +135,7 @@ const SubmitKerjasama = ({ token }) => {
             sessionStorage.removeItem("dataBefore");
             router.push({
               pathname: `/partnership/kerjasama/detail-kerjasama`,
-              query: { id: data.data.id, success: true },
+              query: { id: data?.data?.id, success: true },
             });
           } catch (error) {
             Swal.fire("Gagal", `${error.response.data.message}`, "error");
@@ -144,54 +145,54 @@ const SubmitKerjasama = ({ token }) => {
     }
   };
 
-  const [newDate, setNewDate] = useState("");
+	const [newDate, setNewDate] = useState("");
 
-  const [periodValue, setPeriodValue] = useState("");
-  const [periodUnitValue, setPeriodUnitValue] = useState("");
+	const [periodValue, setPeriodValue] = useState("");
+	const [periodUnitValue, setPeriodUnitValue] = useState("");
 
-  const checkPeriod = (dateNow) => {
-    if (periodUnitValue === "bulan") {
-      let futureMonth = moment(dateNow)
-        .add(parseInt(periodValue), "M")
-        .format("YYYY-MM-DD");
+	const checkPeriod = (dateNow) => {
+		if (periodUnitValue === "bulan") {
+			let futureMonth = moment(dateNow)
+				.add(parseInt(periodValue), "M")
+				.format("YYYY-MM-DD");
 
-      setNewDate(futureMonth);
-    }
-    // jika tahun
-    else {
-      let futureYear = moment(dateNow)
-        .add(parseInt(periodValue), "y")
-        .format("YYYY-MM-DD");
+			setNewDate(futureMonth);
+		}
+		// jika tahun
+		else {
+			let futureYear = moment(dateNow)
+				.add(parseInt(periodValue), "y")
+				.format("YYYY-MM-DD");
 
-      setNewDate(futureYear);
-    }
-  };
+			setNewDate(futureYear);
+		}
+	};
 
-  const onChangePeriodeDateStart = (date) => {
-    setPeriod_date_start(moment(date).format("YYYY-MM-DD"));
-    checkPeriod(moment(date).format("YYYY-MM-DD"));
-  };
+	const onChangePeriodeDateStart = (date) => {
+		setPeriod_date_start(moment(date).format("YYYY-MM-DD"));
+		checkPeriod(moment(date).format("YYYY-MM-DD"));
+	};
 
-  const [institution_name, setInstituion_name] = useState("");
-  const [date, setDate] = useState("");
-  const [title, setTitle] = useState("");
-  const [period, setPeriod] = useState("");
-  const [periodUnit, setPeriodUnit] = useState("");
-  const [cooperationC_id, setCooperationC_id] = useState("");
-  const [AllCooperation, setAllCooperation] = useState("");
+	const [institution_name, setInstituion_name] = useState("");
+	const [date, setDate] = useState("");
+	const [title, setTitle] = useState("");
+	const [period, setPeriod] = useState("");
+	const [periodUnit, setPeriodUnit] = useState("");
+	const [cooperationC_id, setCooperationC_id] = useState("");
+	const [AllCooperation, setAllCooperation] = useState("");
 
-  useEffect(() => {
-    let datas = JSON.parse(sessionStorage.getItem("dataBefore"));
+	useEffect(() => {
+		let datas = JSON.parse(sessionStorage.getItem("dataBefore"));
 
     setInstituion_name(datas[0].institution_name);
-    setDate(datas[0].date);
-    setTitle(datas[0].title);
-    setPeriod(datas[0].period);
-    setPeriodUnit(datas[0].periodUnit);
-    setCooperationC_id(datas[0].cooperationC_id);
-    setAllCooperation(datas[0].AllCooperation);
-    setPeriodValue(datas[0].period);
-    setPeriodUnitValue(datas[0].periodUnit);
+    setDate(datas[0]?.date);
+    setTitle(datas[0]?.title);
+    setPeriod(datas[0]?.period);
+    setPeriodUnit(datas[0]?.periodUnit);
+    setCooperationC_id(datas[0]?.cooperationC_id);
+    setAllCooperation(datas[0]?.AllCooperation);
+    setPeriodValue(datas[0]?.period);
+    setPeriodUnitValue(datas[0]?.periodUnit);
   }, []);
 
   return (
@@ -232,8 +233,8 @@ const SubmitKerjasama = ({ token }) => {
                         style={{ right: "10px" }}
                       />
                     </div>
-                    {error.period_date_start ? (
-                      <p className="error-text">{error.period_date_start}</p>
+                    {error?.period_date_start ? (
+                      <p className="error-text">{error?.period_date_start}</p>
                     ) : (
                       ""
                     )}
@@ -241,7 +242,7 @@ const SubmitKerjasama = ({ token }) => {
                   <div className="col-12 col-xl-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-10 mt-xl-2 ">
                       <DatePicker
-                        className="form-search-date form-control cursor-pointer"
+                        className="form-search-date form-control cursor-not-allowed"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         disabled
@@ -253,6 +254,8 @@ const SubmitKerjasama = ({ token }) => {
                         maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
+                        isDisabled={true}
+                        
                       />
                       <IconCalender
                         className="right-center-absolute"
@@ -276,8 +279,8 @@ const SubmitKerjasama = ({ token }) => {
                   className="form-control"
                   placeholder="Masukkan Nomor Perjanjian Lembaga"
                 />
-                {error.agreement_number_partner ? (
-                  <p className="error-text">{error.agreement_number_partner}</p>
+                {error?.agreement_number_partner ? (
+                  <p className="error-text">{error?.agreement_number_partner}</p>
                 ) : (
                   ""
                 )}
@@ -298,9 +301,9 @@ const SubmitKerjasama = ({ token }) => {
                   className="form-control"
                   placeholder="Masukkan Nomor Perjanjian Kemkominfo"
                 />
-                {error.agreement_number_kemkominfo ? (
+                {error?.agreement_number_kemkominfo ? (
                   <p className="error-text">
-                    {error.agreement_number_kemkominfo}
+                    {error?.agreement_number_kemkominfo}
                   </p>
                 ) : (
                   ""
@@ -311,7 +314,7 @@ const SubmitKerjasama = ({ token }) => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal Tanda Tangan
                 </label>
-                <div className="d-flex align-items-center position-relative datepicker-w w-100">
+                <div className="d-flex align-items-center position-relative datepicker-w w-100" style={{zIndex:"10"}}>
                   <DatePicker
                     className="form-search-date form-control-sm form-control cursor-pointer"
                     selected={endDate}
@@ -333,8 +336,8 @@ const SubmitKerjasama = ({ token }) => {
                     style={{ right: "10px" }}
                   />
                 </div>
-                {error.signing_date ? (
-                  <p className="error-text">{error.signing_date}</p>
+                {error?.signing_date ? (
+                  <p className="error-text">{error?.signing_date}</p>
                 ) : (
                   ""
                 )}
@@ -363,50 +366,50 @@ const SubmitKerjasama = ({ token }) => {
                     </label>
                   </div>
                 </div>
-                {error.document ? (
-                  <p className="error-text">{error.document}</p>
+                {error?.document ? (
+                  <p className="error-text">{error?.document}</p>
                 ) : (
                   ""
                 )}
               </div>
               {pdfFileError && <div>{pdfFileError}</div>}
 
-              <div
-                className={`${
-                  viewPDF ? "pdf-container" : "pdf-container d-none"
-                }`}
-              >
-                <iframe
-                  src={viewPDF}
-                  frameBorder="0"
-                  scrolling="auto"
-                  height={viewPDF ? "500px" : ""}
-                  width="100%"
-                ></iframe>
-                {!viewPDF && <>No pdf file selected </>}
-              </div>
+							<div
+								className={`${
+									viewPDF ? "pdf-container" : "pdf-container d-none"
+								}`}
+							>
+								<iframe
+									src={viewPDF}
+									frameBorder="0"
+									scrolling="auto"
+									height={viewPDF ? "500px" : ""}
+									width="100%"
+								></iframe>
+								{!viewPDF && <>No pdf file selected </>}
+							</div>
 
-              <div className="form-group mt-6">
-                <div className="flex-column flex-sm-row d-flex justify-content-end">
-                  <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center">
-                      Kembali
-                    </a>
-                  </Link>
-                  <button
-                    type="submit"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
-                  >
-                    Kirim
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </PageWrapper>
-  );
+							<div className="form-group mt-6">
+								<div className="flex-column flex-sm-row d-flex justify-content-end">
+									<Link href="/partnership/kerjasama">
+										<a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center">
+											Kembali
+										</a>
+									</Link>
+									<button
+										type="submit"
+										className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
+									>
+										Kirim
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</PageWrapper>
+	);
 };
 
 export default SubmitKerjasama;

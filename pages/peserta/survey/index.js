@@ -14,7 +14,10 @@ import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const SurveyPage = dynamic(
-  () => import("../../../user-component-new/content/peserta/survey"),
+  () =>
+    import(
+      "../../../user-component-new/components/global/Riwayat-pelatihan-detail/index"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -30,10 +33,7 @@ const Layout = dynamic(() =>
 );
 
 const BelumTersedia = dynamic(
-  () =>
-    import(
-      "../../../user-component-new/content/peserta/test-substansi/belum-tersedia.jsx"
-    ),
+  () => import("../../../user-component-new/content/peserta/empty-state/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -46,7 +46,7 @@ export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Survey" session={session}>
+      <Layout title="Survey " session={session}>
         {props.success ? <SurveyPage session={session} /> : <BelumTersedia />}
       </Layout>
     </>
@@ -69,13 +69,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       let success = false;
 
-      if (query.id) {
+      if (query.no) {
         //jika ada query id
         const data = await store.dispatch(
-          getDetailRiwayatPelatihan(query.id, session.user.user.data.user.token)
+          getDetailRiwayatPelatihan(query.no, session.user.user.data.user.token)
         );
         if (data) {
-          if (data?.data?.status.includes("administrasi akhir")) {
+          if (data?.data?.survei) {
             success = true;
           } else {
             success = false;
@@ -93,7 +93,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
         if (!status || status == "") {
           success = false;
-        } else if (status?.includes("administrasi akhir")) {
+        } else if (dataDashboard?.data?.pelatihan?.pelatihan_berjalan.survei) {
           await store.dispatch(
             getDetailRiwayatPelatihan(
               dataDashboard?.data.pelatihan.pelatihan_berjalan.id,
@@ -108,7 +108,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           );
           success = false;
           const list = data.list.filter((item) => {
-            return item.status.includes("administrasi akhir");
+            return item.survei;
           });
           if (list.length == 0 || !list) {
             success = false;
@@ -123,6 +123,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           }
         }
       }
+
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
       await store.dispatch(getAllAkademi());
 

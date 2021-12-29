@@ -3,19 +3,19 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Card, Button, Modal, ModalBody } from "react-bootstrap";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-// import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
 import styles from "./testSubstansi.module.css";
 
 const TestSubstansi = () => {
   const router = useRouter();
-  const temaId = Cookies.get("id_tema");
-  const pelatihanId = Cookies.get("id_pelatihan");
+
+  const routerTraining = router.query.id_pelatihan;
+  const routerTema = router.query.id_tema;
 
   const handlePage = () => {
     router.push(
-      `/peserta/subvit/substansi/1?theme_id=${temaId}&training_id=${pelatihanId}&category=Test Substansi`
+      `/peserta/subvit/substansi/1?theme_id=${routerTema}&training_id=${routerTraining}&category=Test Substansi`
     );
   };
 
@@ -47,7 +47,12 @@ const TestSubstansi = () => {
                       Pastikan koneksi internet stabil (sangat disarankan
                       menggunakan koneksi internet broadband dengan kecepatan
                       akses download 384 kbps ke atas). Cek hal ini melalui{" "}
-                      <a href="https://www.speedtest.net/">
+                      <a
+                        href="#"
+                        onClick={() =>
+                          window.open("https://www.speedtest.net/", "_blank")
+                        }
+                      >
                         https://www.speedtest.net/
                       </a>
                     </li>
@@ -57,19 +62,43 @@ const TestSubstansi = () => {
                     </li>
                     <li>
                       Pastikan Javascript ACTIVE/ENABLED. Cek hal ini melalui{" "}
-                      <a href="https://www.whatismybrowser.com/detect/is-javascript-enabled">
+                      <a
+                        href="#"
+                        onClick={() =>
+                          window.open(
+                            "https://www.whatismybrowser.com/detect/is-javascript-enabled",
+                            "_blank"
+                          )
+                        }
+                      >
                         https://www.whatismybrowser.com/detect/is-javascript-enabled
                       </a>{" "}
                       atau baca terlebih dahulu Panduan Pengaktifan Javascript
                       pada{" "}
-                      <a href="https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo">
+                      <a
+                        href="#"
+                        onClick={() =>
+                          window.open(
+                            "https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo",
+                            "_blank"
+                          )
+                        }
+                      >
                         https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo
                       </a>
                     </li>
                     <li>
                       Pastikan Cookies ACTIVE/ENABLED. Baca Panduan Pengaktifan
                       Cookie pada{" "}
-                      <a href="https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo">
+                      <a
+                        href="#"
+                        onClick={() =>
+                          window.open(
+                            "https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo",
+                            "_blank"
+                          )
+                        }
+                      >
                         https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
                       </a>
                     </li>

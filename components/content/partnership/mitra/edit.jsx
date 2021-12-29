@@ -19,6 +19,7 @@ import Select from "react-select";
 
 import { Modal } from "react-bootstrap";
 import ReactCrop from "react-image-crop";
+import Cookies from "js-cookie"
 
 const EditMitra = ({ token }) => {
   const router = useRouter();
@@ -194,7 +195,7 @@ const EditMitra = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
@@ -227,6 +228,7 @@ const EditMitra = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -241,7 +243,7 @@ const EditMitra = ({ token }) => {
             );
             
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error")
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
           }
         }
       });
@@ -251,68 +253,73 @@ const EditMitra = ({ token }) => {
  
 
   useEffect(() => {
-    async function setDataSingle (id,token){
-      try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/partners/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setInstitution_name(data.data.institution_name);
-
-      setEmail(data.data.email);
-      // tambah url logo
-      setImageview(data.data.agency_logo);
-      setWebsite(data.data.website);
-      setAddress(data.data.alamat);
-
-      setIndonesia_provinces_id(data.data.province.id);
-      setDefaultValueProvince(data.data.province.name);
-      setDefaultValueProvinceID(data.data.province.id);
-
-      setIndonesia_cities_id(data.data.city.id);
-      setDefaultValueCitie(data.data.city.name);
-      setDefaultValueCitieID(data.data.city.id);
-
-      setPostal_code(data.data.postal_code);
-      setPic_name(data.data.pic_name);
-      setPic_contact_number(data.data.pic_contact_number);
-      setPic_email(data.data.pic_email);
-    } catch (error) {
-      return;
-    }
-
-    } 
     setDataSingle(router.query.name,token);
   }, [router.query.name,token]);
 
+  async function setDataSingle (id,token){
+    try {
+    let { data } = await axios.get(
+      `${process.env.END_POINT_API_PARTNERSHIP}api/partners/${id}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission")
+        },
+      }
+    );
+    setInstitution_name(data?.data?.institution_name);
+
+    setEmail(data?.data?.email);
+    // tambah url logo
+    setImageview(data?.data?.agency_logo);
+    setWebsite(data?.data?.website);
+    setAddress(data?.data?.alamat);
+
+    setIndonesia_provinces_id(data?.data?.province.id);
+    setDefaultValueProvince(data?.data?.province.name);
+    setDefaultValueProvinceID(data?.data?.province.id);
+
+    setIndonesia_cities_id(data?.data?.city.id);
+    setDefaultValueCitie(data?.data?.city.name);
+    setDefaultValueCitieID(data?.data?.city.id);
+
+    setPostal_code(data?.data?.postal_code);
+    setPic_name(data?.data?.pic_name);
+    setPic_contact_number(data?.data?.pic_contact_number);
+    setPic_email(data?.data?.pic_email);
+  } catch (error) {
+    return;
+  }
+
+  } 
+
   useEffect(() => {
     if (indonesia_provinces_id !== "") {
-      async function fetchAPI() {
-        try {
-          let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
-             {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
-          );
-          let dataNewCitites = data.data.map((items) => {
-            return { ...items, label: items.name, value: items.id };
-          });
-          dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
-          setCitiesAll(dataNewCitites);
-        } catch (error) {
-          return;
-        }
-      }
+      
       fetchAPI();
     }
   }, [indonesia_provinces_id,token]);
+
+  async function fetchAPI() {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
+         {
+            headers: {
+              authorization: `Bearer ${token}`,
+              Permission: Cookies.get("token_permission")
+            },
+          }
+      );
+      let dataNewCitites = data.data.map((items) => {
+        return { ...items, label: items?.name, value: items?.id };
+      });
+      dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
+      setCitiesAll(dataNewCitites);
+    } catch (error) {
+      return;
+    }
+  }
 
   return (
     <PageWrapper>
@@ -342,8 +349,8 @@ const EditMitra = ({ token }) => {
                   value={institution_name}
                   onChange={(e) => setInstitution_name(e.target.value)}
                 />
-                {error.institution_name ? (
-                  <p className="error-text">{error.institution_name}</p>
+                {error?.institution_name ? (
+                  <p className="error-text">{error?.institution_name}</p>
                 ) : (
                   ""
                 )}
@@ -398,64 +405,6 @@ const EditMitra = ({ token }) => {
                   Gambar Logo
                 </label>
                 {/* ketika ada upload gambar baru */}
-                {
-                  // !agency_logo ? (
-                  //   ""
-                  // ) : (
-                  //   <div
-                  //     data-toggle="modal"
-                  //     data-target="#exampleModalCenter"
-                  //     className="shadow-image-form cursor-pointer position-relative"
-                  //     style={{
-                  //       maxWidth: "168px",
-                  //       maxHeight: "168px",
-                  //       width: "168px",
-                  //       height: "168px",
-                  //     }}
-                  //   >
-                  //     <Image
-                  //       src={agency_logo}
-                  //       alt="Picture of the author"
-                  //       layout="fill"
-                  //       objectFit="fill"
-                  //     />
-                  //   </div>
-                  // )}
-                  
-                  // {/* read gambar yg ada from api */}
-                  // {agency_logo ? (
-                  //   ""
-                  // ) : !imageview ? (
-                  //   ""
-                  // ) : (
-                  //   <div
-                  //     data-toggle="modal"
-                  //     data-target="#exampleModalCenter"
-                  //     className="shadow-image-form cursor-pointer"
-                  //     style={{
-                  //       maxWidth: "168px",
-                  //       maxHeight: "168px",
-                  //       width: "168px",
-                  //       height: "168px",
-                  //     }}
-                  //   >
-                  //     <div
-                  //       className="w-100 h-100 position-relative"
-                  //       style={{ padding: "6px" }}
-                  //     >
-                  //       <Image
-                  //         src={
-                  //           process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
-                  //         }
-                  //         alt="images"
-                  //         layout="fill"
-                  //         objectFit="fill"
-                  //       />
-                  //     </div>
-                  //   </div>
-                  // )
-                }
-
                 {!agency_logo ? (
                   <div className="ml-4 row">
                     <figure
@@ -591,8 +540,8 @@ const EditMitra = ({ token }) => {
                   </div>
                 </div>
 
-                {error.agency_logo ? (
-                  <p className="error-text">{error.agency_logo}</p>
+                {error?.agency_logo ? (
+                  <p className="error-text">{error?.agency_logo}</p>
                 ) : (
                   ""
                 )}
@@ -610,8 +559,8 @@ const EditMitra = ({ token }) => {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                 />
-                {error.address ? (
-                  <p className="error-text">{error.address}</p>
+                {error?.address ? (
+                  <p className="error-text">{error?.address}</p>
                 ) : (
                   ""
                 )}
@@ -628,7 +577,7 @@ const EditMitra = ({ token }) => {
                         onFocus={() =>
                           setError({ ...error, indonesia_provinces_id: "" })
                         }
-                        className="form-control mt-2"
+                        className="form-control mt-2 cursor-not-allowed"
                         disabled
                       >
                         <option value={indonesia_provinces_id}>
@@ -646,8 +595,8 @@ const EditMitra = ({ token }) => {
                       </button>
                     </div>
                   </div>
-                  {error.indonesia_provinces_id ? (
-                    <p className="error-text">{error.indonesia_provinces_id}</p>
+                  {error?.indonesia_provinces_id ? (
+                    <p className="error-text">{error?.indonesia_provinces_id}</p>
                   ) : (
                     ""
                   )}
@@ -689,8 +638,8 @@ const EditMitra = ({ token }) => {
                     </div>
                   </div>
 
-                  {error.indonesia_provinces_id ? (
-                    <p className="error-text">{error.indonesia_provinces_id}</p>
+                  {error?.indonesia_provinces_id ? (
+                    <p className="error-text">{error?.indonesia_provinces_id}</p>
                   ) : (
                     ""
                   )}
@@ -706,44 +655,48 @@ const EditMitra = ({ token }) => {
                       setError({ ...error, indonesia_cities_id: "" })
                     }
                     disabled
-                    className="form-control"
+                    className="form-control cursor-not-allowed"
                   >
                     <option value={indonesia_cities_id}>
                       {defaultValueCitie}
                     </option>
                   </select>
-                  {error.indonesia_cities_id ? (
-                    <p className="error-text">{error.indonesia_cities_id}</p>
+                  {error?.indonesia_cities_id ? (
+                    <p className="error-text">{error?.indonesia_cities_id}</p>
                   ) : (
                     ""
                   )}
                 </div>
               ) : (
-                <div className="form-group">
+                <div 
+                  className="form-group"
+                >
                   <label htmlFor="staticEmail" className="col-form-label">
                     Kota / Kabupaten
                   </label>
 
-                  <Select
-                    onFocus={() =>
-                      setError({ ...error, indonesia_cities_id: "" })
-                    }
-                    className="basic-single w-full"
-                    classNamePrefix="select"
-                    placeholder="Pilih data Kab/Kota"
-                    defaultValue={citiesAll[0]}
-                    isDisabled={false}
-                    isLoading={false}
-                    isClearable={false}
-                    isRtl={false}
-                    isSearchable={true}
-                    name="color"
-                    onChange={(e) => setIndonesia_cities_id(e.id)}
-                    options={citiesAll}
-                  />
+                  <div className={ indonesia_provinces_id ? "" : "cursor-not-allowed"}>
+                    <Select
+                      onFocus={() =>
+                        setError({ ...error, indonesia_cities_id: "" })
+                      }
+                      className="basic-single w-full"
+                      classNamePrefix="select"
+                      placeholder="Pilih data Kab/Kota"
+                      defaultValue={citiesAll[0]}
+                      isDisabled={indonesia_provinces_id ? false : true}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => setIndonesia_cities_id(e.id)}
+                      options={citiesAll}
+                    />
+                  </div>
 
-                  {error.indonesia_cities_id ? (
-                    <p className="error-text">{error.indonesia_cities_id}</p>
+                  {error?.indonesia_cities_id ? (
+                    <p className="error-text">{error?.indonesia_cities_id}</p>
                   ) : (
                     ""
                   )}
@@ -762,8 +715,8 @@ const EditMitra = ({ token }) => {
                   value={postal_code}
                   onChange={(e) => setPostal_code(e.target.value)}
                 />
-                {error.postal_code ? (
-                  <p className="error-text">{error.postal_code}</p>
+                {error?.postal_code ? (
+                  <p className="error-text">{error?.postal_code}</p>
                 ) : (
                   ""
                 )}
@@ -802,8 +755,8 @@ const EditMitra = ({ token }) => {
                   value={pic_contact_number}
                   onChange={(e) => setPic_contact_number(e.target.value)}
                 />
-                {error.pic_contact_number ? (
-                  <p className="error-text">{error.pic_contact_number}</p>
+                {error?.pic_contact_number ? (
+                  <p className="error-text">{error?.pic_contact_number}</p>
                 ) : (
                   ""
                 )}

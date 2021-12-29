@@ -220,6 +220,15 @@ const Artikel = () => {
                 setShowArrow (false)
             }
         }
+
+        if (kategori){
+            if (kategori.length > 3){
+                setShowArrow (true)
+        
+            } else {
+                setShowArrow (false)
+            }
+        }
        
     }
 
@@ -238,6 +247,41 @@ const Artikel = () => {
 
             setOptionAkademi(result)
         }
+    }
+
+    const handleTotalReader = (num) => {
+        let result = ""
+        let temp = ""
+
+        if (num >= 1000 && num < 10000){
+            temp += num / 1000
+            result += `${temp[0]},${temp[2]} K`
+
+        } else if (num >= 10000 && num < 100000){
+            temp += num / 1000
+            result += `${temp[0]}${temp[1]},${temp[2]} K`
+
+        } else if (num >= 100000 && num < 1000000){
+            temp += num / 1000
+            result += `${temp[0]}${temp[1]}${temp[2]},${temp[3]} K`
+        
+        } else if (num >= 1000000 && num < 10000000){
+            temp += num / 1000000
+            result += `${temp[0]},${temp[2]} M`
+
+        } else if (num >= 10000000 && num < 100000000){
+            temp += num / 1000000
+            result += `${temp[0]}${temp[1]},${temp[2]} M`
+
+        } else if (num >= 100000000 && num < 1000000000){
+            temp += num / 1000000
+            result += `${temp[0]}${temp[1]}${temp[2]},${temp[3]} M`
+    
+        } else {
+            result += num
+        }
+
+        return result
     }
 
     // Style Select Filter
@@ -280,6 +324,21 @@ const Artikel = () => {
             tag
         ))
 
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaArtikel(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                str, 
+                category_academy,
+                tag
+            ))
+        }
+
         window.scrollTo(0,0)
     }
 
@@ -296,6 +355,21 @@ const Artikel = () => {
             category_academy,
             tag
         ))
+
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaArtikel(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriArtikel, 
+                category_academy,
+                tag
+            ))
+        }
 
         window.scrollTo(0,0)
     }
@@ -328,6 +402,21 @@ const Artikel = () => {
             category_academy,
             tag
         ))
+
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaArtikel(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriArtikel, 
+                category_academy,
+                tag
+            ))
+        }
 
         window.scrollTo(0,0)
     }
@@ -363,6 +452,21 @@ const Artikel = () => {
             tag
         ))
 
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaArtikel(
+                pageNumber, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriArtikel, 
+                category_academy,
+                tag
+            ))
+        }
+
         window.scrollTo(0,0)
     }
 
@@ -373,9 +477,8 @@ const Artikel = () => {
             <SubHeaderComponent 
                 data={[{ link: router.asPath, name: "Artikel" }]}
             />
-
             {/* Header */}
-            <div className="col-12 mt-5 ml-n1">
+            <div className="col-12 mt-5 ml-n3">
                 <h1 className="fw-700" style={{fontSize: "40px", fontFamily:"Poppins"}}>
                     {activeTitle}
                 </h1>
@@ -396,7 +499,7 @@ const Artikel = () => {
             {/* Filter Button */}
             {/* Filter on Desktop */}
             {
-                kategoriToShow ? (
+                kategori ? (
                     <div
                         className={
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
@@ -461,19 +564,19 @@ const Artikel = () => {
                                         }
 
                                         {
-                                            kategoriToShow ?
-                                                kategoriToShow.map((el, i) => {
+                                            kategori ?
+                                                kategori?.map((el, i) => {
                                                     return (
-                                                        kategoriArtikel == el ?
+                                                        kategoriArtikel == el.nama_kategori ?
                                                             <SplideSlide>
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
@@ -482,11 +585,11 @@ const Artikel = () => {
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div> 
                                                             </SplideSlide>
@@ -546,19 +649,19 @@ const Artikel = () => {
                                         }
 
                                         {
-                                            kategoriToShow ?
-                                                kategoriToShow.map((el, i) => {
+                                            kategori ?
+                                                kategori?.map((el, i) => {
                                                     return (
-                                                        kategoriArtikel == el ?
+                                                        kategoriArtikel == el.nama_kategori ?
                                                             <SplideSlide>
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
@@ -567,11 +670,11 @@ const Artikel = () => {
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div> 
                                                             </SplideSlide>
@@ -636,19 +739,19 @@ const Artikel = () => {
                     }
 
                     {
-                        kategoriToShow ?
-                            kategoriToShow.map((el, i) => {
+                        kategori ?
+                            kategori?.map((el, i) => {
                                 return (
-                                    kategoriArtikel == el ?
+                                    kategoriArtikel == el.nama_kategori ?
                                         <SplideSlide>
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div>
                                         </SplideSlide>
@@ -657,11 +760,11 @@ const Artikel = () => {
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div> 
                                         </SplideSlide>
@@ -724,19 +827,19 @@ const Artikel = () => {
                     }
 
                     {
-                        kategoriToShow ?
-                            kategoriToShow.map((el, i) => {
+                        kategori ?
+                            kategori?.map((el, i) => {
                                 return (
-                                    kategoriArtikel == el ?
+                                    kategoriArtikel == el.nama_kategori ?
                                         <SplideSlide>
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div>
                                         </SplideSlide>
@@ -745,11 +848,11 @@ const Artikel = () => {
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div> 
                                         </SplideSlide>
@@ -1023,13 +1126,13 @@ const Artikel = () => {
                             </div>
                         :
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
-                                artikel.artikel.map ((el, i) => {
+                                artikel?.artikel?.map ((el, i) => {
                                     return (
                                         <div 
-                                            className= "row mt-20 mb-3 pl-7"
+                                            className= "row mt-20 mb-3 pl-6"
                                             key={i}
                                         >
-                                            <div className="col-4 col-sm-8 pr-md-8 pr-2 pl-lg-2">
+                                            <div className="col-5 col-sm-9 pr-md-8 pr-2 pl-lg-2">
                                                 <div className="row justify-content-between align-items-center">
                                                     <div className=" d-flex align-self-center mb-2">
                                                         <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
@@ -1053,7 +1156,7 @@ const Artikel = () => {
                                                         </span>
                                                     </div>
 
-                                                    <div className="mr-2 mb-3">
+                                                    <div className="mr-2 mb-3 d-flex align-content-center">
                                                         <div className="badge badge-pill badge-light mr-0 mr-sm-2">
                                                             <div 
                                                                 className="text-primary p-1 text-truncate d-inline-block"
@@ -1070,7 +1173,7 @@ const Artikel = () => {
                                                         </div>
                                                         {
                                                             windowDimensions && windowDimensions.width && windowDimensions.width > 500 ?
-                                                                <span className="font-weight-bolder">
+                                                                <span className="font-weight-bolder mt-2">
                                                                     {/* Insert Akademi Here */}
                                                                     | {el.kategori_akademi}
                                                                 </span>
@@ -1133,12 +1236,8 @@ const Artikel = () => {
                                                 {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width >= 768 ?
                                                         <div 
-                                                            className="my-5 d-flex flex-wrap "
-                                                        >
-                                                            {/* Insert Desc Here */}
-                                                            <div 
-                                                                dangerouslySetInnerHTML={{__html: (el.isi_artikel)}}
-                                                                style={{ 
+                                                            className="my-5 ml-n3"
+                                                            style={{ 
                                                                     fontSize:"16px", 
                                                                     fontFamily:"Poppins", 
                                                                     color: "#6C6C6C",
@@ -1146,9 +1245,14 @@ const Artikel = () => {
                                                                     overflow: 'hidden', 
                                                                     textOverflow: 'ellipsis', 
                                                                     WebkitLineClamp: "2",
-                                                                    WebkitBoxOrient:"vertical"
+                                                                    WebkitBoxOrient:"vertical",
+                                                                    width:"100%",
+                                                                    lineHeight:"25px"
                                                                 }}
-                                                                className="ml-n3"
+                                                        >
+                                                            {/* Insert Desc Here */}
+                                                            <div 
+                                                                dangerouslySetInnerHTML={{__html: (el.isi_artikel)}}
                                                             />
                                                         </div>
                                                     :
@@ -1157,12 +1261,20 @@ const Artikel = () => {
                                                 
                                                 <div className="row mb-3 mt-5 d-flex align-items-center ml-n7 ">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12">
-                                                        {moment(el.tanggal_publish).format("DD MMM")} | {el.dibaca} dibaca
+                                                    <div className="text-muted col-md-4 col-lg-3 col-12 d-flex flex-row justify-content-between">
+                                                        <div className="text-truncate">
+                                                            {moment(el.tanggal_publish).format("DD MMM")}
+                                                        </div>
+                                                        <div>
+                                                            |
+                                                        </div>
+                                                        <div className="text-truncate">
+                                                            {handleTotalReader(el.dibaca)} dibaca
+                                                        </div>
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
-                                                    <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-2 ">
+                                                    <div className="col-xl-9 col-12 d-flex flex-row flex-wrap my-3 pl-0 ">
                                                         {   
                                                             tagCards && tagCards.length !== 0 ?
                                                                 showTagCards(i)
@@ -1174,7 +1286,8 @@ const Artikel = () => {
                                             </div>
 
                                             <div 
-                                                className="col-8 col-sm-4 position-relative img-fluid" 
+                                                // className="col-7 col-sm-4 pl-6 pl-sm-0 position-relative img-fluid" 
+                                                className="col-7 col-sm-3 d-flex justify-content-end position-relative img-fluid"
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/artikel/detail/${el.slug}`}>
@@ -1184,8 +1297,24 @@ const Artikel = () => {
                                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                 "publikasi/images/" + el.gambar
                                                             }
-                                                            width={300}
-                                                            height={250}
+                                                            // width={300}
+                                                            // height={250}
+                                                            width={
+                                                                windowDimensions &&
+                                                                windowDimensions.width &&
+                                                                windowDimensions.width > 768 ?
+                                                                300
+                                                                :
+                                                                144
+                                                            }
+                                                            height={
+                                                                windowDimensions &&
+                                                                windowDimensions.width &&
+                                                                windowDimensions.width > 768 ?
+                                                                250
+                                                                :
+                                                                120
+                                                            }
                                                             alt="Card Image"
                                                             className="rounded-lg img-fluid"
                                                             objectFit="cover"
@@ -1211,7 +1340,15 @@ const Artikel = () => {
                                             className="font-weight-bolder mt-15 text-center fw-600" 
                                             style={{fontFamily:"Poppins", fontSize:"24px"}}
                                         >
-                                            Tidak ada artikel terkait "{keyword}"
+                                            {
+                                                keyword ?
+                                                    `Tidak ada artikel terkait "${keyword}"`
+                                                :
+                                                    category_academy ?
+                                                        `Tidak ada artikel terkait "${category_academy}"`
+                                                    :
+                                                        `Tidak ada artikel terkait.`
+                                            }
                                         </h1>
                                 
                                         </div>
@@ -1229,7 +1366,7 @@ const Artikel = () => {
                                         activePage = {activePage}
                                         itemsCountPerPage={5}
                                         // itemsCountPerPage={artikel.perPage}
-                                        totalItemsCount={artikel.total}
+                                        totalItemsCount={artikel?.total}
                                         pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
                                         onChange={handlePagination}
                                         nextPageText={">"}

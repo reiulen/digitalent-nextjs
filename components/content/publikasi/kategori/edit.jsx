@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
@@ -37,8 +38,8 @@ const EditKategori = ({ token }) => {
     }, [dispatch, isUpdated, router]);
 
 
-    const [nama, setNamaKategori] = useState(kategori.nama)
-    const [jenis_kategori, setJenisKategori] = useState(kategori.jenis_kategori)
+    const [nama, setNamaKategori] = useState(kategori?.nama)
+    const [jenis_kategori, setJenisKategori] = useState(kategori?.jenis_kategori)
     const [, forceUpdate] = useState();
 
 

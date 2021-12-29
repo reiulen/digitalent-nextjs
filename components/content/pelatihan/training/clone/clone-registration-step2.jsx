@@ -11,11 +11,18 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 import ModalPreview from "../components/modal-preview-form.component";
+import ModalProfile from "../components/modal-profile-peserta";
 import { putTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
 import {
   storeRegistrationStep2,
   getRegistrationStep2,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+import {
+  element,
+  options,
+  size,
+} from "../../../../../utils/middleware/helper/data";
+import { helperUnformatCheckbox } from "../../../../../utils/middleware/helper";
 
 import FormManual from "../components/step-registration/form-manual";
 import FormCopy from "../components/step-registration/form-copy";
@@ -30,6 +37,10 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   const { data: dataForm, error: errorDropdownForm } = useSelector(
     (state) => state.drowpdownFormBuilder
   );
+  const { data: dataReferenceOption } = useSelector(
+    (state) => state.allDataReference
+  );
+  const [dataOptions, setDataOptions] = useState([]);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -51,92 +62,19 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
 
   const [viewForm, setViewForm] = useState(getEditTraining2.type_form);
 
-  const [element] = useState([
-    {
-      value: "select",
-      name: "Select",
-    },
-    {
-      value: "text",
-      name: "Text",
-    },
-    {
-      value: "checkbox",
-      name: "Checkbox",
-    },
-    {
-      value: "textarea",
-      name: "Text Area",
-    },
-    {
-      value: "radio",
-      name: "Radio",
-    },
-    {
-      value: "file_image",
-      name: "File Image",
-    },
-    {
-      value: "file_doc",
-      name: "File Documet",
-    },
-    {
-      value: "date",
-      name: "Input Date",
-    },
-  ]);
-
-  const [size] = useState([
-    { value: "col-md-6", name: "Half" },
-    { value: "col-md-12", name: "Full" },
-  ]);
-
-  const [options] = useState([
-    {
-      name: "Manual",
-      value: "manual",
-    },
-    {
-      name: "Select Reference",
-      value: "select_reference",
-    },
-  ]);
-
-  const [dataOptions] = useState([
-    {
-      value: "status_menikah",
-    },
-    {
-      value: "pendidikan",
-    },
-    {
-      value: "status_pekerjaan",
-    },
-    {
-      value: "hubungan",
-    },
-    {
-      value: "bidang_pekerjaan",
-    },
-    {
-      value: "level_pelatihan",
-    },
-    {
-      value: "agama",
-    },
-    {
-      value: "penyelengaara",
-    },
-    {
-      value: "provinsi",
-    },
-    {
-      value: "kota/kabupaten",
-    },
-    {
-      value: "universitas",
-    },
-  ]);
+  useEffect(() => {
+    const dataOptionsArr = [];
+    if (dataReferenceOption) {
+      dataReferenceOption.list_reference.map((row, i) => {
+        let data = {
+          id: row.id,
+          value: row.name,
+        };
+        dataOptionsArr.push(data);
+      });
+    }
+    setDataOptions(dataOptionsArr);
+  }, []);
 
   const optionsForm = dataForm.data || [];
 
@@ -149,7 +87,10 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
         size: "",
         option: "",
         dataOption: "",
-        required: false,
+        required: "0",
+        triggered: "0",
+        triggered_parent: [],
+        value: "",
       },
     ]
   );
@@ -189,13 +130,14 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
     } else {
       titleStore;
     }
-    const data = {
-      judul_form: titleStore,
-      Pelatian_id: parseInt(router.query.id),
-      formBuilder: formBuilderStore,
-      type_form: viewForm,
-    };
     if (simpleValidator.current.allValid()) {
+      const valueForm = helperUnformatCheckbox(formBuilderStore);
+      const data = {
+        judul_form: titleStore,
+        Pelatian_id: parseInt(router.query.id),
+        formBuilder: valueForm,
+        type_form: viewForm,
+      };
       dispatch(storeRegistrationStep2(data));
       propsStep(3);
     } else {
@@ -274,10 +216,27 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
   return (
     <div className="col-lg-12 order-1 px-0">
       <div className="card card-custom card-stretch gutter-b">
+        <div className="card-header border-0">
+          <h1
+            className="font-weight-bolder card-title"
+            style={{ fontSize: "20px" }}
+          >
+            Form Pendaftaran
+          </h1>
+          <div className="card-toolbar justify-content-between d-flex">
+            <button
+              className="btn btn-warning px-6 font-weight-bolder"
+              style={{ borderRadius: "30px" }}
+              data-toggle="modal"
+              data-target="#modalProfile"
+              type="button"
+            >
+              Harap dibaca!
+            </button>
+          </div>
+        </div>
         <div className="card-body py-4">
           <form onSubmit={submitHandler}>
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
-
             <div className="form-group mb-4">
               <label className="col-form-label font-weight-bold">
                 Tambah Form
@@ -320,13 +279,13 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
 
             <div className="form-group mt-9">
               <div className="text-right">
-                <button
+                {/* <button
                   className="btn btn-light-ghost-rounded-full mr-2"
                   type="button"
                   onClick={() => propsStep(1)}
                 >
                   Kembali
-                </button>
+                </button> */}
                 <button className="btn btn-primary-rounded-full" type="submit">
                   Simpan & Lanjut
                 </button>
@@ -368,6 +327,17 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
           sendPropsModalShow={(value) => setModalShow(value)}
         />
       </Modal>
+
+      <div
+        className="modal fade"
+        id="modalProfile"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="modalProfile"
+        aria-hidden="true"
+      >
+        <ModalProfile />
+      </div>
     </div>
   );
 };

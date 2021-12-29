@@ -13,13 +13,18 @@ import {
   newAcademy,
   clearErrors,
 } from "../../../../redux/actions/pelatihan/academy.actions";
+
+import styles from "../../../../styles/pelatihanQuill.module.css";
 import { NEW_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
 import LoadingPage from "../../../LoadingPage";
+import Cookies from "js-cookie";
+import { useQuill } from "react-quilljs";
 
 const AddAcademy = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
@@ -27,6 +32,7 @@ const AddAcademy = ({ token }) => {
   const { loading, error, success, academy } = useSelector(
     (state) => state.newAcademy
   );
+  const { quill, quillRef } = useQuill();
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -50,11 +56,11 @@ const AddAcademy = ({ token }) => {
   ];
 
   useEffect(() => {
-    editorRef.current = {
-      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
-    };
+    if (quill) {
+      quill.on("text-change", (delta, oldDelta, source) => {
+        setDescription(quill.root.innerHTML); // Get innerHTML using quill
+      });
+    }
 
     setEditorLoaded(true);
 
@@ -67,7 +73,7 @@ const AddAcademy = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [success, dispatch, router]);
+  }, [success, dispatch, router, quill]);
 
   const handleResetError = () => {
     if (error) {
@@ -157,7 +163,7 @@ const AddAcademy = ({ token }) => {
         brosur: brosurPreview,
         status,
       };
-      dispatch(newAcademy(data, token));
+      dispatch(newAcademy(data, token, token_permission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -309,29 +315,18 @@ const AddAcademy = ({ token }) => {
                 )}
               </div>
 
-              <div className="form-group mb-4">
+              <div className={`${styles.setQuil} form-group`}>
                 <label className="col-form-label font-weight-bold">
                   Deskripsi
                 </label>
                 <div className="ckeditor">
                   {editorLoaded ? (
-                    <CKEditor
-                      editor={ClassicEditor}
-                      data={description}
-                      onReady={(editor) => {
-                        // You can store the "editor" and use when it is needed.
-                      }}
-                      onChange={(event, editor) => {
-                        const data = editor.getData();
-                        setDescription(data);
-                      }}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("deskripsi")
-                      }
-                      config={{
-                        placeholder: "Silahkan Masukan Deskripsi Detail",
-                      }}
-                    />
+                    <div style={{ width: "100%", height: "250px" }}>
+                      <div
+                        ref={quillRef}
+                        style={{ fontFamily: "Poppins" }}
+                      />
+                    </div>
                   ) : (
                     <p>Tunggu Sebentar</p>
                   )}

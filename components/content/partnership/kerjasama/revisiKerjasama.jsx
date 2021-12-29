@@ -9,6 +9,7 @@ import moment from "moment";
 import axios from "axios";
 
 import IconCalender from "../../../assets/icon/Calender";
+import Cookies from "js-cookie";
 
 const RevisiKerjasama = ({ token }) => {
   const router = useRouter();
@@ -37,7 +38,7 @@ const RevisiKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         try {
@@ -47,6 +48,7 @@ const RevisiKerjasama = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -55,7 +57,7 @@ const RevisiKerjasama = ({ token }) => {
             query: { successTerima: true },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error").then(
             () => {
               router.push("/partnership/kerjasama");
             }
@@ -75,7 +77,7 @@ const RevisiKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         try {
@@ -85,6 +87,7 @@ const RevisiKerjasama = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -93,7 +96,7 @@ const RevisiKerjasama = ({ token }) => {
             query: { successReject: true },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error").then(
             () => {
               router.push("/partnership/kerjasama");
             }
@@ -116,7 +119,7 @@ const RevisiKerjasama = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
           try {
@@ -129,6 +132,7 @@ const RevisiKerjasama = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -137,7 +141,7 @@ const RevisiKerjasama = ({ token }) => {
               query: { successMakeREvisi: true },
             });
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -145,28 +149,30 @@ const RevisiKerjasama = ({ token }) => {
   };
 
   useEffect(() => {
-    async function setDataSingle(id, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setPeriod_start(data.data.period_date_start);
-        setPeriod_end(data.data.period_date_end);
-        setNo_perjanjianLembaga(data.data.agreement_number_partner);
-        setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
-        setTgl_ttd(data.data.signing_date);
-        setDokument(data.data.document);
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
-      }
-    }
     setDataSingle(router.query.id, token);
   }, [router.query.id, token]);
+
+  async function setDataSingle(id, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      setPeriod_start(data?.data?.period_date_start);
+      setPeriod_end(data?.data?.period_date_end);
+      setNo_perjanjianLembaga(data?.data?.agreement_number_partner);
+      setNo_perjanjianKoninfo(data?.data?.agreement_number_kemkominfo);
+      setTgl_ttd(data?.data?.signing_date);
+      setDokument(data?.data?.document);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+    }
+  }
 
   return (
     <PageWrapper>
@@ -187,7 +193,7 @@ const RevisiKerjasama = ({ token }) => {
                   <div className="col-12 col-xl-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer ml-n3"
+                        className="form-search-date form-control-sm form-control ml-n3"
                         selected={startDate}
                         selectsStart
                         value={period_start && period_start}
@@ -205,7 +211,7 @@ const RevisiKerjasama = ({ token }) => {
                   <div className="col-12 col-xl-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer "
+                        className="form-search-date form-control-sm form-control "
                         selected={endDate}
                         readOnly
                         selectsEnd
@@ -262,7 +268,7 @@ const RevisiKerjasama = ({ token }) => {
                     <DatePicker
                       readOnly
                       value={tgl_ttd && tgl_ttd}
-                      className="form-search-date form-control-sm form-control cursor-pointer ml-n2"
+                      className="form-search-date form-control-sm form-control ml-n2"
                       selected={startDate}
                       selectsStart
                       dateFormat="YYYY-MM-DD"

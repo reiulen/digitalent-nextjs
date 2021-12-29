@@ -1,15 +1,11 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
-
-// import Layout from "../../../components/templates/layout.component";
-// import EditGaleri from "../../../components/content/publikasi/galeri/edit";
-
 import { getDetailGaleri } from "../../../../redux/actions/publikasi/galeri.actions";
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action";
 
@@ -17,7 +13,7 @@ const EditGaleri = dynamic(
   () => import("../../../../components/content/publikasi/galeri/edit"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
@@ -48,11 +44,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailGaleri(query.id, session.user.user.data.token)
+        getDetailGaleri(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
-      await store.dispatch(getAllKategori(session.user.user.data.token));
-      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
-      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      await store.dispatch(getAllKategori(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getSettingPublikasi(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token, req.cookies.token_permission));
       
       return {
         props: { session, title: "Ubah Galeri" },

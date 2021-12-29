@@ -11,6 +11,7 @@ import Pagination from "react-js-pagination";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 import SimpleReactValidator from "simple-react-validator";
+import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
@@ -49,6 +50,7 @@ const Kategori = ({ token }) => {
   const [endDate, setEndDate] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
   const [searchKategori, setSearchKategori] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (isDeleted) {
@@ -122,8 +124,10 @@ const Kategori = ({ token }) => {
     } else {
       if (searchKategori === null) {
         router.push(`${router.pathname}?page=1&limit=${limit}`);
+        setShowModal(false)
       } else {
         router.push(`${router.pathname}?page=1&keyword=${searchKategori}`);
+        setShowModal(false)
       }
     }
   };
@@ -185,6 +189,7 @@ const Kategori = ({ token }) => {
     setLimit(null)
     setSearchKategori(null);
     setSearch("")
+    setShowModal(false)
     $("#selectKategori").prop("selectedIndex", 0);
     router.replace("/publikasi/kategori", undefined, { shallow: false });
   };
@@ -250,7 +255,7 @@ const Kategori = ({ token }) => {
               Kategori
             </h3>
             {
-              role_permission.permissions.includes("publikasi.kategori.manage") || role_permission.roles.includes("Super Admin") ?
+              role_permission?.permissions.includes("publikasi.kategori.manage") || role_permission?.roles.includes("Super Admin") ?
                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                   <Link href="/publikasi/kategori/tambah-kategori">
                     <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
@@ -271,23 +276,29 @@ const Kategori = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className={`${styles.cari} form-control pl-10`}
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={e => setSearch(e.target.value)}
-                    />
-                    <button
-                      className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
+                    <form onSubmit={(e) => {
+                      e.preventDefault();
+                      handleSearch
+                    }}
                     >
-                      Cari
-                    </button>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className={`${styles.cari} form-control pl-10`}
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={e => setSearch(e.target.value)}
+                      />
+                      <button
+                        className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={handleSearch}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
                 <div className={`${styles.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
@@ -295,8 +306,7 @@ const Kategori = ({ token }) => {
                     {/* sortir by modal */}
                     <button
                       className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
+                      onClick={() => setShowModal(true)}
                       style={{ color: "#464646" }}
                     >
                       <div className={`${styles.filter} d-flex align-items-center`}>
@@ -305,97 +315,6 @@ const Kategori = ({ token }) => {
                       </div>
                       <IconArrow fill="#E4E6EF" width="11" height="11" />
                     </button>
-
-                    {/* modal */}
-                    <form
-                      className="form text-left"
-                    >
-                      <div
-                        className="modal fade"
-                        id="exampleModalCenter"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-labelledby="exampleModalCenterTitle"
-                        aria-hidden="true"
-                      >
-                        <div
-                          className="modal-dialog modal-dialog-centered"
-                          role="document"
-                        >
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5
-                                className="modal-title font-weight-bold"
-                                id="exampleModalLongTitle"
-                              >
-                                Filter
-                              </h5>
-                              <button
-                                type="button"
-                                className="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                                onClick={() => resetValueSort()}
-                              >
-                                <IconClose />
-                              </button>
-                            </div>
-
-                            <div
-                              className="modal-body text-left"
-                              style={{ height: "200px" }}
-                            >
-                              <div className="mb-10 col-12">
-                                <select
-                                  id="selectKategori"
-                                  value={searchKategori}
-                                  className="form-control"
-                                  onChange={e =>
-                                    setSearchKategori(e.target.value)
-                                  }
-                                  onBlur={e => {
-                                    setSearchKategori(e.target.value);
-                                    simpleValidator.current.showMessageFor(
-                                      "jenis kategori"
-                                    );
-                                  }}
-                                >
-                                  <option value="" disabled selected>
-                                    -- Pilih Kategori --
-                                  </option>
-                                  <option value="Berita">Berita</option>
-                                  <option value="Artikel">Artikel</option>
-                                  <option value="Galeri">Galeri</option>
-                                  <option value="Video">Video</option>
-                                  <option value="Imagetron">Imagetron</option>
-                                  <option value="Faq">Faq</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div className="modal-footer">
-                              <div className="d-flex justify-content-end align-items-center">
-                                <button
-                                  className="btn btn-white-ghost-rounded-full"
-                                  type="button"
-                                  onClick={() => resetValueSort()}
-                                >
-                                  Reset
-                                </button>
-                                <button
-                                  className="btn btn-primary-rounded-full ml-4"
-                                  type="button"
-                                  data-dismiss="modal"
-                                  onClick={() => handleSearchKategori()}
-                                >
-                                  Terapkan
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                    {/* end modal */}
                   </div>
                 </div>
               </div>
@@ -413,7 +332,7 @@ const Kategori = ({ token }) => {
                         <th>Nama</th>
                         <th>Jenis Kategori</th>
                         {
-                          role_permission.permissions.includes("publikasi.kategori.manage") || role_permission.roles.includes("Super Admin") ?
+                          role_permission?.permissions.includes("publikasi.kategori.manage") || role_permission?.roles.includes("Super Admin") ?
                             <th className="text-center">Aksi</th>
                             : null
                         }
@@ -423,13 +342,13 @@ const Kategori = ({ token }) => {
                     <tbody>
                       {!paginateKategori ||
                         (paginateKategori &&
-                          paginateKategori.kategori.length === 0) ? (
+                          paginateKategori?.kategori.length === 0) ? (
                         <td className="align-middle text-center" colSpan={4}>
                           Data Kosong
                         </td>
                       ) : (
                         paginateKategori &&
-                        paginateKategori.kategori.map((row, i) => {
+                        paginateKategori?.kategori?.map((row, i) => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
@@ -450,7 +369,7 @@ const Kategori = ({ token }) => {
                                 {row.jenis_kategori}
                               </td>
                               {
-                                role_permission.permissions.includes("publikasi.kategori.manage") || role_permission.roles.includes("Super Admin") ?
+                                role_permission?.permissions.includes("publikasi.kategori.manage") || role_permission?.roles.includes("Super Admin") ?
                                   <td className="align-middle d-flex justify-content-center">
                                     <Link href={`/publikasi/kategori/ubah-kategori?id=${row.id}`}>
                                       <a className="btn btn-link-action bg-blue-secondary text-white mr-2 position-relative btn-delete">
@@ -486,13 +405,13 @@ const Kategori = ({ token }) => {
 
               {kategori && paginateKategori ? (
                 <div className="row">
-                  {paginateKategori.perPage < kategori.total && (
+                  {paginateKategori?.perPage < kategori?.total && (
                     <>
                       <div className={`${stylesPag.pagination} table-pagination`}>
                         <Pagination
                           activePage={page}
-                          itemsCountPerPage={paginateKategori.perPage}
-                          totalItemsCount={paginateKategori.total}
+                          itemsCountPerPage={paginateKategori?.perPage}
+                          totalItemsCount={paginateKategori?.total}
                           pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                           onChange={handlePagination}
                           nextPageText={">"}
@@ -532,7 +451,7 @@ const Kategori = ({ token }) => {
                           className="align-middle mt-5 pt-1"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {paginateKategori.total} List Data
+                          Total Data {paginateKategori?.total} List Data
                         </p>
                       </div>
                     </div>
@@ -540,6 +459,73 @@ const Kategori = ({ token }) => {
                 </div>
               ) : null}
             </div>
+
+            <Modal
+              show={showModal}
+              onHide={() => setShowModal(false)}
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header>
+                <Modal.Title>Filter</Modal.Title>
+                <button
+                  type="button"
+                  className="close"
+                  onClick={() => setShowModal(false)}
+                >
+                  <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+                </button>
+              </Modal.Header>
+              <Modal.Body>
+                <div
+                  className="modal-body text-left"
+                  style={{ height: "200px" }}
+                >
+                  <div className="mb-10 col-12">
+                    <select
+                      id="selectKategori"
+                      value={searchKategori}
+                      className="form-control"
+                      onChange={e =>
+                        setSearchKategori(e.target.value)
+                      }
+                      onBlur={e => {
+                        setSearchKategori(e.target.value);
+                        simpleValidator.current.showMessageFor(
+                          "jenis kategori"
+                        );
+                      }}
+                    >
+                      <option value="" disabled selected>
+                        -- Pilih Kategori --
+                      </option>
+                      <option value="Berita">Berita</option>
+                      <option value="Artikel">Artikel</option>
+                      <option value="Galeri">Galeri</option>
+                      <option value="Video">Video</option>
+                      <option value="Imagetron">Imagetron</option>
+                      <option value="Faq">Faq</option>
+                    </select>
+                  </div>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <button
+                  className="btn btn-white-ghost-rounded-full"
+                  type="button"
+                  onClick={() => resetValueSort()}
+                >
+                  Reset
+                </button>
+                <button
+                  className="btn btn-primary-rounded-full"
+                  type="button"
+                  onClick={() => handleSearchKategori()}
+                >
+                  Terapkan
+                </button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>

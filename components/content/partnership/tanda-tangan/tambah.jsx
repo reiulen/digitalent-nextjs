@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
+import Cookies from "js-cookie"
 
 const TambahTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
@@ -21,7 +22,7 @@ const TambahTandaTangan = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then((result) => {
       if (result.isConfirmed) {
         signCanvas.current.clear();
@@ -81,7 +82,7 @@ const TambahTandaTangan = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
@@ -96,6 +97,7 @@ const TambahTandaTangan = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get ("token_permission")
                 },
               }
             );
@@ -105,7 +107,7 @@ const TambahTandaTangan = ({ token }) => {
               query: { success: true },
             });
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -135,7 +137,7 @@ const TambahTandaTangan = ({ token }) => {
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                 />
-                {error.nama ? <p className="error-text">{error.nama}</p> : ""}
+                {error?.nama ? <p className="error-text">{error?.nama}</p> : ""}
               </div>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -148,8 +150,8 @@ const TambahTandaTangan = ({ token }) => {
                   placeholder="Masukkan Jabatan"
                   onChange={(e) => setJabatan(e.target.value)}
                 />
-                {error.jabatan ? (
-                  <p className="error-text">{error.jabatan}</p>
+                {error?.jabatan ? (
+                  <p className="error-text">{error?.jabatan}</p>
                 ) : (
                   ""
                 )}
@@ -178,8 +180,8 @@ const TambahTandaTangan = ({ token }) => {
                       }
                     />
                   </div>
-                  {error.tandaTangan ? (
-                    <p className="error-text">{error.tandaTangan}</p>
+                  {error?.tandaTangan ? (
+                    <p className="error-text">{error?.tandaTangan}</p>
                   ) : (
                     ""
                   )}

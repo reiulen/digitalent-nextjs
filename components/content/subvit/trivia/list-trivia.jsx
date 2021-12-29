@@ -9,6 +9,8 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import styles from "../../../../styles/subvit.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
+import Image from "next/dist/client/image";
+import { getAllTriviaQuestionDetail } from "../../../../redux/actions/subvit/trivia-question-detail.action";
 
 import {
   deleteTriviaQuestionBanks,
@@ -16,8 +18,9 @@ import {
   getAllTriviaQuestionBanks,
 } from "../../../../redux/actions/subvit/trivia-question.actions";
 import { DELETE_TRIVIA_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/trivia-question.type";
+import { Card, Col, Form, Modal, Row } from "react-bootstrap";
 
-const ListTrivia = ({ token }) => {
+const ListTrivia = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { loading, error, trivia } = useSelector(
@@ -39,16 +42,26 @@ const ListTrivia = ({ token }) => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [viewSoal, setViewSoal] = useState(false);
 
   useEffect(() => {
+    localStorage.removeItem("step1");
+    localStorage.removeItem("step2");
+    localStorage.removeItem("clone1");
+    localStorage.removeItem("clone3");
+    localStorage.removeItem("method");
+    localStorage.removeItem("clone");
+    localStorage.removeItem("id_trivia");
     if (isDeleted) {
       dispatch({
         type: DELETE_TRIVIA_QUESTION_BANKS_RESET,
       });
-      dispatch(getAllTriviaQuestionBanks(page, "", limit, token));
+      dispatch(
+        getAllTriviaQuestionBanks(page, "", limit, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [dispatch, isDeleted, token, page, limit]);
+  }, [dispatch, isDeleted, token, page, limit, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -57,7 +70,8 @@ const ListTrivia = ({ token }) => {
     router.push(link);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     let link = `${router.pathname}?page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
@@ -65,7 +79,13 @@ const ListTrivia = ({ token }) => {
 
   const handleLimit = (e) => {
     setLimit(e.target.value);
-    router.push(`${router.pathname}?page=1&limit=${e.target.value}`);
+    if (search) {
+      router.push(
+        `${router.pathname}?page=1&keyword=${search}&limit=${e.target.value}`
+      );
+    } else {
+      router.push(`${router.pathname}?page=1&limit=${e.target.value}`);
+    }
   };
 
   const handleDelete = (id) => {
@@ -80,7 +100,7 @@ const ListTrivia = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteTriviaQuestionBanks(id, token));
+        dispatch(deleteTriviaQuestionBanks(id, token, tokenPermission));
       }
     });
   };
@@ -161,6 +181,24 @@ const ListTrivia = ({ token }) => {
     }
   };
 
+  const handleModal = (id) => {
+    dispatch(
+      getAllTriviaQuestionDetail(
+        id,
+        1,
+        "",
+
+        100,
+        token
+      )
+    );
+    setViewSoal(true);
+  };
+
+  const { trivia_question_detail } = useSelector(
+    (state) => state.allTriviaQuestionDetail
+  );
+
   return (
     <PageWrapper>
       {error ? (
@@ -224,22 +262,24 @@ const ListTrivia = ({ token }) => {
             style={{ border: "1px solid black" }}
           >
             <h1
-              className={`${styles.headTitle} col-sm-12 col-md-8 col-lg-8 col-xl-9`}
+              className="card-title text-dark mt-2 ml-5"
+              style={{ fontSize: "24px" }}
             >
               List TRIVIA
             </h1>
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.trivia.manage"
             ) ? (
-              <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
+              <div className=" card-toolbar">
+                <Link href="/subvit/trivia/clone">
+                  <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                    <i className="ri-mastercard-fill"></i>
+                    Clone TRIVIA
+                  </a>
+                </Link>
                 <Link href="/subvit/trivia/tambah">
-                  {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
-                  <a
-                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
-                  >
+                  <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
                     <i className="ri-add-fill"></i>
                     Tambah TRIVIA
                   </a>
@@ -258,20 +298,22 @@ const ListTrivia = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                       // UNFINISH
                     >
                       Cari
@@ -297,17 +339,15 @@ const ListTrivia = ({ token }) => {
                         <th>Bank Soal</th>
                         <th>Status</th>
                         {dataPermission &&
-                        dataPermission.roles.includes("Super Admin") &&
-                        dataPermission &&
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.trivia.manage"
                         ) ? (
-                          <th style={{ width: "10px" }}>Aksi</th>
+                          <th style={{ width: "250px" }}>Aksi</th>
                         ) : dataPermission &&
                           dataPermission.permissions.includes(
                             "subvit.view" && "subvit.trivia.view"
                           ) ? (
-                          <th style={{ width: "10px" }}>Aksi</th>
+                          <th style={{ width: "250px" }}>Aksi</th>
                         ) : (
                           ""
                         )}
@@ -317,7 +357,7 @@ const ListTrivia = ({ token }) => {
                       {!trivia ||
                       (trivia && trivia.list_trivia.length === 0) ? (
                         <td className="align-middle text-center" colSpan={6}>
-                          Data Tidak Ditemukan
+                          Data Kosong
                         </td>
                       ) : (
                         trivia &&
@@ -366,8 +406,6 @@ const ListTrivia = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.trivia.manage"
                                 ) ? (
@@ -389,11 +427,22 @@ const ListTrivia = ({ token }) => {
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="Detail"
+                                        title="List Soal"
                                       >
-                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                        <i className="ri-file-list-line p-0 text-white"></i>
                                       </a>
                                     </Link>
+                                    {row?.bank_soal !== 0 && (
+                                      <a
+                                        onClick={() => handleModal(row?.id)}
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Review Soal"
+                                      >
+                                        <i className="ri-file-search-fill p-0 text-white"></i>
+                                      </a>
+                                    )}
                                     <Link
                                       href={`/subvit/trivia/report?id=${row.id}`}
                                     >
@@ -407,7 +456,17 @@ const ListTrivia = ({ token }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      className={
+                                        row?.status
+                                          ? "btn btn-link-action btn-secondary  text-white"
+                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                      }
+                                      disabled={row?.status}
+                                      style={{
+                                        cursor: row?.status
+                                          ? "not-allowed"
+                                          : "pointer",
+                                      }}
                                       onClick={() => handleDelete(row.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
@@ -502,36 +561,11 @@ const ListTrivia = ({ token }) => {
                           onBlur={(event) => handleLimit(event)}
                           value={limit}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="30"
-                            selected={limit == "30" ? true : false}
-                          >
-                            30
-                          </option>
-                          <option
-                            value="40"
-                            selected={limit == "40" ? true : false}
-                          >
-                            40
-                          </option>
-                          <option
-                            value="50"
-                            selected={limit == "50" ? true : false}
-                          >
-                            50
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -552,6 +586,148 @@ const ListTrivia = ({ token }) => {
           </div>
         </div>
       </div>
+      <Modal
+        show={viewSoal}
+        onHide={() => setViewSoal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Review Soal</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setViewSoal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body style={{ overflowY: "scroll", height: "500px" }}>
+          <Row>
+            <Col ms={12}>
+              {trivia_question_detail?.list_questions && (
+                <>
+                  {trivia_question_detail?.list_questions?.map(
+                    (item, index) => {
+                      return (
+                        <>
+                          <Card
+                            style={{
+                              padding: "15px",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <h4>Soal {index + 1}</h4>
+                            <Card
+                              style={{
+                                marginTop: "10px",
+
+                                padding: "15px",
+                              }}
+                            >
+                              <div className="d-flex flex-row">
+                                <div className="mr-3">
+                                  {item.question_image ? (
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.question_image
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                <div>
+                                  {" "}
+                                  <h5>{item.question}</h5>
+                                </div>
+                              </div>
+
+                              {!item.answer.includes("TIPE JAWABAN") ? (
+                                JSON.parse(item?.answer).map((anw) => {
+                                  return (
+                                    <>
+                                      <div className="d-flex flex-row ">
+                                        <div className="mt-6">
+                                          {anw.image !== "" ? (
+                                            <Image
+                                              src={
+                                                process.env
+                                                  .END_POINT_API_IMAGE_SUBVIT +
+                                                anw.image
+                                              }
+                                              alt=""
+                                              width={40}
+                                              height={40}
+                                            />
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                        <div style={{ width: "100%" }}>
+                                          <Card
+                                            style={{
+                                              padding: "5px",
+                                              marginTop: "15px",
+                                              margin: "10px",
+                                            }}
+                                            className={
+                                              anw.value !== null
+                                                ? styles.answer
+                                                : ""
+                                            }
+                                          >
+                                            <p
+                                              style={{
+                                                padding: "5px",
+                                                marginTop: "5px",
+                                              }}
+                                            >
+                                              {anw.key} . {anw.option}
+                                            </p>
+                                          </Card>
+                                        </div>
+                                      </div>
+                                    </>
+                                  );
+                                })
+                              ) : (
+                                <Form>
+                                  <Form.Control
+                                    as="textarea"
+                                    style={{ marginTop: "10px" }}
+                                    rows={5}
+                                    placeholder="Jelaskan jawaban Anda di sini..."
+                                    className={styles.textArea}
+                                    disabled
+                                  />
+                                </Form>
+                              )}
+                            </Card>
+                          </Card>
+                        </>
+                      );
+                    }
+                  )}
+                </>
+              )}
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+            type="button"
+            onClick={() => setViewSoal(false)}
+          >
+            Kembali
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };

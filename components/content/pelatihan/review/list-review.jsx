@@ -21,10 +21,12 @@ import LoadingTable from "../../../LoadingTable";
 import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const ListReview = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   let { success } = router.query;
   // page = Number(page);
@@ -147,7 +149,8 @@ const ListReview = ({ token }) => {
         penyelenggara != null ? penyelenggara.value : null,
         academy,
         theme,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -174,7 +177,8 @@ const ListReview = ({ token }) => {
         penyelenggara != null ? penyelenggara.label : null,
         academy !== null ? academy.label : null,
         theme !== null ? theme.label : null,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -202,12 +206,14 @@ const ListReview = ({ token }) => {
         null,
         null,
         null,
-        token
+        token,
+        token_permission
       )
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     setPage(1);
     dispatch(
       getAllListReview(
@@ -221,7 +227,8 @@ const ListReview = ({ token }) => {
         null,
         null,
         null,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -241,13 +248,14 @@ const ListReview = ({ token }) => {
         null,
         null,
         null,
-        token
+        token,
+        token_permission
       )
     );
   };
 
   const onNewReset = () => {
-    router.replace("/pelatihan/review", undefined, { shallow: true });
+    router.replace("/pelatihan/review-pelatihan", undefined, { shallow: true });
   };
 
   const handlePublish = (val, type) => {
@@ -268,7 +276,8 @@ const ListReview = ({ token }) => {
           null,
           null,
           null,
-          token
+          token,
+          token_permission
         )
       );
     } else {
@@ -285,7 +294,8 @@ const ListReview = ({ token }) => {
           null,
           null,
           null,
-          token
+          token,
+          token_permission
         )
       );
     }
@@ -350,19 +360,7 @@ const ListReview = ({ token }) => {
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
           <CardPage
-            background="bg-success"
-            icon="new/open-book.svg"
-            color="#FFFFFF"
-            value={cardReview[0].count}
-            titleValue=""
-            title="Revisi"
-            publishedVal={cardReview[0].status}
-            routePublish={() =>
-              handlePublish(cardReview[0].status, cardReview[0].condisi)
-            }
-          />
-          <CardPage
-            background="bg-warning"
+            background="cardMenunggu"
             icon="new/mail-white.svg"
             color="#FFFFFF"
             value={cardReview[1].count}
@@ -374,7 +372,19 @@ const ListReview = ({ token }) => {
             }
           />
           <CardPage
-            background="bg-extras"
+            background="cardSelesai"
+            icon="new/open-book.svg"
+            color="#FFFFFF"
+            value={cardReview[0].count}
+            titleValue=""
+            title="Revisi"
+            publishedVal={cardReview[0].status}
+            routePublish={() =>
+              handlePublish(cardReview[0].status, cardReview[0].condisi)
+            }
+          />
+          <CardPage
+            background="cardDisetujui"
             icon="new/done-circle.svg"
             color="#FFFFFF"
             value={cardReview[2].count}
@@ -386,7 +396,7 @@ const ListReview = ({ token }) => {
             }
           />
           <CardPage
-            background="bg-danger"
+            background="cardRevisi"
             icon="new/error-circle.svg"
             color="#FFFFFF"
             value={cardReview[3].count}
@@ -416,6 +426,8 @@ const ListReview = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-4 col-xl-4">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
+                    <form onSubmit={e => handleSearch(e)}>
+
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -429,10 +441,11 @@ const ListReview = ({ token }) => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={e => handleSearch(e)}
                     >
                       Cari
                     </button>
+                    </form>
                   </div>
                 </div>
 
@@ -467,7 +480,7 @@ const ListReview = ({ token }) => {
                         <th className="text-center">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal</th>
+                        <th>Jadwal Pendaftaran <br /> Jadwal Pelatihan</th>
                         <th>Kuota</th>
                         <th>Status</th>
                         <th>Revisi</th>
@@ -476,8 +489,8 @@ const ListReview = ({ token }) => {
                     </thead>
                     <tbody>
                       {!review ||
-                      (review && review.list === null) ||
-                      review.list.length === 0 ? (
+                        (review && review.list === null) ||
+                        review.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
@@ -502,22 +515,22 @@ const ListReview = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <p className="my-0">
-                                {moment(row.pendaftaran_mulai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pendaftaran_mulai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
-                                {moment(row.pendaftaran_selesai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pendaftaran_selesai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                               <p className="my-0">
-                                {moment(row.pelatihan_mulai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pelatihan_mulai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
-                                {moment(row.pelatihan_selesai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pelatihan_selesai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                             </td>
                             <td className="align-middle">
@@ -530,22 +543,22 @@ const ListReview = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               {row.status_substansi === "review" && (
-                                <span className="label label-inline label-light-success font-weight-bold">
+                                <span className="label label-inline select-pelatihan-primary font-weight-bold">
                                   Review
                                 </span>
                               )}
                               {row.status_substansi === "disetujui" && (
-                                <span className="label label-inline label-light-success font-weight-bold">
+                                <span className="label label-inline select-pelatihan-success font-weight-bold">
                                   Disetujui
                                 </span>
                               )}
                               {row.status_substansi === "revisi" && (
-                                <span className="label label-inline label-light-warning font-weight-bold">
+                                <span className="label label-inline select-pelatihan-warning font-weight-bold">
                                   Revisi
                                 </span>
                               )}
                               {row.status_substansi === "ditolak" && (
-                                <span className="label label-inline label-light-danger font-weight-bold">
+                                <span className="label label-inline select-pelatihan-danger font-weight-bold">
                                   Ditolak
                                 </span>
                               )}
@@ -559,19 +572,19 @@ const ListReview = ({ token }) => {
                                   {listPermission.includes(
                                     "pelatihan.review_pelatihan.view"
                                   ) && (
-                                    <Link
-                                      href={`/pelatihan/review-pelatihan/view-pelatihan/${row.id}`}
-                                    >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Detail"
+                                      <Link
+                                        href={`/pelatihan/review-pelatihan/view-pelatihan/${row.id}`}
                                       >
-                                        <i className="ri-eye-fill text-white p-0"></i>
-                                      </a>
-                                    </Link>
-                                  )}
+                                        <a
+                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                          data-toggle="tooltip"
+                                          data-placement="bottom"
+                                          title="Detail"
+                                        >
+                                          <i className="ri-eye-fill text-white p-0"></i>
+                                        </a>
+                                      </Link>
+                                    )}
                                 </div>
                               )}
                             </td>
@@ -695,16 +708,6 @@ const ListReview = ({ token }) => {
               defaultValue={statusSubstansi}
               onChange={(e) =>
                 setStatusSubstansi({ value: e.value, label: e.label })
-              }
-            />
-          </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Pelatihan</label>
-            <Select
-              options={optionsStatusPelatihan}
-              defaultValue={statusPelatihan}
-              onChange={(e) =>
-                setStatusPelatihan({ value: e.value, label: e.label })
               }
             />
           </div>

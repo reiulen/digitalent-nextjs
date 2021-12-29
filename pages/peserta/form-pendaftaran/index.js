@@ -14,6 +14,7 @@ import {
 } from "../../../redux/actions/pelatihan/register-training.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import { checkRegisterPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
 
 const IndexForm = dynamic(
   () =>
@@ -38,26 +39,11 @@ export default function FormPendaftaran(props) {
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
     (state) => state.getFormBuilder
   );
-
   useEffect(() => {
     let data = {
       komitmen: false,
-      form_pendaftaran: [],
+      form_pendaftaran: dataForm.FormBuilder,
     };
-    dataForm &&
-      dataForm.FormBuilder.map((row, i) => {
-        data.form_pendaftaran.push({
-          key: row.key,
-          name: row.name,
-          type: row.element,
-          size: row.size,
-          option: row.option,
-          dataOption: row.dataOption,
-          required: row.required,
-          fileName: "",
-          value: "",
-        });
-      });
     dispatch(storeFormRegister(data));
   }, [dataForm, dispatch]);
   return (
@@ -84,16 +70,29 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       await store.dispatch(getAllAkademi());
 
-      const data = await store.dispatch(
-        getDataPribadi(session?.user.user.data.user.token)
-      );
-
+      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
       await store.dispatch(
         getFormBuilder(session?.user.user.data.user.token, query.id)
       );
-      await store.dispatch(
+      const dataPelatihan = await store.dispatch(
         getPelatihan(session?.user.user.data.user.token, query.id)
       );
+
+      // const check = await store.dispatch(
+      // 	checkRegisterPelatihan(
+      // 		dataPelatihan?.data?.id,
+      // 		session?.user.user.data.user.token
+      // 	)
+      // );
+
+      // if (!check.status) {
+      // 	return {
+      // 		redirect: {
+      // 			destination: process.env.PATH_URL + "/peserta",
+      // 			permanent: false,
+      // 		},
+      // 	};
+      // }
 
       return {
         props: {

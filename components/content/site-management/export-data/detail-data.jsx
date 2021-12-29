@@ -54,7 +54,7 @@ const Table = ({ token }) => {
           <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-sm-4">
                   <div className="d-flex align-items-center w-100">
                     <div className="position-relative overflow-hidden w-100">
                       <IconSearch

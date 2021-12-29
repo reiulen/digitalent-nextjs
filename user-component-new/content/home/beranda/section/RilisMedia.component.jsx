@@ -15,7 +15,7 @@ export default function RilisMedia({ berita, dimension }) {
           berita.map((row, i) =>
             dimension.width < 1000 ? (
               i < 2 && (
-                <div className="col-sm-12 col-lg-4 col-md-6 mb-5">
+                <div key={i} className="col-sm-12 col-lg-4 col-md-6 mb-5">
                   <Card className="h-100 shadow rounded-xl">
                     <Image
                       src={
@@ -44,10 +44,8 @@ export default function RilisMedia({ berita, dimension }) {
                           </p>
                         </div>
                       </div>
-                      <div className="mb-2">
-                        <p className={`${style.media_card}`}>
-                          {row.judul_berita}
-                        </p>
+                      <div className="mb-2 module-rilis-media">
+                        <p className="media-card ">{row.judul_berita}</p>
                       </div>
 
                       <div
@@ -60,7 +58,7 @@ export default function RilisMedia({ berita, dimension }) {
                       >
                         <Link href={`/berita/detail/${row.slug}`} passHref>
                           <a className={`${style.link_rilis}`}>
-                            Lihat Detail >
+                            Lihat Detail &gt;
                           </a>
                         </Link>
                       </div>
@@ -69,7 +67,7 @@ export default function RilisMedia({ berita, dimension }) {
                 </div>
               )
             ) : (
-              <div className="col-sm-12 col-lg-4 col-md-6 mb-5">
+              <div key={i} className="col-sm-12 col-lg-4 col-md-6 mb-5">
                 <Card className="h-100 shadow rounded-xl">
                   <Image
                     src={
@@ -98,22 +96,20 @@ export default function RilisMedia({ berita, dimension }) {
                         </p>
                       </div>
                     </div>
-                    <div className="mb-2">
-                      <p className={`${style.media_card}`}>
-                        {row.judul_berita}
-                      </p>
+                    <div className="mb-2 module-rilis-media">
+                      <p className="media-card ">{row.judul_berita}</p>
                     </div>
 
                     <div
                       className="d-flex align-content-end justify-content-end align-self-end mb-3 mr-3"
                       style={{
                         position: "absolute",
-                        bottom: "8px",
+                        bottom: "0px",
                         right: "16px",
                       }}
                     >
                       <Link href={`/berita/detail/${row.slug}`} passHref>
-                        <a className={`${style.link_rilis}`}>Lihat Detail ></a>
+                        <a className={`${style.link_rilis}`}>Lihat Detail &gt;</a>
                       </Link>
                     </div>
                   </Card.Body>
@@ -128,7 +124,7 @@ export default function RilisMedia({ berita, dimension }) {
           <Link href="/berita">
             <a>
               <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12">
-                Lihat Selengkapnya >
+                Lihat Selengkapnya &gt;
               </button>
             </a>
           </Link>

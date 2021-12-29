@@ -40,7 +40,7 @@ export const getAllBerandaArtikel =
             try {
                 dispatch({ type: BERANDA_ARTIKEL_REQUEST })
 
-                let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}`
+                let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel?page=${page}&role=1`
                 if (keyword) link = link.concat(`&keyword=${keyword}`);
                 if (limit) link = link.concat(`&limit=${limit}`);
                 if (filterPublish) link = link.concat(`&filterPublish=${filterPublish}`);
@@ -50,7 +50,13 @@ export const getAllBerandaArtikel =
                 if (category_akademi) link = link.concat(`&category_akademi=${category_akademi}`);
                 if (tag) link = link.concat(`&tag=${tag}`);
 
-                const { data } = await axios.get(link);
+                const config = {
+                    headers: {
+                      apikey: process.env.API_KEY_PUBLIKASI,
+                    },
+                };
+
+                const { data } = await axios.get(link, config);
 
                 dispatch({
                     type: BERANDA_ARTIKEL_SUCCESS,
@@ -69,7 +75,13 @@ export const getDetailBerandaArtikel = (id) => async dispatch => {
     try {
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel/${id}`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: DETAIL_BERANDA_ARTIKEL_SUCCESS,
@@ -113,9 +125,16 @@ export const getKategoriBerandaArtikel = () => async dispatch => {
     try {
         dispatch({ type: KATEGORI_BERANDA_ARTIKEL_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
+        // let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Artikel&type=home&role=1`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: KATEGORI_BERANDA_ARTIKEL_SUCCESS,
@@ -123,6 +142,7 @@ export const getKategoriBerandaArtikel = () => async dispatch => {
         })
 
     } catch (error) {
+        console.log (error)
         dispatch({
             type: KATEGORI_BERANDA_ARTIKEL_FAIL,
             payload: error.response.data.message,
@@ -137,7 +157,13 @@ export const getTagBerandaArtikel = () => async dispatch => {
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: TAG_BERANDA_ARTIKEL_SUCCESS,

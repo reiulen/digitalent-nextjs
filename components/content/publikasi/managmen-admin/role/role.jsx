@@ -137,14 +137,14 @@ const Role = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.artikel.length === 0 ?
+                                                artikel && artikel?.artikel.length === 0 ?
                                                     '' :
-                                                    artikel && artikel.artikel.map((artikel) => {
+                                                    artikel && artikel?.artikel?.map((artikel) => {
                                                         return <tr key={artikel.id}>
 
-                                                            <td className='align-middle text-center'>{artikel.jenis_kategori}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
-                                                            <td className='align-middle'>{artikel.created_at}</td>
+                                                            <td className='align-middle text-center'>{artikel?.jenis_kategori}</td>
+                                                            <td className='align-middle'>{artikel?.judul_artikel}</td>
+                                                            <td className='align-middle'>{artikel?.created_at}</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='write.svg' />
                                                                 <ButtonAction icon='trash.svg' />
@@ -159,12 +159,12 @@ const Role = () => {
                             </div>
 
                             <div className="row">
-                                {artikel && artikel.perPage < artikel.total &&
+                                {artikel && artikel?.perPage < artikel?.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={artikel.perPage}
-                                            totalItemsCount={artikel.total}
+                                            itemsCountPerPage={artikel?.perPage}
+                                            totalItemsCount={artikel?.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -176,7 +176,7 @@ const Role = () => {
                                         />
                                     </div>
                                 }
-                                {artikel && artikel.total > 5 ?
+                                {artikel && artikel?.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

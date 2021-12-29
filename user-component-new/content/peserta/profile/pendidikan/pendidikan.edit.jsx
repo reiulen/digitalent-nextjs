@@ -12,6 +12,7 @@ import {
   clearErrors,
   getProfilePendidikan,
   getDataAsalSekolah,
+  updateWizzardStatus,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 import {
@@ -25,7 +26,9 @@ import { useRouter } from "next/router";
 
 const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const simpleValidator = useRef(new SimpleReactValidator({ 
+    locale: "id" 
+  }));
   const [, forceUpdate] = useState();
   const router = useRouter();
   const { data: dataAsalSekolah } = useSelector(
@@ -40,9 +43,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   );
   const {
     error: errorUpdateData,
-    loading,
-    success,
+    loading: loadingUpdateData,
+    success: successUpdateData,
   } = useSelector((state) => state.updatePendidikan);
+
+  const {
+		error: errorStatusWizzard,
+		loading: loadingStatusWizzard,
+		success: successStatusWizard,
+	} = useSelector((state) => state.updateStatusWizzard);
 
   const [jengjangPendidikan, setJenjangPendidikan] = useState(
     (pendidikan && {
@@ -64,7 +73,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const [programStudi, setProgramStudi] = useState(
     (pendidikan && pendidikan.program_studi) || ""
   );
-  const [ipk, setIpk] = useState((pendidikan && pendidikan.ipk) || "");
+  const [ipk, setIpk] = useState((pendidikan && pendidikan.ipk) || null);
   const [tahunMasuk, setTahunMasuk] = useState(
     (pendidikan && pendidikan.tahun_masuk) || ""
   );
@@ -72,7 +81,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const [ijazahName, setIjazahName] = useState(
     pendidikan ? pendidikan?.ijasah?.split("/ijasah/") : "Belum ada file"
   );
-  const [ijazah, setIjazah] = useState("");
+  // const [ijazah, setIjazah] = useState("");
+  const [ijazah, setIjazah] = useState(pendidikan?.ijasah ? pendidikan.ijasah : "");
   const [ijazahPreview, setIjazahPreview] = useState("");
 
   const [dataSearch, setDataSearch] = useState([]);
@@ -86,8 +96,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
       optionsJenjangPendidikan.push(val);
     }
   }
-
   const [showInputCollegeName, setShowInputCollegeName] = useState(false);
+  const [errorOnIpk, setErrorOnIpk] = useState (false)
+  const validateLetter = /[a-zA-Z]/;
 
   const NoOptionsMessage = (props) => {
     return (
@@ -104,11 +115,16 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     dispatch(getDataAsalSekolah(token));
 
     if (errorUpdateData) {
-      SweatAlert("Gagal", errorUpdateData, "error");
+      // SweatAlert("Gagal", errorUpdateData, "error");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
       dispatch(clearErrors());
     }
 
-    if (success) {
+    if (successUpdateData) {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_PENDIDIKAN_RESET });
       if (wizzard) {
@@ -119,7 +135,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    success,
+    successUpdateData,
     errorUpdateData,
     dispatch,
     jengjangPendidikan.value,
@@ -127,21 +143,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     token,
     asalSekolah,
   ]);
-
-  const optionsAsalSekolah = [];
-
-  dataAsalSekolah &&
-    dataAsalSekolah.map((item) => {
-      optionsAsalSekolah.push({
-        value: item.id,
-        label: item.label,
-      });
-    });
-
-  optionsAsalSekolah.push({
-    value: "",
-    label: "Nama Institusi Lainnya..",
-  });
 
   const searchAsal = (word) => {
     let array = [];
@@ -165,12 +166,12 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   };
 
   const onChangeIjazah = (e) => {
-    const type = ["image/jpeg", "image/jpg", "application/pdf"];
+    const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
         if (e.target.files[0].size > 5000000) {
           e.target.value = null;
-          Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+          Swal.fire("Oops !", "Ukuran file maksimal 5 MB.", "error");
         } else {
           const reader = new FileReader();
           reader.onload = () => {
@@ -186,16 +187,58 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         e.target.value = null;
         Swal.fire(
           "Oops !",
-          "Data yang bisa dimasukkan hanya berupa data jpg atau pdf.",
+          "Data yang bisa dimasukkan hanya berupa data gambar atau pdf.",
           "error"
         );
       }
     }
   };
 
+  const stepBack = async () => {
+    let status = 2
+
+    const data = await dispatch (updateWizzardStatus(status, token))
+
+    if (data?.status === true){
+      router.push("/peserta/wizzard/alamat");
+
+    } else {
+      SweatAlert("Gagal", errorStatusWizzard, "error");
+			dispatch(clearErrors());
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let data = {};
+    if (
+      !asalSekolah.includes("Lainnya") ||
+      jengjangPendidikan.label != "SMA/Sederajat"
+    ) {
+      simpleValidator.current.fields["sekolah lainnya"] = true;
+    }
+    // if(asalSekolah.includes(''))
+    if (jengjangPendidikan.label.includes("Tidak Sekolah")) {
+      simpleValidator.current.fields["asal sekolah"] = true;
+      simpleValidator.current.fields["ijazah"] = true;
+      simpleValidator.current.fields["ipk"] = true;
+      simpleValidator.current.fields["lainya"] = true;
+      simpleValidator.current.fields["program studi"] = true;
+      simpleValidator.current.fields["sekolah lainnya"] = true;
+      simpleValidator.current.fields["tahun masuk"] = true;
+    }
+
+    if (
+      jengjangPendidikan.label === "D3" ||
+      jengjangPendidikan.label === "D4" ||
+      jengjangPendidikan.label === "S1" ||
+      jengjangPendidikan.label === "S2" ||
+      jengjangPendidikan.label === "S3"
+    ){
+      simpleValidator.current.fields["lainya ( sekolah/ pt )"] = true;
+      simpleValidator.current.errorMessages["lainya ( sekolah/ pt )"] = null;
+    }
+
     if (simpleValidator.current.allValid()) {
       if (jengjangPendidikan.label === "Tidak Sekolah") {
         data = {
@@ -206,6 +249,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
           ipk: "0",
           tahun_masuk: parseInt("1"),
           ijasah: "",
+          wizard: 4,
         };
       } else if (
         jengjangPendidikan.label === "TK" ||
@@ -220,17 +264,32 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
           ipk: "0",
           tahun_masuk: parseInt(tahunMasuk),
           ijasah: ijazah,
+          wizard: 4,
         };
       } else if (jengjangPendidikan.label === "SMA/Sederajat") {
-        data = {
-          jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah,
-          lainya: "-",
-          program_studi: "0",
-          ipk: "0",
-          tahun_masuk: parseInt(tahunMasuk),
-          ijasah: ijazah,
-        };
+        if (!sekolahLainnya) {
+          data = {
+            jenjang: jengjangPendidikan.label,
+            asal_pendidikan: asalSekolah,
+            lainya: "-",
+            program_studi: "0",
+            ipk: "0",
+            tahun_masuk: parseInt(tahunMasuk),
+            ijasah: ijazah,
+            wizard: 4,
+          };
+        } else {
+          data = {
+            jenjang: jengjangPendidikan.label,
+            asal_pendidikan: sekolahLainnya,
+            lainya: "-",
+            program_studi: "0",
+            ipk: "0",
+            tahun_masuk: parseInt(tahunMasuk),
+            ijasah: ijazah,
+            wizard: 4,
+          };
+        }
       } else if (
         jengjangPendidikan.label === "D3" ||
         jengjangPendidikan.label === "D4" ||
@@ -247,6 +306,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
             ipk: `${ipk}`,
             tahun_masuk: parseInt(tahunMasuk),
             ijasah: ijazah,
+            wizard: 4,
           };
         } else {
           data = {
@@ -257,12 +317,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
             ipk: `${ipk}`,
             tahun_masuk: parseInt(tahunMasuk),
             ijasah: ijazah,
+            wizard: 4,
           };
         }
       }
+
       dispatch(updateProfilePendidikan(data, token));
       window.scrollTo(0, 0);
     } else {
+     
       simpleValidator.current.showMessages();
       forceUpdate(1);
       Swal.fire({
@@ -281,33 +344,79 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
 
   useEffect(() => {
     const validateIpk = /^[0-9]+\.[0-9][0-9][0-9][0-9]$/;
+    
     if (ipk >= 4) {
       setIpk(4);
     }
+
     if (validateIpk.test(ipk)) {
       setIpk(Math.round(ipk));
+      setErrorOnIpk(false)
+
+    } else {
+      setErrorOnIpk(true)
     }
+
     const target = document.getElementById("formGridIpk");
     if (target) {
       target.onkeydown = (e) => {
         if (e.code == "Minus") {
           return false;
+
         }
+
         if (e.code == "NumpadAdd") {
           return false;
-        }
+        } 
+
         if (e.code == "NumpadSubtract") {
           return false;
-        }
+        } 
+
         if (e.code == "Equal") {
           return false;
-        }
+        } 
+
         if (e.code == "Comma") {
           return false;
-        }
+        } 
       };
     }
   }, [ipk]);
+
+  const [lainnya, setLainnya] = useState(false);
+  const [sekolahLainnya, setSekolahLainnya] = useState("");
+
+  useEffect(() => {
+    if (asalSekolah.includes("Lainnya")) {
+      setLainnya(true);
+    } else {
+      setSekolahLainnya("");
+      setLainnya(false);
+    }
+  }, [asalSekolah]);
+
+  const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
+  const [inputSekolah, setInputSekolah] = useState("");
+
+  useEffect(() => {
+    setOptionsAsalSekolah((prev) => {
+      let arr = [];
+      arr.push({ value: "", label: "Nama Institusi Lainnya.." });
+      dataAsalSekolah.map((item) => {
+        arr.push({ label: item.label, value: item.id });
+      });
+      return arr;
+    });
+  }, [dataAsalSekolah]);
+
+  useEffect(() => {
+    if (inputSekolah.length > 3) {
+      setTimeout(() => {
+        dispatch(getDataAsalSekolah(token, inputSekolah));
+      }, 1000);
+    }
+  }, [inputSekolah]);
 
   return (
     <>
@@ -343,29 +452,60 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
           </Form.Group>
           {jengjangPendidikan.value === 19 && <div className=""></div>}
           {jengjangPendidikan.label === "SMA/Sederajat" && (
-            <Form.Group className="mb-3" controlId="formGridAdress1">
-              <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-              <div className="position-relative" style={{ zIndex: "4" }}>
-                <Select
-                  // list="data"
-                  placeholder={asalSekolah || "Pilih Sekolah"}
-                  options={optionsAsalSekolah}
-                  // className="form-control"
-                  defaultValue={asalSekolah}
-                  onChange={(e) => {
-                    setAsalSekolah(e.label);
-                  }}
-                />
-              </div>
-              {simpleValidator.current.message(
-                "asal sekolah",
-                asalSekolah,
-                asalSekolah === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" controlId="formGridAdress1">
+                  <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+                  <div className="position-relative" style={{ zIndex: "4" }}>
+                    <Select
+                      // list="data"
+                      placeholder={asalSekolah || "Pilih Sekolah"}
+                      options={optionsAsalSekolah}
+                      onInputChange={(e) => {
+                        setInputSekolah(e);
+                      }}
+                      // className="form-control"
+
+                      defaultValue={asalSekolah}
+                      onChange={(e) => {
+                        setAsalSekolah(e.label);
+                      }}
+                    />
+                  </div>
+                  {simpleValidator.current.message(
+                    "asal sekolah",
+                    asalSekolah,
+                    // asalSekolah === null ? "required" : "",
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </Form.Group>
+              </Col>
+              {lainnya && (
+                <Col md={6}>
+                  <Form.Group className="mb-3" controlId="formGridAddress1">
+                    <Form.Label>Nama Institusi Pendidikan</Form.Label>
+                    <Form.Control
+                      placeholder="Silahkan Masukkan Nama Institusi"
+                      onChange={(e) => {
+                        setSekolahLainnya(e.target.value);
+                      }}
+                      type="text"
+                    />
+                    {simpleValidator.current.message(
+                      "sekolah lainnya",
+                      sekolahLainnya,
+                      "required",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
+                  </Form.Group>
+                </Col>
               )}
-            </Form.Group>
+            </Row>
           )}
 
           {jengjangPendidikan.label === "D3" && showInputCollegeName === false && (
@@ -381,6 +521,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -391,7 +534,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -416,7 +560,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -439,6 +584,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -449,7 +597,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -474,7 +623,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -496,6 +646,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -506,7 +659,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -530,7 +684,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -553,6 +708,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -563,7 +721,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -588,7 +747,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -610,6 +770,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -620,7 +783,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -644,7 +808,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -667,6 +832,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -677,7 +845,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -702,7 +871,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -724,6 +894,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -734,7 +907,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -758,7 +932,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -781,6 +956,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -791,7 +969,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -816,7 +995,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -838,6 +1018,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -848,7 +1031,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -872,7 +1056,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -895,6 +1080,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Select
                     placeholder={asalSekolah || "Pilih Sekolah"}
                     options={optionsAsalSekolah}
+                    onInputChange={(e) => {
+                      setInputSekolah(e);
+                    }}
                     selectedValue={asalSekolah}
                     onChange={(e) => {
                       onChangeAsalSekolah(e.label);
@@ -905,7 +1093,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "asal sekolah",
                   asalSekolah,
-                  asalSekolah === null ? "required" : "",
+                  // asalSekolah === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -930,7 +1119,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "nama institusi",
                   asalInstitusi,
-                  asalInstitusi === null ? "required" : "",
+                  // asalInstitusi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -955,7 +1145,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                lainya === null ? "required" : "",
+                // lainya === null ? "required" : "",
+                "required",
                 {
                   className: "text-danger",
                 }
@@ -978,7 +1169,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                lainya === null ? "required" : "",
+                // lainya === null ? "required" : "",
+                "required",
                 {
                   className: "text-danger",
                 }
@@ -1001,7 +1193,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                lainya === null ? "required" : "",
+                // lainya === null ? "required" : "",
+                "required",
                 {
                   className: "text-danger",
                 }
@@ -1036,7 +1229,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "" : "required|integer",
+                  // tahunMasuk === null ? "" : "required|integer",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1072,7 +1266,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "" : "required|integer",
+                  // tahunMasuk === null ? "" : "required|integer",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1108,7 +1303,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "" : "required|integer",
+                  // tahunMasuk === null ? "" : "required|integer",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1144,7 +1340,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "" : "required|integer",
+                  // tahunMasuk === null ? "" : "required|integer",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1161,7 +1358,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg ,application/pdf"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -1174,7 +1371,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -1183,7 +1381,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -1196,7 +1394,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg ,application/pdf"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -1209,7 +1407,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -1218,7 +1417,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -1231,7 +1430,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg ,application/pdf"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -1244,7 +1443,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -1253,7 +1453,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -1279,17 +1479,35 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
                 <span className="text-muted">
-                  Gunakan titik "." - Contoh : 3.75
+                  Gunakan titik "." dengan dua angka di belakang titik - Contoh : 3.75
                 </span>
-                {simpleValidator.current.message(
-                  "ipk",
-                  ipk,
-                  ipk === null ? "required|integer" : "",
-                  {
-                    className: "text-danger",
-                  }
-                )}
+                {/* {
+                  errorOnIpk === true ? 
+                    <div className="text-danger">
+                      ipk harus menggunakan angka
+                    </div>
+                  :
+                    simpleValidator.current.message(
+                      "ipk",
+                      ipk,
+                      `required`,
+                      {
+                        className: "text-danger",
+                      }
+                )} */}
+                {
+                  simpleValidator.current.message(
+                    "ipk",
+                    ipk,
+                    `required`,
+                    {
+                      className: "text-danger",
+                    }
+                  )
+                }
+            
               </Form.Group>
+              
               <Form.Group as={Col} md={6} controlId="formGridTahun">
                 <Form.Label>Tahun Masuk</Form.Label>
                 <Form.Control
@@ -1316,7 +1534,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1346,7 +1565,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1376,7 +1596,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1411,7 +1632,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1443,7 +1665,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1473,7 +1696,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1503,7 +1727,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1538,7 +1763,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1570,7 +1796,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1600,7 +1827,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
@@ -1630,11 +1858,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
                 )}
+               
               </Form.Group>
             </Row>
           )}
@@ -1665,11 +1895,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
                 )}
+                
               </Form.Group>
               <Form.Group as={Col} md={6} controlId="formGridTahun">
                 <Form.Label>Tahun Masuk</Form.Label>
@@ -1697,7 +1929,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1727,7 +1960,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1757,11 +1991,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
                 )}
+                
               </Form.Group>
             </Row>
           )}
@@ -1792,11 +2028,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
                 )}
+                
               </Form.Group>
               <Form.Group as={Col} md={6} controlId="formGridTahun">
                 <Form.Label>Tahun Masuk</Form.Label>
@@ -1824,7 +2062,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1854,12 +2093,14 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "program studi",
                   programStudi,
-                  programStudi === null ? "required" : "",
+                  // programStudi === null ? "required" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
                 )}
               </Form.Group>
+              
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
@@ -1884,11 +2125,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null ? "required|integer" : "",
+                  // ipk === null ? "required|integer" : "",
+                  "required",
                   {
                     className: "text-danger",
                   }
                 )}
+                
               </Form.Group>
             </Row>
           )}
@@ -1902,7 +2145,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg ,application/pdf"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -1915,7 +2158,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -1924,7 +2168,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -1958,7 +2202,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -1971,7 +2216,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg ,application/pdf"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -1987,14 +2232,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    "required",
                     {
                       className: "text-danger",
                     }
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>
@@ -2009,7 +2255,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg ,application/pdf"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -2022,7 +2268,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      "required",
                       {
                         className: "text-danger",
                       }
@@ -2031,7 +2278,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2065,7 +2312,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -2078,7 +2326,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg ,application/pdf"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2094,14 +2342,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    ijazah ? "" : "required",
                     {
                       className: "text-danger",
                     }
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>
@@ -2116,7 +2365,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg ,application/pdf"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -2129,7 +2378,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      ijazah ? "" : "required",
                       {
                         className: "text-danger",
                       }
@@ -2138,7 +2388,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2172,7 +2422,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  tahunMasuk ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -2185,7 +2436,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg ,application/pdf"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2201,14 +2452,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    ijazah ? "" : "required",
                     {
                       className: "text-danger",
                     }
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>
@@ -2223,7 +2475,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg ,application/pdf"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -2236,7 +2488,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      ijazah ? "" : "required",
                       {
                         className: "text-danger",
                       }
@@ -2245,7 +2498,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2279,7 +2532,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  tahunMasuk ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -2292,7 +2546,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg ,application/pdf"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2308,14 +2562,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    ijazah ? "" : "required",
                     {
                       className: "text-danger",
                     }
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>
@@ -2330,7 +2585,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="file"
                     className="custom-file-input"
                     name="question_image"
-                    accept="image/jpeg , image/jpg ,application/pdf"
+                    accept="image/png, image/jpeg, image/jpg, application/pdf"
                     onChange={onChangeIjazah}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("ijazah")
@@ -2343,7 +2598,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null ? "required" : "",
+                      // ijazah === null ? "required" : "",
+                      ijazah ? "" : "required",
                       {
                         className: "text-danger",
                       }
@@ -2352,7 +2608,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 </div>
               </div>
               <small className="text-muted">
-                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
           )}
@@ -2386,7 +2642,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null ? "required|integer" : "",
+                  // tahunMasuk === null ? "required|integer" : "",
+                  tahunMasuk ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -2399,7 +2656,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpeg , image/jpg ,application/pdf"
+                  accept="image/png, image/jpeg, image/jpg, application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -2415,14 +2672,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   {simpleValidator.current.message(
                     "ijazah",
                     ijazah,
-                    ijazah === null ? "required" : "",
+                    // ijazah === null ? "required" : "",
+                    ijazah ? "" : "required",
                     {
                       className: "text-danger",
                     }
                   )}
                 </label>
                 <small className="text-muted">
-                  *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+                  *JPG/JPEG/PNG/PDF (Maksimal ukuran file 5 MB)
                 </small>
               </Form.Group>
             </Row>
@@ -2447,8 +2705,17 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         ) : (
           <div className="button-aksi mt-5 float-right">
             <Button
+							className={`${style.button_profile_batal} rounded-xl mr-2`}
+							type="button"
+							onClick={() => stepBack()}
+							disabled={loadingStatusWizzard ? true : false}
+						>
+							Kembali
+						</Button>
+            <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
+              disabled = {loadingUpdateData ? true : false}
             >
               Lanjut
             </Button>

@@ -15,10 +15,12 @@ import CardPage from "../../../CardPage";
 import { getPendaftaranPeserta } from "../../../../redux/actions/pelatihan/summary.actions";
 
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const DetailSummary = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { error: errorStatusPendaftar, statusPendaftar } = useSelector(
     (state) => state.getStatusPendaftar
@@ -70,7 +72,19 @@ const DetailSummary = ({ token }) => {
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
-    dispatch(getPendaftaranPeserta(token, id, search, limit, pageNumber));
+    dispatch(
+      getPendaftaranPeserta(
+        token,
+        id,
+        search,
+        limit,
+        pageNumber,
+        "",
+        "",
+        "",
+        token_permission
+      )
+    );
   };
 
   function capitalize(s) {
@@ -82,15 +96,40 @@ const DetailSummary = ({ token }) => {
     return result.join(" ");
   }
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     setPage(1);
-    dispatch(getPendaftaranPeserta(token, id, search, limit, 1));
+    dispatch(
+      getPendaftaranPeserta(
+        token,
+        id,
+        search,
+        limit,
+        1,
+        "",
+        "",
+        "",
+        token_permission
+      )
+    );
   };
 
   const handleLimit = (val) => {
     setLimit(val);
     setPage(1);
-    dispatch(getPendaftaranPeserta(token, id, search, val, 1));
+    dispatch(
+      getPendaftaranPeserta(
+        token,
+        id,
+        search,
+        val,
+        1,
+        "",
+        "",
+        "",
+        token_permission
+      )
+    );
   };
 
   const handleFilter = () => {
@@ -103,7 +142,8 @@ const DetailSummary = ({ token }) => {
         1,
         statusBerkas === null ? "" : statusBerkas.value,
         statusPeserta === null ? "" : statusPeserta.value,
-        statusTesSubstansi === null ? "" : statusTesSubstansi.value
+        statusTesSubstansi === null ? "" : statusTesSubstansi.value,
+        token_permission
       )
     );
     setShowModal(false);
@@ -159,7 +199,8 @@ const DetailSummary = ({ token }) => {
                   1,
                   "verified",
                   statusPeserta === null ? "" : statusPeserta.value,
-                  statusTesSubstansi === null ? "" : statusTesSubstansi.value
+                  statusTesSubstansi === null ? "" : statusTesSubstansi.value,
+                  token_permission
                 )
               );
             }}
@@ -182,7 +223,8 @@ const DetailSummary = ({ token }) => {
                   1,
                   null,
                   statusPeserta === null ? "" : statusPeserta.value,
-                  "lulus tes"
+                  "lulus tes",
+                  token_permission
                 )
               );
             }}
@@ -206,7 +248,8 @@ const DetailSummary = ({ token }) => {
                   1,
                   "verified",
                   statusPeserta === null ? "" : statusPeserta.value,
-                  "lulus tes"
+                  "lulus tes",
+                  token_permission
                 )
               )
             }
@@ -229,7 +272,8 @@ const DetailSummary = ({ token }) => {
                   1,
                   null,
                   "diterima",
-                  null
+                  null,
+                  token_permission
                 )
               )
             }
@@ -315,25 +359,29 @@ const DetailSummary = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center d-flex">
                 <div className="col-lg-4 col-xl-4">
-                  <div className="position-relative overflow-hidden mt-3" style={{width: "100%"}}>
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                      
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
-                    >
-                      Cari
-                    </button>
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ width: "100%" }}
+                  >
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={(e) => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
 
@@ -353,8 +401,6 @@ const DetailSummary = ({ token }) => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
-
-                
               </div>
             </div>
 
@@ -414,12 +460,44 @@ const DetailSummary = ({ token }) => {
                               </p>
                             </td>
                             <td>
-                              <span className="label label-inline label-light-success font-weight-bold">
+                              <span
+                                className={
+                                  (row.administrasi === "unverified" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.administrasi === "verified" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                                  (row.administrasi === "incomplete" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize")
+                                }
+                              >
                                 {capitalize(row.administrasi)}
                               </span>
                             </td>
                             <td>
-                              <span className="label label-inline label-light-success font-weight-bold">
+                              <span
+                                className={
+                                  (row.status === "tidak lulus administrasi" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "tidak lulus tes substansi" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "tidak lulus pelatihan" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "ditolak" &&
+                                    "label label-inline statusPeserta-danger font-weight-bold text-capitalize") ||
+                                  (row.status === "seleksi administrasi" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "tes substansi" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "seleksi akhir" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "administrasi akhir" &&
+                                    "label label-inline select-pelatihan-warning font-weight-bold text-capitalize") ||
+                                  (row.status === "diterima" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize") ||
+                                  (row.status === "lulus pelatihan" &&
+                                    "label label-inline statusPeserta-success font-weight-bold text-capitalize")
+                                }
+                              >
                                 {capitalize(row.status)}
                               </span>
                             </td>

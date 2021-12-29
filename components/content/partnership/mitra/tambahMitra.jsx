@@ -10,6 +10,7 @@ import IconClose from "../../../assets/icon/Close";
 import Image from "next/image";
 import ReactCrop from "react-image-crop";
 import { Modal } from "react-bootstrap";
+import Cookies from "js-cookie"
 
 const TambahMitra = ({ token }) => {
   const router = useRouter();
@@ -95,7 +96,7 @@ const TambahMitra = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
@@ -118,6 +119,7 @@ const TambahMitra = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -203,53 +205,59 @@ const TambahMitra = ({ token }) => {
   };
 
   useEffect(() => {
-    async function getDataProvinces(token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/option/provinces`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        let dataNewProvinces = data.data.map((items) => {
-          return { ...items, label: items.name, value: items.id };
-        });
-        // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-        setAllProvinces(dataNewProvinces);
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error")
-      }
-    }
+    
     getDataProvinces(token);
   }, [token]);
+
+  async function getDataProvinces(token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/provinces`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      let dataNewProvinces = data?.data?.map((items) => {
+        return { ...items, label: items?.name, value: items?.id };
+      });
+      // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+      setAllProvinces(dataNewProvinces);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+    }
+  }
 
   useEffect(() => {
     // get data cities
     if (indonesia_provinces_id !== "") {
-      async function fetchAPI() {
-        try {
-          let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
-            {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          let dataNewCitites = data.data.map((items) => {
-            return { ...items, label: items.name, value: items.id };
-          });
-          // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
-          setCitiesAll(dataNewCitites);
-        } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error")
-        }
-      }
+      
       fetchAPI();
     }
   }, [indonesia_provinces_id, token]);
+
+  async function fetchAPI() {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      let dataNewCitites = data?.data?.map((items) => {
+        return { ...items, label: items.name, value: items.id };
+      });
+      // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
+      setCitiesAll(dataNewCitites);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+    }
+  }
 
   return (
     <PageWrapper>
@@ -273,8 +281,8 @@ const TambahMitra = ({ token }) => {
                   placeholder="Masukkan Nama Lembaga"
                   onChange={(e) => setInstitution_name(e.target.value)}
                 />
-                {error.institution_name ? (
-                  <p className="error-text">{error.institution_name}</p>
+                {error?.institution_name ? (
+                  <p className="error-text">{error?.institution_name}</p>
                 ) : (
                   ""
                 )}
@@ -293,8 +301,8 @@ const TambahMitra = ({ token }) => {
                       placeholder="Masukkan Website"
                       onChange={(e) => setWesite(e.target.value)}
                     />
-                    {error.wesite ? (
-                      <p className="error-text">{error.wesite}</p>
+                    {error?.wesite ? (
+                      <p className="error-text">{error?.wesite}</p>
                     ) : (
                       ""
                     )}
@@ -312,8 +320,8 @@ const TambahMitra = ({ token }) => {
                       placeholder="Masukkan Email"
                       onChange={(e) => setEmail(e.target.value)}
                     />
-                    {error.email ? (
-                      <p className="error-text">{error.email}</p>
+                    {error?.email ? (
+                      <p className="error-text">{error?.email}</p>
                     ) : (
                       ""
                     )}
@@ -391,6 +399,14 @@ const TambahMitra = ({ token }) => {
                       </label>
                     </div>
                   </div>
+                )}
+
+                {!agency_logo ? (
+                  <p className="error-text">
+                    {error?.agency_logo}
+                  </p>
+                ) : (
+                  ""
                 )}
 
                 {agency_logo && imageview ? (
@@ -472,8 +488,8 @@ const TambahMitra = ({ token }) => {
                   placeholder="Masukkan Alamat"
                   onChange={(e) => setAddress(e.target.value)}
                 />
-                {error.address ? (
-                  <p className="error-text">{error.address}</p>
+                {error?.address ? (
+                  <p className="error-text">{error?.address}</p>
                 ) : (
                   ""
                 )}
@@ -502,9 +518,9 @@ const TambahMitra = ({ token }) => {
                       onChange={(e) => onChangeProvinces(e)}
                       options={allProvinces}
                     />
-                    {error.indonesia_provinces_id ? (
+                    {error?.indonesia_provinces_id ? (
                       <p className="error-text">
-                        {error.indonesia_provinces_id}
+                        {error?.indonesia_provinces_id}
                       </p>
                     ) : (
                       ""
@@ -513,7 +529,9 @@ const TambahMitra = ({ token }) => {
                 </div>
                 <div className="col-12 col-xl-6">
                   {/* ========================================= cities */}
-                  <div className="form-group">
+                  <div 
+                    className={indonesia_provinces_id ? "form-group" : "form-group cursor-not-allowed"}
+                  >
                     <label htmlFor="staticEmail" className=" col-form-label">
                       Kota / Kabupaten
                     </label>
@@ -521,11 +539,11 @@ const TambahMitra = ({ token }) => {
                       onFocus={() =>
                         setError({ ...error, indonesia_cities_id: "" })
                       }
-                      className="basic-single"
+                      className="basic-single cursor-not-allowed"
                       classNamePrefix="select"
                       placeholder="Pilih data Kab/Kota"
                       // defaultValue={citiesAll[0]}
-                      isDisabled={false}
+                      isDisabled={indonesia_provinces_id ? false : true}
                       isLoading={false}
                       isClearable={false}
                       isRtl={false}
@@ -534,8 +552,8 @@ const TambahMitra = ({ token }) => {
                       onChange={(e) => setIndonesia_cities_id(e.id)}
                       options={citiesAll}
                     />
-                    {error.indonesia_cities_id ? (
-                      <p className="error-text">{error.indonesia_cities_id}</p>
+                    {error?.indonesia_cities_id ? (
+                      <p className="error-text">{error?.indonesia_cities_id}</p>
                     ) : (
                       ""
                     )}
@@ -558,8 +576,8 @@ const TambahMitra = ({ token }) => {
                 <div className="box-hide-arrow"></div>
                 </div>
 
-                {error.postal_code ? (
-                  <p className="error-text">{error.postal_code}</p>
+                {error?.postal_code ? (
+                  <p className="error-text">{error?.postal_code}</p>
                 ) : (
                   ""
                 )}
@@ -579,8 +597,8 @@ const TambahMitra = ({ token }) => {
                       placeholder="Masukkan Nama"
                       onChange={(e) => setPic_name(e.target.value)}
                     />
-                    {error.pic_name ? (
-                      <p className="error-text">{error.pic_name}</p>
+                    {error?.pic_name ? (
+                      <p className="error-text">{error?.pic_name}</p>
                     ) : (
                       ""
                     )}
@@ -608,8 +626,8 @@ const TambahMitra = ({ token }) => {
                     />
                     <div className="box-hide-arrow"></div>
                 </div>
-                    {error.pic_contact_number ? (
-                      <p className="error-text">{error.pic_contact_number}</p>
+                    {error?.pic_contact_number ? (
+                      <p className="error-text">{error?.pic_contact_number}</p>
                     ) : (
                       ""
                     )}

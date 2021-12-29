@@ -12,20 +12,31 @@ import {
   storeRegistrationStep2,
   getRegistrationStep2,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+import { getAllDataReference } from "../../../../../redux/actions/site-management/data-reference.actions";
+import { helperUnformatCheckbox } from "../../../../../utils/middleware/helper";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 import ModalPreview from "../components/modal-preview-form.component";
+import ModalProfile from "../components/modal-profile-peserta";
 
 import FormManual from "../components/step-registration/form-manual";
 import FormCopy from "../components/step-registration/form-copy";
 import FormCopyEdit from "../components/step-registration/form-copy-edit";
 import { getDetailMasterPelatihan } from "../../../../../redux/actions/pelatihan/master-pendaftaran.action";
+import Cookies from "js-cookie";
 
-const AddRegistrationStep2 = ({ propsStep, token }) => {
+import {
+  element,
+  size,
+  options,
+} from "../../../../../utils/middleware/helper/data";
+
+const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { registrationData } = useSelector((state) => state.registrationStep2);
   const { data: dataForm, error: errorDropdownForm } = useSelector(
@@ -35,93 +46,6 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [modalShow, setModalShow] = useState(false);
-
-  const [element] = useState([
-    {
-      value: "select",
-      name: "Select",
-    },
-    {
-      value: "text",
-      name: "Text",
-    },
-    {
-      value: "checkbox",
-      name: "Checkbox",
-    },
-    {
-      value: "textarea",
-      name: "Text Area",
-    },
-    {
-      value: "radio",
-      name: "Radio",
-    },
-    {
-      value: "file_image",
-      name: "File Image",
-    },
-    {
-      value: "file_doc",
-      name: "File Document",
-    },
-    {
-      value: "date",
-      name: "Input Date",
-    },
-  ]);
-
-  const [size] = useState([
-    { value: "col-md-6", name: "Half" },
-    { value: "col-md-12", name: "Full" },
-  ]);
-
-  const [options] = useState([
-    {
-      name: "Manual",
-      value: "manual",
-    },
-    {
-      name: "Select Reference",
-      value: "select_reference",
-    },
-  ]);
-
-  const [dataOptions] = useState([
-    {
-      value: "status_menikah",
-    },
-    {
-      value: "pendidikan",
-    },
-    {
-      value: "status_pekerjaan",
-    },
-    {
-      value: "hubungan",
-    },
-    {
-      value: "bidang_pekerjaan",
-    },
-    {
-      value: "level_pelatihan",
-    },
-    {
-      value: "agama",
-    },
-    {
-      value: "penyelengaara",
-    },
-    {
-      value: "provinsi",
-    },
-    {
-      value: "kota/kabupaten",
-    },
-    {
-      value: "universitas",
-    },
-  ]);
 
   const optionsForm = dataForm.data || [];
 
@@ -148,10 +72,11 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
   const [viewForm, setViewForm] = useState(registrationData.type_form);
 
   useEffect(() => {
+    dispatch(getAllDataReference(token, true));
     if (registrationData.type_form === "0") {
       setTitleCopy("");
       setFormBuilderCopy([]);
-      dispatch(getDetailMasterPelatihan(99999, token));
+      dispatch(getDetailMasterPelatihan(99999, token, token_permission));
       setTitleCopyEdit("");
       setFormBuilderCopyEdit([]);
     } else if (registrationData.type_form === "1") {
@@ -165,6 +90,9 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
           option: "",
           dataOption: "",
           required: "0",
+          triggered: "0",
+          triggered_parent: [],
+          value: "",
         },
       ]);
       setTitleCopyEdit("");
@@ -180,6 +108,9 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
           option: "",
           dataOption: "",
           required: "0",
+          triggered: "0",
+          triggered_parent: [],
+          value: "",
         },
       ]);
       setTitleCopy("");
@@ -240,6 +171,7 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
 
     const data = {
       judul_form: titleStore,
+      type_form: viewForm,
       formBuilder: formBuilderStore,
     };
     dispatch(storeRegistrationStep2(data));
@@ -278,10 +210,11 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
       });
     } else {
       if (simpleValidator.current.allValid()) {
+        const valueForm = helperUnformatCheckbox(formBuilderStore);
         const data = {
           judul_form: titleStore,
           type_form: viewForm,
-          formBuilder: formBuilderStore,
+          formBuilder: valueForm,
         };
         dispatch(storeRegistrationStep2(data));
         propsStep(3);
@@ -301,17 +234,19 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
     switch (viewForm) {
       case "0":
         return (
-          <FormManual
-            title={titleManual}
-            formBuilder={formBuilderManual}
-            funcTitle={(value) => setTitleManual(value)}
-            funcFormBuilder={(value) => setFormBuilderManual(value)}
-            funcModalShow={(value) => setModalShow(value)}
-            element={element}
-            size={size}
-            options={options}
-            dataOptions={dataOptions}
-          />
+          <>
+            <FormManual
+              title={titleManual}
+              formBuilder={formBuilderManual}
+              funcTitle={(value) => setTitleManual(value)}
+              funcFormBuilder={(value) => setFormBuilderManual(value)}
+              funcModalShow={(value) => setModalShow(value)}
+              element={element}
+              size={size}
+              options={options}
+              dataOptions={dataOptions}
+            />
+          </>
         );
         break;
       case "1":
@@ -372,9 +307,27 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
     //   <div className="col-lg-12 order-1 px-0">
     <>
       <div className="card card-custom card-stretch gutter-b">
-        <div className="card-body py-4">
+        <div className="card-header border-0">
+          <h1
+            className="font-weight-bolder card-title"
+            style={{ fontSize: "20px" }}
+          >
+            Form Pendaftaran
+          </h1>
+          <div className="card-toolbar justify-content-between d-flex">
+            <button
+              className="btn btn-warning px-6 font-weight-bolder"
+              style={{ borderRadius: "30px" }}
+              data-toggle="modal"
+              data-target="#modalProfile"
+              type="button"
+            >
+              Harap dibaca!
+            </button>
+          </div>
+        </div>
+        <div className="card-body py-0">
           <form onSubmit={submitHandler}>
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
             <div className="form-group mb-4">
               <label className="col-form-label font-weight-bold">
                 Tambah Form
@@ -427,12 +380,12 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
 
             {viewRegistrationHandler()}
 
-            <div className="form-group mt-md-20">
+            <div className="form-group mt-9">
               <div className="text-right">
                 <button
                   className="btn btn-light-ghost-rounded-full mr-2"
                   type="button"
-                  onClick={backHandler}
+                  onClick={() => backHandler()}
                 >
                   Kembali
                 </button>
@@ -445,7 +398,7 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
         </div>
         <Modal
           show={modalShow}
-          onHide={closePreviewHandler}
+          // onHide={closePreviewHandler}
           size="xl"
           aria-labelledby="contained-modal-title-vcenter"
           centered
@@ -474,8 +427,20 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
                 : viewForm === "2" && setFormBuilderCopyEdit(form);
             }}
             sendPropsModalShow={(value) => setModalShow(value)}
+            propsToken={token}
           />
         </Modal>
+
+        <div
+          className="modal fade"
+          id="modalProfile"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalProfile"
+          aria-hidden="true"
+        >
+          <ModalProfile />
+        </div>
       </div>
     </>
     //   </div>

@@ -1,4 +1,5 @@
-import DetailSurvey from "../../../components/content/subvit/survey/detail-survey";
+import dynamic from "next/dynamic";
+// import DetailSurvey from "../../../components/content/subvit/survey/detail-survey";
 import Layout from "../../../components/templates/layout.component";
 
 import { getAllSurveyQuestionDetail } from "../../../redux/actions/subvit/survey-question-detail.action";
@@ -7,13 +8,27 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import { getPermissionSubvit } from "../../../redux/actions/subvit/subtance.actions";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const DetailSurvey = dynamic(
+  () => import("../../../components/content/subvit/survey/detail-survey"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function DetailSurveyPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DetailSurvey token={session.token} />
+        <DetailSurvey
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -23,14 +38,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -67,7 +74,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Detail Survey - Subvit" },
+        props: { session, title: "Detail Survey - Subvit", permission },
       };
     }
 );

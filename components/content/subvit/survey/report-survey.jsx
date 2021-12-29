@@ -10,7 +10,7 @@ import ButtonAction from "../../../ButtonAction";
 import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Modal } from "react-bootstrap";
+import { Badge, Modal } from "react-bootstrap";
 import axios from "axios";
 import styles from "../trivia/edit/step.module.css";
 import { allReportSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
@@ -47,7 +47,8 @@ const ReportSurvey = ({ token }) => {
     router.push(link);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (limit != null) {
       router.push(
         `${router.pathname}?id=${id}&page=1&keyword=${search}&limit=${limit}`
@@ -65,9 +66,12 @@ const ReportSurvey = ({ token }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/survey-question-banks/report/export/${id}`;
+    let link =
+      process.env.END_POINT_API_SUBVIT +
+      `api/survey-question-banks/report/export/${id}?`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
+    if (router.query.card) link = link.concat(`&card=${router.query.card}`);
 
     const config = {
       headers: {
@@ -126,8 +130,8 @@ const ReportSurvey = ({ token }) => {
             value={survey && survey.data.total_peserta}
             titleValue=""
             title="Total Peserta"
-            publishedVal=""
-            routePublish={() => handlePublish(null)}
+            publishedVal="total-peserta"
+            routePublish={() => handlePublish("total-peserta")}
           />
           <CardPage
             background="bg-secondary"
@@ -191,20 +195,22 @@ const ReportSurvey = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -213,13 +219,6 @@ const ReportSurvey = ({ token }) => {
                 <div className="col-md-1"></div>
 
                 <div className="col-md-2  ">
-                  {/* <button
-                    className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export .CSV
-                  </button> */}
                   <button
                     className={`${styles.btnResponsive} btn w-200 btn-rounded-full bg-blue-secondary text-center text-white mt-2`}
                     type="button"
@@ -252,7 +251,7 @@ const ReportSurvey = ({ token }) => {
                       {survey && survey.data.reports.length === 0 ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Tidak Ditemukan
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (
@@ -309,9 +308,42 @@ const ReportSurvey = ({ token }) => {
                               {/* Buat Tampilan  */}
 
                               <td className="align-middle">
-                                <span className="label label-inline label-light-success font-weight-bold">
-                                  Diterima
-                                </span>
+                                {row.status === 1 && row.finish === 1 ? (
+                                  <td className="align-middle">
+                                    {/* <span className="label label-inline label-light-success font-weight-bold">
+                                      Diterima
+                                    </span> */}
+                                    <Badge bg="success">
+                                      Sudah Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : !row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="warning">
+                                      Belum Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="success">
+                                      Sedang Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.finish == 1 && row.status == 0 ? (
+                                  <td className="align-middle">
+                                    <Badge bg="success">
+                                      Sudah Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : (
+                                  <td className="align-middle">
+                                    <span className="label label-inline label-light-danger font-weight-bold">
+                                      -
+                                    </span>
+                                  </td>
+                                )}
                               </td>
                             </tr>
                           );

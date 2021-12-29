@@ -4,12 +4,13 @@ import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
+import Swal from "sweetalert2";
 import axios from "axios";
 import IconCalender from "../../../../assets/icon/Calender";
 import Select from "react-select";
 import SimpleReactValidator from "simple-react-validator";
 
-import styles from "../../../../../styles/previewGaleri.module.css"
+import styles from "../../../../../styles/previewGaleri.module.css";
 
 const UbahApi = ({ token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -18,7 +19,7 @@ const UbahApi = ({ token }) => {
   const router = useRouter();
   let selectRefListApi = null;
 
-  const [isFrom, setIsFrom] = useState(false)
+  const [isFrom, setIsFrom] = useState(false);
 
   const detailApi = useSelector((state) => state.detailApi);
 
@@ -55,7 +56,7 @@ const UbahApi = ({ token }) => {
 
   const onChangePeriodeDateStart = (date) => {
     setFrom(moment(date).format("YYYY-MM-DD"));
-    setIsFrom(true)
+    setIsFrom(true);
   };
   const onChangePeriodeDateEnd = (date) => {
     setTo(moment(date).format("YYYY-MM-DD"));
@@ -107,7 +108,6 @@ const UbahApi = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
         icon: "warning",
@@ -220,9 +220,14 @@ const UbahApi = ({ token }) => {
                     <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
                   </select>
-                  {simpleValidator.current.message("status", status, "required", {
-                    className: "text-danger",
-                  })}
+                  {simpleValidator.current.message(
+                    "status",
+                    status,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               ) : (
                 <div className="form-group">
@@ -237,18 +242,21 @@ const UbahApi = ({ token }) => {
                     <option value="0">Tidak Aktif</option>
                     <option value="1">Aktif</option>
                   </select>
-                  {simpleValidator.current.message("status", status, "required", {
-                    className: "text-danger",
-                  })}
+                  {simpleValidator.current.message(
+                    "status",
+                    status,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               )}
 
               <div className="form-group">
                 <label>Pilih API</label>
                 <Select
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("api")
-                  }
+                  onBlur={() => simpleValidator.current.showMessageFor("api")}
                   ref={(ref) => (selectRefListApi = ref)}
                   className={`${styles.cari} basic-single`}
                   classNamePrefix="select"
@@ -263,12 +271,9 @@ const UbahApi = ({ token }) => {
                   name="color"
                   options={optionListApi}
                 />
-                {simpleValidator.current.message(
-                  "api",
-                  apiChoice,
-                  "required",
-                  { className: "text-danger" }
-                )}
+                {simpleValidator.current.message("api", apiChoice, "required", {
+                  className: "text-danger",
+                })}
               </div>
 
               <div className="form-group">
@@ -288,16 +293,16 @@ const UbahApi = ({ token }) => {
                   name="color"
                   onChange={(e) => changeListField(e)}
                   options={optionListField}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("field")
-                  }
+                  onBlur={() => simpleValidator.current.showMessageFor("field")}
                 />
-                {defaultValueListField ? "" : simpleValidator.current.message(
-                  "field",
-                  valueField,
-                  "required",
-                  { className: "text-danger" }
-                )}
+                {defaultValueListField
+                  ? ""
+                  : simpleValidator.current.message(
+                      "field",
+                      valueField,
+                      "required",
+                      { className: "text-danger" }
+                    )}
               </div>
               <div className="form-group row">
                 <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-5">
@@ -305,11 +310,15 @@ const UbahApi = ({ token }) => {
                   <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                     <DatePicker
                       className={`${styles.cari} form-search-date form-control cursor-pointer`}
-                      onChange={(date) => onChangePeriodeDateStart(date)}
+                      onChange={(date) => {
+                        onChangePeriodeDateStart(date);
+                        setTo(null)
+                      }}
                       value={from}
                       dateFormat="YYYY-MM-DD"
                       placeholderText="From"
                       minDate={moment().toDate()}
+                      maxDate={moment(to).toDate()}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("from")
                       }
@@ -352,7 +361,9 @@ const UbahApi = ({ token }) => {
             <div className="form-group row">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/setting/api">
-                  <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}>
+                  <a
+                    className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                  >
                     Kembali
                   </a>
                 </Link>

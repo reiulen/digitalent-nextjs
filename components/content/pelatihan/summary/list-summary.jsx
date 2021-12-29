@@ -15,26 +15,21 @@ import {
   clearErrors,
   getAllSummary,
 } from "../../../../redux/actions/pelatihan/summary.actions";
+import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
-
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const ListSummary = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   let { success } = router.query;
   const { permission } = useSelector((state) => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
-
-  useEffect(() => {
-    const filterPermission = permission?.permissions?.filter((item) =>
-      item.includes("pelatihan")
-    );
-    setListPermission(filterPermission);
-  }, []);
 
   const { loading, error, summary } = useSelector((state) => state.allSummary);
   const {
@@ -51,6 +46,10 @@ const ListSummary = ({ token }) => {
   );
   const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
     useSelector((state) => state.drowpdownPenyelenggara);
+
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
+  );
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -70,8 +69,16 @@ const ListSummary = ({ token }) => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const optionsAkademi = dataAkademi.data;
-  const optionsTema = dataTema.data;
+  useEffect(() => {
+    dispatch(dropdownTemabyAkademi(academy?.value, token));
+    const filterPermission = permission?.permissions?.filter((item) =>
+      item.includes("pelatihan")
+    );
+    setListPermission(filterPermission);
+  }, [academy?.value]);
+
+  const optionsAkademi = dataAkademi.data || [];
+  const optionsTema = dataTema.data || [];
   const optionsPenyelenggara = [];
   if (dataPenyelenggara && dataPenyelenggara.data.length > 0) {
     for (let index = 0; index < dataPenyelenggara.data.length; index++) {
@@ -120,12 +127,14 @@ const ListSummary = ({ token }) => {
         penyelenggara != null ? penyelenggara.value : null,
         academy,
         theme,
-        token
+        token,
+        token_permission
       )
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     setPage(1);
     dispatch(
       getAllSummary(
@@ -139,7 +148,8 @@ const ListSummary = ({ token }) => {
         null,
         null,
         null,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -166,7 +176,8 @@ const ListSummary = ({ token }) => {
         penyelenggara != null ? penyelenggara.label : null,
         academy !== null ? academy.label : null,
         theme !== null ? theme.label : null,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -194,7 +205,8 @@ const ListSummary = ({ token }) => {
         null,
         null,
         null,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -214,7 +226,8 @@ const ListSummary = ({ token }) => {
         null,
         null,
         null,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -329,23 +342,25 @@ const ListSummary = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={e => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
 
@@ -365,16 +380,20 @@ const ListSummary = ({ token }) => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
-                <div className="col-md-2">
-                  <button
-                    className="d-flex justify-content-center btn w-100 btn-rounded-full bg-blue-secondary text-white"
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export
-                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                  </button>
-                </div>
+                {listPermission.includes(
+                  "pelatihan.rekap_pendaftaran.manage"
+                ) && (
+                  <div className="col-md-2">
+                    <button
+                      className="d-flex justify-content-center btn w-100 btn-rounded-full bg-blue-secondary text-white"
+                      type="button"
+                      onClick={handleExportReport}
+                    >
+                      Export
+                      <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -394,7 +413,9 @@ const ListSummary = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal</th>
+                        <th>
+                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                        </th>
                         <th>Status Pelatihan</th>
                         <th>Aksi</th>
                       </tr>
@@ -427,26 +448,37 @@ const ListSummary = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <p className="my-0">
-                                {moment(row.pendaftaran_mulai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pendaftaran_mulai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
-                                {moment(row.pendaftaran_selesai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pendaftaran_selesai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                               <p className="my-0">
-                                {moment(row.pelatihan_mulai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pelatihan_mulai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                                 -{" "}
-                                {moment(row.pelatihan_selesai).format(
-                                  "DD MMM YYYY"
-                                )}{" "}
+                                {moment(row.pelatihan_selesai)
+                                  .utc()
+                                  .format("DD MMM YYYY")}{" "}
                               </p>
                             </td>
                             <td className="align-middle">
-                              <span className="label label-inline label-light-success font-weight-bold">
+                              <span
+                                className={
+                                  (row.status_pelatihan === "selesai" &&
+                                    "select-pelatihan select-pelatihan-success font-weight-bold") ||
+                                  (row.status_pelatihan === "pendaftaran" &&
+                                    "select-pelatihan select-pelatihan-primary font-weight-bold") ||
+                                  (row.status_pelatihan === "seleksi" &&
+                                    "select-pelatihan select-pelatihan-warning font-weight-bold") ||
+                                  (row.status_pelatihan === "pelatihan" &&
+                                    "select-pelatihan select-pelatihan-primary font-weight-bold")
+                                }
+                              >
                                 {row.status_pelatihan}
                               </span>
                             </td>
@@ -591,21 +623,12 @@ const ListSummary = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              options={optionsTema}
+              options={drowpdownTemabyAkademi.data.data}
               defaultValue={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
           </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Substansi</label>
-            <Select
-              options={optionsStatusSubstansi}
-              defaultValue={statusSubstansi}
-              onChange={(e) =>
-                setStatusSubstansi({ value: e.value, label: e.label })
-              }
-            />
-          </div>
+          
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
             <Select

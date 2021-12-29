@@ -13,8 +13,11 @@ import {
   clearErrors,
   getAllTriviaQuestionDetail,
 } from "../../../../redux/actions/subvit/trivia-question-detail.action";
+import Swal from "sweetalert2";
 
-const DetailTrivia = ({ token }) => {
+import { Modal, Button } from "react-bootstrap";
+
+const DetailTrivia = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -33,16 +36,20 @@ const DetailTrivia = ({ token }) => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [modalType, setModalType] = useState(false);
 
   let { page = 1, id } = router.query;
   page = Number(page);
 
   useEffect(() => {
+    localStorage.setItem("id_trivia", router.query.id);
     if (isDeleted) {
-      dispatch(getAllTriviaQuestionDetail(id, token));
+      dispatch(
+        getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, trivia, id, token, dispatch]);
+  }, [router, isDeleted, trivia, id, token, dispatch, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     router.push(
@@ -67,42 +74,71 @@ const DetailTrivia = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteTriviaQuestionDetail(id, token));
+        dispatch(deleteTriviaQuestionDetail(id, token, tokenPermission));
       }
     });
   };
 
   const handleModal = () => {
-    Swal.fire({
-      title: "Silahkan Pilih Metode Entry",
-      icon: "info",
-      showDenyButton: true,
-      showCloseButton: true,
-      confirmButtonText: `Entry`,
-      denyButtonText: `Import`,
-      confirmButtonColor: "#3085d6",
-      denyButtonColor: "#d33",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        router.push({
-          pathname: `/subvit/trivia/tambah/step-2-entry`,
-          query: { id },
-        });
-      } else if (result.isDenied) {
-        router.push({
-          pathname: `/subvit/trivia/tambah/step-2-import`,
-          query: { id },
-        });
-      }
+    setModalType(true);
+  };
+
+  const handleEntry = () => {
+    router.push({
+      pathname: `/subvit/trivia/tambah/step-2-entry`,
+      query: { id },
     });
   };
 
-  const handleSearch = () => {
-    dispatch(getAllTriviaQuestionDetail(id, 1, search, 5, token));
+  const handleImport = () => {
+    router.push({
+      pathname: `/subvit/trivia/tambah/step-2-import`,
+      query: { id },
+    });
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    dispatch(
+      getAllTriviaQuestionDetail(id, 1, search, 5, token, tokenPermission)
+    );
+  };
+
+  const truncateString = (str, num) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
   };
 
   return (
     <PageWrapper>
+      {router.query.success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -255,20 +291,22 @@ const DetailTrivia = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -324,7 +362,10 @@ const DetailTrivia = ({ token }) => {
                               </td>
                               <td className="align-middle">CC{question.id}</td>
                               <td className="align-middle">
-                                {question.question}
+                                {truncateString(
+                                  question && question.question,
+                                  80
+                                )}
                               </td>
                               <td className="align-middle">
                                 {question.status ? (
@@ -346,7 +387,7 @@ const DetailTrivia = ({ token }) => {
                                 <td className="align-middle">
                                   <div className="d-flex">
                                     <Link
-                                      href={`edit-soal-trivia?id=${question.id}`}
+                                      href={`edit-soal-trivia?id=${question.id}&no=${i}`}
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -358,11 +399,16 @@ const DetailTrivia = ({ token }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      className={
+                                        "btn btn-link-action bg-blue-secondary text-white"
+                                      }
                                       onClick={() => handleDelete(question.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
                                       title="Hapus"
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>
@@ -441,6 +487,43 @@ const DetailTrivia = ({ token }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={modalType}
+        onHide={() => setModalType(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Body>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setModalType(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+          <center>
+            <i
+              className="ri-information-line"
+              style={{ fontSize: "100px", color: "#17a2b8" }}
+            ></i>
+            <h3>Silahkan Pilih Metode Entry</h3>
+            <Button
+              className="btn btn-outline-primary font-weight-bolder px-7 py-3 mt-5 mr-5"
+              style={{ borderRadius: "5px", border: "1px solid" }}
+              onClick={handleImport}
+            >
+              Import
+            </Button>
+            <Button
+              className="btn btn-primary font-weight-bolder px-7 py-3 mt-5 "
+              onClick={handleEntry}
+            >
+              Entry
+            </Button>
+          </center>
+        </Modal.Body>
+      </Modal>
     </PageWrapper>
   );
 };

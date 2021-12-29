@@ -55,7 +55,7 @@ const DetailBerita = () => {
 
   const handleLinkContent = () => {
     if (detail) {
-      let text = detail.isi_berita;
+      let text = detail?.isi_berita;
       let result = "";
 
       if (text.includes("<a")) {
@@ -108,6 +108,10 @@ const DetailBerita = () => {
 
   const handleFilterTag = (str) => {
     router.push(`/berita?tag=${str}`);
+    // router.push ({
+    //   pathname:"/berita",
+    //   query: `tag=${str}`
+    // }, "/berita")
   };
 
   const handleHighlightWords = (e, text) => {
@@ -121,12 +125,13 @@ const DetailBerita = () => {
       for (let j = 0; j < splitText.length; j++) {
         if (splitWords[i].toLowerCase() === splitText[j].toLowerCase()) {
           result += `<mark>` + splitText[j] + `</mark>` + " ";
+          window.scrollTo (0, 1200)
+
         } else {
           result += " " + splitText[j] + " ";
         }
       }
     }
-
     setResultText(result);
   };
 
@@ -145,30 +150,30 @@ const DetailBerita = () => {
         <div className="row my-5 d-flex flex-column ml-1">
           <div>
             <div className="badge badge-light mr-2">
-              <div className="text-primary">{detail.nama_kategori}</div>
+              <div className="text-primary">{detail?.nama_kategori}</div>
             </div>
           </div>
 
           <div className="mt-5">
             <h1 
-              className={`${styles.fontTitle} font-weight-bolder`}
+              className={`${styles.fontTitle}font-weight-bolder`}
             >
               {/* Insert Title Here */}
-              {detail.judul}
+              {detail?.judul}
             </h1>
           </div>
 
           <div className="mt-5 d-flex flex-row align-items-center">
             <span className="font-weight-bolder" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Akademi Here */}
-              {detail.kategori_akademi}
+              {detail?.kategori_akademi}
             </span>
             <span className="mr-1 ml-3">
               <i className="ri-eye-line"></i>
             </span>
             <span className="text-muted" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Views Here */}
-              Dibaca {detail.dibaca}
+              Dibaca {detail?.dibaca}
             </span>
           </div>
 
@@ -194,10 +199,10 @@ const DetailBerita = () => {
                   style={{fontSize:"14px", fontFamily:"Poppins"}}
                 >
                   {/* Insert Admin Here */}
-                  {detail.dibuat}
+                  {detail?.dibuat}
                 </div>
                 <div className="text-muted" style={{fontSize:"14px", fontFamily:"Poppins", color:"#6C6C6C"}}>
-                  {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
+                  {moment(detail?.tanggal_publish).format("DD MMMM YYYY")}
                 </div>
               </div>
             </div>
@@ -205,7 +210,7 @@ const DetailBerita = () => {
               <div className="mr-3">
                 {/* SHAREOVERLAY */}
                 <ShareOverlay
-                  url={`http://dts-dev.majapahit.id/berita/detail/${id}`}
+                  url={`${process.env.NEXTAUTH_URL}/berita/detail/${id}`}
                   quote={detail.judul}
                 >
                   <button className="btn btn-sm btn-outline-light rounded-circle">
@@ -232,67 +237,41 @@ const DetailBerita = () => {
                 : "col-12 col-lg-8"
             }
           >
-            {/* Image */}
-            <Image
-              // src="/assets/media/default-detail-image.png"
-              src={
-                process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                "publikasi/images/" +
-                detail.gambar
-              }
-              width={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 768 ?
-                  837
-                :
-                  windowDimensions &&
-                  windowDimensions.width &&
-                  windowDimensions.width <= 768 &&
-                  windowDimensions.width > 540 ?
-                    704
-                  :
-                    361
-              }
-              height={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 768 ?
-                  640
-                :
-                  361
+            <div className={`${styles.image_thumbnail} rounded-lg`}>
+              {/* Image */}
+              <Image
+                // src="/assets/media/default-detail-image.png"
+                src={
+                  process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                  "publikasi/images/" +
+                  detail.gambar
                 }
-              objectFit="cover"
-              alt="Detail Image"
-              className="rounded-lg img-fluid"
-              objectFit="cover"
-            />
+                layout="fill"
+                objectFit="cover"
+                alt="Detail Image"
+                className="rounded-lg img-fluid"
+              />
+            </div>
+            
 
             {/* Berita */}
             <div 
-              className={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 1242 ?
-                  "border rounded-lg mb-5 mt-15 mr-20"
-                :
-                  "border rounded-lg mb-5 mt-15"
-              }
+              className="border rounded-lg mb-5 mt-15"
             >
               <div
-                className="row my-5 mx-5 text-justify "
-                style={{ width: "95%", wordBreak: "break-word" }}
+                className="row "
+                style={{wordBreak: "break-word" }}
               >
                 {detailContent ? (
                   resultText ? (
                     <div
                       dangerouslySetInnerHTML={{ __html: resultText }}
-                      className={`${styles.detailBerita}`}
+                      className={`${styles.detailBerita} my-5 mx-10 text-justify`}
                     />
                   ) : (
                     <div
                       dangerouslySetInnerHTML={{ __html: detailContent }}
-                      className={`${styles.detailBerita}`}
+                      className={`${styles.detailBerita} my-5 mx-10 text-justify`}
                     />
                   )
                 ) : null}
@@ -301,7 +280,7 @@ const DetailBerita = () => {
               <div className="row m-3 d-flex justify-content-between pb-5">
                 <div className="row d-flex justify-content-evenly ml-1">
                   {detail && detail.tag && detail.tag.length !== 0
-                    ? detail.tag.map((el, i) => {
+                    ? detail?.tag?.map((el, i) => {
                         return (
                           <div
                             className="mr-3 border p-3 rounded mb-3"
@@ -319,7 +298,7 @@ const DetailBerita = () => {
                   <div className="mr-3">
                     {/* SHAREOVERLAY */}
                     <ShareOverlay
-                      url={`http://dts-dev.majapahit.id/berita/detail/${id}`}
+                      url={`${process.env.NEXTAUTH_URL}/berita/detail/${id}`}
                       quote={detail.judul}
                     >
                       <button className="btn btn-sm btn-outline-light rounded-circle">
@@ -351,7 +330,7 @@ const DetailBerita = () => {
                   </div>
                   <div className="col-9 my-auto">
                     <h4 
-                      className=" font-weight-bolder"
+                      className={`font-weight-bolder`}
                       style={{fontSize:"20px", fontFamily:"Poppins"}}
                     >Pencarian</h4>
                   </div>

@@ -37,42 +37,46 @@ import {
   SET_LIMIT_VALUE,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
-export const getAllSertifikat = (token) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: SERTIFIKAT_REQUEST });
-    let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates`;
-    let pageState = getState().allCertificates.page || 1;
-    let limitState = getState().allCertificates.limit || 5;
-    let themeState = getState().allCertificates.theme || "";
-    let academyState = getState().allCertificates.academy || "";
-    let keywordState = getState().allCertificates.keyword || "";
+export const getAllSertifikat =
+  (token, token_permission) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: SERTIFIKAT_REQUEST });
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates`;
+      let pageState = getState().allCertificates.page || 1;
+      let limitState = getState().allCertificates.limit || 5;
+      let themeState = getState().allCertificates.theme || "";
+      let academyState = getState().allCertificates.academy || "";
+      let keywordState = getState().allCertificates.keyword || "";
 
-    const params = {
-      page: pageState,
-      limit: limitState,
-      theme: themeState,
-      academy: academyState,
-      keyword: keywordState,
-    };
+      const params = {
+        page: pageState,
+        limit: limitState,
+        theme: themeState,
+        academy: academyState,
+        keyword: keywordState,
+      };
 
-    const config = {
-      params,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+      const config = {
+        params,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
-    if (data) {
-      dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
+      const { data } = await axios.get(link, config);
+      if (data) {
+        dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
+      }
+      return data;
+    } catch (error) {
+      dispatch({
+        type: SERTIFIKAT_FAIL,
+        payload: error?.response?.data?.message || error.message,
+      });
     }
-  } catch (error) {
-    dispatch({
-      type: SERTIFIKAT_FAIL,
-      payload: error?.response?.data?.message || error.message,
-    });
-  }
-};
+  };
 
 export const searchKeyword = (text) => {
   return {
@@ -110,7 +114,15 @@ export const setValueLimit = (text) => {
 };
 
 export const getDetailSertifikat =
-  (id, page = 1, keyword = "", limit = 5, status = null, token) =>
+  (
+    id,
+    page = 1,
+    keyword = "",
+    limit = 5,
+    status = null,
+    token,
+    token_permission = ""
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: DETAIL_SERTIFIKAT_REQUEST });
@@ -123,12 +135,14 @@ export const getDetailSertifikat =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
+          // Permission: token_permission,
         },
       };
       const { data } = await axios.get(link, config);
       if (data) {
         dispatch({ type: DETAIL_SERTIFIKAT_SUCCESS, payload: data });
       }
+      return data;
     } catch (error) {
       dispatch({
         type: DETAIL_SERTIFIKAT_FAIL,
@@ -137,161 +151,184 @@ export const getDetailSertifikat =
     }
   };
 
-export const newSertifikat = (id, formData, token) => async (dispatch) => {
-  try {
-    dispatch({ type: NEW_SERTIFIKAT_REQUEST });
-    let link =
-      process.env.END_POINT_API_SERTIFIKAT +
-      `api/manage_certificates/store/${id.academy_id}/${id.theme_id}/${id.training_id}`;
+export const newSertifikat =
+  (id, formData, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: NEW_SERTIFIKAT_REQUEST });
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT +
+        `api/manage_certificates/store/${id.academy_id}/${id.theme_id}/${id.training_id}`;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(link, formData, config);
+      const { data } = await axios.post(link, formData, config);
 
-    if (data) {
-      dispatch({ type: NEW_SERTIFIKAT_SUCCESS, payload: data });
+      if (data) {
+        dispatch({ type: NEW_SERTIFIKAT_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: NEW_SERTIFIKAT_FAIL,
+        payload: error?.response?.data?.message || error.message,
+      });
+      console.log(error, "ini errornya");
+      console.log(error.response.data.message, "ini error response");
+      console.log(error.message, "ini error message");
     }
-  } catch (error) {
-    dispatch({
-      type: NEW_SERTIFIKAT_FAIL,
-      payload: error?.response?.data?.message || error.message,
-    });
-  }
-};
+  };
 
-export const clearErrors = () => async (dispatch) => {
+export const clearErrors = () => (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
 };
 
-export const getSingleSertifikat = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
-    let link =
-      process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
+export const getSingleSertifikat =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    if (data) {
-      dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
-    }
-    return data;
-  } catch (error) {
-    dispatch({
-      type: SINGLE_SERTIFIKAT_FAIL,
-      // payload: error.message
-      payload: error?.response?.data?.message || error.message,
-    });
-  }
-};
-
-export const getPublishedSertifikat = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
-    let link =
-      process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const { data } = await axios.get(link, config);
-    if (data) {
+      if (data) {
+        dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
+      }
+      return data;
+    } catch (error) {
       dispatch({
-        type: PUBLISHED_SERTIFIKAT_SUCCESS,
-        payload: data,
+        type: SINGLE_SERTIFIKAT_FAIL,
+        // payload: error.message
+        payload: error?.response?.data?.message || error.message,
       });
     }
-    return data;
-  } catch (error) {
-    dispatch({
-      type: PUBLISHED_SERTIFIKAT_FAIL,
-      payload: error?.response?.data?.message || error.message,
-    });
-  }
-};
+  };
 
-export const updateSertifikat = (id, formData, token) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
+export const getPublishedSertifikat =
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Permission: token_permission,
+        },
+      };
 
-    let link =
-      process.env.END_POINT_API_SERTIFIKAT +
-      `api/manage_certificates/update/${id}`;
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token.token}`,
-      },
-    };
-
-    const { data } = await axios.post(link, formData, config);
-    if (data) {
-      dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
+      const { data } = await axios.get(link, config);
+      if (data) {
+        dispatch({
+          type: PUBLISHED_SERTIFIKAT_SUCCESS,
+          payload: data,
+        });
+      }
+      return data;
+    } catch (error) {
+      dispatch({
+        type: PUBLISHED_SERTIFIKAT_FAIL,
+        payload: error?.response?.data?.message || error.message,
+      });
     }
-  } catch (error) {
-    dispatch({
-      type: UPDATE_SERTIFIKAT_FAIL,
-      payload: error?.response?.data?.message || error.message,
-    });
-  }
-};
+  };
 
-export const getOptionsAcademy = (token) => async (dispatch) => {
-  try {
-    dispatch({ type: OPTIONS_ACADEMY_REQUEST });
-    let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/academy`;
+export const updateSertifikat =
+  (id, formData, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT +
+        `api/manage_certificates/update/${id}`;
 
-    const { data } = await axios.get(link, config);
-    if (data) {
-      dispatch({ type: OPTIONS_ACADEMY_SUCCESS, payload: data });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token.token}`,
+          // Permission: token_permission,
+        },
+      };
+
+      const { data } = await axios.post(link, formData, config);
+      if (data) {
+        dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: UPDATE_SERTIFIKAT_FAIL,
+        payload: error?.response?.data?.message || error.message,
+      });
     }
-  } catch (error) {
-    dispatch({
-      type: OPTIONS_ACADEMY_FAIL,
-      payload: error?.response?.data?.message || error.message,
-    });
-  }
-};
+  };
 
-export const getOptionsTheme = (token) => async (dispatch) => {
-  try {
-    dispatch({ type: OPTIONS_THEME_REQUEST });
-    let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/theme`;
+export const getOptionsAcademy =
+  (token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: OPTIONS_ACADEMY_REQUEST });
+      let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/academy`;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
-
-    if (data) {
-      dispatch({ type: OPTIONS_THEME_SUCCESS, payload: data });
+      const { data } = await axios.get(link, config);
+      if (data) {
+        dispatch({ type: OPTIONS_ACADEMY_SUCCESS, payload: data });
+      }
+      return data;
+    } catch (error) {
+      dispatch({
+        type: OPTIONS_ACADEMY_FAIL,
+        payload: error?.response?.data?.message || error.message,
+      });
     }
-  } catch (error) {
-    dispatch({
-      type: OPTIONS_THEME_FAIL,
-      payload: error?.response?.data?.message || error.message,
-    });
-  }
-};
+  };
+
+export const getOptionsTheme =
+  (token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: OPTIONS_THEME_REQUEST });
+      let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/theme`;
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Permission: token_permission,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      if (data) {
+        dispatch({ type: OPTIONS_THEME_SUCCESS, payload: data });
+      }
+      return data;
+    } catch (error) {
+      dispatch({
+        type: OPTIONS_THEME_FAIL,
+        payload: error?.response?.data?.message || error.message,
+      });
+    }
+  };

@@ -1,21 +1,44 @@
+import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Button, Modal, ModalBody } from "react-bootstrap";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import styles from "./survey.module.css";
 
-const TestSubstansi = () => {
+const TestSubstansi = ({ token }) => {
   const router = useRouter();
-  const temaId = Cookies.get("id_tema");
-  const pelatihanId = Cookies.get("id_pelatihan");
+
+  const routerTraining = router.query.id_pelatihan;
+  const routerTema = router.query.id_tema;
+
+  const [question, setQuestion] = useState("");
+  const [time, setTime] = useState("");
 
   const handlePage = () => {
     router.push(
-      `/peserta/subvit/survey/1?theme_id=${temaId}&training_id=${pelatihanId}`
+      `/peserta/subvit/survey/1?theme_id=${routerTema}&training_id=${routerTraining}`
     );
   };
+
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    axios
+      .get(
+        process.env.END_POINT_API_SUBVIT +
+          `api/survey-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`,
+        config
+      )
+      .then((res) => {
+        setQuestion(res.data.total_questions);
+        setTime(res.data.duration);
+      });
+  }, [routerTema, routerTraining, token]);
 
   const [show, setShow] = useState(false);
 
@@ -49,8 +72,8 @@ const TestSubstansi = () => {
                 <td>&nbsp;</td>
                 <td>
                   {" "}
-                  Peserta wajib menjawab seluruh survey yang berjumlah 50
-                  pertanyaan.
+                  Peserta wajib menjawab seluruh survey yang berjumlah &nbsp;
+                  {question || 50} pertanyaan.
                 </td>
               </tr>
               <tr>
@@ -66,7 +89,11 @@ const TestSubstansi = () => {
               <tr>
                 <td style={{ verticalAlign: "top" }}>4.</td>
                 <td>&nbsp;</td>
-                <td> Waktu yang tersedia untuk mengisi survey ini 1 Jam.</td>
+                <td>
+                  {" "}
+                  Waktu yang tersedia untuk mengisi survey ini {time || 5}{" "}
+                  Menit.
+                </td>
               </tr>
             </table>
           </Card>

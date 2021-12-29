@@ -1,10 +1,23 @@
-import EditTriviaBank from "../../../components/content/subvit/trivia/question-bank-soal/edit";
+import dynamic from "next/dynamic";
+// import EditTriviaBank from "../../../components/content/subvit/trivia/question-bank-soal/edit";
 import Layout from "../../../components/templates/layout.component";
 
 import { detailTriviaQuestionDetail } from "../../../redux/actions/subvit/trivia-question-detail.action";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+
+const EditTriviaBank = dynamic(
+  () =>
+    import("../../../components/content/subvit/trivia/question-bank-soal/edit"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditTriviaBankPage(props) {
   const session = props.session.user.user.data;
@@ -12,7 +25,10 @@ export default function EditTriviaBankPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditTriviaBank token={session.token} />
+        <EditTriviaBank
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -22,14 +38,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false,
-          },
-        };
-      }
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -51,7 +59,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Edit Trivia - Subvit" },
+        props: { session, title: "Edit Trivia - Subvit", permission },
       };
     }
 );

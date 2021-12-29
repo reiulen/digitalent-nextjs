@@ -4,7 +4,8 @@ import { getSession } from "next-auth/client";
 import { getAllKategori } from "/redux/actions/publikasi/kategori.actions";
 import { wrapper } from "/redux/store";
 
-import LoadingPage from "/components/LoadingPage";
+import LoadingSkeleton from "/components/LoadingSkeleton";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const Tambah = dynamic(
   () =>
@@ -13,7 +14,7 @@ const Tambah = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
@@ -37,10 +38,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

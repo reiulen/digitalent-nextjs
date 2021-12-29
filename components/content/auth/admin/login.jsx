@@ -60,7 +60,7 @@ const LoginAdmin = () => {
         };
         axios
           .post(
-            process.env.END_POINT_API_SITE_MANAGEMENT + "/api/auth/login",
+            process.env.END_POINT_API_SITE_MANAGEMENT + "api/auth/login",
             setData
           )
           .then((res) => {
@@ -74,11 +74,28 @@ const LoginAdmin = () => {
               );
             } else {
               if (data.role === "admin") {
+                // axios
+                //   .get(
+                //     `${process.env.END_POINT_API_SITE_MANAGEMENT}api/user/permissions`,
+                //     {
+                //       headers: {
+                //         Authorization: `Bearer ${res.data.data.token}`,
+                //       },
+                //     }
+                //   )
+                //   .then((response) => {
+                //     router.push(response.data.data.menu[0].href);
+                //   });
+                // console.log(res, "ini res");
                 router.push("/dashboard");
               } else {
                 router.push("/partnership/user/kerjasama");
               }
             }
+          })
+          .catch((err) => {
+            SweatAlert("Gagal", err.response, "error");
+            setLoading(false);
           });
       }
     } else {

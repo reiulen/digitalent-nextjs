@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
@@ -8,7 +8,7 @@ const EditDetailKerjasama = dynamic(
     import(
       "../../../../components/content/partnership/kerjasama/editDokumentKerjasama"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function editDokumenKerjasama(props) {
@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // }
 
       return {
-        props: { session, title: "Ubah Dokumen Kerjasama - Partnership" },
+        props: { session, title: "Ubah Kerjasama - Partnership" },
       };
     }
 );

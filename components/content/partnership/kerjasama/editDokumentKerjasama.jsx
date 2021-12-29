@@ -18,12 +18,14 @@ import IconCalender from "../../../assets/icon/Calender";
 import moment from "moment";
 
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const EditDokumentKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const allMK = useSelector((state) => state.allMK);
+  const cookiePermission = Cookies.get("token_permission")
   // state onchange form data
   const [isntitusiName, setIsntitusiName] = useState("");
   const [title, setTitle] = useState("");
@@ -64,7 +66,7 @@ const EditDokumentKerjasama = ({ token }) => {
         reader.readAsDataURL(selectedFile);
         reader.onloadend = (e) => {
           setPdfFile(e.target.result);
-          setNamePDF(selectedFile.name);
+          setNamePDF(selectedFile?.name);
           setPdfFileError("");
         };
       } else {
@@ -106,7 +108,7 @@ const EditDokumentKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Tidak",
       confirmButtonText: "Ya",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         let formData = new FormData();
@@ -130,8 +132,8 @@ const EditDokumentKerjasama = ({ token }) => {
         if (AllCooperation === "") {
           // start data default
           formData.append("cooperation_category_id", cooperationID.id);
-          let dataee = cooperationID.data_content.map((items, i) => {
-            return items.form_content;
+          let dataee = cooperationID?.data_content?.map((items, i) => {
+            return items?.form_content;
           });
           dataee.forEach((item, i) => {
             formData.append(`cooperation_form_content[${i}]`, item);
@@ -141,7 +143,7 @@ const EditDokumentKerjasama = ({ token }) => {
           // start jika tidak default
           formData.append("cooperation_category_id", cooperationC_id);
           let ez = AllCooperation.map((items, i) => {
-            return items.cooperation;
+            return items?.cooperation;
           });
           ez.forEach((item, i) => {
             formData.append(`cooperation_form_content[${i}]`, item);
@@ -155,7 +157,8 @@ const EditDokumentKerjasama = ({ token }) => {
             formData,
             {
               headers: {
-                authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission"),
               },
             }
           );
@@ -211,46 +214,54 @@ const EditDokumentKerjasama = ({ token }) => {
   };
 
   useEffect(() => {
-    async function setDataSingle(id) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setIsntitusiName(data.data.institution_name);
-        setTitle(data.data.title);
-        setDate(data.data.submission_date);
-        setCooperationID(data.data.cooperation_category);
-        //
-        setPeriod(data.data.period);
-        setPeriodUnit(data.data.period_unit);
-        //
-        setPeriodDateStart(data.data.period_date_start);
-        setPeriodDateEnd(data.data.period_date_end);
-        //
-        setAggrementNumber(data.data.agreement_number_partner);
-        setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
-        setSigninDate(data.data.signing_date);
-        setDocument(data.data.document_file);
-        setEmail(data.data.email);
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
-      }
-    }
     setDataSingle(router.query.id);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
   }, [dispatch, router.query.id, token]);
+
+  async function setDataSingle(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission"),
+          },
+        }
+      );
+      setIsntitusiName(data?.data?.institution_name);
+      setTitle(data?.data?.title);
+      setDate(data?.data?.submission_date);
+      setCooperationID(data?.data?.cooperation_category);
+      //
+      setPeriod(data?.data?.period);
+      setPeriodUnit(data?.data?.period_unit);
+      //
+      setPeriodDateStart(data?.data?.period_date_start);
+      setPeriodDateEnd(data?.data?.period_date_end);
+      //
+      setAggrementNumber(data?.data?.agreement_number_partner);
+      setAggrementNumberInfo(data?.data?.agreement_number_kemkominfo);
+      setSigninDate(data?.data?.signing_date);
+      setDocument(data?.data?.document_file);
+      setEmail(data?.data?.email);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data.message}`, "error");
+    }
+  }
+
   useEffect(() => {
-    dispatch(fetchListCooperationSelectById(token, cooperationC_id));
-  }, [dispatch, allMK.idCooporationSelect, cooperationC_id, token]);
+    if (cooperationC_id){
+      dispatch(fetchListCooperationSelectById(token, cooperationC_id, cookiePermission));
+    }
+  }, [dispatch, allMK?.idCooporationSelect, cooperationC_id, token]);
+
   useEffect(() => {
-    dispatch(fetchDataEmail(token));
-  }, [dispatch, allMK.institution_name, allMK.stateListMitra, token]);
+    if (allMK?.institution_name){
+      dispatch(fetchDataEmail(token));
+    }
+  }, [dispatch, allMK?.institution_name, allMK.stateListMitra, token]);
 
   useEffect(() => {
     function periodCheck(date) {
@@ -286,17 +297,22 @@ const EditDokumentKerjasama = ({ token }) => {
     setError({ ...error, period: "" });
     const regex = new RegExp(/[^0-9]/, "g");
     const val = e.target.value;
-    
+
     if (val.match(regex)) {
       setError({ ...error, period: "Masukkan angka" });
       setPeriod("");
-    }else if(e.target.value.toString().charAt(0) === "0"){
-      setError({ ...error, period: "Lama Periode tidak boleh kosong atau angka nol" });
+    } else if (e.target.value.toString().charAt(0) === "0") {
+      setError({
+        ...error,
+        period: "Lama Periode tidak boleh kosong atau angka nol",
+      });
       setPeriod("");
-    }else if(e.target.value.length > 5){
-      setError({ ...error, period: "Lama Periode tidak boleh lebih 5 karakter" });
-    }
-    else {
+    } else if (e.target.value.length > 5) {
+      setError({
+        ...error,
+        period: "Lama Periode tidak boleh lebih 5 karakter",
+      });
+    } else {
       setPeriod(e.target.value);
     }
   };
@@ -306,7 +322,7 @@ const EditDokumentKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark mb-0 titles-1">
-              Ubah Dokumen Kerjasama
+              Ubah Kerjasama
             </h3>
           </div>
 
@@ -389,13 +405,13 @@ const EditDokumentKerjasama = ({ token }) => {
                         className="form-control mt-2"
                       >
                         <option value="">Pilih Kategory Kerjasama</option>
-                        {allMK.cooperationActiveSelect.length === 0
+                        {allMK?.cooperationActiveSelect.length === 0
                           ? ""
-                          : allMK.cooperationActiveSelect.data.map(
+                          : allMK?.cooperationActiveSelect?.data?.map(
                               (items, i) => {
                                 return (
                                   <option key={i} value={items.id}>
-                                    {items.cooperation_categories}
+                                    {items?.cooperation_categories}
                                   </option>
                                 );
                               }
@@ -431,7 +447,7 @@ const EditDokumentKerjasama = ({ token }) => {
                       value={period}
                     />
                   </div>
-                  
+
                   <div className="col-12 col-sm-6">
                     <input
                       disabled
@@ -444,7 +460,7 @@ const EditDokumentKerjasama = ({ token }) => {
                 </div>
               </div>
               {error.period ? (
-                  <p className="error-text mb-4 mt-0">{error.period}</p>
+                  <p className="error-text mb-4 mt-0">{error?.period}</p>
                 ) : (
                   ""
                 )} 
@@ -472,7 +488,7 @@ const EditDokumentKerjasama = ({ token }) => {
                   <div className="col-12 col-sm-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-search-date form-control-sm form-control cursor-not-allowed"
                         disabled
                         onChange={(date) =>
                           setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))
@@ -674,22 +690,22 @@ const EditDokumentKerjasama = ({ token }) => {
 
               {cooperationID === ""
                 ? ""
-                : cooperationID.data_content.map((items, i) => {
+                : cooperationID?.data_content?.map((items, i) => {
                     return (
                       <div
                         key={i}
                         className={`form-group ${
-                          allMK.cooperationActiveSelect.length !== 0
+                          allMK?.cooperationActiveSelect.length !== 0
                             ? "d-none"
                             : ""
                         }`}
                       >
                         <label htmlFor="staticEmail" className="col-form-label">
-                          {items.cooperation_form}
+                          {items?.cooperation_form}
                         </label>
                         <textarea
                           onChange={(e) => changeDataContentDefault(e, i)}
-                          value={items.form_content}
+                          value={items?.form_content}
                           name=""
                           id={i}
                           cols="30"
@@ -703,15 +719,15 @@ const EditDokumentKerjasama = ({ token }) => {
               {/* loop first end loop*/}
 
               {/* looping second */}
-              {allMK.singleCooporationSelect.length === 0
+              {allMK?.singleCooporationSelect.length === 0
                 ? ""
-                : allMK.singleCooporationSelect.data.option.map(
+                : allMK?.singleCooporationSelect?.data?.option?.map(
                     (items, index) => {
                       return (
                         <div
                           key={index}
                           className={`form-group ${
-                            allMK.cooperationActiveSelect.length === 0
+                            allMK?.cooperationActiveSelect.length === 0
                               ? "d-none"
                               : ""
                           }`}
@@ -720,7 +736,7 @@ const EditDokumentKerjasama = ({ token }) => {
                             htmlFor="staticEmail"
                             className="col-form-label"
                           >
-                            {items.cooperation_form}
+                            {items?.cooperation_form}
                           </label>
                           <textarea
                             required

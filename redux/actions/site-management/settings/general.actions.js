@@ -21,6 +21,9 @@ import {
   LIMIT_CONFIGURATION,
   SET_PAGE,
   SEARCH_COORPORATION,
+  DATA_GENERAL_REQUEST,
+  DATA_GENERAL_SUCCESS,
+  DATA_GENERAL_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/site-management/settings/general.type";
 
@@ -28,14 +31,41 @@ import axios from "axios";
 
 export const getAllGeneral =
   (page = 1, cari = "", limit = 5, token) =>
+    async (dispatch) => {
+      try {
+        dispatch({ type: GENERAL_REQUEST });
+        let link =
+          process.env.END_POINT_API_SITE_MANAGEMENT +
+          `api/setting-page/all?page=${page}`;
+        if (cari) link = link.concat(`&cari=${cari}`);
+        if (limit) link = link.concat(`&limit=${limit}`);
+
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        };
+
+        const { data } = await axios.get(link, config);
+
+        dispatch({
+          type: GENERAL_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: GENERAL_FAIL,
+        });
+      }
+    };
+
+export const getDataGeneral = (token) =>
   async (dispatch) => {
     try {
-      dispatch({ type: GENERAL_REQUEST });
+      dispatch({ type: DATA_GENERAL_REQUEST });
       let link =
         process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/all?page=${page}`;
-      if (cari) link = link.concat(`&cari=${cari}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
+        `api/setting/general/get`;
 
       const config = {
         headers: {
@@ -46,12 +76,13 @@ export const getAllGeneral =
       const { data } = await axios.get(link, config);
 
       dispatch({
-        type: GENERAL_SUCCESS,
+        type: DATA_GENERAL_SUCCESS,
         payload: data,
       });
     } catch (error) {
       dispatch({
-        type: GENERAL_FAIL,
+        type: DATA_GENERAL_FAIL,
+        payload: error.response.data.message,
       });
     }
   };
@@ -68,7 +99,7 @@ export const deleteGeneral = (id, token) => async (dispatch) => {
 
     const { data } = await axios.delete(
       process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/delete/${id}`,
+      `api/setting-page/delete/${id}`,
       config
     );
 
@@ -154,7 +185,7 @@ export const updateGeneral = (sendData, id, token) => async (dispatch) => {
 
     const { data } = await axios.post(
       process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/update/${id}`,
+      `api/setting-page/update/${id}`,
       sendData,
       config
     );

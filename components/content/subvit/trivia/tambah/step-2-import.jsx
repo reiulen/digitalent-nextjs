@@ -27,7 +27,7 @@ import ButtonAction from "../../../../ButtonAction";
 import styles from "../edit/step.module.css";
 import axios from "axios";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -52,6 +52,7 @@ const StepTwo = ({ token }) => {
     loading: loadingImages,
     error: errorImages,
     success: successImages,
+    trivia_question_images,
   } = useSelector((state) => state.importImagesTriviaQuestionDetail);
   let { page = 1, id } = router.query;
   page = Number(page);
@@ -80,26 +81,43 @@ const StepTwo = ({ token }) => {
   const [question_file, setQuestionFile] = useState(null);
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
+  const [limit, setLimit] = useState(null);
   const [fileSoalName, setFileSoalName] = useState("");
   const [imageFileName, setImageFileName] = useState("");
 
   useEffect(() => {
-    dispatch(getAllTriviaQuestionDetail(id, token));
+    dispatch(
+      getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+    );
     // if (error) {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      dispatch(getAllTriviaQuestionDetail(id, token));
+      dispatch(
+        getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+      );
     }
 
     if (successImages) {
-      dispatch(getAllTriviaQuestionDetail(id, token));
+      dispatch(
+        getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+      );
     }
 
     if (isDeleted) {
-      dispatch(getAllTriviaQuestionDetail(id, token));
+      dispatch(
+        getAllTriviaQuestionDetail(id, 1, "", null, token, tokenPermission)
+      );
     }
-  }, [dispatch, id, successFile, successImages, isDeleted, token]);
+  }, [
+    dispatch,
+    id,
+    successFile,
+    successImages,
+    isDeleted,
+    token,
+    tokenPermission,
+  ]);
 
   const saveDraft = () => {
     let valid = true;
@@ -122,6 +140,8 @@ const StepTwo = ({ token }) => {
     }
 
     if (valid) {
+      localStorage.removeItem("method");
+      localStorage.removeItem("step1");
       dispatch(
         {
           type: IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
@@ -135,8 +155,8 @@ const StepTwo = ({ token }) => {
         token
       );
       router.push({
-        pathname: `/subvit/trivia/tambah/step-2-import`,
-        query: { id },
+        pathname: `/subvit/trivia`,
+        query: { success: true },
       });
     }
   };
@@ -163,6 +183,7 @@ const StepTwo = ({ token }) => {
     }
 
     if (valid) {
+      localStorage.setItem("method", "import" || router.query.metode);
       router.push({
         pathname: `/subvit/trivia/tambah/step-3`,
         query: { id },
@@ -196,17 +217,18 @@ const StepTwo = ({ token }) => {
     data.append("trivia_question_bank_id", id);
     data.append("image_file", image_file, image_file.name);
 
-    dispatch(importImagesTriviaQuestionDetail(data, token));
+    dispatch(importImagesTriviaQuestionDetail(data, token, tokenPermission));
   };
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllTriviaQuestionDetail(id, pageNumber, token));
+    // dispatch(getAllTriviaQuestionDetail(id, pageNumber, "", limit, token));
   };
 
   const handleLimit = (val) => {
+    setLimit(val);
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllTriviaQuestionDetail(id, 1, val, token));
+    // dispatch(getAllTriviaQuestionDetail(id, 1, "", val, token));
   };
 
   const handleDelete = (id) => {
@@ -221,15 +243,23 @@ const StepTwo = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteTriviaQuestionDetail(id, token));
+        dispatch(deleteTriviaQuestionDetail(id, token, tokenPermission));
       }
     });
   };
 
   const handleDownloadTemplate = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+        Permission: tokenPermission || "",
+      },
+    };
     await axios
       .get(
-        "http://dts-subvit-dev.majapahit.id/api/trivia-question-bank-details/template"
+        process.env.END_POINT_API_SUBVIT +
+          "api/trivia-question-bank-details/template",
+        config
       )
       .then((res) => {
         window.location.href = res.data.data;
@@ -307,7 +337,7 @@ const StepTwo = ({ token }) => {
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="2" title="Trivia"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Metode Import .csv/.xls</h2>
           </div>
@@ -324,6 +354,12 @@ const StepTwo = ({ token }) => {
                     <i className="ri-download-2-fill text-white"></i> Unduh
                   </button>
                 </div>
+              </div>
+              <div className="mt-5">
+                <span style={{ color: "#ffa800" }}>
+                  *Jika anda ingin membuat soal yang terdapat gambar silahkan
+                  import file gambar terlebih dahulu !
+                </span>
               </div>
             </div>
             <form onSubmit={onSubmit} id="form-upload">
@@ -432,19 +468,30 @@ const StepTwo = ({ token }) => {
               </div>
 
               <div className="table-page" style={{ marginTop: "20px" }}>
-                {successFile ? (
-                  <div className="mb-5">
+                <div className="mb-5">
+                  {!successFile || successImages ? (
+                    <h2 className="text-success">Sukses Import Gambar</h2>
+                  ) : (
                     <h2 className="text-success">Sukses Import Soal</h2>
-                    <span className="text-muted">
-                      {trivia_question_file.success +
-                        trivia_question_file.failed}{" "}
-                      Total Import | {trivia_question_file.success} Sukses di
-                      Import | {trivia_question_file.failed} Gagal di import
-                    </span>
-                  </div>
-                ) : (
-                  ""
-                )}
+                  )}
+
+                  <span className="text-muted">
+                    {!successFile || successImages
+                      ? trivia_question_images?.success +
+                        trivia_question_images?.failed
+                      : trivia_question_file?.success +
+                        trivia_question_file?.failed}{" "}
+                    Total Import |{" "}
+                    {!successFile || successImages
+                      ? trivia_question_images?.success
+                      : trivia_question_file?.success}{" "}
+                    Sukses di Import |{" "}
+                    {!successFile || successImages
+                      ? trivia_question_images?.failed
+                      : trivia_question_file?.failed}{" "}
+                    Gagal di import
+                  </span>
+                </div>
                 <div className="table-responsive">
                   <LoadingTable loading={loading} />
 
@@ -475,11 +522,13 @@ const StepTwo = ({ token }) => {
                           trivia_question_detail.list_questions &&
                           trivia_question_detail.list_questions.map(
                             (question, i) => {
+                              const paginate = i + 1 * (page * limit);
+                              const dividers = limit - 1;
                               return (
                                 <tr key={question.id}>
                                   <td className="align-middle text-center">
                                     <span className="">
-                                      {i + 1 * (page * 5 || limit) - 4}
+                                      {paginate - dividers}
                                     </span>
                                   </td>
                                   <td className="align-middle font-weight-bold">
@@ -503,7 +552,7 @@ const StepTwo = ({ token }) => {
                                   <td className="align-middle">
                                     <div className="d-flex">
                                       <Link
-                                        href={`edit-soal-trivia?id=${question.id}`}
+                                        href={`/subvit/trivia/edit-soal-trivia?id=${question.id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -568,6 +617,7 @@ const StepTwo = ({ token }) => {
                           <div className="row">
                             <div className="col-4 mr-0 p-0">
                               <select
+                                value={limit}
                                 className="form-control"
                                 id="exampleFormControlSelect2"
                                 style={{
@@ -607,6 +657,21 @@ const StepTwo = ({ token }) => {
 
               <div className="row">
                 <div className="col-sm-12 col-md-12 pt-4">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      if (localStorage.getItem("clone") === "true") {
+                        router.push(
+                          `/subvit/trivia/clone/step-3?id=${router.query.id}`
+                        );
+                      } else {
+                        router.push("/subvit/trivia/tambah");
+                      }
+                    }}
+                  >
+                    Kembali
+                  </button>
                   <div className="float-right">
                     <button
                       className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

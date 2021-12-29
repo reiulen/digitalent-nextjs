@@ -2,6 +2,10 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getAllListsPeserta } from "../../../redux/actions/site-management/user/peserta-dts";
+import { loadDataListZonasi } from "../../../redux/actions/site-management/dashboard.actions";
+
 const SiteManagementDashboard = dynamic(
   () =>
     import(
@@ -22,16 +26,20 @@ export default function DashboardSiteManagement(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  () => async ({ req }) => {
+  (store) => async ({ req }) => {
     const session = await getSession({ req });
-    if (!session) {
+    const middleware = middlewareAuthAdminSession(session);
+    if (!middleware.status) {
       return {
         redirect: {
-          destination: "/",
+          destination: middleware.redirect,
           permanent: false,
         },
       };
     }
+
+    await store.dispatch(getAllListsPeserta(session.user.user.data.token));
+    await store.dispatch(loadDataListZonasi(session.user.user.data.token));
 
     return {
       props: { session, title: "Dashboard - Site Management" },

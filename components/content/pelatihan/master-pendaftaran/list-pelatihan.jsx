@@ -27,10 +27,12 @@ import {
   searchKeyword,
   setValueStatus,
 } from "../../../../redux/actions/pelatihan/master-pendaftaran.action";
+import Cookies from "js-cookie";
 
 export default function MasterPelatihan({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const token_permission = Cookies.get("token_permission");
 
   const { permission } = useSelector((state) => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
@@ -64,7 +66,7 @@ export default function MasterPelatihan({ token }) {
     ) {
       return false;
     } else {
-      dispatch(getAllListMasterPelatihan(token));
+      dispatch(getAllListMasterPelatihan(token, token_permission));
     }
   }, [deleted, dispatch, token]);
 
@@ -181,22 +183,24 @@ export default function MasterPelatihan({ token }) {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Master Pendaftaran
+              List Form Master Pendaftaran
             </h1>
-            <div className="card-toolbar">
-              <Link
-                href="/pelatihan/master-pendaftaran/tambah-form-pendaftaran"
-                passHref
-              >
-                <a
-                  href="#"
-                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
+            {listPermission.includes("pelatihan.master_pendaftaran.manage") && (
+              <div className="card-toolbar">
+                <Link
+                  href="/pelatihan/form-master-pendaftaran/tambah-form-master-pendaftaran"
+                  passHref
                 >
-                  <i className="ri-add-fill"></i>
-                  Form Pendaftaran
-                </a>
-              </Link>
-            </div>
+                  <a
+                    href="#"
+                    className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
+                  >
+                    <i className="ri-add-fill"></i>
+                    Form Master Pendaftaran
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -207,25 +211,27 @@ export default function MasterPelatihan({ token }) {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={(e) => {
-                        handleSearch(e);
-                      }}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={(e) => {
+                          handleSearch(e);
+                        }}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
                 <div className="col-lg-6 col-sm-6 pake">
@@ -344,7 +350,7 @@ export default function MasterPelatihan({ token }) {
                         <th className="text-center">No</th>
                         <th>ID Pendaftaran</th>
                         <th>Nama Form Pendaftaran</th>
-                        <th>Status Publish</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -401,7 +407,7 @@ export default function MasterPelatihan({ token }) {
                                   </select>
                                 </div>
                               </td>
-                              <td className="align-middle d-flex">
+                              <td className="align-middle d-flex p-6">
                                 {listPermission.includes(
                                   "pelatihan.master_pendaftaran.manage"
                                 ) && (
@@ -409,7 +415,7 @@ export default function MasterPelatihan({ token }) {
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                     onClick={() =>
                                       router.push(
-                                        `/pelatihan/master-pendaftaran/edit-form-pendaftaran?id=${item.id}`
+                                        `/pelatihan/form-master-pendaftaran/edit-form-master-pendaftaran?id=${item.id}`
                                       )
                                     }
                                     data-toggle="tooltip"
@@ -424,7 +430,7 @@ export default function MasterPelatihan({ token }) {
                                   "pelatihan.master_pendaftaran.view"
                                 ) && (
                                   <Link
-                                    href={`/pelatihan/master-pendaftaran/view-master-pendaftaran?id=${item.id}`}
+                                    href={`/pelatihan/form-master-pendaftaran/view-form-master-pendaftaran?id=${item.id}`}
                                     passHref
                                   >
                                     <a

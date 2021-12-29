@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
+import DatePicker from "react-datepicker";
 import LoadingTable from "../../../LoadingTable";
 import IconEye from "../../../assets/icon/Eye";
 import IconPencil from "../../../assets/icon/Pencil";
@@ -14,6 +15,7 @@ import IconPlus from "../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../public/assets/icon/Minus.svg";
 import Image from "next/image";
 import Select from "react-select";
+import Swal from "sweetalert2";
 import moment from "moment";
 import {
   dropdownKabupaten,
@@ -24,7 +26,7 @@ import { postFilterExportData } from "../../../../redux/actions/site-management/
 import { temaByAkademiReducer } from "../../../../redux/reducers/beranda/beranda.reducers";
 import Cookies from 'js-cookie'
 
-const UbahRole = ({ token }) => {
+const UbahRole = ({ token, name }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
@@ -39,6 +41,8 @@ const UbahRole = ({ token }) => {
   const [kota, setKota] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
+  const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
+  const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
 
   const drowpdownYear = useSelector((state) => state.drowpdownYear);
   const drowpdownAkademi = useSelector((state) => state.drowpdownAkademi);
@@ -82,7 +86,9 @@ const UbahRole = ({ token }) => {
   const handleFilter = () => {
     const data = {
       button_type: 0,
-      tahun: tahun ? tahun.label : "",
+      tahun: "",
+      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD"),
+      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
       akademi: akademi ? akademi.label : "",
       tema: tema ? tema.label : "",
       penyelenggara: penyelenggara ? penyelenggara.label : "",
@@ -91,14 +97,24 @@ const UbahRole = ({ token }) => {
       kota: kota ? kota.label : "",
     };
 
+<<<<<<< HEAD
     dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission")));
+=======
+    if (datePelaksanaanEnd !== null) {
+      dispatch(postFilterExportData(token, data));
+    } else {
+      Swal.fire("Oppss", "isi tanggal dengan benar", "error");
+    }
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       button_type: 1,
-      tahun: tahun ? tahun.label : "",
+      tahun: "",
+      dari: moment(datePelaksanaanStart).format("YYYY-MM-DD"),
+      sampai: moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
       akademi: akademi ? akademi.label : "",
       tema: tema ? tema.label : "",
       penyelenggara: penyelenggara ? penyelenggara.label : "",
@@ -106,6 +122,7 @@ const UbahRole = ({ token }) => {
       provinsi: provinsi ? provinsi.label : "",
       kota: kota ? kota.label : "",
     };
+<<<<<<< HEAD
     Swal.fire({
       title: "Apakah anda yakin ?",
       icon: "warning",
@@ -119,14 +136,35 @@ const UbahRole = ({ token }) => {
         dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission")));
       }
     });
+=======
+    if (datePelaksanaanEnd !== null) {
+      Swal.fire({
+        title: "Apakah anda yakin ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya !",
+        cancelButtonText: "Batal",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(postFilterExportData(token, data, null, null, name));
+        }
+      });
+    } else {
+      Swal.fire("Oppss", "isi tanggal dengan benar", "error");
+    }
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
   };
 
   const listFilter =
-    filterExportData?.data?.data?.rows.length > 0 ? (
+    filterExportData?.data?.data?.rows?.length > 0 ? (
       filterExportData.data.data.rows.map((item, index) => {
         return (
           <tr key={index}>
-            <td className="align-middle text-left">{index + limit * (page - 1) + 1}</td>
+            <td className="align-middle text-left">
+              {index + limit * (page - 1) + 1}
+            </td>
             <td className="align-middle text-left">
               <h6 className="font-weight-bolder mb-0">{item.nama_peserta}</h6>
               <p className="mb-0">{item.email}</p>
@@ -134,7 +172,16 @@ const UbahRole = ({ token }) => {
             </td>
             <td className="align-middle text-left">
               <h6 className="font-weight-bolder mb-0">{item.nama_akademi}</h6>
-              <p>{item.nama_pelatihan}</p>
+              <p
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "22rem",
+                }}
+              >
+                {item.nama_pelatihan}
+              </p>
             </td>
             <td className="align-middle text-left">
               <h6 className="font-weight-bolder mb-0">
@@ -165,8 +212,20 @@ const UbahRole = ({ token }) => {
           <div className="card-body pt-0 px-4 px-sm-8">
             <form>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Tahun</label>
-                <Select
+                <label htmlFor="exampleSelect1">Tanggal</label>
+                <DatePicker
+                  wrapperClassName="datepicker"
+                  className="form-control"
+                  name="start_date"
+                  selectsRange={true}
+                  onChange={(date) => setDatePelaksanaan(date)}
+                  startDate={datePelaksanaanStart}
+                  endDate={datePelaksanaanEnd}
+                  dateFormat="dd/MM/yyyy"
+                  placeholderText="Silahkan Pilih Tanggal"
+                  autoComplete="off"
+                />
+                {/* <Select
                   placeholder="Silahkan Pilih Tahun"
                   options={drowpdownYear.data.data.map((item) => {
                     return {
@@ -177,7 +236,7 @@ const UbahRole = ({ token }) => {
                   onChange={(e) =>
                     setTahun({ value: e?.value, label: e?.label })
                   }
-                />
+                /> */}
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Akademi</label>
@@ -235,7 +294,7 @@ const UbahRole = ({ token }) => {
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Provinsi</label>
                 <Select
-                  placeholder="Silahkan Pilih Tahun"
+                  placeholder="Silahkan Pilih Provinsi"
                   options={drowpdownProvinsi.data.data.map((item) => {
                     return {
                       label: item.label,
@@ -252,7 +311,7 @@ const UbahRole = ({ token }) => {
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Kota/Kabupaten</label>
                 <Select
-                  placeholder="Silahkan Pilih Tahun"
+                  placeholder="Silahkan Pilih Kota"
                   value={kota}
                   isDisabled={provinsi === null}
                   options={drowpdownKabupaten?.data?.data?.map((item) => {
@@ -298,10 +357,15 @@ const UbahRole = ({ token }) => {
                   className="card-title font-weight-bolder  w-100  mt-5 mb-0"
                   style={{ fontSize: "24px", color: "#04AA77" }}
                 >
-                  Pencarian Sukses
+                  {filterExportData?.data?.data?.rows?.length > 0
+                    ? "Pencarian Sukses"
+                    : "Pencarian Tidak Ditemukan"}
                 </h3>
                 <p className="mb-0" style={{ color: "#6C6C6C" }}>
-                  {filterExportData?.data?.data?.total_rows} Total Data
+                  {filterExportData?.data?.data?.rows?.length > 0
+                    ? filterExportData?.data?.data?.total_rows
+                    : 0}{" "}
+                  Total Data
                 </p>
                 <div className="table-responsive mt-10">
                   <table className="table table-separate table-head-custom table-checkable">
@@ -318,6 +382,7 @@ const UbahRole = ({ token }) => {
                     <tbody>{listFilter}</tbody>
                   </table>
                 </div>
+<<<<<<< HEAD
                 <div className="row px-4">
                   <div className="table-pagination">
                     <Pagination
@@ -393,23 +458,130 @@ const UbahRole = ({ token }) => {
                           Total Data {filterExportData?.data?.data?.total_rows} List Data
                            
                         </p>
+=======
+                {filterExportData?.data?.data?.total_rows > 5 && (
+                  <div className="row px-4">
+                    <div className="table-pagination">
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={filterExportData?.data?.data?.limit}
+                        totalItemsCount={
+                          filterExportData?.data?.data?.total_rows
+                        }
+                        pageRangeDisplayed={2}
+                        onChange={(e) => {
+                          setPage(e);
+                          const data = {
+                            button_type: 0,
+                            tahun: "",
+                            dari: moment(datePelaksanaanStart).format(
+                              "YYYY-MM-DD"
+                            ),
+                            sampai:
+                              moment(datePelaksanaanEnd).format("YYYY-MM-DD"),
+                            akademi: akademi ? akademi.label : "",
+                            tema: tema ? tema.label : "",
+                            penyelenggara: penyelenggara
+                              ? penyelenggara.label
+                              : "",
+                            pelatihan: pelatihan ? pelatihan.label : "",
+                            provinsi: provinsi ? provinsi.label : "",
+                            kota: kota ? kota.label : "",
+                          };
+
+                          dispatch(postFilterExportData(token, data, e, limit));
+                        }}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
+
+                    <div className="table-total ml-auto mr-4">
+                      <div className="row mt-4">
+                        <div className="col-4 mr-0 p-0">
+                          <select
+                            className="form-control cursor-pointer pr-2"
+                            value={limit}
+                            id="exampleFormControlSelect2"
+                            style={{
+                              width: "63px",
+                              background: "#F3F6F9",
+                              borderColor: "#F3F6F9",
+                              color: "#9E9E9E",
+                            }}
+                            onChange={(e) => {
+                              setLimit(e.target.value);
+                              const data = {
+                                button_type: 0,
+                                tahun: "",
+                                dari: moment(datePelaksanaanStart).format(
+                                  "YYYY-MM-DD"
+                                ),
+                                sampai:
+                                  moment(datePelaksanaanEnd).format(
+                                    "YYYY-MM-DD"
+                                  ),
+                                akademi: akademi ? akademi.label : "",
+                                tema: tema ? tema.label : "",
+                                penyelenggara: penyelenggara
+                                  ? penyelenggara.label
+                                  : "",
+                                pelatihan: pelatihan ? pelatihan.label : "",
+                                provinsi: provinsi ? provinsi.label : "",
+                                kota: kota ? kota.label : "",
+                              };
+
+                              dispatch(
+                                postFilterExportData(
+                                  token,
+                                  data,
+                                  page,
+                                  e.target.value
+                                )
+                              );
+                            }}
+                          >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                          </select>
+                        </div>
+                        <div className="col-8 my-auto">
+                          <p
+                            className="align-middle mt-3"
+                            style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                          >
+                            Total Data{" "}
+                            {filterExportData?.data?.data?.total_rows} List Data
+                          </p>
+                        </div>
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="form-group row mt-10">
-                  <div className="col-sm-12 d-flex justify-content-end">
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                      onClick={(e) => {
-                        handleSubmit(e);
-                      }}
-                    >
-                      Simpan
-                    </button>
+                )}
+
+                {filterExportData?.data?.data?.rows?.length > 0 && (
+                  <div className="form-group row mt-10">
+                    <div className="col-sm-12 d-flex justify-content-end">
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                        onClick={(e) => {
+                          handleSubmit(e);
+                        }}
+                      >
+                        Simpan
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
 

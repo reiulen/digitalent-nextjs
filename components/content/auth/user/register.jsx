@@ -266,7 +266,6 @@ const RegisterUser = () => {
                         simpleValidator.current.showMessageFor("Password")
                       }
                     />
-
                     {hidePassword === true && (
                       <i
                         className="ri-eye-fill right-center-absolute cursor-pointer"
@@ -282,6 +281,10 @@ const RegisterUser = () => {
                       />
                     )}
                   </div>
+                  <small className="text-white">
+                    Minimal 8 Karakter yang berisi kombinasi huruf besar, huruf
+                    kecil, angka dan simbol.
+                  </small>
                   {simpleValidator.current.message(
                     "Password",
                     password,

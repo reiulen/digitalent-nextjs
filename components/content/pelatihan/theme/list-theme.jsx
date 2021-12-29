@@ -19,10 +19,12 @@ import {
   clearErrors,
 } from "../../../../redux/actions/pelatihan/theme.actions";
 import { DELETE_THEME_RESET } from "../../../../redux/types/pelatihan/theme.type";
+import Cookies from "js-cookie";
 
 const ListTheme = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   const { permission } = useSelector((state) => state.adminPermission);
   const [listPermission, setListPermission] = useState([]);
@@ -71,7 +73,7 @@ const ListTheme = ({ token }) => {
   const [status, setStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const optionsAkademi = dataAkademi.data || [];
+  const optionsAkademi = dataAkademi ? dataAkademi.data : [];
   const optionsStatus = [
     { value: "1", label: "Publish" },
     { value: "0", label: "Unpublish" },
@@ -95,7 +97,9 @@ const ListTheme = ({ token }) => {
         (result) => {
           if (result.isConfirmed) {
             setPage(1);
-            dispatch(getAllTheme(1, null, null, null, null, token));
+            dispatch(
+              getAllTheme(1, null, null, null, null, token, token_permission)
+            );
           }
         }
       );
@@ -121,12 +125,14 @@ const ListTheme = ({ token }) => {
         academy != null ? academy.label : null,
         status != null ? status.value : null,
         limit,
-        token
+        token,
+        token_permission
       )
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     let link = `${router.pathname}?page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
@@ -138,7 +144,8 @@ const ListTheme = ({ token }) => {
         academy != null ? academy.label : null,
         status != null ? status.value : null,
         limit,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -152,7 +159,8 @@ const ListTheme = ({ token }) => {
         academy != null ? academy.label : null,
         status != null ? status.value : null,
         limit,
-        token
+        token,
+        token_permission
       )
     );
     setShowModal(false);
@@ -162,7 +170,7 @@ const ListTheme = ({ token }) => {
     setAcademy(null);
     setStatus(null);
     setPage(1);
-    dispatch(getAllTheme(1, null, null, null, 5, token));
+    dispatch(getAllTheme(1, null, null, null, 5, token, token_permission));
     setShowModal(false);
   };
 
@@ -176,7 +184,8 @@ const ListTheme = ({ token }) => {
         academy != null ? academy.label : null,
         status != null ? status.value : null,
         val,
-        token
+        token,
+        token_permission
       )
     );
   };
@@ -197,7 +206,7 @@ const ListTheme = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteTheme(id, token));
+        dispatch(deleteTheme(id, token, token_permission));
       }
     });
   };
@@ -267,14 +276,16 @@ const ListTheme = ({ token }) => {
             >
               List Tema
             </h1>
-            <div className="card-toolbar">
-              <Link href="/pelatihan/tema/tambah-tema">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-add-fill"></i>
-                  Tambah Tema
-                </a>
-              </Link>
-            </div>
+            {listPermission.includes("pelatihan.tema.manage") && (
+              <div className="card-toolbar">
+                <Link href="/pelatihan/tema/tambah-tema">
+                  <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
+                    <i className="ri-add-fill"></i>
+                    Tambah Tema
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -282,23 +293,25 @@ const ListTheme = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-4 col-xl-4">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={(e) => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
 
@@ -333,6 +346,7 @@ const ListTheme = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>Akademi</th>
                         <th>Tema</th>
+                        <th>Pelatihan</th>
                         <th>Peminat</th>
                         <th>Status</th>
                         <th className="row-aksi-tema">Aksi</th>
@@ -364,6 +378,7 @@ const ListTheme = ({ token }) => {
                                 ? row.name.substring(0, 30) + "..."
                                 : row.name}
                             </td>
+                            <td className="align-middle">{row.pelatihan}</td>
                             <td className="align-middle">
                               {row.peminat} Peminat
                             </td>

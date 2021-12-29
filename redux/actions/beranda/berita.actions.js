@@ -15,6 +15,10 @@ import {
     TAG_BERANDA_BERITA_SUCCESS,
     TAG_BERANDA_BERITA_FAIL,
 
+    SAVE_KATEGORI_BERANDA_BERITA_REQUEST,
+    SAVE_KATEGORI_BERANDA_BERITA_SUCCESS,
+    SAVE_KATEGORI_BERANDA_BERITA_FAIL,
+
     CLEAR_ERRORS
 } from "../../types/beranda/berita.type"
 
@@ -47,7 +51,13 @@ export const getAllBerandaBerita =
             if (category_akademi) link = link.concat(`&category_akademi=${category_akademi}`);
             if (tag) link = link.concat(`&tag=${tag}`);
 
-            const { data } = await axios.get(link);
+            const config = {
+                headers: {
+                  apikey: process.env.API_KEY_PUBLIKASI,
+                },
+            };
+
+            const { data } = await axios.get(link, config);
 
             dispatch({
                 type: BERANDA_BERITA_SUCCESS,
@@ -66,7 +76,13 @@ export const getDetailBerandaBerita = (id) => async dispatch => {
     try {
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/berita/${id}`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch ({
             type: DETAIL_BERANDA_BERITA_SUCCESS,
@@ -85,9 +101,16 @@ export const getKategoriBerandaBerita = () => async dispatch => {
     try {
         dispatch({ type: KATEGORI_BERANDA_BERITA_REQUEST})
 
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
+        // let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori?keyword=Berita&type=home`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: KATEGORI_BERANDA_BERITA_SUCCESS,
@@ -109,7 +132,13 @@ export const getTagBerandaBerita = () => async dispatch => {
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/berita`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+              apikey: process.env.API_KEY_PUBLIKASI,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: TAG_BERANDA_BERITA_SUCCESS,
@@ -121,6 +150,21 @@ export const getTagBerandaBerita = () => async dispatch => {
             type: TAG_BERANDA_BERITA_FAIL,
             payload: error.response.data.message,
         });
+    }
+}
+
+export const saveKategoriBerita = (dataToSave) => async dispatch => {
+    try{
+        dispatch ({
+            type:  SAVE_KATEGORI_BERANDA_BERITA_SUCCESS,
+            data: dataToSave
+        })
+
+    } catch (error){
+        dispatch ({
+            type: SAVE_KATEGORI_BERANDA_BERITA_FAIL,
+            message: error
+        })
     }
 }
 

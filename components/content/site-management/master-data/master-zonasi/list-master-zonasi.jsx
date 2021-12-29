@@ -33,7 +33,8 @@ const Table = ({ token }) => {
     setValueSearch(value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     dispatch(searchCooporation(valueSearch));
   };
 
@@ -53,7 +54,7 @@ const Table = ({ token }) => {
             </h3>
             {localStorage
               .getItem("permissions")
-              .includes("site_management.master-data.master_zonasi.manage") && (
+              .includes("site_management.master_data.master_zonasi.manage") && (
               <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
                 <Link
                   href="/site-management/master-data/master-zonasi/tambah-zonasi"
@@ -77,24 +78,28 @@ const Table = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className={`${styles.cari} form-control pl-10`}
-                      placeholder="Ketik disini untuk Pencarian..."
-                      // value={search}
-                      onChange={(e) => handleChangeValueSearch(e.target.value)}
-                    />
-                    <button
-                      className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={() => handleSubmit()}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSubmit(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className={`${styles.cari} form-control pl-10`}
+                        placeholder="Ketik disini untuk Pencarian..."
+                        // value={search}
+                        onChange={(e) =>
+                          handleChangeValueSearch(e.target.value)
+                        }
+                      />
+                      <button
+                        className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={(e) => handleSubmit(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -193,7 +198,7 @@ const Table = ({ token }) => {
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
-                                      "site_management.master-data.master_zonasi.manage"
+                                      "site_management.master_data.master_zonasi.manage"
                                     ) && (
                                     <Link
                                       href={`/site-management/master-data/master-zonasi/ubah-zonasi/${items.value}`}
@@ -210,7 +215,7 @@ const Table = ({ token }) => {
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
-                                      "site_management.master-data.master_zonasi.view"
+                                      "site_management.master_data.master_zonasi.view"
                                     ) && (
                                     <Link
                                       href={`/site-management/master-data/master-zonasi/detail-zonasi/${items.value}`}
@@ -258,7 +263,7 @@ const Table = ({ token }) => {
                     </>
                   )}
 
-                {allZonasi ? (
+                {allZonasi?.data?.total > 5 ? (
                   <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
                       <div className="col-4 mr-0">

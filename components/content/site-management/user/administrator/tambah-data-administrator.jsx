@@ -7,6 +7,7 @@ import IconSearch from "../../../../assets/icon/Search";
 import Select from "react-select";
 import axios from "axios";
 import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
 import {
   getDetailAdminSite,
   getListRoles,
@@ -19,7 +20,7 @@ import Cookies from 'js-cookie'
 const TambahApi = ({ token }) => {
   const router = useRouter();
   let dispatch = useDispatch();
-  
+
   const [name, setName] = useState(null);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
@@ -31,7 +32,7 @@ const TambahApi = ({ token }) => {
   const [unitWorkOption, setUnitWorkOption] = useState([]);
   const [statusAcademy, setStatusAcademy] = useState([]);
   const [typeAccess, setTypeAccess] = useState("akademi");
-  const [search, setSearch] = useState(null)
+  const [search, setSearch] = useState(null);
 
   const [pelatihan, setPelatihan] = useState([]);
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
@@ -118,13 +119,13 @@ const TambahApi = ({ token }) => {
       return { ...items, training_id: items.value };
     });
 
-    if(password !== confirmPassword){
+    if (password !== confirmPassword) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Password harus sama dengan Confirmation Password !",
       });
-    }else{
+    } else {
       if (simpleValidator.current.allValid()) {
         Swal.fire({
           title: "Apakah anda yakin simpan ?",
@@ -147,7 +148,7 @@ const TambahApi = ({ token }) => {
                 role: role,
                 unit_work_ids: unitWork,
                 type_access: typeAccess,
-  
+
                 academy_ids: statusAcademy.map((items) => {
                   return items.value;
                 }),
@@ -164,7 +165,7 @@ const TambahApi = ({ token }) => {
                     },
                   }
                 );
-  
+
                 Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
                   () => {
                     router.push(`/site-management/user/administrator`);
@@ -207,7 +208,7 @@ const TambahApi = ({ token }) => {
                     },
                   }
                 );
-  
+
                 Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
                   () => {
                     router.push(`/site-management/user/administrator`);
@@ -233,8 +234,6 @@ const TambahApi = ({ token }) => {
         });
       }
     }
-
-    
   };
 
   const handleChangeRole = (e) => {
@@ -293,7 +292,7 @@ const TambahApi = ({ token }) => {
                     simpleValidator.current.showMessageFor("email");
                   }}
                 />
-                 {simpleValidator.current.message("email", email, "required", {
+                {simpleValidator.current.message("email", email, "required", {
                   className: "text-danger",
                 })}
               </div>
@@ -345,18 +344,22 @@ const TambahApi = ({ token }) => {
                     />
                   )}
                 </div>
-                {simpleValidator.current.message("password", password, "required", {
-                  className: "text-danger",
-                })}
+                {simpleValidator.current.message(
+                  "password",
+                  password,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
                 <p style={{ color: "#b7b5cf" }}>
-                Min 8 Karakter,
-                <br />
-                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
-                <br />
-                Min 1 Symbol/angka
-              </p>
+                  Min 8 Karakter,
+                  <br />
+                  Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
+                  <br />
+                  Min 1 Simbol dan Angka
+                </p>
               </div>
-              
               <div className="form-group mb-2">
                 <label>Konfirmasi Password</label>
                 <div className="position-relative">
@@ -385,11 +388,15 @@ const TambahApi = ({ token }) => {
                     />
                   )}
                 </div>
-                {simpleValidator.current.message("confirmPassword", confirmPassword, "required", {
-                  className: "text-danger",
-                })}
+                {simpleValidator.current.message(
+                  "confirmPassword",
+                  confirmPassword,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </div>
-              
               <div className="form-group">
                 <label>Role</label>
                 <Select
@@ -405,16 +412,31 @@ const TambahApi = ({ token }) => {
                   isSearchable={true}
                   name="color"
                   onChange={(e) => handleChangeRole(e)}
-                  options={allRolesList?.data?.list_role?.map((items) => {
-                    return { ...items, label: items.name, value: items.name };
-                  })}
+                  options={allRolesList?.data?.list_role
+                    ?.filter((items) => {
+                      if (items.status === 1) {
+                        return {
+                          ...items,
+                          label: items.name,
+                          value: items.name,
+                        };
+                      }
+                    })
+                    .map((item) => {
+                      return { ...item, label: item.name, value: item.name };
+                    })}
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("roleOption");
                   }}
                 />
-                {simpleValidator.current.message("roleOption", roleOption, "required", {
-                  className: "text-danger",
-                })}
+                {simpleValidator.current.message(
+                  "roleOption",
+                  roleOption,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </div>
               <div className="form-group">
                 <label>Satuan Kerja</label>
@@ -431,16 +453,31 @@ const TambahApi = ({ token }) => {
                   isSearchable={true}
                   name="color"
                   onChange={(e) => handleChangeUnitWork(e)}
-                  options={allUnitWorkList?.data?.unit_work?.map((items) => {
-                    return { ...items, label: items.name, value: items.name };
-                  })}
+                  options={allUnitWorkList?.data?.unit_work
+                    ?.filter((items) => {
+                      if (items.status === "1") {
+                        return {
+                          ...items,
+                          label: items.name,
+                          value: items.name,
+                        };
+                      }
+                    })
+                    .map((item) => {
+                      return { ...item, label: item.name, value: item.name };
+                    })}
                   onBlur={(e) => {
                     simpleValidator.current.showMessageFor("unitWorkOption");
                   }}
                 />
-                {simpleValidator.current.message("unitWorkOption", unitWorkOption, "required", {
-                  className: "text-danger",
-                })}
+                {simpleValidator.current.message(
+                  "unitWorkOption",
+                  unitWorkOption,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </div>{" "}
               {/* hak akses disini */}
               <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
@@ -548,8 +585,10 @@ const TambahApi = ({ token }) => {
                                         borderTopLeftRadius: "0",
                                         borderBottomLeftRadius: "0",
                                       }}
-                                      onClick={e => {
-                                        dispatch(getAllListPelatihan(token, search))
+                                      onClick={(e) => {
+                                        dispatch(
+                                          getAllListPelatihan(token, search)
+                                        );
                                       }}
                                     >
                                       Cari

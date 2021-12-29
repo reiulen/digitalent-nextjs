@@ -17,6 +17,7 @@ import {
   uploadSertifikat,
 } from "../../../../redux/actions/pelatihan/report-training.actions";
 import axios from "axios";
+import { PDFReader } from "react-read-pdf";
 
 const DetailReport = ({ token }) => {
   const dispatch = useDispatch();
@@ -31,7 +32,11 @@ const DetailReport = ({ token }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(5);
   const [showModal, setShowModal] = useState(false);
+
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
+  const [showModalPreview, setShowModalPreview] = useState(false);
+  const [filePreviewPdf, setFilePreviewPdf] = useState("");
+
   const [publishValue, setPublishValue] = useState(null);
   const [sertifikasi, setSertifikasi] = useState(null);
   const [statusSubstansi, setStatusSubstansi] = useState(null);
@@ -50,7 +55,7 @@ const DetailReport = ({ token }) => {
   const [sertifikatName, setSertifikatName] = useState("");
 
   const fileSertifikatHandler = (e) => {
-    const type = ["application/pdf", "image/jpeg"];
+    const type = ["application/pdf"];
     if (type.includes(e.target.files[0].type)) {
       if (e.target.files[0].size > 5000000) {
         e.target.value = null;
@@ -135,10 +140,9 @@ const DetailReport = ({ token }) => {
       .get(link, config)
       .then((res) => {
         window.location.href = res.data.data;
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire("Oops !", err, "error");
       });
   };
 
@@ -228,25 +232,27 @@ const DetailReport = ({ token }) => {
             </td>
             <td className="align-middle">
               <span
-                className={`label label-inline label-light-${
-                  item.administrasi.toLowerCase() !== "verified"
-                    ? "danger"
-                    : "success"
-                } font-weight-bold`}
+                className={item.administrasi === "unverified" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                item.administrasi === "verified" && "label label-inline statusPeserta-success font-weight-bold text-capitalize" ||
+                item.administrasi === "incomplete" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize"}
               >
                 {item.administrasi}
               </span>
             </td>
             <td className="align-middle">
               <span
-                className={`label label-inline label-light-${
-                  item.status.toLowerCase() === "lulus tes substansi" ||
-                  item.status.toLowerCase() === "diterima" ||
-                  item.status.toLowerCase() === "pelatihan" ||
-                  item.status.toLowerCase() === "lulus pelatihan"
-                    ? "success"
-                    : "danger"
-                } font-weight-bold`}
+                className={
+                  item.status === "tidak lulus administrasi" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
+                  item.status === "tidak lulus tes substansi" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
+                  item.status === "tidak lulus pelatihan" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
+                  item.status === "ditolak" && "label label-inline statusPeserta-danger font-weight-bold text-capitalize" ||
+                  item.status === "seleksi administrasi" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                  item.status === "tes substansi" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                  item.status === "seleksi akhir" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                  item.status === "administrasi akhir" && "label label-inline select-pelatihan-warning font-weight-bold text-capitalize" ||
+                  item.status === "diterima" && "label label-inline statusPeserta-success font-weight-bold text-capitalize" ||
+                  item.status === "lulus pelatihan" && "label label-inline statusPeserta-success font-weight-bold text-capitalize"
+                }
               >
                 {item.status}
               </span>
@@ -256,7 +262,7 @@ const DetailReport = ({ token }) => {
                 {item.sertifikat === "" ? "Tidak Ada" : "Ada"}
               </div>
             </td>
-            {item.sertifikat === "" && (
+            {item.sertifikat === "" ? (
               <td className="align-middle">
                 <button
                   className="btn btn-link-action bg-blue-primary text-white"
@@ -270,6 +276,27 @@ const DetailReport = ({ token }) => {
                   type="button"
                 >
                   <i className="ri-add-fill text-white p-0"></i>
+                </button>
+              </td>
+            ) : (
+              <td className="align-middle">
+                <button
+                  className="btn btn-link-action bg-blue-primary text-white"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Preview Sertifikasi"
+                  onClick={() => {
+                    setFilePreviewPdf(
+                      item.file_sertifikat !== ""
+                        ? item.file_path + item.file_sertifikat
+                        : ""
+                    );
+                    setShowModalPreview(true);
+                    setId(item.id);
+                  }}
+                  type="button"
+                >
+                  <i className="ri-eye-line text-white p-0"></i>
                 </button>
               </td>
             )}
@@ -304,20 +331,9 @@ const DetailReport = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={() => {
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
                         dispatch(
                           getDetailReportTraining(
                             token,
@@ -333,8 +349,38 @@ const DetailReport = ({ token }) => {
                         );
                       }}
                     >
-                      Cari
-                    </button>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={() => {
+                          dispatch(
+                            getDetailReportTraining(
+                              token,
+                              pelatian_id,
+                              page,
+                              limit,
+                              search,
+                              statusAdmin?.label,
+                              statusSubstansi?.label,
+                              sertifikasi?.value,
+                              statusPeserta?.label
+                            )
+                          );
+                        }}
+                      >
+                        Cari
+                      </button>
                   </div>
                 </div>
 
@@ -543,6 +589,20 @@ const DetailReport = ({ token }) => {
               setStatusSubstansi(null);
               setSertifikasi(null);
               setStatusPeserta(null);
+              dispatch(
+                getDetailReportTraining(
+                  token,
+                  pelatian_id,
+                  1,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                )
+              );
+              setShowModal(false);
             }}
           >
             Reset
@@ -637,7 +697,7 @@ const DetailReport = ({ token }) => {
                 <input
                   type="file"
                   className="custom-file-input"
-                  accept="application/pdf, image/jpeg , image/jpg"
+                  accept="application/pdf"
                   onChange={fileSertifikatHandler}
                 />
                 <label className="custom-file-label" htmlFor="customFile">
@@ -646,7 +706,7 @@ const DetailReport = ({ token }) => {
               </div>
             </div>
             <small className="text-muted">
-              Format File (.pdf/.jpg) & Max size 5 mb
+              Format File (.pdf) & Max size 5 mb
             </small>
           </div>
         </Modal.Body>
@@ -668,6 +728,29 @@ const DetailReport = ({ token }) => {
             Upload
           </button>
         </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showModalPreview}
+        onHide={() => setShowModalPreview(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        size="lg"
+      >
+        <Modal.Header>
+          <Modal.Title>Preview Sertifikasi</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModalPreview(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ overflow: "scroll", height: 600 }}>
+            {filePreviewPdf !== "" && <PDFReader url={filePreviewPdf} />}
+          </div>
+        </Modal.Body>
       </Modal>
     </PageWrapper>
   );

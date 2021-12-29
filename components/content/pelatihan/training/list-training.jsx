@@ -41,11 +41,13 @@ import {
   dropdownTemabyAkademi,
   dropdownKabupaten,
 } from "../../../../redux/actions/pelatihan/function.actions";
+import Cookies from "js-cookie";
 
 const ListTraining = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { success } = router.query;
+  const token_permission = Cookies.get("token_permission");
 
   const { error: errorRevisi, revisi } = useSelector(
     (state) => state.listRevisi
@@ -133,6 +135,7 @@ const ListTraining = ({ token }) => {
   const [theme, setTheme] = useState(null);
   const [statusSubstansi, setStatusSubstansi] = useState(null);
   const [statusPelatihan, setStatusPelatihan] = useState(null);
+  const [statusPublish, setStatusPublish] = useState(null);
   const [berjalan, setBerjalan] = useState(null);
 
   const [dateRegister, setDateRegister] = useState([null, null]);
@@ -176,6 +179,12 @@ const ListTraining = ({ token }) => {
     { value: "ditolak", label: "Ditolak" },
   ];
 
+  const optionsStatusPublish = [
+    { value: "0", label: "Unpublish" },
+    { value: "1", label: "Publish" },
+    { value: "2", label: "Unlisted" },
+  ];
+
   useEffect(() => {
     dispatch(dropdownTemabyAkademi(academy?.value, token));
     if (isDeleted) {
@@ -194,7 +203,10 @@ const ListTraining = ({ token }) => {
                 null,
                 null,
                 null,
-                token
+                null,
+                token,
+                null,
+                token_permission
               )
             );
           }
@@ -220,7 +232,10 @@ const ListTraining = ({ token }) => {
                 null,
                 null,
                 null,
-                token
+                null,
+                token,
+                null,
+                token_permission
               )
             );
           }
@@ -243,7 +258,10 @@ const ListTraining = ({ token }) => {
           null,
           null,
           null,
-          token
+          null,
+          token,
+          null,
+          token_permission
         )
       );
       dispatch({
@@ -293,13 +311,16 @@ const ListTraining = ({ token }) => {
         penyelenggara != null ? penyelenggara.label : null,
         academy !== null ? academy.label : null,
         theme !== null ? theme.label : null,
+        statusPublish != null ? statusPublish.value : null,
         token,
-        berjalan
+        berjalan,
+        token_permission
       )
     );
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     setPage(1);
     dispatch(
       getAllTraining(
@@ -313,7 +334,10 @@ const ListTraining = ({ token }) => {
         null,
         null,
         null,
-        token
+        null,
+        token,
+        null,
+        token_permission
       )
     );
   };
@@ -340,8 +364,10 @@ const ListTraining = ({ token }) => {
         penyelenggara != null ? penyelenggara.label : null,
         academy != null ? academy.label : null,
         theme != null ? theme.label : null,
+        statusPublish != null ? statusPublish.value : null,
         token,
-        berjalan
+        berjalan,
+        token_permission
       )
     );
   };
@@ -369,7 +395,10 @@ const ListTraining = ({ token }) => {
         null,
         null,
         null,
-        token
+        null,
+        token,
+        null,
+        token_permission
       )
     );
   };
@@ -389,17 +418,21 @@ const ListTraining = ({ token }) => {
         null,
         null,
         null,
-        token
+        null,
+        token,
+        null,
+        token_permission
       )
     );
   };
 
   const handleStatusPublish = (id, val) => {
+    setPage(1);
     const data = {
       status_publish: val,
       pelatian_id: id,
     };
-    dispatch(updateStatusPublish(data, token));
+    dispatch(updateStatusPublish(data, token, token_permission));
   };
 
   const handleStatusPelatihan = (id, val) => {
@@ -407,7 +440,7 @@ const ListTraining = ({ token }) => {
       status_pelatihan: val,
       pelatian_id: id,
     };
-    dispatch(updateStatusPelatihan(data, token));
+    dispatch(updateStatusPelatihan(data, token, token_permission));
   };
 
   const onNewReset = () => {
@@ -427,23 +460,6 @@ const ListTraining = ({ token }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteTraining(id, token));
-      }
-    });
-  };
-
-  const handleClone = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      text: "Data ini akan di Clone !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Ya !",
-      cancelButtonText: "Batal",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(cloneTrainingAction(id, token));
       }
     });
   };
@@ -475,7 +491,10 @@ const ListTraining = ({ token }) => {
           null,
           null,
           null,
-          token
+          null,
+          token,
+          null,
+          token_permission
         )
       );
     } else if (type === "status_substansi") {
@@ -502,7 +521,10 @@ const ListTraining = ({ token }) => {
           null,
           null,
           null,
-          token
+          null,
+          token,
+          null,
+          token_permission
         )
       );
     } else if (type === "WhereInPelatihan") {
@@ -529,8 +551,10 @@ const ListTraining = ({ token }) => {
           null,
           null,
           null,
+          null,
           token,
-          val
+          val,
+          token_permission
         )
       );
     } else {
@@ -556,8 +580,10 @@ const ListTraining = ({ token }) => {
           null,
           null,
           null,
+          null,
           token,
-          val
+          val,
+          token_permission
         )
       );
     }
@@ -584,9 +610,11 @@ const ListTraining = ({ token }) => {
         tema: theme !== null ? theme.label : "",
         WhereInPelatihan: berjalan,
         status_substansi: statusSubstansi !== null ? statusSubstansi.label : "",
+        status_publish: statusPublish != null ? statusPublish.value : null,
       },
       headers: {
         Authorization: "Bearer " + token,
+        Permission: token_permission,
       },
     };
 
@@ -602,6 +630,15 @@ const ListTraining = ({ token }) => {
       dispatch(clearErrors());
     }
   };
+
+  function capitalize(s) {
+    let a = s.split(" ");
+    let result = [];
+    for (let i = 0; i < a.length; i++) {
+      result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
+    }
+    return result.join(" ");
+  }
 
   const handleModalRevisi = (id) => {
     dispatch(getListRevisi(token, id));
@@ -662,43 +699,7 @@ const ListTraining = ({ token }) => {
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
           <CardPage
-            background="bg-primary"
-            icon="new/add-user.svg"
-            color="#FFFFFF"
-            value={cardTraining[0].count}
-            titleValue=""
-            title="Selesai"
-            publishedVal={cardTraining[0].status}
-            routePublish={() =>
-              handlePublish(cardTraining[0].status, cardTraining[0].condisi)
-            }
-          />
-          <CardPage
-            background="bg-secondary"
-            icon="new/done-circle.svg"
-            color="#FFFFFF"
-            value={cardTraining[4].count}
-            titleValue=""
-            title="Disetujui"
-            publishedVal={cardTraining[4].status}
-            routePublish={() =>
-              handlePublish(cardTraining[4].status, cardTraining[4].condisi)
-            }
-          />
-          <CardPage
-            background="bg-success"
-            icon="new/open-book.svg"
-            color="#FFFFFF"
-            value={cardTraining[3].count}
-            titleValue=""
-            title="Revisi"
-            publishedVal={cardTraining[3].status}
-            routePublish={() =>
-              handlePublish(cardTraining[3].status, cardTraining[3].condisi)
-            }
-          />
-          <CardPage
-            background="bg-warning"
+            background="cardMenunggu"
             icon="new/mail-white.svg"
             color="#FFFFFF"
             value={cardTraining[1].count}
@@ -710,7 +711,31 @@ const ListTraining = ({ token }) => {
             }
           />
           <CardPage
-            background="bg-extras"
+            background="cardRevisi"
+            icon="new/open-book.svg"
+            color="#FFFFFF"
+            value={cardTraining[3].count}
+            titleValue=""
+            title="Revisi"
+            publishedVal={cardTraining[3].status}
+            routePublish={() =>
+              handlePublish(cardTraining[3].status, cardTraining[3].condisi)
+            }
+          />
+          <CardPage
+            background="cardDisetujui"
+            icon="new/done-circle.svg"
+            color="#FFFFFF"
+            value={cardTraining[4].count}
+            titleValue=""
+            title="Disetujui"
+            publishedVal={cardTraining[4].status}
+            routePublish={() =>
+              handlePublish(cardTraining[4].status, cardTraining[4].condisi)
+            }
+          />
+          <CardPage
+            background="cardBerjalan"
             icon="new/block-white.svg"
             color="#FFFFFF"
             value={cardTraining[2].count}
@@ -719,6 +744,18 @@ const ListTraining = ({ token }) => {
             publishedVal={cardTraining[2].status}
             routePublish={() =>
               handlePublish(cardTraining[2].status, cardTraining[2].condisi)
+            }
+          />
+          <CardPage
+            background="cardSelesai"
+            icon="new/add-user.svg"
+            color="#FFFFFF"
+            value={cardTraining[0].count}
+            titleValue=""
+            title="Selesai"
+            publishedVal={cardTraining[0].status}
+            routePublish={() =>
+              handlePublish(cardTraining[0].status, cardTraining[0].condisi)
             }
           />
         </div>
@@ -733,17 +770,19 @@ const ListTraining = ({ token }) => {
             >
               List Pelatihan
             </h1>
-            <div className="card-toolbar">
-              <Link href="/pelatihan/pelatihan/tambah-pelatihan" passHref>
-                <a
-                  href="#"
-                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
-                >
-                  <i className="ri-add-fill"></i>
-                  Tambah Pelatihan
-                </a>
-              </Link>
-            </div>
+            {listPermission.includes("pelatihan.pelatihan.manage") && (
+              <div className="card-toolbar">
+                <Link href="/pelatihan/pelatihan/tambah-pelatihan" passHref>
+                  <a
+                    href="#"
+                    className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
+                  >
+                    <i className="ri-add-fill"></i>
+                    Tambah Pelatihan
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -751,24 +790,26 @@ const ListTraining = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
                   <div className="position-relative overflow-hidden mb-2 mt-3">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      value={search}
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={handleSearch}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        value={search}
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={(e) => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
 
@@ -788,17 +829,18 @@ const ListTraining = ({ token }) => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
-
-                <div className="col-md-2">
-                  <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white d-flex justify-content-center"
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export
-                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                  </button>
-                </div>
+                {listPermission.includes("pelatihan.pelatihan.manage") && (
+                  <div className="col-md-2">
+                    <button
+                      className="btn w-100 btn-rounded-full bg-blue-secondary text-white d-flex justify-content-center"
+                      type="button"
+                      onClick={handleExportReport}
+                    >
+                      Export
+                      <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -812,7 +854,9 @@ const ListTraining = ({ token }) => {
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal</th>
+                        <th>
+                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                        </th>
                         <th>Status Publish</th>
                         <th>Status Substansi</th>
                         <th>Status Pelatihan</th>
@@ -898,23 +942,44 @@ const ListTraining = ({ token }) => {
                               </div>
                             </td>
                             <td className="align-middle text-center">
-                              {row.status_substansi === "review" ||
-                              row.status_substansi === "disetujui" ? (
-                                <span className="label label-inline label-light-success font-weight-bold text-capitalize">
-                                  {row.status_substansi}
-                                </span>
-                              ) : (
-                                <span className="label label-inline label-light-danger font-weight-bold text-capitalize">
-                                  {row.status_substansi}
-                                </span>
-                              )}
+                              <span
+                                className={
+                                  (row.status_substansi === "disetujui" &&
+                                    "select-pelatihan select-pelatihan-success") ||
+                                  (row.status_substansi === "revisi" &&
+                                    "select-pelatihan select-pelatihan-warning") ||
+                                  (row.status_substansi === "ditolak" &&
+                                    "select-pelatihan select-pelatihan-danger") ||
+                                  (row.status_substansi === "review" &&
+                                    "select-pelatihan select-pelatihan-primary")
+                                }
+                              >
+                                {capitalize(row.status_substansi)}
+                              </span>
                             </td>
                             <td className="align-middle">
                               <div className="position-relative w-max-content">
                                 <select
                                   name=""
                                   id=""
-                                  className="select-pelatihan select-pelatihan-success"
+                                  className={
+                                    (row.status_pelatihan === "selesai" &&
+                                      "select-pelatihan select-pelatihan-success") ||
+                                    (row.status_pelatihan === "seleksi" &&
+                                      "select-pelatihan select-pelatihan-warning") ||
+                                    (row.status_pelatihan ===
+                                      "menunggu pendaftaran" &&
+                                      "select-pelatihan select-pelatihan-warning") ||
+                                    (row.status_pelatihan ===
+                                      "review substansi" &&
+                                      "select-pelatihan select-pelatihan-primary") ||
+                                    (row.status_pelatihan === "pelatihan" &&
+                                      "select-pelatihan select-pelatihan-primary") ||
+                                    (row.status_pelatihan === "pendaftaran" &&
+                                      "select-pelatihan select-pelatihan-primary") ||
+                                    (row.status_pelatihan === "dibatalkan" &&
+                                      "select-pelatihan select-pelatihan-danger")
+                                  }
                                   key={i}
                                   value={row.status_pelatihan}
                                   onChange={(e) =>
@@ -926,7 +991,6 @@ const ListTraining = ({ token }) => {
                                   disabled={
                                     (row.status_pelatihan ===
                                       "review substansi" ||
-                                      row.status_pelatihan === "selesai" ||
                                       row.status_substansi === "ditolak") &&
                                     true
                                   }
@@ -968,7 +1032,12 @@ const ListTraining = ({ token }) => {
                                   )}
 
                                   {row.status_pelatihan === "selesai" && (
-                                    <option value="selesai">Selesai</option>
+                                    <>
+                                      <option value="selesai">Selesai</option>
+                                      <option value="pelatihan">
+                                        Pelatihan
+                                      </option>
+                                    </>
                                   )}
 
                                   <option value="dibatalkan">Dibatalkan</option>
@@ -978,7 +1047,7 @@ const ListTraining = ({ token }) => {
                             <td className="align-middle">
                               <div className="d-flex flex-row">
                                 {listPermission.includes(
-                                  "pelatihan.manage"
+                                  "pelatihan.pelatihan.manage"
                                 ) && (
                                   <div className="d-flex flex-row">
                                     {!(
@@ -1001,7 +1070,9 @@ const ListTraining = ({ token }) => {
                                     )}
                                   </div>
                                 )}
-                                {listPermission.includes("pelatihan.view") && (
+                                {listPermission.includes(
+                                  "pelatihan.pelatihan.view"
+                                ) && (
                                   <Link
                                     href={`/pelatihan/pelatihan/view-pelatihan/${row.id}`}
                                   >
@@ -1017,7 +1088,7 @@ const ListTraining = ({ token }) => {
                                 )}
 
                                 {listPermission.includes(
-                                  "pelatihan.manage"
+                                  "pelatihan.pelatihan.manage"
                                 ) && (
                                   <div className="d-flex">
                                     {row.status_substansi === "revisi" && (
@@ -1251,6 +1322,16 @@ const ListTraining = ({ token }) => {
               defaultValue={statusPelatihan}
               onChange={(e) =>
                 setStatusPelatihan({ value: e.value, label: e.label })
+              }
+            />
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Status Publish</label>
+            <Select
+              options={optionsStatusPublish}
+              defaultValue={statusPublish}
+              onChange={(e) =>
+                setStatusPublish({ value: e.value, label: e.label })
               }
             />
           </div>

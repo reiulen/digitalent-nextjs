@@ -17,10 +17,12 @@ import Swal from "sweetalert2";
 
 import Image from "next/image";
 
+import Cookies from "js-cookie";
+
 const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const cookiePermission = Cookies.get("token_permission")
   const allMK = useSelector((state) => state.allMK);
   //
   //
@@ -44,53 +46,59 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
   const [AllCooperation, setAllCooperation] = useState("");
   const changeFormCooporation = (index, e) => {
-    let dataaa = [...allMK.singleCooporationSelect.data.option];
+    let dataaa = [...allMK.singleCooporationSelect?.data?.option];
     dataaa[index].cooperation = e.target.value;
     setAllCooperation(dataaa);
   };
 
   useEffect(() => {
-    async function setDataSingle(id, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (data) {
-          setIsntitusiName(data.data.institution_name);
-          setTitle(data.data.title);
-          setDate(data.data.submission_date);
-          setCooperationID(data.data.cooperation_category);
-          setPeriod(data.data.period);
-          setPeriodUnit(data.data.period_unit);
-          setPeriodDateStart(data.data.period_date_start);
-          setPeriodDateEnd(data.data.period_date_end);
-          setAggrementNumber(data.data.agreement_number_partner);
-          setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
-          setSigninDate(data.data.signing_date);
-          setDocument(data.data.document_file);
-          setEmail(data.data.email);
-        }
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
-      }
-    }
     setDataSingle(router.query.id, token);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
   }, [dispatch, router.query.id, token]);
 
-  useEffect(() => {
-    dispatch(fetchListCooperationSelectById(token, cooperationC_id));
-  }, [dispatch, allMK.idCooporationSelect, cooperationC_id, token]);
+  async function setDataSingle(id, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+      if (data) {
+        setIsntitusiName(data?.data?.institution_name);
+        setTitle(data?.data?.title);
+        setDate(data?.data?.submission_date);
+        setCooperationID(data?.data?.cooperation_category);
+        setPeriod(data?.data?.period);
+        setPeriodUnit(data?.data?.period_unit);
+        setPeriodDateStart(data?.data?.period_date_start);
+        setPeriodDateEnd(data?.data?.period_date_end);
+        setAggrementNumber(data?.data?.agreement_number_partner);
+        setAggrementNumberInfo(data?.data?.agreement_number_kemkominfo);
+        setSigninDate(data?.data?.signing_date);
+        setDocument(data?.data?.document_file);
+        setEmail(data?.data?.email);
+      }
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+    }
+  }
 
   useEffect(() => {
-    dispatch(fetchDataEmail(token));
-  }, [dispatch, allMK.institution_name, allMK.stateListMitra, token]);
+    if (cooperationC_id){
+      dispatch(fetchListCooperationSelectById(token, cooperationC_id, cookiePermission));
+    }
+  }, [dispatch, allMK?.idCooporationSelect, cooperationC_id, token, cookiePermission]);
+
+  useEffect(() => {
+    if (allMK?.institution_name){
+      dispatch(fetchDataEmail(token));
+    }
+  }, [dispatch, allMK?.institution_name, allMK?.stateListMitra, token]);
 
   return (
     <PageWrapper>
@@ -129,7 +137,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
               >
                 Kategori kerjasama
               </label>
-              <p className="fz-16">{cooperationID.name}</p>
+              <p className="fz-16">{cooperationID?.name}</p>
 
               <label
                 htmlFor="staticEmail"
@@ -224,12 +232,12 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
               {cooperationID === ""
                 ? ""
-                : cooperationID.data_content.map((items, i) => {
+                : cooperationID?.data_content?.map((items, i) => {
                     return (
                       <div
                         key={i}
                         className={`form-group ${
-                          allMK.stateListKerjaSama.length !== 0 ? "d-none" : ""
+                          allMK?.stateListKerjaSama.length !== 0 ? "d-none" : ""
                         }`}
                       >
                         <label
@@ -237,24 +245,24 @@ const EditDokumentKerjasamaById = ({ token }) => {
                           className="col-form-label fz-14"
                           style={{ color: "#6C6C6C" }}
                         >
-                          {items.cooperation_form}
+                          {items?.cooperation_form}
                         </label>
-                        <p className="fz-16">{items.form_content}</p>
+                        <p className="fz-16">{items?.form_content}</p>
                       </div>
                     );
                   })}
               {/* loop first end loop*/}
 
               {/* looping second */}
-              {allMK.singleCooporationSelect.length === 0
+              {allMK?.singleCooporationSelect.length === 0
                 ? ""
-                : allMK.singleCooporationSelect.data.option.map(
+                : allMK?.singleCooporationSelect?.data?.option?.map(
                     (items, index) => {
                       return (
                         <div
                           key={index}
                           className={`form-group row ${
-                            allMK.stateListKerjaSama.length === 0
+                            allMK?.stateListKerjaSama.length === 0
                               ? "d-none"
                               : ""
                           }`}
@@ -263,7 +271,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                             htmlFor="staticEmail"
                             className="col-sm-2 col-form-label"
                           >
-                            {items.cooperation_form}
+                            {items?.cooperation_form}
                           </label>
                           <div className="col-sm-10">
                             <textarea

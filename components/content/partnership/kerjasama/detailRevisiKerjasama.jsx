@@ -5,6 +5,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const DetailRevisiKerjasama = ({ token }) => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const DetailRevisiKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Tidak",
       confirmButtonText: "Ya",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         let formData = new FormData();
@@ -49,7 +50,8 @@ const DetailRevisiKerjasama = ({ token }) => {
             formData,
             {
               headers: {
-                authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission"),
               },
             }
           );
@@ -59,43 +61,43 @@ const DetailRevisiKerjasama = ({ token }) => {
             query: { id: router.query.id },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error")
+          Swal.fire("Gagal", `${error.response.data.message}`, "error");
         }
       }
     });
   };
 
-  
   const handleChange = (e, index) => {
     let dataaa = [...allCooperation];
     dataaa[index].form_content_review = e.target.value;
     setAllCooperation(dataaa);
   };
   useEffect(() => {
-    async function setDataSingle(id){
-      try {
+    setDataSingle(router.query.id);
+  }, [router.query.id, token]);
+
+  async function setDataSingle(id) {
+    try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission"),
           },
         }
       );
-      setTitle(data.data.title);
-      setDate(data.data.submission_date);
-      setAllCooperation(data.data.cooperation_category.data_content);
-      setCooperationID(data.data.cooperation_category);
-      setPeriod(data.data.period);
-      setPeriodUnit(data.data.period_unit);
-      setNote(data.data.note);
+      setTitle(data?.data?.title);
+      setDate(data?.data?.submission_date);
+      setAllCooperation(data?.data?.cooperation_category?.data_content);
+      setCooperationID(data?.data?.cooperation_category);
+      setPeriod(data?.data?.period);
+      setPeriodUnit(data?.data?.period_unit);
+      setNote(data?.data?.note);
     } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error")
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
     }
-
-    }
-    setDataSingle(router.query.id);
-  }, [router.query.id,token]);
+  }
 
   return (
     <PageWrapper>
@@ -125,7 +127,9 @@ const DetailRevisiKerjasama = ({ token }) => {
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
-                    <label className="required mb-2 text-muted">Judul Kerjasama</label>
+                    <label className="required mb-2 text-muted">
+                      Judul Kerjasama
+                    </label>
                     <input
                       placeholder="Masukan Judul Kerjasama"
                       readOnly
@@ -137,14 +141,16 @@ const DetailRevisiKerjasama = ({ token }) => {
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
-                    <label className="required mb-2 text-muted">Kategori Kerjasama</label>
+                    <label className="required mb-2 text-muted">
+                      Kategori Kerjasama
+                    </label>
                     <select
                       className="form-control remove-icon-default border-0 ml-n4"
                       disabled
-                      style={{backgroundColor:"transparent"}}
+                      style={{ backgroundColor: "transparent" }}
                     >
                       <option value="">
-                        {cooperationID && cooperationID.name}
+                        {cooperationID && cooperationID?.name}
                       </option>
                     </select>
                   </div>
@@ -154,7 +160,9 @@ const DetailRevisiKerjasama = ({ token }) => {
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
-                    <label className="required mb-2 text-muted">Periode Kerjasama</label>
+                    <label className="required mb-2 text-muted">
+                      Periode Kerjasama
+                    </label>
                     <input
                       placeholder="Masukan Lama Kerjasama"
                       readOnly
@@ -167,7 +175,11 @@ const DetailRevisiKerjasama = ({ token }) => {
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
-                    <select className="form-control mt-2 border-0 remove-icon-default ml-n4" disabled style={{backgroundColor:"transparent"}}>
+                    <select
+                      className="form-control mt-2 border-0 remove-icon-default ml-n4"
+                      disabled
+                      style={{ backgroundColor: "transparent" }}
+                    >
                       <option value="">Tahun</option>
                     </select>
                   </div>
@@ -176,12 +188,9 @@ const DetailRevisiKerjasama = ({ token }) => {
 
               {/* start loop */}
 
-
-              
-
               {!allCooperation.length
                 ? ""
-                : allCooperation.map((items, index) => {
+                : allCooperation?.map((items, index) => {
                     return (
                       <div className="row" key={index}>
                         <div className="col-12 col-xl-6">
@@ -190,7 +199,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                               htmlFor="staticEmail"
                               className="col-form-label text-muted"
                             >
-                              {items.cooperation_form}
+                              {items?.cooperation_form}
                             </label>
                             <div>
                               <textarea
@@ -199,7 +208,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                                 readOnly
                                 cols="30"
                                 rows="5"
-                                value={items.form_content}
+                                value={items?.form_content}
                                 className="form-control border-0 ml-n4"
                                 placeholder="Tuliskan Tujuan Kerjasama"
                               ></textarea>
@@ -217,7 +226,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                             <div>
                               <textarea
                                 onChange={(e) => handleChange(e, index)}
-                                value={items.form_content_review}
+                                value={items?.form_content_review}
                                 name="cooperation"
                                 id=""
                                 cols="30"
@@ -273,7 +282,6 @@ const DetailRevisiKerjasama = ({ token }) => {
                   </button>
                 </div>
               </div>
-              
             </form>
           </div>
         </div>

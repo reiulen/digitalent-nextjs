@@ -30,7 +30,7 @@ export default function RiwayatPelatihanDetail(props) {
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
   const config = {
     headers: {
-      authorization: "Bearer " + props.session.token,
+      Authorization: "Bearer " + props.session.token,
     },
   };
 
@@ -172,8 +172,6 @@ export default function RiwayatPelatihanDetail(props) {
                     </CustomButton>
                     <CustomButton
                       click={() => {
-                        Cookies.set("id_pelatihan", data.id);
-                        Cookies.set("id_tema", data.tema_id);
                         router.push(`/peserta/form-lpj`);
                       }}
                     >
@@ -195,8 +193,6 @@ export default function RiwayatPelatihanDetail(props) {
                       disabled={!data.survei}
                       click={() => {
                         router.push("/peserta/survey");
-                        Cookies.set("id_pelatihan", data.id);
-                        Cookies.set("id_tema", data.tema_id);
                       }}
                     >
                       Isi Survei
@@ -215,8 +211,6 @@ export default function RiwayatPelatihanDetail(props) {
                     <CustomButton
                       disabled={!data.lpj}
                       click={() => {
-                        Cookies.set("id_pelatihan", data.id);
-                        Cookies.set("id_tema", data.tema_id);
                         router.push(`/peserta/form-lpj`);
                       }}
                     >
@@ -330,7 +324,7 @@ export default function RiwayatPelatihanDetail(props) {
                     <img
                       src={
                         data?.gambar_mitra
-                          ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data?.gambar_mitra}`
+                          ? `${process.env.END_POINT_API_IMAGE_PARTNERSHIP}${data?.gambar_mitra}`
                           : "/assets/media/default-card.png"
                       }
                       width={58}

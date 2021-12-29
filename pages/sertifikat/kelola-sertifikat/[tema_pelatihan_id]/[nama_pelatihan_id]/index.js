@@ -7,6 +7,7 @@ import {
   getPublishedSertifikat,
   getSingleSertifikat,
 } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 const NamaPelatihanID = dynamic(
   () =>
@@ -81,18 +82,25 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+      const token_permission = req.cookies.token_permission;
 
       if (query.status == "1") {
         const data = await store.dispatch(
-          getPublishedSertifikat(query.id, session.user.user.data.token)
+          getPublishedSertifikat(
+            query.id,
+            session.user.user.data.token,
+            token_permission
+          )
         );
         return {
           props: {
@@ -103,14 +111,22 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       } else if (query.status == "edit") {
         const data = await store.dispatch(
-          getSingleSertifikat(query.id, session.user.user.data.token)
+          getSingleSertifikat(
+            query.id,
+            session.user.user.data.token,
+            token_permission
+          )
         );
         return {
           props: { session, title: "Edit - Sertifikat", status: query.status },
         };
       } else {
         await store.dispatch(
-          getSingleSertifikat(query.id, session.user.user.data.token)
+          getSingleSertifikat(
+            query.id,
+            session.user.user.data.token,
+            token_permission
+          )
         );
         return {
           props: {

@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import IconSearch from "../../../../assets/icon/Search";
+import {
+  geteditAdminSite,
+  getListRoles,
+  getListUnitWorks,
+  getListAcademy,
+  getAllListPelatihan,
+} from "../../../../../redux/actions/site-management/user/admin-site.action";
 
 const DetailAdmin = ({ token }) => {
+  let dispatch = useDispatch();
 
-  const detailAdminSite = useSelector((state) => state.detailAdminSite);
+  const editAdminSite = useSelector((state) => state.editAdminSite);
+  const [search, setSearch] = useState(null);
 
   return (
     <PageWrapper>
@@ -27,7 +36,7 @@ const DetailAdmin = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {detailAdminSite.adminSite?.data.name}
+                {editAdminSite.adminSite?.data.name}
               </p>
             </div>
             <div className="form-group d-flex flex-column mt-4">
@@ -39,7 +48,7 @@ const DetailAdmin = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {detailAdminSite.adminSite?.data.email}
+                {editAdminSite.adminSite?.data.email}
               </p>
             </div>
             <div className="form-group d-flex flex-column mt-4">
@@ -51,15 +60,15 @@ const DetailAdmin = ({ token }) => {
                 className="fw-400 fz-16"
                 style={{ color: "#1F1F1F" }}
               >
-                {detailAdminSite.adminSite?.data.status == 1
+                {editAdminSite.adminSite?.data.status == 1
                   ? "Aktif"
                   : "Tidak Aktif"}
               </p>
             </div>
             <div className="form-group d-flex flex-column mt-4">
-              <p style={{ color: "#6C6C6C" }}>Status</p>
+              <p style={{ color: "#6C6C6C" }}>Role</p>
               <div className="d-flex ailgn-items-center">
-                {detailAdminSite.adminSite?.data.roles.map((items, index) => {
+                {editAdminSite.adminSite?.data.roles.map((items, index) => {
                   return (
                     <span
                       className="label label-lg label-inline"
@@ -81,114 +90,101 @@ const DetailAdmin = ({ token }) => {
                 Satuan Kerja
               </p>
               <div className="d-flex ailgn-items-center">
-                <span
-                  className="label label-lg label-inline"
-                  style={{
-                    width: "max-content",
-                    backgroundColor: "#F2F7FC",
-                    color: "#ADB5BD",
-                  }}
-                >
-                  Admin UPT
-                </span>
-                <span
-                  className="label label-lg label-inline ml-3"
-                  style={{
-                    width: "max-content",
-                    backgroundColor: "#F2F7FC",
-                    color: "#ADB5BD",
-                  }}
-                >
-                  Admin UPT
-                </span>
+                {editAdminSite.adminSite?.data.unit_works.map((item, index) => {
+                  return (
+                    <span
+                      className="label label-lg label-inline"
+                      style={{
+                        width: "max-content",
+                        backgroundColor: "#F2F7FC",
+                        color: "#ADB5BD",
+                      }}
+                      key={index}
+                    >
+                      {item.name}
+                    </span>
+                  );
+                })}
               </div>
             </div>
 
-            {detailAdminSite.adminSite?.data.type_access === "akademi" ? (
+            {editAdminSite.adminSite?.data.type_access === "akademi" ? (
               <div className="border-top pt-6">
                 <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1">
                   Hak Akses Pelatihan
                 </h3>
 
-                <form className="d-flex align-items-center w-100">
-                  <div className="row w-100">
-                    <div className="col-12 col-sm-6">
-                      <div className="position-relative overflow-hidden w-100">
-                        <IconSearch
-                          style={{ left: "10" }}
-                          className="left-center-absolute"
-                        />
-                        <input
-                          id="kt_datatable_search_query"
-                          type="text"
-                          className="form-control pl-10"
-                          placeholder="Ketik disini untuk Pencarian..."
-                          // onChange={(e) =>
-                          //   handleChangeValueSearch(e.target.value)
-                          // }
-                        />
-                        <button
-                          type="handleSubmit"
-                          className="btn bg-blue-primary text-white right-center-absolute"
-                          style={{
-                            borderTopLeftRadius: "0",
-                            borderBottomLeftRadius: "0",
-                          }}
-                        >
-                          Cari
-                        </button>
-                      </div>
-                    </div>
+                <div className="form-group d-flex flex-column mt-4 pb-6">
+                  <div className="d-flex ailgn-items-center">
+                    {editAdminSite.adminSite?.data.training_access.map(
+                      (item, index) => {
+                        return (
+                          <span
+                            className="label label-lg label-inline mr-2"
+                            style={{
+                              width: "max-content",
+                              backgroundColor: "#F2F7FC",
+                              color: "#ADB5BD",
+                            }}
+                            key={index}
+                          >
+                            {item.name}
+                          </span>
+                        );
+                      }
+                    )}
                   </div>
-                </form>
+                </div>
+              </div>
+            ) : (
 
-                <div className="table-page mt-5">
-                  <div className="table-responsive">
-                    <table className="table table-separate table-head-custom table-checkable">
-                      <thead style={{ backgroundColor: "#F2F7FC" }}>
-                        <tr>
-                          <th rowSpan="2" className="align-middle fz-16 fw-600">
-                            No
-                          </th>
-                          <th rowSpan="2" className="align-middle fz-16 fw-600">
-                            ID Pelatihan
-                          </th>
-                          <th rowSpan="2" className="align-middle fz-16 fw-600">
-                            Nama Pelatihan
-                          </th>
-                          <th
-                            rowSpan="2"
-                            className="align-middle text-center fz-16 fw-600"
-                          >
-                            Access
-                          </th>
-                          <th
-                            colSpan="2"
-                            className="text-center border-0 fz-16 fw-600"
-                          >
-                            Permission
-                          </th>
-                        </tr>
-                        <tr>
-                          <th className="text-center fz-16 fw-600">Manage</th>
-                          <th className="text-center fz-16 fw-600">View</th>
-                        </tr>
-                      </thead>
+              <div className="table-page mt-5">
+                 <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1">
+                  Hak Akses Pelatihan
+                </h3>
+                <div className="table-responsive">
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ backgroundColor: "#F2F7FC" }}>
+                      <tr>
+                        <th rowSpan="2" className="align-middle fz-16 fw-600">
+                          No
+                        </th>
+                        <th rowSpan="2" className="align-middle fz-16 fw-600">
+                          ID Pelatihan
+                        </th>
+                        <th rowSpan="2" className="align-middle fz-16 fw-600">
+                          Nama Pelatihan
+                        </th>
+                        <th
+                          rowSpan="2"
+                          className="align-middle text-center fz-16 fw-600"
+                        >
+                          Access
+                        </th>
+                        <th
+                          colSpan="2"
+                          className="text-center border-0 fz-16 fw-600"
+                        >
+                          Permission
+                        </th>
+                      </tr>
+                      <tr>
+                        <th className="text-center fz-16 fw-600">Manage</th>
+                        <th className="text-center fz-16 fw-600">View</th>
+                      </tr>
+                    </thead>
 
-                      <tbody>
-                        {
-                          detailAdminSite.adminSite?.data.training_access
-                        .map((items, index) => {
+                    <tbody>
+                      {editAdminSite.adminSite?.data.training_access.map(
+                        (items, index) => {
                           return (
                             <tr key={index}>
                               <td className="py-8 border-bottom">
                                 {index + 1}
                               </td>
+                              <td className="py-8 border-bottom">{items.id}</td>
                               <td className="py-8 border-bottom">
-                                {items.training_id}
-                              </td>
-                              <td className="py-8 border-bottom">
-                                Belom ada dari api
+                                {items.name}
                               </td>
                               <td className="text-center py-8 border-bottom">
                                 <label className="checkbox checkbox-disabled d-flex justify-content-center">
@@ -225,15 +221,12 @@ const DetailAdmin = ({ token }) => {
                               </td>
                             </tr>
                           );
-                        })}
-                      </tbody>
-                     
-                    </table>
-                  </div>
+                        }
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
-            ) : (
-              ""
             )}
 
             {/* start footer btn */}

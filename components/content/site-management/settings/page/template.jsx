@@ -10,6 +10,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
+import Swal from "sweetalert2";
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 import { postTemplate } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
@@ -34,14 +35,15 @@ export default function Template(props) {
   let dispatch = useDispatch();
 
   const optionsStatus = [
-    { value: "menunggu", label: "Menunggu" },
+    { value: "menunggu", label: "Seleksi Administrasi" }, // => diubah menjadi Seleksi Administrasi
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
     { value: "tes substansi", label: "Tes Substansi" },
-    { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
-    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "tidak lulus tes subtansi", label: "Tidak Lulus Tes Substansi" },
+    { value: "lulus tes subtansi", label: "Seleksi Akhir" }, // => Seleksi Akhir
     { value: "ditolak", label: "Ditolak" },
     { value: "diterima", label: "Diterima" },
     { value: "pelatihan", label: "Pelatihan" },
+    { value: "administrasi akhir", label: "Administrasi Akhir" },
     { value: "lulus pelatihan", label: "Lulus Pelatihan" },
     { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
@@ -57,7 +59,9 @@ export default function Template(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      dispatch(postTemplate(props.token, subject, body, status.value.toLowerCase()));
+      dispatch(
+        postTemplate(props.token, subject, body, status.value.toLowerCase())
+      );
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -76,20 +80,21 @@ export default function Template(props) {
     };
 
     setEditorLoaded(true);
-
-    axios
-      .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status?.value}`,
-        {
-          headers: {
-            authorization: `Bearer ${props.token}`,
-          },
-        }
-      )
-      .then((items) => {
-        setSubject(items.data.data.training_rules.subject);
-        setBody(items.data.data.training_rules.body);
-      })
+    if (status?.value !== undefined) {
+      axios
+        .get(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/${status?.value}`,
+          {
+            headers: {
+              authorization: `Bearer ${props.token}`,
+            },
+          }
+        )
+        .then((items) => {
+          setSubject(items.data.data.training_rules.subject);
+          setBody(items.data.data.training_rules.body);
+        });
+    }
   }, [props.token, status]);
 
   return (
@@ -102,7 +107,10 @@ export default function Template(props) {
             </div>
             <div className="form-group">
               <label>Status</label>
-              <div className="mr-4" style={{ zIndex: '99', position: 'relative' }}>
+              <div
+                className="mr-4"
+                style={{ zIndex: "99", position: "relative" }}
+              >
                 <Select
                   placeholder="Pilih Status"
                   options={optionsStatus}
@@ -113,12 +121,9 @@ export default function Template(props) {
                   }}
                 />
               </div>
-              {simpleValidator.current.message(
-                "status",
-                status,
-                "required",
-                { className: "text-danger" }
-              )}
+              {simpleValidator.current.message("status", status, "required", {
+                className: "text-danger",
+              })}
             </div>
             <div className="form-group mr-4">
               <label>Subject</label>
@@ -134,12 +139,9 @@ export default function Template(props) {
                   simpleValidator.current.showMessageFor("subject");
                 }}
               />
-              {simpleValidator.current.message(
-                "subject",
-                subject,
-                "required",
-                { className: "text-danger" }
-              )}
+              {simpleValidator.current.message("subject", subject, "required", {
+                className: "text-danger",
+              })}
             </div>
             <div className="form-group mr-4">
               <div className="ckeditor">
@@ -158,34 +160,35 @@ export default function Template(props) {
                 ) : (
                   <p>Tunggu Sebentar</p>
                 )}
-                {simpleValidator.current.message(
-                  "data",
-                  body,
-                  "required",
-                  { className: "text-danger" }
-                )}
+                {simpleValidator.current.message("data", body, "required", {
+                  className: "text-danger",
+                })}
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-end mb-5 mr-4">
-            <button
-              type="reset"
-              className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
-              onClick={(e) => {
-                setStatus("")
-                setSubject("")
-                setBody("")
-              }}
-            >
-              Reset
-            </button>
-            <button
-              type="submit"
-              className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-            >
-              Kirim
-            </button>
-          </div>
+          {localStorage
+            .getItem("permissions")
+            .includes("site_management.setting.pelatihan.manage") && (
+            <div className="d-flex justify-content-end mb-5 mr-4">
+              <button
+                type="reset"
+                className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                onClick={(e) => {
+                  setStatus("");
+                  setSubject("");
+                  setBody("");
+                }}
+              >
+                Reset
+              </button>
+              <button
+                type="submit"
+                className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+              >
+                Kirim
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>

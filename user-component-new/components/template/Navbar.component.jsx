@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, Toast } from "react-bootstrap";
 import Link from "next/link";
 import { signOut } from "next-auth/client";
 import IconArrow from "../../../components/assets/icon/Arrow2";
@@ -8,6 +9,15 @@ import style from "./Navbar.module.css";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import LoadingSidebar from "../loader/LoadingSidebar";
+import { toast } from "react-toastify";
+
+import {
+  getFirebaseToken,
+  onMessageListener,
+} from "../../../messaging_get_token";
+// import { firebaseReceiveMessage } from "../../../messaging_receive_message";
+
+import { getMessaging, onMessage } from "firebase/messaging";
 
 import {
   Navbar,
@@ -42,23 +52,33 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
-  const [secondary, setSecondary] = useState(null);
   const [warna, setWarna] = useState("secondary");
-  const [menu, setMenu] = useState(
-    localStorage.getItem("menu")
-      ? JSON.parse(localStorage.getItem("menu"))
-      : null
-  );
+  const [menu, setMenu] = useState([]);
 
-  const { footer, loading } = useSelector(state => state.berandaFooter);
+  const [dataNotification, setDataNotification] = useState([]);
+
+  const { footer, loading } = useSelector((state) => state.berandaFooter);
+
+  const [isTokenFound, setTokenFound] = useState(false);
+  const [alertNotif, setAlertNotif] = useState(false);
 
   useEffect(() => {
+    getFirebaseToken(setTokenFound);
+
+    const messaging = getMessaging();
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload.notification);
+      toast.info(payload.notification.title);
+      setAlertNotif(true);
+    });
+
     if (!session) {
       return;
     }
     if (session && session.roles[0] == "user") {
+      GetNotifikasi();
       if (
         !dataPribadi || // 👈 null and undefined check
         (dataPribadi && Object.keys(dataPribadi).length === 0)
@@ -66,14 +86,13 @@ const Navigationbar = ({ session }) => {
         signOut();
       }
     }
-
     if (session) {
       if (
         dataPribadi &&
         Object.keys(dataPribadi).length !== 0 &&
         !dataPribadi.status
       ) {
-        if (dataPribadi.wizard == 1) {
+        if (dataPribadi.wizard == 1 || dataPribadi.wizard == 0) {
           return router.push("/peserta/wizzard");
         }
         if (dataPribadi.wizard == 2) {
@@ -89,13 +108,13 @@ const Navigationbar = ({ session }) => {
     }
   }, []);
 
-  const getDataGeneral = async token => {
+  const getDataGeneral = async (token) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -106,27 +125,42 @@ const Navigationbar = ({ session }) => {
     } catch (error) {}
   };
 
-  const getMenu = async token => {
+  const GetNotifikasi = async () => {
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN + "api/v1/auth/get-notikasi-user",
+        {
+          headers: {
+            Authorization: `Bearer ${session.token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setDataNotification(res.data.data);
+      })
+      .catch((err) => {});
+  };
+
+  const getMenu = async (token) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
         {
           headers: {
-            authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      localStorage.setItem("menu", JSON.stringify(data.data));
+      const result = data.data.filter((item) => {
+        return item.status == 1 && item.page_status == 1;
+      });
+      setMenu(result);
     } catch (error) {}
   };
 
   useEffect(() => {
-    getMenu();
     if (!localStorage.getItem("navbar")) {
       getDataGeneral();
-    }
-    if (!localStorage.getItem("menu")) {
-      getMenu();
     }
     if (localStorage.getItem("navbar") === "1") {
       setWarna("primary");
@@ -138,6 +172,7 @@ const Navigationbar = ({ session }) => {
   }, []);
 
   const [akademi, setAkademi] = useState([]);
+
   const getAkademi = async () => {
     let link =
       process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/dasboard-akademi`;
@@ -148,6 +183,7 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     getAkademi();
+    getMenu();
   }, []);
 
   const handlerLogout = () => {
@@ -182,7 +218,7 @@ const Navigationbar = ({ session }) => {
 
   const [search, setSearch] = useState("");
 
-  const handleEnter = e => {
+  const handleEnter = (e) => {
     e.preventDefault();
     if (e.code == "Enter") {
       dispatch(searchKeyword(search));
@@ -191,16 +227,6 @@ const Navigationbar = ({ session }) => {
   };
 
   const [notification, setNotification] = useState(false);
-  const data = [
-    { icon: "Fail", text: "test" },
-    { icon: "Success", text: "test" },
-    { icon: "Warning", text: "test" },
-    { icon: "File", text: "test" },
-    { icon: "Fail", text: "test" },
-    { icon: "Success", text: "test" },
-    { icon: "Warning", text: "test" },
-    { icon: "File", text: "test" },
-  ];
 
   const [navbarItems, setNavbarItems] = useState("");
   const [rilisMedia, setRilisMedia] = useState([
@@ -208,9 +234,11 @@ const Navigationbar = ({ session }) => {
     "artikel",
     "galeri",
     "video",
+    "testimoni",
   ]);
-  const [lainnya, setLainnya] = useState(["about us", "about DTS"]);
   const [index, setIndex] = useState(0);
+
+  const [state, setState] = useState();
 
   return (
     <>
@@ -242,7 +270,7 @@ const Navigationbar = ({ session }) => {
             />
           </Navbar.Brand>
           <div className="d-flex d-lg-none justify-content-end align-items-center">
-            {!isNavOpen && session && session.roles[0] === "user" && (
+            {!isNavOpen && session && session.roles[0] === "user" ? (
               <div className="row m-3">
                 <a className="col-3 p-md-0 col-xl-4 text-center">
                   <i
@@ -261,13 +289,79 @@ const Navigationbar = ({ session }) => {
                   </a>
                 </Link>
                 <a href="#" className="col-3 p-md-0 col-xl-4 text-center">
-                  <i className="ri-notification-4-line ri-2x mx-0 mx-md-3 text-gray"></i>
+                  <i
+                    className="ri-notification-4-line ri-2x mx-0 mx-md-3 text-gray"
+                    onClick={() => {
+                      setNotification(!notification);
+                      setAlertNotif(false);
+                    }}
+                  ></i>
+                  {alertNotif && (
+                    <div
+                      onClick={() => setNotification(!notification)}
+                      className="position-absolute bg-danger rounded-full cursor-pointer"
+                      style={{
+                        height: "15px",
+                        width: "15px",
+                        right: "8px",
+                        top: "5px",
+                        border: "2px solid white",
+                      }}
+                    ></div>
+                  )}
+                  {notification && (
+                    <div
+                      className="position-absolute px-5 bg-white w-200px right-0 p-6 max-h-275px overflow-auto"
+                      style={{ color: "#6C6C6C" }}
+                    >
+                      <div className="d-flex align-items-center fz-12 justify-content-between mb-9">
+                        <div>Notifikasi</div>
+                        <img
+                          src="/assets/media/notification/Close_Button.png"
+                          alt="close_button"
+                          onClick={() => {
+                            setNotification(!notification);
+                            setAlertNotif(false);
+                          }}
+                          className="cursor-pointer"
+                          style={{ width: "20px", height: "20px" }}
+                        />
+                      </div>
+                      {dataNotification?.length > 0 &&
+                        dataNotification?.map((el, i) => {
+                          return (
+                            <Fragment key={i}>
+                              <div className="d-flex align-items-center position-relative ">
+                                <img
+                                  src={`/assets/media/notification/${el.icon}.png`}
+                                  alt="success"
+                                  style={{ objectFit: "cover" }}
+                                />
+                                <span className="ml-5 fz-14 text-capitalize">
+                                  {el.Pesan}
+                                </span>
+                              </div>
+                              <hr className="my-3" />
+                            </Fragment>
+                          );
+                        })}
+                    </div>
+                  )}
+                </a>
+              </div>
+            ) : (
+              <div>
+                <a className="col-3 p-md-0 col-xl-4 text-left">
+                  <i
+                    className="ri-search-2-line ri-2x mx-0 mx-md-3 text-gray"
+                    onClick={() => setShowSearch(!showSearch)}
+                  ></i>
                 </a>
               </div>
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={e => {
+              onClick={(e) => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -281,7 +375,16 @@ const Navigationbar = ({ session }) => {
           </div>
         </Col>
         {showSearch && (
-          <Form className="w-100 my-2 mx-1 row ">
+          <Form
+            className="w-100 my-2 mx-1 row  d-block d-lg-none"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (search != "") {
+                router.push(`/pencarian?cari=${search}&page=1`);
+                dispatch(searchKeyword(search));
+              }
+            }}
+          >
             <div className="position-relative w-100">
               <FormControl
                 type="search"
@@ -292,17 +395,22 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={e => {
+                // onKeyDown={(e) => {
+                // 	setSearch(e.target.value);
+                // 	// if (e.code == "Enter") {
+                // 	// 	handleEnter(e);
+                // 	// }
+                // 	setState(e.code);
+                // }}
+                onChange={(e) => {
                   setSearch(e.target.value);
-                  if (e.code == "Enter") {
-                    handleEnter(e);
-                  }
                 }}
               />
               <IconSearch
                 className="left-center-absolute"
                 style={{ left: "10px" }}
               />
+              {state}
             </div>
           </Form>
         )}
@@ -321,13 +429,19 @@ const Navigationbar = ({ session }) => {
                     navbarItems ? `w-350px p-0 m-0` : "w-175px p-0 m-0"
                   }
                 >
-                  <Col md={navbarItems ? 6 : 12} className="p-0 m-0">
+                  <Col
+                    md={navbarItems ? 6 : 12}
+                    className="p-0 m-0"
+                    style={
+                      navbarItems ? { borderRight: "1px solid #6c6c6c" } : {}
+                    }
+                  >
                     <NavDropdown.Item href="/" className="navdropdown-child">
                       Beranda
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={e => {
+                      onClick={(e) => {
                         setNavbarItems(akademi);
 
                         if (index != 1) {
@@ -341,22 +455,29 @@ const Navigationbar = ({ session }) => {
                       active={index == 1 ? true : false}
                     >
                       <div className="d-flex justify-content-between align-items-center">
-                        Pelatihan
+                        Akademi
                         <span className="ri-arrow-right-s-line" />
                       </div>
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      pusat informasi
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      tentang kami
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      penyelenggara
-                    </NavDropdown.Item>
+                    <Link href="/pusat-informasi" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        pusat informasi
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/tentang-kami" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        tentang kami
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/mitra" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        mitra pelatihan
+                      </NavDropdown.Item>
+                    </Link>
+
                     <NavDropdown.Item
                       className="navdropdown-child"
-                      onClick={e => {
+                      onClick={(e) => {
                         setNavbarItems(rilisMedia);
                         if (index != 2) {
                           setIndex(2);
@@ -373,167 +494,86 @@ const Navigationbar = ({ session }) => {
                         <span className="ri-arrow-right-s-line" />
                       </div>
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      FAQ
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/" className="navdropdown-child">
-                      Kontak
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      onClick={e => {
-                        setNavbarItems(lainnya);
-                        if (index != 3) {
-                          setIndex(3);
-                        } else {
-                          setNavbarItems(null);
-                          setIndex(0);
-                        }
-                        e.stopPropagation();
-                      }}
-                      active={index == 3 ? true : false}
-                      className="navdropdown-child"
-                    >
-                      <div className="d-flex justify-content-between align-items-center">
-                        lainnya
-                        <span className="ri-arrow-right-s-line" />
-                      </div>
-                    </NavDropdown.Item>
+                    <Link href="/faq" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        FAQ
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/kontak" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        Kontak
+                      </NavDropdown.Item>
+                    </Link>
+                    <Link href="/cek-sertifikat" passHref>
+                      <NavDropdown.Item className="navdropdown-child">
+                        Cek Sertifikat
+                      </NavDropdown.Item>
+                    </Link>
+                    {menu?.length > 0 && (
+                      <NavDropdown.Item
+                        onClick={(e) => {
+                          setNavbarItems(menu);
+                          if (index != 3) {
+                            setIndex(3);
+                          } else {
+                            setNavbarItems(null);
+                            setIndex(0);
+                          }
+                          e.stopPropagation();
+                        }}
+                        active={index == 3 ? true : false}
+                        className="navdropdown-child"
+                      >
+                        <div className="d-flex justify-content-between align-items-center">
+                          lainnya
+                          <span className="ri-arrow-right-s-line" />
+                        </div>
+                      </NavDropdown.Item>
+                    )}
                   </Col>
-                  <Col className="p-0 m-0 h-350px overflow-auto">
+                  <Col
+                    className={`p-0 m-0 ${
+                      menu?.length > 0 ? `h-350px` : "h-350px"
+                    } overflow-auto ${style.scrollbar_navbar}`}
+                  >
                     {navbarItems &&
-                      navbarItems.map((el, i) => {
+                      navbarItems?.map((el, i) => {
                         return (
-                          <Link
+                          <a
                             key={i}
-                            href={
-                              el.slug ? `/detail/akademi/${el.id}` : `/${el}`
-                            }
-                            passHref
+                            onClick={() => {
+                              if (el.slug) {
+                                window.location.href = `/detail/akademi/${el.id}`;
+                              } else if (el.name) {
+                                window.location.href = `/lainnya/${el.url}`;
+                              } else {
+                                window.location.href = `/${el}`;
+                              }
+                            }}
                           >
-                            <NavDropdown.Item className="navdropdown-child">
-                              {el.slug ? el.slug : el}
+                            <NavDropdown.Item className={`navdropdown-child `}>
+                              {el.slug ? el.slug : el.name ? el.name : el}
                             </NavDropdown.Item>
-                          </Link>
+                          </a>
                         );
                       })}
                   </Col>
                 </Row>
-                {/* <Fragment>
-                  <NavDropdown.Item href="/" className="navdropdown-child">
-                    Beranda
-                  </NavDropdown.Item>
-                  <div className="btn-group dropright w-100">
-                    <a
-                      type="button"
-                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Pelatihan
-                    </a>
-                    <div className="dropdown-menu ml-3">
-                      {akademi.map((item, i) => {
-                        return (
-                          <Link
-                            key={item.id}
-                            href={`/detail/akademi/${item.id}`}
-                          >
-                            <a className="dropdown-item navdropdown-child ">
-                              {item.slug}
-                            </a>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <Link href="/pusat-informasi" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Pusat Informasi
-                    </NavDropdown.Item>
-                  </Link>
-                  <Link href="/tentang-kami" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Tentang Kami
-                    </NavDropdown.Item>
-                  </Link>
-                  <Link href="/penyelenggara" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Penyelenggara
-                    </NavDropdown.Item>
-                  </Link>
-                  <div className="btn-group dropright w-100">
-                    <a
-                      type="button"
-                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Rilis Media
-                    </a>
-                    <div className="dropdown-menu ml-3">
-                      <Link href="/berita">
-                        <a className="dropdown-item navdropdown-child">
-                          Berita
-                        </a>
-                      </Link>
-                      <Link href="/artikel">
-                        <a className="dropdown-item navdropdown-child">
-                          Artikel
-                        </a>
-                      </Link>
-                      <Link href="/galeri">
-                        <a className="dropdown-item navdropdown-child">
-                          Galeri
-                        </a>
-                      </Link>
-                      <Link href="/video">
-                        <a className="dropdown-item navdropdown-child">Video</a>
-                      </Link>
-                    </div>
-                  </div>
-                  <Link href="/faq" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      FAQ
-                    </NavDropdown.Item>
-                  </Link>
-                  <Link href="/kontak" passHref>
-                    <NavDropdown.Item className="navdropdown-child">
-                      Kontak
-                    </NavDropdown.Item>
-                  </Link>
-                  <div className="btn-group dropright w-100">
-                    <a
-                      type="button"
-                      className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Lainnya
-                    </a>
-                    <div className="dropdown-menu ml-3">
-                      {menu
-                        ? menu.map((item, index) => {
-                            return (
-                              <Link href={"/lainnya/" + item.url} key={index}>
-                                <a className="dropdown-item navdropdown-child">
-                                  {item.name}
-                                </a>
-                              </Link>
-                            );
-                          })
-                        : null}
-                    </div>
-                  </div>
-                </Fragment> */}
               </NavDropdown>
             </div>
             {/* END MENU */}
           </Nav>
           {/* Search Bar */}
-          <Form className="w-100 my-2 mx-5 row ">
+          <Form
+            className="w-100 my-2 mx-5 row"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (search != "") {
+                router.push(`/pencarian?cari=${search}&page=1`);
+                dispatch(searchKeyword(search));
+              }
+            }}
+          >
             <div className="position-relative w-100 d-none d-lg-block">
               <FormControl
                 type="search"
@@ -544,12 +584,12 @@ const Navigationbar = ({ session }) => {
                   backgroundColor: "#F2F7FC",
                   border: "0px !important",
                 }}
-                onKeyDown={e => {
-                  if (e.code == "Enter") {
-                    handleEnter(e);
-                  }
-                }}
-                onChange={e => {
+                // onKeyDown={(e) => {
+                // 	if (e.code == "Enter") {
+                // 		handleEnter(e);
+                // 	}
+                // }}
+                onChange={(e) => {
                   setSearch(e.target.value);
                 }}
               />
@@ -578,41 +618,63 @@ const Navigationbar = ({ session }) => {
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
               >
                 <i
-                  onClick={() => setNotification(!notification)}
+                  onClick={() => {
+                    setNotification(!notification);
+                    setAlertNotif(false);
+                  }}
                   className="ri-notification-4-line ri-2x  text-gray"
                 ></i>
               </a>
+              {alertNotif && (
+                <div
+                  onClick={() => {
+                    setNotification(!notification);
+                  }}
+                  className="position-absolute bg-danger rounded-full cursor-pointer"
+                  style={{
+                    height: "15px",
+                    width: "15px",
+                    right: "10px",
+                    top: "5px",
+                    border: "2px solid white",
+                  }}
+                ></div>
+              )}
               {notification && (
                 <div
-                  className="position-absolute px-5 bg-white w-400px right-0 p-12"
+                  className="position-absolute px-5 bg-white w-400px right-0 p-12 max-h-275px overflow-auto d-md-block d-none"
                   style={{ color: "#6C6C6C" }}
                 >
                   <div className="d-flex align-items-center fz-20 justify-content-between mb-9">
-                    <div>Notification</div>
+                    <div>Notifikasi</div>
                     <img
                       src="/assets/media/notification/Close_Button.png"
                       alt="close_button"
-                      onClick={() => setNotification(!notification)}
+                      onClick={() => {
+                        setNotification(!notification);
+                        setAlertNotif(false);
+                      }}
                       className="cursor-pointer"
                     />
                   </div>
-                  {data.map((el, i) => {
-                    return (
-                      <Fragment key={i}>
-                        <div className="d-flex align-items-center position-relative">
-                          <img
-                            src={`/assets/media/notification/${el.icon}.png`}
-                            alt="success"
-                            style={{ objectFit: "cover" }}
-                          />
-                          <span className="ml-5 fz-14 text-capitalize">
-                            dokumen anda sedang di tahap pengumuman akhir
-                          </span>
-                        </div>
-                        <hr className="my-3" />
-                      </Fragment>
-                    );
-                  })}
+                  {dataNotification?.length > 0 &&
+                    dataNotification?.map((el, i) => {
+                      return (
+                        <Fragment key={i}>
+                          <div className="d-flex align-items-center position-relative ">
+                            <img
+                              src={`/assets/media/notification/${el.icon}.png`}
+                              alt="success"
+                              style={{ objectFit: "cover" }}
+                            />
+                            <span className="ml-5 fz-14 text-capitalize">
+                              {el.Pesan}
+                            </span>
+                          </div>
+                          <hr className="my-3" />
+                        </Fragment>
+                      );
+                    })}
                 </div>
               )}
             </div>
@@ -706,7 +768,7 @@ const Navigationbar = ({ session }) => {
                             style={{ fontSize: "16px" }}
                             className="ri-user-line mr-2"
                           ></div>
-                          PROFILE
+                          PROFIL
                         </li>
                       </Link>
                       <Link href="/peserta/riwayat-pelatihan" passHref>
@@ -718,15 +780,17 @@ const Navigationbar = ({ session }) => {
                           PELATIHAN
                         </li>
                       </Link>{" "}
-                      <Link href="/peserta/artikel" passHref>
-                        <li className="items-lists rounded-0">
-                          <div
-                            style={{ fontSize: "16px" }}
-                            className="ri-bar-chart-horizontal-line mr-2"
-                          ></div>
-                          ARTIKEL
-                        </li>
-                      </Link>
+                      {dataPribadi?.lulus && (
+                        <Link href="/peserta/artikel" passHref>
+                          <li className="items-lists rounded-0">
+                            <div
+                              style={{ fontSize: "16px" }}
+                              className="ri-bar-chart-horizontal-line mr-2"
+                            ></div>
+                            ARTIKEL
+                          </li>
+                        </Link>
+                      )}
                       <Link href="/peserta/pengaturan" passHref>
                         <li className="items-lists rounded-0">
                           <div
@@ -759,7 +823,9 @@ const Navigationbar = ({ session }) => {
                 {/* Button Masuk dan Daftar */}
                 <Link href="/login">
                   <a className="mx-4 mx-md-2">
-                    <button className="btn btn-sm btn-block btn-login-peserta btn-outline-primary-new my-2 justify-content-center py-3">
+                    <button
+                      className={`btn btn-sm btn-block btn-login-peserta btn-outline-primary-new my-2 justify-content-center py-3 color-hover-${warna}`}
+                    >
                       {/* <IconLogin className="mr-2 icon-login" /> */}
                       <i className="ri-login-box-line mr-2"></i>
                       Masuk
@@ -807,14 +873,14 @@ const Navigationbar = ({ session }) => {
                     className="p-0 w-100"
                   >
                     <div className="d-flex align-items-center justify-content-between p-0 m-0">
-                      Pelatihan
+                      Akademi
                       <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
                     </div>
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
                     {/* gw map disini */}
                     {akademi &&
-                      akademi.map((item, i) => {
+                      akademi?.map((item, i) => {
                         return (
                           <Fragment key={item.id}>
                             <Link href={`/detail/akademi/${item.id}`} passHref>
@@ -834,10 +900,10 @@ const Navigationbar = ({ session }) => {
                 <Link href="/pusat-informasi">Pusat Informasi</Link>
               </Col>
               <Col className="mb-8" sm={12}>
-                Tentang Kami
+                <Link href="/tentang-kami">Tentang Kami</Link>
               </Col>
               <Col className="mb-8" sm={12}>
-                <Link href="/penyelenggara">Penyelenggara</Link>
+                <Link href="/mitra">Mitra Pelatihan</Link>
               </Col>
               <Col sm={12}>
                 <Dropdown color="white">
@@ -907,44 +973,54 @@ const Navigationbar = ({ session }) => {
               <Col className="mb-8" sm={12}>
                 <Link href="/kontak">Kontak</Link>
               </Col>
-              <Col sm={12}>
-                <Dropdown color="white">
-                  <Dropdown.Toggle
-                    id="dropdown-basic"
-                    style={{
-                      backgroundColor: "transparent",
-                      border: "transparent",
-                      color: "#6C6C6C",
-                      fontSize: "14px",
-                    }}
-                    className="p-0"
-                  >
-                    <div className="d-flex align-items-center justify-content-between p-0 m-0">
-                      Lainnya
-                      <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
-                    </div>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
-                    {menu
-                      ? menu.map((item, index) => {
-                          return (
-                            <Fragment key={index}>
-                              <div
-                                onClick={() => {
-                                  router.push("/lainnya/" + item.url);
-                                }}
-                                className="p-4 fz-12"
-                              >
-                                {item.name}
-                              </div>
-                              <hr className="w-100 p-0 m-0" />
-                            </Fragment>
-                          );
-                        })
-                      : null}
-                  </Dropdown.Menu>
-                </Dropdown>
+
+              <Col className="mb-8" sm={12}>
+                <Link href="/cek-sertifikat">Cek Sertifikat</Link>
               </Col>
+              {menu?.length > 0 && (
+                <Col sm={12}>
+                  <Dropdown color="white">
+                    <Dropdown.Toggle
+                      id="dropdown-basic"
+                      style={{
+                        backgroundColor: "transparent",
+                        border: "transparent",
+                        color: "#6C6C6C",
+                        fontSize: "14px",
+                      }}
+                      className="p-0"
+                    >
+                      <div className="d-flex align-items-center justify-content-between p-0 m-0">
+                        Lainnya
+                        <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
+                      </div>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="w-100 mb-6 shadow-none border p-0">
+                      {menu
+                        ? menu?.map((item, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <div
+                                  onClick={() => {
+                                    router.push("/lainnya/" + item.url);
+                                  }}
+                                  className={`p-4 fz-12 ${
+                                    item.status === 1 && item.page_status === 1
+                                      ? ""
+                                      : "d-none"
+                                  }`}
+                                >
+                                  {item.name}
+                                </div>
+                                <hr className="w-100 p-0 m-0" />
+                              </Fragment>
+                            );
+                          })
+                        : null}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Col>
+              )}
             </Row>
             <hr />
             {/* Start side bar */}

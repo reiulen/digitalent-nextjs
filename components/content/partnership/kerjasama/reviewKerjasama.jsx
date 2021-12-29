@@ -4,6 +4,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const ReviewKerjasama = ({ token }) => {
   const router = useRouter();
@@ -40,7 +41,7 @@ const ReviewKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         router.push({
@@ -63,7 +64,7 @@ const ReviewKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         try {
@@ -73,6 +74,7 @@ const ReviewKerjasama = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission"),
               },
             }
           );
@@ -81,7 +83,7 @@ const ReviewKerjasama = ({ token }) => {
             query: { successTerima: true },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error").then(
             () => {
               router.push({
                 pathname: `/partnership/kerjasama`,
@@ -105,7 +107,7 @@ const ReviewKerjasama = ({ token }) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         try {
@@ -115,6 +117,7 @@ const ReviewKerjasama = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission"),
               },
             }
           );
@@ -124,7 +127,7 @@ const ReviewKerjasama = ({ token }) => {
             query: { successReject: true },
           });
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error").then(
             () => {
               router.push({
                 pathname: `/partnership/kerjasama`,
@@ -138,55 +141,58 @@ const ReviewKerjasama = ({ token }) => {
 
   const [statusInfo, setstatusInfo] = useState("");
   useEffect(() => {
-    async function setDataSingle(id, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setTitle(data.data.title);
-        setDate(data.data.submission_date);
-        setCooperationID(data.data.cooperation_category);
-        setPeriod(data.data.period);
-        setPeriodUnit(data.data.period_unit);
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
-      }
-    }
     setDataSingle(router.query.id, token);
-
-    async function setDataSingleSelesaiReview(id, version, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/show-revisi/${id}/${version}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setTitleView(data.data.title);
-        setDateView(data.data.date);
-        setCooperationIDView(data.data.cooperation_category);
-        setPeriodView(data.data.period);
-        setPeriodUnitView(data.data.period_unit);
-        setAllCooperationView(data.data.cooperation_category.data_content);
-        setNoteView(data.data.note);
-        setMitra(data.data.mitra);
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
-      }
-    }
-
     setDataSingleSelesaiReview(router.query.id, router.query.version, token);
+
     if (router.query.statusInfo) {
       setstatusInfo(router.query.statusInfo);
     }
   }, [router.query.id, router.query.version, router.query.statusInfo, token]);
+
+  async function setDataSingle(id, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission"),
+          },
+        }
+      );
+      setTitle(data?.data?.title);
+      setDate(data?.data?.submission_date);
+      setCooperationID(data?.data?.cooperation_category);
+      setPeriod(data?.data?.period);
+      setPeriodUnit(data?.data?.period_unit);
+    } catch (error) {
+      Swal.fire("Gagal", `${error.response.data?.message}`, "error");
+    }
+  }
+
+  async function setDataSingleSelesaiReview(id, version, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/show-revisi/${id}/${version}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission"),
+          },
+        }
+      );
+      setTitleView(data?.data?.title);
+      setDateView(data?.data?.date);
+      setCooperationIDView(data?.data?.cooperation_category);
+      setPeriodView(data?.data?.period);
+      setPeriodUnitView(data?.data?.period_unit);
+      setAllCooperationView(data?.data?.cooperation_category.data_content);
+      setNoteView(data?.data?.note);
+      setMitra(data?.data?.mitra);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
+    }
+  }
 
   return (
     <PageWrapper>
@@ -201,7 +207,11 @@ const ReviewKerjasama = ({ token }) => {
             {statusInfo && statusInfo === "Sudah direview" ? (
               <form>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label"
+                    style={{ color: "#6C6C6C" }}
+                  >
                     Tanggal
                   </label>
                   <input
@@ -212,7 +222,11 @@ const ReviewKerjasama = ({ token }) => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label"
+                    style={{ color: "#6C6C6C" }}
+                  >
                     Judul kerjasama
                   </label>
                   <input
@@ -226,7 +240,11 @@ const ReviewKerjasama = ({ token }) => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label"
+                    style={{ color: "#6C6C6C" }}
+                  >
                     Kategori kerjasama
                   </label>
                   <select
@@ -241,7 +259,11 @@ const ReviewKerjasama = ({ token }) => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label"
+                    style={{ color: "#6C6C6C" }}
+                  >
                     Periode
                   </label>
                   <div className="row">
@@ -263,7 +285,7 @@ const ReviewKerjasama = ({ token }) => {
 
                 {cooperationIDView === ""
                   ? ""
-                  : cooperationIDView.data_content.map((items, i) => {
+                  : cooperationIDView?.data_content?.map((items, i) => {
                       return (
                         <div className="row" key={i}>
                           <div className="col-12 col-sm-6">
@@ -271,13 +293,13 @@ const ReviewKerjasama = ({ token }) => {
                               <label
                                 htmlFor="staticEmail"
                                 className="col-form-label"
-                                style={{color:"#6C6C6C"}}
+                                style={{ color: "#6C6C6C" }}
                               >
-                                {items.cooperation_form}
+                                {items?.cooperation_form}
                               </label>
                               <textarea
                                 readOnly
-                                value={items.form_content}
+                                value={items?.form_content}
                                 name=""
                                 id={i}
                                 cols="30"
@@ -296,7 +318,7 @@ const ReviewKerjasama = ({ token }) => {
                               </label>
                               <textarea
                                 readOnly
-                                value={items.form_content_review}
+                                value={items?.form_content_review}
                                 name=""
                                 id={i}
                                 cols="30"

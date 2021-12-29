@@ -1,10 +1,6 @@
 import React from "react";
-
 import dynamic from "next/dynamic";
-// import Layout from "../../../components/templates/layout.component";
-// import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-// import ListSubstansi from "../../../components/content/subvit/substansi/list-substansi";
 
 import {
   getAllSubtanceQuestionBanks,
@@ -29,7 +25,10 @@ export default function Substansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListSubstansi token={session.token} />
+        <ListSubstansi
+          token={session.token}
+          tokenPermission={props.permission}
+        />
       </div>
     </>
   );
@@ -39,14 +38,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -75,7 +66,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "List Test Substansi - Subvit" },
+        props: { session, title: "List Test Substansi - Subvit", permission },
       };
     }
 );

@@ -1,5 +1,5 @@
 // #Next & React
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // #Page, Component & Library
@@ -15,15 +15,50 @@ import { toPng } from "html-to-image";
 import { useDispatch } from "react-redux";
 import {
   clearErrors,
+  getPublishedSertifikat,
+  getSingleSertifikat,
   newSertifikat,
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import * as moment from "moment";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
+import {
+  helperRegexNumber,
+  helperRemoveZeroFromIndex0,
+  SweatAlert,
+} from "../../../../../../utils/middleware/helper";
+import Cookies from "js-cookie";
+import Select from "react-select";
+import axios from "axios";
+import {
+  getOptionsThemeCloneSertifikat,
+  getOptionsTrainingCloneSertifikat,
+} from "../../../../../../redux/actions/sertifikat/clone-sertifikat.action";
 
 export default function TambahMasterSertifikat({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const { query } = router;
+  const token_permission = Cookies.get("token_permission");
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token.token,
+    },
+  };
+
+  const allOptionAcademy = useSelector(
+    (state) => state.optionsAcademyCloneSertifikat
+  );
+
+  const allOptionTheme = useSelector(
+    (state) => state.optionsThemeCloneSertifikat
+  );
+
+  const allOptionTraining = useSelector(
+    (state) => state.optionsTrainingCloneSertifikat
+  );
+
+  const publishedCertificate = useSelector((state) => state.publishCertificate);
+  const [, forceUpdate] = useState();
 
   // #Div Reference Lembar 1
   const divReference = useRef(null);
@@ -33,12 +68,14 @@ export default function TambahMasterSertifikat({ token }) {
   const [confirmModal, setConfirmModal] = useState(false);
 
   const [date, setDate] = useState(new Date());
+  const { pelatihan: pelatihanDetail } = useSelector(
+    (state) => state.detailPelatihan
+  );
 
   // #Redux state
-  const { certificate } = useSelector(state => state.detailCertificates);
-
+  const { certificate } = useSelector((state) => state.detailCertificates);
   const { error, certificate: newCertificate } = useSelector(
-    state => state.newCertificates
+    (state) => state.newCertificates
   );
 
   useEffect(() => {
@@ -51,18 +88,23 @@ export default function TambahMasterSertifikat({ token }) {
           created: true,
         },
       });
+    } else {
+      setDisablePublish(false);
     }
   }, [newCertificate, query.theme_name, query.theme_id, router]);
+
+  useEffect(() => {
+    setDisablePublish(false);
+  }, [error]);
 
   const [pelatihan, setPelatihan] = useState();
 
   useEffect(() => {
     const filter = certificate.data.pelatihan.list.filter(
-      item => item.training == query.theme_name
+      (item) => item.id == query.id
     );
     setPelatihan(filter[0]);
   }, []);
-
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -88,7 +130,7 @@ export default function TambahMasterSertifikat({ token }) {
 
   // START SYLLABUS
   const [number_of_signature_syllabus, setNumber_of_signature_syllabus] =
-    useState(1);
+    useState(0);
   const [syllabus, setSyllabus] = useState(["", ""]);
 
   const [
@@ -125,6 +167,14 @@ export default function TambahMasterSertifikat({ token }) {
   const [tanggal, setTanggal] = useState("--/--/----");
   const [tahun, setTahun] = useState("----");
 
+  const [akademi, setAkademi] = useState(
+    certificate?.data?.tema?.akademi || "-"
+  );
+
+  const [enableSyllabus, setEnableSyllabus] = useState(true);
+  const [hour, setHour] = useState("");
+
+  const [disablePublish, setDisablePublish] = useState(false);
   // RESET TTD
   useEffect(() => {
     setSignature_certificate_set_position([0, 0, 0, 0]);
@@ -223,7 +273,7 @@ export default function TambahMasterSertifikat({ token }) {
   // #END SECTION 2
 
   // # START BACKGROUND IMAGE 1
-  const onChangeBackground = e => {
+  const onChangeBackground = (e) => {
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
       Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
@@ -251,7 +301,7 @@ export default function TambahMasterSertifikat({ token }) {
   // # END BACKGROUND IMAGE 1
 
   // # START BACKGROUND IMAGE 2
-  const onChangeBackgroundLembar2 = e => {
+  const onChangeBackgroundLembar2 = (e) => {
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
       Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
@@ -275,9 +325,8 @@ export default function TambahMasterSertifikat({ token }) {
       }
     }
   };
-  const [, forceUpdate] = useState();
 
-  const convertDivToPng = async div => {
+  const convertDivToPng = async (div) => {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -286,20 +335,31 @@ export default function TambahMasterSertifikat({ token }) {
     });
     return data;
   };
-
   // # END IMAGE
   const handlePost = async (e, status) => {
-    const currentData = certificate.data.pelatihan.list.filter(
-      el => el.id == query.id
-    );
-    const id = {
-      training_id: currentData[0].training_id,
-      theme_id: currentData[0].theme_id,
-      academy_id: currentData[0].academy_id,
-    };
     try {
       e.preventDefault();
+      setDisablePublish(true);
+      const currentData = certificate.data.pelatihan.list.filter(
+        (el) => el.id == query.id
+      );
+
+      const id = {
+        training_id: pelatihanDetail?.id,
+        theme_id: pelatihanDetail?.tema_id,
+        academy_id: pelatihanDetail?.akademi_id,
+      };
+      //  currentData[0].training_id,
+      // currentData[0].theme_id,
+      //  currentData[0].academy_id,
+
       if (certificate_type == "1 lembar") {
+        simpleValidator.current.fields.Jabatan = true;
+        simpleValidator.current.fields.Nama = true;
+        simpleValidator.current.fields["Tanda tangan"] = true;
+      }
+
+      if (number_of_signature_syllabus == 0) {
         simpleValidator.current.fields.Jabatan = true;
         simpleValidator.current.fields.Nama = true;
         simpleValidator.current.fields["Tanda tangan"] = true;
@@ -324,7 +384,7 @@ export default function TambahMasterSertifikat({ token }) {
           "number_of_signature_syllabus",
           number_of_signature_syllabus
         );
-
+        formData.append("training_hours", hour);
         formData.append("background", background);
         formData.append("background_syllabus", background_syllabus);
         // bagian image2
@@ -373,22 +433,29 @@ export default function TambahMasterSertifikat({ token }) {
               signature_certificate_image_syllabus[i]
             );
           }
+          if (enableSyllabus) {
+            syllabus.forEach((item, i) => {
+              formData.append(`syllabus[${i}]`, item);
+            });
+          }
         }
-
-        syllabus.forEach((item, i) => {
-          formData.append(`syllabus[${i}]`, item);
-        });
 
         formData.append("status_migrate_id", status);
 
-        dispatch(newSertifikat(id, formData, token));
+        dispatch(newSertifikat(id, formData, token.token, token_permission));
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
         Swal.fire("Oops !", "Isi data dengan benar.", "error");
+        setDisablePublish(false);
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert(
+        "Gagal",
+        error.response.data.message || error.message,
+        "error"
+      );
+      setDisablePublish(false);
     }
   };
 
@@ -405,7 +472,7 @@ export default function TambahMasterSertifikat({ token }) {
     setSyllabus(list);
   };
 
-  const handleDelete = i => {
+  const handleDelete = (i) => {
     let filterResult = syllabus.filter((items, index) => index !== i);
     setSyllabus(filterResult);
   };
@@ -414,18 +481,26 @@ export default function TambahMasterSertifikat({ token }) {
     setSyllabus([...syllabus, ""]);
   };
 
-  function acronym(text) {
-    return text.split(" ").reduce(function (accumulator, word) {
-      return accumulator + word.charAt(0);
-    }, "");
-  }
-
-  const [akademi, setAkademi] = useState();
-
   useEffect(() => {
-    const str = certificate?.data?.tema?.slug;
-    setAkademi(str);
-  }, []);
+    const number = document.getElementById("jam_pelatihan");
+    number.onkeydown = (e) => {
+      if (e.code == "Minus") {
+        return false;
+      }
+      if (e.code == "Period") {
+        return false;
+      }
+      if (e.code == "NumpadAdd") {
+        return false;
+      }
+      if (e.code == "NumpadSubtract") {
+        return false;
+      }
+      if (e.code == "Equal") {
+        return false;
+      }
+    };
+  }, [hour]);
 
   return (
     <PageWrapper>
@@ -460,7 +535,7 @@ export default function TambahMasterSertifikat({ token }) {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           {/* START HEADER */}
-          <div className="card-header border-0 d-flex justify-content-lg-between row p-10">
+          <div className="card-header border-0 d-flex justify-content-lg-between align-items-center row p-10">
             <div className="card-title d-flex my-auto">
               <div className="text-dark">Nama Sertifikat :</div>
               <div className="px-6 p-0 w-100">
@@ -468,10 +543,9 @@ export default function TambahMasterSertifikat({ token }) {
                   type="text"
                   className="form-control"
                   placeholder="Masukan Nama Sertifikat"
-                  onChange={e => setCertificate_name(e.target.value)}
-                  onBlur={() => {
-                    simpleValidator.current.showMessageFor("nama sertifikat");
-                  }}
+                  onChange={(e) => setCertificate_name(e.target.value)}
+                  // value={certificate_name}
+                  value={certificate_name}
                 />
                 {simpleValidator.current.message(
                   "nama sertifikat",
@@ -491,7 +565,11 @@ export default function TambahMasterSertifikat({ token }) {
                 className="border-primary border col-lg-8 col-12 position-relative p-0"
                 style={{ fontSize: "100%" }}
               >
-                <div className="p-0 col-12" ref={divReference}>
+                <div
+                  className="p-0 col-12"
+                  ref={divReference}
+                  style={{ height: "595px" }}
+                >
                   {background ? (
                     <img
                       src={background}
@@ -503,26 +581,27 @@ export default function TambahMasterSertifikat({ token }) {
                   )}
                   <div
                     className="row align-items-center m-0"
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", fontSize: "12px" }}
                   >
-                    <div className="position-relative">
-                      <div
-                        className="mt-10 mx-8 text-center d-flex align-items-center px-4 border-2"
-                        style={{ height: "20px" }}
-                      >
-                        {nomerSertifikat}
-                      </div>
-                    </div>
                     <div
                       className={`col-12 text-center font-weight-normal p-0 justify-content-center `}
                     >
-                      <label className="mt-10 font-weight-boldest w-100 responsive-font-size-sertifikat">
-                        SERTIFIKAT
+                      <label
+                        style={{ fontSize: "24px" }}
+                        className="mt-40 mb-0 font-weight-boldest w-100 responsive-font-size-sertifikat"
+                      >
+                        SERTIFIKAT PELATIHAN
                       </label>
-                      <div className="w-100">Diberikan kepada</div>
+                      <div
+                        className="mb-3"
+                        style={{ height: "18px", minHeight: "18px" }}
+                      >
+                        <label className="fz-12">{nomerSertifikat}</label>
+                      </div>
+                      <div className="w-100 fz-11">Diberikan kepada</div>
                       <div className="my-2">
                         <span
-                          className="mx-2 px-2 px-10 w-100 font-weight-bold responsive-font-size-nama-peserta"
+                          className="mx-2 px-2 fz-18 px-10 w-100 font-weight-boldest responsive-font-size-nama-peserta"
                           style={{
                             height: "29px",
                           }}
@@ -530,51 +609,55 @@ export default function TambahMasterSertifikat({ token }) {
                           {namaPeserta ? namaPeserta : ""}
                         </span>
                       </div>
-                      <div className="w-100">Atas Partisipasi sebagai</div>
-                      <div
-                        className="font-weight-bolder w-100"
-                        style={{ fontSize: "125%" }}
-                      >
+                      <div className="w-100 fz-11">
+                        Atas Partisipasi sebagai
+                      </div>
+                      <div className="font-weight-bold w-100 fz-14 my-2">
                         Peserta
                       </div>
-                      <div className="w-100">Nama Pelatihan</div>
-                      <div
-                        className="text-center font-weight-bolder w-100 "
-                        style={{ fontSize: "125%" }}
-                      >
-                        {query.theme_name || "Nama Pelatihan"}
-                      </div>
-                      <div className="mt-2 w-100">
-                        <span className="w-100">
-                          Program{" "}
-                          <span className="font-weight-boldest w-100">
-                            {akademi || "-"}
-                          </span>{" "}
-                          Selama
+                      <div className="w-100">
+                        Pada Pelatihan{" "}
+                        <span className="font-weight-bold">
+                          {pelatihanDetail?.name || "Nama Pelatihan"}
                         </span>
-                        <span
-                          className="px-2 border-2 w-100 font-weight-boldest"
-                          style={{ width: "19px" }}
-                        >
-                          {moment(pelatihan?.pelatihan_mulai).format(
-                            "DD/MM/YYYY"
-                          )}{" "}
+                      </div>
+                      <div className=" w-100">
+                        <span className="w-100">Program </span>
+                        <span className="font-weight-bold w-100">
+                          {akademi || "-"}
+                        </span>{" "}
+                      </div>
+                      <div>
+                        <span className="mx-2">Selama</span>
+                        <span className="font-weight-bold">
+                          {moment(pelatihanDetail?.pelatihan_mulai)
+                            .utc()
+                            .format("DD/MM/YYYY")}{" "}
                           -{" "}
-                          {moment(pelatihan?.pelatihan_selesai).format(
-                            "DD/MM/YYYY"
-                          )}
+                          {moment(pelatihanDetail?.pelatihan_selesai)
+                            .utc()
+                            .format("DD/MM/YYYY")}
+                        </span>
+                        <span className="mx-2">yang meliputi</span>
+                        <span>
+                          <span className="font-weight-bolder mr-2">
+                            {hour}
+                          </span>
+                          <span>Jam Pelajaran</span>
                         </span>
                       </div>
-                      <div className="mt-2 w-100">
+                      <div className="w-100">
                         <span>Digital Talent Scholarship</span>
                         <span
-                          className="px-2 border-2 font-weight-boldest"
+                          className="px-2 border-2 font-weight-bold"
                           style={{ width: "19px" }}
                         >
-                          {moment(pelatihan?.pendaftaran_mulai).format("YYYY")}
+                          {moment(pelatihanDetail?.pelatihan_mulai)
+                            .utc()
+                            .format("YYYY")}
                         </span>
                       </div>
-                      <div className="my-4 w-100 text-center">
+                      <div className="w-100 my-3 text-center">
                         <span className="mx-2 px-2 border-2">
                           Jakarta {moment(date).format("DD/MM/YYYY")}
                         </span>
@@ -588,85 +671,98 @@ export default function TambahMasterSertifikat({ token }) {
                         style={{ width: "100%", height: "100%" }}
                       >
                         {/* START MAP TTD */}
-                        {[...Array(number_of_signatures)].map((el, i) => {
-                          return (
-                            <div
-                              key={i}
-                              style={{
-                                transform: `translateX(${signature_certificate_set_position[i]}%)`,
-                                width: "156px",
-                                height: "150px",
-                              }}
-                              className="col-3 p-0 px-lg-4"
-                            >
-                              <div className="col p-0 ">
-                                <div
-                                  className="col border-2 align-items-center justify-content-center d-flex position-relative"
-                                  style={{
-                                    borderStyle: signature_certificate_image[i]
-                                      ? ""
-                                      : "dashed",
-                                    height: "80px",
-                                  }}
-                                >
-                                  {signature_certificate_image[i] ? (
-                                    <img
-                                      src={signature_certificate_image[i]}
-                                      layout="fill"
-                                      alt={`Tanda tangan ${i + 1} `}
-                                      className="position-absolute w-100 h-100"
-                                    />
-                                  ) : (
-                                    "TTD"
-                                  )}
-                                </div>
-                                <div
-                                  className="border-2 text-center w-100"
-                                  style={{
-                                    borderStyle: signature_certificate_name[i]
-                                      ? ""
-                                      : "dashed",
-                                  }}
-                                >
-                                  {signature_certificate_name[i] ? (
-                                    <div
-                                      dangerouslySetInnerHTML={{
-                                        __html: signature_certificate_name[i],
-                                      }}
-                                      className="my-auto m-0 p-0 test"
-                                      style={{ margin: "0px" }}
-                                    ></div>
-                                  ) : (
-                                    "Nama"
-                                  )}
-                                </div>
-                                <div
-                                  className="border-2 text-center w-100"
-                                  style={{
-                                    borderStyle: signature_certificate_position[
-                                      i
-                                    ]
-                                      ? ""
-                                      : "dashed",
-                                  }}
-                                >
-                                  {signature_certificate_position[i] ? (
-                                    <div
-                                      dangerouslySetInnerHTML={{
-                                        __html:
-                                          signature_certificate_position[i],
-                                      }}
-                                      className="my-auto m-0 p-0"
-                                      style={{ margin: "0px" }}
-                                    ></div>
-                                  ) : (
-                                    "Jabatan"
-                                  )}
+                        {number_of_signatures &&
+                          [...Array(number_of_signatures)].map((el, i) => {
+                            return (
+                              <div
+                                key={i}
+                                style={{
+                                  transform: `translateX(${signature_certificate_set_position[i]}%)`,
+                                  width: "156px",
+                                  height: "150px",
+                                }}
+                                className={
+                                  number_of_signatures > 2
+                                    ? `col-3 p-0 px-lg-4`
+                                    : `col-3 p-0 `
+                                }
+                              >
+                                <div className="col p-0 ">
+                                  <div
+                                    className="col border-2 align-items-center justify-content-center d-flex position-relative"
+                                    style={{
+                                      borderStyle: signature_certificate_image[
+                                        i
+                                      ]
+                                        ? ""
+                                        : "dashed",
+                                      height: "80px",
+                                    }}
+                                  >
+                                    {signature_certificate_image[i] ? (
+                                      <img
+                                        src={signature_certificate_image[i]}
+                                        layout="fill"
+                                        alt={`Tanda tangan ${i + 1} `}
+                                        className="position-absolute w-100 h-100"
+                                      />
+                                    ) : (
+                                      "TTD"
+                                    )}
+                                  </div>
+                                  <div
+                                    className="border-2 text-center w-100"
+                                    style={{
+                                      borderStyle: !signature_certificate_name[
+                                        i
+                                      ]
+                                        ? "dashed"
+                                        : "",
+                                    }}
+                                  >
+                                    {!signature_certificate_name[i] ? (
+                                      "Nama"
+                                    ) : (
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html: signature_certificate_name[i],
+                                        }}
+                                        className="my-auto m-0 p-0 test"
+                                        style={{ margin: "0px" }}
+                                        key={signature_certificate_name[i]}
+                                        id={i}
+                                      ></div>
+                                      // <Name
+                                      // 	name={signature_certificate_name[i]}
+                                      // />
+                                    )}
+                                  </div>
+                                  <div
+                                    className="border-2 text-center w-100"
+                                    style={{
+                                      borderStyle:
+                                        signature_certificate_position[i]
+                                          ? ""
+                                          : "dashed",
+                                    }}
+                                  >
+                                    {signature_certificate_position[i] ? (
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            signature_certificate_position[i],
+                                        }}
+                                        className="my-auto m-0 p-0"
+                                        style={{ margin: "0px" }}
+                                      ></div>
+                                    ) : (
+                                      "Jabatan"
+                                    )}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
                       </div>
                     </div>
                   </div>
@@ -683,6 +779,31 @@ export default function TambahMasterSertifikat({ token }) {
                   >
                     Jenis Sertifikat
                   </label>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputEmail1">Jam Pelatihan</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Silahkan Masukan Jam Pelatihan"
+                      onChange={(e) => {
+                        if (
+                          e.target.value == "" ||
+                          helperRegexNumber.test(e.target.value)
+                        ) {
+                          helperRemoveZeroFromIndex0(e.target.value, setHour);
+                        }
+                      }}
+                      value={hour}
+                      maxLength={4}
+                      id="jam_pelatihan"
+                    />
+                    {simpleValidator.current.message(
+                      "jam pelatihan",
+                      hour,
+                      "required",
+                      { className: "text-danger font-size-sm mt-4" }
+                    )}
+                  </div>
                   <div className="d-flex justify-content-start">
                     <div className="col-6 form-check form-check-inline">
                       <input
@@ -717,7 +838,7 @@ export default function TambahMasterSertifikat({ token }) {
                   <div>
                     <select
                       name="jumlah_tandatangan"
-                      onChange={e =>
+                      onChange={(e) =>
                         setNumber_of_signatures(Number(e.target.value))
                       }
                       className="form-control"
@@ -863,7 +984,7 @@ export default function TambahMasterSertifikat({ token }) {
                                         type="file"
                                         className="custom-file-input"
                                         name="image"
-                                        onChange={e =>
+                                        onChange={(e) =>
                                           handleImageTandaTangan(e, i)
                                         }
                                         onBlur={() =>
@@ -906,10 +1027,14 @@ export default function TambahMasterSertifikat({ token }) {
                                           }
                                         />
                                       </div>
+                                      <small>
+                                        Setelah isi tandatangan, harap tekan
+                                        "Buat Tanda Tangan"
+                                      </small>
                                       <div className="d-flex align-items-center my-5">
                                         <a
                                           className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
-                                          onClick={e =>
+                                          onClick={(e) =>
                                             handleCanvasTandaTangan(e, i)
                                           }
                                         >
@@ -917,7 +1042,7 @@ export default function TambahMasterSertifikat({ token }) {
                                         </a>
                                         <button
                                           type="button"
-                                          onClick={e => {
+                                          onClick={(e) => {
                                             handleClearCanvasTandaTangan(e, i);
                                           }}
                                           className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
@@ -1011,7 +1136,7 @@ export default function TambahMasterSertifikat({ token }) {
                                 }
                                 className="form-control"
                                 value={signature_certificate_set_position[i]}
-                                onChange={e => {
+                                onChange={(e) => {
                                   let newArr = [
                                     ...signature_certificate_set_position,
                                   ];
@@ -1046,7 +1171,7 @@ export default function TambahMasterSertifikat({ token }) {
                                   cursor: "pointer",
                                   width: "100%",
                                 }}
-                                onChange={e => {
+                                onChange={(e) => {
                                   let newArr = [
                                     ...signature_certificate_set_position,
                                   ];
@@ -1071,13 +1196,16 @@ export default function TambahMasterSertifikat({ token }) {
                         Unggah Background
                       </a>
                     </div>
+                    <small className="text-muted">
+                      JPG/JPEG/PNG. Resolusi A4 (842px X 595px)
+                    </small>
                   </label>
                   <input
                     type="file"
                     name="background"
                     className="custom-file-input"
                     id="InputFile"
-                    onChange={e => onChangeBackground(e)}
+                    onChange={(e) => onChangeBackground(e)}
                     accept="image/*"
                     style={{ display: "none" }}
                   />
@@ -1115,7 +1243,7 @@ export default function TambahMasterSertifikat({ token }) {
 
                 <a
                   className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5 col-lg-2 col-md-3 col-12 mt-5 mt-md-0 w-50"
-                  onClick={e => {
+                  onClick={(e) => {
                     handlePost(e, 2); // 2 == draft
                   }}
                 >
@@ -1125,7 +1253,7 @@ export default function TambahMasterSertifikat({ token }) {
 
                 <a
                   className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
-                  onClick={e => {
+                  onClick={(e) => {
                     setConfirmModal(true);
                   }}
                 >
@@ -1150,7 +1278,11 @@ export default function TambahMasterSertifikat({ token }) {
                   className="border-primary p-0 border col-lg-8 col-12"
                   style={{ width: "100%" }}
                 >
-                  <div className="p-0" ref={divReferenceSilabus}>
+                  <div
+                    className="p-0"
+                    ref={divReferenceSilabus}
+                    style={{ height: "595px" }}
+                  >
                     {background_syllabus ? (
                       <img
                         src={background_syllabus}
@@ -1168,41 +1300,49 @@ export default function TambahMasterSertifikat({ token }) {
                     >
                       <div
                         className="pt-19 pl-19 zindex-1 col-12"
-                        style={{ height: "370px" }}
+                        style={{ height: "45	0px" }}
                       >
-                        <div style={{ fontSize: "120%", fontWeight: "bold" }}>
-                          Silabus yang didapat
-                        </div>
-                        <div>
-                          <ol className="col mt-4">
-                            {syllabus &&
-                              syllabus.map((e, i) => {
-                                return (
-                                  <li
-                                    className="p-0"
-                                    key={i}
-                                    style={{
-                                      fontSize:
-                                        syllabus.length <= 5
-                                          ? "120%"
-                                          : syllabus.length <= 10
-                                          ? "90%"
-                                          : syllabus.length <= 15
-                                          ? "80%"
-                                          : "50%",
-                                    }}
-                                  >
-                                    {e}
-                                  </li>
-                                );
-                              })}
-                          </ol>
-                        </div>
+                        {enableSyllabus && (
+                          <Fragment>
+                            <div
+                              style={{ fontSize: "120%", fontWeight: "bold" }}
+                            >
+                              Silabus yang didapat
+                            </div>
+                            <div>
+                              <ol className="col mt-4">
+                                {syllabus &&
+                                  syllabus.map((e, i) => {
+                                    return (
+                                      <li
+                                        className="p-0"
+                                        key={i}
+                                        style={{
+                                          fontSize:
+                                            syllabus.length <= 5
+                                              ? "120%"
+                                              : syllabus.length <= 10
+                                              ? "90%"
+                                              : syllabus.length <= 15
+                                              ? "80%"
+                                              : "50%",
+                                        }}
+                                      >
+                                        {e}
+                                      </li>
+                                    );
+                                  })}
+                              </ol>
+                            </div>
+                          </Fragment>
+                        )}
                       </div>
+                    </div>
+                    <div className="position-absolute bottom-0 col-12">
                       <div
                         className="col-12 text-center font-weight-normal p-0 justify-content-center"
                         style={{
-                          marginTop: "-20px",
+                          marginTop: "20px",
                           width: "100%",
                           height: "100%",
                         }}
@@ -1216,107 +1356,110 @@ export default function TambahMasterSertifikat({ token }) {
                           style={{ width: "100%", height: "100%" }}
                         >
                           {/* START MAP TTD */}
-                          {[...Array(number_of_signature_syllabus)].map(
-                            (el, i) => {
-                              return (
-                                <div
-                                  key={i}
-                                  style={{
-                                    transform: `translateX(${signature_certificate_set_position_syllabus[i]}%)`,
-                                    width: "151px",
-                                    height: "150px",
-                                  }}
-                                  className="col-3 p-0 px-lg-4"
-                                >
-                                  <div className="col p-0 ">
-                                    <div
-                                      className="col border-2 align-items-center justify-content-center d-flex position-relative"
-                                      style={{
-                                        borderStyle:
-                                          signature_certificate_image_syllabus[
-                                            i
-                                          ]
-                                            ? ""
-                                            : "dashed",
-                                        height: "80px",
-                                      }}
-                                    >
-                                      {signature_certificate_image_syllabus[
-                                        i
-                                      ] ? (
-                                        <img
-                                          src={
+                          {number_of_signature_syllabus !== 0 &&
+                            [...Array(number_of_signature_syllabus)].map(
+                              (el, i) => {
+                                return (
+                                  <div
+                                    key={i}
+                                    style={{
+                                      transform: `translateX(${signature_certificate_set_position_syllabus[i]}%)`,
+                                      width: "151px",
+                                      height: "150px",
+                                    }}
+                                    className="col-3 p-0 px-lg-4"
+                                  >
+                                    <div className="col p-0 ">
+                                      <div
+                                        className="col border-2 align-items-center justify-content-center d-flex position-relative"
+                                        style={{
+                                          borderStyle:
                                             signature_certificate_image_syllabus[
                                               i
                                             ]
-                                          }
-                                          layout="fill"
-                                          alt={`Tanda tangan ${i + 1} `}
-                                          className="position-absolute w-100 h-100"
-                                        />
-                                      ) : (
-                                        "TTD"
-                                      )}
-                                    </div>
-                                    <div
-                                      className="border-2 text-center w-100"
-                                      style={{
-                                        borderStyle:
-                                          signature_certificate_name_syllabus[i]
-                                            ? ""
-                                            : "dashed",
-                                      }}
-                                    >
-                                      {signature_certificate_name_syllabus[
-                                        i
-                                      ] ? (
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              signature_certificate_name_syllabus[
+                                              ? ""
+                                              : "dashed",
+                                          height: "80px",
+                                        }}
+                                      >
+                                        {signature_certificate_image_syllabus[
+                                          i
+                                        ] ? (
+                                          <img
+                                            src={
+                                              signature_certificate_image_syllabus[
                                                 i
-                                              ],
-                                          }}
-                                          className="my-auto m-0 p-0 test"
-                                          style={{ margin: "0px" }}
-                                        ></div>
-                                      ) : (
-                                        "Nama"
-                                      )}
-                                    </div>
-                                    <div
-                                      className="border-2 text-center w-100"
-                                      style={{
-                                        borderStyle:
-                                          signature_certificate_position_syllabus[
-                                            i
-                                          ]
-                                            ? ""
-                                            : "dashed",
-                                      }}
-                                    >
-                                      {signature_certificate_position_syllabus[
-                                        i
-                                      ] ? (
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              signature_certificate_position_syllabus[
-                                                i
-                                              ],
-                                          }}
-                                          className="my-auto m-0 p-0"
-                                          style={{ margin: "0px" }}
-                                        ></div>
-                                      ) : (
-                                        "Jabatan"
-                                      )}
+                                              ]
+                                            }
+                                            layout="fill"
+                                            alt={`Tanda tangan ${i + 1} `}
+                                            className="position-absolute w-100 h-100"
+                                          />
+                                        ) : (
+                                          "TTD"
+                                        )}
+                                      </div>
+                                      <div
+                                        className="border-2 text-center w-100"
+                                        style={{
+                                          borderStyle:
+                                            signature_certificate_name_syllabus[
+                                              i
+                                            ]
+                                              ? ""
+                                              : "dashed",
+                                        }}
+                                      >
+                                        {signature_certificate_name_syllabus[
+                                          i
+                                        ] ? (
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                signature_certificate_name_syllabus[
+                                                  i
+                                                ],
+                                            }}
+                                            className="my-auto m-0 p-0 test"
+                                            style={{ margin: "0px" }}
+                                          ></div>
+                                        ) : (
+                                          "Nama"
+                                        )}
+                                      </div>
+                                      <div
+                                        className="border-2 text-center w-100"
+                                        style={{
+                                          borderStyle:
+                                            signature_certificate_position_syllabus[
+                                              i
+                                            ]
+                                              ? ""
+                                              : "dashed",
+                                        }}
+                                      >
+                                        {signature_certificate_position_syllabus[
+                                          i
+                                        ] ? (
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                signature_certificate_position_syllabus[
+                                                  i
+                                                ],
+                                            }}
+                                            className="my-auto m-0 p-0"
+                                            style={{ margin: "0px" }}
+                                          ></div>
+                                        ) : (
+                                          "Jabatan"
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              );
-                            }
-                          )}
+                                );
+                              }
+                            )}
                         </div>
                       </div>
                     </div>
@@ -1328,23 +1471,24 @@ export default function TambahMasterSertifikat({ token }) {
                 <div className="col-lg-4 col-12 font-weight-normal tandatangan mt-lg-0 mt-10">
                   {/* END FORM Jenis Sertifikat */}
                   {/* START FORM Tanda tangan */}
-                  <div className="form-group mb-2">
+                  <div className="form-group mb-2 w-100">
                     <label className=" col-form-label font-weight-bold">
                       Jumlah Tanda Tangan
                     </label>
                     <div>
                       <select
                         name="jumlah_tandatangan"
-                        onChange={e =>
+                        onChange={(e) =>
                           setNumber_of_signature_syllabus(
                             Number(e.target.value)
                           )
                         }
                         className="form-control"
                       >
-                        <option value={1} defaultValue={1}>
-                          1 Tanda Tangan
+                        <option defaultValue={0} value={0}>
+                          Tidak Ada Tanda Tangan
                         </option>
+                        <option value={1}>1 Tanda Tangan</option>
                         <option value={2}>2 Tanda Tangan</option>
                         <option value={3}>3 Tanda Tangan</option>
                         <option value={4}>4 Tanda Tangan</option>
@@ -1353,15 +1497,43 @@ export default function TambahMasterSertifikat({ token }) {
                     <label className=" col-form-label font-weight-bold">
                       Silabus
                     </label>
-                    <div
-                      className="card-toolbar"
-                      data-target={`#modalSyllabus`}
-                      data-toggle="modal"
-                    >
-                      <a className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-15 py-3">
-                        Atur Silabus
-                      </a>
+                    <div className="d-flex justify-content-start mb-5">
+                      <div className="col-6 form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="syllabus"
+                          value={true}
+                          checked={enableSyllabus}
+                          onChange={() => setEnableSyllabus(true)}
+                        />
+                        <label className="form-check-label">Ada</label>
+                      </div>
+                      <div className="col-6 form-check form-check-inline">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="syllabus"
+                          value={false}
+                          checked={enableSyllabus == false}
+                          onChange={() => setEnableSyllabus(false)}
+                        />
+                        <label className="form-check-label">Tidak Ada</label>
+                      </div>
                     </div>
+                    {enableSyllabus && (
+                      <Fragment>
+                        <div className="card-toolbar">
+                          <a
+                            data-target={`#modalSyllabus`}
+                            data-toggle="modal"
+                            className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-15 py-3"
+                          >
+                            Atur Silabus
+                          </a>
+                        </div>
+                      </Fragment>
+                    )}
                   </div>
                   {/* END FORM Tanda Tangan */}
                   {/* START TANDA TANGAN SLIDER */}
@@ -1519,7 +1691,7 @@ export default function TambahMasterSertifikat({ token }) {
                                           type="file"
                                           className="custom-file-input"
                                           name="image"
-                                          onChange={e =>
+                                          onChange={(e) =>
                                             handleImageTandaTanganSyllabus(e, i)
                                           }
                                           accept="image/png, image/jpeg , image/jpg"
@@ -1570,11 +1742,14 @@ export default function TambahMasterSertifikat({ token }) {
                                             }}
                                           />
                                         </div>
-
+                                        <small>
+                                          Setelah isi tandatangan, harap tekan
+                                          "Buat Tanda Tangan"
+                                        </small>
                                         <div className="d-flex align-items-center my-5">
                                           <a
                                             className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
-                                            onClick={e =>
+                                            onClick={(e) =>
                                               handleCanvasTandaTanganSyllabus(
                                                 e,
                                                 i
@@ -1585,7 +1760,7 @@ export default function TambahMasterSertifikat({ token }) {
                                           </a>
                                           <button
                                             type="button"
-                                            onClick={e => {
+                                            onClick={(e) => {
                                               handleClearCanvasTandaTanganSyllabus(
                                                 e,
                                                 i
@@ -1697,7 +1872,7 @@ export default function TambahMasterSertifikat({ token }) {
                                       i
                                     ]
                                   }
-                                  onChange={e => {
+                                  onChange={(e) => {
                                     let newArr = [
                                       ...signature_certificate_set_position_syllabus,
                                     ];
@@ -1738,7 +1913,7 @@ export default function TambahMasterSertifikat({ token }) {
                                     cursor: "pointer",
                                     width: "100%",
                                   }}
-                                  onChange={e => {
+                                  onChange={(e) => {
                                     let newArr = [
                                       ...signature_certificate_set_position_syllabus,
                                     ];
@@ -1765,13 +1940,16 @@ export default function TambahMasterSertifikat({ token }) {
                           Unggah Background
                         </a>
                       </div>
+                      <small className="text-muted">
+                        JPG/JPEG/PNG. Resolusi A4 (842px X 595px)
+                      </small>
                     </label>
                     <input
                       type="file"
                       name="background2"
                       id="InputFile2"
                       className="custom-file-input"
-                      onChange={e => onChangeBackgroundLembar2(e)}
+                      onChange={(e) => onChangeBackgroundLembar2(e)}
                       accept="image/*"
                       style={{ display: "none" }}
                     />
@@ -1809,7 +1987,7 @@ export default function TambahMasterSertifikat({ token }) {
 
                   <a
                     className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5 col-lg-2 col-md-3 col-12 mt-5 mt-md-0 w-50"
-                    onClick={e => {
+                    onClick={(e) => {
                       handlePost(e, 2); // 2 == draft
                     }}
                   >
@@ -1818,7 +1996,7 @@ export default function TambahMasterSertifikat({ token }) {
 
                   <a
                     className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
-                    onClick={e => {
+                    onClick={(e) => {
                       setConfirmModal(true);
                     }}
                   >
@@ -1872,7 +2050,7 @@ export default function TambahMasterSertifikat({ token }) {
                             }
                             name={`cooperation${index}`}
                             type="text"
-                            onChange={e => handleChange(e, index)}
+                            onChange={(e) => handleChange(e, index)}
                             className="form-control"
                             value={syllabus}
                           />
@@ -1963,15 +2141,16 @@ export default function TambahMasterSertifikat({ token }) {
             >
               Batal
             </button>
-            <a
+            <button
+              disabled={disablePublish ? true : false}
               className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 text-center"
-              onClick={e => {
+              onClick={(e) => {
                 setConfirmModal(false);
                 handlePost(e, 1);
               }}
             >
               Publish
-            </a>
+            </button>
           </Modal.Footer>
         </Modal>
       </>

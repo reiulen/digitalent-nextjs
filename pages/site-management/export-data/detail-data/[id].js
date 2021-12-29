@@ -2,8 +2,9 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 // import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../redux/store";
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getDetailsExportData } from "../../../../redux/actions/site-management/export-data.actions";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const UbahRole = dynamic(
   () =>
@@ -12,7 +13,7 @@ const UbahRole = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
@@ -33,10 +34,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req, query }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

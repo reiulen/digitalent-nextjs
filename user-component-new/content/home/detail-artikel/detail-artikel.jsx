@@ -55,7 +55,7 @@ const DetailArtikel = () => {
 
   const handleLinkContent = () => {
     if (detail) {
-      let text = detail.isi_artikel;
+      let text = detail?.isi_artikel;
 
       let result = "";
 
@@ -122,6 +122,8 @@ const DetailArtikel = () => {
       for (let j = 0; j < splitText.length; j++) {
         if (splitWords[i].toLowerCase() === splitText[j].toLowerCase()) {
           result += `<mark>` + splitText[j] + `</mark>` + " ";
+          window.scrollTo (0, 1200)
+          
         } else {
           result += " " + splitText[j] + " ";
         }
@@ -146,7 +148,7 @@ const DetailArtikel = () => {
         <div className="row my-5 d-flex flex-column ml-1">
           <div>
             <div className="badge badge-light mr-2">
-              <div className="text-primary">{detail.nama_kategori}</div>
+              <div className="text-primary">{detail?.nama_kategori}</div>
             </div>
           </div>
           <div className="mt-5">
@@ -154,21 +156,21 @@ const DetailArtikel = () => {
               className={`${styles.fontTitle} font-weight-bolder`}
             >
               {/* Insert Title Here */}
-              {detail.judul}
+              {detail?.judul}
             </h1>
           </div>
 
           <div className="mt-5 d-flex flex-row align-items-center">
             <span className="font-weight-bolder" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Akademi Here */}
-              {detail.kategori_akademi}
+              {detail?.kategori_akademi}
             </span>
             <span className="mr-1 ml-3">
               <i className="ri-eye-line"></i>
             </span>
             <span className="text-muted" style={{fontSize:"14px", color:"#6C6C6C", fontFamily:"Poppins"}}>
               {/* Insert Views Here */}
-              Dibaca {detail.dibaca}
+              Dibaca {detail?.dibaca}
             </span>
           </div>
 
@@ -191,7 +193,7 @@ const DetailArtikel = () => {
               <div className="d-flex flex-column ml-3">
                 <div className="font-weight-bolder mb-2">
                   {/* Insert Admin Here */}
-                  {detail.dibuat}
+                  {detail?.dibuat}
                 </div>
                 <div className="text-muted" style={{fontSize:"14px", fontFamily:"Poppins", color:"#6C6C6C"}}>
                   {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
@@ -203,8 +205,8 @@ const DetailArtikel = () => {
               <div className="mr-3">
                 {/* SHAREOVERLAY */}
                 <ShareOverlay
-                  url={`http://dts-dev.majapahit.id/artikel/detail/${id}`}
-                  quote={detail.judul}
+                  url={`${process.env.NEXTAUTH_URL}/artikel/detail/${id}`}
+                  quote={detail?.judul}
                 >
                   <button className="btn btn-sm btn-outline-light rounded-circle">
                     <i className="ri-share-line px-0 py-1"></i>
@@ -222,109 +224,86 @@ const DetailArtikel = () => {
         <div className="row mt-10">
           {/* Left Side */}
           <div
+          // className="image-thumbnail-detail"
             className={
               windowDimensions &&
               windowDimensions.width &&
               windowDimensions.width > 770
-                ? "col-12 col-lg-8 pr-11"
-                : "col-12 col-lg-8"
+                ? "col-12 col-lg-8 pr-11 "
+                : "col-12 col-lg-8 "
             }
           >
+            
             {/* Image */}
-            <Image
-              src={
-                process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                "publikasi/images/" +
-                detail.gambar
-              }
-              width={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 768 ?
-                  837
-                :
-                  windowDimensions &&
-                  windowDimensions.width &&
-                  windowDimensions.width <= 768 &&
-                  windowDimensions.width > 540 ?
-                    704
-                  :
-                    361
-              }
-              height={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 768 ?
-                  640
-                :
-                  361
+            <div className={`${styles.image_thumbnail} rounded-lg`}>
+              <Image
+                src={
+                  process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                  "publikasi/images/" +
+                  detail.gambar
                 }
-              objectFit="cover"
-              alt="Detail Image"
-              className="rounded-lg img-fluid"
-            />
+                layout="fill"
+                objectFit="cover"
+                alt="Detail Image"
+                className={`rounded-lg img-fluid `}
+              />
+            </div>
+            
 
-            {/* Artikel */}
-            <div 
-              className={
-                windowDimensions &&
-                windowDimensions.width &&
-                windowDimensions.width > 1242 ?
-                  "border rounded-lg mb-5 mt-15 mr-20"
-                :
-                  "border rounded-lg mb-5 mt-15"
-              }
-            >
-              <div
-                className="row my-5 mx-5 text-justify"
-                style={{ width: "95%", wordBreak: "break-word" }}
+              {/* Artikel */}
+              <div 
+                className="border rounded-lg mb-5 mt-15"
               >
-                {detailContent ? (
-                  resultText ? (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: resultText }}
-                      className={`${styles.detailArtikel}`}
-                    />
-                  ) : (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: detailContent }}
-                      className={`${styles.detailArtikel}`}
-                    />
-                  )
-                ) : null}
-              </div>
-
-              <div className="row m-3 d-flex justify-content-between pb-5">
-                <div className="row d-flex justify-content-between ml-1">
-                  {detail && detail.tag && detail.tag.length !== 0
-                    ? detail.tag.map((el, i) => {
-                        return (
-                          <div
-                            className="mr-3 border p-3 rounded mb-3"
-                            key={i}
-                            style={{ height: "38px" }}
-                          >
-                            #{el.toString().toUpperCase()}
-                          </div>
-                        );
-                      })
-                    : null}
+                <div
+                  className="row"
+                  style={{wordBreak: "break-word" }}
+                >
+                  {detailContent ? (
+                    resultText ? (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: resultText }}
+                        className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
+                      />
+                    ) : (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: detailContent }}
+                        className={`${styles.detailArtikel} my-5 mx-10 text-justify`}
+                      />
+                    )
+                  ) : null}
                 </div>
 
-                <div className="row ml-1">
-                  <div className="mr-3">
-                    <ShareOverlay
-                      url={`http://dts-dev.majapahit.id/artikel/detail/${id}`}
-                      quote={detail.judul}
-                    >
-                      <button className="btn btn-sm btn-outline-light rounded-circle">
-                        <i className="ri-share-line px-0 py-1"></i>
-                      </button>
-                    </ShareOverlay>
+                <div className="row m-3 d-flex justify-content-between pb-5">
+                  <div className="row d-flex justify-content-between ml-1">
+                    {detail && detail.tag && detail.tag.length !== 0
+                      ? detail?.tag?.map((el, i) => {
+                          return (
+                            <div
+                              className="mr-3 border p-3 rounded mb-3"
+                              key={i}
+                              style={{ height: "38px" }}
+                            >
+                              #{el.toString().toUpperCase()}
+                            </div>
+                          );
+                        })
+                      : null}
+                  </div>
+
+                  <div className="row ml-1">
+                    <div className="mr-3">
+                      <ShareOverlay
+                        url={`${process.env.NEXTAUTH_URL}/artikel/detail/${id}`}
+                        quote={detail.judul}
+                      >
+                        <button className="btn btn-sm btn-outline-light rounded-circle">
+                          <i className="ri-share-line px-0 py-1"></i>
+                        </button>
+                      </ShareOverlay>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
           {/* End of Left Side */}
 
@@ -398,7 +377,7 @@ const DetailArtikel = () => {
                 </h3>
                 <div className=" d-flex flex-wrap flex-row">
                   {tagArtikel && tagArtikel.length !== 0 ? (
-                    tagArtikel.map((el, i) => {
+                    tagArtikel?.map((el, i) => {
                       return (
                         <div
                           className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center"

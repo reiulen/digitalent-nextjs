@@ -88,11 +88,11 @@ export default function RiwayatPelatihan({ session }) {
   return (
     <>
       <PesertaWrapper>
-        <Col lg={12} className="px-0">
-          <Card className="card-custom gutter-b">
+        <Col lg={12} className="px-0 ">
+          <Card className="card-custom gutter-b rounded-lg">
             <Card.Body>
-              <Row>
-                <Col lg={8}>
+              <Row className="d-flex justify-content-center">
+                <Col>
                   <div className="position-relative overflow-hidden ">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
@@ -106,7 +106,7 @@ export default function RiwayatPelatihan({ session }) {
                     />
                   </div>
                 </Col>
-                <Col lg={4} className="w-100">
+                {/* <Col lg={4} className="w-100">
                   <button
                     className="btn border d-flex align-items-center justify-content-between w-100 mt-5 mt-lg-0 rounded-full"
                     data-toggle="modal"
@@ -125,12 +125,12 @@ export default function RiwayatPelatihan({ session }) {
                     </div>
                     <IconArrow fill="#ADB5BD" width="10" height="6" />
                   </button>
-                </Col>
+                </Col> */}
 
                 <Row className="pt-4 w-100">
                   {filter.map((item, i) => {
                     return (
-                      <Col md={2} sm={3} key={i} className="d-flex w-100">
+                      <Col md={3} sm={3} key={i} className="d-flex  w-100">
                         <Button
                           onClick={(e) => {
                             setSelected(i);
@@ -138,7 +138,7 @@ export default function RiwayatPelatihan({ session }) {
                           }}
                           className={
                             selected == i
-                              ? ` btn-primary rounded-full btn-primary mx-4 w-md-100 w-100 my-2 my-md-0 text-capitalize `
+                              ? ` rounded-full btn-primary mx-4 w-md-100 w-100 my-2 my-md-0 text-capitalize `
                               : ` ${style.background_outline_primary} rounded-full btn-primary mx-4 w-md-100 w-100 my-2 my-md-0 text-capitalize `
                           }
                         >
@@ -158,50 +158,60 @@ export default function RiwayatPelatihan({ session }) {
             <LoadingTable />
           </div>
         )}
-        {dataRiwayatPelatihan?.listPelatihan?.list?.length > 0 ? (
-          dataRiwayatPelatihan?.listPelatihan?.list?.map((el, i) => {
-            return (
-              <Fragment key={i}>
-                <CardPeserta status={"test"} data={el} session={session} />
-              </Fragment>
-            );
-          })
-        ) : (
-          <div className="row mx-auto bg-white rounded">
-            <div className="col col-12 d-flex flex-column justify-content-center">
-              <Image
-                src={`/assets/media/gambar-belum-tersedia-page.svg`}
-                width={525}
-                height={350}
-                alt="Tidak Tersedia"
-              />
-              <h1
-                className="font-weight-bolder mt-15 text-center fw-600 mb-10"
-                style={{ fontFamily: "Poppins", fontSize: "24px" }}
-              >
-                Anda belum pernah mengikuti pelatihan
-              </h1>
-            </div>
-          </div>
-        )}
-        <div className="d-flex justify-content-center mt-8 mb-40">
-          {dataRiwayatPelatihan?.listPelatihan?.total >= 5 && (
-            <div className="table-pagination my-auto">
-              <Pagination
-                activePage={dataRiwayatPelatihan?.page}
-                itemsCountPerPage={dataRiwayatPelatihan?.listPelatihan?.perPage}
-                totalItemsCount={dataRiwayatPelatihan?.listPelatihan?.total}
-                pageRangeDisplayed={3}
-                onChange={(page) => dispatch(setValuePage(page))}
-                nextPageText={">"}
-                prevPageText={"<"}
-                firstPageText={"<<"}
-                lastPageText={">>"}
-                itemClass="page-item"
-                linkClass="page-link"
-              />
+        <div className="mb-40">
+          {dataRiwayatPelatihan?.listPelatihan?.list?.length > 0 ? (
+            dataRiwayatPelatihan?.listPelatihan?.list?.map((el, i) => {
+              return (
+                <Fragment key={i}>
+                  <CardPeserta status={"test"} data={el} session={session} />
+                </Fragment>
+              );
+            })
+          ) : (
+            <div className="row mx-auto bg-white rounded">
+              <div className="col col-12 d-flex flex-column justify-content-center">
+                <Image
+                  src={`/assets/media/gambar-belum-tersedia-page.svg`}
+                  width={525}
+                  height={350}
+                  alt="Tidak Tersedia"
+                />
+                <h1
+                  className="font-weight-bolder text-capitalize mt-15 text-center fw-600 mb-10"
+                  style={{ fontFamily: "Poppins", fontSize: "24px" }}
+                >
+                  Data pelatihan tidak ditemukan
+                </h1>
+              </div>
             </div>
           )}
+        </div>
+
+        <div className="position-absolute bottom-0 w-100">
+          <div className="d-flex justify-content-center ">
+            {dataRiwayatPelatihan?.listPelatihan?.total > 5 && (
+              <div className="table-pagination my-auto">
+                <Pagination
+                  activePage={dataRiwayatPelatihan?.page}
+                  itemsCountPerPage={
+                    dataRiwayatPelatihan?.listPelatihan?.perPage
+                  }
+                  totalItemsCount={dataRiwayatPelatihan?.listPelatihan?.total}
+                  pageRangeDisplayed={3}
+                  onChange={(page) => {
+                    dispatch(setValuePage(page));
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  nextPageText={">"}
+                  prevPageText={"<"}
+                  firstPageText={"<<"}
+                  lastPageText={">>"}
+                  itemClass="page-item-dashboard"
+                  linkClass="page-link-dashboard"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>

@@ -14,19 +14,24 @@ import {
 } from "../../../../redux/actions/pelatihan/academy.actions";
 
 import { UPDATE_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
+import styles from "../../../../styles/pelatihanQuill.module.css";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
+import Cookies from "js-cookie";
+import { useQuill } from "react-quilljs";
 
 const EditAcademy = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
+  const token_permission = Cookies.get("token_permission");
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
+  const { quill, quillRef } = useQuill();
 
   const {
     loading: detailLoading,
@@ -68,11 +73,12 @@ const EditAcademy = ({ token }) => {
   ];
 
   useEffect(() => {
-    editorRef.current = {
-      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
-    };
+    if (quill) {
+      quill.clipboard.dangerouslyPasteHTML(description);
+      quill.on('text-change', (delta, oldDelta, source) => {
+        setDescription(quill.root.innerHTML); // Get innerHTML using quill
+      });
+    }
 
     setEditorLoaded(true);
 
@@ -85,7 +91,7 @@ const EditAcademy = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [isUpdated, dispatch, router]);
+  }, [isUpdated, dispatch, router, quill]);
 
   const handleResetError = () => {
     if (error) {
@@ -174,7 +180,7 @@ const EditAcademy = ({ token }) => {
         logo: logoFile,
         brosur:
           browsurName === "Belum ada file" && browsurFile === ""
-            ? "Dihapus"
+            ? "dihapus"
             : browsurFile,
         status: status.value,
         id: idInt,
@@ -190,7 +196,7 @@ const EditAcademy = ({ token }) => {
         dismissOnDestroy: false,
       }).then((result) => {
         if (result.value) {
-          dispatch(updateAcademy(data, token));
+          dispatch(updateAcademy(data, token, token_permission));
         }
       });
     } else {
@@ -338,29 +344,18 @@ const EditAcademy = ({ token }) => {
                 )}
               </div>
 
-              <div className="form-group mb-4">
+              <div className={`${styles.setQuil} form-group`}>
                 <label className="col-form-label font-weight-bold">
                   Deskripsi
                 </label>
                 <div className="ckeditor">
                   {editorLoaded ? (
-                    <CKEditor
-                      editor={ClassicEditor}
-                      data={description}
-                      onReady={(editor) => {
-                        // You can store the "editor" and use when it is needed.
-                      }}
-                      onChange={(event, editor) => {
-                        const data = editor.getData();
-                        setDescription(data);
-                      }}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("deskripsi")
-                      }
-                      config={{
-                        placeholder: "Silahkan Masukan Deskripsi Detail",
-                      }}
-                    />
+                    <div style={{ width: "100%", height: "250px" }}>
+                      <div
+                        ref={quillRef}
+                        style={{ fontFamily: 'Poppins' }}
+                      />
+                    </div>
                   ) : (
                     <p>Tunggu Sebentar</p>
                   )}

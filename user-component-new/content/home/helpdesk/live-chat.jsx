@@ -9,18 +9,18 @@ export default function FormPengaduan() {
   const router = useRouter();
 
   return (
-    <Container fluid className="px-md-30 px-10 py-10 bg-white">
-      <SubHeaderComponent data={[{ link: router.asPath, name: "Helpdesk" }]} />
+    <Container fluid className="px-md-17 px-10 py-10 bg-white">
+      <SubHeaderComponent data={[{ link: router.asPath, name: "Bantuan" }]} />
       <Sidebar>
         <h1 className={`font-weight-boldest text-blue-primary mb-15 `}>
           Live Chat
         </h1>
-        <div className="h-700px">
+        <div className="h-500px d-flex justify-content-start">
           <iframe
-            src="https://chat.sociomile.com/livechat/57c6e0e722c054db65f99267"
-            width="100%"
-            height="100%"
-            className=" m-0 p-0 border-0"
+            src="https://chat.sociomile.com/livechat/61b28d9773bedb57087fe462"
+            width="700px"
+            // height="100%"
+            className=" mt-n10 p-0 border-0 ml-n29"
           />
         </div>
       </Sidebar>

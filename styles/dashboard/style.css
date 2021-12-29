@@ -8,6 +8,9 @@
 .text-dashboard-neutral {
   color: #1f1f1f !important;
 }
+.text-dashboard-neutral-body {
+  color: #6c6c6c !important;
+}
 .text-dashboard-gray {
   color: #374151 !important;
 }
@@ -27,9 +30,36 @@
   background-color: #4cbde2 !important;
 }
 
+.background-transparent {
+  background-color: transparent;
+  font-weight: 600;
+}
+
+.btn-outline-primary-dashboard {
+  color: #3699ff;
+  border-color: #3699ff;
+  background-color: #eef0f8;
+  padding: 0;
+  border-radius: 30px;
+  cursor: default;
+}
+.btn-outline-primary-dashboard:hover {
+  color: #3699ff;
+  border-color: #3699ff;
+  background-color: #eef0f8;
+  cursor: default;
+}
+
 .title-section-dashboard {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 32px;
+  line-height: 120%;
+  color: #6c6c6c;
+  text-transform: capitalize;
+}
+.title-section-dashboard-mini {
+  font-weight: bold;
+  font-size: 24px;
   line-height: 120%;
   color: #6c6c6c;
   text-transform: capitalize;
@@ -83,9 +113,6 @@
       url("/assets/media/ilustrator-1.svg");
     background-repeat: no-repeat;
     background-position: left bottom, right bottom;
-  }
-  .title-section-dashboard {
-    font-size: 32px;
   }
   .opening-hello .card .card-body h2 {
     font-size: 24px;

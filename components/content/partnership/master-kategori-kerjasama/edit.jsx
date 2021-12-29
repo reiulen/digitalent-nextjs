@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie"
 
 const Edit = ({ token }) => {
   const router = useRouter();
@@ -77,7 +78,7 @@ const Edit = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
@@ -118,6 +119,7 @@ const Edit = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -131,7 +133,7 @@ const Edit = ({ token }) => {
               }
             );
           } catch (error) {
-            Swal.fire("Gagal", `${error.response.data.message}`, "error");
+            Swal.fire("Gagal", `${error?.response?.data?.message}`, "error");
           }
         }
       });
@@ -141,36 +143,7 @@ const Edit = ({ token }) => {
 
 
   useEffect(() => {
-    async function getSingleData(id, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        let arr = [],
-          arr_new = [];
-        data.data.cooperation_category_forms.forEach((item) => {
-          item.isTipe = "old";
-          arr.push(item);
-        });
-        data.data.cooperation_category_forms.forEach((item) => {
-          item.name = item.cooperation_form;
-          item.isTipe = "old";
-          arr_new.push(item);
-        });
-        setStateDataSingle(arr_new);
-        setStateDataSingleOld(arr);
-        setCategoryCooporation(data.data.cooperation_categories);
-        setStatus(data.data.status);
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error")
-      }
-    }
+    
     getSingleData(router.query.id, token);
     if (allMKCooporation.status === "success") {
       router.push({
@@ -179,6 +152,38 @@ const Edit = ({ token }) => {
       });
     }
   }, [router.query.id, allMKCooporation.status, router, token]);
+
+  async function getSingleData(id, token) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+
+      let arr = [],
+        arr_new = [];
+      data?.data?.cooperation_category_forms?.forEach((item) => {
+        item.isTipe = "old";
+        arr.push(item);
+      });
+      data?.data?.cooperation_category_forms?.forEach((item) => {
+        item.name = item.cooperation_form;
+        item.isTipe = "old";
+        arr_new.push(item);
+      });
+      setStateDataSingle(arr_new);
+      setStateDataSingleOld(arr);
+      setCategoryCooporation(data?.data?.cooperation_categories);
+      setStatus(data?.data?.status);
+    } catch (error) {
+      Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
+    }
+  }
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -216,7 +221,7 @@ const Edit = ({ token }) => {
                               htmlFor="staticEmail"
                               className="col-form-label"
                             >
-                              Form Kerjasama
+                              Judul Form Isian Kerjasama
                             </label>
                           ) : (
                             ""
@@ -283,7 +288,7 @@ const Edit = ({ token }) => {
                             name="cooperation_form"
                             className="form-control"
                             placeholder="Tujuan Kerjasama"
-                            value={item.cooperation_form}
+                            value={item?.cooperation_form}
                             onChange={(e) => handleChange(e, index)}
                           />
                         </div>

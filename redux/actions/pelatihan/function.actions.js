@@ -49,10 +49,13 @@ import {
   ERROR_DROPDOWN_FORM_BUILDER,
   GET_DROPDOWN_YEAR,
   ERROR_DROPDOWN_YEAR,
+  GET_DROPDOWN_HUBUNGAN,
+  ERROR_DROPDOWN_HUBUNGAN,
+  GET_DROPDOWN_STATUS_MENIKAH,
+  ERROR_DROPDOWN_STATUS_MENIKAH,
 } from "../../types/pelatihan/function.type";
 
 import axios from "axios";
-import { getAllAkademi } from "../beranda/beranda.actions";
 
 export const getDataPribadi = (token) => async (dispatch) => {
   try {
@@ -148,7 +151,11 @@ export const getRegistrationStep2 = () => async (dispatch) => {
         size: "",
         option: "",
         dataOption: "",
+        fileName: "Belum ada file",
         required: "0",
+        triggered: "0",
+        triggered_parent: [],
+        value: "",
       },
     ],
   };
@@ -184,29 +191,31 @@ export const storeCommitmentStep3 = (data) => async (dispatch) => {
   });
 };
 
-export const dropdownAkademi = (token, tokenPermission) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-        permissionToken: tokenPermission,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/dropdown`,
-      config
-    );
-    dispatch({
-      type: GET_DROPDOWN_AKADEMI,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ERROR_DROPDOWN_AKADEMI,
-      payload: error.response.data.message,
-    });
-  }
-};
+export const dropdownAkademi =
+  (token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/dropdown`,
+        config
+      );
+      dispatch({
+        type: GET_DROPDOWN_AKADEMI,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ERROR_DROPDOWN_AKADEMI,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const drowpdownFormBuilder = (token) => async (dispatch) => {
   try {
@@ -231,35 +240,38 @@ export const drowpdownFormBuilder = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownTema = (token, tokenPermission) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-        permissionToken: tokenPermission,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_PELATIHAN + `api/v1/tema/dropdown`,
-      config
-    );
-    dispatch({
-      type: GET_DROPDOWN_TEMA,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ERROR_DROPDOWN_TEMA,
-      payload: error.response.data.message,
-    });
-  }
-};
+export const dropdownTema =
+  (token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_PELATIHAN + `api/v1/tema/dropdown`,
+        config
+      );
+      dispatch({
+        type: GET_DROPDOWN_TEMA,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ERROR_DROPDOWN_TEMA,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const dropdownTemabyAkademi = (id, token) => async (dispatch) => {
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        // Permission: tokenPermission,
       },
     };
     const { data } = await axios.get(
@@ -305,29 +317,31 @@ export const dropdownPelatihan =
     }
   };
 
-export const dropdownPelatihanbyTema = (id, token) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_PELATIHAN +
-        `api/v1/pelatihan/dropdown-pelatihan-tema?id=${id}`,
-      config
-    );
-    dispatch({
-      type: GET_DROPDOWN_PELATIHAN_BY_TEMA,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ERROR_DROPDOWN_PELATIHAN_BY_TEMA,
-      payload: error.response.data.message,
-    });
-  }
-};
+export const dropdownPelatihanbyTema =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/pelatihan/dropdown-pelatihan-tema?id=${id}`,
+        config
+      );
+      dispatch({
+        type: GET_DROPDOWN_PELATIHAN_BY_TEMA,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ERROR_DROPDOWN_PELATIHAN_BY_TEMA,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const dropdownAgama = (token) => async (dispatch) => {
   try {
@@ -452,7 +466,8 @@ export const dropdownZonasi = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/zonasi/list`,
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/zonasi/list?paginate=false`,
       config
     );
     dispatch({
@@ -614,28 +629,31 @@ export const dropdownTempatLahir = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownPenyelenggara = (token) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/organizer`,
-      config
-    );
-    dispatch({
-      type: GET_DROPDOWN_PENYELENGGARA,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ERROR_DROPDOWN_PENYELENGGARA,
-      payload: error.response.data.message,
-    });
-  }
-};
+export const dropdownPenyelenggara =
+  (token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: token_permission,
+        },
+      };
+      const { data } = await axios.get(
+        process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/organizer`,
+        config
+      );
+      dispatch({
+        type: GET_DROPDOWN_PENYELENGGARA,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ERROR_DROPDOWN_PENYELENGGARA,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getDropdownYear = (token) => async (dispatch) => {
   try {
@@ -655,6 +673,78 @@ export const getDropdownYear = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_YEAR,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getDropdownHubungan = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/reference-choose-name/Hubungan?paginate=false`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_HUBUNGAN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_HUBUNGAN,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getDropdownStatusMenikah = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/reference-choose-name/Status Menikah?paginate=false`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_STATUS_MENIKAH,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_STATUS_MENIKAH,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getDropdownKabupatenAll = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/reference-choose-name/Kabupaten?paginate=false`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_KABUPATEN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_KABUPATEN,
       payload: error.response.data.message,
     });
   }

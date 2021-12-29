@@ -1,14 +1,23 @@
 import dynamic from "next/dynamic";
-
-import Preview from "../../../../components/content/publikasi/artikel/preview";
+// import Preview from "../../../../components/content/publikasi/artikel/preview";
 import Footer from "../../../../components/templates/footer.component";
 
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
-
 import { getDetailArtikel } from "../../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../redux/store";
 import { getTagBerandaArtikel } from "../../../../redux/actions/beranda/artikel.actions"
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const Preview = dynamic(
+  () => import("../../../../components/content/publikasi/artikel/preview"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 const Layout = dynamic(
   () => import("../../../../user-component-new/components/template/Layout.component")
@@ -39,11 +48,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       await store.dispatch(
-        getDetailArtikel(params.id, session.user.user.data.token)
+        getDetailArtikel(params.id, session.user.user.data.token, req.cookies.token_permission)
       );
 
       await store.dispatch(
-        getTagBerandaArtikel(session.user.user.data.token)
+        getTagBerandaArtikel(session.user.user.data.token, req.cookies.token_permission)
       )
 
       return {

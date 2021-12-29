@@ -20,7 +20,7 @@ import {
   masterCategoryUpdate,
 } from "./api/master-category";
 
-export const fetchAllMKCooporation = (token) => {
+export const fetchAllMKCooporation = (token, permission) => {
   return async (dispatch, getState) => {
     dispatch({ type: MK_COOPORATION_REQUEST });
     let keywordState = getState().allMKCooporation.keyword || "";
@@ -34,7 +34,7 @@ export const fetchAllMKCooporation = (token) => {
     };
 
     try {
-      const { data } = await getAllMasterCategory(params, token);
+      const { data } = await getAllMasterCategory(params, token, permission);
       dispatch(successFetchAllMKCooporation(data));
     } catch (error) {
       dispatch(errorfetchAllMKCooporation());
@@ -92,10 +92,10 @@ export const failGetSingleCooporation = (data) => {
   };
 };
 
-export const deleteCooporation = (token, formData, id) => {
+export const deleteCooporation = (token, formData, id, permission) => {
   return async (dispatch) => {
     try {
-      let { data } = await deleteMasterCategory(token, formData, id);
+      let { data } = await deleteMasterCategory(token, formData, id, permission);
       dispatch(successDeleteCooporation(data));
     } catch (error) {
       dispatch(errorDeleteCooporation(error.response.data.message));

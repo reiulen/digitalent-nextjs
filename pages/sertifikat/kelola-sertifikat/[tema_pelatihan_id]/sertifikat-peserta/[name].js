@@ -4,59 +4,68 @@ import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/li
 import { getPublishedSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { wrapper } from "../../../../../redux/store";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 const ListPesertaId = dynamic(
-  () =>
-    import(
-      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta-id"
-    ),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
+	() =>
+		import(
+			"../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta-id"
+		),
+	{
+		loading: function loadingNow() {
+			return <LoadingSkeleton />;
+		},
+		ssr: false,
+	}
 );
 
 export default function KelokaSertifikatPage(props) {
-  const session = props.session.user.user.data;
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        <ListPesertaId token={session} />
-      </div>
-    </>
-  );
+	const session = props.session.user.user.data;
+	return (
+		<>
+			<div className="d-flex flex-column flex-root">
+				<ListPesertaId token={session} />
+			</div>
+		</>
+	);
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ query, req }) => {
-      const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false,
-          },
-        };
-      }
+	(store) =>
+		async ({ query, req }) => {
+			const session = await getSession({ req });
+			const middleware = middlewareAuthAdminSession(session);
 
-      await store.dispatch(
-        getPublishedSertifikat(query.id_pelatihan, session.user.user.data.token)
-      );
+			if (!middleware.status) {
+				return {
+					redirect: {
+						destination: middleware.redirect,
+						permanent: false,
+					},
+				};
+			}
+			const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(
-        getDetailParticipant(
-          //   query.nama_pelatihan_id,
-          query.id,
-          query.id_pelatihan,
-          session.user.user.data.token
-        )
-      );
+			await store.dispatch(
+				getPublishedSertifikat(
+					query.id_pelatihan,
+					session.user.user.data.token,
+					token_permission
+				)
+			);
 
-      return {
-        props: { session, title: "Detail - Sertifikat" },
-      };
-    }
+			await store.dispatch(
+				getDetailParticipant(
+					//   query.nama_pelatihan_id,
+					query.id,
+					query.id_pelatihan,
+					session.user.user.data.token,
+					token_permission
+				)
+			);
+
+			return {
+				props: { session, title: "Detail - Sertifikat" },
+			};
+		}
 );

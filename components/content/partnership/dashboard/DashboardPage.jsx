@@ -12,75 +12,73 @@ import IconStop from "../../../../public/assets/icon/folder-forbid-line.svg";
 import Image from "next/image";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { getSession } from "next-auth/client";
-import Link from 'next/link'
+import Link from "next/link";
 import { fetchDashboard } from "../../../../redux/actions/partnership/dashboard.action";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 import axios from "axios";
 
 export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
+  const { permission } = useSelector((state) => state.partnershipPermissions);
   const [user, setUser] = useState("");
 
   const colors = ["#215480", "#4299E1", "#357AB4"];
   const [dataPieChartStatusPengajuan, setDataPieChartStatusPengajuan] =
     useState([]);
+
   const [dataPieChartPengajuanDisetujui, setDataPieChartPengajuanDisetujui] =
     useState([]);
 
   const [errorGetData, setErrorGetData] = useState("");
+  const cookiePermission = Cookies.get("token_permission");
 
   useEffect(() => {
     // dispatch (fetchDashboard(token))
-
-    async function fetchDashboards() {
-      // const cookiePermission = Cookies.get("token_permission")
-      
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/dashbord`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-              // permissionToken: localStorage.getItem("token-permission")
-              // permissionToken: "U2FsdGVkX1/8bJA1yPuTitjBQIWEy1GEsyNFohOq7F2PIsPVfNgnmPPOWcJXAKFEgbMppK8Fyw0xReLhnj+Pmf6udk18GMKI1929EvT0DZafMFtuR/iRg3fz1L1ntUCC8J9DXy/FmNThOaTiYI7q8Q355IC5RgKGtHfkQxDRDLfS/XwQ8y1hnRRurzZgJAV9cTJs/7ZPQbI5r0E1ymvHbg6hzwCXeONeRcX3U7rsXaO6ouwfN6/ymcJUEGMxVNv/64NkXTk0ISzV06+jyuhoT/on/emeQ6prfLCjaPxzDDCdSlUKAD3kA/FYLAtJKdyUZVkQMx1T9d5UIuI1eO8WZfP0jV+R12qrzM12QCsr5jiTJTe2UiCGWhm3fLdJJKMKPxWJJyHyhGLE47qFGjK84iEVvqAvuSGyGOPCjN7g49ARR0H9vBC0qCtekN/58zGfyqGORFjcZFLSlKnsTQip1U2qgPvDTf6b6rot3gSsEYJRyhhG3ksp1uyFDxGmNR+qfo4C/iQ4qodADfQg+mFGOx2mVhMuj+8wcbRD6XW9v0vmAHiW/Zx+bN4/dOYsaLrGdnWssuoNi9yIRCVPkqYImGRgMI2A2BM7/ZpRrD8/HvI="
-              // permissionToken: cookiePermission
-            },
-          }
-        );
-        setDataPieChartPengajuanDisetujui([
-          {
-            name: "Akan Berakhir",
-            value: data?.data?.cooperation_will_expired,
-          },
-          {
-            name: "Ditolak",
-            value: data?.data?.cooperation_rejected,
-          },
-        ]);
-        setDataPieChartStatusPengajuan([
-          {
-            name: "Aktif",
-            value: data?.data?.cooperation_active,
-          },
-          {
-            name: "Disetujui",
-            value: data?.data?.cooperation_approved,
-          },
-        ]);
-      } catch (error) {
-        setErrorGetData(error);
-      }
-    }
 
     fetchDashboards();
 
     getSession().then((session) => {
       setUser(session.user.user.data.user);
     });
+  }, [dispatch, token, cookiePermission]);
 
-  }, [dispatch, token]);
+  async function fetchDashboards() {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/dashbord`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Permission: cookiePermission,
+          },
+        }
+      );
+      setDataPieChartPengajuanDisetujui([
+        {
+          name: "Akan Berakhir",
+          value: data?.data?.cooperation_will_expired,
+        },
+        {
+          name: "Ditolak",
+          value: data?.data?.cooperation_rejected,
+        },
+      ]);
+      setDataPieChartStatusPengajuan([
+        {
+          name: "Aktif",
+          value: data?.data?.cooperation_active,
+        },
+        {
+          name: "Tidak Aktif",
+          value: data?.data?.cooperation_non_active,
+        },
+      ]);
+    } catch (error) {
+      setErrorGetData(error);
+    }
+  }
 
   return (
     <PageWrapper>
@@ -96,9 +94,7 @@ export default function DashboardPage({ token }) {
           <Image src={ImagePlants} alt="imagehero" />
         </div>
 
-        <h5 className="text-blue-secondary fw-600 fz-24">
-          Halo {user.name} !
-        </h5>
+        <h5 className="text-blue-secondary fw-600 fz-24">Halo {user.name} !</h5>
         <p className="text-gray-primary fw-600 fz-16">
           Selamat Datang di Dashboard Partnership, yuk cek pengajuan kerjasama
           mitra hari ini.
@@ -106,16 +102,60 @@ export default function DashboardPage({ token }) {
       </div>
 
       <div className="row mt-4">
-
         {/* Card Total Mitra */}
         <div className="col-12 col-xl-6 my-3">
-          <Link href="/partnership/mitra" passHref>
+          {permission?.permissions?.includes("partnership.dashboard.manage") &&
+          permission?.permissions?.includes("partnership.mitra.manage") ? (
+            <Link href="/partnership/mitra" passHref>
+              <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2 cursor-pointer">
+                <div className="d-flex justify-content-between align-items-center position-relative">
+                  <div>
+                    <div className="d-flex align-items-center">
+                      <Image
+                        src="/assets/icon/add-user-white.svg"
+                        width={50}
+                        height={50}
+                        alt="add-user"
+                      />
 
-            <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2 cursor-pointer">
+                      {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
+
+                      <h1
+                        className="text-white ml-3 mt-7"
+                        style={{ fontSize: "3rem" }}
+                      >
+                        {allDashboard?.data_dashboard?.data?.mitra}
+                      </h1>
+                    </div>
+
+                    <div>
+                      <h5 className="fw-500 fz-14">Total Mitra</h5>
+                    </div>
+                  </div>
+
+                  <i
+                    className="ri-user-add-fill ri-7x"
+                    style={{
+                      color: "#1a4367",
+                      marginTop: "-2rem",
+                      marginRight: "-0.25rem",
+                    }}
+                  />
+                  {/* <Image 
+                          src="/assets/icon/add-user-shade-primary.svg"
+                          width={100}
+                          height={100}
+                          className="border border-dark mt-0 position-absolute right-0"
+                          style={{marginTop:"-5%"}}
+                        /> */}
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <div className="br-12 bg-blue-primary pl-8 pb-3 text-white mt-2">
               <div className="d-flex justify-content-between align-items-center position-relative">
                 <div>
                   <div className="d-flex align-items-center">
-
                     <Image
                       src="/assets/icon/add-user-white.svg"
                       width={50}
@@ -125,8 +165,11 @@ export default function DashboardPage({ token }) {
 
                     {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
 
-                    <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
-                      {allDashboard.data_dashboard.data?.mitra}
+                    <h1
+                      className="text-white ml-3 mt-7"
+                      style={{ fontSize: "3rem" }}
+                    >
+                      {allDashboard?.data_dashboard?.data?.mitra}
                     </h1>
                   </div>
 
@@ -135,31 +178,79 @@ export default function DashboardPage({ token }) {
                   </div>
                 </div>
 
-                <i 
-                  className="ri-user-add-fill ri-7x" 
-                  style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.25rem"}}
+                <i
+                  className="ri-user-add-fill ri-7x"
+                  style={{
+                    color: "#1a4367",
+                    marginTop: "-2rem",
+                    marginRight: "-0.25rem",
+                  }}
                 />
-                  {/* <Image 
-                      src="/assets/icon/add-user-shade-primary.svg"
-                      width={100}
-                      height={100}
-                      className="border border-dark mt-0 position-absolute right-0"
-                      style={{marginTop:"-5%"}}
-                    /> */}
+                {/* <Image 
+                        src="/assets/icon/add-user-shade-primary.svg"
+                        width={100}
+                        height={100}
+                        className="border border-dark mt-0 position-absolute right-0"
+                        style={{marginTop:"-5%"}}
+                      /> */}
               </div>
             </div>
-          </Link>
+          )}
         </div>
 
         {/* Card Total Kerjasama */}
         <div className="col-12 col-xl-6 my-3">
-          <Link href="/partnership/kerjasama" passHref>
+          {permission?.permissions?.includes("partnership.dashboard.manage") &&
+          permission?.permissions?.includes("partnership.kerjasama.manage") ? (
+            <Link href="/partnership/kerjasama" passHref>
+              <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2 cursor-pointer">
+                <div className="d-flex justify-content-between align-items-center position-relative">
+                  <div>
+                    <div className="d-flex align-items-center">
+                      {/* <i className="ri-clipboard-fill ri-4x text-white" /> */}
 
-            <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2 cursor-pointer">
+                      <Image
+                        src="/assets/icon/clipboard-list-white.svg"
+                        width={50}
+                        height={50}
+                        alt="clipboard"
+                      />
+
+                      <h1
+                        className="text-white ml-3 mt-7"
+                        style={{ fontSize: "3rem" }}
+                      >
+                        {allDashboard?.data_dashboard?.data?.cooperation}
+                      </h1>
+                    </div>
+
+                    <div>
+                      <h5 className="fw-500 fz-14">Total Kerjasama</h5>
+                    </div>
+                  </div>
+
+                  {/* <i 
+                        className="ri-clipboard-fill ri-7x" 
+                        style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.75rem"}}
+                      /> */}
+
+                  <Image
+                    src="/assets/icon/clipboard-list-primary-shade.svg"
+                    width={100}
+                    height={100}
+                    // className="mr-0"
+                    className="mt-n1 mr-n1"
+                    // style={{ marginTop: "-2rem", marginRight: "-3rem" }}
+                    alt="clipboard"
+                  />
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <div className="br-12 bg-blue-dark pl-8 pb-6 text-white mt-2">
               <div className="d-flex justify-content-between align-items-center position-relative">
                 <div>
                   <div className="d-flex align-items-center">
-
                     {/* <i className="ri-clipboard-fill ri-4x text-white" /> */}
 
                     <Image
@@ -169,8 +260,11 @@ export default function DashboardPage({ token }) {
                       alt="clipboard"
                     />
 
-                    <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
-                      {allDashboard.data_dashboard.data?.cooperation}
+                    <h1
+                      className="text-white ml-3 mt-7"
+                      style={{ fontSize: "3rem" }}
+                    >
+                      {allDashboard?.data_dashboard?.data?.cooperation}
                     </h1>
                   </div>
 
@@ -180,30 +274,26 @@ export default function DashboardPage({ token }) {
                 </div>
 
                 {/* <i 
-                  className="ri-clipboard-fill ri-7x" 
-                  style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.75rem"}}
-                /> */}
+                      className="ri-clipboard-fill ri-7x" 
+                      style={{color:"#1a4367", marginTop:"-2rem", marginRight:"-0.75rem"}}
+                    /> */}
 
-                <Image 
+                <Image
                   src="/assets/icon/clipboard-list-primary-shade.svg"
                   width={100}
                   height={100}
                   className="mr-0"
-                  style={{marginTop:"-2rem", marginRight:"-3rem"}}
+                  style={{ marginTop: "-2rem", marginRight: "-3rem" }}
                   alt="clipboard"
                 />
               </div>
             </div>
-          </Link>
+          )}
         </div>
-
-
       </div>
 
-      
       {/* Content */}
       <div className="row mt-4">
-
         {/* Card pengajuan Aktif */}
         <div className="col-12 col-xl-6 my-5">
           <div className="br-12 bg-white px-10 py-6 mt-2">
@@ -211,18 +301,27 @@ export default function DashboardPage({ token }) {
               Berdasarkan Pengajuan Aktif & Tidak Aktif
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              {allDashboard.data_dashboard.data?.cooperation_active +
-                allDashboard.data_dashboard.data?.cooperation_approved}&nbsp;
-              Total Aktif dan Tidak Aktif
+              {
+                allDashboard && 
+                allDashboard.data_dashboard && 
+                allDashboard.data_dashboard.data && 
+                allDashboard.data_dashboard.data.cooperation_active && 
+                allDashboard.data_dashboard.data.cooperation_approved ?
+                  allDashboard?.data_dashboard?.data?.cooperation_active +
+                  allDashboard?.data_dashboard?.data?.cooperation_approved
+                :
+                  0
+              }
+              &nbsp; Total Aktif dan Tidak Aktif
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
-                {!allDashboard.data_dashboard.data?.cooperation_active
+                {!allDashboard.data_dashboard?.data?.cooperation_active
                   ? 0
-                  : allDashboard.data_dashboard.data?.cooperation_active +
-                    allDashboard.data_dashboard.data?.cooperation_approved}
+                  : allDashboard?.data_dashboard?.data?.cooperation_active +
+                    allDashboard?.data_dashboard?.data?.cooperation_approved}
               </span>
-              
+
               <div className="col-12">
                 <ResponsiveContainer width="100%" height={350}>
                   <PieChart>
@@ -233,18 +332,18 @@ export default function DashboardPage({ token }) {
                       innerRadius={60}
                       outerRadius={80}
                       paddingAngle={-10}
-                      cornerRadius={30} 
+                      cornerRadius={30}
+                      dataKey="value"
+                      nameKey="name"
                     >
                       {dataPieChartStatusPengajuan &&
-                        dataPieChartStatusPengajuan.map((el, i) => {
+                        dataPieChartStatusPengajuan?.map((el, i) => {
                           return <Cell key={i} fill={colors[i]} />;
                         })}
                     </Pie>
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              
-              
             </div>
             <div className="row">
               <div className="col-6">
@@ -259,7 +358,7 @@ export default function DashboardPage({ token }) {
 
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
-                        {allDashboard.data_dashboard.data?.cooperation_active}
+                        {allDashboard?.data_dashboard?.data?.cooperation_active}
                       </p>
                     </div>
                   </div>
@@ -283,18 +382,20 @@ export default function DashboardPage({ token }) {
 
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
-                        {allDashboard.data_dashboard.data?.cooperation_non_active}
+                        {
+                          allDashboard?.data_dashboard?.data
+                            ?.cooperation_non_active
+                        }
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className='text-center'>
+                <div className="text-center">
                   <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
                     Pengajuan Tidak Aktif
                   </p>
                 </div>
-                
               </div>
             </div>
           </div>
@@ -307,16 +408,34 @@ export default function DashboardPage({ token }) {
               Berdasarkan Pengajuan Akan Berakhir & Ditolak
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              {allDashboard.data_dashboard.data?.cooperation_will_expired +
-                allDashboard.data_dashboard.data?.cooperation_rejected}{" "}
-              Total Akan Berakhir & Ditolak
+              {
+                allDashboard &&
+                allDashboard.data_dashboard &&
+                allDashboard.data_dashboard.data &&
+                allDashboard.data_dashboard.data.cooperation_will_expired &&
+                allDashboard.data_dashboard.data.cooperation_rejected ?
+                  allDashboard?.data_dashboard?.data?.cooperation_will_expired +
+                  allDashboard?.data_dashboard?.data?.cooperation_rejected
+                :
+                  0
+              }
+              &nbsp;Total Akan Berakhir & Ditolak
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
-                {allDashboard.data_dashboard.data?.cooperation_will_expired +
-                  allDashboard.data_dashboard.data?.cooperation_rejected}
+              {
+                allDashboard &&
+                allDashboard.data_dashboard &&
+                allDashboard.data_dashboard.data &&
+                allDashboard.data_dashboard.data.cooperation_will_expired &&
+                allDashboard.data_dashboard.data.cooperation_rejected ?
+                  allDashboard?.data_dashboard?.data?.cooperation_will_expired +
+                  allDashboard?.data_dashboard?.data?.cooperation_rejected
+                :
+                  0
+              }
               </span>
-              
+
               <div className="col-12">
                 <ResponsiveContainer width="100%" height={350}>
                   <PieChart>
@@ -328,6 +447,8 @@ export default function DashboardPage({ token }) {
                       outerRadius={80}
                       paddingAngle={-10}
                       cornerRadius={30}
+                      dataKey="value"
+                      nameKey="name"
                     >
                       {dataPieChartPengajuanDisetujui &&
                         dataPieChartPengajuanDisetujui.map((el, i) => {
@@ -337,7 +458,6 @@ export default function DashboardPage({ token }) {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              
             </div>
             <div className="row">
               <div className="col-6">
@@ -353,7 +473,7 @@ export default function DashboardPage({ token }) {
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
                         {
-                          allDashboard.data_dashboard.data
+                          allDashboard?.data_dashboard?.data
                             ?.cooperation_will_expired
                         }
                       </p>
@@ -380,7 +500,10 @@ export default function DashboardPage({ token }) {
 
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
-                        {allDashboard.data_dashboard.data?.cooperation_rejected}
+                        {
+                          allDashboard?.data_dashboard?.data
+                            ?.cooperation_rejected
+                        }
                       </p>
                     </div>
                   </div>

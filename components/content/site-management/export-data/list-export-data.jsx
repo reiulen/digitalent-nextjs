@@ -61,12 +61,16 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     dispatch(getAllExportData(token , Cookies.get("token_permission")));
     if (deleteExportData?.isDeleted) {
       Swal.fire("Berhasil", "Data berhasil dihapus", "success").then(() => {
         dispatch(getAllExportData(token));
       });
     }
+=======
+    dispatch(getAllExportData(token));
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
   }, [
     dispatch,
     allExportData.cari,
@@ -88,36 +92,38 @@ const Table = ({ token }) => {
           <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-sm-4">
                   <div className="d-flex align-items-center w-100 mt-4">
                     <div className="position-relative overflow-hidden w-100">
-                      <IconSearch
-                        style={{ left: "10" }}
-                        className="left-center-absolute"
-                      />
-                      <input
-                        type="text"
-                        className="form-control pl-10"
-                        placeholder="Ketik disini untuk Pencarian..."
-                        onChange={(e) =>
-                          handleChangeValueSearch(e.target.value)
-                        }
-                      />
-                      <button
-                        type="button"
-                        onClick={(e) => handleSubmit(e)}
-                        className="btn bg-blue-primary text-white right-center-absolute"
-                        style={{
-                          borderTopLeftRadius: "0",
-                          borderBottomLeftRadius: "0",
-                        }}
-                      >
-                        Cari
-                      </button>
+                      <form onSubmit={(e) => handleSubmit(e)}>
+                        <IconSearch
+                          style={{ left: "10" }}
+                          className="left-center-absolute"
+                        />
+                        <input
+                          type="text"
+                          className="form-control pl-10"
+                          placeholder="Ketik disini untuk Pencarian..."
+                          onChange={(e) =>
+                            handleChangeValueSearch(e.target.value)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => handleSubmit(e)}
+                          className="btn bg-blue-primary text-white right-center-absolute"
+                          style={{
+                            borderTopLeftRadius: "0",
+                            borderBottomLeftRadius: "0",
+                          }}
+                        >
+                          Cari
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-sm-6 ml-auto">
                   {localStorage
                     .getItem("permissions")
                     .includes("site_management.export_data.manage") && (
@@ -154,14 +160,14 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allExportData.data.exports.length === 0 ? (
+                      {allExportData?.data?.total === 0 ? (
                         <tr>
                           <td colSpan="8" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (
-                        allExportData.data.exports.map((items, index) => {
+                        allExportData?.data?.exports?.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
@@ -172,7 +178,7 @@ const Table = ({ token }) => {
                                     (index + 1)}
                               </td>
                               <td className="align-middle text-left">
-                                {items.user.name}
+                                {items?.user?.name || "-"}
                               </td>
                               <td className="align-middle text-left">
                                 {moment(items.filtered_at).format(
@@ -257,61 +263,62 @@ const Table = ({ token }) => {
                   </table>
                 )}
               </div>
+              {allExportData?.data?.total > 5 && (
+                <div className="row px-4">
+                  <div className="table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={allExportData.page}
+                      itemsCountPerPage={allExportData.data.perPage}
+                      totalItemsCount={allExportData.data.total}
+                      pageRangeDisplayed={2}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
 
-              <div className="row px-4">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={allExportData.page}
-                    itemsCountPerPage={allExportData.data.perPage}
-                    totalItemsCount={allExportData.data.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control cursor-pointer pr-2"
-                        id="exampleFormControlSelect2"
-                        defaultValue=""
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) =>
-                          dispatch(limitCooporation(e.target.value, token))
-                        }
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data{" "}
-                        {allExportData.data && allExportData.data.total} List
-                        Data
-                      </p>
+                  <div className="table-total ml-auto mr-4">
+                    <div className="row mt-4">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control cursor-pointer pr-2"
+                          id="exampleFormControlSelect2"
+                          defaultValue=""
+                          style={{
+                            width: "63px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) =>
+                            dispatch(limitCooporation(e.target.value, token))
+                          }
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data{" "}
+                          {allExportData.data && allExportData.data.total} List
+                          Data
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

@@ -12,12 +12,12 @@ import styles from "../trivia/edit/step.module.css";
 import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Modal } from "react-bootstrap";
+import { Badge, Modal } from "react-bootstrap";
 
 import { clearErrors } from "/redux/actions/subvit/subtance.actions";
 import { allReportSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 
-const ListSubstansi = ({ token }) => {
+const ListSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -28,6 +28,7 @@ const ListSubstansi = ({ token }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [status, setStatus] = useState("");
+  const [type, setType] = useState(false);
 
   const [nilai, setNilai] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
@@ -36,7 +37,11 @@ const ListSubstansi = ({ token }) => {
   let { page = 1, id } = router.query;
   page = Number(page);
 
-  useEffect(() => {}, [dispatch]);
+  useEffect(() => {
+    subtance?.data?.reports.map((it) => {
+      return it.type.includes("midtest") ? setType(true) : setType(false);
+    });
+  }, [dispatch, subtance]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
@@ -48,7 +53,8 @@ const ListSubstansi = ({ token }) => {
     router.push(link);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (limit != null) {
       router.push(
         `${router.pathname}?id=${id}&page=1&keyword=${search}&limit=${limit}`
@@ -65,14 +71,17 @@ const ListSubstansi = ({ token }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`;
+    let link =
+      process.env.END_POINT_API_SUBVIT +
+      `api/subtance-question-banks/report/export/${id}?`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
     if (nilai) link = link.concat(`&nilai=${nilai}`);
-
+    if (router.query.card) link = link.concat(`&card=${router.query.card}`);
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
@@ -195,8 +204,8 @@ const ListSubstansi = ({ token }) => {
             value={subtance ? subtance.data.total_peserta : 0}
             titleValue=""
             title="Total Peserta"
-            publishedVal={null}
-            routePublish={() => handlePublish("")}
+            publishedVal={"total-peserta"}
+            routePublish={() => handlePublish("total-peserta")}
           />
           <CardPage
             background="bg-secondary"
@@ -246,7 +255,7 @@ const ListSubstansi = ({ token }) => {
           <div className="card-header border-0 align-items-center row">
             <div className="col-lg-10 col-xl-10">
               <h3 className="card-title font-weight-bolder text-dark">
-                Report Test Substansi{" "}
+                Report {type ? "Mid Test" : "Test Substansi"}{" "}
                 {publishValue === null || ""
                   ? ""
                   : `- ${
@@ -266,29 +275,31 @@ const ListSubstansi = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-md-5">
+                <div className="col-md-4">
                   <div className="position-relative overflow-hidden mt-2">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10 mt-2"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10 mt-2"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute mt-1"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
                   </div>
                 </div>
-                <div className="col-md-1"></div>
-                <div className="col-md-3">
+                <div className="col-md-4"></div>
+                <div className="col-md-2">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-2 btn-block"
                     style={{
@@ -305,7 +316,7 @@ const ListSubstansi = ({ token }) => {
                   </button>
                 </div>
 
-                <div className="col-md-3">
+                <div className="col-md-2 ">
                   <button
                     className={`${styles.btnResponsive} btn w-200 btn-rounded-full bg-blue-secondary text-center text-white mt-2`}
                     type="button"
@@ -339,7 +350,7 @@ const ListSubstansi = ({ token }) => {
                       {subtance && subtance.data.reports.length === 0 ? (
                         <tr>
                           <td className="text-center" colSpan={7}>
-                            Data Tidak Ditemukan
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (
@@ -376,7 +387,7 @@ const ListSubstansi = ({ token }) => {
                                     {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">
-                                    {row.total_workmanship_time}
+                                    {row.total_workmanship_time} Menit
                                   </p>
                                 </div>
                               </td>
@@ -394,16 +405,35 @@ const ListSubstansi = ({ token }) => {
                                 </div>
                               </td>
                               <td className="align-middle">
-                                {row.status ? (
+                                {row.status === 1 && row.finish === 1 ? (
                                   <td className="align-middle">
-                                    <span className="label label-inline label-light-success font-weight-bold">
+                                    {/* <span className="label label-inline label-light-success font-weight-bold">
                                       Diterima
-                                    </span>
+                                    </span> */}
+                                    <Badge bg="success">Lulus</Badge>
+                                  </td>
+                                ) : !row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="warning">
+                                      Belum Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.start_datetime &&
+                                  !row.finish_datetime ? (
+                                  <td className="align-middle">
+                                    <Badge bg="success">
+                                      Sedang Mengerjakan
+                                    </Badge>
+                                  </td>
+                                ) : row.finish == 1 && row.status == 0 ? (
+                                  <td className="align-middle">
+                                    <Badge bg="danger">Gagal</Badge>
                                   </td>
                                 ) : (
                                   <td className="align-middle">
                                     <span className="label label-inline label-light-danger font-weight-bold">
-                                      Ditolak
+                                      -
                                     </span>
                                   </td>
                                 )}
@@ -507,8 +537,8 @@ const ListSubstansi = ({ token }) => {
               <option value="" selected>
                 Semua
               </option>
-              <option value={1}>Diterima</option>
-              <option value={0}>Ditolak</option>
+              <option value={1}>Lulus</option>
+              <option value={0}>Gagal</option>
             </select>
           </div>
           <div className="form-group mb-5">

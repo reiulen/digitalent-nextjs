@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { PENDAFTARAN_PELATIHAN_RESET } from "../../../../redux/types/pelatihan/register-training.type";
+import moment from "moment";
 
 const FormBerhasil = ({ token }) => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const FormBerhasil = ({ token }) => {
     try {
       const config = {
         headers: {
-          authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       };
       const { data } = await axios.get(
@@ -72,9 +73,10 @@ const FormBerhasil = ({ token }) => {
                     src={`${
                       !dataPelatihan?.logo && !dataPelatihan?.gambar_mitra
                         ? "/assets/media/default-card.png"
-                        : dataPelatihan?.file_path + dataPelatihan.logo ||
-                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                            dataPelatihan?.gambar_mitra
+                        : dataPelatihan.logo
+                        ? dataPelatihan?.file_path + dataPelatihan.logo
+                        : process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                          dataPelatihan?.gambar_mitra
                     }`}
                     width={58}
                     height={58}
@@ -145,6 +147,7 @@ const FormBerhasil = ({ token }) => {
             <a
               className="text-primary font-weight-bolder"
               onClick={() => {
+                router.push("/peserta");
                 dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
               }}
             >

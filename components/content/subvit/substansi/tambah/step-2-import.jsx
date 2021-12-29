@@ -26,8 +26,9 @@ import StepInput from "/components/StepInput";
 import LoadingTable from "../../../../LoadingTable";
 import axios from "axios";
 import styles from "../../trivia/edit/step.module.css";
+import Cookies from "js-cookie";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -52,6 +53,7 @@ const StepTwo = ({ token }) => {
     loading: loadingImages,
     error: errorImages,
     success: successImages,
+    subtance_question_images,
   } = useSelector((state) => state.importImagesSubtanceQuestionDetail);
   let { page = 1, id } = router.query;
   page = Number(page);
@@ -82,22 +84,78 @@ const StepTwo = ({ token }) => {
   const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
-    dispatch(getAllSubtanceQuestionDetail(id, token));
+    dispatch(
+      getAllSubtanceQuestionDetail(
+        id,
+        1,
+        null,
+        null,
+        "",
+        "",
+        "",
+        token,
+        tokenPermission
+      )
+    );
     // if (error) {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      dispatch(getAllSubtanceQuestionDetail(id, token));
+      dispatch(
+        getAllSubtanceQuestionDetail(
+          id,
+          1,
+          null,
+          null,
+          "",
+          "",
+          "",
+          token,
+          tokenPermission
+        )
+      );
     }
 
     if (successImages) {
-      dispatch(getAllSubtanceQuestionDetail(id, token));
+      dispatch(
+        getAllSubtanceQuestionDetail(
+          id,
+          1,
+          null,
+          null,
+          "",
+          "",
+          "",
+          token,
+          tokenPermission
+        )
+      );
     }
 
     if (isDeleted) {
-      dispatch(getAllSubtanceQuestionDetail(id, token));
+      dispatch(
+        getAllSubtanceQuestionDetail(
+          id,
+          1,
+          null,
+          null,
+          "",
+          "",
+          "",
+          token,
+          tokenPermission
+        )
+      );
     }
-  }, [dispatch, id, successFile, successImages, isDeleted, token]);
+  }, [
+    dispatch,
+    id,
+    successFile,
+    successImages,
+    isDeleted,
+    token,
+    tokenPermission,
+  ]);
 
   const saveDraft = () => {
     let valid = true;
@@ -120,6 +178,9 @@ const StepTwo = ({ token }) => {
     }
 
     if (valid) {
+      localStorage.removeItem("method");
+      localStorage.removeItem("step2");
+      localStorage.removeItem("clone");
       dispatch({
         type: IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_RESET,
       });
@@ -127,8 +188,8 @@ const StepTwo = ({ token }) => {
         type: IMPORT_IMAGES_SUBTANCE_QUESTION_DETAIL_RESET,
       });
       router.push({
-        pathname: `/subvit/substansi/tambah-step-2-import`,
-        query: { id },
+        pathname: `/subvit/substansi`,
+        query: { success: true },
       });
     }
   };
@@ -155,6 +216,7 @@ const StepTwo = ({ token }) => {
     }
 
     if (valid) {
+      localStorage.setItem("method", "import" || router.query.metode);
       router.push({
         pathname: `/subvit/substansi/tambah-step-3`,
         query: { id },
@@ -178,7 +240,9 @@ const StepTwo = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(importFileSubtanceQuestionDetail(data, token));
+        dispatch(
+          importFileSubtanceQuestionDetail(data, token, tokenPermission)
+        );
       }
     });
   };
@@ -188,17 +252,19 @@ const StepTwo = ({ token }) => {
     // data.append("subtance_question_bank_id", id);
     data.append("image_file", image_file, image_file.name);
 
-    dispatch(importImagesSubtanceQuestionDetail(data, token));
+    dispatch(importImagesSubtanceQuestionDetail(data, token, tokenPermission));
   };
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllSubtanceQuestionDetail(id, pageNumber, token));
+    // dispatch(
+    //   getAllSubtanceQuestionDetail(id, pageNumber, token, tokenPermission)
+    // );
   };
 
   const handleLimit = (val) => {
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllSubtanceQuestionDetail(id, 1, val, token));
+    // dispatch(getAllSubtanceQuestionDetail(id, 1, val, token, tokenPermission));
   };
 
   const handleDelete = (id) => {
@@ -213,15 +279,24 @@ const StepTwo = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionDetail(id, token));
+        dispatch(deleteSubtanceQuestionDetail(id, token, tokenPermission));
       }
     });
   };
 
   const handleDownloadTemplate = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+        Permission: tokenPermission || "",
+      },
+    };
+
     await axios
       .get(
-        "http://dts-subvit-dev.majapahit.id/api/subtance-question-bank-details/template"
+        process.env.END_POINT_API_SUBVIT +
+          "api/subtance-question-bank-details/template",
+        config
       )
       .then((res) => {
         window.location.href = res.data.data[0];
@@ -296,7 +371,7 @@ const StepTwo = ({ token }) => {
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="2" title="Substansi"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Metode Import .csv/.xls</h2>
           </div>
@@ -313,6 +388,12 @@ const StepTwo = ({ token }) => {
                     <i className="ri-download-2-fill text-white"></i> Unduh
                   </button>
                 </div>
+              </div>
+              <div className="mt-5">
+                <span style={{ color: "#ffa800" }}>
+                  *Jika anda ingin membuat soal yang terdapat gambar silahkan
+                  import file gambar terlebih dahulu !
+                </span>
               </div>
             </div>
 
@@ -422,19 +503,30 @@ const StepTwo = ({ token }) => {
               </div>
 
               <div className="table-page" style={{ marginTop: "20px" }}>
-                {successFile ? (
-                  <div className="mb-5">
+                <div className="mb-5">
+                  {!successFile || successImages ? (
+                    <h2 className="text-success">Sukses Import Gambar</h2>
+                  ) : (
                     <h2 className="text-success">Sukses Import Soal</h2>
-                    <span className="text-muted">
-                      {subtance_question_file.success +
-                        subtance_question_file.failed}{" "}
-                      Total Import | {subtance_question_file.success} Sukses di
-                      Import | {subtance_question_file.failed} Gagal di import
-                    </span>
-                  </div>
-                ) : (
-                  ""
-                )}
+                  )}
+
+                  <span className="text-muted">
+                    {!successFile || successImages
+                      ? subtance_question_images?.success +
+                        subtance_question_images?.failed
+                      : subtance_question_file?.success +
+                        subtance_question_file?.failed}{" "}
+                    Total Import |{" "}
+                    {!successFile || successImages
+                      ? subtance_question_images?.success
+                      : subtance_question_file?.success}{" "}
+                    Sukses di Import |{" "}
+                    {!successFile || successImages
+                      ? subtance_question_images?.failed
+                      : subtance_question_file?.failed}{" "}
+                    Gagal di import
+                  </span>
+                </div>
                 <div className="table-responsive">
                   <LoadingTable loading={loading} />
 
@@ -495,7 +587,7 @@ const StepTwo = ({ token }) => {
                                   </td>
                                   <td className="align-middle d-flex">
                                     <Link
-                                      href={`edit-soal-substansi?id=${question.id}`}
+                                      href={`edit-soal-substansi?id=${question.id}&no=${i}`}
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -594,6 +686,21 @@ const StepTwo = ({ token }) => {
 
               <div className="row">
                 <div className="col-sm-12 mt-3">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      if (localStorage.getItem("clone") === "true") {
+                        router.push(
+                          `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                        );
+                      } else {
+                        router.push("/subvit/substansi/tambah-step-1");
+                      }
+                    }}
+                  >
+                    Kembali
+                  </button>
                   <div className="float-right">
                     <button
                       className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

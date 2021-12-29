@@ -11,6 +11,7 @@ import {
   getOptionsTheme,
 } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { wrapper } from "../../../redux/store";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 const KelolaSertifikat = dynamic(
   () =>
@@ -41,18 +42,28 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+      const token_permission = req.cookies.token_permission;
 
-      await store.dispatch(getAllSertifikat(session.user.user.data.token));
-      await store.dispatch(getOptionsAcademy(session.user.user.data.token));
-      await store.dispatch(getOptionsTheme(session.user.user.data.token));
+      await store.dispatch(
+        getAllSertifikat(session.user.user.data.token, token_permission)
+      );
+      await store.dispatch(
+        getOptionsAcademy(session.user.user.data.token, token_permission)
+      );
+
+      await store.dispatch(
+        getOptionsTheme(session.user.user.data.token, token_permission)
+      );
 
       return {
         props: { session, title: "List Akademi - Sertifikat" },

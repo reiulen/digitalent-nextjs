@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from 'react-redux'
+import Swal from "sweetalert2";
 
 import styles from '../../../../styles/preview.module.css'
 
@@ -175,11 +176,11 @@ const Pengaturan = ({ token }) => {
     }
 
     // disable enter on input
-    $("input").keydown(function (event) {
-        if (event.keyCode == 13) {
-            event.preventDefault();
-        }
-    });
+    // $("input").keydown(function (event) {
+    //     if (event.keyCode == 13) {
+    //         event.preventDefault();
+    //     }
+    // });
 
     return (
         <PageWrapper>
@@ -246,7 +247,7 @@ const Pengaturan = ({ token }) => {
                                         </div>
 
                                         {
-                                            role_permission.permissions.includes("publikasi.pengaturan.manage") || role_permission.roles.includes("Super Admin") ?
+                                            role_permission?.permissions.includes("publikasi.pengaturan.manage") || role_permission?.roles.includes("Super Admin") ?
                                                 <button
                                                     className={`${styles.btnSave} col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white`}
                                                     onClick={(e) => submitImagePublikasi(e)}
@@ -280,7 +281,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         {
-                                            role_permission.permissions.includes("publikasi.pengaturan.manage") || role_permission.roles.includes("Super Admin") ?
+                                            role_permission?.permissions.includes("publikasi.pengaturan.manage") || role_permission?.roles.includes("Super Admin") ?
                                                 <button
                                                     className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                                     onClick={(e) => submitImagetron(e)}
@@ -313,7 +314,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         {
-                                            role_permission.permissions.includes("publikasi.pengaturan.manage") || role_permission.roles.includes("Super Admin") ?
+                                            role_permission?.permissions.includes("publikasi.pengaturan.manage") || role_permission?.roles.includes("Super Admin") ?
                                                 <button
                                                     className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                                     onClick={(e) => submitSlider(e)}
@@ -346,7 +347,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         {
-                                            role_permission.permissions.includes("publikasi.pengaturan.manage") || role_permission.roles.includes("Super Admin") ?
+                                            role_permission?.permissions.includes("publikasi.pengaturan.manage") || role_permission?.roles.includes("Super Admin") ?
                                                 <button
                                                     className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                                     onClick={(e) => submitFaq(e)}

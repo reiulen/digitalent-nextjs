@@ -11,7 +11,7 @@ const CardPelatihanClose = ({ row }) => {
         disabled
         className={`p-0 mb-0 btn-disabled-pelatihan-new`}
       >
-        <div className={`parent-image-pelatihan-new`}>
+        <div className={`parent-image-pelatihan-new-close`}>
           <Image
             className={`image-list-pelatihan-new`}
             src={
@@ -29,8 +29,8 @@ const CardPelatihanClose = ({ row }) => {
           <div className="d-flex justify-content-between">
             <div className="align-self-start">
               <Badge
-                bg={`py-3 px-4 badge-card-pelatihan-new`}
-                classNam="d-flex "
+                bg={`py-3 px-4 badge-card-pelatihan-new-close`}
+                className="d-flex"
               >
                 Pelatihan {row.metode_pelatihan}
               </Badge>
@@ -49,9 +49,9 @@ const CardPelatihanClose = ({ row }) => {
               width={60}
               height={60}
               objectFit="cover"
-              thumbnail
-              roundedCircle
-              className={`mitra-pelatihan-image-new`}
+              // thumbnail="true"
+              // roundedCircle
+              className={`mitra-pelatihan-image-new-close`}
               alt="Image Mitra"
             />
           </div>
@@ -95,8 +95,8 @@ const CardPelatihanClose = ({ row }) => {
               <i className="ri-time-line"></i>
               <span className={`text-date-register-new pl-2`}>
                 Registrasi:{" "}
-                {moment(row.pendaftaran_mulai).format("DD MMM YYYY")} -{" "}
-                {moment(row.pendaftaran_selesai).format("DD MMM YYYY")}
+                {moment(row.pendaftaran_mulai).utc().format("DD MMM YYYY")} -{" "}
+                {moment(row.pendaftaran_selesai).utc().format("DD MMM YYYY")}
               </span>
             </div>
             <div className="date d-flex align-items-center align-middle">

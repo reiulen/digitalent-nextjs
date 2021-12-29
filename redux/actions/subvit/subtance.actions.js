@@ -54,7 +54,7 @@ export const getPermissionSubvit =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -88,7 +88,7 @@ export const getAllSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -107,7 +107,7 @@ export const getAllSubtanceQuestionBanks =
   };
 
 export const newSubtanceQuestionBanks =
-  (subtanceData, token) => async (dispatch) => {
+  (subtanceData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_SUBTANCE_QUESTION_BANKS_REQUEST,
@@ -116,6 +116,7 @@ export const newSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -149,7 +150,7 @@ export const getDetailSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -178,7 +179,7 @@ export const getOneSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -197,7 +198,7 @@ export const getOneSubtanceQuestionBanks =
   };
 
 export const updatewSubtanceQuestionBanks =
-  (id, substanceQuestionData, token) => async (dispatch) => {
+  (id, substanceQuestionData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST,
@@ -206,6 +207,7 @@ export const updatewSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -227,41 +229,44 @@ export const updatewSubtanceQuestionBanks =
     }
   };
 
-export const deleteSubtanceQuestionBanks = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_SUBTANCE_QUESTION_BANKS_REQUEST });
+export const deleteSubtanceQuestionBanks =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_SUBTANCE_QUESTION_BANKS_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    const data = await axios.delete(
-      process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`,
-      config
-    );
+      const data = await axios.delete(
+        process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const deleteCloneSubtanceQuestionBanks =
-  (dataId, token) => async (dispatch) => {
+  (dataId, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({ type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST });
 
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -285,7 +290,7 @@ export const deleteCloneSubtanceQuestionBanks =
   };
 
 export const updateSubtanceQuestionBanksPublish =
-  (subtanceData, id, token) => async (dispatch) => {
+  (subtanceData, id, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
@@ -294,6 +299,7 @@ export const updateSubtanceQuestionBanksPublish =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -346,7 +352,7 @@ export const allReportSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -365,7 +371,7 @@ export const allReportSubtanceQuestionBanks =
   };
 
 export const newCloneSubtanceQuestionBanks =
-  (subtanceData, token) => async (dispatch) => {
+  (subtanceData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
@@ -374,6 +380,7 @@ export const newCloneSubtanceQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 

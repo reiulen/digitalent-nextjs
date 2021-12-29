@@ -9,6 +9,7 @@ import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import Swal from 'sweetalert2'
 import moment from "moment";
+import { Modal } from "react-bootstrap";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
@@ -50,6 +51,7 @@ const Berita = ({ token }) => {
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null)
     const [disableEndDate, setDisableEndDate] = useState(true)
+    const [showModal, setShowModal] = useState(false);
 
     let loading = false;
     let { page = 1, keyword, success } = router.query;
@@ -223,26 +225,31 @@ const Berita = ({ token }) => {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
+                setShowModal(false)
 
             } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 )
+                setShowModal(false)
 
             } else if (limit !== null && search === null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}`
                 )
+                setShowModal(false)
 
             } else if (limit !== null && search !== null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
                 )
+                setShowModal(false)
 
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
                 );
+                setShowModal(false)
             }
         }
     };
@@ -306,6 +313,7 @@ const Berita = ({ token }) => {
         setLimit(null)
         setSearch("")
         setPublishValue(null)
+        setShowModal(false)
         router.replace("/publikasi/berita", undefined, { shallow: false });
     }
 
@@ -362,7 +370,7 @@ const Berita = ({ token }) => {
                         background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        value={berita && berita.publish != "" ? berita.publish : 0}
+                        value={berita && berita?.publish != "" ? berita?.publish : 0}
                         titleValue='Berita'
                         title='Total Publish'
                         publishedVal="1"
@@ -372,7 +380,7 @@ const Berita = ({ token }) => {
                         background='bg-light-warning'
                         icon="new/mail-white.svg"
                         color="#ffffff"
-                        value='0'
+                        value={berita?.total_author === null || berita?.total_author === undefined ? 0 : berita?.total_author}
                         titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
@@ -382,8 +390,7 @@ const Berita = ({ token }) => {
                         background='bg-light-success'
                         icon='user-white.svg'
                         color='#ffffff'
-                        value='0'
-                        // value={berita && berita.total_views !== null ? berita.total_views : 0} 
+                        value={berita && berita?.total_pembaca !== null ? berita?.total_pembaca : 0}
                         titleValue='Orang'
                         title='Total Pembaca'
                         publishedVal=""
@@ -393,7 +400,7 @@ const Berita = ({ token }) => {
                         background='bg-light-danger'
                         icon="Library.svg"
                         color='#ffffff'
-                        value={berita && berita.unpublish != "" ? berita.unpublish : 0}
+                        value={berita && berita?.unpublish != "" ? berita?.unpublish : 0}
                         titleValue='Berita'
                         title='Total Belum Dipublish'
                         publishedVal="0"
@@ -408,7 +415,7 @@ const Berita = ({ token }) => {
                     <div className="card-header row border-0">
                         <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Berita</h3>
                         {
-                            role_permission.permissions.includes("publikasi.berita.manage") || role_permission.roles.includes("Super Admin") ?
+                            role_permission?.permissions.includes("publikasi.berita.manage") || role_permission?.roles.includes("Super Admin") ?
                                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                                     <Link href='/publikasi/berita/tambah-berita'>
                                         <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
@@ -429,24 +436,30 @@ const Berita = ({ token }) => {
                                         className="position-relative overflow-hidden mt-3"
                                         style={{ maxWidth: "330px" }}
                                     >
-                                        <i className="ri-search-line left-center-absolute ml-2"></i>
-                                        <input
-                                            type="text"
-                                            className={`${styles.cari} form-control pl-10`}
-                                            placeholder="Ketik disini untuk Pencarian..."
-                                            value={search}
-                                            onChange={(e) => setSearch(e.target.value)}
-                                        />
-                                        <button
-                                            className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
-                                            style={{
-                                                borderTopLeftRadius: "0",
-                                                borderBottomLeftRadius: "0",
-                                            }}
-                                            onClick={handleSearch}
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault();
+                                            handleSearch
+                                        }}
                                         >
-                                            Cari
-                                        </button>
+                                            <i className="ri-search-line left-center-absolute ml-2"></i>
+                                            <input
+                                                type="text"
+                                                className={`${styles.cari} form-control pl-10`}
+                                                placeholder="Ketik disini untuk Pencarian..."
+                                                value={search}
+                                                onChange={(e) => setSearch(e.target.value)}
+                                            />
+                                            <button
+                                                className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
+                                                style={{
+                                                    borderTopLeftRadius: "0",
+                                                    borderBottomLeftRadius: "0",
+                                                }}
+                                                onClick={handleSearch}
+                                            >
+                                                Cari
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div className={`${styles.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
@@ -454,8 +467,7 @@ const Berita = ({ token }) => {
                                         {/* sortir by modal */}
                                         <button
                                             className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
-                                            data-toggle="modal"
-                                            data-target="#exampleModalCenter"
+                                            onClick={() => setShowModal(true)}
                                             style={{ color: "#464646" }}
                                         >
                                             <div className={`${styles.filter} d-flex align-items-center`}>
@@ -464,122 +476,6 @@ const Berita = ({ token }) => {
                                             </div>
                                             <IconArrow fill="#E4E6EF" width="11" height="11" />
                                         </button>
-
-                                        {/* modal */}
-                                        <form
-                                            className="form text-left"
-                                        >
-                                            <div
-                                                className="modal fade"
-                                                id="exampleModalCenter"
-                                                tabIndex="-1"
-                                                role="dialog"
-                                                aria-labelledby="exampleModalCenterTitle"
-                                                aria-hidden="true"
-                                            >
-                                                <div
-                                                    className="modal-dialog modal-dialog-centered"
-                                                    role="document"
-                                                >
-                                                    <div className="modal-content">
-                                                        <div className="modal-header">
-                                                            <h5
-                                                                className="modal-title font-weight-bold"
-                                                                id="exampleModalLongTitle"
-                                                            >
-                                                                Filter
-                                                            </h5>
-                                                            <button
-                                                                type="button"
-                                                                className="close"
-                                                                data-dismiss="modal"
-                                                                aria-label="Close"
-                                                                onClick={() => resetValueSort()}
-                                                            >
-                                                                <IconClose />
-                                                            </button>
-                                                        </div>
-
-                                                        <div
-                                                            className="modal-body text-left"
-                                                            style={{ height: "200px" }}
-                                                        >
-                                                            <div className="mb-10 col-12">
-                                                                <label className="required fw-bold fs-6 mb-2">
-                                                                    Tanggal
-                                                                </label>
-
-                                                                <div>
-                                                                    <DatePicker
-                                                                        className="form-search-date form-control-sm form-control"
-                                                                        selected={startDate}
-                                                                        onChange={(date) => handleStartDate(date)}
-                                                                        selectsStart
-                                                                        startDate={startDate}
-                                                                        endDate={endDate}
-                                                                        dateFormat="dd/MM/yyyy"
-                                                                        placeholderText="Silahkan Isi Tanggal Dari"
-                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                    />
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="mb-10 col-12">
-                                                                <label className="required fw-bold fs-6 mb-2">
-                                                                    Tanggal
-                                                                </label>
-
-                                                                <div>
-                                                                    <DatePicker
-                                                                        className="form-search-date form-control-sm form-control"
-                                                                        selected={endDate}
-                                                                        onChange={(date) => setEndDate(date)}
-                                                                        selectsEnd
-                                                                        startDate={startDate}
-                                                                        endDate={endDate}
-                                                                        dateFormat="dd/MM/yyyy"
-                                                                        minDate={startDate}
-                                                                        maxDate={addDays(startDate, 20)}
-                                                                        placeholderText="Silahkan Isi Tanggal Sampai"
-                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                        disabled={disableEndDate === true || disableEndDate === null}
-                                                                    />
-                                                                </div>
-                                                                {
-                                                                    disableEndDate === true || disableEndDate === null ?
-                                                                        <small className="text-muted">
-                                                                            Mohon isi Tanggal Dari terlebih dahulu
-                                                                        </small>
-                                                                        :
-                                                                        null
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                        <div className="modal-footer">
-                                                            <div className="d-flex justify-content-end align-items-center">
-                                                                <button
-                                                                    className="btn btn-white-ghost-rounded-full"
-                                                                    type="button"
-                                                                    onClick={() => resetValueSort()}
-                                                                >
-                                                                    Reset
-                                                                </button>
-                                                                <button
-                                                                    className="btn btn-primary-rounded-full ml-4"
-                                                                    type="button"
-                                                                    data-dismiss="modal"
-                                                                    onClick={() => handleSearchDate()}
-                                                                >
-                                                                    Terapkan
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        {/* end modal */}
-
                                     </div>
                                 </div>
                             </div>
@@ -602,7 +498,7 @@ const Berita = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions.includes("publikasi.berita.manage") || role_permission.roles.includes("Super Admin") ?
+                                                    role_permission?.permissions.includes("publikasi.berita.manage") || role_permission?.roles.includes("Super Admin") ?
                                                         <th style={{ width: '9.7vw' }}>Aksi</th>
                                                         : null
                                                 }
@@ -612,7 +508,7 @@ const Berita = ({ token }) => {
                                             {
                                                 !berita || berita && berita.berita.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
-                                                    berita && berita.berita.map((row, i) => {
+                                                    berita && berita?.berita?.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -669,7 +565,7 @@ const Berita = ({ token }) => {
                                                                 {row.role[0].name}
                                                             </td>
                                                             {
-                                                                role_permission.permissions.includes("publikasi.berita.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                role_permission?.permissions.includes("publikasi.berita.manage") || role_permission?.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex">
 
                                                                         <Link
@@ -716,13 +612,13 @@ const Berita = ({ token }) => {
                             </div>
 
                             <div className="row">
-                                {berita && berita.perPage < berita.total &&
+                                {berita && berita?.perPage < berita?.total &&
                                     <>
                                         <div className={`${stylesPag.pagination} table-pagination`}>
                                             <Pagination
                                                 activePage={page}
-                                                itemsCountPerPage={berita.perPage}
-                                                totalItemsCount={berita.total}
+                                                itemsCountPerPage={berita?.perPage}
+                                                totalItemsCount={berita?.total}
                                                 pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={'>'}
@@ -759,7 +655,7 @@ const Berita = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {berita.total} List Data</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {berita?.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''
@@ -768,6 +664,99 @@ const Berita = ({ token }) => {
 
                             </div>
                         </div>
+
+                        <Modal
+                            show={showModal}
+                            onHide={() => setShowModal(false)}
+                            aria-labelledby="contained-modal-title-vcenter"
+                            centered
+                        >
+                            <Modal.Header>
+                                <Modal.Title>Filter</Modal.Title>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    onClick={() => setShowModal(false)}
+                                >
+                                    <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+                                </button>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div className="row">
+                                    <div
+                                        className="modal-body text-left"
+                                        style={{ height: "200px" }}
+                                    >
+                                        <div className="mb-10 col-12">
+                                            <label className="required fw-bold fs-6 mb-2">
+                                                Tanggal
+                                            </label>
+
+                                            <div>
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={startDate}
+                                                    onChange={(date) => handleStartDate(date)}
+                                                    selectsStart
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    placeholderText="Silahkan Isi Tanggal Dari"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-10 col-12">
+                                            <label className="required fw-bold fs-6 mb-2">
+                                                Tanggal
+                                            </label>
+
+                                            <div>
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={endDate}
+                                                    onChange={(date) => setEndDate(date)}
+                                                    selectsEnd
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    minDate={startDate}
+                                                    maxDate={addDays(startDate, 20)}
+                                                    placeholderText="Silahkan Isi Tanggal Sampai"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    disabled={disableEndDate === true || disableEndDate === null}
+                                                />
+                                            </div>
+                                            {
+                                                disableEndDate === true || disableEndDate === null ?
+                                                    <small className="text-muted">
+                                                        Mohon isi Tanggal Dari terlebih dahulu
+                                                    </small>
+                                                    :
+                                                    null
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <button
+                                    className="btn btn-white-ghost-rounded-full"
+                                    type="button"
+                                    onClick={() => resetValueSort()}
+                                >
+                                    Reset
+                                </button>
+                                <button
+                                    className="btn btn-primary-rounded-full"
+                                    type="button"
+                                    onClick={() => handleSearchDate()}
+                                >
+                                    Terapkan
+                                </button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                 </div>
             </div>

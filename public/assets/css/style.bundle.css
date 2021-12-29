@@ -2923,7 +2923,20 @@ pre code {
   display: block;
   width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: auto;
+}
+
+.table-responsive::-webkit-scrollbar {
+  width: 12px;
+  height:5px;
+  background-color: #F5F5F5;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #215480;
 }
 
 .table-responsive > .table-bordered {
@@ -4798,6 +4811,13 @@ fieldset:disabled a.btn {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
   box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
   border-radius: 30px;
+}
+
+.btn-outline-primary{
+  color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: none;
+  border-radius: 50px;
 }
 
 .btn-warning-rounded-full {
@@ -7409,6 +7429,7 @@ input[type="button"].btn-block {
   color: #3699ff;
   background-color: #ffffff;
   border: 1px solid #e4e6ef;
+  width: fit-content;
 }
 
 .page-link:hover {

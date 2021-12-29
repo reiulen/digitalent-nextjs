@@ -79,7 +79,8 @@ const ListKandidatBeasiswa = ({ token }) => {
     });
   }
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     setPage(1);
     dispatch(getAllBeasiswaKandidat(token, 1, search));
   };
@@ -192,20 +193,22 @@ const ListKandidatBeasiswa = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6 col-md-6">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={e => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -285,9 +288,27 @@ const ListKandidatBeasiswa = ({ token }) => {
                               <p className="fz-15 mb-0">{row.type || "-"}</p>
                             </td>
                             <td className="align-middle">
-                              <span className="label label-inline label-light-success font-weight-bold py-5">
-                                {row.status}
-                              </span>
+                              {row.status === "Menunggu Verifikasi" ||
+                              row.status === "Menunggu Konfirmasi" ? (
+                                <span className="label label-inline label-light-warning font-weight-bold py-5">
+                                  {row.status}
+                                </span>
+                              ) : row.status === "Revisi Formulir" ||
+                                row.status === "Undangan" ? (
+                                <span className="label label-inline label-light-primary font-weight-bold py-5">
+                                  {row.status}
+                                </span>
+                              ) : row.status === "Gagal" ||
+                                row.status === "Registrasi Ditolak" ||
+                                row.status === "Ditolak" ? (
+                                <span className="label label-inline label-light-danger font-weight-bold py-5">
+                                  {row.status}
+                                </span>
+                              ) : (
+                                <span className="label label-inline label-light-success font-weight-bold py-5">
+                                  {row.status}
+                                </span>
+                              )}
                             </td>
                           </tr>
                         ))

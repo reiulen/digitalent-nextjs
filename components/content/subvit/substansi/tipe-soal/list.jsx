@@ -16,8 +16,9 @@ import {
   clearErrors,
 } from "../../../../../redux/actions/subvit/subtance-question-type.actions";
 import { DELETE_SUBTANCE_QUESTION_TYPE_RESET } from "../../../../../redux/types/subvit/subtance-question-type.type";
+import Swal from "sweetalert2";
 
-const ListTipeSoal = ({ token }) => {
+const ListTipeSoal = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -110,7 +111,7 @@ const ListTipeSoal = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionBanksType(id, token));
+        dispatch(deleteSubtanceQuestionBanksType(id, token, tokenPermission));
       }
     });
   };
@@ -212,8 +213,6 @@ const ListTipeSoal = ({ token }) => {
               Tipe Soal Test Substansi
             </h1>
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.substansi.manage"
             ) ? (
@@ -234,20 +233,6 @@ const ListTipeSoal = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-7 col-xl-7 col-sm-9">
-                  {/* <div className="input-icon">
-                    <input
-                      style={{ background: "#F3F6F9", border: "none" }}
-                      type="text"
-                      className="form-control"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      autoComplete="off"
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
-                  </div> */}
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -272,15 +257,6 @@ const ListTipeSoal = ({ token }) => {
                   </div>
                 </div>
 
-                {/* <div className="col-lg-2 col-xl-2 col-sm-3">
-                  <button
-                    className="btn btn-light-primary font-weight-bold"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div> */}
-
                 <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto"></div>
               </div>
             </div>
@@ -294,12 +270,11 @@ const ListTipeSoal = ({ token }) => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
+                        <th className="text-center">ID Tipe Soal</th>
                         <th>Tipe Soal</th>
                         <th>Bobot Nilai</th>
                         <th>Status</th>
                         {dataPermission &&
-                        dataPermission.roles.includes("Super Admin") &&
-                        dataPermission &&
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.substansi.manage"
                         ) ? (
@@ -327,6 +302,12 @@ const ListTipeSoal = ({ token }) => {
                               <td className="align-middle text-center">
                                 <span className="">{paginate - dividers}</span>
                               </td>
+                              <td
+                                className="align-middle text-center"
+                                style={{ width: "200px" }}
+                              >
+                                {row.id}
+                              </td>
                               <td className="align-middle">{row.name}</td>
                               <td className="align-middle">{row.value}</td>
                               <td className="align-middle">
@@ -342,8 +323,6 @@ const ListTipeSoal = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.substansi.manage"
                                 ) ? (

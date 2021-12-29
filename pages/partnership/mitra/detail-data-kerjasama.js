@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import {
@@ -22,7 +22,7 @@ import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddle
 const DetailDataKerjasama = dynamic(
   () =>
     import("../../../components/content/partnership/mitra/detailDataKerjasama"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 export default function DetailDataKerjasamaPage(props) {
   const session = props.session.user.user.data;
@@ -48,6 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const cookiePermission = req.cookies.token_permission
       // if (!session) {
       //   return {
       //     redirect: {
@@ -57,13 +58,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   };
       // }
 
-      dispatch(getSingleValue(token, params.id));
-      dispatch(fetchListSelectCooperation(token));
-      dispatch(fetchListSelectStatus(token));
+      dispatch(getSingleValue(token, params.id, cookiePermission));
+      dispatch(fetchListSelectCooperation(token, cookiePermission));
+      dispatch(fetchListSelectStatus(token, cookiePermission));
 
-      await store.dispatch(fetchListSelectStatus(session.user.user.data.token));
+      await store.dispatch(fetchListSelectStatus(session.user.user.data.token, cookiePermission));
       await store.dispatch(
-        fetchListSelectCooperation(session.user.user.data.token)
+        fetchListSelectCooperation(session.user.user.data.token, cookiePermission)
       );
 
       return {

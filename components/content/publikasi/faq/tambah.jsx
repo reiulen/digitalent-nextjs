@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator"
 import Swal from 'sweetalert2'
+import moment from "moment";
 import DatePicker from 'react-datepicker'
 
 import styles from "../../../../styles/previewGaleri.module.css";
@@ -236,7 +237,7 @@ const TambahFaq = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jawaban</label>
-                                <div className={`${styles.deskripsiTambah} col-sm-12`}>
+                                <div className={` col-sm-12`}>
                                     <div className="ckeditor">
                                         {editorLoaded ? (
                                             <CKEditor
@@ -259,12 +260,14 @@ const TambahFaq = ({ token, id }) => {
                                         ) : (
                                             <p>Tunggu Sebentar</p>
                                         )}
-                                        {simpleValidator.current.message(
-                                            "jawaban",
-                                            jawaban,
-                                            "required|min:5|max:7000",
-                                            { className: "text-danger" }
-                                        )}
+                                        <div className={`${styles.validFaq}`}>
+                                            {simpleValidator.current.message(
+                                                "jawaban",
+                                                jawaban,
+                                                "required|min:5|max:7000",
+                                                { className: "text-danger" }
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -283,8 +286,8 @@ const TambahFaq = ({ token, id }) => {
                                             <option value="">Data Kosong</option>
                                         ) : (
                                             kategori &&
-                                            kategori.kategori &&
-                                            kategori.kategori.map((row) => {
+                                            kategori?.kategori &&
+                                            kategori?.kategori?.map((row) => {
                                                 return (
                                                     row.jenis_kategori === "Faq" ?
                                                         <option key={row.id} value={row.id}>
@@ -301,7 +304,7 @@ const TambahFaq = ({ token, id }) => {
                             </div>
 
                             {
-                                role_permission.roles.includes("Super Admin") ?
+                                role_permission?.roles.includes("Super Admin") ?
                                     <div className="form-group row font-weight-bolder font-weight-bolder">
                                         <label
                                             htmlFor="staticEmail"

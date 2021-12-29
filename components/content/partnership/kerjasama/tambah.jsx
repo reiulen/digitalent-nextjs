@@ -18,17 +18,26 @@ import moment from "moment";
 import Select from "react-select";
 import FormSubmit from "./submitKerjasama";
 import { helperRemoveZeroFromIndex0 } from "../../../../utils/middleware/helper/index";
+import Cookies from "js-cookie"
 
 const Tambah = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { formSubmit } = router.query;
+  const cookiePermission = Cookies.get("token_permission")
   const allMK = useSelector((state) => state.allMK);
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");
   const changeInstitusi = (value) => {
-    setInstitution_name(value);
-    dispatch(setNameLembaga(value));
+    if (value){
+      setInstitution_name(value);
+      dispatch(setNameLembaga(value));
+      setError({ ...error, institution_name: "" });
+
+    } else {
+      setError({ ...error, institution_name: "Harus pilih nama lembaga" });
+    }
+    
   };
   const [error, setError] = useState({
     institution_name: "",
@@ -46,7 +55,7 @@ const Tambah = ({ token }) => {
 
   const [AllCooperation, setAllCooperation] = useState("");
   const changeFormCooporation = (index, e) => {
-    let dataaa = [...allMK.singleCooporationSelect.data.option];
+    let dataaa = [...allMK?.singleCooporationSelect?.data?.option];
     dataaa[index].cooperation = e.target.value;
     setAllCooperation(dataaa);
   };
@@ -65,7 +74,7 @@ const Tambah = ({ token }) => {
       let errorAllCooperation = AllCooperation.map((items) => {
         if (!items.cooperation) {
           isError = true;
-          return { ...items, error: `Harus isi ${items.cooperation_form}` };
+          return { ...items, error: `Harus isi ${items?.cooperation_form}` };
         } else {
           return { ...items };
         }
@@ -108,7 +117,7 @@ const Tambah = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then((result) => {
         if (result.value) {
           let allDataPart = [
@@ -163,10 +172,14 @@ const Tambah = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchDataEmail(token));
+    if (allMK.institution_name){
+      dispatch(fetchDataEmail(token));
+    }
+    if (cooperationC_id){
+      dispatch(fetchListCooperationSelectById(token, cooperationC_id, cookiePermission ));
+    }
     dispatch(fetchListSelectCooperation(token));
     dispatch(fetchListCooperationSelect(token));
-    dispatch(fetchListCooperationSelectById(token, cooperationC_id));
     dispatch(fetchListSelectMitra(token));
     setDate(moment(new Date()).format("YYYY-MM-DD"));
   }, [
@@ -174,6 +187,7 @@ const Tambah = ({ token }) => {
     allMK.institution_name,
     allMK.idCooporationSelect,
     cooperationC_id,
+    cookiePermission,
     token,
   ]);
 
@@ -217,10 +231,10 @@ const Tambah = ({ token }) => {
                       </label>
                       <Select
                         placeholder="Silahkan Pilih Lembaga"
-                        options={allMK?.stateListMitra.map((item, index) => {
+                        options={allMK?.stateListMitra?.map((item, index) => {
                           return {
-                            label: item.label,
-                            value: item.label,
+                            label: item?.label,
+                            value: item?.label,
                           };
                         })}
                         onChange={(e) => changeInstitusi(e.label)}
@@ -240,7 +254,7 @@ const Tambah = ({ token }) => {
                       <input
                         disabled
                         type="text"
-                        value={allMK.email}
+                        value={allMK?.email}
                         name="text_input"
                         className="form-control mb-3 mb-lg-0 border-0"
                         style={{ backgroundColor: "transparent" }}
@@ -314,9 +328,9 @@ const Tambah = ({ token }) => {
                       className="form-control"
                     >
                       <option value="">Pilih Kategory Kerjasama</option>
-                      {allMK.cooperationActiveSelect.length === 0
+                      {allMK?.cooperationActiveSelect.length === 0
                         ? ""
-                        : allMK.cooperationActiveSelect.data.map(
+                        : allMK?.cooperationActiveSelect?.data?.map(
                             (items, index) => {
                               return (
                                 <option key={index} value={items.id}>
@@ -345,7 +359,7 @@ const Tambah = ({ token }) => {
                               htmlFor="staticEmail"
                               className="col-form-label"
                             >
-                              {items.cooperation_form}
+                              {items?.cooperation_form}
                             </label>
                             <div>
                               <textarea
@@ -360,7 +374,7 @@ const Tambah = ({ token }) => {
                                 cols="30"
                                 rows="5"
                                 className="form-control"
-                                placeholder={`Masukan ${items.cooperation_form}`}
+                                placeholder={`Masukan ${items?.cooperation_form}`}
                               ></textarea>
                               {AllCooperation[index]?.error ? (
                                 <p className="error-text">

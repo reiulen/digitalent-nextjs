@@ -29,7 +29,7 @@ const DetailPelatihan = ({ session }) => {
   const { akademiId } = router.query;
 
   const dispatch = useDispatch();
-  const { pelatihan } = useSelector(state => state.detailPelatihan);
+  const { pelatihan } = useSelector((state) => state.detailPelatihan);
 
   useEffect(() => {
     if (pelatihan.Status === "Close") {
@@ -53,12 +53,12 @@ const DetailPelatihan = ({ session }) => {
   };
 
   const handleDownloadSilabus = async () => {
-    let silabus = pelatihan.file_path + pelatihan.silabus;
+    let silabus = process.env.END_POINT_API_IMAGE_BEASISWA + pelatihan.silabus;
     window.location.href = silabus;
   };
 
   //disini kurang
-  const handleBookmark = async pelatihan => {
+  const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -126,7 +126,15 @@ const DetailPelatihan = ({ session }) => {
 
                 <div className="d-flex align-items-center mt-5 mt-md-1">
                   <p className="mr-6 fz-18 fw-500">{pelatihan?.akademi}</p>
-                  <p className="badgess-green">{pelatihan?.Status}</p>
+                  <p
+                    className={
+                      pelatihan?.Status === "Dibuka"
+                        ? `badgess-green`
+                        : `badgess-red`
+                    }
+                  >
+                    {pelatihan?.Status}
+                  </p>
                 </div>
 
                 <Row className="mt-5">
@@ -136,13 +144,13 @@ const DetailPelatihan = ({ session }) => {
                         Registrasi
                       </p>
                       <p className="fz-16 fw-400">
-                        {moment(pelatihan?.pendaftaran_mulai).format(
-                          "DD MMM YYYY"
-                        )}{" "}
+                        {moment(pelatihan?.pendaftaran_mulai)
+                          .utc()
+                          .format("DD MMM YYYY")}{" "}
                         -{" "}
-                        {moment(pelatihan?.pendaftaran_selesai).format(
-                          "DD MMM YYYY"
-                        )}
+                        {moment(pelatihan?.pendaftaran_selesai)
+                          .utc()
+                          .format("DD MMM YYYY")}
                       </p>
                     </div>
                   </div>
@@ -175,21 +183,33 @@ const DetailPelatihan = ({ session }) => {
                         url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
                         quote={pelatihan?.name}
                       >
-                        <button className="btn btn-white roundedss-border mr-4">
+                        <button
+                          className="btn btn-white roundedss-border mr-4"
+                          disabled={pelatihan?.Status !== "Dibuka" && true}
+                        >
                           <IconShare />
                         </button>
                       </ShareOverlay>
                       <button
+                        disabled={pelatihan?.Status !== "Dibuka" && true}
                         className="btn btn-white roundedss-border"
                         onClick={() => {
                           if (!session) {
                             router.push("/login");
                           } else {
-                            const pelatihanObj = {
-                              bookmark: pelatihan?.bookmart,
-                              id: pelatihan?.id,
-                            };
-                            handleBookmark(pelatihanObj);
+                            if (!session?.roles?.includes("user")) {
+                              SweatAlert(
+                                "Gagal",
+                                "Anda sedang login sebagai Admin",
+                                "error"
+                              );
+                            } else {
+                              const pelatihanObj = {
+                                bookmark: pelatihan?.bookmart,
+                                id: pelatihan?.id,
+                              };
+                              handleBookmark(pelatihanObj);
+                            }
                           }
                         }}
                       >
@@ -212,7 +232,7 @@ const DetailPelatihan = ({ session }) => {
                         pelatihan?.thumbnail) ||
                     "/assets/media/default-card.png"
                   }
-                  objectFit="fill"
+                  objectFit="cover"
                   layout="fill"
                   className="rounded-lg"
                 />
@@ -228,20 +248,35 @@ const DetailPelatihan = ({ session }) => {
             <div className="border rounded-xl p-6 mb-5 ikuti-pelatihan">
               <h4 className="fz-20 fw-600">Ikuti Pelatihan</h4>
               <span className="fz-16">
-                {moment(pelatihan?.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
-                {moment(pelatihan?.pelatihan_selesai).format("DD MMM YYYY")}
+                {moment(pelatihan?.pelatihan_mulai).utc().format("DD MMM YYYY")}{" "}
+                -{" "}
+                {moment(pelatihan?.pelatihan_selesai)
+                  .utc()
+                  .format("DD MMM YYYY")}
               </span>
               <div className="mt-7">
-                {pelatihan?.status !== "Closed" && (
-                  <button
-                    className="btn btn-primary-dashboard rounded-pill btn-block fw-500"
-                    onClick={() =>
-                      handleCheckPelatihanReg(pelatihan?.id, session)
+                <button
+                  disabled={pelatihan?.Status !== "Dibuka" && true}
+                  className="btn btn-primary-dashboard rounded-pill btn-block fw-500"
+                  onClick={() => {
+                    if (!session) {
+                      return router.push("/login");
+                    } else {
+                      if (!session?.roles?.includes("user")) {
+                        SweatAlert(
+                          "Gagal",
+                          "Anda sedang login sebagai Admin",
+                          "error"
+                        );
+                      } else {
+                        handleCheckPelatihanReg(pelatihan?.id, session);
+                      }
                     }
-                  >
-                    Daftar Pelatihan
-                  </button>
-                )}
+                  }}
+                >
+                  Daftar Pelatihan
+                </button>
+
                 <button
                   className="btn btn-outline-primary-new rounded-pill btn-block fw-500 d-flex justify-content-center align-items-center p-1"
                   onClick={() => handleDownloadSilabus()}
@@ -261,7 +296,14 @@ const DetailPelatihan = ({ session }) => {
                 </div>
                 <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Alamat</p>
-                  <p className="fz-16">{pelatihan?.alamat}</p>
+                  {pelatihan?.metode_pelatihan !== "Online" ? (
+                    <p className="fz-16">
+                      {pelatihan?.alamat}, {pelatihan?.kabupaten},{" "}
+                      {pelatihan?.provinsi}
+                    </p>
+                  ) : (
+                    <p className="fz-16">Online</p>
+                  )}
                 </div>
               </div>
               <div className="d-flex flex-wrap align-items-start mt-4">
@@ -275,8 +317,13 @@ const DetailPelatihan = ({ session }) => {
                 <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Jadwal Pelatihan</p>
                   <p className="fz-16">
-                    {moment(pelatihan?.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
-                    {moment(pelatihan?.pelatihan_selesai).format("DD MMM YYYY")}
+                    {moment(pelatihan?.pelatihan_mulai)
+                      .utc()
+                      .format("DD MMM YYYY")}{" "}
+                    -{" "}
+                    {moment(pelatihan?.pelatihan_selesai)
+                      .utc()
+                      .format("DD MMM YYYY")}
                   </p>
                 </div>
               </div>
@@ -300,9 +347,9 @@ const DetailPelatihan = ({ session }) => {
                 <div className="dot-bullet-detail">
                   <Image
                     src={
-                      (pelatihan?.logo &&
-                        pelatihan.logo !== "Belum ada file" &&
-                        pelatihan.file_path + pelatihan?.logo) ||
+                      (pelatihan?.gambar_mitra &&
+                        pelatihan.gambar_mitra !== "Belum ada file" &&
+                        pelatihan.file_path + pelatihan?.gambar_mitra) ||
                       "/assets/media/mitra-default.png"
                     }
                     width={60}
@@ -316,8 +363,12 @@ const DetailPelatihan = ({ session }) => {
                 </div>
 
                 <div className="ml-5">
-                  <p className="fw-600 fz-16 mb-2">{pelatihan?.mitra_nama}</p>
-                  <p style={{ color: "#6C6C6C" }}>{pelatihan?.provinsi}</p>
+                  <p className="fw-600 fz-16 mb-2">
+                    {pelatihan?.mitra_nama || "-"}
+                  </p>
+                  <p style={{ color: "#6C6C6C" }}>
+                    {pelatihan?.lokasi_mitra || "-"}
+                  </p>
                 </div>
               </div>
             </div>

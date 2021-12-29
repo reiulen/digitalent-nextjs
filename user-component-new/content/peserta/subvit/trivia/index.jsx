@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/dist/client/image";
-import Dot from "../../../../../public/assets/media/logos/dot.png";
 import { useSelector } from "react-redux";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
@@ -23,6 +22,7 @@ import { postResultTrivia } from "../../../../../redux/actions/subvit/trivia-que
 import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
 import { useDispatch } from "react-redux";
 import { parseInt } from "lodash";
+import axios from "axios";
 
 const SubtansiUser = ({ token }) => {
   const dispatch = useDispatch();
@@ -31,42 +31,40 @@ const SubtansiUser = ({ token }) => {
   const router = useRouter();
 
   const initialData = {
-    training: "Leader Tim IT",
-    academy: "Digital Leadersip Academy",
-    theme: "Pelatihan Leader Tim",
-    total_questions: 2,
-    time_left: 37336,
+    training: "Postgre",
+    academy: "Digital Entrepreneurship Academy",
+    theme: "Wirasusaha Digital",
+    total_questions: 3,
+    time_left: 30000,
     list_questions: [
       {
-        id: 172,
-        trivia_question_bank_id: 66,
-        question: "Polling dulu ga sih",
-        type: "polling",
+        id: 23,
+        trivia_question_bank_id: 12,
+        question: "fill in the blnk",
+        type: "fill_in_the_blank",
         question_image: "",
         answer:
-          '[{"key":"A","type":"","value":"","option":"Close the door!","image":"trivia\\/images\\/79a97af8-6bc7-4290-ad0b-88f2c7890951.jpeg"},{"key":"B","type":"","value":"","option":"SUUUU","image":"trivia\\/images\\/3a045a49-56a6-423d-8236-f899c8d97895.jpeg"},{"key":"C","type":"","value":"","option":"WWE","image":"trivia\\/images\\/e7a8db31-ea64-437f-acf4-409c3a04e74e.jpeg"},{"key":"D","type":"","value":"","option":"Pelaut","image":"trivia\\/images\\/85d92034-f1e0-43d9-9c7f-3d8e03bca473.jpeg"}]',
-        duration: 30000,
+          '[{"key":"A","type":"Percis","value":"5","option":"fill in the blank","image":"","color":false},{"key":"B","type":"Mengandung","value":"3","option":"fill","image":"","color":false},{"key":"C","type":"Sama Dengan","value":"1","option":"fill in the blank","image":"","color":false}]',
+        duration: 1000,
       },
       {
-        id: 174,
-        trivia_question_bank_id: 66,
-        question: "1 + 1",
+        id: 22,
+        trivia_question_bank_id: 12,
+        question: "chcbx",
         type: "checkbox",
         question_image: "",
         answer:
-          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
-        duration: 20000,
+          '[{"key":"A","type":"","value":"5","option":"a","image":"","color":false},{"key":"B","type":"","value":"4","option":"b","image":"","color":false},{"key":"C","type":"","value":"3","option":"c","image":"","color":false},{"key":"D","type":"","value":"2","option":"d","image":"","color":false}]',
+        duration: 1000,
       },
       {
-        id: 173,
-        trivia_question_bank_id: 66,
-        question: "Polling lg",
+        id: 21,
+        trivia_question_bank_id: 12,
+        question: "polling",
         type: "polling",
-        question_image:
-          "trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg",
+        question_image: "",
         answer:
-          '[{"key":"A","type":"","value":"","option":"A","image":""},{"key":"B","type":"","value":"","option":"B","image":""},{"key":"C","type":"","value":"","option":"C","image":"trivia\\/images\\/3767632c-40f1-4e06-937e-0a362a77e050.jpeg"},{"key":"D","type":"","value":"","option":"D","image":""}]',
-        duration: 1,
+          '[{"key":"A","type":"","value":"","option":"a","image":"","color":false},{"key":"B","type":"","value":"","option":"b","image":"","color":false},{"key":"C","type":"","value":"","option":"c","image":"","color":false},{"key":"D","type":"","value":"","option":"d","image":"","color":false}]',
       },
     ],
   };
@@ -79,50 +77,62 @@ const SubtansiUser = ({ token }) => {
   const [modalNext, setModalNext] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
   const [count, setCount] = useState(random_trivia && random_trivia.time_left);
+
+  let tt = [];
+
+  random_trivia?.list_questions.map((it) => {
+    tt.push(it.duration / 1000);
+  });
+
+  // MASIH DIPAKE
+  // $(window).on("popstate", function () {
+  //   router.push("/peserta/done-trivia");
+  //   const setData = {
+  //     list: null,
+  //     training_id: router.query.training_id,
+  //     type: "trivia",
+  //   };
+  //   dispatch(postResultTrivia(setData, token));
+  // });
+
+  const [times, setTimes] = useState(
+    tt[parseInt(router.query.id) - 1] <= 0
+      ? 3000
+      : tt[parseInt(router.query.id) - 1]
+  );
+
   const [modalDone, setModalDone] = useState(false);
   const [open, setOpen] = useState(false);
+  const [type, setType] = useState("");
+
+  const [zoom, setZoom] = useState(false);
+  const [zoomJawab, setZoomJawab] = useState(false);
 
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
 
-  function startTimer(duration, display) {
-    let timer = duration,
-      minutes,
-      seconds;
-    setInterval(function () {
-      minutes = parseInt(timer / 60, 10);
-      seconds = parseInt(timer % 60, 10);
+  const [hour2, setHour2] = useState(0);
+  const [minute2, setMinute2] = useState(0);
+  const [second2, setSecond2] = useState(0);
+  const [close, setClose] = useState(0);
 
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      if (display) {
-        display.textContent = minutes + ":" + seconds;
-      }
+  const [question, setQuestion] = useState("");
+  const [time, setTime] = useState("");
 
-      if (--timer <= 5) {
-        if (parseInt(router.query.id) === data?.total_questions) {
-          handlePage();
-        } else {
-          handlePageNext();
-        }
-      }
-    }, 1000);
-  }
-
-  window.onload = function () {
-    let fiveMinutes =
-        data &&
-        (data.list_questions[parseInt(router.query.id) - 1].duration / 60000) *
-          60,
-      display = document.querySelector("#time2");
-    startTimer(fiveMinutes, display);
-  };
+  const routerTraining = router.query.training_id;
+  const routerTema = router.query.theme_id;
 
   useEffect(() => {
     // Handle Error akan langsung ke done
     if (error) {
-      // router.push(`/peserta/done-trivia`);
+      router.push(`/peserta/done-trivia`);
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "trivia",
+      };
+      dispatch(postResultTrivia(setData, token));
     }
 
     // Hitung Waktu Mundur
@@ -136,24 +146,46 @@ const SubtansiUser = ({ token }) => {
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "trivia",
+      };
+      dispatch(postResultTrivia(setData, token));
       localStorage.clear();
-
-      // router.push(`/peserta/done-trivia`);
+      router.push(`/peserta/done-trivia`);
     }
-  }, [count, router]);
+  }, [count, router, error, dispatch, token]);
 
   useEffect(() => {
-    // setData(random_trivia);
-    setData(initialData);
-  }, []);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    axios
+      .get(
+        process.env.END_POINT_API_SUBVIT +
+          `api/trivia-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`,
+        config
+      )
+      .then((res) => {
+        setQuestion(res.data.total_questions);
+        setTime(res.data.duration);
+      });
+  }, [routerTraining, routerTema, token]);
+
+  useEffect(() => {
+    setData(random_trivia);
+  }, [data, random_trivia]);
 
   const handleModalSoal = () => {
     setModalSoal(true);
   };
 
   const handleAnswerText = (e) => {
-    localStorage.setItem(`${parseInt(router.query.id)}`, e.target.value);
-    if (localStorage.getItem(`${parseInt(router.query.id)}`) === "") {
+    sessionStorage.setItem(`${parseInt(router.query.id)}`, e.target.value);
+    if (sessionStorage.getItem(`${parseInt(router.query.id)}`) === "") {
       setAnswer("");
     } else {
       setAnswer(e.target.value);
@@ -200,17 +232,40 @@ const SubtansiUser = ({ token }) => {
     };
   };
 
+  const ToTime = (secs) => {
+    let hours = Math.floor(secs / (60 * 60));
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
+    return {
+      h: hours,
+      m: minutes,
+      s: seconds,
+    };
+  };
+
   let list = [];
 
   const handleAnswer = (e) => {
-    setAnswer(e.key);
+    if (type === "checkbox") {
+      if (multi.includes(e.key)) {
+        multi.splice(multi.indexOf(e.key), 1);
+        sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+      } else {
+        multi.push(e.key);
+        sessionStorage.setItem(router.query.id, JSON.stringify(multi));
+      }
+    } else {
+      setAnswer(e.key);
 
-    sessionStorage.setItem(`${router.query.id}`, e.key);
+      sessionStorage.setItem(`${router.query.id}`, e.key);
 
-    for (let i = 0; i < sessionStorage.length; i++) {
-      const key = sessionStorage.key(i);
-      list.push(key);
-      setListAnswer(key);
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        list.push(key);
+        setListAnswer(key);
+      }
     }
   };
 
@@ -224,17 +279,18 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
+    setClose(1);
     const setData = {
       list: JSON.stringify(
         data.list_questions.map((item, index) => {
           return {
             ...item,
-            participant_answer: localStorage.getItem(index + 1),
+            participant_answer: sessionStorage.getItem(index + 1),
           };
         })
       ),
       training_id: router.query.training_id,
-      type: router.query.category === "Test Substansi" && "substansi",
+      type: "trivia",
     };
     dispatch(postResultTrivia(setData, token));
     localStorage.clear();
@@ -248,7 +304,7 @@ const SubtansiUser = ({ token }) => {
 
   let multi = [];
 
-  const handleAnswerCheckbox = (e, idx) => {
+  const handleAnswerCheckbox = (e) => {
     if (multi.includes(e.key)) {
       multi.splice(multi.indexOf(e.key), 1);
       sessionStorage.setItem(router.query.id, JSON.stringify(multi));
@@ -256,43 +312,29 @@ const SubtansiUser = ({ token }) => {
       multi.push(e.key);
       sessionStorage.setItem(router.query.id, JSON.stringify(multi));
     }
-
-    if (e.key.includes(localStorage.getItem(idx + "a"))) {
-      localStorage.removeItem(idx + "a", e.key);
-    } else {
-      localStorage.setItem(idx + "a", e.key);
-    }
-
-    let answerData = JSON.parse(
-      data.list_questions[parseInt(router.query.id) - 1].answer
-    ).map((item) => {
-      if (
-        JSON.parse(sessionStorage.getItem(router.query.id)).includes(item.key)
-      ) {
-        return { ...item, color: true };
-      } else {
-        return { ...item, color: false };
-      }
-    });
-
-    let dataTemp = data.list_questions.map((item) => {
-      return { ...item, answer: JSON.stringify(answerData) };
-    });
-
-    data.list_questions = dataTemp;
-
-    // let initial = [...data];
-    setData(data);
   };
 
   const handlePageNext = () => {
+    setTimes(tt[router.query.id]);
     const page = parseInt(router.query.id) + 1;
-    router.push(
-      `${router.pathname.slice(0, 23)}/${page}?theme_id=${
-        router.query.theme_id
-      }&training_id=${router.query.training_id}`
-    );
+    if (parseInt(router.query.id) === data?.total_questions) {
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "trivia",
+      };
+      dispatch(postResultTrivia(setData, token));
+      router.push("/peserta/done-trivia");
+    } else {
+      router.push(
+        `${router.pathname.slice(0, 23)}/${page}?theme_id=${
+          router.query.theme_id
+        }&training_id=${router.query.training_id}`
+      );
+    }
+
     setModalNext(false);
+
     if (
       data &&
       data.list_questions &&
@@ -316,12 +358,23 @@ const SubtansiUser = ({ token }) => {
   };
   let listCheckbox = [];
 
-  const millisToMinutesAndSeconds = (millis) => {
-    let minutes = Math.floor(millis / 60000);
-
-    let seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-  };
+  useEffect(() => {
+    // Hitung Waktu Mundur
+    if (times >= 0) {
+      const secondsLeft = setInterval(() => {
+        setTimes((c) => c - 1);
+        let timeLeftVar = ToTime(times);
+        setHour2(timeLeftVar.h);
+        setMinute2(timeLeftVar.m);
+        setSecond2(timeLeftVar.s);
+      }, 1000);
+      return () => clearInterval(secondsLeft);
+    } else {
+      localStorage.clear();
+      setOpen(true);
+      handleNext();
+    }
+  }, [times, data, router]);
 
   return (
     <>
@@ -394,13 +447,18 @@ const SubtansiUser = ({ token }) => {
                     data.list_questions &&
                     data.list_questions[parseInt(router.query.id) - 1].type ===
                       "fill_in_the_blank") ? (
-                    <p className={styles.totalSoal2} id="time2">
-                      {millisToMinutesAndSeconds(
-                        data &&
-                          data.list_questions[parseInt(router.query.id) - 1]
-                            .duration
-                      )}
-                    </p>
+                    data &&
+                    data.list_questions &&
+                    data.list_questions[parseInt(router.query.id) - 1]
+                      .duration !== 0 ? (
+                      <p className={styles.totalSoal2} id="time2">
+                        {hour2 < 9 ? "0" + hour2 : hour2}:
+                        {minute2 < 9 ? "0" + minute2 : minute2}:
+                        {second2 < 9 ? "0" + second2 : second2}
+                      </p>
+                    ) : (
+                      ""
+                    )
                   ) : (
                     ""
                   )}
@@ -440,9 +498,22 @@ const SubtansiUser = ({ token }) => {
                         }
                         alt=""
                         width={150}
+                        onClick={() => setZoom(true)}
                         height={150}
                       />
                     </div>
+                    <Modal show={zoom} onHide={() => setZoom(false)}>
+                      <Image
+                        src={
+                          process.env.END_POINT_API_IMAGE_SUBVIT +
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question_image || defaultImage
+                        }
+                        alt=""
+                        width={500}
+                        height={800}
+                      />
+                    </Modal>
                     <div className="p-5">
                       {data &&
                         data.list_questions[parseInt(router.query.id) - 1]
@@ -478,9 +549,24 @@ const SubtansiUser = ({ token }) => {
                               }
                               alt=""
                               width={70}
+                              onClick={() => setZoomJawab(true)}
                               height={70}
                             />
                           </div>
+                          <Modal
+                            show={zoomJawab}
+                            onHide={() => setZoomJawab(false)}
+                          >
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  item.image || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div
                             className="p-4"
                             style={{ width: "100%", height: "100%" }}
@@ -539,7 +625,7 @@ const SubtansiUser = ({ token }) => {
                       placeholder="Jelaskan jawaban Anda di sini..."
                       className={styles.textArea}
                       onChange={(event) => handleAnswerText(event)}
-                      value={localStorage.getItem(`${router.query.id}`)}
+                      value={sessionStorage.getItem(`${router.query.id}`)}
                     />
                   </Form>
                 )}
@@ -558,6 +644,7 @@ const SubtansiUser = ({ token }) => {
                     const key = localStorage.key(index);
                     listCheckbox.push(key);
                   }
+
                   return (
                     <>
                       {item.image !== null && item.image !== "" ? (
@@ -571,49 +658,62 @@ const SubtansiUser = ({ token }) => {
                               alt=""
                               width={70}
                               height={70}
+                              onClick={() => setZoomJawab(true)}
                             />
                           </div>
+                          <Modal
+                            show={zoomJawab}
+                            onHide={() => setZoomJawab(false)}
+                          >
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  item.image || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div
                             className="p-4"
                             style={{ width: "100%", height: "100%" }}
                           >
-                            <Card
-                              className={
-                                listCheckbox.includes(index + "a")
-                                  ? styles.answer
-                                  : styles.boxAnswer
-                              }
-                              key={index}
-                              onClick={() => handleAnswerCheckbox(item, index)}
-                            >
-                              <table>
-                                <tr>
-                                  <td style={{ width: "5px" }}>{item.key}</td>
-                                  <td style={{ width: "15px" }}>.</td>
-                                  <td>{item.option}</td>
-                                </tr>
-                              </table>
-                            </Card>
+                            <div className="quiz_card_area">
+                              <input
+                                className="quiz_checkbox"
+                                type="checkbox"
+                                onChange={() => handleAnswerCheckbox(item)}
+                              />
+                              <div className="single_quiz_card">
+                                <div className="quiz_card_content">
+                                  <div className="quiz_card_title">
+                                    <p>
+                                      {item.key}.{item.option}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       ) : (
-                        <Card
-                          className={
-                            listCheckbox.includes(index + "a")
-                              ? styles.answer
-                              : styles.boxAnswer
-                          }
-                          key={index}
-                          onClick={() => handleAnswerCheckbox(item, index)}
-                        >
-                          <table>
-                            <tr>
-                              <td style={{ width: "5px" }}>{item.key}</td>
-                              <td style={{ width: "15px" }}>.</td>
-                              <td>{item.option}</td>
-                            </tr>
-                          </table>
-                        </Card>
+                        <div className="quiz_card_area">
+                          <input
+                            className="quiz_checkbox"
+                            type="checkbox"
+                            onChange={() => handleAnswerCheckbox(item)}
+                          />
+                          <div className="single_quiz_card">
+                            <div className="quiz_card_content">
+                              <div className="quiz_card_title">
+                                <p>
+                                  {item.key}.{item.option}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       )}
                     </>
                   );
@@ -891,8 +991,8 @@ const SubtansiUser = ({ token }) => {
                   <td>&nbsp;</td>
                   <td>
                     {" "}
-                    Peserta wajib menjawab seluruh TRIVIA yang berjumlah 50
-                    pertanyaan.
+                    Peserta wajib menjawab seluruh TRIVIA yang berjumlah{" "}
+                    {question || 50} pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -908,7 +1008,12 @@ const SubtansiUser = ({ token }) => {
                 <tr>
                   <td style={{ verticalAlign: "top" }}>4.</td>
                   <td>&nbsp;</td>
-                  <td> Waktu yang tersedia untuk mengisi TRIVIA ini 1 Jam.</td>
+                  <td>
+                    {" "}
+                    Waktu yang tersedia untuk mengisi TRIVIA ini {time ||
+                      5}{" "}
+                    Menit.
+                  </td>
                 </tr>
               </table>
             </Card>
@@ -949,7 +1054,11 @@ const SubtansiUser = ({ token }) => {
             >
               Batal
             </Button>
-            <Button onClick={handlePage} className={styles.btnMulai}>
+            <Button
+              onClick={handlePage}
+              className={styles.btnMulai}
+              disabled={close === 1}
+            >
               Selesai
             </Button>
           </div>
@@ -1010,7 +1119,7 @@ const SubtansiUser = ({ token }) => {
       </Modal>
 
       {/* Modal Lanjut */}
-      <Modal show={modalNext} onHide={() => setModalNext(false)}>
+      <Modal show={modalNext} onHide={() => !open && setModalNext(false)}>
         <ModalHeader className={styles.headerModal}>
           Konfirmasi Jawaban{" "}
         </ModalHeader>
@@ -1023,6 +1132,7 @@ const SubtansiUser = ({ token }) => {
             variant="link"
             onClick={() => setModalNext(false)}
             className={styles.btnBatal}
+            hidden={open}
           >
             Batal
           </Button>

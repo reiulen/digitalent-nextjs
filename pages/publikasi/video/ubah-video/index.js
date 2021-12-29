@@ -6,17 +6,15 @@ import { getDetailVideo } from "../../../../redux/actions/publikasi/video.action
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action"
 
 const EditVideo = dynamic(
   () => import("../../../../components/content/publikasi/vidio/edit"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
@@ -48,11 +46,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailVideo(query.id, session.user.user.data.token)
+        getDetailVideo(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
-      await store.dispatch(getAllKategori(session.user.user.data.token));
-      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
-      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      await store.dispatch(getAllKategori(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getSettingPublikasi(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token, req.cookies.token_permission));
 
       return {
         props: { session, title: "Ubah Video - Publikasi" },

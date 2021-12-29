@@ -30,15 +30,16 @@ const Beranda = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { publikasi } = useSelector(state => state.allPublikasiBeranda);
+  const { publikasi } = useSelector((state) => state.allPublikasiBeranda);
   const { tema, loading: loadingTema } = useSelector(
-    state => state.temaByAkademi
+    (state) => state.temaByAkademi
   );
-  const { akademi } = useSelector(state => state.allAkademi);
+  const { akademi } = useSelector((state) => state.allAkademi);
   const [activeTab, setActiveTab] = useState(0);
   const [akademiId, setAkademiId] = useState(null);
 
   const [pelatihan, setPelatihan] = useState(null);
+  const [warna, setWarna] = useState("secondary");
 
   const [cardId, setCardId] = useState(null);
   const [cardImage, setCardImage] = useState(null);
@@ -56,6 +57,8 @@ const Beranda = ({ session }) => {
   const [cardMetode, setCardMetode] = useState(null);
   const [cardBookmark, setCardBookmark] = useState(null);
 
+  const [compareValue, setCompareValue] = useState(tema);
+  const [arr, setArr] = useState(false);
   const optionsSplide = {
     gap: "1rem",
     drag: "free",
@@ -125,13 +128,30 @@ const Beranda = ({ session }) => {
   useEffect(() => {
     handleAkademiStart();
     handlePelatihanCard();
+    const filter = tema?.filter((item) => {
+      return item.pelatihan == null;
+    });
+
+    if (tema?.length === filter?.length) {
+      setArr(true);
+    } else {
+      setArr(false);
+    }
   }, []);
 
   useEffect(() => {
     if (tema) {
       handlePelatihanCard();
-    }
+      const filter = tema?.filter((item) => {
+        return item.pelatihan == null;
+      });
 
+      if (tema?.length === filter?.length) {
+        setArr(true);
+      } else {
+        setArr(false);
+      }
+    }
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
     }
@@ -269,7 +289,7 @@ const Beranda = ({ session }) => {
     setCardBookmark(bookmark);
   };
 
-  const handleCloseQuickView = indexTema => {
+  const handleCloseQuickView = (indexTema) => {
     let obj = [...pelatihan];
 
     for (let i = 0; i < obj.length; i++) {
@@ -284,7 +304,7 @@ const Beranda = ({ session }) => {
     if (session) {
       const data = await dispatch(checkRegisterPelatihan(id, session.token));
       if (data.status === true) {
-        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
+        router.push(`/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
         let errMessage = data.message;
         SweatAlert("Gagal", errMessage, "error");
@@ -294,7 +314,7 @@ const Beranda = ({ session }) => {
     }
   };
 
-  const PrintTextTrim = word => {
+  const PrintTextTrim = (word) => {
     let str = null;
     if (word.length > 200) {
       str = word.slice(0, 200) + "...";
@@ -305,7 +325,7 @@ const Beranda = ({ session }) => {
     return str;
   };
 
-  const handleBookmark = async pelatihan => {
+  const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -368,6 +388,34 @@ const Beranda = ({ session }) => {
     }
   };
 
+  const getDataGeneral = async (token) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/get`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (data) {
+        localStorage.setItem("extras", data.data.color[2].color);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getDataGeneral();
+    if (localStorage.getItem("extras") == "1") {
+      setWarna("primary");
+    } else if (localStorage.getItem("extras") == "2") {
+      setWarna("secondary");
+    } else if (localStorage.getItem("extras") == "3") {
+      setWarna("extras");
+    }
+  }, []);
+
   return (
     <>
       <section className="image-carousel-new mt-10">
@@ -428,10 +476,10 @@ const Beranda = ({ session }) => {
             </>
           ) : (
             <div className="pb-10">
-              {tema ? (
+              {tema && arr !== true ? (
                 tema.map((row, i) => (
                   <div key={i}>
-                    {row.pelatihan !== null ? (
+                    {row.pelatihan !== null && (
                       <div className="mb-25">
                         <div
                           className="d-flex justify-content-between header-pelatihan-new mb-10 flex-wrap"
@@ -441,12 +489,21 @@ const Beranda = ({ session }) => {
                             <h1>{row.Name}</h1>
                           </div>
                           <div className="link-pelatihan-new">
-                            <Link
+                            {/* <Link
                               href={`/detail/akademi/${akademiId}?tema_id=${row.id}`}
                               passHref
                             >
-                              <span>Lihat Semua {">"}</span>
-                            </Link>
+                            </Link> */}
+                            <span
+                              className={`color-extras-${warna}`}
+                              onClick={() =>
+                                router.push(
+                                  `/detail/akademi/${akademiId}?tema_id=${row.id}`
+                                )
+                              }
+                            >
+                              Lihat Semua {">"}
+                            </span>
                           </div>
                         </div>
                         <div className="card-pelatihan-new">
@@ -485,69 +542,82 @@ const Beranda = ({ session }) => {
                                             );
                                       }}
                                     >
-                                      {row.status !== "Dibuka" ? (
+                                      {/* {row.status !== "Dibuka" ? (
                                         <CardPelatihanClose row={row} />
-                                      ) : (
-                                        <>
-                                          <div
-                                            className={
-                                              pelatihan[i].pelatihan[j]
-                                                .hover !== true
+                                      ) : ( */}
+                                      <>
+                                        <div
+                                          className={
+                                            row.status === "Dibuka"
+                                              ? pelatihan[i].pelatihan[j]
+                                                  .hover !== true
                                                 ? `parent-image-pelatihan-new`
                                                 : `parent-image-pelatihan-new-hover`
+                                              : "parent-image-pelatihan-new-close"
+                                          }
+                                        >
+                                          <Image
+                                            className={`image-list-pelatihan-new`}
+                                            src={
+                                              (row.gambar &&
+                                                row.gambar !==
+                                                  "Belum ada file" &&
+                                                process.env
+                                                  .END_POINT_API_IMAGE_BEASISWA +
+                                                  row.gambar) ||
+                                              "/assets/media/default-card.png"
                                             }
-                                          >
-                                            <Image
-                                              className={`image-list-pelatihan-new`}
-                                              src={
-                                                (row.gambar &&
-                                                  row.gambar !==
-                                                    "Belum ada file" &&
-                                                  process.env
-                                                    .END_POINT_API_IMAGE_BEASISWA +
-                                                    row.gambar) ||
-                                                "/assets/media/default-card.png"
-                                              }
-                                              layout="fill"
-                                              objectFit="cover"
-                                              alt="Image Thumbnail"
-                                            />
-                                          </div>
-                                          <Card.ImgOverlay>
-                                            <div className="d-flex justify-content-between">
-                                              <div className="align-self-start">
-                                                <Badge
-                                                  bg={`py-3 px-4 badge-card-pelatihan-new`}
-                                                  classNam="d-flex "
-                                                >
-                                                  Pelatihan{" "}
-                                                  {row.metode_pelatihan}
-                                                </Badge>
-                                              </div>
+                                            layout="fill"
+                                            objectFit="cover"
+                                            alt="Image Thumbnail"
+                                          />
+                                        </div>
+                                        <Card.ImgOverlay>
+                                          <div className="d-flex justify-content-between">
+                                            <div className="align-self-start">
+                                              <Badge
+                                                bg={`py-3 px-4 ${
+                                                  row.status === "Dibuka"
+                                                    ? "badge-card-pelatihan-new"
+                                                    : "badge-card-pelatihan-new-close"
+                                                } `}
+                                                className="d-flex "
+                                              >
+                                                Pelatihan {row.metode_pelatihan}
+                                              </Badge>
+                                            </div>
 
-                                              {pelatihan[i].pelatihan[j]
-                                                .hover &&
-                                                row.status === "Dibuka" && (
-                                                  <div className="whishlist align-self-end">
-                                                    <Button
-                                                      variant="light"
-                                                      className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
-                                                    >
-                                                      <i
-                                                        className={`${
-                                                          pelatihan[i]
-                                                            .pelatihan[j]
-                                                            .bookmark
-                                                            ? "ri-heart-fill text-danger"
-                                                            : "ri-heart-line"
-                                                        }  p-0`}
-                                                        style={{
-                                                          color: "#6C6C6C",
-                                                        }}
-                                                        onClick={() => {
-                                                          if (!session) {
-                                                            router.push(
-                                                              "/login"
+                                            {pelatihan[i].pelatihan[j].hover &&
+                                              row.status === "Dibuka" && (
+                                                <div className="whishlist align-self-end">
+                                                  <Button
+                                                    variant="light"
+                                                    className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
+                                                  >
+                                                    <i
+                                                      className={`${
+                                                        pelatihan[i].pelatihan[
+                                                          j
+                                                        ].bookmark
+                                                          ? "ri-heart-fill text-danger"
+                                                          : "ri-heart-line"
+                                                      }  p-0`}
+                                                      style={{
+                                                        color: "#6C6C6C",
+                                                      }}
+                                                      onClick={() => {
+                                                        if (!session) {
+                                                          router.push("/login");
+                                                        } else {
+                                                          if (
+                                                            !session?.roles?.includes(
+                                                              "user"
+                                                            )
+                                                          ) {
+                                                            SweatAlert(
+                                                              "Gagal",
+                                                              "Anda sedang login sebagai Admin",
+                                                              "error"
                                                             );
                                                           } else {
                                                             handleBookmark(
@@ -555,155 +625,158 @@ const Beranda = ({ session }) => {
                                                                 .pelatihan[j]
                                                             );
                                                           }
+                                                        }
+                                                      }}
+                                                    ></i>
+                                                  </Button>
+                                                  {/* SHAREOVERLAY */}
+                                                  <ShareOverlay
+                                                    url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
+                                                    quote={row.name}
+                                                  >
+                                                    <Button
+                                                      variant="light"
+                                                      className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                                                    >
+                                                      <i
+                                                        className="ri-share-line p-0"
+                                                        style={{
+                                                          color: "#6C6C6C",
                                                         }}
                                                       ></i>
                                                     </Button>
-                                                    {/* SHAREOVERLAY */}
-                                                    <ShareOverlay
-                                                      url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
-                                                      quote={row.name}
-                                                    >
-                                                      <Button
-                                                        variant="light"
-                                                        className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
-                                                      >
-                                                        <i
-                                                          className="ri-share-line p-0"
-                                                          style={{
-                                                            color: "#6C6C6C",
-                                                          }}
-                                                        ></i>
-                                                      </Button>
-                                                    </ShareOverlay>
-                                                  </div>
-                                                )}
-                                            </div>
-                                          </Card.ImgOverlay>
-                                          <Card.Body className="position-relative">
-                                            <div className="mitra-pelatihan-new">
-                                              <Image
-                                                src={
-                                                  (row.gambar_mitra &&
-                                                    row.gambar_mitra !==
-                                                      "Belum ada file" &&
-                                                    row.file_path +
-                                                      row.gambar_mitra) ||
-                                                  "/assets/media/mitra-default.png"
-                                                }
-                                                width={60}
-                                                height={60}
-                                                objectFit="cover"
-                                                thumbnail
-                                                roundedCircle
-                                                className={`mitra-pelatihan-image-new`}
-                                                alt="Image Mitra"
-                                              />
-                                            </div>
-                                            <div
-                                              className="d-flex justify-content-between position-relative pb-0 mb-0"
-                                              style={{ top: "-15px" }}
-                                            >
-                                              <div className="module-pelatihan-mitra">
-                                                <p
-                                                  className={`pl-18 my-0 text-mitra-new`}
-                                                >
-                                                  {row.mitra}
-                                                </p>
-                                              </div>
-                                              <div className="status align-self-center">
-                                                <p
-                                                  className={`${
-                                                    row.status === "Dibuka"
-                                                      ? "status-mitra-open-new"
-                                                      : "status-mitra-close-new"
-                                                  } text-uppercase my-0`}
-                                                >
-                                                  {row.status}
-                                                </p>
-                                              </div>
-                                            </div>
-                                            <div className="module-pelatihan-name">
+                                                  </ShareOverlay>
+                                                </div>
+                                              )}
+                                          </div>
+                                        </Card.ImgOverlay>
+                                        <Card.Body className="position-relative">
+                                          <div className="mitra-pelatihan-new">
+                                            <Image
+                                              src={
+                                                (row.gambar_mitra &&
+                                                  row.gambar_mitra !==
+                                                    "Belum ada file" &&
+                                                  row.file_path +
+                                                    row.gambar_mitra) ||
+                                                "/assets/media/mitra-default.png"
+                                              }
+                                              width={60}
+                                              height={60}
+                                              objectFit="cover"
+                                              thumbnail
+                                              roundedCircle
+                                              className={
+                                                row.status === "Dibuka"
+                                                  ? `mitra-pelatihan-image-new`
+                                                  : `mitra-pelatihan-image-new-close`
+                                              }
+                                              alt="Image Mitra"
+                                            />
+                                          </div>
+                                          <div
+                                            className="d-flex justify-content-between position-relative pb-0 mb-0"
+                                            style={{ top: "-15px" }}
+                                          >
+                                            <div className="module-pelatihan-mitra">
                                               <p
-                                                className={`my-0 title-card-new`}
+                                                className={`pl-18 my-0 text-mitra-new`}
                                               >
-                                                {row.name}
+                                                {row.mitra}
                                               </p>
                                             </div>
-                                            <div className="module-pelatihan-name">
+                                            <div className="status align-self-center">
                                               <p
-                                                style={{
-                                                  fontSize: "14px",
-                                                  color: "#6C6C6C",
+                                                className={`${
+                                                  row.status === "Dibuka"
+                                                    ? "status-mitra-open-new"
+                                                    : "status-mitra-close-new"
+                                                } text-uppercase my-0`}
+                                              >
+                                                {row.status}
+                                              </p>
+                                            </div>
+                                          </div>
+                                          <div className="module-pelatihan-name">
+                                            <p
+                                              className={`my-0 title-card-new`}
+                                            >
+                                              {row.name}
+                                            </p>
+                                          </div>
+                                          <div className="module-pelatihan-name">
+                                            <p
+                                              style={{
+                                                fontSize: "14px",
+                                                color: "#6C6C6C",
+                                              }}
+                                            >
+                                              {row.akademi}
+                                            </p>
+                                          </div>
+                                          <hr />
+                                          {pelatihan[i].pelatihan[j].hover !==
+                                          true ? (
+                                            <div className="d-flex flex-column">
+                                              <div className="date d-flex align-items-center align-middle">
+                                                <i className="ri-time-line"></i>
+                                                <span
+                                                  className={`text-date-register-new pl-2`}
+                                                >
+                                                  Registrasi:{" "}
+                                                  {moment(row.pendaftaran_mulai)
+                                                    .utc()
+                                                    .format("DD MMM YYYY")}{" "}
+                                                  -{" "}
+                                                  {moment(
+                                                    row.pendaftaran_selesai
+                                                  )
+                                                    .utc()
+                                                    .format("DD MMM YYYY")}
+                                                </span>
+                                              </div>
+                                              <div className="date d-flex align-items-center align-middle">
+                                                <i className="ri-group-line"></i>
+                                                <span
+                                                  className={`text-date-register-new pl-2`}
+                                                >
+                                                  Kuota: {row.kuota_peserta}{" "}
+                                                  Peserta
+                                                </span>
+                                              </div>
+                                            </div>
+                                          ) : (
+                                            <div style={{ marginTop: "21px" }}>
+                                              <Button
+                                                className={`btn-block rounded-xl my-auto btn-quick-view-new`}
+                                                onClick={() => {
+                                                  handleQuickView(
+                                                    i,
+                                                    row.gambar,
+                                                    row.status,
+                                                    row.gambar_mitra,
+                                                    row.file_path,
+                                                    row.akademi,
+                                                    row.deskripsi,
+                                                    row.name,
+                                                    row.kuota_peserta,
+                                                    row.mitra,
+                                                    row.alamat,
+                                                    row.pendaftaran_mulai,
+                                                    row.pendaftaran_selesai,
+                                                    row.id,
+                                                    row.metode_pelatihan,
+                                                    row.bookmark
+                                                  );
                                                 }}
                                               >
-                                                {row.akademi}
-                                              </p>
+                                                LIHAT
+                                              </Button>
                                             </div>
-                                            <hr />
-                                            {pelatihan[i].pelatihan[j].hover !==
-                                            true ? (
-                                              <div className="d-flex flex-column">
-                                                <div className="date d-flex align-items-center align-middle">
-                                                  <i className="ri-time-line"></i>
-                                                  <span
-                                                    className={`text-date-register-new pl-2`}
-                                                  >
-                                                    Registrasi:{" "}
-                                                    {moment(
-                                                      row.pendaftaran_mulai
-                                                    ).format(
-                                                      "DD MMM YYYY"
-                                                    )}{" "}
-                                                    -{" "}
-                                                    {moment(
-                                                      row.pendaftaran_selesai
-                                                    ).format("DD MMM YYYY")}
-                                                  </span>
-                                                </div>
-                                                <div className="date d-flex align-items-center align-middle">
-                                                  <i className="ri-group-line"></i>
-                                                  <span
-                                                    className={`text-date-register-new pl-2`}
-                                                  >
-                                                    Kuota: {row.kuota_peserta}{" "}
-                                                    Peserta
-                                                  </span>
-                                                </div>
-                                              </div>
-                                            ) : (
-                                              <div
-                                                style={{ marginTop: "21px" }}
-                                              >
-                                                <Button
-                                                  className={`btn-block rounded-xl my-auto btn-quick-view-new`}
-                                                  onClick={() => {
-                                                    handleQuickView(
-                                                      i,
-                                                      row.gambar,
-                                                      row.status,
-                                                      row.gambar_mitra,
-                                                      row.file_path,
-                                                      row.akademi,
-                                                      row.deskripsi,
-                                                      row.name,
-                                                      row.kuota_peserta,
-                                                      row.mitra,
-                                                      row.alamat,
-                                                      row.pendaftaran_mulai,
-                                                      row.pendaftaran_selesai,
-                                                      row.id,
-                                                      row.metode_pelatihan,
-                                                      row.bookmark
-                                                    );
-                                                  }}
-                                                >
-                                                  LIHAT
-                                                </Button>
-                                              </div>
-                                            )}
-                                          </Card.Body>
-                                        </>
-                                      )}
+                                          )}
+                                        </Card.Body>
+                                      </>
+                                      {/* )} */}
                                     </Card>
                                   </Col>
                                 ))
@@ -785,6 +858,36 @@ const Beranda = ({ session }) => {
                                             <div className="d-flex align-items-start">
                                               <div className="whislist mr-5">
                                                 <Button
+                                                  disabled={
+                                                    cardStatus === "Ditutup" &&
+                                                    true
+                                                  }
+                                                  onClick={() => {
+                                                    if (!session) {
+                                                      router.push("/login");
+                                                    } else {
+                                                      if (
+                                                        !session?.roles?.includes(
+                                                          "user"
+                                                        )
+                                                      ) {
+                                                        SweatAlert(
+                                                          "Gagal",
+                                                          "Anda sedang login sebagai Admin",
+                                                          "error"
+                                                        );
+                                                      } else {
+                                                        const pelatihan = {
+                                                          id: cardId,
+                                                          bookmark:
+                                                            cardBookmark,
+                                                        };
+                                                        handleBookmark(
+                                                          pelatihan
+                                                        );
+                                                      }
+                                                    }
+                                                  }}
                                                   variant="light"
                                                   className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
                                                 >
@@ -797,20 +900,6 @@ const Beranda = ({ session }) => {
                                                     style={{
                                                       color: "#6C6C6C",
                                                     }}
-                                                    onClick={() => {
-                                                      if (!session) {
-                                                        router.push("/login");
-                                                      } else {
-                                                        const pelatihan = {
-                                                          id: cardId,
-                                                          bookmark:
-                                                            cardBookmark,
-                                                        };
-                                                        handleBookmark(
-                                                          pelatihan
-                                                        );
-                                                      }
-                                                    }}
                                                   ></i>
                                                 </Button>
                                                 {/* SHAREOVERLAY */}
@@ -819,6 +908,10 @@ const Beranda = ({ session }) => {
                                                   quote={cardName}
                                                 >
                                                   <Button
+                                                    disabled={
+                                                      cardStatus ===
+                                                        "Ditutup" && true
+                                                    }
                                                     variant="light"
                                                     className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new mr-5`}
                                                   >
@@ -861,13 +954,13 @@ const Beranda = ({ session }) => {
                                                 style={{ color: "#6C6C6C" }}
                                               >
                                                 Registrasi:{" "}
-                                                {moment(
-                                                  cardPendaftaranMulai
-                                                ).format("DD MMM YYYY")}{" "}
+                                                {moment(cardPendaftaranMulai)
+                                                  .utc()
+                                                  .format("DD MMM YYYY")}{" "}
                                                 -{" "}
-                                                {moment(
-                                                  cardPendaftaranSelesai
-                                                ).format("DD MMM YYYY")}
+                                                {moment(cardPendaftaranSelesai)
+                                                  .utc()
+                                                  .format("DD MMM YYYY")}
                                               </span>
                                             </div>
                                             <div className="date d-flex align-items-center align-middle mr-5">
@@ -917,21 +1010,39 @@ const Beranda = ({ session }) => {
                                               </Link>
                                             </div>
 
-                                            {cardStatus !== "Ditutup" && (
-                                              <div className="col-6">
-                                                <button
-                                                  onClick={() =>
-                                                    handleCheckPelatihanReg(
-                                                      cardId,
-                                                      session
-                                                    )
+                                            <div className="col-6">
+                                              <button
+                                                disabled={
+                                                  cardStatus === "Ditutup" &&
+                                                  true
+                                                }
+                                                onClick={() => {
+                                                  if (!session) {
+                                                    router.push("/login");
+                                                  } else {
+                                                    if (
+                                                      !session?.roles?.includes(
+                                                        "user"
+                                                      )
+                                                    ) {
+                                                      SweatAlert(
+                                                        "Gagal",
+                                                        "Anda sedang login sebagai Admin",
+                                                        "error"
+                                                      );
+                                                    } else {
+                                                      handleCheckPelatihanReg(
+                                                        cardId,
+                                                        session
+                                                      );
+                                                    }
                                                   }
-                                                  className="d-flex justify-content-center  btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100"
-                                                >
-                                                  Daftar Pelatihan
-                                                </button>
-                                              </div>
-                                            )}
+                                                }}
+                                                className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100 font-weight-bolder"
+                                              >
+                                                Daftar Pelatihan
+                                              </button>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
@@ -949,21 +1060,22 @@ const Beranda = ({ session }) => {
                           </Row>
                         </div>
                       </div>
-                    ) : (
-                      tema.length <= 1 && (
-                        <div className="row">
-                          <h1 className="text-center text-muted col-12 font-weight-bolder">
-                            Pelatihan Belum Tersedia
-                          </h1>
-                        </div>
-                      )
                     )}
+                    {/* {arr === true && i === 0 && (
+                      <div className="row">
+                        <h1 className="text-center text-muted col-12 font-weight-bolder">
+                          Pelatihan Belum Tersedia
+                        </h1>
+                      </div>
+                    )} */}
                   </div>
                 ))
               ) : (
                 <div className="row">
                   <h1 className="text-center text-muted col-12 font-weight-bolder">
-                    Tema Belum Tersedia
+                    {arr === true
+                      ? "Pelatihan Belum Tersedia"
+                      : "Tema Belum Tersedia"}
                   </h1>
                 </div>
               )}
@@ -988,14 +1100,14 @@ const Beranda = ({ session }) => {
       <section className="step-register-new my-lg-20 ">
         <Container fluid className="padding-content-home">
           <div className="title-step-register text-center">
-            <h1>
+            <h1 className="fw-600 text-center" style={{ color: "#1F1F1F" }}>
               Tahapan Pendaftaran <br /> Digital Talent Scholarship
             </h1>
 
             <div className="mt-25 p-0 m-0 d-flex justify-content-center justify-content-md-between flex-wrap">
               <div className="content">
                 <img
-                  src="/assets/media/pendaftaran-illustration-new.svg"
+                  src="/assets/media/pendaftaran-illustration-new.png"
                   className="caption-image-new"
                 />
                 <div className="caption d-flex align-items-center flex-column mt-6">
@@ -1007,7 +1119,7 @@ const Beranda = ({ session }) => {
               </div>
               <div className="content">
                 <img
-                  src="/assets/media/seleksi-illustration-new.svg"
+                  src="/assets/media/seleksi-illustration-new.png"
                   className="caption-image-new"
                 />
                 <div className="caption d-flex align-items-center flex-column mt-6">
@@ -1020,7 +1132,7 @@ const Beranda = ({ session }) => {
               </div>
               <div className="content">
                 <img
-                  src="/assets/media/verifikasi-illustration-new.svg"
+                  src="/assets/media/verifikasi-illustration-new.png"
                   className="caption-image-new"
                 />
                 <div className="caption d-flex align-items-center flex-column mt-6">
@@ -1033,7 +1145,7 @@ const Beranda = ({ session }) => {
               </div>
               <div className="content">
                 <img
-                  src="/assets/media/pelatihan-illustration-new.svg"
+                  src="/assets/media/pelatihan-illustration-new.png"
                   className="caption-image-new"
                 />
                 <div className="caption d-flex align-items-center flex-column mt-6">

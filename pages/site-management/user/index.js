@@ -1,6 +1,8 @@
 import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../components/LoadingPage";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+
 const DashboardUser = dynamic(
   () =>
     import(
@@ -26,14 +28,15 @@ export default function Dashboard() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "http://dts-dev.majapahit.id/login/admin",
-        permanent: false,
-      },
-    };
-  }
+  const middleware = middlewareAuthAdminSession(session);
+    if (!middleware.status) {
+      return {
+        redirect: {
+          destination: middleware.redirect,
+          permanent: false,
+        },
+      };
+    }
 
   return {
     props: { session, title: "Dashboard - User" },

@@ -47,9 +47,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
   const [sideBar, setSidebar] = useState([])
   const handlerLogout = () => {
     signOut();
-    localStorage.removeItem("sidebar")
-    localStorage.removeItem("token-permission")
-    localStorage.removeItem("permissions")
+    localStorage.clear();
     // {
     //   callbackUrl: `${window.location.origin}/login/admin`,
     // } LAGI DEVELOP JANGAN DIHAPUS
@@ -96,19 +94,15 @@ const Layout = ({ children, title = "Dashboard" }) => {
         id="kt_quick_user"
         className={`offcanvas offcanvas-right p-10 ${
           allFunctionls.isOverlayProfile && allFunctionls.isOverlayProfile
-            ? "offcanvas-on"
-            : ""
-        }`}
-      >
+            && "offcanvas-on"
+        }`}>
         <div className="offcanvas-header d-flex align-items-center justify-content-between pb-5">
           <h3 className="font-weight-bold m-0">User Profile</h3>
           <a
-            href="#"
             className="btn btn-xs btn-icon btn-light btn-hover-primary"
             id="kt_quick_user_close"
-            onClick={() => activeProfileAndOverlay()}
-          >
-            <i className="ki ki-close icon-xs text-muted"></i>
+            onClick={() => activeProfileAndOverlay()}>
+            <i className="ki ki-close icon-xs text-muted"/>
           </a>
         </div>
 

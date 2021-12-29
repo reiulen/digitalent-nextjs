@@ -4,7 +4,8 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
-import styles from "../../../../../styles/previewGaleri.module.css"
+import styles from "../../../../../styles/previewGaleri.module.css";
+import Swal from "sweetalert2";
 
 import {
   postViaFilter,
@@ -13,16 +14,17 @@ import {
 
 export default function SUBM(props) {
   let dispatch = useDispatch();
+  let selectRefYear = null;
 
   const [via, setVia] = useState("template");
   const [title, setTitle] = useState("");
-  const [year, setYear] = useState("");
-  const [academy, setAcademy] = useState("");
-  const [theme, setTheme] = useState("");
-  const [organizer, setOrganizer] = useState("");
-  const [training, setTraining] = useState("");
-  const [profileStatus, setProfileStatus] = useState("");
-  const [selectionStatus, setSelectionStatus] = useState("");
+  const [year, setYear] = useState([]);
+  const [academy, setAcademy] = useState([]);
+  const [theme, setTheme] = useState([]);
+  const [organizer, setOrganizer] = useState([]);
+  const [training, setTraining] = useState([]);
+  const [profileStatus, setProfileStatus] = useState([]);
+  const [selectionStatus, setSelectionStatus] = useState([]);
   const [
     participantSelectionStatusUpdate,
     setParticipantSelectionStatusUpdate,
@@ -35,78 +37,113 @@ export default function SUBM(props) {
   const [file, setFile] = useState("");
   const [link, setLink] = useState("");
 
-  const [listYear, setListYear] = useState([])
-  const [listAcademy, setListAcademy] = useState([])
-  const [listTheme, setListTheme] = useState([])
-  const [listOrganizer, setListOrganizer] = useState([])
-  const [listTraining, setListTraining] = useState([])
-  const [listProfileStatus, setListProfileStatus] = useState([])
-  const [listSelectionStatus, setListSelectionStatus] = useState([])
-  const [disableOption, setDisableOption] = useState(true)
-  const [disableAkademi, setDisableAkademi] = useState(true)
-  const [disableTema, setDisableTema] = useState(true)
-  const [disablePenyelenggara, setDisablePenyelenggara] = useState(true)
-  const [disablePelatihan, setDisablePelatihan] = useState(true)
-  const [disableStatusProfile, setDisableStatusProfile] = useState(true)
-  const [disableStatusSelection, setDisableStatusSelection] = useState(true)
-  const [namaakademi, setnamakademi] = useState(null)
-  const [namatema, setnamatema] = useState(null)
-  const [namapenyelenggara, setnamapenyelenggara] = useState(null)
-  const [namapelatihan, setnamapelatihan] = useState(null)
-  const [namastatusseleksi, setnamastatusseleksi] = useState(null)
-
+  const [listYear, setListYear] = useState([]);
+  const [listAcademy, setListAcademy] = useState([]);
+  const [listTheme, setListTheme] = useState([]);
+  const [listOrganizer, setListOrganizer] = useState([]);
+  const [listTraining, setListTraining] = useState([]);
+  const [listProfileStatus, setListProfileStatus] = useState([]);
+  const [listSelectionStatus, setListSelectionStatus] = useState([]);
+  const [disableOption, setDisableOption] = useState(true);
+  const [disableAkademi, setDisableAkademi] = useState(true);
+  const [disableTema, setDisableTema] = useState(true);
+  const [disablePenyelenggara, setDisablePenyelenggara] = useState(true);
+  const [disablePelatihan, setDisablePelatihan] = useState(true);
+  const [disableStatusProfile, setDisableStatusProfile] = useState(true);
+  const [disableStatusSelection, setDisableStatusSelection] = useState(true);
+  const [namaakademi, setnamakademi] = useState(null);
+  const [namatema, setnamatema] = useState(null);
+  const [namapenyelenggara, setnamapenyelenggara] = useState(null);
+  const [namapelatihan, setnamapelatihan] = useState(null);
+  const [namastatusseleksi, setnamastatusseleksi] = useState(null);
+  const [nameFile, setNameFile] = useState(null);
+  const [selectedTraining, setSelectedTraining] = useState(null);
 
   const optionsStatus = [
-    { value: "menunggu", label: "Menunggu" },
+    { value: "seleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
     { value: "tes substansi", label: "Tes Substansi" },
     { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
-    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "seleksi akhir", label: "Seleksi Akhir" },
     { value: "ditolak", label: "Ditolak" },
     { value: "diterima", label: "Diterima" },
     { value: "pelatihan", label: "Pelatihan" },
+    { value: "administrasi akhir", label: "Administrasi Akhir" },
     { value: "lulus pelatihan", label: "Lulus Pelatihan" },
     { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
 
   const handleSubmit = async (e) => {
-
     if (via === "filter") {
-      dispatch(
-        postViaFilter(
-          props.token,
-          title,
-          year,
-          namaakademi ? namaakademi : "",
-          namatema ? namatema : "",
-          namapenyelenggara ? namapenyelenggara : "",
-          namapelatihan ? namapelatihan : "",
-          profileStatus ? profileStatus : "",
-          selectionStatus ? selectionStatus : "",
-          participantSelectionStatusUpdate ||
-            participantSelectionStatusUpdate === 1
-            ? true
-            : false,
-          status.value ? status.value : "",
-          broadcastEmailSendNotification || broadcastEmailSendNotification === 1
-            ? true
-            : false,
-          emailSubject,
-          emailContent,
-          `via ${via}`
-        )
-      );
+      Swal.fire({
+        title: "Apakah anda yakin ingin mengirim ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then((result) => {
+        dispatch(
+          postViaFilter(
+            props.token,
+            title,
+            year,
+            academy,
+            theme,
+            organizer,
+            training,
+            profileStatus,
+            selectionStatus,
+            participantSelectionStatusUpdate ||
+              participantSelectionStatusUpdate === 1
+              ? true
+              : false,
+            status.value ? status.value : "",
+            broadcastEmailSendNotification ||
+              broadcastEmailSendNotification === 1
+              ? true
+              : false,
+            emailSubject,
+            emailContent,
+            `via ${via}`
+          )
+        );
+      });
     } else {
-      dispatch(postViaTemplate(props.token, title, file, participantSelectionStatusUpdate ||
-        participantSelectionStatusUpdate === 1
-        ? true
-        : false,
-        status.value,
-        broadcastEmailSendNotification || broadcastEmailSendNotification === 1
-          ? true
-          : false,
-        emailSubject,
-        emailContent, `via ${via}`));
+      Swal.fire({
+        title: "Apakah anda yakin ingin mengirim ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then((result) => {
+        dispatch(
+          postViaTemplate(
+            props.token,
+            title,
+            file,
+            participantSelectionStatusUpdate ||
+              participantSelectionStatusUpdate === 1
+              ? true
+              : false,
+            status.value,
+            broadcastEmailSendNotification ||
+              broadcastEmailSendNotification === 1
+              ? true
+              : false,
+            emailSubject,
+            emailContent,
+            `via ${via}`
+          )
+        );
+      });
     }
   };
 
@@ -125,70 +162,13 @@ export default function SUBM(props) {
       });
 
     axios
-      .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/year`,
-        {
-          headers: {
-            authorization: `Bearer ${props.token}`,
-          },
-        }
-      )
+      .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/year`, {
+        headers: {
+          authorization: `Bearer ${props.token}`,
+        },
+      })
       .then((data) => {
-        setListYear(data.data.data)
-      });
-
-    axios
-      .get(
-        process.env.END_POINT_API_PELATIHAN +
-        `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
-        {
-          headers: {
-            authorization: `Bearer ${props.token}`,
-          },
-        }
-      )
-      .then((data) => {
-        setListTheme(data.data.data)
-      });
-
-    axios
-      .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/academy`,
-        {
-          headers: {
-            authorization: `Bearer ${props.token}`,
-          },
-        }
-      )
-      .then((data) => {
-        setListAcademy(data.data.data)
-      });
-
-    axios
-      .get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/organizer`,
-        {
-          headers: {
-            authorization: `Bearer ${props.token}`,
-          },
-        }
-      )
-      .then((data) => {
-        setListOrganizer(data.data.data)
-      });
-
-    axios
-      .get(
-        process.env.END_POINT_API_PELATIHAN +
-        `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme}`,
-        {
-          headers: {
-            authorization: `Bearer ${props.token}`,
-          },
-        }
-      )
-      .then((data) => {
-        setListTraining(data.data.data)
+        setListYear(data.data.data);
       });
 
     axios
@@ -201,46 +181,229 @@ export default function SUBM(props) {
         }
       )
       .then((data) => {
-        setListProfileStatus(data.data.data)
+        setListProfileStatus(data.data.data);
       });
-
   }, [props.token, academy, theme]);
 
-  const listYears = listYear.map((item, index) => {
-    return (
-      <option value={item.value} key={index} >{item.value}</option>
-    )
-  })
+  const changeYear = (e) => {
+    let data = e.map((item) => {
+      return { ...item, value: item.value };
+    });
+    const datas = data.map((items) => {
+      return items.value;
+    });
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/pelatihan/dropdown-site-management`,
+        {
+          params: {
+            type: "akademi",
+            cari: datas.join(","),
+          },
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListAcademy(data.data.data);
+      });
+    setYear(datas);
+  };
 
-  const optAcademy = listAcademy.map((item, index) => {
-    return (
-      <option value={item.value} key={index} akademi={item.label} >{item.label}</option>
-    )
-  })
+  const changeAkademi = (e) => {
+    let data = e.map((item) => {
+      return { ...item, value: item.value };
+    });
+    const datas = data.map((items) => {
+      return items.value;
+    });
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/pelatihan/dropdown-site-management`,
+        {
+          params: {
+            type: "tema",
+            cari: datas.join(","),
+          },
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListTheme(data.data.data);
+      });
+    setAcademy(datas);
+  };
 
-  const optTheme = listTheme.map((item, index) => {
-    return (
-      <option value={item.value} key={index} >{item.label}</option>
-    )
-  })
+  const changeTema = (e) => {
+    let data = e.map((item) => {
+      return { ...item, value: item.value };
+    });
+    const datas = data.map((items) => {
+      return items.value;
+    });
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/pelatihan/dropdown-site-management`,
+        {
+          params: {
+            type: "penyelenggara",
+            cari: datas.join(","),
+          },
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListOrganizer(data.data.data);
+      });
+    setTheme(datas);
+  };
 
-  const optOrganizer = listOrganizer.map((item, index) => {
-    return (
-      <option value={item.label} key={index} >{item.label}</option>
-    )
-  })
+  const changePenyelenggara = (e) => {
+    let data = e.map((item) => {
+      return { ...item, value: item.value };
+    });
+    const datas = data.map((items) => {
+      return items.value;
+    });
 
-  const optTraining = listTraining.map((item, index) => {
-    return (
-      <option value={item.value} key={index} >{item.label}</option>
-    )
-  })
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/pelatihan/dropdown-site-management`,
+        {
+          params: {
+            type: "pelatihan",
+            cari: datas.join(","),
+          },
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListTraining(data.data.data);
+      });
+    setOrganizer(datas);
+  };
 
-  const optStatusProfile = listProfileStatus.map((item, index) => {
+  const changeTraining = (e) => {
+    let data = e.map((item) => {
+      return { ...item, value: item.value };
+    });
+    const datas = data.map((items) => {
+      return items.label;
+    });
+    setTraining(datas);
+    setSelectedTraining(
+      data.map((item) => {
+        return {
+          value: item.value,
+          label: item.label,
+        };
+      })
+    );
+  };
+
+  const changeStatusAdministrasi = (e) => {
+    let data = e.map((item) => {
+      return { ...item, value: item.value };
+    });
+    const datas = data.map((items) => {
+      return items.value;
+    });
+    setProfileStatus(datas);
+  };
+
+  const changeStatusPeserta = (e) => {
+    let data = e.map((item) => {
+      return { ...item, value: item.value };
+    });
+    const datas = data.map((items) => {
+      return items.value;
+    });
+    setSelectionStatus(datas);
+  };
+
+  const listYears = listYear.map((items, index) => {
+    return { label: items.value, value: items.value, id: items.id };
+  });
+
+  const optAcademy = listAcademy?.map((items, index) => {
+    return { label: items.label, value: items.label, akademi: items.label };
+  });
+
+  const optTheme = listTheme?.map((items, index) => {
+    return { label: items.label, value: items.label };
+  });
+
+  const optOrganizer = listOrganizer?.map((items, index) => {
+    return { label: items.label, value: items.label };
+  });
+
+  const optTraining = listTraining?.map((item, index) => {
     return (
-      <option value={item.value} key={index} >{item.value}</option>
-    )
-  })
+      <option value={item.value} key={index}>
+        {item.label}
+      </option>
+    );
+  });
+
+  const optStatusProfile = listProfileStatus?.map((items, index) => {
+    return { label: items.value, value: items.value };
+  });
+
+  const onChangeFile = (e) => {
+    if (e.target.files[0].size > "10000000") {
+      e.target.value = null;
+      Swal.fire("Oops !", "File Size Melebihi 10 MB", "error");
+    } else {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setFile(e.target.files[0]);
+      setNameFile(e.target.files[0].name);
+    }
+  };
+
+  const trainingOpt = listTraining?.map((item, index) => {
+    return {
+      ...item,
+      icon: (
+        <span
+          className={`text-${
+            item.status ? "success" : "danger"
+          } ml-auto font-weight-bolder`}
+        >
+          <i
+            className={`fas fa-circle text-${
+              item.status ? "success" : "danger"
+            }`}
+          ></i>{" "}
+          {item.status ? "Aktif" : "Tidak Aktif"}
+        </span>
+      ),
+    };
+  });
+
+  const formatLabel = (e) => {
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ paddingRight: 6 }}>{e.label}</span>
+        {e.icon}
+      </div>
+    );
+  };
 
   return (
     <div className="row">
@@ -275,8 +438,9 @@ export default function SUBM(props) {
                   name="via"
                   id="template"
                   value="template"
-                  onChange={(e) => {
-                    setVia(e.target.value);
+                  checked={via === "template"}
+                  onClick={(e) => {
+                    setVia("template");
                   }}
                 />
                 <h3 className="judul">Via Template</h3>
@@ -288,8 +452,8 @@ export default function SUBM(props) {
                   name="via"
                   id="filter"
                   value="filter"
-                  onChange={(e) => {
-                    setVia(e.target.value);
+                  onClick={(e) => {
+                    setVia("filter");
                   }}
                 />
                 <h3 className="judul">Via Filter</h3>
@@ -335,7 +499,7 @@ export default function SUBM(props) {
                   </div>
                   <div className="justify-content-start">
                     <div className="mr-4 styling-upload d-flex">
-                      <div className="position-relative" >
+                      <div className="position-relative">
                         <i
                           className="fas fa-upload"
                           style={{
@@ -351,13 +515,14 @@ export default function SUBM(props) {
                           type="file"
                           required
                           onChange={(e) => {
-                            setFile(e.target.files[0]);
+                            onChangeFile(e);
                           }}
-                          style={{ width: '100%' }}
+                          style={{ width: "100%" }}
                         />
                       </div>
                     </div>
                   </div>
+                  <p>{nameFile}</p>
                 </div>
               </div>
               <p className="border-bottom mt-4 pb-3 text-muted">
@@ -371,167 +536,226 @@ export default function SUBM(props) {
               <div className="row border-bottom mr-2">
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Tahun</h3>
-                  <select
-                    className="form-control"
-                    onChange={(e) => {
-                      setYear(e.target.value);
-                      setDisableOption(false)
-                    }}
-                    required
-                  >
-                    <option disabled selected>
-                      PILIH TAHUN
-                    </option>
-                    {listYears}
-                  </select>
+
+                  <div style={{ zIndex: "20", position: "relative" }}>
+                    <Select
+                      className={`basic-single`}
+                      classNamePrefix="select"
+                      placeholder="Pilih Tahun"
+                      isMulti
+                      isDisabled={false}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => {
+                        changeYear(e);
+                        setDisableOption(false);
+                      }}
+                      options={listYears}
+                    />
+                  </div>
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Akademi</h3>
-                  <select
-                    className="form-control"
-                    onChange={(e) => {
-                      setnamakademi(e.target.selectedOptions[0].innerText)
-                      setAcademy(e.target.value);
-                      setDisableAkademi(false)
-                    }}
-                    required
-                    disabled={disableOption === true || disableOption === ""}
-                  >
-                    <option disabled selected>
-                      PILIH AKADEMI
-                    </option>
-                    {optAcademy}
-                  </select>
-                  {
-                    disableOption === true || disableOption === "" ?
-                      <small className="text-muted">
-                        Mohon isi tahun terlebih dahulu
-                      </small>
-                      : null
-                  }
+                  <div style={{ zIndex: "19", position: "relative" }}>
+                    <Select
+                      className={`basic-single`}
+                      classNamePrefix="select"
+                      placeholder="Pilih Akademi"
+                      isMulti
+                      isDisabled={
+                        disableOption === true || disableOption === ""
+                      }
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => {
+                        changeAkademi(e);
+                        setDisableAkademi(false);
+                      }}
+                      options={optAcademy}
+                    />
+                  </div>
+                  {disableOption === true || disableOption === "" ? (
+                    <small className="text-muted">
+                      Mohon isi tahun terlebih dahulu
+                    </small>
+                  ) : null}
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Tema</h3>
-                  <select
-                    className="form-control"
-                    onChange={(e) => {
-                      setnamatema(e.target.selectedOptions[0].innerText)
-                      setTheme(e.target.value);
-                      setDisableTema(false)
-                    }}
-                    required
-                    disabled={disableAkademi === true || disableAkademi === ""}
-                  >
-                    <option disabled selected>
-                      PILIH TEMA
-                    </option>
-                    {optTheme}
-                  </select>
-                  {
-                    disableAkademi === true || disableAkademi === "" ?
-                      <small className="text-muted">
-                        Mohon isi akademi terlebih dahulu
-                      </small>
-                      : null
-                  }
+                  <div style={{ zIndex: "18", position: "relative" }}>
+                    <Select
+                      className={`basic-single`}
+                      classNamePrefix="select"
+                      placeholder="Pilih Tema"
+                      isMulti
+                      isDisabled={
+                        disableAkademi === true || disableAkademi === ""
+                      }
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => {
+                        changeTema(e);
+                        setDisableTema(false);
+                      }}
+                      options={optTheme}
+                    />
+                  </div>
+                  {disableAkademi === true || disableAkademi === "" ? (
+                    <small className="text-muted">
+                      Mohon isi akademi terlebih dahulu
+                    </small>
+                  ) : null}
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Penyelenggara</h3>
-                  <select
-                    className="form-control"
-                    onChange={(e) => {
-                      setnamapenyelenggara(e.target.selectedOptions[0].innerText)
-                      setOrganizer(e.target.value);
-                      setDisablePenyelenggara(false)
-                    }}
-                    required
-                    disabled={disableTema === true || disableTema === ""}
-                  >
-                    <option disabled selected>
-                      PILIH PENYELENGGARA
-                    </option>
-                    {optOrganizer}
-                  </select>
-                  {
-                    disableTema === true || disableTema === "" ?
-                      <small className="text-muted">
-                        Mohon isi tema terlebih dahulu
-                      </small>
-                      : null
-                  }
+                  <div style={{ zIndex: "15", position: "relative" }}>
+                    <Select
+                      className={`basic-single`}
+                      classNamePrefix="select"
+                      placeholder="Pilih Penyelenggara"
+                      isMulti
+                      isDisabled={disableTema === true || disableTema === ""}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => {
+                        changePenyelenggara(e);
+                        setDisablePenyelenggara(false);
+                      }}
+                      options={optOrganizer}
+                    />
+                  </div>
+                  {disableTema === true || disableTema === "" ? (
+                    <small className="text-muted">
+                      Mohon isi tema terlebih dahulu
+                    </small>
+                  ) : null}
                 </div>
                 <div className="form-group col-xl-12">
                   <h3 className="judul">Pelatihan</h3>
-                  <select
+                  <div style={{ zIndex: "14", position: "relative" }}>
+                    <Select
+                      placeholder="Pilih Pelatihan"
+                      options={trainingOpt}
+                      value={selectedTraining}
+                      isMulti
+                      onChange={(e) => {
+                        // setnamapelatihan(e.target.selectedOptions[0].innerText);
+                        setTraining(e?.label);
+                        changeTraining(e);
+                        // setSelectedTraining({value: e?.label, label: e?.label})
+                        setDisablePelatihan(false);
+                      }}
+                      required
+                      isDisabled={
+                        disablePenyelenggara === true ||
+                        disablePenyelenggara === ""
+                      }
+                      getOptionLabel={(e) => formatLabel(e)}
+                    />
+                  </div>
+
+                  {/* <select
                     className="form-control"
                     onChange={(e) => {
-                      setnamapelatihan(e.target.selectedOptions[0].innerText)
+                      setnamapelatihan(e.target.selectedOptions[0].innerText);
                       setTraining(e.target.value);
-                      setDisablePelatihan(false)
+                      setDisablePelatihan(false);
                     }}
                     required
-                    disabled={disablePenyelenggara === true || disablePenyelenggara === ""}
+                    disabled={
+                      disablePenyelenggara === true ||
+                      disablePenyelenggara === ""
+                    }
+                    style={{
+                      cursor:
+                        disablePenyelenggara === true ||
+                          disablePenyelenggara === ""
+                          ? "not-allowed"
+                          : "pointer",
+                    }}
                   >
                     <option disabled selected>
                       PILIH PELATIHAN
                     </option>
                     {optTraining}
-                  </select>
-                  {
-                    disablePenyelenggara === true || disablePenyelenggara === "" ?
-                      <small className="text-muted">
-                        Mohon isi penyelenggara terlebih dahulu
-                      </small>
-                      : null
-                  }
+                  </select> */}
+                  {disablePenyelenggara === true ||
+                  disablePenyelenggara === "" ? (
+                    <small className="text-muted">
+                      Mohon isi penyelenggara terlebih dahulu
+                    </small>
+                  ) : null}
                 </div>
                 <div className="form-group col-xl-6">
-                  <h3 className="judul">Status Profil</h3>
-                  <select
+                  <h3 className="judul">Status Administrasi</h3>
+                  <Select
+                    placeholder="Pilih Status Administrasi"
+                    options={optStatusProfile}
+                    isMulti
+                    onChange={(e) => {
+                      changeStatusAdministrasi(e);
+                    }}
+                    required
+                  />
+                  {/* <select
                     className="form-control"
                     onChange={(e) => {
                       setProfileStatus(e.target.value);
-                      setDisableStatusProfile(false)
+                      setDisableStatusProfile(false);
                     }}
-                    required
-                    disabled={disablePelatihan === true || disablePelatihan === ""}
                   >
                     <option disabled selected>
-                      PILIH STATUS PROFIL
+                      PILIH STATUS ADMINISTRASI
                     </option>
                     {optStatusProfile}
-                  </select>
-                  {
-                    disablePelatihan === true || disablePelatihan === "" ?
-                      <small className="text-muted">
-                        Mohon isi pelatihan terlebih dahulu
-                      </small>
-                      : null
-                  }
+                  </select> */}
                 </div>
                 <div className="form-group col-xl-6">
-                  <h3 className="judul">Status Seleksi</h3>
-                  <select
+                  <h3 className="judul">Status Peserta</h3>
+                  <div
+                    className=""
+                    style={{ zIndex: "13", position: "relative" }}
+                  >
+                    <Select
+                      placeholder="Pilih Status Peserta"
+                      options={optionsStatus}
+                      isMulti
+                      onChange={(e) => {
+                        changeStatusPeserta(e);
+                      }}
+                      required
+                    />
+                  </div>
+                  {/* <select
                     className="form-control"
                     onChange={(e) => {
                       setSelectionStatus(e.target.value);
-                      setDisableStatusSelection(false)
+                      setDisableStatusSelection(false);
                     }}
-                    required
-                    disabled={disableStatusProfile === true || disableStatusProfile === ""}
                   >
                     <option disabled selected>
-                      PILIH STATUS SELEKSI
+                      PILIH STATUS PESERTA
                     </option>
-                    <option value="Lulus">Lulus</option>
-                  </select>
-                  {
-                    disableStatusProfile === true || disableStatusProfile === "" ?
-                      <small className="text-muted">
-                        Mohon isi status profile terlebih dahulu
-                      </small>
-                      : null
-                  }
+                    {optionsStatus.map((item, index) => {
+                      return (
+                        <option key={index} value={item.value}>
+                          {item.label}
+                        </option>
+                      );
+                    })}
+                  </select> */}
                 </div>
               </div>
             </div>
@@ -547,7 +771,6 @@ export default function SUBM(props) {
             <span className="d-flex switch switch-primary status-peserta">
               <label className="checkbox-button">
                 <input
-                  
                   type="checkbox"
                   name="select"
                   checked={participantSelectionStatusUpdate}
@@ -564,10 +787,13 @@ export default function SUBM(props) {
           </div>
           <div className="status-peserta">
             <div className="form-group">
-              <h3 className="mb-4 judul">Status</h3>
-              <div className="mr-4" style={{ zIndex: '2', position: 'relative' }}>
+              <h3 className="mb-4 judul">Status Peserta</h3>
+              <div
+                className="mr-4"
+                style={{ zIndex: "10", position: "relative" }}
+              >
                 <Select
-                  placeholder="PILIH PELATIHAN"
+                  placeholder="PILIH STATUS PESERTA"
                   options={optionsStatus}
                   defaultValue={status}
                   onChange={(e) => {
@@ -641,7 +867,7 @@ export default function SUBM(props) {
           </div>
           <div className="form-group mr-4">
             <h3 className="judul">Konten Email</h3>
-            <div style={{ zIndex: '1' }}>
+            <div style={{ zIndex: "2", position: "relative" }}>
               <CKEditor
                 editor={ClassicEditor}
                 data={emailContent}
@@ -652,35 +878,48 @@ export default function SUBM(props) {
               />
             </div>
           </div>
-          <div className="d-flex justify-content-end mb-4 mr-4">
-            <button type="reset" className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`} onClick={() => {
-              setVia("template");
-              setTitle("");
-              setYear("");
-              setAcademy("");
-              setTheme("");
-              setOrganizer("");
-              setTraining("");
-              setProfileStatus("");
-              setSelectionStatus("");
-              setParticipantSelectionStatusUpdate(0);
-              setStatus("");
-              setBroadcastEmailSendNotification(0);
-              setEmailSubject("");
-              setEmailContent("");
-              setFile("");
-              setLink("");
-            }}>
-              Reset
-            </button>
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e)}
-              className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-            >
-              Kirim
-            </button>
-          </div>
+          {localStorage
+            .getItem("permissions")
+            .includes("site_management.setting.pelatihan.manage") && (
+            <div className="d-flex justify-content-end mb-4 mr-4">
+              <button
+                type="reset"
+                className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                onClick={() => {
+                  setVia("template");
+                  setTitle("");
+                  setYear([])
+                  setAcademy([])
+                  setTheme([])
+                  setOrganizer([])
+                  setTraining([])
+                  setProfileStatus([])
+                  setSelectionStatus([])
+                  setParticipantSelectionStatusUpdate(0);
+                  setStatus("");
+                  setBroadcastEmailSendNotification(0);
+                  setEmailSubject("");
+                  setEmailContent("");
+                  setFile("");
+                  setLink("");
+                  setSelectedTraining([])
+                  setDisableOption(true)
+                  setDisableAkademi(true)
+                  setDisableTema(true)
+                  setDisablePenyelenggara(true)
+                }}
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                onClick={(e) => handleSubmit(e)}
+                className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+              >
+                Kirim
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>

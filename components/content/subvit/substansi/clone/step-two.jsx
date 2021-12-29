@@ -21,8 +21,9 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInputClone";
 import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
+import { Button, Modal } from "react-bootstrap";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -49,6 +50,7 @@ const StepTwo = ({ token }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [checkedDelete, setCheckedDelete] = useState([]);
+  const [modalType, setModalType] = useState(false);
 
   useEffect(() => {
     if (limit) {
@@ -76,7 +78,7 @@ const StepTwo = ({ token }) => {
   };
   const saveLanjut = () => {
     router.push({
-      pathname: `/subvit/substansi/clone/step-3`,
+      pathname: `/subvit/substansi/clone/step-4`,
       query: { id },
     });
   };
@@ -156,32 +158,27 @@ const StepTwo = ({ token }) => {
     const data = {
       list_soal: checkedDelete,
     };
-    dispatch(deleteCloneSubtanceQuestionBanks(data, token));
+    dispatch(deleteCloneSubtanceQuestionBanks(data, token, tokenPermission));
   };
 
   const handleModal = () => {
-    Swal.fire({
-      title: "Silahkan Pilih Metode Entry",
-      icon: "info",
-      showDenyButton: true,
-      showCloseButton: true,
-      confirmButtonText: `Entry`,
-      denyButtonText: `Import`,
-      confirmButtonColor: "#3085d6",
-      denyButtonColor: "#d33",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-2-entry`,
-          query: { id },
-        });
-      } else if (result.isDenied) {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-2-import`,
-          query: { id },
-        });
-      }
+    setModalType(true);
+  };
+
+  const handleEntry = () => {
+    router.push({
+      pathname: `/subvit/substansi/tambah-step-2-entry`,
+      query: { id },
     });
+    localStorage.setItem("clone", true);
+  };
+
+  const handleImport = () => {
+    router.push({
+      pathname: `/subvit/substansi/tambah-step-2-import`,
+      query: { id },
+    });
+    localStorage.setItem("clone", true);
   };
 
   const handleResetError = () => {
@@ -220,7 +217,7 @@ const StepTwo = ({ token }) => {
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="3"></StepInput>
           <div className="card-body">
             <div className="table-filter">
               <div className="row align-items-center">
@@ -295,20 +292,19 @@ const StepTwo = ({ token }) => {
                         <th>Kategori</th>
                         <th>Bobot</th>
                         <th>Status</th>
-                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {subtance_question_detail &&
-                      subtance_question_detail.list_questions &&
-                      subtance_question_detail.list_questions.length === 0 ? (
+                      subtance_question_detail?.list_questions &&
+                      subtance_question_detail?.list_questions.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
                       ) : (
                         subtance_question_detail &&
-                        subtance_question_detail.list_questions &&
-                        subtance_question_detail.list_questions.map(
+                        subtance_question_detail?.list_questions &&
+                        subtance_question_detail?.list_questions?.map(
                           (question, i) => {
                             return (
                               <tr key={question.id}>
@@ -344,7 +340,7 @@ const StepTwo = ({ token }) => {
                                   {question.type.value} poin
                                 </td>
                                 <td className="align-middle">
-                                  {question.status === true ? (
+                                  {question.status ? (
                                     <span className="label label-inline label-light-success font-weight-bold">
                                       Publish
                                     </span>
@@ -353,20 +349,6 @@ const StepTwo = ({ token }) => {
                                       Draft
                                     </span>
                                   )}
-                                </td>
-                                <td className="align-middle">
-                                  <Link
-                                    href={`/subvit/substansi/edit-soal-substansi?id=${question.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="Edit"
-                                    >
-                                      <i className="ri-pencil-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
                                 </td>
                               </tr>
                             );
@@ -383,8 +365,8 @@ const StepTwo = ({ token }) => {
                   {subtance_question_detail && (
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={subtance_question_detail.perPage}
-                      totalItemsCount={subtance_question_detail.total}
+                      itemsCountPerPage={subtance_question_detail?.perPage}
+                      totalItemsCount={subtance_question_detail?.total}
                       pageRangeDisplayed={3}
                       onChange={handlePagination}
                       nextPageText={">"}
@@ -399,7 +381,7 @@ const StepTwo = ({ token }) => {
 
                 <div className="table-total ml-auto">
                   {subtance_question_detail &&
-                    subtance_question_detail.list_questions && (
+                    subtance_question_detail?.list_questions && (
                       <div className="row">
                         <div className="col-4 mr-0 p-0">
                           <select
@@ -426,7 +408,7 @@ const StepTwo = ({ token }) => {
                             className="align-middle mt-3"
                             style={{ color: "#B5B5C3" }}
                           >
-                            Total Data {subtance_question_detail.total}
+                            Total Data {subtance_question_detail?.total}
                           </p>
                         </div>
                       </div>
@@ -435,6 +417,17 @@ const StepTwo = ({ token }) => {
               </div>
               <div className="row mt-7">
                 <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
+                  <button
+                    className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push(
+                        `/subvit/substansi/clone/step-2?id=${router.query.id}`
+                      );
+                    }}
+                  >
+                    Kembali
+                  </button>
                   <div className="float-right ">
                     <div className={styles.foldResponsive}>
                       <button
@@ -452,6 +445,7 @@ const StepTwo = ({ token }) => {
                         Simpan Draft
                       </button>
                     </div>
+
                     <div className={`${styles.normalBtn} row`}>
                       <div className="col-xs-6">
                         <button
@@ -479,6 +473,43 @@ const StepTwo = ({ token }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={modalType}
+        onHide={() => setModalType(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Body>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setModalType(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+          <center>
+            <i
+              className="ri-information-line"
+              style={{ fontSize: "100px", color: "#17a2b8" }}
+            ></i>
+            <h3>Silahkan Pilih Metode Entry</h3>
+            <Button
+              className="btn btn-outline-primary font-weight-bolder px-7 py-3 mt-5 mr-5"
+              style={{ borderRadius: "5px", border: "1px solid" }}
+              onClick={handleImport}
+            >
+              Import
+            </Button>
+            <Button
+              className="btn btn-primary font-weight-bolder px-7 py-3 mt-5 "
+              onClick={handleEntry}
+            >
+              Entry
+            </Button>
+          </center>
+        </Modal.Body>
+      </Modal>
     </PageWrapper>
   );
 };

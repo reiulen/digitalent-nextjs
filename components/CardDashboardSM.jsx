@@ -13,7 +13,7 @@ const CardPage = ({
 }) => {
   return (
     <div
-      className={`col ${background} px-6 py-8 rounded-xl mr-3 mb-7 ml-3`}
+      className={`col-12 ${background} px-6 py-8 rounded-xl mr-3 mb-7 ml-md-3 col-md`}
       style={
         publishedVal !== ""
           ? {
@@ -50,7 +50,7 @@ const CardPage = ({
             {/* {titleValue} */}
           </p>
           <p
-            className={`${styles.hideTitle} font-weight-bold font-size-h2 ml-2 my-auto`}
+            className={`font-weight-bold font-size-h2 ml-2 my-auto`}
             style={{ color: color }}
           >
             {/* {value}  */}

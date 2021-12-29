@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
+import moment from "moment";
 import SimpleReactValidator from "simple-react-validator";
 import DatePicker from "react-datepicker";
 import { useQuill } from "react-quilljs";
@@ -84,9 +85,9 @@ const EditArtikel = ({ token, idUser }) => {
     }
   }, [dispatch, error, success, router, quill]);
 
-  const [id, setId] = useState(artikel.id);
-  const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel);
-  const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
+  const [id, setId] = useState(artikel?.id);
+  const [judul_artikel, setJudulArtikel] = useState(artikel?.judul_artikel);
+  const [isi_artikel, setIsiArtikel] = useState(artikel?.isi_artikel);
   const [gambar, setGambar] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
     "publikasi/images/" +
@@ -103,17 +104,17 @@ const EditArtikel = ({ token, idUser }) => {
     "publikasi/images/" +
     artikel.gambar
   );
-  const [gambarName, setGambarName] = useState(artikel.gambar);
-  const [kategori_id, setKategoriId] = useState(artikel.kategori_id);
-  const [kategori_akademi, setKategoriAkademi] = useState(artikel.kategori_akademi);
-  const [users_id, setUserId] = useState(artikel.users_id);
-  const [tag, setTag] = useState(artikel.tag);
-  const [publish, setPublish] = useState(artikel.publish);
+  const [gambarName, setGambarName] = useState(artikel?.gambar);
+  const [kategori_id, setKategoriId] = useState(artikel?.kategori_id);
+  const [kategori_akademi, setKategoriAkademi] = useState(artikel?.kategori_akademi);
+  const [users_id, setUserId] = useState(artikel?.users_id);
+  const [tag, setTag] = useState(artikel?.tag);
+  const [publish, setPublish] = useState(artikel?.publish);
   const [publishDate, setPublishDate] = useState(
-    artikel.tanggal_publish ? new Date(artikel.tanggal_publish) : null
+    artikel?.tanggal_publish ? new Date(artikel?.tanggal_publish) : null
   );
   const [disablePublishDate, setDisablePublishDate] = useState(
-    artikel.publish === 0 ? true : false
+    artikel?.publish === 0 ? true : false
   );
   const [_method, setMethod] = useState("put");
   const [disableTag, setDisableTag] = useState(false);
@@ -424,6 +425,7 @@ const EditArtikel = ({ token, idUser }) => {
                         <div style={{ width: "100%", height: "300px" }}>
                           <div
                             ref={quillRef}
+                            style={{fontFamily:'Poppins'}}
                           />
                         </div>
                       ) : (
@@ -522,7 +524,7 @@ const EditArtikel = ({ token, idUser }) => {
                         <option value="">Data Kosong</option>
                       ) : (
                         akademi &&
-                        akademi.map(row => {
+                        akademi?.map(row => {
                           return (
                             <option
                               key={row.id}
@@ -570,8 +572,8 @@ const EditArtikel = ({ token, idUser }) => {
                         <option value="">Data Kosong</option>
                       ) : (
                         kategori &&
-                        kategori.kategori &&
-                        kategori.kategori.map(row => {
+                        kategori?.kategori &&
+                        kategori?.kategori?.map(row => {
                           return row.jenis_kategori == "Artikel" ? (
                             <option
                               key={row.id}

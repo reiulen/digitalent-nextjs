@@ -14,8 +14,8 @@ import ButtonStatusPeserta from "../../../../components/global/StatusPesertaButt
 import Image from "next/image";
 export default function CardTemplateOriginal({ data, session }) {
   const router = useRouter();
-  const dateFrom = moment(data.pelatihan_mulai).format("LL");
-  const dateTo = moment(data.pelatihan_selesai).format("LL");
+  const dateFrom = moment(data.pelatihan_mulai).utc().format("LL");
+  const dateTo = moment(data.pelatihan_selesai).utc().format("LL");
   const [label, setLabel] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
@@ -28,7 +28,7 @@ export default function CardTemplateOriginal({ data, session }) {
 
   return (
     <Fragment>
-      <Card className="position-relative">
+      <Card className="position-relative mb-8 rounded-lg">
         <Button
           variant="white"
           disabled={
@@ -38,15 +38,27 @@ export default function CardTemplateOriginal({ data, session }) {
               ? true
               : false
           }
-          className="p-0"
+          className="p-0  rounded-lg"
         >
           <Card.Body
             onClick={() => {
-              if (data.status.includes("tidak")) return false;
+              if (
+                data.status.includes("tidak") ||
+                data.status.includes("tolak")
+              )
+                return false;
               if (data.status.includes("menunggu jadwal tes substansi")) {
-                Cookies.set("id_pelatihan", data.id);
-                Cookies.set("id_tema", data.tema_id);
                 return router.push(`/peserta/test-substansi?id=${data.id}`);
+              }
+              if (data?.trivia && !data?.midtest) {
+                return router.push(
+                  `/peserta/trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                );
+              }
+              if (data?.survei) {
+                return router.push(
+                  `/peserta/survey?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                );
               }
               if (
                 data.status.includes("administrasi") &&
@@ -54,22 +66,16 @@ export default function CardTemplateOriginal({ data, session }) {
               )
                 return router.push(`/peserta/administrasi?id=${data.id}`);
               if (data.status.includes("seleksi akhir")) {
-                Cookies.set("id_pelatihan", data.id);
-                Cookies.set("id_tema", data.tema_id);
                 return router.push(
                   `/peserta/riwayat-pelatihan/${data.name
                     .split(" ")
                     .join("-")
-                    .toLowerCase()}`
+                    .toLowerCase()}?no=${data.id}`
                 );
               }
               if (data.status.includes("tes substansi")) {
-                Cookies.set("id_pelatihan", data.id);
-                Cookies.set("id_tema", data.tema_id);
                 return router.push(`/peserta/test-substansi?id=${data.id}`);
               } else {
-                Cookies.set("id_pelatihan", data.id);
-                Cookies.set("id_tema", data.tema_id);
                 return router.push(
                   `/peserta/riwayat-pelatihan/${data.name
                     .split(" ")
@@ -83,7 +89,11 @@ export default function CardTemplateOriginal({ data, session }) {
               <Col lg={3}>
                 <img
                   className="rounded-xl img-fluid d-block w-100"
-                  src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
+                  src={
+                    !data.gambar
+                      ? "/assets/media/default-card.png"
+                      : `${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`
+                  }
                   alt="test1"
                   style={{ height: "200px", objectFit: "cover" }}
                 />
@@ -146,7 +156,7 @@ export default function CardTemplateOriginal({ data, session }) {
                         style={{ borderRadius: "50px" }}
                         className={`label label-inline label-light-${
                           data.midtest ? "primary" : label
-                        } font-weight-bolder p-0 px-4 py-4 text-capitalize mr-5`}
+                        } font-weight-bolder p-4 text-capitalize mr-5`}
                       >
                         Kerjakan Mid Test
                       </p>
@@ -154,10 +164,14 @@ export default function CardTemplateOriginal({ data, session }) {
                       ""
                     )}
                     <p
-                      style={{ borderRadius: "50px" }}
-                      className={`label label-inline label-light-${
+                      style={{
+                        borderRadius: "50px",
+                        paddingRight: "12px",
+                        paddingLeft: "12px",
+                      }}
+                      className={`label p-4 label-inline label-light-${
                         data.survei ? "primary" : label
-                      } font-weight-bolder p-0 px-4 py-4 text-capitalize`}
+                      } font-weight-bolder text-capitalize`}
                     >
                       {data.lpj
                         ? "Isi LPJ"
@@ -177,7 +191,11 @@ export default function CardTemplateOriginal({ data, session }) {
                         : data.status}
                     </p>
                   </Col>
-                  <Col lg={12} className="order-5">
+                  <Col
+                    lg={12}
+                    className="order-5"
+                    style={{ paddingTop: "24px", paddingBottom: "8px" }}
+                  >
                     <div className="d-flex align-items-center align-middle text-left">
                       <i className="ri-time-line"></i>
                       <span className={` pl-2`}>
@@ -185,10 +203,7 @@ export default function CardTemplateOriginal({ data, session }) {
                       </span>
                     </div>
                   </Col>
-                  <Col
-                    lg={12}
-                    className="my-auto order-5 pb-40 pb-lg-30 pb-lg-20"
-                  >
+                  <Col lg={12} className="my-auto order-5 pb-40 pb-md-20 ">
                     <div className="d-flex align-items-center align-middle ">
                       <i className="ri-map-pin-line"></i>
                       <span

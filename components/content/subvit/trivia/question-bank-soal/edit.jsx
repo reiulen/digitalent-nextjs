@@ -21,7 +21,7 @@ import PollingComponent from "./edit-soal/polling-component";
 import CheckboxComponent from "./edit-soal/checkbox-component";
 import BlankComponent from "./edit-soal/blank-component";
 
-const EditSoalTrivia = ({ token }) => {
+const EditSoalTrivia = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const importSwitch = () => import("bootstrap-switch-button-react");
@@ -39,25 +39,27 @@ const EditSoalTrivia = ({ token }) => {
   );
   let { id } = router.query;
 
-  const [methodAdd, setMethodAdd] = useState(trivia_question_detail.type);
+  const [methodAdd, setMethodAdd] = useState(trivia_question_detail?.type);
 
-  const [question, setQuestion] = useState(trivia_question_detail.question);
+  const [question, setQuestion] = useState(trivia_question_detail?.question);
   const [question_image, setQuestionImage] = useState(
-    trivia_question_detail.question_image
+    trivia_question_detail?.question_image
   );
   const [question_image_preview, setQuestionImagePreview] = useState(
     process.env.END_POINT_API_IMAGE_SUBVIT +
-      trivia_question_detail.question_image_preview
+      trivia_question_detail?.question_image_preview
   );
   const [question_image_name, setQuestionImageName] = useState("Pilih Gambar");
 
   const [answer, setAnswer] = useState(
-    JSON.parse(trivia_question_detail.answer)
+    JSON.parse(trivia_question_detail?.answer)
   );
 
-  const [duration, setDuration] = useState(trivia_question_detail.duration);
-  const [answerKey, setAnswerKey] = useState(trivia_question_detail.answer_key);
-  const [status, setStatus] = useState(trivia_question_detail.status);
+  const [duration, setDuration] = useState(trivia_question_detail?.duration);
+  const [answerKey, setAnswerKey] = useState(
+    trivia_question_detail?.answer_key
+  );
+  const [status, setStatus] = useState(trivia_question_detail?.status);
 
   useEffect(() => {
     if (success) {
@@ -65,7 +67,7 @@ const EditSoalTrivia = ({ token }) => {
         type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET,
       });
       router.push({
-        pathname: `/subvit/trivia`,
+        pathname: `/subvit/trivia/${localStorage.getItem("id_trivia")}`,
         query: { success: true },
       });
     }
@@ -144,7 +146,9 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateTriviaQuestionDetail(id, data, token));
+          dispatch(
+            updateTriviaQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       case "checkbox":
@@ -160,7 +164,9 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateTriviaQuestionDetail(id, data, token));
+          dispatch(
+            updateTriviaQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       case "fill_in_the_blank":
@@ -176,7 +182,9 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateTriviaQuestionDetail(id, data, token));
+          dispatch(
+            updateTriviaQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       default:
@@ -266,7 +274,9 @@ const EditSoalTrivia = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
-              <h2 className="card-title h2 text-dark">Soal 1</h2>
+              <h2 className="card-title h2 text-dark">
+                Soal {parseInt(router.query.no) + 1}
+              </h2>
             </div>
 
             <div className="card-body pt-0">

@@ -95,6 +95,12 @@
 
 .deskripsiTambah{
   margin-bottom: 70px;
+  position: relative;
+}
+
+.validQuill{
+  position: absolute;
+  top: 345px;
 }
 
 .btnKembali{
@@ -113,6 +119,9 @@
 
 /* HOME PAGE GALERI */
 
+.containerGaleri{
+  padding: 0 24px;
+}
 .contentGaleri{
   margin-left: -4px;
 }
@@ -143,6 +152,11 @@
   top: 4px;
   right: 8px;
 }
+.kategoriGaleri{
+  cursor: pointer;
+  height: 40px;
+  min-width: 236px;
+}
 
 @media only screen and (max-width: 1024px) {
   .modal-body {
@@ -160,6 +174,10 @@
   }
   .deskripsiTambah{
     margin-bottom: 90px;
+  }
+  .validQuill{
+    position: absolute;
+    top: 370px;
   }
 }
 
@@ -186,6 +204,10 @@
   }
   .btnTambah {
     font-size: 12px;
+  }
+  .validQuill{
+    position: absolute;
+    top: 370px;
   }
 
   /* Modal Galeri HOMEPAGE */
@@ -261,11 +283,24 @@
   .deskripsiTambah{
     margin-bottom: 140px;
   }
+  .validQuill{
+    position: absolute;
+    top: 415px;
+  }
 
   /* Home Page Galeri */
 
   .closeModal{
     visibility: visible;
+  }
+  .padModalGaleri{
+    padding: 0 20px;
+    /* margin-left: 50px; */
+  }
+  .kategoriGaleri{
+    text-align: center;
+    min-width: 160px;
+    width: 85px;
   }
 }
 
@@ -282,6 +317,9 @@
   .deskripsiTambah{
     font-size: 8.5px;
     margin-bottom: 190px;
+  }
+  .validFaq{
+    font-size: 9px;
   }
   .tagStyle{
     font-size: 8.5px;
@@ -319,6 +357,15 @@
     padding-left: 13px;
     padding-right: 13px;
   }
+  .kategoriGaleri{
+    text-align: center;
+    min-width: 105px;
+    width: 85px;
+  }
+  .validQuill{
+    position: absolute;
+    top: 465px;
+  }
 }
 
 @media only screen and (max-width: 280px){
@@ -335,6 +382,9 @@
     font-size: 6.7px;
     margin-bottom: 210px;
   }
+  .validFaq{
+    font-size: 9px;
+  }
   .btnKembali{
     padding-top: 5px;
     padding-bottom: 5px;
@@ -346,5 +396,14 @@
     padding-bottom: 5px;
     padding-left: 13px;
     padding-right: 13px;
+  }
+  .kategoriGaleri{
+    font-size: 9px;
+    min-width: 70px;
+    width: 55px;
+  }
+  .validQuill{
+    position: absolute;
+    top: 490px;
   }
 }

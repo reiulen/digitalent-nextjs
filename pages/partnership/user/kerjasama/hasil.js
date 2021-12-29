@@ -1,10 +1,12 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
+import { middlewareAuthMitraSession } from "../../../../utils/middleware/authMiddleware";
+
 const Hasil = dynamic(
   () => import("../../../../components/content/partnership/user/hasil"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function PembahasanPage(props) {
@@ -22,14 +24,24 @@ export const getServerSideProps = wrapper.getServerSideProps(
   () =>
     async ({ req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthMitraSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/mitra",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+      
+      // if (!session) {
+      //   return {
+      //     redirect: {
+      //       destination: "http://dts-dev.majapahit.id/login/mitra",
+      //       permanent: false,
+      //     },
+      //   };
+      // }
 
       return {
         props: { session, title: "Hasil kerjasama - Partnership" },

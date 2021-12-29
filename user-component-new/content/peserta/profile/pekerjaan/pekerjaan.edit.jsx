@@ -11,6 +11,7 @@ import {
   clearErrors,
   getDataAsalSekolah,
   getDataRefPekerjaan,
+  updateWizzardStatus,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 import router from "next/router";
@@ -36,9 +37,15 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     useSelector((state) => state.drowpdownStatusPekerjaan);
   const {
     error: errorUpdateData,
-    loading,
-    success,
+    loading: loadingUpdateData,
+    success: successUpdateData,
   } = useSelector((state) => state.updatePekerjaan);
+
+  const {
+		error: errorStatusWizzard,
+		loading: loadingStatusWizzard,
+		success: successStatusWizard,
+	} = useSelector((state) => state.updateStatusWizzard);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -60,7 +67,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     (pekerjaan && pekerjaan.perusahaan) || ""
   );
   const [penghasilan, setPenghasilan] = useState(
-    (pekerjaan && pekerjaan.penghasilan) || "1"
+    (pekerjaan && pekerjaan.penghasilan) || "0"
   );
   const [sekolah, setSekolah] = useState(
     (pekerjaan && pekerjaan.sekolah) || ""
@@ -92,13 +99,17 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   }
 
   useEffect(() => {
-    dispatch(getDataAsalSekolah(token, 1, 100, sekolah));
     if (errorUpdateData) {
       SweatAlert("Gagal", errorUpdateData, "error");
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops...",
+      //   text: "Isi data dengan benar !",
+      // });
       dispatch(clearErrors());
     }
 
-    if (success) {
+    if (successUpdateData) {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
       if (wizzard) {
         router.push("/peserta");
@@ -108,7 +119,21 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
+  }, [errorUpdateData, successUpdateData, dispatch, funcViewEdit, token]);
+
+  const stepBack = async () => {
+    let status = 3
+
+    const data = await dispatch (updateWizzardStatus(status, token))
+
+    if (data?.status === true){
+      router.push("/peserta/wizzard/pendidikan");
+
+    } else {
+      SweatAlert("Gagal", errorStatusWizzard, "error");
+			dispatch(clearErrors());
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -118,6 +143,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
       simpleValidator.current.fields["pekerjaan"] = true; //pekerjaan
       simpleValidator.current.fields["penghasilan"] = true; //pekerjaan
       simpleValidator.current.fields["perusahaan"] = true; //pekerjaan
+      simpleValidator.current.fields["sekolah lainnya"] = true;
     }
     if (statusPekerjaan.label == "Pelajar/Mahasiswa") {
       simpleValidator.current.fields["pekerjaan"] = true; //pekerjaan
@@ -127,6 +153,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     if (statusPekerjaan.label == "Bekerja") {
       simpleValidator.current.fields["tahun masuk"] = true; //pelajar
       simpleValidator.current.fields["sekolah"] = true; //pelajar
+      simpleValidator.current.fields["sekolah lainnya"] = true;
     }
     if (simpleValidator.current.allValid()) {
       let data = {};
@@ -138,9 +165,10 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
           status_pekerjaan: statusPekerjaan.label || statusPekerjaan,
           pekerjaan: "-",
           perusahaan: "-",
-          penghasilan: "1",
+          penghasilan: "0",
           sekolah: "-",
           tahun_masuk: parseInt(0),
+          wizard: 5,
         };
       } else if (
         statusPekerjaan === "Bekerja" ||
@@ -153,19 +181,33 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
           penghasilan: penghasilan.split(".").join(""),
           sekolah: "-",
           tahun_masuk: 0,
+          wizard: 5,
         };
       } else if (
         statusPekerjaan === "Pelajar/Mahasiswa" ||
         statusPekerjaan.label === "Pelajar/Mahasiswa"
       ) {
-        data = {
-          status_pekerjaan: statusPekerjaan.label || statusPekerjaan,
-          pekerjaan: "-",
-          perusahaan: "-",
-          penghasilan: "1",
-          sekolah,
-          tahun_masuk: parseInt(tahunMasuk),
-        };
+        if (sekolah.includes("Lainnya") && sekolahLainnya) {
+          data = {
+            status_pekerjaan: statusPekerjaan.label || statusPekerjaan,
+            pekerjaan: "-",
+            perusahaan: "-",
+            penghasilan: "0",
+            sekolah: sekolahLainnya,
+            tahun_masuk: parseInt(tahunMasuk),
+            wizard: 5,
+          };
+        } else {
+          data = {
+            status_pekerjaan: statusPekerjaan.label || statusPekerjaan,
+            pekerjaan: "-",
+            perusahaan: "-",
+            penghasilan: "0",
+            sekolah,
+            tahun_masuk: parseInt(tahunMasuk),
+            wizard: 5,
+          };
+        }
       }
       window.scrollTo(0, 0);
       dispatch(updateProfilePekerjaan(data, token));
@@ -211,6 +253,40 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   }, [tahunMasuk, year]);
 
+  const [lainnya, setLainnya] = useState(false);
+  const [sekolahLainnya, setSekolahLainnya] = useState("");
+
+  useEffect(() => {
+    if (sekolah.includes("Lainnya")) {
+      setLainnya(true);
+    } else {
+      setSekolahLainnya("");
+      setLainnya(false);
+    }
+  }, [sekolah]);
+
+  const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
+  const [inputSekolah, setInputSekolah] = useState("");
+
+  useEffect(() => {
+    setOptionsAsalSekolah((prev) => {
+      let arr = [];
+      arr.push({ value: "", label: "Nama Institusi Lainnya.." });
+      dataAsalSekolah.map((item) => {
+        arr.push({ label: item.label, value: item.id });
+      });
+      return arr;
+    });
+  }, [dataAsalSekolah]);
+
+  useEffect(() => {
+    if (inputSekolah.length > 3) {
+      setTimeout(() => {
+        dispatch(getDataAsalSekolah(token, inputSekolah));
+      }, 1000);
+    }
+  }, [inputSekolah]);
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -239,7 +315,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
             />
             {simpleValidator.current.message(
               "status pekerjaan",
-              statusPekerjaan,
+              statusPekerjaan && statusPekerjaan?.label,
               "required",
               {
                 className: "text-danger",
@@ -341,22 +417,26 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Sekolah / Perguruan Tinggi</Form.Label>
-                    <input
-                      list="data"
-                      type="text" /*  */
-                      className="form-control"
-                      value={sekolah}
+                    <Select
+                      // list="data"
+                      placeholder={"Pilih Sekolah"}
+                      options={optionsAsalSekolah}
+                      // className="form-control"
+                      onInputChange={(e) => {
+                        setInputSekolah(e);
+                      }}
+                      value={{ label: sekolah }}
                       onChange={(e) => {
-                        setSekolah(e.target.value);
+                        setSekolah(e.label);
                       }}
                     />
-                    <datalist id="data">
+                    {/* <datalist id="data">
                       {dataAsalSekolah === undefined
                         ? "kosong"
                         : dataAsalSekolah.map((item, index) => {
                             return <option value={item.label} key={index} />;
                           })}
-                    </datalist>
+                    </datalist> */}
                     {simpleValidator.current.message(
                       "sekolah",
                       sekolah,
@@ -370,6 +450,34 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                     )}
                   </Form.Group>
                 </Col>
+                {lainnya && (
+                  <Col md={6}>
+                    <Form.Group className="mb-3" controlId="formGridAddress1">
+                      <Form.Label>Nama Institusi Pendidikan</Form.Label>
+                      <Form.Control
+                        placeholder="Silahkan Masukkan Nama Institusi"
+                        onChange={(e) => {
+                          setSekolahLainnya(e.target.value);
+                        }}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("tahun masuk")
+                        }
+                        type="text"
+                      />
+                      {simpleValidator.current.message(
+                        "sekolah lainnya",
+                        sekolahLainnya,
+                        statusPekerjaan === "Pelajar/Mahasiswa" ||
+                          statusPekerjaan.label === "Pelajar/Mahasiswa"
+                          ? "required"
+                          : "",
+                        {
+                          className: "text-danger",
+                        }
+                      )}
+                    </Form.Group>
+                  </Col>
+                )}
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Tahun Masuk</Form.Label>
@@ -429,8 +537,17 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
         ) : (
           <div className="button-aksi mt-5 float-right">
             <Button
+							className={`${style.button_profile_batal} rounded-xl mr-2`}
+							type="button"
+							onClick={() => stepBack()}
+							disabled={loadingStatusWizzard ? true : false}
+						>
+							Kembali
+						</Button>
+            <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
+              disabled = {loadingUpdateData ? true : false}
             >
               Simpan
             </Button>

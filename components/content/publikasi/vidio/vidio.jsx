@@ -48,12 +48,14 @@ const Vidio = ({ token }) => {
     const [idVideo, setIdVideo] = useState(null)
     const [disableEndDate, setDisableEndDate] = useState(true)
     const [judul_video, setJudulVideo] = useState(null)
+    const [total_views, setTotalViews] = useState(null)
     const [tanggal_publish, setTanggalPublish] = useState(null)
     const [kategori, setKategori] = useState(null)
     const [isiVideo, setIsiVideo] = useState(null)
     const [tag, setTag] = useState([])
     const [show, setShow] = useState(false)
     const [showDesc, setShowDesc] = useState(false)
+    const [showModal, setShowModal] = useState(false);
     const descToTrim = 100;
 
     let loading = false
@@ -234,27 +236,31 @@ const Vidio = ({ token }) => {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
+                setShowModal(false)
 
             } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 )
-
+                setShowModal(false)
 
             } else if (limit !== null && search === null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}`
                 )
+                setShowModal(false)
 
             } else if (limit !== null && search !== null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
                 )
+                setShowModal(false)
 
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
                 );
+                setShowModal(false)
             }
         }
     };
@@ -318,12 +324,13 @@ const Vidio = ({ token }) => {
 
     }
 
-    const handlePreview = (url, id, judul_video, tanggal_publish, kategori, isi_video, tag) => {
+    const handlePreview = (url, id, judul_video, tanggal_publish, total_views, kategori, isi_video, tag) => {
         setIdVideo(id)
         setVideoPlaying(true)
         setUrlVideo(url)
         setJudulVideo(judul_video)
         setTanggalPublish(tanggal_publish)
+        setTotalViews(total_views)
         setKategori(kategori)
         setIsiVideo(isi_video)
         setTag(tag)
@@ -351,6 +358,7 @@ const Vidio = ({ token }) => {
         setPublishValue(null)
         setSearch("")
         setLimit(null)
+        setShowModal(false)
         router.replace('/publikasi/video', undefined, { shallow: false })
     }
 
@@ -417,7 +425,7 @@ const Vidio = ({ token }) => {
                         background='bg-light-warning'
                         icon="new/mail-white.svg"
                         color='#ffffff'
-                        value='0'
+                        value={video.total_author === "" || video.total_author === undefined ? 0 : video.total_author}
                         titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
@@ -452,8 +460,7 @@ const Vidio = ({ token }) => {
                     <div className="card-header row border-0">
                         <h3 className={`${styles2.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Video</h3>
                         {
-                            role_permission.permissions === "publikasi.video.view" && role_permission.roles !== "Super Admin" ? null
-                                :
+                            role_permission?.permissions.includes("publikasi.video.manage") || role_permission?.roles.includes("Super Admin") ?
                                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                                     <Link href='/publikasi/video/tambah-video'>
                                         <a className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
@@ -462,11 +469,11 @@ const Vidio = ({ token }) => {
                                         </a>
                                     </Link>
                                 </div>
+                                : null
                         }
                     </div>
 
                     <div className="card-body pt-0">
-
                         <div className="table-filter">
                             <div className="row align-items-center">
                                 <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -474,24 +481,30 @@ const Vidio = ({ token }) => {
                                         className="position-relative overflow-hidden mt-3"
                                         style={{ maxWidth: "330px" }}
                                     >
-                                        <i className="ri-search-line left-center-absolute ml-2"></i>
-                                        <input
-                                            type="text"
-                                            className={`${styles2.cari} form-control pl-10`}
-                                            placeholder="Ketik disini untuk Pencarian..."
-                                            value={search}
-                                            onChange={(e) => setSearch(e.target.value)}
-                                        />
-                                        <button
-                                            className={`${styles2.fontCari} btn bg-blue-primary text-white right-center-absolute`}
-                                            style={{
-                                                borderTopLeftRadius: "0",
-                                                borderBottomLeftRadius: "0",
-                                            }}
-                                            onClick={handleSearch}
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault();
+                                            handleSearch
+                                        }}
                                         >
-                                            Cari
-                                        </button>
+                                            <i className="ri-search-line left-center-absolute ml-2"></i>
+                                            <input
+                                                type="text"
+                                                className={`${styles2.cari} form-control pl-10`}
+                                                placeholder="Ketik disini untuk Pencarian..."
+                                                value={search}
+                                                onChange={(e) => setSearch(e.target.value)}
+                                            />
+                                            <button
+                                                className={`${styles2.fontCari} btn bg-blue-primary text-white right-center-absolute`}
+                                                style={{
+                                                    borderTopLeftRadius: "0",
+                                                    borderBottomLeftRadius: "0",
+                                                }}
+                                                onClick={handleSearch}
+                                            >
+                                                Cari
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div className={`${styles2.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
@@ -499,8 +512,7 @@ const Vidio = ({ token }) => {
                                         {/* sortir by modal */}
                                         <button
                                             className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
-                                            data-toggle="modal"
-                                            data-target="#exampleModalCenter"
+                                            onClick={() => setShowModal(true)}
                                             style={{ color: "#464646" }}
                                         >
                                             <div className={`${styles2.filter} d-flex align-items-center`}>
@@ -509,130 +521,6 @@ const Vidio = ({ token }) => {
                                             </div>
                                             <IconArrow fill="#E4E6EF" width="11" height="11" />
                                         </button>
-
-                                        {/* modal */}
-                                        <form
-                                            // id="kt_docs_formvalidation_text"
-                                            className="form text-left"
-                                        // action="#"
-                                        // autoComplete="off"
-                                        // onSubmit={handleSubmitSearchMany}
-                                        >
-                                            <div
-                                                className="modal fade"
-                                                id="exampleModalCenter"
-                                                tabIndex="-1"
-                                                role="dialog"
-                                                aria-labelledby="exampleModalCenterTitle"
-                                                aria-hidden="true"
-                                            >
-                                                <div
-                                                    className="modal-dialog modal-dialog-centered"
-                                                    role="document"
-                                                >
-                                                    <div className="modal-content">
-                                                        <div className="modal-header">
-                                                            <h5
-                                                                className="modal-title font-weight-bold"
-                                                                id="exampleModalLongTitle"
-                                                            >
-                                                                Filter
-                                                            </h5>
-                                                            <button
-                                                                type="button"
-                                                                className="close"
-                                                                data-dismiss="modal"
-                                                                aria-label="Close"
-                                                                onClick={() => resetValueSort()}
-                                                            >
-                                                                <IconClose />
-                                                            </button>
-                                                        </div>
-
-                                                        <div
-                                                            className="modal-body text-left"
-                                                            style={{ height: "200px" }}
-                                                        >
-                                                            <div className="mb-10 col-12">
-                                                                <label className="required fw-bold fs-6 mb-2">
-                                                                    Tanggal
-                                                                </label>
-
-                                                                <div>
-                                                                    <DatePicker
-                                                                        className="form-search-date form-control-sm form-control"
-                                                                        selected={startDate}
-                                                                        onChange={(date) => handleStartDate(date)}
-                                                                        selectsStart
-                                                                        startDate={startDate}
-                                                                        endDate={endDate}
-                                                                        dateFormat="dd/MM/yyyy"
-                                                                        placeholderText="Silahkan Isi Tanggal Dari"
-                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                    // minDate={moment().toDate()}
-                                                                    // minDate={addDays(new Date(), 20)}
-                                                                    />
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="mb-10 col-12">
-                                                                <label className="required fw-bold fs-6 mb-2">
-                                                                    Tanggal
-                                                                </label>
-
-                                                                <div>
-                                                                    <DatePicker
-                                                                        className="form-search-date form-control-sm form-control"
-                                                                        selected={endDate}
-                                                                        onChange={(date) => setEndDate(date)}
-                                                                        selectsEnd
-                                                                        startDate={startDate}
-                                                                        endDate={endDate}
-                                                                        dateFormat="dd/MM/yyyy"
-                                                                        // minDate={moment().toDate()}
-                                                                        minDate={startDate}
-                                                                        maxDate={addDays(startDate, 20)}
-                                                                        placeholderText="Silahkan Isi Tanggal Sampai"
-                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                        disabled={disableEndDate === true || disableEndDate === null}
-                                                                    // minDate={addDays(new Date(), 20)}
-                                                                    />
-                                                                </div>
-                                                                {
-                                                                    disableEndDate === true || disableEndDate === null ?
-                                                                        <small className="text-muted">
-                                                                            Mohon isi Tanggal Dari terlebih dahulu
-                                                                        </small>
-                                                                        :
-                                                                        null
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                        <div className="modal-footer">
-                                                            <div className="d-flex justify-content-end align-items-center">
-                                                                <button
-                                                                    className="btn btn-white-ghost-rounded-full"
-                                                                    type="button"
-                                                                    onClick={() => resetValueSort()}
-                                                                >
-                                                                    Reset
-                                                                </button>
-                                                                <button
-                                                                    className="btn btn-primary-rounded-full ml-4"
-                                                                    type="button"
-                                                                    data-dismiss="modal"
-                                                                    onClick={() => handleSearchDate()}
-                                                                >
-                                                                    Terapkan
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        {/* end modal */}
-
                                     </div>
                                 </div>
                             </div>
@@ -656,17 +544,17 @@ const Vidio = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions === "publikasi.video.view" && role_permission.roles !== "Super Admin" ? null
-                                                        :
+                                                    role_permission?.permissions.includes("publikasi.video.manage") || role_permission?.roles.includes("Super Admin") ?
                                                         <th style={{ width: '9.7vw' }}>Aksi</th>
+                                                        : null
                                                 }
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {
-                                                !video || video && video.video.length === 0 ?
+                                                !video || video && video?.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={12}>Data Kosong</td> :
-                                                    video && video.video.map((row, i) => {
+                                                    video && video?.video?.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -719,12 +607,10 @@ const Vidio = ({ token }) => {
                                                             </td>
                                                             <td className='align-middle'>{row.role[0].name}</td>
                                                             {
-                                                                role_permission.permissions === "publikasi.video.view" && role_permission.roles !== "Super Admin" ? null
-                                                                    :
+                                                                role_permission?.permissions.includes("publikasi.video.manage") || role_permission?.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex">
-
                                                                         <button
-                                                                            onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori, row.isi_video, row.tag)}
+                                                                            onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.total_views, row.kategori, row.isi_video, row.tag)}
                                                                             className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
                                                                             data-target="#videoPlayerModal"
                                                                             data-toggle="modal"
@@ -757,6 +643,7 @@ const Vidio = ({ token }) => {
                                                                         </button>
 
                                                                     </td>
+                                                                    : null
                                                             }
                                                         </tr>
                                                     })
@@ -767,13 +654,13 @@ const Vidio = ({ token }) => {
                             </div>
 
                             <div className="row">
-                                {video && video.perPage < video.total &&
+                                {video && video?.perPage < video?.total &&
                                     <>
                                         <div className={`${stylesPag.pagination} table-pagination`}>
                                             <Pagination
                                                 activePage={page}
-                                                itemsCountPerPage={video.perPage}
-                                                totalItemsCount={video.total}
+                                                itemsCountPerPage={video?.perPage}
+                                                totalItemsCount={video?.total}
                                                 pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={'>'}
@@ -805,13 +692,106 @@ const Vidio = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {video.total} List Data</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {video?.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''
                                 }
                             </div>
                         </div>
+
+                        <Modal
+                            show={showModal}
+                            onHide={() => setShowModal(false)}
+                            aria-labelledby="contained-modal-title-vcenter"
+                            centered
+                        >
+                            <Modal.Header>
+                                <Modal.Title>Filter</Modal.Title>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    onClick={() => setShowModal(false)}
+                                >
+                                    <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+                                </button>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div className="row">
+                                    <div
+                                        className="modal-body text-left"
+                                        style={{ height: "200px" }}
+                                    >
+                                        <div className="mb-10 col-12">
+                                            <label className="required fw-bold fs-6 mb-2">
+                                                Tanggal
+                                            </label>
+
+                                            <div>
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={startDate}
+                                                    onChange={(date) => handleStartDate(date)}
+                                                    selectsStart
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    placeholderText="Silahkan Isi Tanggal Dari"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-10 col-12">
+                                            <label className="required fw-bold fs-6 mb-2">
+                                                Tanggal
+                                            </label>
+
+                                            <div>
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={endDate}
+                                                    onChange={(date) => setEndDate(date)}
+                                                    selectsEnd
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    minDate={startDate}
+                                                    maxDate={addDays(startDate, 20)}
+                                                    placeholderText="Silahkan Isi Tanggal Sampai"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    disabled={disableEndDate === true || disableEndDate === null}
+                                                />
+                                            </div>
+                                            {
+                                                disableEndDate === true || disableEndDate === null ?
+                                                    <small className="text-muted">
+                                                        Mohon isi Tanggal Dari terlebih dahulu
+                                                    </small>
+                                                    :
+                                                    null
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <button
+                                    className="btn btn-white-ghost-rounded-full"
+                                    type="button"
+                                    onClick={() => resetValueSort()}
+                                >
+                                    Reset
+                                </button>
+                                <button
+                                    className="btn btn-primary-rounded-full"
+                                    type="button"
+                                    onClick={() => handleSearchDate()}
+                                >
+                                    Terapkan
+                                </button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                 </div>
             </div>
@@ -869,6 +849,33 @@ const Vidio = ({ token }) => {
                                         :
                                         <div className="overflow-auto">
                                             {isiVideo}
+                                            {/* <div className="col-12 col-md-5 col-lg-4 my-2"> */}
+                                            <div className="d-flex flex-wrap flex-row mt-2">
+                                                {
+                                                    tag === null ?
+                                                        null
+                                                        : tag.map((el, i) => {
+                                                            return (
+                                                                <div
+                                                                    style={{
+                                                                        background: "#fff",
+                                                                        border: "1px solid #d7e1ea",
+                                                                    }}
+                                                                    className="mr-2 px-3 py-1 mb-2 rounded"
+                                                                    key={i}
+                                                                >
+                                                                    <div
+                                                                        className="text-center"
+                                                                        style={{ fontSize: "10px" }}
+                                                                    >
+                                                                        #{el.toUpperCase()}
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        })
+                                                }
+                                            </div>
+                                            {/* </div> */}
 
                                             <div
                                                 className="mt-1 mb-3 text-primary"
@@ -884,40 +891,13 @@ const Vidio = ({ token }) => {
                         </div>
 
                         <div className="mt-10 mb-5 row justify-content-between">
-                            <div className="col-12 col-md-4 col-lg-4">
+                            <div className="col-12 col-md-4 col-lg-4 text-muted">
                                 {
                                     tanggal_publish !== null ?
-                                        `${moment(tanggal_publish).format("MMMM DD")} | 120 Ditonton`
+                                        `${moment(tanggal_publish).format("MMMM DD")} | ${total_views} Ditonton`
                                         :
                                         ""
                                 }
-                            </div>
-                            <div className="col-12 col-md-5 col-lg-4 my-2">
-                                <div className="d-flex flex-wrap flex-row">
-                                    {
-                                        tag === null ?
-                                            null
-                                            : tag.map((el, i) => {
-                                                return (
-                                                    <div
-                                                        style={{
-                                                            background: "#fff",
-                                                            border: "1px solid #d7e1ea",
-                                                        }}
-                                                        className="mr-2 px-3 py-1 mb-2 rounded"
-                                                        key={i}
-                                                    >
-                                                        <div
-                                                            className="text-center"
-                                                            style={{ fontSize: "10px" }}
-                                                        >
-                                                            #{el.toUpperCase()}
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })
-                                    }
-                                </div>
                             </div>
                             <div className="col-12 col-md-3 col-lg-4 text-sm-right text-md-right text-lg-right">
                                 {kategori === null ? null : (

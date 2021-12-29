@@ -6,7 +6,7 @@ import { getDetailArtikel } from "../../../../redux/actions/publikasi/artikel.ac
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
 import { getAllRolePermission } from "../../../../redux/actions/publikasi/role-permissions.action"
@@ -15,7 +15,7 @@ const EditArtikel = dynamic(
   () => import("../../../../components/content/publikasi/artikel/edit"),
   {
     loading: function loadingNow() {
-      return <LoadingPage />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
@@ -46,12 +46,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       await store.dispatch(
-        getDetailArtikel(query.id, session.user.user.data.token)
+        getDetailArtikel(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
-      await store.dispatch(getAllKategori(session.user.user.data.token));
-      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
-      await store.dispatch(getAllAkademi(session.user.user.data.token));
-      await store.dispatch(getAllRolePermission(session.user.user.data.token));
+      await store.dispatch(getAllKategori(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getSettingPublikasi(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getAllAkademi(session.user.user.data.token, req.cookies.token_permission));
+      await store.dispatch(getAllRolePermission(session.user.user.data.token, req.cookies.token_permission));
 
       return {
         props: { session, title: "Ubah Artikel - Publikasi" },

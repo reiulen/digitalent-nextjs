@@ -79,11 +79,30 @@ const DetailAkademi = ({ session }) => {
   };
 
   useEffect(() => {
-    handleHoverCard();
+    dispatch(
+      getAllPelatihanByAkademi(
+        id,
+        tema_id,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        session?.token
+      )
+    );
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (pelatihan) {
+      handleHoverCard();
+    }
     if (akademi) {
       handleTextTrim();
     }
-  }, [akademi]);
+  }, [akademi, pelatihan]);
 
   const handleTextTrim = () => {
     if (akademi) {
@@ -339,7 +358,7 @@ const DetailAkademi = ({ session }) => {
                       )
                     ) : (
                       <div
-                        dangerouslySetInnerHTML={{ __html: akademi.deskripsi }}
+                        dangerouslySetInnerHTML={{ __html: akademi?.deskripsi }}
                       ></div>
                     )}
                   </Card.Text>
@@ -472,26 +491,26 @@ const DetailAkademi = ({ session }) => {
                               key={i}
                             >
                               <Card className="h-100 shadow-sm">
-                                {el.status !== "Dibuka" ? (
+                                {/* {el.status !== "Dibuka" ? (
                                   <CardPelatihanClose row={el} />
-                                ) : (
-                                  <CardPelatihanOpen
-                                    funcMouseEnter={(index) =>
-                                      handleMouseEnter(index)
-                                    }
-                                    funcMouseLeave={(index) =>
-                                      handleMouseLeave(index)
-                                    }
-                                    funcQuickView={(index) =>
-                                      handleQuickView(index)
-                                    }
-                                    session={session}
-                                    show={show}
-                                    row={el}
-                                    i={i}
-                                    akademi={akademi}
-                                  />
-                                )}
+                                ) : ( */}
+                                <CardPelatihanOpen
+                                  funcMouseEnter={(index) =>
+                                    handleMouseEnter(index)
+                                  }
+                                  funcMouseLeave={(index) =>
+                                    handleMouseLeave(index)
+                                  }
+                                  funcQuickView={(index) =>
+                                    handleQuickView(index)
+                                  }
+                                  session={session}
+                                  show={show}
+                                  row={el}
+                                  i={i}
+                                  akademi={akademi}
+                                />
+                                {/* )} */}
                               </Card>
                             </Col>
                           </>

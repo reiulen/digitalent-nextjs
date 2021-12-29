@@ -226,6 +226,15 @@ const Berita = () => {
                 setShowArrow (false)
             }
         }
+
+        if (kategori){
+            if (kategori.length > 3){
+                setShowArrow (true)
+        
+            } else {
+                setShowArrow (false)
+            }
+        }
        
     }
 
@@ -244,6 +253,41 @@ const Berita = () => {
 
             setOptionAkademi(result)
         }
+    }
+
+    const handleTotalReader = (num) => {
+        let result = ""
+        let temp = ""
+
+        if (num >= 1000 && num < 10000){
+            temp += num / 1000
+            result += `${temp[0]},${temp[2]} K`
+
+        } else if (num >= 10000 && num < 100000){
+            temp += num / 1000
+            result += `${temp[0]}${temp[1]},${temp[2]} K`
+
+        } else if (num >= 100000 && num < 1000000){
+            temp += num / 1000
+            result += `${temp[0]}${temp[1]}${temp[2]},${temp[3]} K`
+        
+        } else if (num >= 1000000 && num < 10000000){
+            temp += num / 1000000
+            result += `${temp[0]},${temp[2]} M`
+
+        } else if (num >= 10000000 && num < 100000000){
+            temp += num / 1000000
+            result += `${temp[0]}${temp[1]},${temp[2]} M`
+
+        } else if (num >= 100000000 && num < 1000000000){
+            temp += num / 1000000
+            result += `${temp[0]}${temp[1]}${temp[2]},${temp[3]} M`
+    
+        } else {
+            result += num
+        }
+
+        return result
     }
 
     // Style Select Filter
@@ -286,6 +330,28 @@ const Berita = () => {
             tag
         ))
 
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaBerita(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                str, 
+                category_academy,
+                tag
+            ))
+        }
+
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${str}&category_academy=${category_academy}&tag=${tag}`)
+        // }
+
         window.scrollTo(0,0)
     }
 
@@ -303,19 +369,24 @@ const Berita = () => {
             tag
         ))
 
-        window.scrollTo(0,0)
-    }
-
-    const handleDescToTrim = (str) => {
-        let result = null
-        
-        if (str.length > descToTrim){
-            result = str.slice(0, descToTrim) + "..."
-
-        } else {
-            result = str
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaBerita(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriBerita, 
+                category_academy,
+                tag
+            ))
         }
-        return result
+
+        // router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+            
+        window.scrollTo(0,0)
     }
 
     const handleFilterPublish = (publish, status) => {
@@ -347,6 +418,28 @@ const Berita = () => {
             tag
         ))
 
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaBerita(
+                activePage, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriBerita, 
+                category_academy,
+                tag
+            ))
+        }
+
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        // }
+
         window.scrollTo(0,0)
     }
 
@@ -363,6 +456,13 @@ const Berita = () => {
             category_academy,
             str
         ))
+
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${activePage}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${activePage}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${str}`)
+        // }
 
         window.scrollTo(0,0)
     }
@@ -381,6 +481,28 @@ const Berita = () => {
             tag
         ))
 
+        if (router.query.tag){
+            router.push (router.pathname)
+            dispatch (getAllBerandaBerita(
+                pageNumber, 
+                keyword, 
+                limit, 
+                filterPublish, 
+                sort, 
+                category_id, 
+                kategoriBerita, 
+                category_academy,
+                tag
+            ))
+        }
+
+        // if (keyword){
+        //     router.push (`${router.pathname}?page=${pageNumber}&keyword=${keyword}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        
+        // } else {
+        //     router.push (`${router.pathname}?page=${pageNumber}&limit=${limit}&filterPublish=${filterPublish}&sort=${sort}&category_id=${category_id}&category_name=${kategoriBerita}&category_academy=${category_academy}&tag=${tag}`)
+        // }
+
         window.scrollTo(0,0)
     }
 
@@ -393,7 +515,7 @@ const Berita = () => {
             />
 
             {/* Header */}
-            <div className="col-12 mt-5 ml-n1">
+            <div className="col-12 mt-5 ml-n3">
                 <h1 className="fw-700" style={{fontSize: "40px", fontFamily:"Poppins"}}>
                     {activeTitle}
                 </h1>
@@ -414,7 +536,8 @@ const Berita = () => {
             {/* Filter Button */}
             {/* Filter on Desktop */}
             {
-                kategoriToShow ?
+                // kategoriToShow ?
+                kategori ?
                     <div
                         className={
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
@@ -477,19 +600,19 @@ const Berita = () => {
                                                 
                                         }
                                         {
-                                            kategoriToShow ?
-                                                kategoriToShow.map((el, i) => {
+                                            kategori ?
+                                                kategori.map((el, i) => {
                                                     return (
-                                                        kategoriBerita == el ?
+                                                        kategoriBerita == el.nama_kategori ?
                                                             <SplideSlide>
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
@@ -498,11 +621,11 @@ const Berita = () => {
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div> 
                                                             </SplideSlide>
@@ -562,19 +685,19 @@ const Berita = () => {
                                                 
                                         }
                                         {
-                                            kategoriToShow ?
-                                                kategoriToShow.map((el, i) => {
+                                            kategori ?
+                                                kategori.map((el, i) => {
                                                     return (
-                                                        kategoriBerita == el ?
+                                                        kategoriBerita == el.nama_kategori ?
                                                             <SplideSlide>
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div>
                                                             </SplideSlide>
@@ -583,11 +706,11 @@ const Berita = () => {
                                                                 <div 
                                                                     className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                                    onClick={() => handleFilterKategori(el)}
+                                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
                                                                     key={i}
                                                                 >
                                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                        {el.toString().toUpperCase()}
+                                                                        {el.nama_kategori.toString().toUpperCase()}
                                                                     </div>
                                                                 </div> 
                                                             </SplideSlide>
@@ -656,19 +779,19 @@ const Berita = () => {
                             
                     }
                     {
-                        kategoriToShow ?
-                            kategoriToShow.map((el, i) => {
+                        kategori ?
+                            kategori.map((el, i) => {
                                 return (
-                                    kategoriBerita == el ?
+                                    kategoriBerita == el.nama_kategori ?
                                         <SplideSlide>
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div>
                                         </SplideSlide>
@@ -677,11 +800,11 @@ const Berita = () => {
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div> 
                                         </SplideSlide>
@@ -744,19 +867,19 @@ const Berita = () => {
                             
                     }
                     {
-                        kategoriToShow ?
-                            kategoriToShow.map((el, i) => {
+                        kategori ?
+                            kategori.map((el, i) => {
                                 return (
-                                    kategoriBerita == el ?
+                                    kategoriBerita == el.nama_kategori ?
                                         <SplideSlide>
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5"
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div>
                                         </SplideSlide>
@@ -765,11 +888,11 @@ const Berita = () => {
                                             <div 
                                                 className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                 style={{ cursor: "pointer", height:"40px" }}
-                                                onClick={() => handleFilterKategori(el)}
+                                                onClick={() => handleFilterKategori(el.nama_kategori)}
                                                 key={i}
                                             >
                                                 <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
-                                                    {el.toString().toUpperCase()}
+                                                    {el.nama_kategori.toString().toUpperCase()}
                                                 </div>
                                             </div> 
                                         </SplideSlide>
@@ -1044,13 +1167,13 @@ const Berita = () => {
                             </div>
                         :
                             berita && berita.berita && berita.berita.length !== 0 ?
-                                berita.berita.map ((el, i) => {
+                                berita?.berita?.map ((el, i) => { // edit here
                                     return (
                                         <div 
-                                            className= "row mt-20 mb-3 pl-7"
+                                            className= "row mt-20 mb-3 pl-6"
                                             key={i}
                                         >
-                                            <div className="col-4 col-sm-8 pr-md-8 pr-2 pl-lg-2">
+                                            <div className="col-5 col-sm-9 pr-md-8 pr-2 pl-lg-2">
                                                 <div className="row justify-content-between align-items-center">
                                                     <div className=" d-flex align-self-center mb-2">
                                                         <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
@@ -1074,7 +1197,7 @@ const Berita = () => {
                                                         </span>
                                                     </div>
 
-                                                    <div className="mr-2 mb-3">
+                                                    <div className="mr-2 mb-3 d-flex align-content-center">
                                                         <div className="badge badge-pill badge-light mr-0 mr-sm-2">
                                                             <div 
                                                                 className="text-primary p-1 text-truncate d-inline-block"
@@ -1091,7 +1214,7 @@ const Berita = () => {
                                                         </div>
                                                         {
                                                             windowDimensions && windowDimensions.width && windowDimensions.width > 500 ?
-                                                                <span className="font-weight-bolder">
+                                                                <span className="font-weight-bolder mt-2">
                                                                     {/* Insert Akademi Here */}
                                                                     | {el.kategori_akademi}
                                                                 </span>
@@ -1153,12 +1276,9 @@ const Berita = () => {
                                                 {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width >= 768 ?
                                                         <div 
-                                                            className="my-5 d-flex flex-wrap "
-                                                        >
-                                                            {/* Insert Desc Here */}
-                                                            <div 
-                                                                dangerouslySetInnerHTML={{__html: (el.isi_berita)}}
-                                                                style={{ 
+                                                            // className="my-5 d-flex flex-wrap "
+                                                            className="my-5 ml-n3"
+                                                            style={{ 
                                                                     fontSize:"16px", 
                                                                     fontFamily:"Poppins", 
                                                                     color: "#6C6C6C",
@@ -1166,9 +1286,27 @@ const Berita = () => {
                                                                     overflow: 'hidden', 
                                                                     textOverflow: 'ellipsis', 
                                                                     WebkitLineClamp: "2",
-                                                                    WebkitBoxOrient:"vertical"
+                                                                    WebkitBoxOrient:"vertical",
+                                                                    width:"100%",
+                                                                    lineHeight:"25px"
                                                                 }}
-                                                                className="ml-n3"
+                                                        >
+                                                            {/* Insert Desc Here */}
+                                                            <div 
+                                                                dangerouslySetInnerHTML={{__html: (el.isi_berita)}}
+                                                                // style={{ 
+                                                                //     fontSize:"16px", 
+                                                                //     fontFamily:"Poppins", 
+                                                                //     color: "#6C6C6C",
+                                                                //     display:"-webkit-box", 
+                                                                //     overflow: 'hidden', 
+                                                                //     textOverflow: 'ellipsis', 
+                                                                //     WebkitLineClamp: "2",
+                                                                //     WebkitBoxOrient:"vertical",
+                                                                //     width:"100%",
+                                                                //     lineHeight:"25px"
+                                                                // }}
+                                                                // className="ml-n3"
                                                             />
                                                         </div>
                                                     :
@@ -1177,8 +1315,16 @@ const Berita = () => {
                                                 
                                                 <div className="row mb-3 mt-5 d-flex align-items-center ml-n7">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12">
-                                                        {moment(el.tanggal_publish).format("DD MMM")} | {el.dibaca} dibaca
+                                                    <div className="text-muted col-md-4 col-lg-3 col-12 d-flex flex-row justify-content-between">
+                                                        <div className="text-truncate">
+                                                            {moment(el.tanggal_publish).format("DD MMM")}
+                                                        </div>
+                                                        <div>
+                                                            |
+                                                        </div>
+                                                        <div className="text-truncate">
+                                                            {handleTotalReader(el.dibaca)} dibaca
+                                                        </div>
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
@@ -1194,7 +1340,8 @@ const Berita = () => {
                                             </div>
 
                                             <div 
-                                                className="col-8 col-sm-4 position-relative img-fluid" 
+                                                // className="col-8 col-sm-4 pl-6 pl-sm-0 position-relative img-fluid" 
+                                                className="col-7 col-sm-3 d-flex justify-content-end position-relative img-fluid"
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/berita/detail/${el.slug}`}>
@@ -1204,8 +1351,24 @@ const Berita = () => {
                                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                 "publikasi/images/" + el.gambar
                                                             }
-                                                            width={300}
-                                                            height={250}
+                                                            // width={300}
+                                                            // height={250}
+                                                            width={
+                                                                windowDimensions &&
+                                                                windowDimensions.width &&
+                                                                windowDimensions.width > 768 ?
+                                                                300
+                                                                :
+                                                                144
+                                                            }
+                                                            height={
+                                                                windowDimensions &&
+                                                                windowDimensions.width &&
+                                                                windowDimensions.width > 768 ?
+                                                                250
+                                                                :
+                                                                120
+                                                            }
                                                             alt="Card Image"
                                                             className="rounded-lg img-fluid"
                                                             objectFit="cover"
@@ -1231,7 +1394,16 @@ const Berita = () => {
                                             className="font-weight-bolder mt-15 text-center fw-600" 
                                             style={{fontFamily:"Poppins", fontSize:"24px"}}
                                         >
-                                            Tidak ada berita terkait "{keyword}"
+                                            {
+                                                keyword ?
+                                                    `Tidak ada berita terkait "${keyword}"`
+                                                :
+                                                    category_academy ?
+                                                        `Tidak ada berita terkait "${category_academy}"`
+                                                    :
+                                                        `Tidak ada berita terkait.`
+                                            }
+                                            
                                         </h1>
                                 
                                         </div>

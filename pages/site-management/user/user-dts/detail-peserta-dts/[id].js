@@ -1,15 +1,16 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../../../components/LoadingPage";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../../redux/store";
 import {getDetailPesertaManage, getPelatihanByPeserta, getPelatihanWithPagination} from '../../../../../redux/actions/site-management/user/peserta-dts'
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 const PageDetail = dynamic(
   () =>
     import(
       "../../../../../components/content/site-management/user/peserta-dts/detail-peserta-dts"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function DetailPage(props) {
@@ -27,10 +28,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, query }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

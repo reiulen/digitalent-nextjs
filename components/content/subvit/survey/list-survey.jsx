@@ -7,6 +7,7 @@ import stylesPag from "../../../../styles/pagination.module.css";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import Image from "next/dist/client/image";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,8 +16,11 @@ import {
   getAllSurveyQuestionBanks,
 } from "../../../../redux/actions/subvit/survey-question.actions";
 import { DELETE_SURVEY_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/survey-question.type";
+import { getAllSurveyQuestionDetail } from "../../../../redux/actions/subvit/survey-question-detail.action";
+import { Card, Col, Collapse, Form, Modal, Row } from "react-bootstrap";
+import Swal from "sweetalert2";
 
-const ListSurvey = ({ token }) => {
+const ListSurvey = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -39,16 +43,26 @@ const ListSurvey = ({ token }) => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
-
+  const [viewSoal, setViewSoal] = useState(false);
+  const [open, setOpen] = useState(true);
   useEffect(() => {
+    localStorage.removeItem("step1");
+    localStorage.removeItem("step2");
+    localStorage.removeItem("clone1");
+    localStorage.removeItem("clone3");
+    localStorage.removeItem("method");
+    localStorage.removeItem("clone");
+    localStorage.removeItem("id_survey");
     if (isDeleted) {
       dispatch({
         type: DELETE_SURVEY_QUESTION_BANKS_RESET,
       });
-      dispatch(getAllSurveyQuestionBanks(page, "", limit, token));
+      dispatch(
+        getAllSurveyQuestionBanks(page, "", limit, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, dispatch, page, limit, token]);
+  }, [isDeleted, dispatch, page, limit, token, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
@@ -64,7 +78,8 @@ const ListSurvey = ({ token }) => {
     }
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (limit != null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
@@ -74,7 +89,11 @@ const ListSurvey = ({ token }) => {
 
   const handleLimit = (val) => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
+    if (search) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`);
+    } else {
+      router.push(`${router.pathname}?page=1&limit=${val}`);
+    }
   };
 
   const handleDelete = (id) => {
@@ -89,7 +108,7 @@ const ListSurvey = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSurveyQuestionBanks(id, token));
+        dispatch(deleteSurveyQuestionBanks(id, token, tokenPermission));
       }
     });
   };
@@ -170,6 +189,25 @@ const ListSurvey = ({ token }) => {
     }
   };
 
+  const handleModal = (id) => {
+    dispatch(
+      getAllSurveyQuestionDetail(
+        id,
+        1,
+        100,
+
+        "",
+        token,
+        tokenPermission
+      )
+    );
+    setViewSoal(true);
+  };
+
+  const { survey_question_detail } = useSelector(
+    (state) => state.allSurveyQuestionDetail
+  );
+
   return (
     <PageWrapper>
       {error ? (
@@ -231,30 +269,32 @@ const ListSurvey = ({ token }) => {
           <div className="card-header row border-0 mt-3">
             {/* <h1 className="card-title text-dark mt-2" style={{ fontSize: "24px" }}> */}
             <h1
-              className={`${styles.headTitle} col-sm-12 col-md-8 col-lg-8 col-xl-9`}
+              className="card-title text-dark mt-2 ml-5"
+              style={{ fontSize: "24px" }}
             >
               List Survey
             </h1>
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
-            dataPermission.permissions.includes(
-              "subvit.manage" && "subvit.survey.manage"
-            ) ? (
-              <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
-                <Link href="/subvit/survey/tambah">
-                  {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
-                  <a
-                    className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
-                  >
-                    <i className="ri-add-fill"></i>
-                    Tambah Survey
-                  </a>
-                </Link>
-              </div>
-            ) : (
-              ""
-            )}
+              dataPermission.permissions.includes(
+                "subvit.manage" && "subvit.survey.manage"
+              ) && (
+                <>
+                  <div className=" card-toolbar">
+                    <Link href="/subvit/survey/clone">
+                      <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                        <i className="ri-mastercard-fill"></i>
+                        Clone Survey
+                      </a>
+                    </Link>
+                    <Link href="/subvit/survey/tambah">
+                      <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                        <i className="ri-add-fill"></i>
+                        Tambah Survey
+                      </a>
+                    </Link>
+                  </div>
+                </>
+              )}
           </div>
 
           <div className="card-body pt-0">
@@ -265,20 +305,22 @@ const ListSurvey = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -306,12 +348,12 @@ const ListSurvey = ({ token }) => {
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.survey.manage"
                         ) ? (
-                          <th style={{ width: "10px" }}>Aksi</th>
+                          <th style={{ width: "250px" }}>Aksi</th>
                         ) : dataPermission &&
                           dataPermission.permissions.includes(
                             "subvit.view" && "subvit.survey.view"
                           ) ? (
-                          <th style={{ width: "10px" }}>Aksi</th>
+                          <th style={{ width: "250px" }}>Aksi</th>
                         ) : (
                           ""
                         )}
@@ -372,8 +414,6 @@ const ListSurvey = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.survey.manage"
                                 ) ? (
@@ -395,11 +435,22 @@ const ListSurvey = ({ token }) => {
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="Detail"
+                                        title="List Soal"
                                       >
-                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                        <i className="ri-file-list-line p-0 text-white"></i>
                                       </a>
                                     </Link>
+                                    {row?.bank_soal !== 0 && (
+                                      <a
+                                        onClick={() => handleModal(row?.id)}
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Review Soal"
+                                      >
+                                        <i className="ri-file-search-fill p-0 text-white"></i>
+                                      </a>
+                                    )}
                                     <Link
                                       href={`/subvit/survey/report?id=${row.id}`}
                                     >
@@ -413,11 +464,21 @@ const ListSurvey = ({ token }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      className={
+                                        row?.status
+                                          ? "btn btn-link-action btn-secondary  text-white"
+                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                      }
                                       onClick={() => handleDelete(row.id)}
+                                      disabled={row?.status}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
                                       title="Hapus"
+                                      style={{
+                                        cursor: row?.status
+                                          ? "not-allowed"
+                                          : "pointer",
+                                      }}
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>
@@ -496,6 +557,7 @@ const ListSurvey = ({ token }) => {
                     <div className="row">
                       <div className="col-4 mr-0">
                         <select
+                          value={limit}
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
@@ -507,36 +569,11 @@ const ListSurvey = ({ token }) => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="30"
-                            selected={limit == "30" ? true : false}
-                          >
-                            30
-                          </option>
-                          <option
-                            value="40"
-                            selected={limit == "40" ? true : false}
-                          >
-                            40
-                          </option>
-                          <option
-                            value="50"
-                            selected={limit == "50" ? true : false}
-                          >
-                            50
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -557,6 +594,215 @@ const ListSurvey = ({ token }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={viewSoal}
+        onHide={() => setViewSoal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Review Soal</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setViewSoal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body style={{ overflowY: "scroll", height: "500px" }}>
+          <Row>
+            <Col ms={12}>
+              {survey_question_detail?.list_questions && (
+                <>
+                  {survey_question_detail?.list_questions?.map(
+                    (item, index) => {
+                      return (
+                        <>
+                          <Card
+                            style={{
+                              padding: "15px",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <h4>Soal {index + 1}</h4>
+                            <Card
+                              style={{
+                                marginTop: "10px",
+
+                                padding: "15px",
+                              }}
+                            >
+                              <div className="d-flex flex-row">
+                                <div className="mr-3">
+                                  {item.question_image ? (
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.question_image
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                <div>
+                                  {" "}
+                                  <h5>{item.question}</h5>
+                                </div>
+                              </div>
+
+                              {item.answer !== null ? (
+                                JSON.parse(item?.answer).map((anw) => {
+                                  return (
+                                    <>
+                                      <div className="d-flex flex-row ">
+                                        <div className="mt-6">
+                                          {anw.image !== "" ? (
+                                            <Image
+                                              src={
+                                                process.env
+                                                  .END_POINT_API_IMAGE_SUBVIT +
+                                                anw.image
+                                              }
+                                              alt=""
+                                              width={40}
+                                              height={40}
+                                            />
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                        <div style={{ width: "100%" }}>
+                                          <Card
+                                            onClick={() => setOpen(true)}
+                                            style={{
+                                              padding: "5px",
+                                              marginTop: "15px",
+                                              margin: "10px",
+                                            }}
+                                            className={
+                                              anw.key === item.answer_key
+                                                ? styles.answer
+                                                : ""
+                                            }
+                                          >
+                                            <p
+                                              style={{
+                                                padding: "5px",
+                                                marginTop: "5px",
+                                              }}
+                                            >
+                                              {anw.key} . {anw.option}
+                                            </p>
+                                          </Card>
+                                        </div>
+                                      </div>
+
+                                      <Collapse
+                                        in={open}
+                                        dimension="width"
+                                        style={{ padding: "10px 20px" }}
+                                      >
+                                        <div id="example-collapse-text">
+                                          {anw?.sub?.map((s) => {
+                                            return (
+                                              <>
+                                                <div className="d-flex flex-row">
+                                                  <div className="mr-3">
+                                                    {s.image !== "" ? (
+                                                      <Image
+                                                        src={
+                                                          process.env
+                                                            .END_POINT_API_IMAGE_SUBVIT +
+                                                          s.image
+                                                        }
+                                                        alt=""
+                                                        width={70}
+                                                        height={70}
+                                                      />
+                                                    ) : (
+                                                      ""
+                                                    )}
+                                                  </div>
+                                                  <div>
+                                                    {" "}
+                                                    <h5>{s.question}</h5>
+                                                  </div>
+                                                </div>
+                                                {s.answer.map((sw) => {
+                                                  return (
+                                                    <>
+                                                      <Card
+                                                        style={{
+                                                          padding: "5px",
+                                                          marginTop: "15px",
+                                                          margin: "10px",
+                                                        }}
+                                                        className={
+                                                          sw.key ===
+                                                          item.answer_key
+                                                            ? styles.answer
+                                                            : ""
+                                                        }
+                                                      >
+                                                        <p
+                                                          style={{
+                                                            padding: "5px",
+                                                            marginTop: "5px",
+                                                          }}
+                                                        >
+                                                          {sw.key} . {sw.option}
+                                                        </p>
+                                                      </Card>
+                                                    </>
+                                                  );
+                                                })}
+                                              </>
+                                            );
+                                          })}
+                                        </div>
+                                      </Collapse>
+                                    </>
+                                  );
+                                })
+                              ) : (
+                                <Form>
+                                  <Form.Control
+                                    as="textarea"
+                                    style={{ marginTop: "10px" }}
+                                    rows={5}
+                                    placeholder="Jelaskan jawaban Anda di sini..."
+                                    className={styles.textArea}
+                                    disabled
+                                  />
+                                </Form>
+                              )}
+                            </Card>
+                          </Card>
+                        </>
+                      );
+                    }
+                  )}
+                </>
+              )}
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+            type="button"
+            onClick={() => setViewSoal(false)}
+          >
+            Kembali
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };

@@ -8,6 +8,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import styles from "./listSubstansi.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
+import Image from "next/dist/client/image";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,8 +17,10 @@ import {
   getAllSubtanceQuestionBanks,
 } from "../../../../redux/actions/subvit/subtance.actions";
 import { DELETE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/subtance.type";
+import { Card, Col, Modal, Row } from "react-bootstrap";
+import { getAllSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
-const ListSubstansi = ({ token }) => {
+const ListSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -40,16 +43,27 @@ const ListSubstansi = ({ token }) => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(5);
+  const [viewSoal, setViewSoal] = useState(false);
+  const [num, setNum] = useState(0);
 
   useEffect(() => {
+    localStorage.removeItem("step1");
+    localStorage.removeItem("step2");
+    localStorage.removeItem("clone1");
+    localStorage.removeItem("clone3");
+    localStorage.removeItem("id_substansi");
+    localStorage.removeItem("method");
+    localStorage.removeItem("clone");
     if (isDeleted) {
       dispatch({
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET,
       });
-      dispatch(getAllSubtanceQuestionBanks(1, "", limit, token));
+      dispatch(
+        getAllSubtanceQuestionBanks(1, "", limit, token, tokenPermission)
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [dispatch, isDeleted, limit, token]);
+  }, [dispatch, isDeleted, limit, token, tokenPermission]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -58,7 +72,8 @@ const ListSubstansi = ({ token }) => {
     router.push(link);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (limit != null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
@@ -157,7 +172,7 @@ const ListSubstansi = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionBanks(id, token));
+        dispatch(deleteSubtanceQuestionBanks(id, token, tokenPermission));
       }
     });
   };
@@ -167,6 +182,27 @@ const ListSubstansi = ({ token }) => {
       dispatch(clearErrors());
     }
   };
+
+  const handleModal = (id) => {
+    dispatch(
+      getAllSubtanceQuestionDetail(
+        id,
+        1,
+        null,
+        100,
+        "",
+        "",
+        "",
+        token,
+        tokenPermission
+      )
+    );
+    setViewSoal(true);
+  };
+
+  const { subtance_question_detail } = useSelector(
+    (state) => state.allSubtanceQuestionDetail
+  );
 
   return (
     <PageWrapper>
@@ -235,8 +271,6 @@ const ListSubstansi = ({ token }) => {
             </h1>
 
             {dataPermission &&
-            dataPermission.roles.includes("Super Admin") &&
-            dataPermission &&
             dataPermission.permissions.includes(
               "subvit.manage" && "subvit.substansi.manage"
             ) ? (
@@ -267,7 +301,10 @@ const ListSubstansi = ({ token }) => {
                 "subvit.view" && "subvit.substansi.view"
               ) ? (
               <Link href="/subvit/substansi/tipe-soal">
-                <a className="text-white btn btn-primary-rounded-full  font-weight-bolder px-5 py-6 mt-2 mr-1">
+                <a
+                  className="text-white btn btn-primary-rounded-full  font-weight-bolder  mt-4 py-3 px-4"
+                  style={{ height: "40px" }}
+                >
                   <i className="ri-book-read-fill"></i>
                   Tipe Soal
                 </a>
@@ -284,20 +321,22 @@ const ListSubstansi = ({ token }) => {
                   <div
                     className={`${styles.baseSearch} position-relative overflow-hidden mt-3`}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className={`${styles.inputSearch} form-control pl-10`}
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className={`${styles.inputSearch} form-control pl-10`}
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -326,12 +365,10 @@ const ListSubstansi = ({ token }) => {
                         <th>Status</th>
 
                         {dataPermission &&
-                        dataPermission.roles.includes("Super Admin") &&
-                        dataPermission &&
                         dataPermission.permissions.includes(
                           "subvit.manage" && "subvit.substansi.manage"
                         ) ? (
-                          <th>Aksi</th>
+                          <th style={{ width: "250px" }}>Aksi</th>
                         ) : dataPermission &&
                           dataPermission.permissions.includes(
                             "subvit.view" && "subvit.substansi.view"
@@ -407,8 +444,6 @@ const ListSubstansi = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {dataPermission &&
-                                dataPermission.roles.includes("Super Admin") &&
-                                dataPermission &&
                                 dataPermission.permissions.includes(
                                   "subvit.manage" && "subvit.substansi.manage"
                                 ) ? (
@@ -432,11 +467,25 @@ const ListSubstansi = ({ token }) => {
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                         data-toggle="tooltip"
                                         data-placement="bottom"
-                                        title="Detail"
+                                        title="List Soal"
                                       >
-                                        <i className="ri-eye-fill p-0 text-white"></i>
+                                        <i className="ri-file-list-line p-0 text-white"></i>
                                       </a>
                                     </Link>
+                                    {subtance?.bank_soal !== 0 && (
+                                      <a
+                                        onClick={() =>
+                                          handleModal(subtance?.id)
+                                        }
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Review Soal"
+                                      >
+                                        <i className="ri-file-search-fill p-0 text-white"></i>
+                                      </a>
+                                    )}
+
                                     <Link
                                       href={`/subvit/substansi/report?id=${subtance.id}`}
                                     >
@@ -450,7 +499,17 @@ const ListSubstansi = ({ token }) => {
                                       </a>
                                     </Link>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      disabled={subtance?.status}
+                                      className={
+                                        subtance?.status
+                                          ? "btn btn-link-action btn-secondary  text-white"
+                                          : "btn btn-link-action bg-blue-secondary text-white"
+                                      }
+                                      style={{
+                                        cursor: subtance?.status
+                                          ? "not-allowed"
+                                          : "pointer",
+                                      }}
                                       onClick={() => handleDelete(subtance.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
@@ -538,6 +597,7 @@ const ListSubstansi = ({ token }) => {
                     <div className="row">
                       <div className="col-4 mr-0">
                         <select
+                          value={limit}
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
@@ -549,36 +609,11 @@ const ListSubstansi = ({ token }) => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="30"
-                            selected={limit == "30" ? true : false}
-                          >
-                            30
-                          </option>
-                          <option
-                            value="40"
-                            selected={limit == "40" ? true : false}
-                          >
-                            40
-                          </option>
-                          <option
-                            value="50"
-                            selected={limit == "50" ? true : false}
-                          >
-                            50
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -599,6 +634,137 @@ const ListSubstansi = ({ token }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={viewSoal}
+        onHide={() => setViewSoal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Review Soal</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setViewSoal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body style={{ overflowY: "scroll", height: "500px" }}>
+          <Row>
+            <Col ms={12}>
+              {subtance_question_detail?.list_questions && (
+                <>
+                  {subtance_question_detail?.list_questions?.map(
+                    (item, index) => {
+                      return (
+                        <>
+                          <Card
+                            style={{
+                              padding: "15px",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <h4>Soal {index + 1}</h4>
+                            <Card
+                              style={{
+                                marginTop: "10px",
+
+                                padding: "15px",
+                              }}
+                            >
+                              <div className="d-flex flex-row">
+                                <div className="mr-3">
+                                  {item.question_image ? (
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.question_image
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                <div>
+                                  {" "}
+                                  <h5>{item.question}</h5>
+                                </div>
+                              </div>
+
+                              {JSON.parse(item?.answer).map((anw) => {
+                                return (
+                                  <>
+                                    <div className="d-flex flex-row ">
+                                      <div className="mt-6">
+                                        {anw.image !== "" ? (
+                                          <Image
+                                            src={
+                                              process.env
+                                                .END_POINT_API_IMAGE_SUBVIT +
+                                              anw.image
+                                            }
+                                            alt=""
+                                            width={40}
+                                            height={40}
+                                          />
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div style={{ width: "100%" }}>
+                                        <Card
+                                          // onClick={() => setOpen(true)}
+                                          style={{
+                                            padding: "5px",
+                                            marginTop: "15px",
+                                            margin: "10px",
+                                          }}
+                                          className={
+                                            anw.key === item.answer_key
+                                              ? styles.answer
+                                              : ""
+                                          }
+                                        >
+                                          <p
+                                            style={{
+                                              padding: "5px",
+                                              marginTop: "5px",
+                                            }}
+                                          >
+                                            {anw.key} . {anw.option}
+                                          </p>
+                                        </Card>
+                                      </div>
+                                    </div>
+                                  </>
+                                );
+                              })}
+                            </Card>
+                          </Card>
+                        </>
+                      );
+                    }
+                  )}
+                </>
+              )}
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+            type="button"
+            onClick={() => setViewSoal(false)}
+          >
+            Kembali
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };

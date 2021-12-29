@@ -12,6 +12,7 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
 import IconArrow from "../../../../assets/icon/Arrow";
+import Swal from "sweetalert2";
 import {
   deleteAdminSite,
   getAllAdminSite,
@@ -109,7 +110,12 @@ const Table = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
+<<<<<<< HEAD
             dispatch(getAllAdminSite(token, Cookies.get("token_permission")));
+=======
+            dispatch(getAllAdminSite(token));
+            window.location.reload();
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
           }
         }
       );
@@ -118,6 +124,11 @@ const Table = ({ token }) => {
       type: DETAIL_ADMIN_SITE_RESET,
     });
   }, [isDeleted, dispatch, token]);
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    dispatch(searchCooporation(valueSearch));
+  };
 
   return (
     <PageWrapper>
@@ -147,33 +158,35 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <div className="row w-100 ml-0 ml-sm-0">
+                  <div className="row w-100">
                     <div className="col-12 col-xl-4">
                       <div className="position-relative overflow-hidden w-100">
-                        <IconSearch
-                          style={{ left: "10" }}
-                          className="left-center-absolute"
-                        />
-                        <input
-                          id="kt_datatable_search_query"
-                          type="text"
-                          className="form-control pl-10"
-                          placeholder="Ketik disini untuk Pencarian..."
-                          onChange={(e) =>
-                            handleChangeValueSearch(e.target.value)
-                          }
-                        />
-                        <button
-                          type="button"
-                          onClick={handleSubmit}
-                          className="btn bg-blue-primary text-white right-center-absolute"
-                          style={{
-                            borderTopLeftRadius: "0",
-                            borderBottomLeftRadius: "0",
-                          }}
-                        >
-                          Cari
-                        </button>
+                        <form onSubmit={e => handleSearch(e)}>
+                          <IconSearch
+                            style={{ left: "10" }}
+                            className="left-center-absolute"
+                          />
+                          <input
+                            id="kt_datatable_search_query"
+                            type="text"
+                            className="form-control pl-10"
+                            placeholder="Ketik disini untuk Pencarian..."
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
+                          />
+                          <button
+                            type="button"
+                            onClick={handleSubmit}
+                            className="btn bg-blue-primary text-white right-center-absolute"
+                            style={{
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                            }}
+                          >
+                            Cari
+                          </button>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -335,60 +348,62 @@ const Table = ({ token }) => {
                   </table>
                 )}
               </div>
+              {allAdminSite?.data?.total > 5 && (
+                <div className="row px-4">
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={allAdminSite.page}
+                      itemsCountPerPage={allAdminSite.data.perPage}
+                      totalItemsCount={allAdminSite.data.total}
+                      pageRangeDisplayed={3}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
 
-              <div className="row px-4">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={allAdminSite.page}
-                    itemsCountPerPage={allAdminSite.data.perPage}
-                    totalItemsCount={allAdminSite.data.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control pr-2 cursor-pointer"
-                        id="exampleFormControlSelect2"
-                        defaultValue=""
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) =>
-                          dispatch(limitCooporation(e.target.value, token))
-                        }
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data{" "}
-                        {allAdminSite.data && allAdminSite.data.total} List Data
-                      </p>
+                  <div className="table-total ml-auto mr-4">
+                    <div className="row mt-4">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control pr-2 cursor-pointer"
+                          id="exampleFormControlSelect2"
+                          defaultValue=""
+                          style={{
+                            width: "63px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) =>
+                            dispatch(limitCooporation(e.target.value, token))
+                          }
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data{" "}
+                          {allAdminSite.data && allAdminSite.data.total} List
+                          Data
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

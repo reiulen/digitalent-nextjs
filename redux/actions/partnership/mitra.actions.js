@@ -26,6 +26,7 @@ import {
   CHANGE_STATUS_LIST_M,
 } from "../../types/partnership/mitra.type";
 import router from "next/router";
+import Cookies from "js-cookie";
 
 export async function getAllMitra(params) {
   return await axios.get(
@@ -51,7 +52,7 @@ export async function getStatus() {
 
 let debouncedFetchMitra = debounce(getAllMitra, 0);
 
-export const fetchMitra = (token) => {
+export const fetchMitra = (token, permission) => {
   return async (dispatch, getState) => {
     dispatch({ type: MITRA_REQUEST });
     let keywordState = getState().allMitra.keyword || "";
@@ -71,7 +72,7 @@ export const fetchMitra = (token) => {
           params,
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+            Permission: permission
           },
         }
       );
@@ -101,7 +102,7 @@ export const searchByKey = (value) => {
     value,
   };
 };
-export const deleteMitra = (token, id) => {
+export const deleteMitra = (token, id, permission) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
@@ -109,7 +110,7 @@ export const deleteMitra = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+            Permission: permission
           },
         }
       );
@@ -141,7 +142,7 @@ export const getProvinces = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+            Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -179,7 +180,7 @@ export const exportFileCSV = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+            // Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -188,7 +189,7 @@ export const exportFileCSV = (token) => {
       fetch(url, {
         headers: {
           authorization: `Bearer ${token}`,
-          // permissionToken: localStorage.getItem("token-permission")
+          // Permission: Cookies.get("token_permission")
         },
       })
         .then((response) => response.blob())
@@ -236,7 +237,7 @@ export const getSingleValue = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+            Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -292,7 +293,7 @@ export const exportFileCSVDetail = (token, id) => {
           paramssz,
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+            Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -305,7 +306,7 @@ export const exportFileCSVDetail = (token, id) => {
         paramssz,
         headers: {
           authorization: `Bearer ${token}`,
-          // permissionToken: localStorage.getItem("token-permission")
+          Permission: Cookies.get("token_permission")
         },
       })
         .then((response) => response.blob())
@@ -331,7 +332,7 @@ export const fetchListSelectCooperation = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+           Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -362,7 +363,7 @@ export const fetchListSelectStatus = (token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+           Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -406,7 +407,7 @@ export const deleteCooperation = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+            Permission: Cookies.get("token_permission")
           },
         }
       );
@@ -429,7 +430,7 @@ export const reloadTable = () => {
   };
 };
 
-export const changeStatusList = (token, formData, id) => {
+export const changeStatusList = (token, formData, id, permission) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.post(
@@ -438,7 +439,7 @@ export const changeStatusList = (token, formData, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+            Permission: permission
           },
         }
       );
@@ -464,7 +465,7 @@ export const changeStatusListCooperation = (token, formData, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // permissionToken: localStorage.getItem("token-permission")
+            Permission: Cookies.get("token_permission")
           },
         }
       );

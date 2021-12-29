@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { helperRegexNumber } from "../../../../../../utils/middleware/helper";
 
 const CheckboxComponent = ({
   propsAnswer,
@@ -45,8 +46,12 @@ const CheckboxComponent = ({
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
+    let values = 0;
+    if (value === "" || helperRegexNumber.test(value)) {
+      values = value;
+    }
     const list = [...answer];
-    list[index][name] = value;
+    list[index][name] = values;
     if (name === "question_image") {
       if (e.target.files[0]) {
         list[index]["image_preview"] = URL.createObjectURL(e.target.files[0]);
@@ -67,6 +72,12 @@ const CheckboxComponent = ({
   const handleAnswer = (value, i) => {
     const list = [...answer];
     list[i]["is_right"] = value;
+  };
+
+  const handleDuration = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setDuration(e);
+    }
   };
 
   return (
@@ -123,7 +134,7 @@ const CheckboxComponent = ({
                     <div className="col-md-4 mb-0">
                       <span className="font-weight-bold">Nilai</span>
                       <input
-                        type="number"
+                        type="text"
                         min={0}
                         className="form-control"
                         name="value"
@@ -139,19 +150,19 @@ const CheckboxComponent = ({
                     >
                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                     </button>
-                    <div className="ml-3">
-                      <SwitchButton
-                        checked={row.is_right}
-                        onlabel=" "
-                        onstyle="primary"
-                        offlabel=" "
-                        offstyle="secondary"
-                        size="sm"
-                        width={10}
-                        height={10}
-                        onChange={(checked) => handleAnswer(checked, i)}
-                      />
-                    </div>
+                    {/* <div className="ml-3">
+                        <SwitchButton
+                          checked={row.is_right}
+                          onlabel=" "
+                          onstyle="primary"
+                          offlabel=" "
+                          offstyle="secondary"
+                          size="sm"
+                          width={10}
+                          height={10}
+                          onChange={(checked) => handleAnswer(checked, i)}
+                        />
+                      </div> */}
                   </div>
                 </div>
               </>
@@ -177,11 +188,11 @@ const CheckboxComponent = ({
         <div className="col-sm-12 col-md-12">
           <span className="font-weight-bold">Durasi (Detik)</span>
           <input
-            type="number"
+            type="text"
             min={0}
             value={duration}
             onChange={(e) => {
-              setDuration(e.target.value);
+              handleDuration(e.target.value);
               sendPropsDuration(e.target.value);
             }}
             className="form-control"

@@ -7,9 +7,10 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
+import moment from "moment";
 import { TagsInput } from "react-tag-input-component";
-import DatePicker from 'react-datepicker'
-import Select from 'react-select'
+import DatePicker from "react-datepicker";
+import Select from "react-select";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
@@ -37,8 +38,8 @@ const TambahArtikel = ({ token, id }) => {
   const [, forceUpdate] = useState();
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
-  const { setting } = useSelector(state => state.allSettingPublikasi)
-  const { akademi } = useSelector(state => state.allAkademi);
+  const { setting } = useSelector((state) => state.allSettingPublikasi);
+  const { akademi } = useSelector((state) => state.allAkademi);
   const {
     loading: allLoading,
     error: allError,
@@ -47,12 +48,11 @@ const TambahArtikel = ({ token, id }) => {
   const { role_permission } = useSelector((state) => state.allRolePermission);
 
   const { quill, quillRef } = useQuill();
-  const limit = 12000
+  const limit = 12000;
 
   useEffect(() => {
-
     if (quill) {
-      quill.on('text-change', (delta, oldDelta, source) => {
+      quill.on("text-change", (delta, oldDelta, source) => {
         setIsiArtikel(quill.root.innerHTML); // Get innerHTML using quill
 
         if (quill.root.innerText.length <= limit) {
@@ -67,8 +67,6 @@ const TambahArtikel = ({ token, id }) => {
         }
         quill.updateContents({ ops: updatedOps });
       });
-
-
     }
 
     setEditorLoaded(true);
@@ -86,24 +84,22 @@ const TambahArtikel = ({ token, id }) => {
   const [gambarPreview, setGambarPreview] = useState(
     "/assets/media/default.jpg"
   );
-  const [iconPlus, setIconPlus] = useState(
-    "/assets/icon/Add.svg"
-  );
-  const [gambarName, setGambarName] = useState(null)
+  const [iconPlus, setIconPlus] = useState("/assets/icon/Add.svg");
+  const [gambarName, setGambarName] = useState(null);
   const [kategori_id, setKategoriId] = useState("");
   const [users_id, setUserId] = useState(id);
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
-  const [disablePublishDate, setDisablePublishDate] = useState(true)
-  const [disableTag, setDisableTag] = useState(false)
+  const [disablePublishDate, setDisablePublishDate] = useState(true);
+  const [disableTag, setDisableTag] = useState(false);
   const [kategori_akademi, setKategoriAkademi] = useState("");
 
   const onChangeGambar = (e) => {
-    const type = ["image/jpg", "image/png", "image/jpeg"]
+    const type = ["image/jpg", "image/png", "image/jpeg"];
 
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
+      if (e.target.files[0].size > parseInt(setting[0].max_size) + "000000") {
         e.target.value = null;
         Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
       } else {
@@ -114,39 +110,34 @@ const TambahArtikel = ({ token, id }) => {
             setGambarPreview(reader.result);
           }
         };
-        reader.readAsDataURL(e.target.files[0])
-        setGambarName(e.target.files[0].name)
+        reader.readAsDataURL(e.target.files[0]);
+        setGambarName(e.target.files[0].name);
       }
-    }
-    else {
-      e.target.value = null
-      Swal.fire(
-        'Oops !',
-        'Thumbnail harus berupa data gambar.',
-        'error'
-      )
+    } else {
+      e.target.value = null;
+      Swal.fire("Oops !", "Thumbnail harus berupa data gambar.", "error");
     }
   };
 
   const handleChangePublish = (e) => {
-    setDisablePublishDate(!disablePublishDate)
+    setDisablePublishDate(!disablePublishDate);
 
     if (e.target.checked === false) {
-      setPublishDate(null)
-      setPublish(0)
+      setPublishDate(null);
+      setPublish(0);
     } else {
-      setPublish(1)
+      setPublish(1);
     }
   };
 
   const handlePublishDate = (date) => {
     if (disablePublishDate === false) {
-      setPublishDate(date)
+      setPublishDate(date);
     }
-  }
+  };
 
   function hasWhiteSpace(s) {
-    return s.indexOf(' ') >= 0;
+    return s.indexOf(" ") >= 0;
   }
 
   const handleTag = (data) => {
@@ -156,10 +147,9 @@ const TambahArtikel = ({ token, id }) => {
       }
     }
     setTag(data);
-  }
+  };
 
   const onSubmit = (e) => {
-
     e.preventDefault();
     if (simpleValidator.current.allValid() && disableTag === false) {
       if (error) {
@@ -173,15 +163,13 @@ const TambahArtikel = ({ token, id }) => {
       }
 
       if (publish === true) {
-        setPublish(1)
-
+        setPublish(1);
       } else if (publish === false) {
-        setPublish(0)
-
+        setPublish(0);
       }
 
       if (publishDate === null) {
-        let today = new Date
+        let today = new Date();
 
         const data = {
           judul_artikel,
@@ -192,7 +180,7 @@ const TambahArtikel = ({ token, id }) => {
           users_id,
           tag,
           publish,
-          tanggal_publish: moment(today).format("YYYY-MM-DD")
+          tanggal_publish: moment(today).format("YYYY-MM-DD"),
         };
 
         Swal.fire({
@@ -204,15 +192,12 @@ const TambahArtikel = ({ token, id }) => {
           cancelButtonColor: "#d33",
           confirmButtonText: "Ya !",
           cancelButtonText: "Batal",
-        })
-          .then((result) => {
-            if (result.isConfirmed) {
-              dispatch(newArtikel(data, token));
-            }
-          });
-
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(newArtikel(data, token));
+          }
+        });
       } else {
-
         const data = {
           judul_artikel,
           isi_artikel,
@@ -222,9 +207,8 @@ const TambahArtikel = ({ token, id }) => {
           users_id,
           tag,
           publish,
-          tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
+          tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
         };
-
 
         Swal.fire({
           title: "Apakah anda yakin ?",
@@ -235,14 +219,12 @@ const TambahArtikel = ({ token, id }) => {
           cancelButtonColor: "#d33",
           confirmButtonText: "Ya !",
           cancelButtonText: "Batal",
-        })
-          .then((result) => {
-            if (result.isConfirmed) {
-              dispatch(newArtikel(data, token));
-            }
-          });
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(newArtikel(data, token));
+          }
+        });
       }
-
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -333,12 +315,14 @@ const TambahArtikel = ({ token, id }) => {
                         <div style={{ width: "100%", height: "300px" }}>
                           <div
                             ref={quillRef}
+                            style={{ fontFamily: "Poppins" }}
                           />
                         </div>
-
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
+                    </div>
+                    <div className={`${styles.validQuill}`}>
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
@@ -396,17 +380,17 @@ const TambahArtikel = ({ token, id }) => {
                       "required",
                       { className: "text-danger" }
                     )}
-                    {
-                      gambarName !== null ?
-                        <small className="text-danger">{gambarName}</small>
-                        :
-                        null
-                    }
+                    {gambarName !== null ? (
+                      <small className="text-danger">{gambarName}</small>
+                    ) : null}
                   </div>
 
-                  <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
+                  <div
+                    className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}
+                  >
                     <p>
-                      Resolusi yang direkomendasikan adalah 837 * 640. Fokus visual pada bagian tengah gambar.
+                      Resolusi yang direkomendasikan adalah 837 * 640. Fokus
+                      visual pada bagian tengah gambar.
                     </p>
                   </div>
                 </div>
@@ -436,7 +420,7 @@ const TambahArtikel = ({ token, id }) => {
                         <option value="">Data Kosong</option>
                       ) : (
                         akademi &&
-                        akademi.map((row) => {
+                        akademi?.map((row) => {
                           return (
                             <option key={row.id} value={row.slug}>
                               {row.slug}
@@ -480,16 +464,13 @@ const TambahArtikel = ({ token, id }) => {
                         <option value="">Data Kosong</option>
                       ) : (
                         kategori &&
-                        kategori.kategori &&
-                        kategori.kategori.map((row) => {
-                          return (
-                            row.jenis_kategori == "Artikel" ?
-                              <option key={row.id} value={row.id}>
-                                {row.nama_kategori}
-                              </option>
-                              :
-                              null
-                          );
+                        kategori?.kategori &&
+                        kategori?.kategori?.map((row) => {
+                          return row.jenis_kategori == "Artikel" ? (
+                            <option key={row.id} value={row.id}>
+                              {row.nama_kategori}
+                            </option>
+                          ) : null;
                         })
                       )}
                     </select>
@@ -509,12 +490,15 @@ const TambahArtikel = ({ token, id }) => {
                   >
                     Tag
                   </label>
-                  <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
+                  <div
+                    className={`${styles.tagStyle} col-sm-12`}
+                    style={{ wordBreak: "break-word" }}
+                  >
                     <TagsInput
                       value={tag}
                       onChange={(data) => {
                         handleTag(data);
-                        setDisableTag(false)
+                        setDisableTag(false);
                       }}
                       onExisting={(data) => setDisableTag(true)}
                       name="fruits"
@@ -523,83 +507,82 @@ const TambahArtikel = ({ token, id }) => {
                       seprators={["Enter", "Tab"]}
                     />
 
-                    {
-                      disableTag === true ?
-                        <p className="text-danger">
-                          Tag tidak boleh sama
-                        </p>
-                        :
-                        null
-                    }
+                    {disableTag === true ? (
+                      <p className="text-danger">Tag tidak boleh sama</p>
+                    ) : null}
                   </div>
                 </div>
 
-                {
-                  role_permission.roles.includes("Super Admin") ?
-                    <div className="form-group row">
-                      <label
-                        htmlFor="staticEmail"
-                        className="ml-5 pl-4 font-weight-bolder"
-                      >
-                        Publish
-                      </label>
-                      <div className="col-sm-1 ml-4">
-                        <div className="">
-                          <label className="switches">
-                            <input
-                              // required
-                              className="checkbox"
-                              checked={publish}
-                              type="checkbox"
-                              onChange={(e) => handleChangePublish(e)}
-                            />
-                            <span
-                              className={`sliders round ${publish ? "text-white" : "pl-2"
-                                }`}
-                            >
-                            </span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    : null
-                }
-
-                {
-                  disablePublishDate === false ?
-                    <div className="form-group">
-                      <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                      <div className="col-sm-12">
-                        <div className="input-group">
-                          <DatePicker
-                            className={`${styles.setPublish} form-search-date form-control-sm form-control`}
-                            selected={publishDate}
-                            onChange={(date) => handlePublishDate(date)}
-                            selectsStart
-                            startDate={publishDate}
-                            dateFormat="dd/MM/yyyy"
-                            placeholderText="Silahkan Isi Tanggal Publish"
-                            wrapperClassName="col-12 col-lg-12 col-xl-12"
-                            disabled={disablePublishDate === true || disablePublishDate === null}
+                {role_permission?.roles?.includes("Super Admin") ? (
+                  <div className="form-group row">
+                    <label
+                      htmlFor="staticEmail"
+                      className="ml-5 pl-4 font-weight-bolder"
+                    >
+                      Publish
+                    </label>
+                    <div className="col-sm-1 ml-4">
+                      <div className="">
+                        <label className="switches">
+                          <input
+                            // required
+                            className="checkbox"
+                            checked={publish}
+                            type="checkbox"
+                            onChange={(e) => handleChangePublish(e)}
                           />
-                        </div>
+                          <span
+                            className={`sliders round ${publish ? "text-white" : "pl-2"
+                              }`}
+                          ></span>
+                        </label>
                       </div>
                     </div>
-                    :
-                    null
+                  </div>
+                ) : null}
 
-                }
-
+                {disablePublishDate === false ? (
+                  <div className="form-group">
+                    <label className="col-sm-5 col-form-label font-weight-bolder">
+                      Set Tanggal Publish
+                    </label>
+                    <div className="col-sm-12">
+                      <div className="input-group">
+                        <DatePicker
+                          className={`${styles.setPublish} form-search-date form-control-sm form-control`}
+                          selected={publishDate}
+                          onChange={(date) => handlePublishDate(date)}
+                          selectsStart
+                          startDate={publishDate}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Silahkan Isi Tanggal Publish"
+                          wrapperClassName="col-12 col-lg-12 col-xl-12"
+                          disabled={
+                            disablePublishDate === true ||
+                            disablePublishDate === null
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div className="form-group row mr-0">
                   <div className="col-sm-2"></div>
                   <div className="col-sm-10 text-right">
                     <Link href="/publikasi/artikel">
-                      <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>
+                      <a
+                        className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}
+                      >
                         Kembali
                       </a>
                     </Link>
-                    <button onClick={onSubmit} className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
+                    <button
+                      onClick={onSubmit}
+                      className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}
+                    >
+                      Simpan
+                    </button>
                   </div>
                 </div>
               </div>
@@ -656,6 +639,5 @@ const TambahArtikel = ({ token, id }) => {
     </>
   );
 };
-
 
 export default TambahArtikel;

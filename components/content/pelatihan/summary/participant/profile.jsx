@@ -84,7 +84,7 @@ const ProfileUser = ({ profile }) => {
                   </div>
                   <div className="col-md-6">
                     <p className="text-neutral-body my-0">Pendidikan</p>
-                    <p className="text-dark">{profile.asal_pendidikan}</p>
+                    <p className="text-dark">{profile.jenjang}</p>
                   </div>
                 </div>
                 <div className="row">
@@ -170,9 +170,82 @@ const ProfileUser = ({ profile }) => {
                     <p className="text-dark">{profile.kecamatan || "-"}</p>
                   </div>
                   <div className="col-md-6">
-                    <p className="text-neutral-body my-0">Pendidikan</p>
+                    <p className="text-neutral-body my-0">Kode Pos</p>
                     <p className="text-dark">{profile.kode_pos || "-"}</p>
                   </div>
+                </div>
+              </div>
+              <div className="data-pendidikan">
+                <h3 className="font-weight-bolder mb-4">Pendidikan Terakhir</h3>
+                <div className="row">
+                  <div className="col-md-12">
+                    <p className="text-neutral-body my-0">Jenjang Pendidikan</p>
+
+                    <p className="text-dark">{profile.jenjang || "-"}</p>
+                  </div>
+                  {profile.jenjang === "TK" ||
+                  profile.jenjang === "SD/Sederajat" ||
+                  profile.jenjang === "SMP/Sederajat" ||
+                  profile.jenjang === "SMA/Sederajat" ? (
+                    <>
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">
+                          Asal Sekolah/Perguruan Tinggi
+                        </p>
+
+                        {profile.jenjang === "SMA/Sederajat" ? (
+                          <p className="text-dark">
+                            {profile.asal_pendidikan || "-"}
+                          </p>
+                        ) : (
+                          <p className="text-dark">{profile.lainya || "-"}</p>
+                        )}
+                      </div>
+
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">Tahun Masuk</p>
+
+                        <p className="text-dark">
+                          {profile.tahun_masuk || "-"}
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    profile.jenjang !== "Tidak Sekolah" && (
+                      <>
+                        <div className="col-md-6">
+                          <p className="text-neutral-body my-0">
+                            Asal Sekolah/Perguruan Tinggi
+                          </p>
+
+                          <p className="text-dark">
+                            {profile.asal_pendidikan || "-"}
+                          </p>
+                        </div>
+                        <div className="col-md-6">
+                          <p className="text-neutral-body my-0">
+                            Program Studi
+                          </p>
+
+                          <p className="text-dark">
+                            {profile.program_studi || "-"}
+                          </p>
+                        </div>
+                        <div className="col-md-6">
+                          <p className="text-neutral-body my-0">IPK</p>
+
+                          <p className="text-dark">{profile.ipk || "-"}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <p className="text-neutral-body my-0">Tahun Masuk</p>
+
+                          <p className="text-dark">
+                            {profile.tahun_masuk || "-"}
+                          </p>
+                        </div>
+                      </>
+                    )
+                  )}
                 </div>
               </div>
               <div className="data-pekerjaan">
@@ -180,29 +253,50 @@ const ProfileUser = ({ profile }) => {
                 <div className="row">
                   <div className="col-md-12">
                     <p className="text-neutral-body my-0">Status Pekerjaan</p>
+
                     <p className="text-dark">
-                      {profile.staatus_pekerjaan || "-"}
+                      {profile.status_pekerjaan || "-"}
                     </p>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <p className="text-neutral-body my-0">Pekerjaan</p>
-                    <p className="text-dark">{profile.pekerjaan || "-"}</p>
+                {profile.status_pekerjaan === "Pelajar/Mahasiswa" && (
+                  <div className="row">
+                    <div className="col-md-6">
+                      <p className="text-neutral-body my-0">
+                        Sekolah/Perguruan Tinggi
+                      </p>
+                      <p className="text-dark">{profile.sekolah || "-"}</p>
+                    </div>
+                    <div className="col-md-6">
+                      <p className="text-neutral-body my-0">Tahun Masuk</p>
+                      <p className="text-dark">{profile.tahun_masuk || "-"}</p>
+                    </div>
                   </div>
-                  <div className="col-md-6">
-                    <p className="text-neutral-body my-0">
-                      Perusahaan / Institusi Tempat Bekerja
-                    </p>
-                    <p className="text-dark">{profile.perusahaan || "-"}</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <p className="text-neutral-body my-0">Penghasilan</p>
-                    <p className="text-dark">{profile.penghasilan || "-"}</p>
-                  </div>
-                </div>
+                )}
+                {profile.status_pekerjaan === "Bekerja" && (
+                  <>
+                    <div className="row">
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">Pekerjaan</p>
+                        <p className="text-dark">{profile.pekerjaan || "-"}</p>
+                      </div>
+                      <div className="col-md-6">
+                        <p className="text-neutral-body my-0">
+                          Perusahaan / Institusi Tempat Bekerja
+                        </p>
+                        <p className="text-dark">{profile.perusahaan || "-"}</p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <p className="text-neutral-body my-0">Penghasilan</p>
+                        <p className="text-dark">
+                          {profile.penghasilan || "-"}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
               <div className="data-berkas">
                 <h3 className="font-weight-bolder mb-4">Berkas</h3>
@@ -265,14 +359,12 @@ const ProfileUser = ({ profile }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Image
+          <img
             src={
               (profile.File_ktp &&
                 process.env.END_POINT_API_IMAGE_BEASISWA + profile.File_ktp) ||
               "/assets/media/default.jpg"
             }
-            objectFit="cover"
-            height={200}
             width={400}
             alt="ktp-modal"
           />
@@ -300,14 +392,12 @@ const ProfileUser = ({ profile }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Image
+          <img
             src={
               (profile.ijasah &&
                 process.env.END_POINT_API_IMAGE_BEASISWA + profile.ijasah) ||
               "/assets/media/default.jpg"
             }
-            objectFit="cover"
-            height={200}
             width={400}
             alt="ktp-modal"
           />

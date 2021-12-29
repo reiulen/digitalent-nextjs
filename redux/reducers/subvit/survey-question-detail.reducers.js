@@ -331,7 +331,7 @@ export const importImagesSurveyQuestionDetailReducer = (
       return {
         loading: false,
         success: action.payload.message,
-        survey_question_images: action.payload.data,
+        survey_question_images: action.payload,
       };
 
     case IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_FAIL:

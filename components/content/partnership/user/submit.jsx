@@ -9,6 +9,7 @@ import axios from "axios";
 import IconCalender from "../../../assets/icon/Calender";
 import { useRouter } from "next/router";
 import moment from "moment";
+import Cookies from "js-cookie";
 
 const SubmitKerjasama = ({ token }) => {
   const [startDate, setStartDate] = useState(null);
@@ -90,7 +91,7 @@ const SubmitKerjasama = ({ token }) => {
         cancelButtonColor: "#d33",
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
+        // dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
@@ -112,6 +113,7 @@ const SubmitKerjasama = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
+                  Permission: Cookies.get("token_permission")
                 },
               }
             );
@@ -157,24 +159,27 @@ const SubmitKerjasama = ({ token }) => {
   };
 
   useEffect(() => {
-    async function cekProgresStatus(id) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        setPeriodValue(data.data.period);
-      } catch (error) {
-        Swal.fire("Gagal", `${error.response.data.message}`, "error");
-      }
-    }
+    
     cekProgresStatus(router.query.id);
   }, [router.query.id, token]);
+
+  async function cekProgresStatus(id) {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: Cookies.get("token_permission")
+          },
+        }
+      );
+
+      setPeriodValue(data.data.period);
+    } catch (error) {
+      Swal.fire("Gagal", `${error.response.data.message}`, "error");
+    }
+  }
 
   return (
     <PageWrapper>
@@ -182,7 +187,7 @@ const SubmitKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title titles-1 fw-500 text-dark">
-              Submit Dokumen Kerjasama
+              Submit Dokumen Kerjasama 
             </h3>
           </div>
 
@@ -191,7 +196,7 @@ const SubmitKerjasama = ({ token }) => {
               <div className="col-2 p-0">
                 <div className="progress-items">
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Submit Kerjasama</span>
+                    <span className="title-progress">Submit Kerjasamaa</span>
                   </div>
                 </div>
               </div>
@@ -288,7 +293,7 @@ const SubmitKerjasama = ({ token }) => {
                   <div className="col-12 col-sm-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-control cursor-pointer border-0"
+                        className="form-control cursor-not-allowed border-0"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         readOnly
@@ -358,7 +363,7 @@ const SubmitKerjasama = ({ token }) => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal Penandatangan
                 </label>
-                <div className="d-flex align-items-center position-relative datepicker-w w-100">
+                <div className="d-flex align-items-center position-relative datepicker-w w-100" style={{zIndex:"10"}}>
                   <DatePicker
                     className="form-search-date form-control cursor-pointer"
                     selected={endDate}

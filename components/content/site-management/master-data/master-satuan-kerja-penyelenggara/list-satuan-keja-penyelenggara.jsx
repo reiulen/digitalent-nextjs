@@ -73,7 +73,7 @@ const Table = ({ token }) => {
             </h3>
             {localStorage
               .getItem("permissions")
-              .includes("site_management.master-data.manage") && (
+              .includes("site_management.master_data.master_satuan_kerja_penyelenggara.manage") && (
               <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
                 <Link
                   href="/site-management/master-data/master-satuan-kerja-penyelenggara/tambah-satuan-kerja-penyelenggara"
@@ -97,25 +97,29 @@ const Table = ({ token }) => {
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      id="kt_datatable_search_query"
-                      type="text"
-                      className={`${styles.cari} form-control pl-10`}
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => handleChangeValueSearch(e.target.value)}
-                    />
-                    <button
-                      type="button"
-                      onClick={(e) => handleSubmit(e)}
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSubmit(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        id="kt_datatable_search_query"
+                        type="text"
+                        className={`${styles.cari} form-control pl-10`}
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) =>
+                          handleChangeValueSearch(e.target.value)
+                        }
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => handleSubmit(e)}
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                      >
+                        Cari
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -214,7 +218,7 @@ const Table = ({ token }) => {
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
-                                      "site_management.master-data.manage"
+                                      "site_management.master_data.master_satuan_kerja_penyelenggara.manage"
                                     ) && (
                                     <Link
                                       href={`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara/${items.id}`}
@@ -231,7 +235,7 @@ const Table = ({ token }) => {
                                   {localStorage
                                     .getItem("permissions")
                                     .includes(
-                                      "site_management.master-data.view"
+                                      "site_management.master_data.master_satuan_kerja_penyelenggara.view"
                                     ) && (
                                     <Link
                                       href={`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara/${items.id}`}
@@ -281,7 +285,7 @@ const Table = ({ token }) => {
                     </>
                   )}
 
-                {allUnitWork ? (
+                {allUnitWork?.data?.total > 5 ? (
                   <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row align-items-center">
                       <div className="col-4 mr-0">

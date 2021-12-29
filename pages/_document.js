@@ -55,18 +55,17 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="/assets/css/themes/layout/aside/dark.css" //dark
           />
-          {/* <link href="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" /> */}
 
           {/* <!--end::Layout Themes--> */}
           <link rel="shortcut icon" href="/assets/icon/mainlogo.svg" />
 
           <script
             type="text/javascript"
-            src="/assets/plugins/global/plugins.bundle.js"
+            src="/assets/plugins/global/plugins.bundle.min.js"
           ></script>
           <script
             type="text/javascript"
-            src="/assets/js/scripts.bundle.js"
+            src="/assets/js/scripts2.bundle.min.js"
           ></script>
         </Head>
         <body

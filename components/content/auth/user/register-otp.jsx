@@ -96,22 +96,8 @@ const RegisterUser = () => {
           setLoading(false);
           if (res.data.status) {
             setLoading(false);
-            Swal.fire({
-              icon: "success",
-              html:
-                '<h3 style="white-space: nowrap"><b>Selamat, akun Anda Terdaftar!</b></h3>' +
-                '<p style="margin-bottom:10px">1 akun Kamu Terintegrasi Dengan 3 Platform </p>' +
-                '<img  src="/assets/icon/mainlogo.svg" />' +
-                '<img height="70" width="125" style="margin-left:20px;margin-right:20px"  src="/assets/media/logo-simonas.svg" />' +
-                '<img height="68" width="68"  src="/assets/media/mitra-icon/bg-beasiswa-2.svg" />',
-              showCloseButton: false,
-              showCancelButton: false,
-              showConfirmButton: false,
-              focusConfirm: false,
-            }).then((result) => {
-              router.push({
-                pathname: "/login",
-              });
+            router.push({
+              pathname: "/success-register",
             });
           }
         })
@@ -191,7 +177,7 @@ const RegisterUser = () => {
               </form>
               <div className="bottom mt-9 text-center mb-7">
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
-                  Sisa waktu OTP :
+                  Generate OTP baru :
                   <span
                     className={`${
                       second <= 5 && minute <= 0

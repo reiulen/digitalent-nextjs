@@ -82,7 +82,6 @@ export const kategoriBerandaArtikelReducer = (state = { kategori: [] }, action) 
 
         case KATEGORI_BERANDA_ARTIKEL_SUCCESS:
             let result = []
-
             for (let i = 0; i < action.payload.data.kategori.length; i++) {
                 if (action.payload.data.kategori[i].jenis_kategori == "Artikel") {
                     result.push(action.payload.data.kategori[i])

@@ -17,7 +17,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 
-const EditSoalSubstansi = ({ token }) => {
+const EditSoalSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const importSwitch = () => import("bootstrap-switch-button-react");
@@ -45,10 +45,10 @@ const EditSoalSubstansi = ({ token }) => {
   );
 
   const [question, setQuestion] = useState(
-    subtance_question_detail.question || ""
+    subtance_question_detail?.question || ""
   );
   const [question_image, setQuestionImage] = useState(
-    subtance_question_detail.question_image
+    subtance_question_detail?.question_image
   );
   // const [question_image_preview, setQuestionImagePreview] = useState(
   //   subtance_question_detail.question_image_preview
@@ -57,11 +57,11 @@ const EditSoalSubstansi = ({ token }) => {
 
   const [question_image_preview, setQuestionImagePreview] = useState(
     process.env.END_POINT_API_IMAGE_SUBVIT +
-      subtance_question_detail.question_image_preview
+      subtance_question_detail?.question_image_preview
   );
   const [question_image_name, setQuestionImageName] = useState(
-    (subtance_question_detail.question_image_preview &&
-      subtance_question_detail.question_image_preview.substr(16)) ||
+    (subtance_question_detail?.question_image_preview &&
+      subtance_question_detail?.question_image_preview.substr(16)) ||
       "Pilih Gambar"
   );
 
@@ -85,8 +85,10 @@ const EditSoalSubstansi = ({ token }) => {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_DETAIL_RESET,
       });
+
+      // router.back();
       router.push({
-        pathname: `/subvit/substansi`,
+        pathname: `/subvit/substansi/${localStorage.getItem("id_substansi")}`,
         query: { success: true },
       });
     }
@@ -134,7 +136,13 @@ const EditSoalSubstansi = ({ token }) => {
     const newKey = String.fromCharCode(keyindex + 1);
     setAnswer([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      {
+        key: newKey,
+        question: "",
+        image: "",
+        image_preview: "",
+        is_right: false,
+      },
     ]);
   };
 
@@ -234,9 +242,10 @@ const EditSoalSubstansi = ({ token }) => {
         status,
         answer_key,
         question_type_id: question_type,
+        _method: "put",
       };
 
-      dispatch(updateSubtanceQuestionDetail(id, data, token));
+      dispatch(updateSubtanceQuestionDetail(id, data, token, tokenPermission));
     }
   };
 
@@ -281,10 +290,7 @@ const EditSoalSubstansi = ({ token }) => {
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Soal{" "}
-                {subtance_question_detail
-                  ? subtance_question_detail.bank_soal + 1
-                  : 0}
+                Soal {parseInt(router.query.no) + 1}
               </h3>
               <div className="card-toolbar ml-auto"></div>
             </div>

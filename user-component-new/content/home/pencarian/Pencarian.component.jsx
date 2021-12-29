@@ -17,15 +17,16 @@ import {
 import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
 
 import axios from "axios";
+import ShareOverlay from "../../../components/global/ShareOverlay.component";
 
 const Pencarian = ({ session }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { query } = router;
-  const allPencarian = useSelector(state => state.allPencarian);
+  const allPencarian = useSelector((state) => state.allPencarian);
 
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
-    useSelector(state => state.allPenyelenggaraPeserta);
+    useSelector((state) => state.allPenyelenggaraPeserta);
 
   const [filterPenyelenggara, setFilterPenyelenggara] = useState("");
   const [filterKategori, setFilterKategori] = useState("");
@@ -54,7 +55,7 @@ const Pencarian = ({ session }) => {
   }
 
   const customStylesSide = {
-    control: styles => ({
+    control: (styles) => ({
       ...styles,
       borderRadius: "30px",
       paddingLeft: "10px",
@@ -91,7 +92,7 @@ const Pencarian = ({ session }) => {
     router.push(`/pencarian?cari=${router.query.cari || ""}`);
   };
 
-  const handlePagination = page => {
+  const handlePagination = (page) => {
     let data = {
       penyelenggara:
         filterPenyelenggara !== null ? filterPenyelenggara.label : null,
@@ -110,7 +111,7 @@ const Pencarian = ({ session }) => {
     );
   };
 
-  const handleBookmark = async pelatihan => {
+  const handleBookmark = async (pelatihan) => {
     const link = process.env.END_POINT_API_PELATIHAN;
     const config = {
       headers: {
@@ -180,6 +181,7 @@ const Pencarian = ({ session }) => {
       }
     }
   };
+
   return (
     <>
       <HomeWrapper>
@@ -220,23 +222,23 @@ const Pencarian = ({ session }) => {
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Penyelenggara</Form.Label>
                     <Select
-                      ref={ref => (selectRefPenyelenggara = ref)}
+                      ref={(ref) => (selectRefPenyelenggara = ref)}
                       options={optionsPenyelenggara}
                       styles={customStylesSide}
                       placeholder="Pilih Penyelenggara"
                       isClearable
-                      onChange={e => setFilterPenyelenggara(e)}
+                      onChange={(e) => setFilterPenyelenggara(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Kategori Peserta</Form.Label>
                     <Select
-                      ref={ref => (selectRefKategoriPeserta = ref)}
+                      ref={(ref) => (selectRefKategoriPeserta = ref)}
                       options={optionsKategoriPeserta}
                       styles={customStylesSide}
                       placeholder="Pilih Kategori Peserta"
                       isClearable
-                      onChange={e => setFilterKategori(e)}
+                      onChange={(e) => setFilterKategori(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -248,7 +250,7 @@ const Pencarian = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={startDate}
-                      onChange={e => {
+                      onChange={(e) => {
                         setStartDate(e.target.value);
                         setEndDate("");
                         setDisabledDate(false);
@@ -264,7 +266,7 @@ const Pencarian = ({ session }) => {
                       style={{ borderRadius: "30px" }}
                       type="date"
                       value={endDate}
-                      onChange={e => setEndDate(e.target.value)}
+                      onChange={(e) => setEndDate(e.target.value)}
                       min={startDate}
                       disabled={disabledDate}
                     />
@@ -291,13 +293,13 @@ const Pencarian = ({ session }) => {
             </Col>
             <Col md={8} className="mb-5">
               <Row>
-                {!allPencarian.pelatihan.list ? (
+                {!allPencarian || allPencarian?.pelatihan?.list?.length == 0 ? (
                   <Fragment>
                     <Card
-                      className="card-custom card-stretch gutter-b p-0"
+                      className="card-custom card-stretch gutter-b w-100 p-0"
                       style={{ height: "602px" }}
                     >
-                      <Row className="d-flex justify-content-center w-100 p-0 m-0">
+                      <Row className="d-flex justify-content-center  p-0 m-0">
                         <div className="d-flex justify-content-center pt-10">
                           <Image
                             src={"/assets/media/gambar-belum-tersedia-page.svg"}
@@ -307,13 +309,13 @@ const Pencarian = ({ session }) => {
                             objectFit="contain"
                           />
                         </div>
-                        <p
-                          className="d-flex justify-content-center font-weight-bolder"
-                          style={{ fontSize: "16px" }}
-                        >
-                          Pencarian "{router.query.cari}" belum tersedia
-                        </p>
                       </Row>
+                      <p
+                        className="d-flex justify-content-center font-weight-bolder"
+                        style={{ fontSize: "16px" }}
+                      >
+                        Pencarian "{router.query.cari}" belum tersedia
+                      </p>
                     </Card>
                   </Fragment>
                 ) : (
@@ -339,22 +341,35 @@ const Pencarian = ({ session }) => {
                                   if (!session) {
                                     router.push("/login");
                                   } else {
-                                    handleBookmark(row);
+                                    if (!session?.roles?.includes("user")) {
+                                      SweatAlert(
+                                        "Gagal",
+                                        "Anda sedang login sebagai Admin",
+                                        "error"
+                                      );
+                                    } else {
+                                      handleBookmark(row);
+                                    }
                                   }
                                 }}
                               ></i>
                             </Button>
-                            <Button
-                              variant="light"
-                              className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                            <ShareOverlay
+                              quote={row?.name}
+                              url={`http://dts-dev.majapahit.id/detail/pelatihan/${row?.id}?akademiId=${row.akademi_id}`}
                             >
-                              <i
-                                className="ri-share-line p-0"
-                                style={{
-                                  color: "#6C6C6C",
-                                }}
-                              ></i>
-                            </Button>
+                              <Button
+                                variant="light"
+                                className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                              >
+                                <i
+                                  className="ri-share-line p-0"
+                                  style={{
+                                    color: "#6C6C6C",
+                                  }}
+                                ></i>
+                              </Button>
+                            </ShareOverlay>
                           </div>
                         )}
 
@@ -365,7 +380,9 @@ const Pencarian = ({ session }) => {
                             className="h-100 shadow-sm"
                             key={i}
                             onClick={() => {
-                              router.push(`/detail/pelatihan/${row?.id}`);
+                              router.push(
+                                `/detail/pelatihan/${row?.id}?akademiId=${row.akademi_id}`
+                              );
                             }}
                             style={{ cursor: "pointer" }}
                           >
@@ -387,7 +404,7 @@ const Pencarian = ({ session }) => {
                                 <div className="align-self-start">
                                   <Badge
                                     bg={`py-3 px-4 badge-card-pelatihan-new`}
-                                    classNam="d-flex "
+                                    className="d-flex "
                                   >
                                     {row.metode_pelatihan}
                                   </Badge>
@@ -486,7 +503,7 @@ const Pencarian = ({ session }) => {
                       itemsCountPerPage={allPencarian?.pelatihan?.perPage}
                       totalItemsCount={allPencarian?.pelatihan?.total}
                       pageRangeDisplayed={3}
-                      onChange={page => handlePagination(page)}
+                      onChange={(page) => handlePagination(page)}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}

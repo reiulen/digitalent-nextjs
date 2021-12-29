@@ -43,7 +43,7 @@ export default function Ketentuan(props) {
       setStatusAdmin(parseInt(items.data.data.training_rules.completeFinalAdministrativeStatus))
       setStatusTidakLulus(parseInt(items.data.data.training_rules.statusNotPassedTraining))
       setStatusPelatihan(parseInt(items.data.data.training_rules.noTrainingAccepted))
-      setTotalPelatihan({value: items.data.data.training_rules.numberOfTraining, label: `${items.data.data.training_rules.numberOfTraining} pelatihan`})
+      setTotalPelatihan({value: items.data.data.training_rules.numberOfTraining, label: `${items.data.data.training_rules.numberOfTraining === "-" ? "Lebih dari 10" : items.data.data.training_rules.numberOfTraining} Pelatihan`})
     })
   }, [props.token])
 
@@ -51,6 +51,7 @@ export default function Ketentuan(props) {
     e.preventDefault();
     dispatch(postKetentuan(props.token, totalPelatihan.value, statusLulus || statusLulus === 1 ? "1" : "0", statusAdmin || statusAdmin === 1 ? "1" : "0", statusTidakLulus || statusTidakLulus === 1 ? "1" : "0", statusPelatihan || statusPelatihan === 1 ? "1" : "0"))
   };
+
 
   return (
     <div className="row">
@@ -105,14 +106,17 @@ export default function Ketentuan(props) {
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-end mb-4">
+          {localStorage
+            .getItem("permissions")
+            .includes("site_management.setting.pelatihan.manage") && <div className="d-flex justify-content-end mb-4">
             <button
               type="submit"
               className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill mr-3`}
             >
               Simpan
             </button>
-          </div>
+          </div> }
+         
         </form>
       </div>
     </div>

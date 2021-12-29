@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator"
 import Swal from 'sweetalert2'
+import moment from "moment";
 import DatePicker from 'react-datepicker'
 
 import styles from "../../../../styles/previewGaleri.module.css";
@@ -68,14 +69,14 @@ const EditFaq = ({ token }) => {
     }, [dispatch, error, isUpdated, router]);
 
 
-    const [judul, setJudulPertanyaan] = useState(faq.judul)
-    const [jawaban, setJawaban] = useState(faq.jawaban);
-    const [kategori_id, setKategoriId] = useState(faq.kategori_id)
-    const [users_id, setUsersId] = useState(faq.users_id)
-    const [pinned, setPinnedFaq] = useState(faq.pinned)
-    const [publish, setPublish] = useState(faq.publish)
-    const [publishDate, setPublishDate] = useState(faq.tanggal_publish ? new Date(faq.tanggal_publish) : null);
-    const [disablePublishDate, setDisablePublishDate] = useState(faq.publish === 0 ? true : false)
+    const [judul, setJudulPertanyaan] = useState(faq?.judul)
+    const [jawaban, setJawaban] = useState(faq?.jawaban);
+    const [kategori_id, setKategoriId] = useState(faq?.kategori_id)
+    const [users_id, setUsersId] = useState(faq?.users_id)
+    const [pinned, setPinnedFaq] = useState(faq?.pinned)
+    const [publish, setPublish] = useState(faq?.publish)
+    const [publishDate, setPublishDate] = useState(faq?.tanggal_publish ? new Date(faq?.tanggal_publish) : null);
+    const [disablePublishDate, setDisablePublishDate] = useState(faq?.publish === 0 ? true : false)
     const [, forceUpdate] = useState();
 
     const handleChangePinned = (e) => {
@@ -236,7 +237,7 @@ const EditFaq = ({ token }) => {
 
                                     <div className="form-group">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jawaban</label>
-                                        <div className={`${styles.deskripsiTambah} col-sm-12`}>
+                                        <div className={`col-sm-12`}>
                                             <div className="ckeditor">
                                                 {editorLoaded ? (
                                                     <CKEditor
@@ -259,12 +260,14 @@ const EditFaq = ({ token }) => {
                                                 ) : (
                                                     <p>Tunggu Sebentar</p>
                                                 )}
-                                                {simpleValidator.current.message(
-                                                    "jawaban",
-                                                    jawaban,
-                                                    "required|min:100|max:7000",
-                                                    { className: "text-danger" }
-                                                )}
+                                                <div className={`${styles.validFaq}`}>
+                                                    {simpleValidator.current.message(
+                                                        "jawaban",
+                                                        jawaban,
+                                                        "required|min:100|max:7000",
+                                                        { className: "text-danger" }
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -283,8 +286,8 @@ const EditFaq = ({ token }) => {
                                                     <option value="">Data Kosong</option>
                                                 ) : (
                                                     kategori &&
-                                                    kategori.kategori &&
-                                                    kategori.kategori.map((row) => {
+                                                    kategori?.kategori &&
+                                                    kategori?.kategori?.map((row) => {
                                                         return (
                                                             row.jenis_kategori == "Faq" ?
                                                                 <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
@@ -332,7 +335,7 @@ const EditFaq = ({ token }) => {
                                     }
 
                                     {
-                                        role_permission.roles.includes("Super Admin") ?
+                                        role_permission?.roles.includes("Super Admin") ?
                                             disablePublishDate === false ?
                                                 <div className="form-group">
                                                     <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>

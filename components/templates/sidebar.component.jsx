@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import IconArrow2 from "../../components/assets/icon/Arrow2";
+// import IconArrow2 from "../../components/assets/icon/Arrow2";
 import { useDispatch, useSelector } from "react-redux";
-import { useSession } from "next-auth/client";
-import { getSidebar } from "../../redux/actions/site-management/role.actions";
+// import { useSession } from "next-auth/client";
+// import { getSidebar } from "../../redux/actions/site-management/role.actions";
 import axios from "axios";
 import LoadingTable from "../LoadingTable";
 import Cookies from "js-cookie";
@@ -79,22 +79,48 @@ const Sidebar = ({ session }) => {
       ? JSON.parse(localStorage.getItem("sidebar"))
       : []
   );
-  const pathRoute = router.route;
-  const splitRouteToMakingActive = pathRoute.split("/");
 
   useEffect(() => {
+    let pathRoute = router.route;
+    const replacedPath =
+      pathRoute.substring(0, 0) + "" + pathRoute.substring(0 + 1);
+    const arrPath = replacedPath.split("/");
+
     if (menu) {
       menu.map((row, index) => {
-        if (splitRouteToMakingActive[1] == row.name.toLowerCase()) {
-          menu[index].selected = true;
+        const named = row.href;
+        const replacedIndexOne =
+          named.substring(0, 0) + "" + named.substring(0 + 1);
+        const arrNamed = replacedIndexOne.split("/");
 
-          if (
-            session &&
-            session?.user?.user?.data?.user?.roles[0] !== "mitra"
-          ) {
-            if (splitRouteToMakingActive[1] !== "dashboard") {
-              const idSubmenuActive = localStorage.getItem("submenuActive");
-              menu[index].child[idSubmenuActive].selected = true;
+        if (arrNamed[0] === arrPath[0]) {
+          row.selected = true;
+
+          if (session?.user?.user?.data?.user?.roles[0] !== "mitra") {
+            if (arrPath.length > 1) {
+              row.child.map((rows, indexx) => {
+                const named = rows.href;
+                const replacedIndexOne =
+                  named.substring(0, 0) + "" + named.substring(0 + 1);
+                const arrNamed = replacedIndexOne.split("/");
+
+                if (arrNamed[1] === arrPath[1]) {
+                  rows.selected = true;
+
+                  if (rows.child.length > 0 && arrPath.length > 2) {
+                    rows.child.map((rowss, indexx) => {
+                      const named = rowss.href;
+                      const replacedIndexOne =
+                        named.substring(0, 0) + "" + named.substring(0 + 1);
+                      const arrNamed = replacedIndexOne.split("/");
+
+                      if (arrNamed[2] === arrPath[2]) {
+                        rowss.selected = true;
+                      }
+                    });
+                  }
+                }
+              });
             }
           }
         }
@@ -103,10 +129,6 @@ const Sidebar = ({ session }) => {
     if (menu) {
       let _temp = [...menu];
       setMenu(_temp);
-
-      return () => {
-        localStorage.removeItem("submenuActive");
-      };
     }
   }, []);
 
@@ -118,20 +140,34 @@ const Sidebar = ({ session }) => {
         },
       };
 
-      axios
-        .get(
-          process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
-          config
-        )
-        .then((data) => {
-          setMenu(data.data.data.menu);
-          localStorage.setItem("sidebar", JSON.stringify(data.data.data.menu))
-          localStorage.setItem("token-permission", data.data.data.tokenPermission)
-          localStorage.setItem("permissions", data.data.data.permissions)
-          Cookies.set("token_permission", data.data.data.tokenPermission)
-        });
+      if (!session?.user?.user?.data?.user?.mitra_profile) {
+        axios
+          .get(
+            process.env.END_POINT_API_SITE_MANAGEMENT + "api/user/permissions",
+            config
+          )
+          .then((data) => {
+            setMenu(data.data.data.menu);
+            localStorage.setItem(
+              "sidebar",
+              JSON.stringify(data.data.data.menu)
+            );
+            localStorage.setItem(
+              "token-permission",
+              data.data.data.tokenPermission
+            );
+            localStorage.setItem("permissions", data.data.data.permissions);
+            localStorage.setItem(
+              "trainings",
+              JSON.stringify(data.data.data.user.trainings)
+            );
+            Cookies.set("token_permission", data.data.data.tokenPermission);
+          })
+          .catch((e) => {
+            return;
+          });
+      }
     }
-
     if (!menu) {
       setMenu(JSON.parse(localStorage.getItem("sidebar")));
     }
@@ -139,8 +175,8 @@ const Sidebar = ({ session }) => {
 
   const handleOpenMenu = (e, i, condition) => {
     const pathRoute = router.route;
-    const splitRouteToMakingActive = pathRoute.split("/");
 
+    const splitRouteToMakingActive = pathRoute.split("/");
     if (condition != null) {
       if (splitRouteToMakingActive[1]) {
         menu.map((data, index) => {
@@ -157,74 +193,30 @@ const Sidebar = ({ session }) => {
     setMenu(_temp);
   };
 
-  const handleOpenMenuSubMenu = (e, iMenu, iSubMenu) => {
-    let _temp = [...menu];
-    _temp.map((items, index) => {
-      if (index === iMenu) {
-        _temp[iMenu] = { ...items, selected: true };
-        _temp[iMenu].child[iSubMenu] = {
-          ..._temp[iMenu].child[iSubMenu],
-          selected: _temp[iMenu].child[iSubMenu].selected ? false : true,
-        };
-      }
-    });
+  const handleActiveSubmenu = (
+    e,
+    iMenu,
+    iSubMenu,
+    status,
+    condition,
+    iSubSubMenu
+  ) => {
+    let _temp = [...JSON.parse(localStorage.getItem("sidebar"))];
 
-    setMenu(_temp);
-    e.stopPropagation();
-  };
-
-  const handleActiveSubmenu = (e, iMenu, iSubMenu) => {
-    let _temp = [...menu];
-    _temp.map((items, index) => {
-      if (index === iMenu) {
-        _temp[iMenu] = { ...items, selected: true };
-        items.child.map((itemsp, indxx) => {
-          if (indxx === iSubMenu) {
-            localStorage.setItem("submenuActive", indxx);
-            _temp[iMenu].child[indxx] = {
-              ...itemsp,
-              selected: itemsp.selected ? false : true,
-            };
-          } else {
-            _temp[iMenu].child[indxx] = { ...itemsp, selected: false };
-          }
-        });
+    if (status === "parent") {
+      _temp[iMenu].selected = true;
+      if (iSubSubMenu === null) {
+        _temp[iMenu].child[iSubMenu].selected = !condition;
       } else {
+        _temp[iMenu].child[iSubMenu].selected = true;
+        _temp[iMenu].child[iSubMenu].child[iSubSubMenu].selected = !condition;
       }
-    });
-    setMenu(_temp);
-    e.stopPropagation();
-  };
+    } else {
+      _temp[iMenu].selected = true;
+      _temp[iMenu].child[iSubMenu].selected =
+        !_temp[iMenu].child[iSubMenu].selected;
+    }
 
-  const handleActiveSubSubmenu = (e, iMenu, iSubMenu, iSubSubMenu) => {
-    let _temp = [...menu];
-    _temp.map((items, index) => {
-      if (index === iMenu) {
-        _temp[iMenu] = { ...items, selected: true };
-        items.child.map((itemsp, indxx) => {
-          if (indxx === iSubMenu) {
-            _temp[iMenu].child[indxx] = {
-              ...itemsp,
-              selected: true,
-            };
-
-            itemsp.child.map((itemsz, indxz) => {
-              if (indxz === iSubSubMenu) {
-                _temp[iMenu].child[indxx].child[indxz] = {
-                  ...itemsz,
-                  selected: itemsz.selected ? false : true,
-                };
-              } else {
-                _temp[iMenu].child[indxx].child[indxz] = {
-                  ...itemsz,
-                  selected: false,
-                };
-              }
-            });
-          }
-        });
-      }
-    });
     setMenu(_temp);
     e.stopPropagation();
   };
@@ -351,28 +343,35 @@ const Sidebar = ({ session }) => {
                         <i className="menu-arrow"></i>
                       </a>
 
-                      {items.child.map((child, i) => {
+                      {items?.child.map((item, i) => {
                         return (
                           <div className="menu-submenu" key={i}>
                             <i className="menu-arrow"></i>
                             <ul className="menu-subnav">
-                              {child.child.length === 0 ? (
+                              {item.child?.length < 1 ? (
                                 <li
                                   className={`menu-item ${
-                                    child.selected ? "menu-item-active" : ""
+                                    item.selected ? "menu-item-active" : ""
                                   }`}
                                   aria-haspopup="true"
                                   onClick={(e) =>
-                                    handleActiveSubmenu(e, index, i)
+                                    handleActiveSubmenu(
+                                      e,
+                                      index,
+                                      i,
+                                      "single",
+                                      null,
+                                      null
+                                    )
                                   }
                                 >
-                                  <Link href={child.href} passHref>
+                                  <Link href={item.href} passHref>
                                     <a
                                       className="menu-link"
                                       style={{ paddingLeft: "5.5rem" }}
                                     >
                                       <span className="menu-text">
-                                        {child.name}
+                                        {item.name}
                                       </span>
                                     </a>
                                   </Link>
@@ -380,13 +379,20 @@ const Sidebar = ({ session }) => {
                               ) : (
                                 <li
                                   className={`menu-item menu-item-submenu ${
-                                    child.selected ? "menu-item-open" : ""
+                                    item.selected ? "menu-item-open" : ""
                                   }`}
                                   aria-haspopup="true"
                                   data-menu-toggle="hover"
                                   id="sub-menu"
                                   onClick={(e) =>
-                                    handleOpenMenuSubMenu(e, index, i)
+                                    handleActiveSubmenu(
+                                      e,
+                                      index,
+                                      i,
+                                      "parent",
+                                      item.selected,
+                                      null
+                                    )
                                   }
                                 >
                                   <a
@@ -394,35 +400,42 @@ const Sidebar = ({ session }) => {
                                     style={{ paddingLeft: "5.5rem" }}
                                   >
                                     <span className="menu-text">
-                                      {child.name}
+                                      {item.name}
                                     </span>
                                     <i className="menu-arrow"></i>
                                   </a>
                                   <div className="menu-submenu">
                                     <i className="menu-arrow"></i>
                                     <ul className="menu-subnav">
-                                      {child.child.map((child2, idx) => {
+                                      {item?.child?.map((child2, idx) => {
                                         return (
                                           <li
-                                            className={`menu-item ${
-                                              child2.selected &&
-                                              "menu-item-active"
+                                            className={`menu-item menu-item-submenu ${
+                                              child2.selected
+                                                ? "menu-item-open"
+                                                : ""
                                             }`}
                                             aria-haspopup="true"
-                                            onClick={(e) =>
-                                              handleActiveSubSubmenu(
+                                            onClick={(e) =>{
+                                              // e.preventDefault()
+                                              // location.reload();
+                                              // window.location = child2.href
+                                              window.location = child2.href
+                                              handleActiveSubmenu(
                                                 e,
                                                 index,
                                                 i,
+                                                "parent",
+                                                child2.selected,
                                                 idx
                                               )
-                                            }
+                                            }}
                                             key={idx}
                                           >
                                             <Link href={child2.href} passHref>
                                               <a
                                                 className="menu-link"
-                                                style={{
+                                                r                          style={{
                                                   paddingLeft: "6.5rem",
                                                 }}
                                               >
@@ -460,6 +473,11 @@ const Sidebar = ({ session }) => {
             onClick={() => activeProfileAndOverlay()}
           />
         )}
+      <ul className="menu-nav" style={{ listStyleType: "none" }}>
+        <li className="menu-text text-white">
+          DTS Version: {process.env.VERSION_APP}
+        </li>
+      </ul>
     </div>
   );
 };

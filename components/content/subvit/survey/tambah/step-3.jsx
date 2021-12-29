@@ -23,7 +23,7 @@ import {
   helperTextLimitMax,
 } from "../../../../../utils/middleware/helper";
 
-const StepThree = ({ token }) => {
+const StepThree = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -31,6 +31,9 @@ const StepThree = ({ token }) => {
   const { loading, error, success } = useSelector(
     (state) => state.updateSurveyQuestionBanksPublish
   );
+
+  const { survey } = useSelector((state) => state.detailSurveyQuestionBanks);
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
@@ -71,15 +74,17 @@ const StepThree = ({ token }) => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateSurveyQuestionBanksPublish(data, id, token));
+      dispatch(
+        updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
+      );
+      localStorage.removeItem("method");
+      localStorage.removeItem("step1");
+      localStorage.removeItem("step2");
+      localStorage.removeItem("clone1");
+      localStorage.removeItem("clone3");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -115,15 +120,17 @@ const StepThree = ({ token }) => {
           questions_to_share: jumlah_soal,
         };
 
-        dispatch(updateSurveyQuestionBanksPublish(data, id, token));
+        dispatch(
+          updateSurveyQuestionBanksPublish(data, id, token, tokenPermission)
+        );
+        localStorage.removeItem("method");
+        localStorage.removeItem("step1");
+        localStorage.removeItem("step2");
+        localStorage.removeItem("clone1");
+        localStorage.removeItem("clone3");
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Isi data dengan benar !",
-        });
       }
     }
   };
@@ -169,11 +176,32 @@ const StepThree = ({ token }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="3"></StepInput>
+          <StepInput step="3" title="Survey"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
           <div className="card-body pt-0">
+            <h4 className="mt-2">
+              <b>{survey?.training?.name}</b>
+            </h4>
+            <table>
+              <tr>
+                <td>Tanggal Pendaftaran &nbsp;</td>
+                <td>: &nbsp;</td>
+                <td>
+                  {survey?.pendaftaran_mulai} &nbsp; s.d. &nbsp;{" "}
+                  {survey?.pendaftaran_selesai}{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>Tanggal Pelatihan </td>
+                <td> : </td>{" "}
+                <td>
+                  {survey?.pelatihan_mulai}&nbsp; s.d. &nbsp;
+                  {survey?.pelatihan_selesai}{" "}
+                </td>
+              </tr>
+            </table>
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
@@ -364,7 +392,7 @@ const StepThree = ({ token }) => {
                   </select>
                   {simpleValidator.current.message(
                     "status",
-                    status,
+                    status === 0,
                     "required",
                     { className: "text-danger" }
                   )}
@@ -372,7 +400,27 @@ const StepThree = ({ token }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    onClick={() => {
+                      localStorage.getItem("method") === "entry"
+                        ? router.push(
+                            `/subvit/survey/tambah/step-2-entry?id=${
+                              router.query.id
+                            }&metode=${localStorage.getItem("method")}`
+                          )
+                        : router.push(
+                            `/subvit/survey/tambah/step-2-import?id=${
+                              router.query.id
+                            }&metode=${localStorage.getItem("method")}`
+                          );
+                    }}
+                    type="button"
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}

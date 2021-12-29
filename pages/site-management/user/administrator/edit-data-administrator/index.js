@@ -9,7 +9,10 @@ import {
   getListUnitWorks,
   getListAcademy,
   getAllListPelatihan,
+  getEditAdminSite,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
+
 const ListUser = dynamic(
   () =>
     import(
@@ -38,10 +41,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req, query }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
@@ -51,8 +55,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllListPelatihan(session.user.user.data.token));
       await store.dispatch(getListUnitWorks(session.user.user.data.token));
       await store.dispatch(getListAcademy(session.user.user.data.token));
+      // await store.dispatch(
+      //   getDetailAdminSite(query.id, session.user.user.data.token)
+      // );
       await store.dispatch(
+<<<<<<< HEAD
         getDetailAdminSite(query.id, session.user.user.data.token, req.cookies.token_permission)
+=======
+        getEditAdminSite(query.id, session.user.user.data.token)
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
       );
 
       return {

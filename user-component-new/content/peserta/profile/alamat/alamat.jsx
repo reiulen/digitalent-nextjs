@@ -7,9 +7,7 @@ import { getProfileAlamat } from "../../../../../redux/actions/pelatihan/profile
 const Alamat = ({ token }) => {
   const dispatch = useDispatch();
 
-  const { error: errorAlamat, alamat } = useSelector(
-    (state) => state.dataAlamat
-  );
+  const { error: errorAlamat, alamat } = useSelector(state => state.dataAlamat);
 
   useEffect(() => {
     // if (errorAlamat) {
@@ -17,14 +15,13 @@ const Alamat = ({ token }) => {
     // }
     dispatch(getProfileAlamat(token));
   }, [dispatch]);
-
   return (
     <>
       <div className="mt-5 alamat">
         <h3 className="font-weight-bolder mb-5">Alamat</h3>
         <Row>
           <Col md={12}>
-            <p className="text-neutral-body my-1">Alamat (Sesuai KTP)</p>
+            <p className="text-neutral-body my-1">Alamat</p>
             <p>{(alamat && alamat.address_ktp) || "-"}</p>
           </Col>
         </Row>
@@ -51,16 +48,14 @@ const Alamat = ({ token }) => {
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Kode Pos</p>
-            <p>{(alamat && alamat.kode_pos) || "-"}</p>
+            <p>{(alamat && alamat.kode_pos_ktp) || "-"}</p>
           </Col>
         </Row>
         <hr />
         <h3 className="font-weight-bolder mb-3">Alamat Domisili</h3>
         <Row>
           <Col md={12}>
-            <p className="text-neutral-body my-1">
-              Alamat Domisili (Sesuai KTP)
-            </p>
+            <p className="text-neutral-body my-1">Alamat Domisili </p>
             <p>{(alamat && alamat.address) || "-"}</p>
           </Col>
         </Row>

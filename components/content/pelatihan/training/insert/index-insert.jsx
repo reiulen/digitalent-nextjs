@@ -5,10 +5,6 @@ import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { useDispatch, useSelector } from "react-redux";
 
-// import AddTrainingStep1 from "./add-training-step1";
-// import AddRegistrationStep2 from "./add-registration-step2";
-// import AddCommitmentStep3 from "./add-commitment-step3";
-
 const AddTrainingStep1 = dynamic(() => import("./add-training-step1"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
@@ -39,12 +35,27 @@ const IndexInsert = ({ token }) => {
   const { training, loading, success, error } = useSelector(
     (state) => state.newTraining
   );
+  const { data: dataReferenceOption } = useSelector(
+    (state) => state.allDataReference
+  );
+  const [dataOptions, setDataOptions] = useState([]);
 
   useEffect(() => {
     if (error) {
       SweatAlert("Gagal", error, "error");
       dispatch(clearErrors());
     }
+    const dataOptionsArr = [];
+    if (dataReferenceOption) {
+      dataReferenceOption.list_reference.map((row, i) => {
+        let data = {
+          id: row.id,
+          value: row.name,
+        };
+        dataOptionsArr.push(data);
+      });
+    }
+    setDataOptions(dataOptionsArr);
   }, [error]);
 
   const stepView = () => {
@@ -61,6 +72,7 @@ const IndexInsert = ({ token }) => {
         return (
           <AddRegistrationStep2
             propsStep={(value) => setView(value)}
+            dataOptions={dataOptions}
             token={token}
           />
         );

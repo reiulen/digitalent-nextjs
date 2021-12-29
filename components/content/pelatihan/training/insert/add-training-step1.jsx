@@ -8,20 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import DatePicker, { registerLocale } from "react-datepicker";
 import id from "date-fns/locale/id";
-import { GET_TRAINING_STEP1 } from "../../../../../redux/types/pelatihan/function.type";
 import {
   storeTrainingStep1,
   getTrainingStep1,
   dropdownKabupaten,
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
-import LoadingPage from "../../../../LoadingPage";
-import {
-  disablePlusMinusPeriod,
-  helperRemoveZeroFromIndex0,
-} from "../../../../../utils/middleware/helper";
-import { CustomNumberInput } from "../../../../formCustomComponent/input";
-import moment from "moment";
+import { helperRemoveZeroFromIndex0 } from "../../../../../utils/middleware/helper";
+import { useQuill } from "react-quilljs";
 
 const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
@@ -60,6 +54,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     editorRef.current || {};
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const { quill, quillRef } = useQuill();
   const [, forceUpdate] = useState();
 
   //data pelatihan
@@ -215,9 +210,19 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
     };
-
-    setEditorLoaded(true);
   }, [dispatch, token, academy.value, dataTema.data]);
+
+  useEffect(() => {
+    if (quill) {
+      if (description) {
+        quill.clipboard.dangerouslyPasteHTML(description);
+      }
+      quill.on("text-change", (delta, oldDelta, source) => {
+        setDescription(quill.root.innerHTML);
+      });
+    }
+    setEditorLoaded(true);
+  }, [quill]);
 
   const handleResetError = () => {
     if (error) {
@@ -229,20 +234,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 2000000) {
-          e.target.value = null;
-          Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setLogoBase(reader.result);
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-          setLogoFile(e.target.files[0]);
-          setLogoName(e.target.files[0].name);
-        }
+        // if (e.target.files[0].size > 2000000) {
+        //   e.target.value = null;
+        //   Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+        // } else {
+        // }
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setLogoBase(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setLogoFile(e.target.files[0]);
+        setLogoName(e.target.files[0].name);
       } else {
         e.target.value = null;
         Swal.fire(
@@ -258,20 +263,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 2000000) {
-          e.target.value = null;
-          Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setThumbnailBase(reader.result);
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-          setThumbnailFile(e.target.files[0]);
-          setThumbnailName(e.target.files[0].name);
-        }
+        // if (e.target.files[0].size > 2000000) {
+        //   e.target.value = null;
+        //   Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+        // } else {
+        // }
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setThumbnailBase(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setThumbnailFile(e.target.files[0]);
+        setThumbnailName(e.target.files[0].name);
       } else {
         e.target.value = null;
         Swal.fire(
@@ -288,17 +293,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       case "LOGO":
         setLogoFile("");
         setLogoName("Belum ada file");
+        setLogoBase("");
         document.getElementById("logoReference").value = null;
         break;
       case "THUMBNAIL":
         setThumbnailFile("");
         setThumbnailName("Belum ada file");
+        setThumbnailBase("");
         document.getElementById("uploadThumbnail").value = null;
 
         break;
       case "SILABUS":
         setSilabusFile("");
         setSilabusName("Belum ada file");
+        setSilabusBase("");
         document.getElementById("uploadSilabus").value = null;
         break;
       default:
@@ -310,20 +318,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     const type = ["application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 2000000) {
-          e.target.value = null;
-          Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setSilabusBase(reader.result);
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-          setSilabusFile(e.target.files[0]);
-          setSilabusName(e.target.files[0].name);
-        }
+        // if (e.target.files[0].size > 2000000) {
+        //   e.target.value = null;
+        //   Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+        // } else {
+        // }
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setSilabusBase(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setSilabusFile(e.target.files[0]);
+        setSilabusName(e.target.files[0].name);
       } else {
         e.target.value = null;
         Swal.fire(
@@ -337,7 +345,21 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (metodeTraining === "Online") {
+      simpleValidator.current.fields.alamat = true;
+      simpleValidator.current.fields.provinsi = true;
+      simpleValidator.current.fields["kota/kabupaten"] = true;
+    }
+
     if (simpleValidator.current.allValid()) {
+      if (!umum && !tuna_daksa && !tuna_netra && !tuna_rungu) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Disabilitas tidak boleh kosong !",
+        });
+        return;
+      }
       const data = {
         program_dts: program,
         ketentuan_peserta: ketentuan,
@@ -606,14 +628,19 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
           <div className="form-group mb-4">
             <label className="col-form-label font-weight-bold">Tema</label>
             <div className="position-relative" style={{ zIndex: "4" }}>
-              <Select
-                placeholder="Silahkan Pilih Tema"
-                options={drowpdownTemabyAkademi.data.data}
-                defaultValue={theme}
-                value={theme}
-                onChange={(e) => setTheme({ value: e?.value, label: e?.label })}
-                onBlur={() => simpleValidator.current.showMessageFor("tema")}
-              />
+              <div className={!academy ? "cursor-notallowed" : ""}>
+                <Select
+                  placeholder="Silahkan Pilih Tema"
+                  options={drowpdownTemabyAkademi.data.data}
+                  defaultValue={theme}
+                  value={theme}
+                  onChange={(e) =>
+                    setTheme({ value: e?.value, label: e?.label })
+                  }
+                  onBlur={() => simpleValidator.current.showMessageFor("tema")}
+                  isDisabled={academy ? false : true}
+                />
+              </div>
             </div>
             {simpleValidator.current.message("tema", theme, "required", {
               className: "text-danger",
@@ -649,7 +676,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </button>
             </div>
             <small className="text-muted">
-              Format Image (.png/.jpg), Rekomendasi 1024x1024. dan Max size 2MB
+              Format Image (.png/.jpg), Rekomendasi 1024x1024
             </small>
           </div>
 
@@ -679,7 +706,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </button>
             </div>
             <small className="text-muted">
-              Format Image (.png/.jpg), Rekomendasi 837 x 380. dan Max size 2MB
+              Format Image (.png/.jpg), Rekomendasi 837 x 380
             </small>
           </div>
 
@@ -719,7 +746,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 <i className="ri-delete-bin-fill p-0 text-white"></i>
               </button>
             </div>
-            <small className="text-muted">Format File (.pdf) & Max 2 mb</small>
+            <small className="text-muted">Format File (.pdf)</small>
           </div>
 
           <div className="form-group row mb-0 pt-2">
@@ -867,12 +894,15 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                     startDateRegistration ? startDateRegistration : today
                   }
                   showTimeSelect
-                  className="form-control w-100 d-block"
+                  className={`form-control w-100 d-block ${
+                    !startDateRegistration ? `cursor-notallowed` : ""
+                  }`}
                   locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                   filterTime={filterPassedTime2}
+                  disabled={startDateRegistration ? false : true}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -930,11 +960,14 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   value={endDateTraining}
                   filterTime={filterPassedTime4}
                   showTimeSelect
-                  className="form-control w-100 d-block"
+                  className={`form-control w-100 d-block ${
+                    !startDateRegistration ? `cursor-notallowed` : ""
+                  }`}
                   locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
+                  disabled={startDateTraining ? false : true}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -951,20 +984,23 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <label className="col-form-label font-weight-bold">Deskripsi</label>
             <div className="ckeditor">
               {editorLoaded ? (
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={description}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setDescription(data);
-                  }}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("deskripsi")
-                  }
-                  config={{
-                    placeholder: "Silahkan Masukan Deskripsi Detail",
-                  }}
-                />
+                // <CKEditor
+                //   editor={ClassicEditor}
+                //   data={description}
+                //   onChange={(event, editor) => {
+                //     const data = editor.getData();
+                //     setDescription(data);
+                //   }}
+                //   onBlur={() =>
+                //     simpleValidator.current.showMessageFor("deskripsi")
+                //   }
+                //   config={{
+                //     placeholder: "Silahkan Masukan Deskripsi Detail",
+                //   }}
+                // />
+                <div style={{ width: "100%", height: "250px" }}>
+                  <div ref={quillRef} style={{ fontFamily: "Poppins" }} />
+                </div>
               ) : (
                 <p>Tunggu Sebentar</p>
               )}
@@ -977,7 +1013,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             </div>
           </div>
 
-          <h3 className="font-weight-bolder pt-3">Kuota</h3>
+          <h3 className="font-weight-bolder style-quill-margin">Kuota</h3>
 
           <div className="form-group row mb-2">
             <div className="col-sm-12 col-md-6">
@@ -1147,19 +1183,15 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   type="radio"
                   name="plotRegistration"
                   className="form-check-input"
-                  value="Tanpa Tes Substansi dan Administrasi"
-                  checked={
-                    plotRegistration === "Tanpa Tes Substansi dan Administrasi"
-                  }
-                  onClick={() =>
-                    setPlotRegistration("Tanpa Tes Substansi dan Administrasi")
-                  }
+                  value="Administrasi"
+                  checked={plotRegistration === "Administrasi"}
+                  onClick={() => setPlotRegistration("Administrasi")}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("alur pendaftaran")
                   }
                 />
                 <label className="form-check-label" htmlFor="plotRegistration3">
-                  Tanpa Tes Substansi & Administrasi
+                  Administrasi
                 </label>
               </div>
               {simpleValidator.current.message(
@@ -1182,15 +1214,49 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   type="radio"
                   name="sertification"
                   className="form-check-input"
-                  value="1"
-                  checked={sertification === "1"}
-                  onClick={() => setSertification("1")}
+                  value="global"
+                  checked={sertification === "global"}
+                  onClick={() => setSertification("global")}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("sertifikasi")
                   }
                 />
                 <label className="form-check-label" htmlFor="sertification1">
-                  Ya
+                  Global
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  id="sertification2"
+                  type="radio"
+                  name="sertification"
+                  className="form-check-input"
+                  value="skkni"
+                  checked={sertification === "skkni"}
+                  onClick={() => setSertification("skkni")}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("sertifikasi")
+                  }
+                />
+                <label className="form-check-label" htmlFor="sertification2">
+                  SKKNI (Nasional)
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  id="sertification3"
+                  type="radio"
+                  name="sertification"
+                  className="form-check-input"
+                  value="industri"
+                  checked={sertification === "industri"}
+                  onClick={() => setSertification("industri")}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("sertifikasi")
+                  }
+                />
+                <label className="form-check-label" htmlFor="sertification3">
+                  Industri
                 </label>
               </div>
               <div className="form-check form-check-inline">
@@ -1375,75 +1441,92 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             </div>
           </div>
 
-          <h3 className="font-weight-bolder pt-3">Lokasi Pelatihan</h3>
+          {metodeTraining !== "Online" && (
+            <>
+              <h3 className="font-weight-bolder pt-3">Lokasi Pelatihan</h3>
 
-          <div className="form-group mb-4">
-            <label className="col-form-label font-weight-bold">Alamat</label>
-            <textarea
-              value={address}
-              rows="6"
-              className="form-control"
-              onChange={(e) => setAddress(e.target.value)}
-              onBlur={() => simpleValidator.current.showMessageFor("alamat")}
-              placeholder="Silahkan Masukan Alamat Disini"
-            />
-            {simpleValidator.current.message("alamat", address, "required", {
-              className: "text-danger",
-            })}
-          </div>
+              <div className="form-group mb-4">
+                <label className="col-form-label font-weight-bold">
+                  Alamat
+                </label>
+                <textarea
+                  value={address}
+                  rows="6"
+                  className="form-control"
+                  onChange={(e) => setAddress(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("alamat")
+                  }
+                  placeholder="Silahkan Masukan Alamat Disini"
+                />
+                {simpleValidator.current.message(
+                  "alamat",
+                  address,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </div>
 
-          <div className="form-group row mb-2">
-            <div className="col-sm-12 col-md-6">
-              <label className="col-form-label font-weight-bold">
-                Provinsi
-              </label>
-              <Select
-                placeholder="Silahkan Pilih Provinsi"
-                options={optionsProvinsi}
-                defaultValue={province}
-                onChange={(e) => {
-                  selectRefKabupaten.select.clearValue();
-                  setProvince({ label: e?.label, value: e?.value });
-                  dispatch(dropdownKabupaten(token, e.value));
-                }}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("provinsi")
-                }
-              />
-              {simpleValidator.current.message(
-                "provinsi",
-                province.value,
-                "required",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </div>
-            <div className="col-sm-12 col-md-6">
-              <label className="col-form-label font-weight-bold">
-                Kota / Kabupaten
-              </label>
-              <Select
-                ref={(ref) => (selectRefKabupaten = ref)}
-                placeholder="Silahkan Pilih Kota / Kabupaten"
-                options={optionsKabupaten}
-                defaultValue={city}
-                onChange={(e) => setCity({ value: e?.value, label: e?.label })}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("kota/kabupaten")
-                }
-                isDisabled={province ? false : true}
-              />
-              {simpleValidator.current.message(
-                "kota/kabupaten",
-                city.value,
-                "required",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </div>
-          </div>
+              <div className="form-group row mb-2">
+                <div className="col-sm-12 col-md-6">
+                  <label className="col-form-label font-weight-bold">
+                    Provinsi
+                  </label>
+                  <Select
+                    placeholder="Silahkan Pilih Provinsi"
+                    options={optionsProvinsi}
+                    defaultValue={province}
+                    onChange={(e) => {
+                      selectRefKabupaten.select.clearValue();
+                      setProvince({ label: e?.label, value: e?.value });
+                      dispatch(dropdownKabupaten(token, e.value));
+                    }}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("provinsi")
+                    }
+                  />
+                  {simpleValidator.current.message(
+                    "provinsi",
+                    province.value,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </div>
+                <div className="col-sm-12 col-md-6">
+                  <label className="col-form-label font-weight-bold">
+                    Kota / Kabupaten
+                  </label>
+                  <div className={!province ? "cursor-notallowed" : ""}>
+                    <Select
+                      ref={(ref) => (selectRefKabupaten = ref)}
+                      placeholder="Silahkan Pilih Kota / Kabupaten"
+                      options={optionsKabupaten}
+                      defaultValue={city}
+                      onChange={(e) =>
+                        setCity({ value: e?.value, label: e?.label })
+                      }
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("kota/kabupaten")
+                      }
+                      isDisabled={province ? false : true}
+                    />
+                  </div>
+                  {simpleValidator.current.message(
+                    "kota/kabupaten",
+                    city.value,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="form-group row mb-0">
             <label className="col-form-label font-weight-bold col-sm-2">

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 import Link from "next/link";
 import styles from "./substansi.module.css";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import LoadingPage from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,8 +13,9 @@ import {
   clearErrors,
   getAllSubtanceQuestionDetail,
 } from "../../../../redux/actions/subvit/subtance-question-detail.action";
+import Swal from "sweetalert2";
 
-const DetailSubstansi = ({ token }) => {
+const DetailSubstansi = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -41,11 +41,24 @@ const DetailSubstansi = ({ token }) => {
   page = Number(page);
 
   useEffect(() => {
+    localStorage.setItem("id_substansi", router.query.id);
     if (isDeleted) {
-      dispatch(getAllSubtanceQuestionDetail(id, token));
+      dispatch(
+        getAllSubtanceQuestionDetail(
+          id,
+          1,
+          null,
+          null,
+          "",
+          "",
+          "",
+          token,
+          tokenPermission
+        )
+      );
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, dispatch, id, token]);
+  }, [isDeleted, dispatch, id, token, tokenPermission, router]);
 
   const [status, setStatus] = useState("");
   const [kategori, setKategori] = useState(null);
@@ -53,6 +66,7 @@ const DetailSubstansi = ({ token }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState(false);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
@@ -79,33 +93,26 @@ const DetailSubstansi = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionDetail(id, token));
+        dispatch(deleteSubtanceQuestionDetail(id, token, tokenPermission));
       }
     });
   };
 
   const handleModal = () => {
-    Swal.fire({
-      title: "Silahkan Pilih Metode Entry",
-      icon: "info",
-      showDenyButton: true,
-      showCloseButton: true,
-      confirmButtonText: `Entry`,
-      denyButtonText: `Import`,
-      confirmButtonColor: "#3085d6",
-      denyButtonColor: "#d33",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-2-entry`,
-          query: { id },
-        });
-      } else if (result.isDenied) {
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-2-import`,
-          query: { id },
-        });
-      }
+    setModalType(true);
+  };
+
+  const handleEntry = () => {
+    router.push({
+      pathname: `/subvit/substansi/tambah-step-2-entry`,
+      query: { id },
+    });
+  };
+
+  const handleImport = () => {
+    router.push({
+      pathname: `/subvit/substansi/tambah-step-2-import`,
+      query: { id },
     });
   };
 
@@ -119,13 +126,15 @@ const DetailSubstansi = ({ token }) => {
         status,
         kategori,
         pelatihan,
-        token
+        token,
+        tokenPermission
       )
     );
     setShowModal(false);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     dispatch(
       getAllSubtanceQuestionDetail(
         id,
@@ -135,7 +144,8 @@ const DetailSubstansi = ({ token }) => {
         status,
         kategori,
         pelatihan,
-        token
+        token,
+        tokenPermission
       )
     );
   };
@@ -254,8 +264,41 @@ const DetailSubstansi = ({ token }) => {
     setKategori(e.target.value);
   };
 
+  const truncateString = (str, num) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  };
+
   return (
     <PageWrapper>
+      {router.query.success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -287,7 +330,9 @@ const DetailSubstansi = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Substansi{" "}
+              {subtance?.category === "Test Substansi"
+                ? "Substansi"
+                : "Mid Test"}{" "}
               {subtance && subtance.academy ? subtance.academy.name : ""} -{" "}
               {subtance && subtance.theme ? subtance.theme.name : ""}
             </h2>
@@ -521,13 +566,15 @@ const DetailSubstansi = ({ token }) => {
                     className={`${styles.btnSearch} position-relative overflow-hidden mt-3`}
                     style={{ maxWidth: "330px" }}
                   >
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className={`${styles.inputSearch} form-control pl-10`}
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className={`${styles.inputSearch} form-control pl-10`}
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </form>
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
@@ -535,7 +582,7 @@ const DetailSubstansi = ({ token }) => {
 
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => handleSearch(e)}
                     >
                       Cari
                     </button>
@@ -563,7 +610,7 @@ const DetailSubstansi = ({ token }) => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
+                <table className="table table-separate table-head-custom table-checkable ">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center">No</th>
@@ -600,7 +647,10 @@ const DetailSubstansi = ({ token }) => {
                               </td>
                               <td className="align-middle">CC{question.id}</td>
                               <td className="align-middle">
-                                {question && question.question}
+                                {truncateString(
+                                  question && question.question,
+                                  80
+                                )}
                               </td>
                               <td className="align-middle">
                                 {question.type && question.type.name}
@@ -628,7 +678,7 @@ const DetailSubstansi = ({ token }) => {
                                 ) ? (
                                   <div className="d-flex">
                                     <Link
-                                      href={`edit-soal-substansi?id=${question.id}`}
+                                      href={`edit-soal-substansi?id=${question.id}&no=${i}`}
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -639,12 +689,18 @@ const DetailSubstansi = ({ token }) => {
                                         <i className="ri-pencil-fill p-0 text-white"></i>
                                       </a>
                                     </Link>
+
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      className={
+                                        "btn btn-link-action bg-blue-secondary text-white"
+                                      }
                                       onClick={() => handleDelete(question.id)}
                                       data-toggle="tooltip"
                                       data-placement="bottom"
                                       title="Hapus"
+                                      style={{
+                                        cursor: "pointer",
+                                      }}
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>
@@ -826,6 +882,43 @@ const DetailSubstansi = ({ token }) => {
             Terapkan
           </button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={modalType}
+        onHide={() => setModalType(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Body>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setModalType(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+          <center>
+            <i
+              className="ri-information-line"
+              style={{ fontSize: "100px", color: "#17a2b8" }}
+            ></i>
+            <h3>Silahkan Pilih Metode Entry</h3>
+            <Button
+              className="btn btn-outline-primary font-weight-bolder px-7 py-3 mt-5 mr-5"
+              style={{ borderRadius: "5px", border: "1px solid" }}
+              onClick={handleImport}
+            >
+              Import
+            </Button>
+            <Button
+              className="btn btn-primary font-weight-bolder px-7 py-3 mt-5 "
+              onClick={handleEntry}
+            >
+              Entry
+            </Button>
+          </center>
+        </Modal.Body>
       </Modal>
     </PageWrapper>
   );

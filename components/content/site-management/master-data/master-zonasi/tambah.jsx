@@ -19,7 +19,6 @@ const Tambah = ({ token }) => {
   let selectRefProvinsi = null;
   let selectRefKabupaten = null;
 
-
   const [nameZonation, setNameZonation] = useState("");
   const [status, setStatus] = useState("");
   // state provinsi for set in option provinsi
@@ -203,7 +202,7 @@ const Tambah = ({ token }) => {
             } catch (error) {
               Swal.fire(
                 "Gagal simpan",
-                `${error.response.data.message}`,
+                `${error.response.data.message.includes("PDO") ? "Service Error" : error.response.data.message}`,
                 "error"
               );
             }
@@ -321,24 +320,24 @@ const Tambah = ({ token }) => {
                             <label htmlFor="exampleSelect1">
                               Kota / Kabupaten
                             </label>
-
-                            <Select
-                              value={items.value}
-                              className="basic-single"
-                              classNamePrefix="select"
-                              placeholder="Pilih kota/kabupaten"
-                              isMulti
-                              isDisabled={false}
-                              isLoading={false}
-                              isClearable={false}
-                              isRtl={false}
-                              isSearchable={true}
-                              name="color"
-                              onChange={(e) => changeListKabupaten(e, index)}
-                              options={items.kabupaten}
-                              onBlur={() => simpleValidator.current.showMessageFor("kabupaten")}
-                            />
-
+                            <div className={valueSend[index].provinsi === "" && "cursor-not-allowed"}>
+                              <Select
+                                value={items.value}
+                                className="basic-single"
+                                classNamePrefix="select"
+                                placeholder="Pilih kota/kabupaten"
+                                isMulti
+                                isDisabled={valueSend[index].provinsi === ""}
+                                isLoading={false}
+                                isClearable={false}
+                                isRtl={false}
+                                isSearchable={true}
+                                name="color"
+                                onChange={(e) => changeListKabupaten(e, index)}
+                                options={items.kabupaten}
+                                onBlur={() => simpleValidator.current.showMessageFor("kabupaten")}
+                              />
+                            </div>
                           </div>
 
                           {index === 0 ? (

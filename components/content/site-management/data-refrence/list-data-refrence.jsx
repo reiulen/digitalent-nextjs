@@ -51,7 +51,7 @@ const Table = ({ token }) => {
               {localStorage
                 .getItem("permissions")
                 .includes(
-                  "site_management.master-data.master_zonasi.manage"
+                  "site_management.reference.manage"
                 ) && (
                 <div className="card-toolbar mr-4 mt-2">
                   <Link href="/site-management/reference/tambah-reference-tanpa-relasi">
@@ -74,7 +74,7 @@ const Table = ({ token }) => {
               {localStorage
                 .getItem("permissions")
                 .includes(
-                  "site_management.master-data.master_zonasi.manage"
+                  "site_management.reference.manage"
                 ) && (
                 <div className="card-toolbar mt-2">
                   <Link href="/site-management/reference/tambah-reference-dengan-relasi">
@@ -95,30 +95,32 @@ const Table = ({ token }) => {
                     <div className="row w-100">
                       <div className="col-12 col-xl-4">
                         <div className="position-relative overflow-hidden w-100">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) =>
-                              handleChangeValueSearch(e.target.value)
-                            }
-                          />
-                          <button
-                            type="button"
-                            onClick={(e) => handleSubmit(e)}
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
+                          <form onSubmit={(e) => handleSubmit(e)}>
+                            <IconSearch
+                              style={{ left: "10" }}
+                              className="left-center-absolute"
+                            />
+                            <input
+                              id="kt_datatable_search_query"
+                              type="text"
+                              className="form-control pl-10"
+                              placeholder="Ketik disini untuk Pencarian..."
+                              onChange={(e) =>
+                                handleChangeValueSearch(e.target.value)
+                              }
+                            />
+                            <button
+                              type="button"
+                              onClick={(e) => handleSubmit(e)}
+                              className="btn bg-blue-primary text-white right-center-absolute"
+                              style={{
+                                borderTopLeftRadius: "0",
+                                borderBottomLeftRadius: "0",
+                              }}
+                            >
+                              Cari
+                            </button>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -192,7 +194,7 @@ const Table = ({ token }) => {
                                             localStorage
                                               .getItem("permissions")
                                               .includes(
-                                                "site_management.master-data.master_zonasi.manage"
+                                                "site_management.reference.manage"
                                               )
                                               ? ""
                                               : "d-none"
@@ -214,7 +216,7 @@ const Table = ({ token }) => {
                                             localStorage
                                               .getItem("permissions")
                                               .includes(
-                                                "site_management.master-data.master_zonasi.manage"
+                                                "site_management.reference.manage"
                                               )
                                               ? ""
                                               : "d-none"
@@ -230,7 +232,7 @@ const Table = ({ token }) => {
                                     {localStorage
                                       .getItem("permissions")
                                       .includes(
-                                        "site_management.master-data.master_zonasi.view"
+                                        "site_management.reference.view"
                                       ) && (
                                       <Link
                                         href={`/site-management/reference/detail-reference?id=${items.id}`}
@@ -256,59 +258,61 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row px-4">
-                <div className="table-pagination paginate-cs">
-                  <Pagination
-                    activePage={allDataReference.page}
-                    itemsCountPerPage={allDataReference.data.perPage}
-                    totalItemsCount={allDataReference.data.total}
-                    pageRangeDisplayed={2}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
+              {allDataReference.data.total > 5 && (
+                <div className="row px-4">
+                  <div className="table-pagination paginate-cs">
+                    <Pagination
+                      activePage={allDataReference.page}
+                      itemsCountPerPage={allDataReference.data.perPage}
+                      totalItemsCount={allDataReference.data.total}
+                      pageRangeDisplayed={2}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
 
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control cursor-pointer pr-2"
-                        defaultValue=""
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) =>
-                          dispatch(limitCooporation(e.target.value, token))
-                        }
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data{" "}
-                        {allDataReference.data && allDataReference.data.total}{" "}
-                        List Data
-                      </p>
+                  <div className="table-total ml-auto mr-4">
+                    <div className="row mt-4">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control cursor-pointer pr-2"
+                          defaultValue=""
+                          style={{
+                            width: "63px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) =>
+                            dispatch(limitCooporation(e.target.value, token))
+                          }
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data{" "}
+                          {allDataReference.data && allDataReference.data.total}{" "}
+                          List Data
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

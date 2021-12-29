@@ -20,6 +20,14 @@ import {
   DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST,
   DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS,
   DETAIL_ONE_SURVEY_QUESTION_BANKS_FAIL,
+  NEW_CLONE_SURVEY_QUESTION_BANKS_REQUEST,
+  NEW_CLONE_SURVEY_QUESTION_BANKS_SUCCESS,
+  NEW_CLONE_SURVEY_QUESTION_BANKS_RESET,
+  NEW_CLONE_SURVEY_QUESTION_BANKS_FAIL,
+  DELETE_CLONE_SURVEY_QUESTION_BANKS_REQUEST,
+  DELETE_CLONE_SURVEY_QUESTION_BANKS_SUCCESS,
+  DELETE_CLONE_SURVEY_QUESTION_BANKS_RESET,
+  DELETE_CLONE_SURVEY_QUESTION_BANKS_FAIL,
   UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
   UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_SUCCESS,
   UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET,
@@ -48,7 +56,7 @@ export const getAllSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -67,22 +75,16 @@ export const getAllSurveyQuestionBanks =
   };
 
 export const newSurveyQuestionBanks =
-  (subtanceData, token) => async (dispatch) => {
+  (subtanceData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_SURVEY_QUESTION_BANKS_REQUEST,
       });
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.post(
@@ -110,7 +112,7 @@ export const getDetailSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
       let link =
@@ -138,7 +140,7 @@ export const getOneSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
       let link =
@@ -159,7 +161,7 @@ export const getOneSurveyQuestionBanks =
   };
 
 export const updateSurveyQuestionBanks =
-  (id, substanceQuestionData, token) => async (dispatch) => {
+  (id, substanceQuestionData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SURVEY_QUESTION_BANKS_REQUEST,
@@ -167,6 +169,7 @@ export const updateSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.post(
@@ -187,48 +190,44 @@ export const updateSurveyQuestionBanks =
     }
   };
 
-export const deleteSurveyQuestionBanks = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_SURVEY_QUESTION_BANKS_REQUEST });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`,
-      config
-    );
+export const deleteSurveyQuestionBanks =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_SURVEY_QUESTION_BANKS_REQUEST });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
+      const { data } = await axios.delete(
+        process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_SURVEY_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_SURVEY_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updateSurveyQuestionBanksPublish =
-  (subtanceData, id, token) => async (dispatch) => {
+  (subtanceData, id, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
       });
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
       const { data } = await axios.post(
@@ -278,7 +277,7 @@ export const allReportSurveyQuestionBanks =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -292,6 +291,69 @@ export const allReportSurveyQuestionBanks =
       dispatch({
         type: REPORT_SURVEY_QUESTION_BANKS_FAIL,
         payload: error.message,
+      });
+    }
+  };
+
+export const newCloneSurveyQuestionBanks =
+  (surveyData, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({
+        type: NEW_CLONE_SURVEY_QUESTION_BANKS_REQUEST,
+      });
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
+
+      const { data } = await axios.post(
+        process.env.END_POINT_API_SUBVIT + "api/survey-question-banks/clone",
+        surveyData,
+        config
+      );
+
+      dispatch({
+        type: NEW_CLONE_SURVEY_QUESTION_BANKS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: NEW_CLONE_SURVEY_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+export const deleteCloneSurveyQuestionBanks =
+  (dataId, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_CLONE_SURVEY_QUESTION_BANKS_REQUEST });
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
+
+      const data = await axios.post(
+        process.env.END_POINT_API_SUBVIT +
+          `api/survey-question-bank-details/multiple-delete`,
+        dataId,
+        config
+      );
+
+      dispatch({
+        type: DELETE_CLONE_SURVEY_QUESTION_BANKS_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_CLONE_SURVEY_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
       });
     }
   };

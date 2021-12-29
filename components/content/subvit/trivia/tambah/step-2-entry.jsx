@@ -18,7 +18,7 @@ import CheckboxComponent from "./step-2/checkbox-component";
 import BlankComponent from "./step-2/blank-component";
 import styles from "../edit/step.module.css";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -215,19 +215,12 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
           };
 
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
+          localStorage.removeItem("method");
+          localStorage.removeItem("step2");
         }
         break;
       case "checkbox":
-        if (answer_key === "") {
-          valid = false;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Isi kunci jawaban dengan benar !",
-          });
-        }
-
         answer_checkbox.forEach((row, j) => {
           if (row.option == "" && row.image == "") {
             valid = false;
@@ -246,11 +239,13 @@ const StepTwo = ({ token }) => {
             question,
             answer: answers_check,
             question_image,
-            answer_key,
+
             duration,
             type: methodAdd,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
+          localStorage.removeItem("method");
+          localStorage.removeItem("step2");
         }
         break;
       case "fill_in_the_blank":
@@ -266,7 +261,9 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
             answer_key: null,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
+          localStorage.removeItem("method");
+          localStorage.removeItem("step2");
         }
         break;
       default:
@@ -324,20 +321,12 @@ const StepTwo = ({ token }) => {
             answer_key: null,
             type: methodAdd,
           };
-
-          dispatch(newTriviaQuestionDetail(data, token));
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", "entry" || metode);
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "checkbox":
-        if (answer_key === "") {
-          valid = false;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Isi kunci jawaban dengan benar !",
-          });
-        }
-
         answer_checkbox.forEach((row, j) => {
           if (row.option == "" && row.image == "") {
             valid = false;
@@ -360,7 +349,9 @@ const StepTwo = ({ token }) => {
             duration,
             type: methodAdd,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", "entry" || metode);
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       case "fill_in_the_blank":
@@ -376,7 +367,9 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
             answer_key: null,
           };
-          dispatch(newTriviaQuestionDetail(data, token));
+          localStorage.setItem("step2", JSON.stringify(data));
+          localStorage.setItem("method", "entry" || metode);
+          dispatch(newTriviaQuestionDetail(data, token, tokenPermission));
         }
         break;
       default:
@@ -453,7 +446,7 @@ const StepTwo = ({ token }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="2" title="Trivia"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
               Soal {trivia && trivia.bank_soal + 1}
@@ -494,6 +487,7 @@ const StepTwo = ({ token }) => {
                       className="custom-file-input"
                       name="question_image"
                       onChange={(e) => handleSoalImage(e)}
+                      accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
                       {question_image_name}
@@ -556,7 +550,23 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-12">
                   <hr />
                   <div className="row">
-                    <div className="col-md-5 col-lg-5 col-xl-7"></div>
+                    <div className="col-md-5 col-lg-5 col-xl-7">
+                      <button
+                        className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                        type="button"
+                        onClick={() => {
+                          if (localStorage.getItem("clone") === "true") {
+                            router.push(
+                              `/subvit/trivia/clone/step-3?id=${router.query.id}`
+                            );
+                          } else {
+                            router.push("/subvit/trivia/tambah");
+                          }
+                        }}
+                      >
+                        Kembali
+                      </button>
+                    </div>
                     {/* <div className="col-sm-12 col-md-6 col-lg-6 col-xl-5 buttoon float-right row justify-content-between" style={{border:'1px solid black'}}> */}
                     <div
                       className={`${styles.btnSave} col-12 col-sm-12 col-md-7 col-lg-7 col-xl-5 buttoon float-right justify-content-between`}
@@ -576,7 +586,7 @@ const StepTwo = ({ token }) => {
                             onClick={saveDraft}
                             type="button"
                           >
-                            Simpan Draft
+                            Tambah Soal
                           </button>
                         </div>
                       </div>

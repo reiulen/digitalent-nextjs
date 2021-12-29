@@ -19,6 +19,7 @@ const Administrasi = () => {
                       src="/assets/media/bg-admin-1.png"
                       objectFit="cover"
                       className={`${style.figure_img} img-fluid`}
+                      alt="Image"
                     />
                     <Card.ImgOverlay>
                       <Badge bg="secondary text-white text-uppercase">
@@ -34,6 +35,7 @@ const Administrasi = () => {
                         className={style.figure_img_mitra}
                         objectFit="cover"
                         src="/assets/media/mitra-icon/bukalapak-1.svg"
+                        alt="Image Mitra"
                       />
                       <div className="penyelenggara flex-column align-items-start ml-8 pt-2">
                         <h4 className="font-weight-bolder my-0">

@@ -23,7 +23,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import { Form } from "react-bootstrap";
 
-const StepOne = ({ token }) => {
+const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -39,21 +39,29 @@ const StepOne = ({ token }) => {
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
 
-  const [academy_id, setAcademyId] = useState("");
-  const [theme_id, setThemeId] = useState("");
-  const [training_id, setTrainingId] = useState("");
-  const [academyLabel, setAcademyLabel] = useState("Silahkan Pilih Akademi");
-  const [themeLabel, setThemeLabel] = useState("Silahkan Pilih Tema");
+  let save = JSON.parse(localStorage.getItem("step1"));
+
+  const [academy_id, setAcademyId] = useState(save?.academy_id);
+  const [theme_id, setThemeId] = useState(save?.theme_id);
+  const [training_id, setTrainingId] = useState(save?.training_id);
+  const [academyLabel, setAcademyLabel] = useState(
+    save ? save.academy : "Silahkan Pilih Akademi"
+  );
+  const [themeLabel, setThemeLabel] = useState(
+    save ? save.theme : "Silahkan Pilih Tema"
+  );
   const [trainingLabel, setTrainingLabel] = useState(
-    "Silahkan Pilih Pelatihan"
+    save ? save.training : "Silahkan Pilih Pelatihan"
   );
 
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(
+    save ? save.category : "Silahkan Pilih Kategori"
+  );
   const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (success) {
       const id = subtance.id;
       if (typeSave === "lanjut") {
@@ -78,6 +86,7 @@ const StepOne = ({ token }) => {
     academy_id,
     token,
     theme_id,
+    tokenPermission,
   ]);
 
   const saveDraft = () => {
@@ -92,21 +101,17 @@ const StepOne = ({ token }) => {
     }
     if (simpleValidator.current.allValid()) {
       const data = {
-        academy_id,
-        theme_id,
-        training_id,
-        category,
+        academy_id: save ? save.academy_id : academy_id,
+        theme_id: save ? save.theme_id : theme_id,
+        training_id: save ? save.training_id : training_id,
+        category: save ? save.category : category,
       };
 
       dispatch(newSubtanceQuestionBanks(data, token));
+      localStorage.removeItem("step1");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -124,21 +129,27 @@ const StepOne = ({ token }) => {
     }
     if (simpleValidator.current.allValid()) {
       const data = {
+        academy_id: save ? save.academy_id : academy_id,
+        theme_id: save ? save.theme_id : theme_id,
+        training_id: save ? save.training_id : training_id,
+        category: save ? save.category : category,
+      };
+
+      const setData = {
+        academy: academyLabel,
         academy_id,
+        theme: themeLabel,
         theme_id,
+        training: trainingLabel,
         training_id,
         category,
       };
 
+      localStorage.setItem("step1", JSON.stringify(setData));
       dispatch(newSubtanceQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -146,6 +157,10 @@ const StepOne = ({ token }) => {
 
   const { data: dataPelatihan2 } = useSelector(
     (state) => state.drowpdownPelatihanbyTema.data
+  );
+
+  const [dataBefore, setDataBefore] = useState(
+    JSON.parse(localStorage.getItem("step1"))
   );
 
   const handleChangePelatihan = (e) => {
@@ -219,7 +234,7 @@ const StepOne = ({ token }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="1"></StepInput>
+          <StepInput step="1" title="Substansi"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title text-dark h2">Tambah Test Subtansi</h2>
           </div>
@@ -230,10 +245,10 @@ const StepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  placeholder={"Silahkan Pilih Akademi"}
+                  value={{ label: academyLabel }}
                   className={styles.selectForm}
                   options={dataAkademi.data}
-                  value={academyLabel}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -241,7 +256,7 @@ const StepOne = ({ token }) => {
                 />
                 {simpleValidator.current.message(
                   "akademi",
-                  academy_id,
+                  academy_id || save?.academy,
                   "required",
                   {
                     className: "text-danger",
@@ -254,16 +269,22 @@ const StepOne = ({ token }) => {
                   Tema
                 </Form.Label>
                 <Select
-                  placeholder={themeLabel || "Silahkan Pilih Tema"}
+                  isDisabled={!academy_id}
+                  placeholder={"Silahkan Pilih Tema"}
                   options={optionsTema}
-                  value={themeLabel}
+                  value={{ label: themeLabel }}
                   className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
                 />
-                {simpleValidator.current.message("tema", theme_id, "required", {
-                  className: "text-danger",
-                })}
+                {simpleValidator.current.message(
+                  "tema",
+                  theme_id || save?.theme,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -271,9 +292,10 @@ const StepOne = ({ token }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
+                  isDisabled={!theme_id}
                   placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
-                  value={trainingLabel}
+                  value={{ label: trainingLabel }}
                   className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>
@@ -282,7 +304,7 @@ const StepOne = ({ token }) => {
                 />
                 {simpleValidator.current.message(
                   "pelatihan",
-                  training_id,
+                  training_id || save?.training,
                   "required",
                   {
                     className: "text-danger",
@@ -298,8 +320,21 @@ const StepOne = ({ token }) => {
                   placeholder={"Silahkan Pilih Kategori"}
                   options={optionsKategori}
                   className={styles.selectForm}
+                  value={{ label: category }}
                   onChange={(e) => setCategory(e.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("kategori")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "kategori",
+                  category || save?.category,
+
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
             </Form>
 

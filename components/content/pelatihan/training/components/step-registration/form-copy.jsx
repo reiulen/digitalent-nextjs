@@ -3,6 +3,7 @@ import SimpleReactValidator from "simple-react-validator";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 import { getDetailMasterPelatihan } from "../../../../../../redux/actions/pelatihan/master-pendaftaran.action";
+import Cookies from "js-cookie";
 
 const FormCopy = ({
   title,
@@ -21,6 +22,7 @@ const FormCopy = ({
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
+  const token_permission = Cookies.get("token_permission");
 
   useEffect(() => {
     if (
@@ -33,14 +35,15 @@ const FormCopy = ({
   }, [formPendaftaran]);
 
   const showPreviewHandler = () => {
-    let list = [...formPendaftaran.data.formBuilder];
-    list.forEach((row, i) => {
-      if (row.option === "manual") {
-        let dataOption = row.dataOption.split(";");
-        row.dataOption = dataOption;
-      }
-    });
-    funcFormBuilder(list);
+    // let list =
+    //   formPendaftaran.length > 0 ? [...formPendaftaran?.data?.formBuilder] : [];
+    // list.forEach((row, i) => {
+    //   if (row.option === "manual") {
+    //     let dataOption = row.dataOption.split(";");
+    //     row.dataOption = dataOption;
+    //   }
+    // });
+    // funcFormBuilder(list);
     funcModalShow(true);
   };
 
@@ -75,7 +78,7 @@ const FormCopy = ({
             style={{ borderRadius: "30px", fontWeight: "600" }}
             onClick={showPreviewHandler}
           >
-            Review
+            Preview
           </button>
         </div>
       </div>

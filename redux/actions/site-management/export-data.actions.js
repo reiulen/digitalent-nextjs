@@ -25,6 +25,7 @@ import {
 } from "../../types/site-management/export-data.type";
 
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export const getAllExportData =
   (token, tokenPermission) => async (dispatch, getState) => {
@@ -82,6 +83,7 @@ export const deleteExportDataAction = (id, token) => async (dispatch) => {
       type: DELETE_EXPORT_DATA_SUCCESS,
       payload: data.status,
     });
+    Swal.fire("Berhasil", "Data berhasil dihapus", "success")
   } catch (error) {
     dispatch({
       type: DELETE_EXPORT_DATA_FAIL,
@@ -127,7 +129,11 @@ export const getDetailsExportData =
   };
 
 export const postFilterExportData =
+<<<<<<< HEAD
   (token, datas, page = 1, limit = 5, tokenPermission) =>
+=======
+  (token, datas, page = 1, limit = 5, name = "") =>
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
   async (dispatch) => {
     try {
       dispatch({
@@ -169,9 +175,10 @@ export const postFilterExportData =
         const url = window.URL.createObjectURL(new Blob([data.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", `export${Date.now()}.zip`);
+        link.setAttribute("download", `${name}.zip`);
         document.body.appendChild(link);
         link.click();
+        window.location="/site-management/export-data"
       }
 
       dispatch({
@@ -179,7 +186,7 @@ export const postFilterExportData =
         payload: data.data,
       });
     } catch (error) {
-      Swal.fire("Ooppss", JSON.stringify(error.message), "error").then(
+      Swal.fire("Ooppss", "Service Excel Bermasalah", "error").then(
         () => {}
       );
       dispatch({

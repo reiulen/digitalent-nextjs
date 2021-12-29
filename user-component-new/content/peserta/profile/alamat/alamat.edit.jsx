@@ -16,6 +16,7 @@ import {
 
 import {
   updateProfileAlamat,
+  updateWizzardStatus,
   clearErrors,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 
@@ -55,18 +56,42 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
   const {
     error: errorUpdateData,
-    loading,
-    success,
+    loading: loadingUpdateData,
+    success: successUpdateData,
   } = useSelector((state) => state.updateAlamat);
 
-  const [isValid, setIsValid] = useState(false);
+  const {
+		error: errorStatusWizzard,
+		loading: loadingStatusWizzard,
+		success: successStatusWizard,
+	} = useSelector((state) => state.updateStatusWizzard);
+
+  // const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(
+    alamat && 
+    alamat?.address &&
+    alamat?.provinsi &&
+    alamat?.kota &&
+    alamat?.kecamatan &&
+    alamat?.kelurahan &&
+    alamat?.kode_pos !== "" ?
+      true
+    :
+      false
+  );
 
   const [isProvinsi, setIsProvinsi] = useState(false);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [sesuai, setSesuai] = useState(false);
+  // const [sesuai, setSesuai] = useState(false);
+  const [sesuai, setSesuai] = useState(
+    alamat && alamat?.address_ktp === alamat?.address ? 
+      true
+    : 
+      false
+    );
 
   const [alamatKtp, setAlamatKtp] = useState(
     (alamat && alamat.address_ktp) || ""
@@ -164,7 +189,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
       dispatch(clearErrors());
     }
 
-    if (success) {
+    if (successUpdateData) {
       SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_ALAMAT_RESET });
       if (wizzard) {
@@ -173,7 +198,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         funcViewEdit(false);
       }
     }
-  }, [errorUpdateData, success, dispatch]);
+  }, [errorUpdateData, successUpdateData, dispatch]);
 
   const handleSesuaiKtp = (val) => {
     setIsValid(true);
@@ -186,22 +211,10 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
       setKotaDomisili(kotaKtp);
     } else {
       setAlamatDomisili("");
-      setProvinsiDomisili({
-        value: "",
-        label: "",
-      });
-      setKotaDomisili({
-        value: "",
-        label: "",
-      });
-      setKecamatanDomisili({
-        value: "",
-        label: "",
-      });
-      setKelurahanDomisili({
-        value: "",
-        label: "",
-      });
+      setProvinsiDomisili(null);
+      setKotaDomisili(null);
+      setKecamatanDomisili(null);
+      setKelurahanDomisili(null);
       setKodePosDomisili("");
     }
   };
@@ -215,15 +228,24 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
       setKotaDomisili(kotaKtp);
       setKelurahanDomisili(kelurahanKtp);
     }
-    if (!sesuai) {
-      setAlamatDomisili("");
-      setProvinsiDomisili("");
-      setKecamatanDomisili("");
-      setKodePosDomisili("");
-      setKotaDomisili("");
-      setKelurahanDomisili("");
-    }
+    // if (!sesuai) {
+    //   setProvinsiDomisili("");
+    //   setKecamatanDomisili("");
+    //   setKotaDomisili("");
+    //   setKelurahanDomisili("");
+    // }
   }, [sesuai]);
+
+  useEffect(() => {
+    if (sesuai) {
+      setAlamatDomisili(alamatKtp);
+      setProvinsiDomisili(provinsiKtp);
+      setKecamatanDomisili(kecamatanKtp);
+      setKodePosDomisili(kodePosKtp);
+      setKotaDomisili(kotaKtp);
+      setKelurahanDomisili(kelurahanKtp);
+    }
+  }, [alamatKtp, provinsiKtp, kecamatanKtp, kodePosKtp, kotaKtp, kelurahanKtp]);
 
   const handleViewDomisili = () => {
     if (sesuai) {
@@ -254,6 +276,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Provinsi</Form.Label>
               <Select
                 isDisabled={isValid}
+                // isDisabled={isValid && provinsiDomisili ? true : false}
                 key={1}
                 placeholder={
                   (alamat && alamat.provinsi) || "Silahkan Pilih Provinsi"
@@ -283,6 +306,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
                 isDisabled={isValid}
+                // isDisabled={isValid && kotaDomisili ? true : false}
                 key={1}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
                 placeholder={
@@ -316,6 +340,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
               <Select
                 isDisabled={isValid}
+                // isDisabled={isValid && kecamatanDomisili ? true : false}
                 placeholder={
                   kecamatanKtp === null
                     ? "Silahkan Pilih Kecamatan"
@@ -347,6 +372,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
               <Select
                 isDisabled={isValid}
+                // isDisabled={isValid && kelurahanDomisili ? true : false}
                 placeholder={
                   kelurahanKtp === null
                     ? "Silahkan Pilih Kelurahan"
@@ -379,6 +405,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Kode Pos</Form.Label>
               <Form.Control
                 disabled={isValid}
+                // disabled={isValid && kodePosDomisili ? true : false}
                 type="text"
                 placeholder="Silahkan Masukkan Kode Pos"
                 value={kodePosDomisili}
@@ -427,11 +454,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Provinsi</Form.Label>
               <Select
                 key={2}
-                placeholder={
-                  alamat && alamat.provinsi
-                    ? alamat.provinsi
-                    : "Silahkan Pilih Provinsi"
-                }
+                placeholder={"Silahkan Pilih Provinsi"}
                 options={optionsProvinsi}
                 onChange={(e) => {
                   setKotaDomisili(null);
@@ -459,9 +482,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Select
                 key={2}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
-                placeholder={
-                  alamat && alamat.kota ? alamat.kota : "Silahkan Pilih Kota"
-                }
+                placeholder={"Silahkan Pilih Kota"}
                 options={optionsKabupatenDomisili}
                 onChange={(e) => {
                   setKecamatanDomisili(null);
@@ -489,11 +510,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
             <Form.Group as={Col} md={6} controlId="formGridNik">
               <Form.Label>Kecamatan</Form.Label>
               <Select
-                placeholder={
-                  alamat && alamat.kecamatan
-                    ? alamat && alamat.kecamatan
-                    : "Silahkan Pilih Kecamatan"
-                }
+                placeholder={"Silahkan Pilih Kecamatan"}
                 defaultValue={kecamatanDomisili}
                 options={optionsKecamatan}
                 onChange={(e) => {
@@ -521,11 +538,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               <Form.Label>Desa / Kelurahan</Form.Label>
 
               <Select
-                placeholder={
-                  alamat && alamat.kelurahan
-                    ? alamat && alamat.kelurahan
-                    : "Silahkan Pilih Kelurahan"
-                }
+                placeholder={"Silahkan Pilih Kelurahan"}
                 options={optionsKelurahan}
                 defaultValue={kelurahanDomisili}
                 onChange={(e) => {
@@ -585,6 +598,20 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
     }
   };
 
+  const stepBack = async () => {
+    let status = 1
+
+    const data = await dispatch (updateWizzardStatus(status, token))
+
+    if (data?.status === true){
+      router.push("/peserta/wizzard");
+
+    } else {
+      SweatAlert("Gagal", errorStatusWizzard, "error");
+			dispatch(clearErrors());
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     simpleValidator.current.fields["kota domisili"] = true;
@@ -604,8 +631,8 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         kecamatan: kecamatanDomisili.label || kecamatanDomisili,
         kelurahan: kelurahanDomisili.label || kelurahanDomisili,
         kode_pos: kodePosDomisili,
+        wizard: 3,
       };
-
       dispatch(updateProfileAlamat(data, token));
       window.scrollTo(0, 0);
     } else {
@@ -835,8 +862,17 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         ) : (
           <div className="button-aksi mt-5 float-right">
             <Button
+							className={`${style.button_profile_batal} rounded-xl mr-2`}
+							type="button"
+							onClick={() => stepBack()}
+							disabled={loadingStatusWizzard ? true : false}
+						>
+							Kembali
+						</Button>
+            <Button
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
+              disabled = {loadingUpdateData ? true : false}
             >
               Lanjut
             </Button>

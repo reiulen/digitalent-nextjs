@@ -7,6 +7,8 @@ import {
   Row,
   Button,
   ModalBody,
+  Collapse,
+  CarouselItem,
 } from "react-bootstrap";
 import styles from "./content.module.css";
 
@@ -17,16 +19,11 @@ import Image from "next/dist/client/image";
 import Dot from "../../../../../public/assets/media/logos/dot.png";
 import { useSelector } from "react-redux";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-import {
-  clearErrors,
-  getRandomSurveyQuestionDetail,
-  postResultSurvey,
-} from "../../../../../redux/actions/subvit/survey-question-detail.action";
+import { postResultSurvey } from "../../../../../redux/actions/subvit/survey-question-detail.action";
 
 import defaultImage from "../../../../../public/assets/media/logos/Gambar.png";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { SweatAlert } from "../../../../../utils/middleware/helper";
 
 const SubtansiUser = ({ token }) => {
   const dispatch = useDispatch();
@@ -34,179 +31,191 @@ const SubtansiUser = ({ token }) => {
 
   const router = useRouter();
 
-  const initialData = [
-    {
-      training: "Pelatihan Android test update lima",
-      academy: "Goverment Transformation Academy",
-      theme: "Tema Akademi",
-      total_questions: 4,
-      time_left: 221,
-      list_questions: [
-        {
-          id: 168,
-          survey_question_bank_id: 66,
-          question: "TRIGGERED?",
-          question_image:
-            "survey/images/ce303867-8933-49b6-8640-3c68bacfe8f0.jpeg",
-          type: "triggered_question",
-          answer: [
-            {
-              key: "A",
-              option: "Ada selanjutnya",
-              image: "survey/images/d3ff3103-8197-4d05-ba7d-c93a11643fb5.png",
-              imageName: "gambar1.png",
-              type: "choose",
-              is_next: true,
-              sub: [
-                {
-                  key: 1,
-                  question: "ini selanjutnya",
-                  image:
-                    "survey/images/5b0a7a1c-0d01-4bcc-b408-8a379ed001d1.png",
-                  imageName: "gambar2.png",
-                  is_next: false,
-                  answer: [
-                    {
-                      key: "A",
-                      option: "jawab a",
-                      image:
-                        "survey/images/0a7e1e2d-7209-4873-abd9-0a6a11aefb6a.jpeg",
-                      imageName: "bezos.jpg",
-                      type: "choose",
-                    },
-                    {
-                      key: "B",
-                      option: "jawab b",
-                      image:
-                        "survey/images/695e1fb3-f789-44f8-88f0-829fc5e0f2ca.jpeg",
-                      imageName: "bill gates.jpg",
-                      type: "choose",
-                    },
-                    {
-                      key: "C",
-                      option: "jawab c",
-                      image:
-                        "survey/images/692b465a-3082-4a75-833f-7e84cc5f93fe.jpeg",
-                      imageName: "elon.jpg",
-                      type: "choose",
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              key: "B",
-              option: "Unch",
-              image: null,
-              imageName: "Choose File",
-              type: "choose",
-              is_next: false,
-              sub: [],
-            },
-            {
-              key: "C",
-              option: "ga unch",
-              image: "survey/images/32dd0baf-263c-4eaa-9980-833c328d0dda.png",
-              imageName: "redhat academy.png",
-              type: "choose",
-              is_next: false,
-              sub: [],
-            },
-          ],
-        },
-        {
-          id: 166,
-          survey_question_bank_id: 66,
-          question: "TeslAAA",
-          question_image:
-            "survey/images/c28e548a-3a52-4a9a-a742-7a2711ea768b.jpeg",
-          type: "multiple_choice",
-          answer: [
-            {
-              key: "A",
-              option: "AAA",
-              image: "survey/images/b316765a-ebe4-49c0-857c-87730ad54e16.jpeg",
-              imageName: "bezos.jpg",
-            },
-            {
-              key: "B",
-              option: "BBB",
-              image: "survey/images/838e0a39-4ac6-46f7-9146-3851b6d94f1d.jpeg",
-              imageName: "bill gates.jpg",
-            },
-            {
-              key: "C",
-              option: "CCC",
-              image: "survey/images/a44700c7-3d36-482b-8d90-a3516a5ad680.png",
-              imageName: "gambar1.png",
-            },
-            {
-              key: "D",
-              option: "DDD",
-              image: "survey/images/34f85f50-6a01-4d98-982a-a88728db3f4a.png",
-              imageName: "gambar3.png",
-            },
-          ],
-        },
-        {
-          id: 167,
-          survey_question_bank_id: 66,
-          question: "OOOUCHH",
-          question_image:
-            "survey/images/1f14df13-8a2f-474e-8fda-a93365d15498.jpeg",
-          type: "pertanyaan_terbuka",
-          answer: null,
-        },
-        {
-          id: 165,
-          survey_question_bank_id: 66,
-          question: "SUUUU",
-          question_image:
-            "survey/images/9eb5241f-3598-4980-97b2-632cf3a42d53.jpeg",
-          type: "objective",
-          answer: [
-            {
-              key: "A",
-              option: "AAA",
-              image: "survey/images/cb596346-dd01-4f06-9dcd-cbe6822af969.jpeg",
-              imageName: "elon.jpg",
-            },
-            {
-              key: "B",
-              option: "BBB",
-              image: "survey/images/edad998d-49fe-47fb-98db-775706d7847b.jpeg",
-              imageName: "bill gates.jpg",
-            },
-            {
-              key: "C",
-              option: "SUUU",
-              image: "survey/images/286de9d5-27ca-44d0-9c46-3bdeb29c5dfa.jpeg",
-              imageName: "SUUU.jpg",
-            },
-            {
-              key: "D",
-              option: "DDD",
-              image: "survey/images/2de7a6d0-3bcf-4b16-a85b-53b949c7f0fa.jpeg",
-              imageName: "bezos.jpg",
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const initialData = {
+    training: "Pelatihan Android test update lima",
+    academy: "Goverment Transformation Academy",
+    theme: "Tema Akademi",
+    total_questions: 4,
+    time_left: 221,
+    list_questions: [
+      {
+        id: 168,
+        survey_question_bank_id: 66,
+        question: "TRIGGERED?",
+        question_image:
+          "survey/images/ce303867-8933-49b6-8640-3c68bacfe8f0.jpeg",
+        type: "triggered_question",
+        answer: [
+          {
+            key: "A",
+            option: "Ada selanjutnya",
+            image: "survey/images/d3ff3103-8197-4d05-ba7d-c93a11643fb5.png",
+            imageName: "gambar1.png",
+            type: "choose",
+
+            sub: [
+              {
+                key: 1,
+                question: "ini selanjutnya",
+                image: "survey/images/5b0a7a1c-0d01-4bcc-b408-8a379ed001d1.png",
+                imageName: "gambar2.png",
+
+                answer: [
+                  {
+                    key: "A",
+                    option: "jawab a",
+                    image:
+                      "survey/images/0a7e1e2d-7209-4873-abd9-0a6a11aefb6a.jpeg",
+                    imageName: "bezos.jpg",
+                    type: "choose",
+                  },
+                  {
+                    key: "B",
+                    option: "jawab b",
+                    image:
+                      "survey/images/695e1fb3-f789-44f8-88f0-829fc5e0f2ca.jpeg",
+                    imageName: "bill gates.jpg",
+                    type: "choose",
+                  },
+                  {
+                    key: "C",
+                    option: "jawab c",
+                    image:
+                      "survey/images/692b465a-3082-4a75-833f-7e84cc5f93fe.jpeg",
+                    imageName: "elon.jpg",
+                    type: "choose",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            key: "B",
+            option: "Unch",
+            image: null,
+            imageName: "Choose File",
+            type: "choose",
+            is_next: false,
+            sub: [],
+          },
+          {
+            key: "C",
+            option: "ga unch",
+            image: "survey/images/32dd0baf-263c-4eaa-9980-833c328d0dda.png",
+            imageName: "redhat academy.png",
+            type: "choose",
+            is_next: false,
+            sub: [],
+          },
+        ],
+      },
+      {
+        id: 166,
+        survey_question_bank_id: 66,
+        question: "TeslAAA",
+        question_image:
+          "survey/images/c28e548a-3a52-4a9a-a742-7a2711ea768b.jpeg",
+        type: "multiple_choice",
+        answer: [
+          {
+            key: "A",
+            option: "AAA",
+            image: "survey/images/b316765a-ebe4-49c0-857c-87730ad54e16.jpeg",
+            imageName: "bezos.jpg",
+          },
+          {
+            key: "B",
+            option: "BBB",
+            image: "survey/images/838e0a39-4ac6-46f7-9146-3851b6d94f1d.jpeg",
+            imageName: "bill gates.jpg",
+          },
+          {
+            key: "C",
+            option: "CCC",
+            image: "survey/images/a44700c7-3d36-482b-8d90-a3516a5ad680.png",
+            imageName: "gambar1.png",
+          },
+          {
+            key: "D",
+            option: "DDD",
+            image: "survey/images/34f85f50-6a01-4d98-982a-a88728db3f4a.png",
+            imageName: "gambar3.png",
+          },
+        ],
+      },
+      {
+        id: 167,
+        survey_question_bank_id: 66,
+        question: "OOOUCHH",
+        question_image:
+          "survey/images/1f14df13-8a2f-474e-8fda-a93365d15498.jpeg",
+        type: "pertanyaan_terbuka",
+        answer: null,
+      },
+      {
+        id: 165,
+        survey_question_bank_id: 66,
+        question: "SUUUU",
+        question_image:
+          "survey/images/9eb5241f-3598-4980-97b2-632cf3a42d53.jpeg",
+        type: "objective",
+        answer: [
+          {
+            key: "A",
+            option: "AAA",
+            image: "survey/images/cb596346-dd01-4f06-9dcd-cbe6822af969.jpeg",
+            imageName: "elon.jpg",
+          },
+          {
+            key: "B",
+            option: "BBB",
+            image: "survey/images/edad998d-49fe-47fb-98db-775706d7847b.jpeg",
+            imageName: "bill gates.jpg",
+          },
+          {
+            key: "C",
+            option: "SUUU",
+            image: "survey/images/286de9d5-27ca-44d0-9c46-3bdeb29c5dfa.jpeg",
+            imageName: "SUUU.jpg",
+          },
+          {
+            key: "D",
+            option: "DDD",
+            image: "survey/images/2de7a6d0-3bcf-4b16-a85b-53b949c7f0fa.jpeg",
+            imageName: "bezos.jpg",
+          },
+        ],
+      },
+    ],
+  };
+
   let multi = [];
 
   const [data, setData] = useState();
+
   const [answer, setAnswer] = useState("");
   const [d, setD] = useState("");
 
-  const [listAnswer, setListAnswer] = useState([]);
+  const [listAnswer, setListAnswer] = useState();
+  const [listAnswer2, setListAnswer2] = useState();
   const [numberPage, setNumberPage] = useState("");
-  const [numberAnswer, setNumberAnswer] = useState(false);
+  const [imageClick, setImageClick] = useState("");
+  const [imageClickTr, setImageClickTr] = useState("");
+  const [imageClickTrJawab, setImageClickTrJawab] = useState("");
+
+  const [zoom, setZoom] = useState(false);
+  const [zoomJawab, setZoomJawab] = useState(false);
+  const [zoomTr, setZoomTr] = useState(false);
+  const [zoomTrJawab, setZoomTrJawab] = useState(false);
+
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
-  const [multipleAnswer, setMultipleAnswer] = useState(multi);
-  const [indexSoal, setIndexSoal] = useState(0);
+
+  const [sub, setSub] = useState();
+
+  const [answerTriggered, setAnswerTriggered] = useState();
+
+  const [open, setOpen] = useState(false);
 
   const [count, setCount] = useState(random_survey && random_survey.time_left);
   const [modalDone, setModalDone] = useState(false);
@@ -215,17 +224,34 @@ const SubtansiUser = ({ token }) => {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
 
+  const [close, setClose] = useState(0);
+
+  const routerTraining = router.query.training_id;
+  const routerTema = router.query.theme_id;
+
+  const [question, setQuestion] = useState("");
+  const [time, setTime] = useState("");
+
   let keyMap = [];
+
   const handleMultiple = (item, index) => {
-    setD(index);
-    if (item.key.includes(localStorage.getItem(index + "a"))) {
-      localStorage.removeItem(index + "a", item.key);
+    if (multi.includes(item.key)) {
+      multi.splice(multi.indexOf(item.key), 1);
+      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
     } else {
-      localStorage.setItem(index + "a", item.key);
+      multi.push(item.key);
+      sessionStorage.setItem(router.query.id, JSON.stringify(multi));
     }
 
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
+    setD(index);
+    if (item.key.includes(sessionStorage.getItem(index + "a"))) {
+      sessionStorage.removeItem(index + "a", item.key);
+    } else {
+      sessionStorage.setItem(index + "a", item.key);
+    }
+
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i);
       keyMap.push(key);
     }
   };
@@ -283,6 +309,24 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    axios
+      .get(
+        process.env.END_POINT_API_SUBVIT +
+          `api/survey-question-bank-details/info?training_id=${routerTraining}&theme_id=${routerTema}`,
+        config
+      )
+      .then((res) => {
+        setQuestion(res.data.total_questions);
+        setTime(res.data.duration);
+      });
+  }, [routerTema, routerTraining, token]);
+
+  useEffect(() => {
     if (error) {
       router.push(`/peserta/done-survey`);
     }
@@ -296,11 +340,18 @@ const SubtansiUser = ({ token }) => {
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
-      localStorage.clear();
+      const setData = {
+        list: null,
+        training_id: router.query.training_id,
+        type: "survey",
+      };
 
+      dispatch(postResultSurvey(setData, token));
+      localStorage.clear();
+      sessionStorage.clear();
       router.push(`/peserta/done-survey`);
     }
-  }, [count, data, error, dispatch, router]);
+  }, [count, data, error, dispatch, router, token]);
 
   useEffect(() => {
     setData(random_survey);
@@ -319,45 +370,56 @@ const SubtansiUser = ({ token }) => {
     };
   };
 
-  let list = [];
-
   const handleAnswerText = (e) => {
-    localStorage.setItem(`${parseInt(router.query.id)}`, e.target.value);
-    if (localStorage.getItem(`${parseInt(router.query.id)}`) === "") {
+    sessionStorage.setItem(`${parseInt(router.query.id)}`, e.target.value);
+    if (sessionStorage.getItem(`${parseInt(router.query.id)}`) === "") {
       setAnswer("");
     } else {
       setAnswer(e.target.value);
     }
   };
 
-  const handleAnswerTriggered = (e) => {
-    localStorage.setItem(`${router.query.id}a`, e.key);
+  const handleAnswerTriggered = (e, i) => {
+    setAnswerTriggered(e);
+
+    let sub = JSON.parse(
+      data.list_questions[parseInt(router.query.id) - 1]?.answer
+    ).map((item) => {
+      return item;
+    });
+
+    setSub(sub[i]);
+
+    if (e.sub && e.sub.length > 0) {
+      sessionStorage.setItem(`${router.query.id}e`, e.key);
+      setOpen(!open);
+    } else {
+      sessionStorage.setItem(`${router.query.id}e`, e.key);
+    }
+  };
+
+  const handleTriggered = (e) => {
+    let ansTw = [sessionStorage.getItem(router.query.id + "e"), e.key];
+    sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
+    sessionStorage.setItem(`${router.query.id}tr`, e.key);
+    setListAnswer(sessionStorage.getItem(`${router.query.id}tr`));
+  };
+
+  const handleTriggered2 = (e) => {
+    let ansTw = [
+      sessionStorage.getItem(router.query.id + "e"),
+      sessionStorage.getItem(router.query.id + "tr"),
+      e.key,
+    ];
+    sessionStorage.setItem(`${router.query.id}td`, e.key);
+    sessionStorage.setItem(router.query.id, JSON.stringify(ansTw));
+
+    setListAnswer2(sessionStorage.getItem(`${router.query.id}td`));
   };
 
   const handleObject = (e) => {
-    localStorage.setItem(`${router.query.id}`, e.key);
-  };
-
-  const handleAnswer = (e, id) => {
-    setIndexSoal(id);
-    localStorage.setItem(router.query.id, e.key);
-    initialData.map((item, index) => {
-      if (e.sub && e.sub.length > 0 && item.type === "triggered_question") {
-        item.open = true;
-      }
-    });
-
-    let dataTemp = [...initialData];
-    setData(dataTemp);
-
-    setAnswer(e.key);
-
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-
-      list.push(key);
-      setListAnswer(key);
-    }
+    sessionStorage.setItem(`${router.query.id}`, e.key);
+    setListAnswer(sessionStorage.getItem(`${router.query.id}`));
   };
 
   let number = [];
@@ -371,21 +433,23 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
+    setClose(1);
     const setData = {
       list: JSON.stringify(
         data.list_questions.map((item, index) => {
           return {
             ...item,
-
-            participant_answer: localStorage.getItem(index + 1),
+            participant_answer: sessionStorage.getItem(index + 1),
           };
         })
       ),
       training_id: router.query.training_id,
       type: "survey",
     };
+
     dispatch(postResultSurvey(setData, token));
     localStorage.clear();
+    sessionStorage.clear();
     router.push(`/peserta/done-survey`);
   };
 
@@ -468,200 +532,114 @@ const SubtansiUser = ({ token }) => {
                 </Col>
               </Row>
 
-              {data &&
-                data.list_questions[parseInt(router.query.id) - 1].type ===
-                  "triggered_question" && (
-                  <>
-                    <h1 className={styles.soal}>
-                      {data &&
-                      data.list_questions[parseInt(router.query.id) - 1]
-                        .question_image !== null &&
-                      data.list_questions[parseInt(router.query.id) - 1]
-                        .question_image !== "" ? (
-                        <div className="d-flex flex-row">
-                          <div className="p-2">
-                            {" "}
-                            <Image
-                              src={
-                                process.env.END_POINT_API_IMAGE_SUBVIT +
-                                  data.list_questions[
-                                    parseInt(router.query.id) - 1
-                                  ]?.question_image || defaultImage
-                              }
-                              alt=""
-                              width={150}
-                              ndl
-                              height={150}
-                            />
-                          </div>
-                          <div className="p-5">
-                            {data &&
-                              data.list_questions[parseInt(router.query.id) - 1]
-                                ?.question}
-                          </div>
-                        </div>
-                      ) : (
+              {data?.list_questions[parseInt(router.query.id) - 1]?.type ===
+                "triggered_question" && (
+                <>
+                  <h1 className={styles.soal}>
+                    {data &&
+                    data.list_questions[parseInt(router.query.id) - 1]
+                      .question_image !== null &&
+                    data.list_questions[parseInt(router.query.id) - 1]
+                      .question_image !== "" ? (
+                      <div className="d-flex flex-row">
                         <div className="p-2">
+                          {" "}
+                          <Image
+                            src={
+                              process.env.END_POINT_API_IMAGE_SUBVIT +
+                                data.list_questions[
+                                  parseInt(router.query.id) - 1
+                                ]?.question_image || defaultImage
+                            }
+                            alt=""
+                            width={150}
+                            onClick={() => setZoom(true)}
+                            height={150}
+                          />
+                        </div>
+                        <Modal show={zoom} onHide={() => setZoom(false)}>
+                          <Image
+                            src={
+                              process.env.END_POINT_API_IMAGE_SUBVIT +
+                                data.list_questions[
+                                  parseInt(router.query.id) - 1
+                                ]?.question_image || defaultImage
+                            }
+                            alt=""
+                            width={500}
+                            height={800}
+                          />
+                        </Modal>
+                        <div className="p-5">
                           {data &&
                             data.list_questions[parseInt(router.query.id) - 1]
                               ?.question}
                         </div>
-                      )}
-                    </h1>
-                    <hr
-                      hidden={
-                        data.list_questions[parseInt(router.query.id) - 1]
-                          .open === true
-                      }
-                    />
-                    {data &&
+                      </div>
+                    ) : (
+                      <div className="p-2">
+                        {data &&
+                          data.list_questions[parseInt(router.query.id) - 1]
+                            ?.question}
+                      </div>
+                    )}
+                  </h1>
+                  <hr hidden={open === true} />
+                  {open === false ? (
+                    data &&
                     data.list_questions[parseInt(router.query.id) - 1]
                       ?.answer !== null &&
-                    data &&
-                    data.list_questions[parseInt(router.query.id) - 1].open ===
-                      true
-                      ? data.list_questions[
-                          parseInt(router.query.id) - 1
-                        ]?.answer
-                          .filter(
-                            (data) =>
-                              data.key === localStorage.getItem(router.query.id)
-                          )
-                          .map((item, index) => {
-                            return (
-                              <>
-                                {item.image !== null && item.image !== "" ? (
-                                  <div className="d-flex flex-row">
-                                    <div className="p-2">
-                                      <Image
-                                        src={
-                                          process.env
-                                            .END_POINT_API_IMAGE_SUBVIT +
-                                            item.image || defaultImage
-                                        }
-                                        alt=""
-                                        width={70}
-                                        height={70}
-                                      />
-                                    </div>
-                                    <div
-                                      className="p-4"
-                                      style={{ width: "100%", height: "100%" }}
-                                    >
-                                      <Card
-                                        className={
-                                          localStorage.getItem(
-                                            router.query.id
-                                          ) === item.key
-                                            ? styles.answer
-                                            : styles.boxAnswer
-                                        }
-                                        key={index}
-                                        onClick={() => {
-                                          handleAnswer(item, index);
-                                        }}
-                                      >
-                                        <table>
-                                          <tr>
-                                            <td style={{ width: "5px" }}>
-                                              {item.key}
-                                            </td>
-                                            <td style={{ width: "15px" }}>.</td>
-                                            <td>{item.option}</td>
-                                          </tr>
-                                        </table>
-                                      </Card>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <Card
-                                    className={
-                                      localStorage.getItem(router.query.id) ===
-                                      item.key
-                                        ? styles.answer
-                                        : styles.boxAnswer
-                                    }
-                                    key={index}
-                                    onClick={() => {
-                                      handleAnswer(item, index);
-                                    }}
-                                  >
-                                    <table>
-                                      <tr>
-                                        <td style={{ width: "5px" }}>
-                                          {item.key}
-                                        </td>
-                                        <td style={{ width: "15px" }}>.</td>
-
-                                        <td>{item.option} </td>
-                                      </tr>
-                                    </table>
-                                  </Card>
-                                )}
-                              </>
-                            );
-                          })
-                      : data.list_questions[parseInt(router.query.id) - 1]
-                          ?.answer &&
-                        JSON.parse(
-                          data.list_questions[parseInt(router.query.id) - 1]
-                            ?.answer
-                        ).map((item, index) => {
-                          return (
-                            <>
-                              {item.image !== null && item.image !== "" ? (
-                                <div className="d-flex flex-row">
-                                  <div className="p-2">
-                                    <Image
-                                      src={
-                                        process.env.END_POINT_API_IMAGE_SUBVIT +
-                                          item.image || defaultImage
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                    />
-                                  </div>
-                                  <div
-                                    className="p-4"
-                                    style={{ width: "100%", height: "100%" }}
-                                  >
-                                    <Card
-                                      className={
-                                        localStorage.getItem(
-                                          router.query.id
-                                        ) === item.key
-                                          ? styles.answer
-                                          : styles.boxAnswer
-                                      }
-                                      key={index}
-                                      onClick={() => {
-                                        handleAnswer(item, index);
-                                      }}
-                                    >
-                                      <table>
-                                        <tr>
-                                          <td style={{ width: "5px" }}>
-                                            {item.key}
-                                          </td>
-                                          <td style={{ width: "15px" }}>.</td>
-                                          <td>{item.option}</td>
-                                        </tr>
-                                      </table>
-                                    </Card>
-                                  </div>
-                                </div>
-                              ) : (
+                    JSON.parse(
+                      data.list_questions[parseInt(router.query.id) - 1]?.answer
+                    ).map((item, index) => {
+                      return (
+                        <>
+                          {item.image !== null && item.image !== "" ? (
+                            <div className="d-flex flex-row">
+                              <div className="p-2">
+                                <Image
+                                  src={
+                                    process.env.END_POINT_API_IMAGE_SUBVIT +
+                                      item.image || defaultImage
+                                  }
+                                  alt=""
+                                  width={70}
+                                  onClick={() => {
+                                    setZoomJawab(true);
+                                    setImageClick(item.image);
+                                  }}
+                                  height={70}
+                                />
+                              </div>
+                              <Modal
+                                show={zoomJawab}
+                                onHide={() => setZoomJawab(false)}
+                              >
+                                <Image
+                                  src={
+                                    process.env.END_POINT_API_IMAGE_SUBVIT +
+                                      imageClick || defaultImage
+                                  }
+                                  alt=""
+                                  width={500}
+                                  height={800}
+                                />
+                              </Modal>
+                              <div
+                                className="p-4"
+                                style={{ width: "100%", height: "100%" }}
+                              >
                                 <Card
                                   className={
-                                    localStorage.getItem(router.query.id) ===
-                                    item.key
+                                    sessionStorage.getItem(
+                                      router.query.id + "e"
+                                    ) === item.key
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
                                   key={index}
                                   onClick={() => {
-                                    handleAnswer(item, index);
+                                    handleAnswerTriggered(item, index);
                                   }}
                                 >
                                   <table>
@@ -670,16 +648,213 @@ const SubtansiUser = ({ token }) => {
                                         {item.key}
                                       </td>
                                       <td style={{ width: "15px" }}>.</td>
-                                      <td>{item.option} </td>
+                                      <td>{item.option}</td>
                                     </tr>
                                   </table>
                                 </Card>
-                              )}
-                            </>
-                          );
-                        })}
-                  </>
-                )}
+                              </div>
+                            </div>
+                          ) : (
+                            <Card
+                              className={
+                                sessionStorage.getItem(
+                                  router.query.id + "e"
+                                ) === item.key
+                                  ? styles.answer
+                                  : styles.boxAnswer
+                              }
+                              key={index}
+                              onClick={() => {
+                                handleAnswerTriggered(item, index);
+                              }}
+                            >
+                              <table>
+                                <tr>
+                                  <td style={{ width: "5px" }}>{item.key}</td>
+                                  <td style={{ width: "15px" }}>.</td>
+                                  <td>{item.option} </td>
+                                </tr>
+                              </table>
+                            </Card>
+                          )}
+                        </>
+                      );
+                    })
+                  ) : (
+                    <Card className={styles.answer}>
+                      <table>
+                        <tr>
+                          <td style={{ width: "5px" }}>
+                            {answerTriggered.key}
+                          </td>
+                          <td style={{ width: "15px" }}>.</td>
+                          <td>{answerTriggered.option} </td>
+                        </tr>
+                      </table>
+                    </Card>
+                  )}
+
+                  <Collapse in={open} dimension="width">
+                    <div id="example-collapse-text">
+                      {sub?.sub?.map((a) => {
+                        return (
+                          <>
+                            {a.image !== null && a.image !== "" ? (
+                              <>
+                                <h1 className={styles.soal}>
+                                  <div className="d-flex flex-row">
+                                    <div className="p-2">
+                                      {" "}
+                                      <Image
+                                        src={
+                                          process.env
+                                            .END_POINT_API_IMAGE_SUBVIT +
+                                            a.image || defaultImage
+                                        }
+                                        alt=""
+                                        width={150}
+                                        onClick={() => {
+                                          setZoomTr(true);
+                                          setImageClickTr(a.image);
+                                        }}
+                                        height={150}
+                                      />
+                                    </div>
+                                    <Modal
+                                      show={zoomTr}
+                                      onHide={() => setZoomTr(false)}
+                                    >
+                                      <Image
+                                        src={
+                                          process.env
+                                            .END_POINT_API_IMAGE_SUBVIT +
+                                            imageClickTr || defaultImage
+                                        }
+                                        alt=""
+                                        width={500}
+                                        height={800}
+                                      />
+                                    </Modal>
+                                    <div className="p-5">{a.question}</div>
+                                  </div>
+                                </h1>
+                                <hr />
+                                {a.answer.map((ans, index) => {
+                                  return (
+                                    <>
+                                      <div className="d-flex flex-row">
+                                        <div className="p-2">
+                                          <Image
+                                            src={
+                                              process.env
+                                                .END_POINT_API_IMAGE_SUBVIT +
+                                                ans.image || defaultImage
+                                            }
+                                            alt=""
+                                            width={70}
+                                            onClick={() => {
+                                              setZoomTrJawab(true);
+                                              setImageClickTrJawab(ans.image);
+                                            }}
+                                            height={70}
+                                          />
+                                        </div>
+                                        <Modal
+                                          show={zoomTrJawab}
+                                          onHide={() => setZoomTrJawab(false)}
+                                        >
+                                          <Image
+                                            src={
+                                              process.env
+                                                .END_POINT_API_IMAGE_SUBVIT +
+                                                imageClickTrJawab ||
+                                              defaultImage
+                                            }
+                                            alt=""
+                                            width={500}
+                                            height={800}
+                                          />
+                                        </Modal>
+                                        <div
+                                          className="p-4"
+                                          style={{
+                                            width: "100%",
+                                            height: "100%",
+                                          }}
+                                        >
+                                          <Card
+                                            className={
+                                              listAnswer === ans.key
+                                                ? styles.answer
+                                                : styles.boxAnswer
+                                            }
+                                            key={index}
+                                            onClick={() => {
+                                              handleTriggered(ans, index);
+                                            }}
+                                          >
+                                            <table>
+                                              <tr>
+                                                <td style={{ width: "5px" }}>
+                                                  {ans.key}
+                                                </td>
+                                                <td style={{ width: "15px" }}>
+                                                  .
+                                                </td>
+                                                <td>{ans.option}</td>
+                                              </tr>
+                                            </table>
+                                          </Card>
+                                        </div>
+                                      </div>
+                                    </>
+                                  );
+                                })}
+                              </>
+                            ) : (
+                              <>
+                                <h1 className={styles.soal}>
+                                  {" "}
+                                  <div className="p-2">{a.question}</div>{" "}
+                                </h1>
+                                <hr />
+                                {a.answer.map((ans, index) => {
+                                  return (
+                                    <>
+                                      {" "}
+                                      <Card
+                                        className={
+                                          listAnswer2 === ans.key
+                                            ? styles.answer
+                                            : styles.boxAnswer
+                                        }
+                                        key={index}
+                                        onClick={() => {
+                                          handleTriggered2(ans, index);
+                                        }}
+                                      >
+                                        <table>
+                                          <tr>
+                                            <td style={{ width: "5px" }}>
+                                              {ans.key}
+                                            </td>
+                                            <td style={{ width: "15px" }}>.</td>
+                                            <td>{ans.option} </td>
+                                          </tr>
+                                        </table>
+                                      </Card>
+                                    </>
+                                  );
+                                })}
+                              </>
+                            )}
+                          </>
+                        );
+                      })}
+                    </div>
+                  </Collapse>
+                </>
+              )}
 
               {data &&
                 data.list_questions[parseInt(router.query.id) - 1].type ===
@@ -703,10 +878,23 @@ const SubtansiUser = ({ token }) => {
                               }
                               alt=""
                               width={150}
-                              ndl
+                              onClick={() => setZoom(true)}
                               height={150}
                             />
                           </div>
+                          <Modal show={zoom} onHide={() => setZoom(false)}>
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div className="p-5">
                             {data &&
                               data.list_questions[parseInt(router.query.id) - 1]
@@ -723,10 +911,10 @@ const SubtansiUser = ({ token }) => {
                     </h1>
                     <hr />
                     {data &&
-                      data.list_questions[parseInt(router.query.id) - 1]
+                      data?.list_questions[parseInt(router.query.id) - 1]
                         ?.answer !== null &&
                       JSON.parse(
-                        data.list_questions[parseInt(router.query.id) - 1]
+                        data?.list_questions[parseInt(router.query.id) - 1]
                           ?.answer
                       ).map((item, index) => {
                         return (
@@ -742,16 +930,33 @@ const SubtansiUser = ({ token }) => {
                                     alt=""
                                     width={70}
                                     height={70}
+                                    onClick={() => {
+                                      setZoomJawab(true);
+                                      setImageClick(item.image);
+                                    }}
                                   />
                                 </div>
+                                <Modal
+                                  show={zoomJawab}
+                                  onHide={() => setZoomJawab(false)}
+                                >
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        imageClick || defaultImage
+                                    }
+                                    alt=""
+                                    width={500}
+                                    height={800}
+                                  />
+                                </Modal>
                                 <div
                                   className="p-4"
                                   style={{ width: "100%", height: "100%" }}
                                 >
                                   <Card
                                     className={
-                                      localStorage.getItem(router.query.id) ===
-                                      item.key
+                                      listAnswer === item.key
                                         ? styles.answer
                                         : styles.boxAnswer
                                     }
@@ -775,8 +980,7 @@ const SubtansiUser = ({ token }) => {
                             ) : (
                               <Card
                                 className={
-                                  localStorage.getItem(router.query.id) ===
-                                  item.key
+                                  listAnswer === item.key
                                     ? styles.answer
                                     : styles.boxAnswer
                                 }
@@ -822,10 +1026,23 @@ const SubtansiUser = ({ token }) => {
                               }
                               alt=""
                               width={150}
-                              ndl
+                              onClick={() => setZoom(true)}
                               height={150}
                             />
                           </div>
+                          <Modal show={zoom} onHide={() => setZoom(false)}>
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div className="p-5">
                             {data &&
                               data.list_questions[parseInt(router.query.id) - 1]
@@ -871,15 +1088,33 @@ const SubtansiUser = ({ token }) => {
                                     alt=""
                                     width={70}
                                     height={70}
+                                    onClick={() => {
+                                      setZoomJawab(true);
+                                      setImageClick(item.image);
+                                    }}
                                   />
                                 </div>
+                                <Modal
+                                  show={zoomJawab}
+                                  onHide={() => setZoomJawab(false)}
+                                >
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        imageClick || defaultImage
+                                    }
+                                    alt=""
+                                    width={500}
+                                    height={800}
+                                  />
+                                </Modal>
                                 <div
                                   className="p-4"
                                   style={{ width: "100%", height: "100%" }}
                                 >
                                   <Card
                                     className={
-                                      localStorage.getItem(index + "a") ===
+                                      sessionStorage.getItem(index + "a") ===
                                       item.key
                                         ? styles.answer
                                         : styles.boxAnswer
@@ -904,7 +1139,8 @@ const SubtansiUser = ({ token }) => {
                             ) : (
                               <Card
                                 className={
-                                  localStorage.getItem(index + "a") === item.key
+                                  sessionStorage.getItem(index + "a") ===
+                                  item.key
                                     ? styles.answer
                                     : styles.boxAnswer
                                 }
@@ -950,10 +1186,23 @@ const SubtansiUser = ({ token }) => {
                               }
                               alt=""
                               width={150}
-                              ndl
                               height={150}
+                              onClick={() => setZoom(true)}
                             />
                           </div>
+                          <Modal show={zoom} onHide={() => setZoom(false)}>
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  data.list_questions[
+                                    parseInt(router.query.id) - 1
+                                  ]?.question_image || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div className="p-5">
                             {data &&
                               data.list_questions[parseInt(router.query.id) - 1]
@@ -979,46 +1228,6 @@ const SubtansiUser = ({ token }) => {
                         value={localStorage.getItem(`${router.query.id}`)}
                       />
                     </Form>
-                  </>
-                )}
-
-              {data &&
-                data.list_questions[parseInt(router.query.id) - 1].open ===
-                  true && (
-                  <>
-                    <hr />
-                    <h1 className={styles.soal} style={{ margin: "20px 0px" }}>
-                      {data.list_questions[parseInt(router.query.id) - 1]
-                        .answer[indexSoal].sub[0] &&
-                        data.list_questions[parseInt(router.query.id) - 1]
-                          .answer[indexSoal].sub[0].question}
-                    </h1>
-                    {data[parseInt(router.query.id) - 1].answer[indexSoal]
-                      .sub[0] &&
-                      data[parseInt(router.query.id) - 1].answer[
-                        indexSoal
-                      ].sub[0].answer.map((item, index) => {
-                        return (
-                          <Card
-                            className={
-                              localStorage.getItem(`${router.query.id}a`) ===
-                              item.key
-                                ? styles.answer
-                                : styles.boxAnswer
-                            }
-                            key={index}
-                            onClick={() => handleAnswerTriggered(item)}
-                          >
-                            <table>
-                              <tr>
-                                <td style={{ width: "5px" }}>{item.key}</td>
-                                <td style={{ width: "15px" }}>.</td>
-                                <td>{item.option} </td>
-                              </tr>
-                            </table>
-                          </Card>
-                        );
-                      })}
                   </>
                 )}
 
@@ -1126,8 +1335,8 @@ const SubtansiUser = ({ token }) => {
               <Row>
                 {number.map((item, index) => {
                   let list = [];
-                  for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
+                  for (let i = 0; i < sessionStorage.length; i++) {
+                    const key = sessionStorage.key(i);
                     list.push(key);
                   }
 
@@ -1289,8 +1498,8 @@ const SubtansiUser = ({ token }) => {
                   <td>&nbsp;</td>
                   <td>
                     {" "}
-                    Peserta wajib menjawab seluruh survey yang berjumlah 50
-                    pertanyaan.
+                    Peserta wajib menjawab seluruh survey yang berjumlah{" "}
+                    {question || 50}&nbsp; pertanyaan.
                   </td>
                 </tr>
                 <tr>
@@ -1306,7 +1515,12 @@ const SubtansiUser = ({ token }) => {
                 <tr>
                   <td style={{ verticalAlign: "top" }}>4.</td>
                   <td>&nbsp;</td>
-                  <td> Waktu yang tersedia untuk mengisi survey ini 1 Jam.</td>
+                  <td>
+                    {" "}
+                    Waktu yang tersedia untuk mengisi survey ini {time ||
+                      5}{" "}
+                    Menit.
+                  </td>
                 </tr>
               </table>
             </Card>
@@ -1332,8 +1546,9 @@ const SubtansiUser = ({ token }) => {
         </ModalHeader>
         <ModalBody className={styles.bodyKonfirmasi}>
           Apakah anda ingin menyelesaikan Survey dan mengirim semua hasil
-          jawaban anda?Jika “Ya” maka anda sudah dinyatakan selesai mengikuti
-          Survey, dan anda tidak dapat memperbaiki jawaban anda. <br />
+          jawaban anda?Jika “Selesai” maka anda sudah dinyatakan selesai
+          mengikuti Survey, dan anda tidak dapat memperbaiki jawaban anda.{" "}
+          <br />
           <br />
           Dengan ini saya menyatakan sudah menyelesaikan Survey dengan tidak
           melakukan kecurangan dalam bentuk apapun. Saya bersedia menerima
@@ -1348,7 +1563,11 @@ const SubtansiUser = ({ token }) => {
             >
               Batal
             </Button>
-            <Button onClick={handlePage} className={styles.btnMulai}>
+            <Button
+              onClick={handlePage}
+              className={styles.btnMulai}
+              disabled={close === 1}
+            >
               Selesai
             </Button>
           </div>

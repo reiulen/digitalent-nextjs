@@ -21,7 +21,7 @@ import TriggeredQuestionComponent from "./edit-soal/triggered-question-component
 import PertanyaanTerbukaComponent from "./edit-soal/pertanyaan-terbuka-component";
 import styles from "../../trivia/edit/step.module.css";
 
-const EditSoalTrivia = ({ token }) => {
+const EditSoalTrivia = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -65,7 +65,7 @@ const EditSoalTrivia = ({ token }) => {
         type: UPDATE_SURVEY_QUESTION_DETAIL_RESET,
       });
       router.push({
-        pathname: `/subvit/survey`,
+        pathname: `/subvit/survey/${localStorage.getItem("id_survey")}`,
         query: { success: true },
       });
     }
@@ -136,7 +136,9 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateSurveyQuestionDetail(id, data, token));
+          dispatch(
+            updateSurveyQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       case "multiple_choice":
@@ -151,7 +153,9 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateSurveyQuestionDetail(id, data, token));
+          dispatch(
+            updateSurveyQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       case "pertanyaan_terbuka":
@@ -165,7 +169,9 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateSurveyQuestionDetail(id, data, token));
+          dispatch(
+            updateSurveyQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       case "triggered_question":
@@ -180,7 +186,10 @@ const EditSoalTrivia = ({ token }) => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateSurveyQuestionDetail(id, data, token));
+
+          dispatch(
+            updateSurveyQuestionDetail(id, data, token, tokenPermission)
+          );
         }
         break;
       default:
@@ -285,8 +294,7 @@ const EditSoalTrivia = ({ token }) => {
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Soal{" "}
-                {survey_question_detail && survey_question_detail.bank_soal + 1}
+                Soal {parseInt(router.query.no) + 1}
               </h3>
               <div className="card-toolbar ml-auto"></div>
             </div>

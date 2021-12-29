@@ -37,8 +37,8 @@ const DashbardSubvit = ({ token }) => {
 
   const data = [];
   dashboard_subvit &&
-    dashboard_subvit.chart &&
-    dashboard_subvit.chart.map((item) => {
+    dashboard_subvit?.chart &&
+    dashboard_subvit?.chart.map((item) => {
       data.push(item);
     });
 
@@ -55,7 +55,6 @@ const DashbardSubvit = ({ token }) => {
     router.push(
       `${router.pathname}?page_substansi=${page}&page_trivia=${router.query.page_trivia}&page_survey=${router.query.page_survey}`
     );
-    dispatch(getDashboardSubvit(token));
   };
 
   const handleBackPagination = () => {
@@ -116,7 +115,7 @@ const DashbardSubvit = ({ token }) => {
                         <div className="col-md-12 mt-5">
                           <h4 className="font-weight-bolder text-primary">
                             Halo{" "}
-                            {(dataPermission && dataPermission.user.name) ||
+                            {(dataPermission && dataPermission?.user?.name) ||
                               "Admin "}
                           </h4>
                         </div>
@@ -154,9 +153,7 @@ const DashbardSubvit = ({ token }) => {
           </div>
         </div>
         {dataPermission &&
-        dataPermission.roles.includes("Super Admin") &&
-        dataPermission &&
-        dataPermission.permissions.includes(
+        dataPermission?.permissions.includes(
           "subvit.manage" && "subvit.dashboard.manage"
         ) ? (
           <div className="row">
@@ -192,15 +189,30 @@ const DashbardSubvit = ({ token }) => {
                                 Buat Soal
                               </Dropdown.Toggle>
                               <Dropdown.Menu style={{ width: "195px" }}>
-                                <Dropdown.Item href="subvit/substansi/tambah-step-1">
-                                  Tambah Test Substansi
-                                </Dropdown.Item>
-                                <Dropdown.Item href="subvit/survey/tambah">
-                                  Tambah Survey
-                                </Dropdown.Item>
-                                <Dropdown.Item href="subvit/trivia/tambah">
-                                  Tambah TRIVIA
-                                </Dropdown.Item>
+                                {dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.manage" && "subvit.substansi.manage"
+                                  ) && (
+                                    <Dropdown.Item href="subvit/substansi/tambah-step-1">
+                                      Tambah Test Substansi
+                                    </Dropdown.Item>
+                                  )}
+                                {dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.manage" && "subvit.survey.manage"
+                                  ) && (
+                                    <Dropdown.Item href="subvit/survey/tambah">
+                                      Tambah Survey
+                                    </Dropdown.Item>
+                                  )}
+                                {dataPermission &&
+                                  dataPermission.permissions.includes(
+                                    "subvit.manage" && "subvit.substansi.manage"
+                                  ) && (
+                                    <Dropdown.Item href="subvit/trivia/tambah">
+                                      Tambah TRIVIA
+                                    </Dropdown.Item>
+                                  )}
                               </Dropdown.Menu>
                             </Dropdown>
                           </center>
@@ -218,7 +230,14 @@ const DashbardSubvit = ({ token }) => {
                     className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4  col-xxl-4 order-1 order-xxl-2`}
                   >
                     <CardDashboardMini
-                      link="/subvit/substansi"
+                      link={
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.substansi.manage"
+                        )
+                          ? "/subvit/substansi"
+                          : "#"
+                      }
                       background="bg-white"
                       icon="book-white.svg"
                       title="Test Substansi"
@@ -228,7 +247,14 @@ const DashbardSubvit = ({ token }) => {
                     className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
                   >
                     <CardDashboardMini
-                      link="/subvit/survey"
+                      link={
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.survey.manage"
+                        )
+                          ? "/subvit/survey"
+                          : "#"
+                      }
                       background="bg-white"
                       icon="blok4-secondary.svg"
                       title="Survey"
@@ -238,7 +264,14 @@ const DashbardSubvit = ({ token }) => {
                     className={`${styles.colMinicard} col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2`}
                   >
                     <CardDashboardMini
-                      link="/subvit/trivia"
+                      link={
+                        dataPermission &&
+                        dataPermission.permissions.includes(
+                          "subvit.manage" && "subvit.trivia.manage"
+                        )
+                          ? "/subvit/trivia"
+                          : "#"
+                      }
                       background="bg-white"
                       icon="movie-secondary.svg"
                       title="Trivia"
@@ -300,8 +333,8 @@ const DashbardSubvit = ({ token }) => {
                                 className={styles.labelChart}
                               >
                                 {dashboard_subvit &&
-                                  dashboard_subvit.chart &&
-                                  dashboard_subvit.chart[3].total}
+                                  dashboard_subvit?.chart &&
+                                  dashboard_subvit?.chart[3].total}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -341,8 +374,8 @@ const DashbardSubvit = ({ token }) => {
                                 className={styles.labelChart}
                               >
                                 {dashboard_subvit &&
-                                  dashboard_subvit.chart &&
-                                  dashboard_subvit.chart[3].total}
+                                  dashboard_subvit?.chart &&
+                                  dashboard_subvit?.chart[3].total}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -368,8 +401,8 @@ const DashbardSubvit = ({ token }) => {
                           <td style={{ textAlign: "left" }}>
                             <div className={`${styles.substansi} p-2`}>
                               {dashboard_subvit &&
-                                dashboard_subvit.chart &&
-                                dashboard_subvit.chart[0].total_substansi}
+                                dashboard_subvit?.chart &&
+                                dashboard_subvit?.chart[0].total_substansi}
                               <br />
                               <span className={styles.subTextTotal}>
                                 Substansi
@@ -387,8 +420,8 @@ const DashbardSubvit = ({ token }) => {
                           <td style={{ textAlign: "left" }}>
                             <div className={`${styles.substansi} p-2`}>
                               {dashboard_subvit &&
-                                dashboard_subvit.chart &&
-                                dashboard_subvit.chart[1].total_survey}
+                                dashboard_subvit?.chart &&
+                                dashboard_subvit?.chart[1].total_survey}
                               <br />
                               <span className={styles.subTextTotal}>
                                 Survey
@@ -406,8 +439,8 @@ const DashbardSubvit = ({ token }) => {
                           <td style={{ textAlign: "left" }}>
                             <div className={`${styles.substansi} p-2`}>
                               {dashboard_subvit &&
-                                dashboard_subvit.chart &&
-                                dashboard_subvit.chart[2].total_trivia}
+                                dashboard_subvit?.chart &&
+                                dashboard_subvit?.chart[2].total_trivia}
                               <br />
                               <span className={styles.subTextTotal}>
                                 Trivia
@@ -472,8 +505,8 @@ const DashbardSubvit = ({ token }) => {
                                 className={styles.labelChart}
                               >
                                 {dashboard_subvit &&
-                                  dashboard_subvit.chart &&
-                                  dashboard_subvit.chart[3].total}
+                                  dashboard_subvit?.chart &&
+                                  dashboard_subvit?.chart[3].total}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -513,8 +546,8 @@ const DashbardSubvit = ({ token }) => {
                                 className={styles.labelChart}
                               >
                                 {dashboard_subvit &&
-                                  dashboard_subvit.chart &&
-                                  dashboard_subvit.chart[3].total}
+                                  dashboard_subvit?.chart &&
+                                  dashboard_subvit?.chart[3].total}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -540,8 +573,8 @@ const DashbardSubvit = ({ token }) => {
                           <td style={{ textAlign: "left" }}>
                             <div className={`${styles.substansi} p-2`}>
                               {dashboard_subvit &&
-                                dashboard_subvit.chart &&
-                                dashboard_subvit.chart[0].total_substansi}
+                                dashboard_subvit?.chart &&
+                                dashboard_subvit?.chart[0].total_substansi}
                               <br />
                               <span className={styles.subTextTotal}>
                                 Substansi
@@ -559,8 +592,8 @@ const DashbardSubvit = ({ token }) => {
                           <td style={{ textAlign: "left" }}>
                             <div className={`${styles.substansi} p-2`}>
                               {dashboard_subvit &&
-                                dashboard_subvit.chart &&
-                                dashboard_subvit.chart[1].total_survey}
+                                dashboard_subvit?.chart &&
+                                dashboard_subvit?.chart[1].total_survey}
                               <br />
                               <span className={styles.subTextTotal}>
                                 Survey
@@ -578,8 +611,8 @@ const DashbardSubvit = ({ token }) => {
                           <td style={{ textAlign: "left" }}>
                             <div className={`${styles.substansi} p-2`}>
                               {dashboard_subvit &&
-                                dashboard_subvit.chart &&
-                                dashboard_subvit.chart[2].total_trivia}
+                                dashboard_subvit?.chart &&
+                                dashboard_subvit?.chart[2].total_trivia}
                               <br />
                               <span className={styles.subTextTotal}>
                                 Trivia
@@ -603,8 +636,8 @@ const DashbardSubvit = ({ token }) => {
                   <LoadingTable loading={loading} />
                 ) : (
                   dashboard_subvit &&
-                  dashboard_subvit.substansi &&
-                  dashboard_subvit.substansi.list.map((item, index) => {
+                  dashboard_subvit?.substansi &&
+                  dashboard_subvit?.substansi?.list?.map((item, index) => {
                     return (
                       <>
                         <div className={`${styles.cardList} card`} key={index}>
@@ -668,6 +701,12 @@ const DashbardSubvit = ({ token }) => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={() => handleBackPagination()}
                       disabled={parseInt(router.query.page_substansi) === 1}
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_substansi) === 1
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-left-s-line"
@@ -680,18 +719,31 @@ const DashbardSubvit = ({ token }) => {
                       disabled={
                         Math.ceil(
                           parseInt(
-                            dashboard_subvit && dashboard_subvit.substansi.total
+                            dashboard_subvit &&
+                              dashboard_subvit?.substansi?.total
                           ) / 5
                         ) !== 0
                           ? parseInt(router.query.page_substansi) ===
                             Math.ceil(
                               parseInt(
                                 dashboard_subvit &&
-                                  dashboard_subvit.substansi.total
+                                  dashboard_subvit?.substansi?.total
                               ) / 5
                             )
                           : true
                       }
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_substansi) ===
+                          Math.ceil(
+                            parseInt(
+                              dashboard_subvit &&
+                                dashboard_subvit?.substansi?.total
+                            ) / 5
+                          )
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-right-s-line"
@@ -716,8 +768,8 @@ const DashbardSubvit = ({ token }) => {
                   <LoadingTable loading={loading} />
                 ) : (
                   dashboard_subvit &&
-                  dashboard_subvit.trivia &&
-                  dashboard_subvit.trivia.list.map((item, index) => {
+                  dashboard_subvit?.trivia &&
+                  dashboard_subvit?.trivia?.list?.map((item, index) => {
                     return (
                       <>
                         <div className={`${styles.cardList} card`} key={index}>
@@ -737,14 +789,18 @@ const DashbardSubvit = ({ token }) => {
                                   : index + 1 * 1 * 5 - (5 - 1)}
                               </div>
                             </div>
-                            <div className={`${styles.theme} col-sm-5`}>
+                            <div
+                              className={`${styles.theme}  col-sm-5 col-xs-8 col-md-7 col-lg-7 col-xl-5 col-xxl-7`}
+                            >
                               {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
                                 {item.theme ? item.theme.name : "-"}
                               </span>
                             </div>
-                            <div className={`${styles.total} col-sm-6`}>
+                            <div
+                              className={`${styles.total} col-sm-6 col-xs-3 col-md-4 col-lg-4 col-xl-6 col-xxl-4`}
+                            >
                               {item.participant_finished
                                 ? item.participant_finished
                                 : "0"}{" "}
@@ -767,8 +823,8 @@ const DashbardSubvit = ({ token }) => {
                   <div className={`${styles.total} col-sm-6 mt-5 `}>
                     Total:{" "}
                     {dashboard_subvit &&
-                      dashboard_subvit.trivia &&
-                      dashboard_subvit.trivia.total_participant}{" "}
+                      dashboard_subvit?.trivia &&
+                      dashboard_subvit?.trivia?.total_participant}{" "}
                     Peserta
                   </div>
 
@@ -777,6 +833,12 @@ const DashbardSubvit = ({ token }) => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={handleBackPaginationTrivia}
                       disabled={parseInt(router.query.page_trivia) === 1}
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_trivia) === 1
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-left-s-line"
@@ -789,18 +851,30 @@ const DashbardSubvit = ({ token }) => {
                       disabled={
                         Math.ceil(
                           parseInt(
-                            dashboard_subvit && dashboard_subvit.trivia.total
+                            dashboard_subvit && dashboard_subvit?.trivia?.total
                           ) / 5
                         ) !== 0
                           ? parseInt(router.query.page_trivia) ===
                             Math.ceil(
                               parseInt(
                                 dashboard_subvit &&
-                                  dashboard_subvit.trivia.total
+                                  dashboard_subvit?.trivia?.total
                               ) / 5
                             )
                           : true
                       }
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_trivia) ===
+                          Math.ceil(
+                            parseInt(
+                              dashboard_subvit &&
+                                dashboard_subvit?.trivia?.total
+                            ) / 5
+                          )
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-right-s-line"
@@ -823,8 +897,8 @@ const DashbardSubvit = ({ token }) => {
                   <LoadingTable loading={loading} />
                 ) : (
                   dashboard_subvit &&
-                  dashboard_subvit.survey &&
-                  dashboard_subvit.survey.list.map((item, index) => {
+                  dashboard_subvit?.survey &&
+                  dashboard_subvit?.survey?.list?.map((item, index) => {
                     return (
                       <>
                         <div className={`${styles.cardList} card`} key={index}>
@@ -844,14 +918,18 @@ const DashbardSubvit = ({ token }) => {
                                   : index + 1 * 1 * 5 - (5 - 1)}
                               </div>
                             </div>
-                            <div className={`${styles.theme} col-sm-5`}>
+                            <div
+                              className={`${styles.theme} col-sm-5 col-xs-8 col-md-7 col-lg-7 col-xl-5 col-xxl-7`}
+                            >
                               {item.academy ? item.academy.name : "-"}
                               <br />
                               <span className={styles.training}>
                                 {item.theme ? item.theme.name : "-"}
                               </span>
                             </div>
-                            <div className={`${styles.total} col-sm-6`}>
+                            <div
+                              className={`${styles.total} col-sm-6 col-xs-3 col-md-4 col-lg-4 col-xl-6 col-xxl-4`}
+                            >
                               {item.participant_finished
                                 ? item.participant_finished
                                 : "0"}{" "}
@@ -874,8 +952,8 @@ const DashbardSubvit = ({ token }) => {
                   <div className={`${styles.total} col-sm-6 mt-5`}>
                     Total:{" "}
                     {dashboard_subvit &&
-                      dashboard_subvit.survey &&
-                      dashboard_subvit.survey.total_participant}{" "}
+                      dashboard_subvit?.survey &&
+                      dashboard_subvit?.survey?.total_participant}{" "}
                     Peserta
                   </div>
 
@@ -884,6 +962,12 @@ const DashbardSubvit = ({ token }) => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={handleBackPaginationSurvey}
                       disabled={parseInt(router.query.page_survey) === 1}
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_survey) === 1
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-left-s-line"
@@ -896,18 +980,30 @@ const DashbardSubvit = ({ token }) => {
                       disabled={
                         Math.ceil(
                           parseInt(
-                            dashboard_subvit && dashboard_subvit.survey.total
+                            dashboard_subvit && dashboard_subvit?.survey?.total
                           ) / 5
                         ) !== 0
                           ? parseInt(router.query.page_survey) ===
                             Math.ceil(
                               parseInt(
                                 dashboard_subvit &&
-                                  dashboard_subvit.survey.total
+                                  dashboard_subvit?.survey?.total
                               ) / 5
                             )
                           : true
                       }
+                      style={{
+                        cursor:
+                          parseInt(router.query.page_survey) ===
+                          Math.ceil(
+                            parseInt(
+                              dashboard_subvit &&
+                                dashboard_subvit?.survey?.total
+                            ) / 5
+                          )
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
                     >
                       <i
                         className="ri-arrow-right-s-line"

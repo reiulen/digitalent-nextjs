@@ -16,7 +16,7 @@ import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
@@ -260,6 +260,8 @@ const StepTwo = ({ token }) => {
       };
 
       dispatch(newSubtanceQuestionDetail(data, token));
+      localStorage.removeItem("method");
+      localStorage.removeItem("step2");
       handleResetForm();
     }
   };
@@ -328,6 +330,12 @@ const StepTwo = ({ token }) => {
         answer_key,
       };
 
+      localStorage.setItem("step2", JSON.stringify(data));
+
+      if (router.pathname.includes("entry")) {
+        localStorage.setItem("method", "entry" || metode);
+      }
+
       dispatch(newSubtanceQuestionDetail(data, token));
     }
   };
@@ -369,7 +377,7 @@ const StepTwo = ({ token }) => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="2" title="Substansi"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
               Soal {subtance && subtance.bank_soal + 1}
@@ -562,7 +570,23 @@ const StepTwo = ({ token }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
+                <div className="col-sm-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      if (localStorage.getItem("clone") === "true") {
+                        router.push(
+                          `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                        );
+                      } else {
+                        router.push("/subvit/substansi/tambah-step-1");
+                      }
+                    }}
+                  >
+                    Kembali
+                  </button>
+                </div>
                 <div className="col-sm-10 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
@@ -575,7 +599,7 @@ const StepTwo = ({ token }) => {
                     onClick={saveDraft}
                     type="button"
                   >
-                    Simpan Draft
+                    Tambah Soal
                   </button>
                 </div>
               </div>

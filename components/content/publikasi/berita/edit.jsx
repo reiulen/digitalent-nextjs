@@ -5,6 +5,7 @@ import Image from 'next/image'
 import dynamic from "next/dynamic";
 import SimpleReactValidator from 'simple-react-validator'
 import Swal from "sweetalert2";
+import moment from "moment";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 import { TagsInput } from 'react-tag-input-component';
@@ -73,24 +74,24 @@ const EditBerita = ({ token, idUser }) => {
 
     }, [dispatch, error, success, loading, router, quill]);
 
-    const [id, setId] = useState(berita.id)
-    const [judul_berita, setJudulBerita] = useState(berita.judul_berita)
-    const [isi_berita, setIsiBerita] = useState(berita.isi_berita);
+    const [id, setId] = useState(berita?.id)
+    const [judul_berita, setJudulBerita] = useState(berita?.judul_berita)
+    const [isi_berita, setIsiBerita] = useState(berita?.isi_berita);
     const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar)
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
     );
     const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
-    const [gambarName, setGambarName] = useState(berita.gambar)
-    const [kategori_id, setKategoriId] = useState(berita.kategori_id)
-    const [users_id, setUserId] = useState(berita.users_id)
-    const [kategori_akademi, setKategoriAkademi] = useState(berita.kategori_akademi);
-    const [tag, setTag] = useState(berita.tag)
-    const [publish, setPublish] = useState(berita.publish)
+    const [gambarName, setGambarName] = useState(berita?.gambar)
+    const [kategori_id, setKategoriId] = useState(berita?.kategori_id)
+    const [users_id, setUserId] = useState(berita?.users_id)
+    const [kategori_akademi, setKategoriAkademi] = useState(berita?.kategori_akademi);
+    const [tag, setTag] = useState(berita?.tag)
+    const [publish, setPublish] = useState(berita?.publish)
     const [_method, setMethod] = useState("put")
-    const [publishDate, setPublishDate] = useState(berita.tanggal_publish ? (new Date(berita.tanggal_publish)) : null);
-    const [disablePublishDate, setDisablePublishDate] = useState(berita.publish === 0 ? true : false)
+    const [publishDate, setPublishDate] = useState(berita?.tanggal_publish ? (new Date(berita.tanggal_publish)) : null);
+    const [disablePublishDate, setDisablePublishDate] = useState(berita?.publish === 0 ? true : false)
     const [disableTag, setDisableTag] = useState(false)
 
 
@@ -379,6 +380,7 @@ const EditBerita = ({ token, idUser }) => {
                                                 <div style={{ width: "100%", height: "300px" }}>
                                                     <div
                                                         ref={quillRef}
+                                                        style={{fontFamily:'Poppins'}}
                                                     />
                                                 </div>
                                                 :
@@ -473,7 +475,7 @@ const EditBerita = ({ token, idUser }) => {
                                             {!akademi || (akademi && akademi.length === 0) ? (
                                                 <option value="">Data Tidak Ditemukan</option>
                                             ) : (
-                                                akademi && akademi.map((row) => {
+                                                akademi && akademi?.map((row) => {
                                                     return (
                                                         <option key={row.id} value={row.slug} selected={kategori_akademi === row.slug ? true : false}>
                                                             {row.slug}
@@ -569,7 +571,7 @@ const EditBerita = ({ token, idUser }) => {
                                 }
 
                                 {
-                                    role_permission.roles.includes("Super Admin") ?
+                                    role_permission?.roles?.includes("Super Admin") ?
                                         disablePublishDate === false ?
                                             <div className="form-group">
                                                 <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>

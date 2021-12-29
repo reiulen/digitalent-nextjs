@@ -16,8 +16,10 @@ import {
   getBeasiswaAwardee,
   getBeasiswaYear,
 } from "../../redux/actions/dashboard-kabadan/dashboard/beasiswa.actions";
+import { getDigitalentTotalPengguna } from "../../redux/actions/dashboard-kabadan/dashboard/digitalent.actions";
 
 import { wrapper } from "../../redux/store";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 export default function DashboardBeasiswaPage(props) {
   const DashboardBeasiswa = dynamic(
@@ -25,7 +27,12 @@ export default function DashboardBeasiswaPage(props) {
       import(
         "../../components/content/dashboard-kabadan/beasiswa/dashboard-beasiswa"
       ),
-    { ssr: false }
+    {
+      loading: function loadingNow() {
+        return <LoadingSkeleton />;
+      },
+      ssr: false
+    }
   );
   const MyMap = dynamic(
     () =>
@@ -60,6 +67,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getDigitalentTotalPengguna(session.user.user.data.token)
+      );
 
       await store.dispatch(
         getBeasiswaTotalPengguna(session.user.user.data.token)

@@ -49,17 +49,29 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const token_permission = req.cookies.token_permission;
 
       await store.dispatch(
         getStatusPendaftar(session.user.user.data.token, params.id)
       );
+
       await store.dispatch(
         getAkademiByPelatihan(session.user.user.data.token, params.id)
       );
-      await store.dispatch(
-        getPendaftaranPeserta(session.user.user.data.token, params.id)
-      );
 
+      await store.dispatch(
+        getPendaftaranPeserta(
+          session.user.user.data.token,
+          params.id,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          token_permission
+        )
+      );
       return {
         props: { session, title: "Detail Rekap Pendaftaran - Pelatihan" },
       };

@@ -17,10 +17,30 @@ import FormBerhasil from "./form-berhasil";
 import { clearErrors } from "../../../../redux/actions/pelatihan/register-training.actions";
 import Layout from "../../../components/template/form-pendaftaran/LayoutCustom.component";
 import { SweatAlert } from "../../../../utils/middleware/helper";
+import axios from "axios";
 
 const IndexForm = ({ token, session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const checkPendaftaran = async () => {
+    try {
+      const data = await axios.get(
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/cek-pendaftaran?pelatian_id=${dataTraining?.pelatian_id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return data;
+    } catch (e) {
+      if (!e.response.data.status) {
+        SweatAlert("Gagal", e.response.data.message || e.message, "error");
+        router.push("/peserta");
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkPendaftaran();
+  }, []);
 
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
     (state) => state.getFormBuilder
@@ -55,8 +75,8 @@ const IndexForm = ({ token, session }) => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
       dispatch(clearErrors());
+      SweatAlert("Gagal", error, "error");
     }
 
     if (success) {
@@ -106,9 +126,10 @@ const IndexForm = ({ token, session }) => {
                         src={`${
                           !dataPelatihan?.logo && !dataPelatihan?.gambar_mitra
                             ? "/assets/media/default-card.png"
-                            : dataPelatihan?.file_path + dataPelatihan.logo ||
-                              process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                dataPelatihan?.gambar_mitra
+                            : dataPelatihan?.logo
+                            ? dataPelatihan?.file_path + dataPelatihan.logo
+                            : process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                              dataPelatihan?.gambar_mitra
                         }`}
                         width={58}
                         height={58}

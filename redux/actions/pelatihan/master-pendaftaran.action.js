@@ -33,7 +33,7 @@ import {
 } from "../../types/pelatihan/master-pendaftaran.type";
 
 export const getAllListMasterPelatihan =
-  (token) => async (dispatch, getState) => {
+  (token, token_permission) => async (dispatch, getState) => {
     try {
       dispatch({ type: LIST_MASTER_TRAINING_REQUEST });
       let link =
@@ -55,6 +55,7 @@ export const getAllListMasterPelatihan =
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -97,30 +98,32 @@ export const setValueStatus = (text) => {
   };
 };
 
-export const getDetailMasterPelatihan = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_MASTER_TRAINING_REQUEST });
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `api/v1/formBuilder/detail?id=${id}`;
+export const getDetailMasterPelatihan =
+  (id, token, token_permission) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_MASTER_TRAINING_REQUEST });
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formBuilder/detail?id=${id}`;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const { data } = await axios.get(link, config);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        // Permission: token_permission,
+      };
+      const { data } = await axios.get(link, config);
 
-    if (data) {
-      dispatch({ type: DETAIL_MASTER_TRAINING_SUCCESS, payload: data });
+      if (data) {
+        dispatch({ type: DETAIL_MASTER_TRAINING_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: DETAIL_MASTER_TRAINING_FAIL,
+        payload: error.response.data.message || error,
+      });
     }
-  } catch (error) {
-    dispatch({
-      type: DETAIL_MASTER_TRAINING_FAIL,
-      payload: error.response.data.message || error,
-    });
-  }
-};
+  };
 
 export const getDetailMasterCopyEditPelatihan =
   (id, token) => async (dispatch) => {
@@ -184,7 +187,7 @@ export const clearErrors = () => async (dispatch) => {
 };
 
 export const updateMasterPelatihanAction =
-  (formData, token) => async (dispatch) => {
+  (formData, token, token_permission) => async (dispatch) => {
     try {
       dispatch({ type: UPDATE_MASTER_TRAINING_REQUEST });
 
@@ -195,6 +198,7 @@ export const updateMasterPelatihanAction =
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        Permission: token_permission,
       };
       const { data } = await axios.post(link, formData, config);
       if (data) {

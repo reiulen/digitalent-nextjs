@@ -26,10 +26,23 @@ import {
   getEditTrainingStep2,
   getEditTrainingStep3,
 } from "../../../../redux/actions/pelatihan/training.actions";
+import { getAllDataReference } from "../../../../redux/actions/site-management/data-reference.actions";
 
-const IndexEdit = dynamic(
+// const IndexEdit = dynamic(
+//   () =>
+//     import("../../../../components/content/pelatihan/training/edit/index-edit"),
+//   {
+//     loading: function loadingNow() {
+//       return <LoadingSkeleton />;
+//     },
+//     ssr: false,
+//   }
+// );
+const EditPelatihan = dynamic(
   () =>
-    import("../../../../components/content/pelatihan/training/edit/index-edit"),
+    import(
+      "../../../../components/content/pelatihan/training/edit/edit-training-step1"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -43,7 +56,7 @@ export default function EditTrainingPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <IndexEdit token={session.token} />
+        <EditPelatihan token={session.token} />
       </div>
     </>
   );
@@ -84,6 +97,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
       await store.dispatch(dropdownAkademi(session.user.user.data.token));
       await store.dispatch(drowpdownFormBuilder(session.user.user.data.token));
+      await store.dispatch(
+        getAllDataReference(session.user.user.data.token, true)
+      );
+
       return {
         props: { session, title: "Edit Pelatihan - Pelatihan" },
       };

@@ -4,19 +4,23 @@ import CustomButton from "../../../content/peserta/riwayat-pelatihan/card/Button
 import axios from "axios";
 import { Col, Row, Card, Button, Modal } from "react-bootstrap";
 import Cookies from "js-cookie";
+import { SweatAlert } from "../../../../utils/middleware/helper";
+import { getAllRiwayatPelatihanPeserta } from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import { useDispatch } from "react-redux";
 export default function ButtonStatusPeserta({ data, token }) {
+  const dispatch = useDispatch();
   const router = useRouter();
+
   const [imageSertifikasi, setImageSertifikasi] = useState();
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
   const [fileName, setFileName] = useState();
 
   const config = {
     headers: {
-      authorization: "Bearer " + token,
+      Authorization: "Bearer " + token,
     },
   };
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
-
   // upload sertifikasi
   const uploadSertifikasi = async (sertifikasi, id) => {
     try {
@@ -29,10 +33,12 @@ export default function ButtonStatusPeserta({ data, token }) {
 
       const { data } = await axios.post(link, body, config);
       if (data) {
-        Swal.fire(data?.message, "Berhasil upload sertifikasi", "success");
+        setShowModalSertifikasi(false);
+        SweatAlert("Berhasil", "Berhasil upload sertifikasi", "success");
+        dispatch(getAllRiwayatPelatihanPeserta(token));
       }
     } catch (error) {
-      Swal.fire("Gagal", `${error.response.data?.message}`, "error");
+      SweatAlert("Gagal", `${error.response.data?.message}`, "error");
     }
   };
 
@@ -40,9 +46,9 @@ export default function ButtonStatusPeserta({ data, token }) {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
-      Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+      Swal.fire("Oops !", "PDF maksimal 5 MB.", "error");
     } else {
-      const type = ["image/jpg", "image/png", "image/jpeg"];
+      const type = ["application/pdf"];
       if (type.includes(e.target.files[0].type)) {
         const reader = new FileReader();
         reader.onload = () => {
@@ -55,7 +61,7 @@ export default function ButtonStatusPeserta({ data, token }) {
         e.target.value = null;
         Swal.fire(
           "Oops !",
-          "Data yang bisa dimasukkan hanya berupa data background.",
+          "Data yang bisa dimasukkan hanya berupa data PDF.",
           "error"
         );
       }
@@ -82,6 +88,7 @@ export default function ButtonStatusPeserta({ data, token }) {
       }
     }
   };
+
   return (
     <Fragment>
       {data?.lpj ? (
@@ -95,8 +102,6 @@ export default function ButtonStatusPeserta({ data, token }) {
           </CustomButton>
           <CustomButton
             click={() => {
-              Cookies.set("id_pelatihan", data?.id);
-              Cookies.set("id_tema", data?.tema_id);
               router.push(`/peserta/form-lpj`);
             }}
           >
@@ -118,10 +123,8 @@ export default function ButtonStatusPeserta({ data, token }) {
             disabled={!data?.survei}
             click={() => {
               router.push(
-                `/peserta/survey?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/survey/panduan-survey?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
-              Cookies.set("id_pelatihan", data?.id);
-              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Isi Survei
@@ -139,10 +142,23 @@ export default function ButtonStatusPeserta({ data, token }) {
           </CustomButton>
           <CustomButton
             disabled={!data?.lpj}
-            click={() => handleClick("download", data?.id_pendaftaran)}
+            click={() => {
+              router.push(`/peserta/form-lpj`);
+            }}
           >
             Isi Laporan Pertangung Jawaban
             <i className="ri-arrow-right-s-line mr-2"></i>
+          </CustomButton>
+        </Fragment>
+      ) : data?.status.includes("tidak") ? (
+        <Fragment>
+          <CustomButton
+            outline
+            disabled
+            click={() => handleClick("download", data?.id_pendaftaran)}
+          >
+            <i className="ri-download-2-fill mr-2"></i>
+            Bukti Pendaftaran
           </CustomButton>
         </Fragment>
       ) : data?.status == "pelatihan" && data?.trivia && data?.midtest ? (
@@ -150,10 +166,8 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/mid-test/panduan-mid-test?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/mid-test/panduan-mid-test?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
-              Cookies.set("id_pelatihan", data?.id);
-              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Kerjakan Mid Test
@@ -162,10 +176,8 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/trivia?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/trivia/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
-              Cookies.set("id_pelatihan", data?.id);
-              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
@@ -176,10 +188,8 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/mid-test/panduan-mid-test?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/mid-test/panduan-mid-test?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
-              Cookies.set("id_pelatihan", data?.id);
-              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Kerjakan Mid Test
@@ -191,10 +201,8 @@ export default function ButtonStatusPeserta({ data, token }) {
           <CustomButton
             click={() => {
               router.push(
-                `/peserta/trivia?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/trivia/panduan-trivia?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
-              Cookies.set("id_pelatihan", data?.id);
-              Cookies.set("id_tema", data?.tema_id);
             }}
           >
             Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
@@ -222,8 +230,12 @@ export default function ButtonStatusPeserta({ data, token }) {
       ) : data?.status == "lulus pelatihan" ||
         data?.status == "Lulus Pelatihan" ? (
         <Fragment>
-          {data?.sertifikasi == "1" && (
-            <CustomButton outline click={() => setShowModalSertifikasi(true)}>
+          {data?.sertifikasi != "0" && (
+            <CustomButton
+              outline
+              click={() => setShowModalSertifikasi(true)}
+              disabled={data?.upload_sertifikasi ? true : false}
+            >
               <i className="ri-upload-2-fill mr-2"></i>
               Unggah Sertifikasi
             </CustomButton>
@@ -253,10 +265,8 @@ export default function ButtonStatusPeserta({ data, token }) {
           </CustomButton>
           <CustomButton
             click={() => {
-              Cookies.set("id_pelatihan", data?.id);
-              Cookies.set("id_tema", data?.tema_id);
               router.push(
-                `/peserta/test-substansi/panduan-substansi?id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
+                `/peserta/test-substansi/panduan-substansi?no=${data?.id}&id_pelatihan=${data?.id}&id_tema=${data?.tema_id}`
               );
             }}
             disabled={!data?.tes_subtansi}
@@ -266,8 +276,12 @@ export default function ButtonStatusPeserta({ data, token }) {
         </Fragment>
       ) : data?.status == "diterima" ? (
         <Fragment>
-          {data?.sertifikasi == "1" && (
-            <CustomButton outline click={() => setShowModalSertifikasi(true)}>
+          {data?.sertifikasi != "0" && (
+            <CustomButton
+              outline
+              click={() => setShowModalSertifikasi(true)}
+              disabled={data?.upload_sertifikasi ? true : false}
+            >
               <i className="ri-upload-2-fill mr-2"></i>
               Unggah Sertifikasi
             </CustomButton>
@@ -313,16 +327,33 @@ export default function ButtonStatusPeserta({ data, token }) {
       ) : data?.status === "lpj belum mengerjakan" ? (
         <Fragment>
           <CustomButton
-            disabled
             outline
             click={() => handleClick("download", data?.id_pendaftaran)}
+          >
+            <i className="ri-download-2-fill mr-2"></i>
+            Bukti Pendaftaran
+          </CustomButton>
+          <CustomButton
+            disabled={data?.lpj ? false : true}
+            outline
+            click={() => {
+              router.push(`/peserta/form-lpj`);
+            }}
           >
             <i className="ri-file-text-line mr-2"></i>
             Isi Laporan Pertangungjawaban
           </CustomButton>
         </Fragment>
       ) : (
-        ""
+        <Fragment>
+          <CustomButton
+            outline
+            click={() => handleClick("download", data?.id_pendaftaran)}
+          >
+            <i className="ri-download-2-fill mr-2"></i>
+            Bukti Pendaftaran
+          </CustomButton>
+        </Fragment>
       )}
 
       {/* Modal Start Disini */}
@@ -334,7 +365,9 @@ export default function ButtonStatusPeserta({ data, token }) {
         size="lg"
       >
         <Modal.Header>
-          <Modal.Title>Tambah Sertifikasi</Modal.Title>
+          <Modal.Title className="text-capitalize">
+            Tambah Sertifikasi {data?.sertifikasi}
+          </Modal.Title>
           <button
             type="button"
             className="close"
@@ -390,7 +423,7 @@ export default function ButtonStatusPeserta({ data, token }) {
                 <input
                   type="file"
                   className="custom-file-input"
-                  accept="image/png, image/jpeg , image/jpg"
+                  accept="application/pdf"
                   onChange={(e) => {
                     onChangeFile(e);
                   }}
@@ -401,7 +434,7 @@ export default function ButtonStatusPeserta({ data, token }) {
               </div>
             </div>
             <small className="text-muted">
-              Format File (.pdf/.jpg) & Max size 5 mb
+              Format File (.pdf) & Max size 5 mb
             </small>
           </div>
         </Modal.Body>

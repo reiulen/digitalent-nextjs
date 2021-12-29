@@ -11,6 +11,7 @@ import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import Swal from "sweetalert2";
 import moment from "moment";
+import { Modal } from "react-bootstrap";
 import styles from "../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
 
@@ -29,7 +30,6 @@ import {
 } from "../../../../redux/actions/publikasi/imagetron.actions";
 
 import { DELETE_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron.type";
-// import { getAllImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
 
 const Imagetron = ({ token }) => {
 
@@ -56,22 +56,16 @@ const Imagetron = ({ token }) => {
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null)
     const [disableEndDate, setDisableEndDate] = useState(true)
+    const [showModal, setShowModal] = useState(false);
 
     let loading = false;
     let { page = 1, keyword, success, successEdit } = router.query;
-    // let { page = 1, keyword } = router.query;
     if (allLoading) {
         loading = allLoading;
     } else if (deleteLoading) {
         loading = deleteLoading;
     }
     page = Number(page);
-
-    // useEffect(() => {
-
-    //     dispatch(getAllImagetron())
-
-    // }, [dispatch])
 
     useEffect(() => {
         if (isDeleted) {
@@ -94,10 +88,6 @@ const Imagetron = ({ token }) => {
     };
 
     const getWindowDimensions = () => {
-        // if (typeof window === 'undefined') {
-        //     global.window = {}
-        // }
-
         const { innerWidth: width, innerHeight: height } = window;
         return {
             width,
@@ -106,7 +96,6 @@ const Imagetron = ({ token }) => {
     };
 
     const [windowDimensions, setWindowDimensions] = useState(
-        // getWindowDimensions()
         {}
     );
 
@@ -240,27 +229,31 @@ const Imagetron = ({ token }) => {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
+                setShowModal(false)
 
             } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 )
-
+                setShowModal(false)
 
             } else if (limit !== null && search === null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}`
                 )
+                setShowModal(false)
 
             } else if (limit !== null && search !== null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
                 )
+                setShowModal(false)
 
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
                 );
+                setShowModal(false)
             }
         }
     };
@@ -324,6 +317,7 @@ const Imagetron = ({ token }) => {
         setLimit(null)
         setPublishValue(null)
         setSearch("")
+        setShowModal(false)
         router.replace("/publikasi/imagetron", undefined, { shallow: false });
     }
 
@@ -405,7 +399,7 @@ const Imagetron = ({ token }) => {
                         background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        value={imagetron.data && imagetron.data.publish != "" ? imagetron.data.publish : 0}
+                        value={imagetron?.data && imagetron?.data.publish != "" ? imagetron?.data.publish : 0}
                         titleValue='Imagetron'
                         title='Total Publish'
                         publishedVal="1"
@@ -415,7 +409,7 @@ const Imagetron = ({ token }) => {
                         background='bg-light-success'
                         icon='user-white.svg'
                         color='#ffffff'
-                        value='0'
+                        value={imagetron?.data.total_author === "" || imagetron?.data.total_author === undefined ? 0 : imagetron?.data.total_author}
                         titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
@@ -425,7 +419,7 @@ const Imagetron = ({ token }) => {
                         background='bg-light-danger'
                         icon="Library.svg"
                         color='#ffffff'
-                        value={imagetron.data && imagetron.data.unpublish != "" ? imagetron.data.unpublish : 0}
+                        value={imagetron?.data && imagetron?.data.unpublish != "" ? imagetron?.data.unpublish : 0}
                         titleValue='Imagetron'
                         title='Total Belum Dipublish'
                         publishedVal="0"
@@ -441,7 +435,7 @@ const Imagetron = ({ token }) => {
                             Imagetron
                         </h3>
                         {
-                            role_permission.permissions.includes("publikasi.imagetron.manage") || role_permission.roles.includes("Super Admin") ?
+                            role_permission?.permissions.includes("publikasi.imagetron.manage") || role_permission?.roles.includes("Super Admin") ?
                                 <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                                     <Link href="/publikasi/imagetron/tambah-imagetron">
                                         <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
@@ -463,24 +457,30 @@ const Imagetron = ({ token }) => {
                                         className="position-relative overflow-hidden mt-3"
                                         style={{ maxWidth: "330px" }}
                                     >
-                                        <i className="ri-search-line left-center-absolute ml-2"></i>
-                                        <input
-                                            type="text"
-                                            className={`${styles.cari} form-control pl-10`}
-                                            placeholder="Ketik disini untuk Pencarian..."
-                                            value={search}
-                                            onChange={(e) => setSearch(e.target.value)}
-                                        />
-                                        <button
-                                            className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
-                                            style={{
-                                                borderTopLeftRadius: "0",
-                                                borderBottomLeftRadius: "0",
-                                            }}
-                                            onClick={handleSearch}
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault();
+                                            handleSearch
+                                        }}
                                         >
-                                            Cari
-                                        </button>
+                                            <i className="ri-search-line left-center-absolute ml-2"></i>
+                                            <input
+                                                type="text"
+                                                className={`${styles.cari} form-control pl-10`}
+                                                placeholder="Ketik disini untuk Pencarian..."
+                                                value={search}
+                                                onChange={(e) => setSearch(e.target.value)}
+                                            />
+                                            <button
+                                                className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
+                                                style={{
+                                                    borderTopLeftRadius: "0",
+                                                    borderBottomLeftRadius: "0",
+                                                }}
+                                                onClick={handleSearch}
+                                            >
+                                                Cari
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div className={`${styles.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
@@ -488,8 +488,7 @@ const Imagetron = ({ token }) => {
                                         {/* sortir by modal */}
                                         <button
                                             className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
-                                            data-toggle="modal"
-                                            data-target="#exampleModalCenter"
+                                            onClick={() => setShowModal(true)}
                                             style={{ color: "#464646" }}
                                         >
                                             <div className={`${styles.filter} d-flex align-items-center`}>
@@ -498,130 +497,6 @@ const Imagetron = ({ token }) => {
                                             </div>
                                             <IconArrow fill="#E4E6EF" width="11" height="11" />
                                         </button>
-
-                                        {/* modal */}
-                                        <form
-                                            // id="kt_docs_formvalidation_text"
-                                            className="form text-left"
-                                        // action="#"
-                                        // autoComplete="off"
-                                        // onSubmit={handleSubmitSearchMany}
-                                        >
-                                            <div
-                                                className="modal fade"
-                                                id="exampleModalCenter"
-                                                tabIndex="-1"
-                                                role="dialog"
-                                                aria-labelledby="exampleModalCenterTitle"
-                                                aria-hidden="true"
-                                            >
-                                                <div
-                                                    className="modal-dialog modal-dialog-centered"
-                                                    role="document"
-                                                >
-                                                    <div className="modal-content">
-                                                        <div className="modal-header">
-                                                            <h5
-                                                                className="modal-title font-weight-bold"
-                                                                id="exampleModalLongTitle"
-                                                            >
-                                                                Filter
-                                                            </h5>
-                                                            <button
-                                                                type="button"
-                                                                className="close"
-                                                                data-dismiss="modal"
-                                                                aria-label="Close"
-                                                                onClick={() => resetValueSort()}
-                                                            >
-                                                                <IconClose />
-                                                            </button>
-                                                        </div>
-
-                                                        <div
-                                                            className="modal-body text-left"
-                                                            style={{ height: "200px" }}
-                                                        >
-                                                            <div className="mb-10 col-12">
-                                                                <label className="required fw-bold fs-6 mb-2">
-                                                                    Tanggal
-                                                                </label>
-
-                                                                <div>
-                                                                    <DatePicker
-                                                                        className="form-search-date form-control-sm form-control"
-                                                                        selected={startDate}
-                                                                        onChange={(date) => handleStartDate(date)}
-                                                                        selectsStart
-                                                                        startDate={startDate}
-                                                                        endDate={endDate}
-                                                                        dateFormat="dd/MM/yyyy"
-                                                                        placeholderText="Silahkan Isi Tanggal Dari"
-                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                    // minDate={moment().toDate()}
-                                                                    // minDate={addDays(new Date(), 20)}
-                                                                    />
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="mb-10 col-12">
-                                                                <label className="required fw-bold fs-6 mb-2">
-                                                                    Tanggal
-                                                                </label>
-
-                                                                <div>
-                                                                    <DatePicker
-                                                                        className="form-search-date form-control-sm form-control"
-                                                                        selected={endDate}
-                                                                        onChange={(date) => setEndDate(date)}
-                                                                        selectsEnd
-                                                                        startDate={startDate}
-                                                                        endDate={endDate}
-                                                                        dateFormat="dd/MM/yyyy"
-                                                                        // minDate={moment().toDate()}
-                                                                        minDate={startDate}
-                                                                        maxDate={addDays(startDate, 20)}
-                                                                        placeholderText="Silahkan Isi Tanggal Sampai"
-                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                        disabled={disableEndDate === true || disableEndDate === null}
-                                                                    // minDate={addDays(new Date(), 20)}
-                                                                    />
-                                                                </div>
-                                                                {
-                                                                    disableEndDate === true || disableEndDate === null ?
-                                                                        <small className="text-muted">
-                                                                            Mohon isi Tanggal Dari terlebih dahulu
-                                                                        </small>
-                                                                        :
-                                                                        null
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                        <div className="modal-footer">
-                                                            <div className="d-flex justify-content-end align-items-center">
-                                                                <button
-                                                                    className="btn btn-white-ghost-rounded-full"
-                                                                    type="button"
-                                                                    onClick={() => resetValueSort()}
-                                                                >
-                                                                    Reset
-                                                                </button>
-                                                                <button
-                                                                    className="btn btn-primary-rounded-full ml-4"
-                                                                    type="button"
-                                                                    data-dismiss="modal"
-                                                                    onClick={() => handleSearchDate()}
-                                                                >
-                                                                    Terapkan
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        {/* end modal */}
-
                                     </div>
                                 </div>
                             </div>
@@ -645,7 +520,7 @@ const Imagetron = ({ token }) => {
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 {
-                                                    role_permission.permissions.includes("publikasi.imagetron.manage") || role_permission.roles.includes("Super Admin") ?
+                                                    role_permission?.permissions.includes("publikasi.imagetron.manage") || role_permission?.roles.includes("Super Admin") ?
                                                         <th style={{ width: '9vw', textAlign: 'center' }}>Aksi</th>
                                                         : null
                                                 }
@@ -654,9 +529,9 @@ const Imagetron = ({ token }) => {
 
                                         <tbody>
                                             {
-                                                !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
+                                                !imagetron || imagetron && imagetron?.data?.imagetron.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
-                                                    imagetron && imagetron.data.imagetron.map((row, i) => {
+                                                    imagetron && imagetron?.data?.imagetron.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -715,7 +590,7 @@ const Imagetron = ({ token }) => {
                                                             </td>
                                                             <td className='align-middle'>{row.role[0].name}</td>
                                                             {
-                                                                role_permission.permissions.includes("publikasi.imagetron.manage") || role_permission.roles.includes("Super Admin") ?
+                                                                role_permission?.permissions.includes("publikasi.imagetron.manage") || role_permission?.roles.includes("Super Admin") ?
                                                                     <td className="align-middle d-flex justify-content-center">
 
                                                                         <Link
@@ -752,13 +627,13 @@ const Imagetron = ({ token }) => {
                             </div>
 
                             <div className="row">
-                                {imagetron && parseInt(imagetron.data.perPage) < imagetron.data.total &&
+                                {imagetron && parseInt(imagetron?.data?.perPage) < imagetron?.data?.total &&
                                     <>
                                         <div className={`${stylesPag.pagination} table-pagination`}>
                                             <Pagination
                                                 activePage={page}
-                                                itemsCountPerPage={parseInt(imagetron.data.perPage)}
-                                                totalItemsCount={imagetron.data.total}
+                                                itemsCountPerPage={parseInt(imagetron?.data?.perPage)}
+                                                totalItemsCount={imagetron?.data?.total}
                                                 pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={'>'}
@@ -795,13 +670,106 @@ const Imagetron = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {imagetron.data.total} List Data</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {imagetron?.data?.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''
                                 }
                             </div>
                         </div>
+
+                        <Modal
+                            show={showModal}
+                            onHide={() => setShowModal(false)}
+                            aria-labelledby="contained-modal-title-vcenter"
+                            centered
+                        >
+                            <Modal.Header>
+                                <Modal.Title>Filter</Modal.Title>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    onClick={() => setShowModal(false)}
+                                >
+                                    <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+                                </button>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div className="row">
+                                    <div
+                                        className="modal-body text-left"
+                                        style={{ height: "200px" }}
+                                    >
+                                        <div className="mb-10 col-12">
+                                            <label className="required fw-bold fs-6 mb-2">
+                                                Tanggal
+                                            </label>
+
+                                            <div>
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={startDate}
+                                                    onChange={(date) => handleStartDate(date)}
+                                                    selectsStart
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    placeholderText="Silahkan Isi Tanggal Dari"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-10 col-12">
+                                            <label className="required fw-bold fs-6 mb-2">
+                                                Tanggal
+                                            </label>
+
+                                            <div>
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={endDate}
+                                                    onChange={(date) => setEndDate(date)}
+                                                    selectsEnd
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    minDate={startDate}
+                                                    maxDate={addDays(startDate, 20)}
+                                                    placeholderText="Silahkan Isi Tanggal Sampai"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    disabled={disableEndDate === true || disableEndDate === null}
+                                                />
+                                            </div>
+                                            {
+                                                disableEndDate === true || disableEndDate === null ?
+                                                    <small className="text-muted">
+                                                        Mohon isi Tanggal Dari terlebih dahulu
+                                                    </small>
+                                                    :
+                                                    null
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <button
+                                    className="btn btn-white-ghost-rounded-full"
+                                    type="button"
+                                    onClick={() => resetValueSort()}
+                                >
+                                    Reset
+                                </button>
+                                <button
+                                    className="btn btn-primary-rounded-full"
+                                    type="button"
+                                    onClick={() => handleSearchDate()}
+                                >
+                                    Terapkan
+                                </button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                 </div>
             </div>

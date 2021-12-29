@@ -23,7 +23,7 @@ import {
 
 import { Form } from "react-bootstrap";
 
-const StepOne = ({ token }) => {
+const StepOne = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -40,27 +40,28 @@ const StepOne = ({ token }) => {
   );
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
-  const [academy_id, setAcademyId] = useState(subtance.academy_id);
+  const [academy_id, setAcademyId] = useState(subtance?.academy_id);
   const [academyLabel, setAcademyLabel] = useState(
-    (subtance.academy && subtance.academy.name) || "Silahkan Pilih Akademi"
+    (subtance?.academy && subtance?.academy.name) || "Silahkan Pilih Akademi"
   );
   const [themeLabel, setThemeLabel] = useState(
-    (subtance.theme && subtance.theme.name) || "Silahkan Pilih Tema"
+    (subtance?.theme && subtance?.theme.name) || "Silahkan Pilih Tema"
   );
   const [trainingLabel, setTrainingLabel] = useState(
-    (subtance.training && subtance.training.name) || "Silahkan Pilih Pelatihan"
+    (subtance?.training && subtance?.training?.name) ||
+      "Silahkan Pilih Pelatihan"
   );
-  const [theme_id, setThemeId] = useState(subtance && subtance.theme_id);
+  const [theme_id, setThemeId] = useState(subtance && subtance?.theme_id);
   const [training_id, setTrainingId] = useState(
-    subtance && subtance.training_id
+    subtance && subtance?.training_id
   );
-  const [category, setCategory] = useState(subtance && subtance.category);
+  const [category, setCategory] = useState(subtance && subtance?.category);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+    dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));
+    dispatch(dropdownPelatihanbyTema(theme_id, token, tokenPermission));
     if (isUpdated) {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_RESET,
@@ -87,6 +88,7 @@ const StepOne = ({ token }) => {
     token,
     theme_id,
     subtance,
+    tokenPermission,
   ]);
 
   const saveDraft = () => {
@@ -100,15 +102,10 @@ const StepOne = ({ token }) => {
         _method: "put",
       };
 
-      dispatch(updatewSubtanceQuestionBanks(id, data, token));
+      dispatch(updatewSubtanceQuestionBanks(id, data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -123,15 +120,10 @@ const StepOne = ({ token }) => {
         category,
         _method: "put",
       };
-      dispatch(updatewSubtanceQuestionBanks(id, data, token));
+      dispatch(updatewSubtanceQuestionBanks(id, data, token, tokenPermission));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -169,8 +161,8 @@ const StepOne = ({ token }) => {
 
   let optionsTema = [];
 
-  data.data &&
-    data.data.map((item) => {
+  data?.data &&
+    data?.data?.map((item) => {
       return optionsTema.push({ label: item.label, value: item.value });
     });
 
@@ -206,7 +198,9 @@ const StepOne = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Ubah Test Substansi</h2>
+            <h2 className="card-title h2 text-dark">
+              Ubah {subtance?.category}
+            </h2>
           </div>
           <div className="card-body pt-0">
             <Form>
@@ -215,12 +209,10 @@ const StepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={
-                    subtance ? academyLabel : "Silahkan Pilih Akademi"
-                  }
+                  placeholder={"Silahkan Pilih Akademi"}
                   className={styles.selectForm}
                   options={dataAkademi.data}
-                  value={academyLabel}
+                  value={{ label: academyLabel }}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -241,9 +233,9 @@ const StepOne = ({ token }) => {
                   Tema
                 </Form.Label>
                 <Select
-                  placeholder={subtance ? themeLabel : "Silahkan Pilih Tema"}
+                  placeholder={"Silahkan Pilih Tema"}
                   options={optionsTema}
-                  value={themeLabel}
+                  value={{ label: themeLabel }}
                   className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
@@ -258,11 +250,9 @@ const StepOne = ({ token }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
-                  placeholder={
-                    subtance ? trainingLabel : "Silahkan Pilih Pelatihan"
-                  }
+                  placeholder={"Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
-                  value={trainingLabel}
+                  value={{ label: trainingLabel }}
                   className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>
@@ -284,14 +274,22 @@ const StepOne = ({ token }) => {
                   Kategori
                 </Form.Label>
                 <Select
-                  placeholder={
-                    subtance.category
-                      ? subtance.category
-                      : "Silahkan Pilih Kategori"
-                  }
+                  placeholder={"Silahkan Pilih Kategori"}
+                  value={{ label: category }}
                   options={optionsKategori}
                   onChange={(e) => setCategory(e.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("kategori")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "kategori",
+                  category,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
             </Form>
 

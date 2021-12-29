@@ -6,6 +6,8 @@ import Image from "next/dist/client/image";
 import Default from "../../../public/assets/media/logos/default.png";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
+import moment from "moment";
+import "moment/locale/id";
 
 const Header = () => {
   const router = useRouter();
@@ -89,25 +91,28 @@ const Header = () => {
               sm={3}
               hidden={router.pathname.includes(routerPath)}
             >
-              <center>
-                <Image
-                  src={`${
-                    dataPribadi && dataPribadi.foto
-                      ? dataPribadi.file_path + dataPribadi.foto
-                      : "/assets/media/logos/default.png"
-                  }`}
-                  alt=""
-                  className={styles.imageProfile}
-                  width="120px"
-                  height="120px"
-                />
-                <h1 className={styles.name}>
-                  {dataPribadi ? dataPribadi.name || "-" : "-"}
-                </h1>
-                <p className={styles.nik}>
-                  {dataPribadi ? dataPribadi.nik || "-" : "-"}
-                </p>
-              </center>
+              {!router.pathname.includes(routerPath) && (
+                <center>
+                  <Image
+                    src={`${
+                      dataPribadi && dataPribadi.foto
+                        ? dataPribadi.file_path + dataPribadi.foto
+                        : "/assets/media/logos/default.png"
+                    }`}
+                    alt=""
+                    className={styles.imageProfile}
+                    width="120px"
+                    height="120px"
+                    hidden={router.pathname.includes(routerPath)}
+                  />
+                  <h1 className={styles.name}>
+                    {dataPribadi ? dataPribadi.name || "-" : "-"}
+                  </h1>
+                  <p className={styles.nik}>
+                    {dataPribadi ? dataPribadi.nik || "-" : "-"}
+                  </p>
+                </center>
+              )}
             </Col>
             <Col
               className="mx-lg-0 px-11 px-lg-8"
@@ -129,7 +134,7 @@ const Header = () => {
                         {router.pathname.includes("substansi") ? (
                           "Test Substansi"
                         ) : router.pathname.includes("survey") ? (
-                          "Survey & LPJ"
+                          "Survey"
                         ) : router.pathname.includes("trivia") ? (
                           "Trivia"
                         ) : router.pathname.includes("test-subtansi") ? (
@@ -283,7 +288,7 @@ const Header = () => {
                             )}
                           </>
                         ) : router.pathname.includes("form-lpj") ? (
-                          "Survey & LPJ"
+                          "LPJ"
                         ) : router.pathname.includes("pengaturan") ? (
                           "Pengaturan"
                         ) : (
@@ -302,7 +307,8 @@ const Header = () => {
                         ></i>
                       </div>
                       <div className="p-1">
-                        {thisDay} , <span id="jam">{jam}</span>
+                        {thisDay} {moment().format("ll")} ,{" "}
+                        <span id="jam">{jam}</span>
                       </div>
                     </div>
                   </Col>
@@ -335,7 +341,7 @@ const Header = () => {
                             {router.pathname.includes("substansi") ? (
                               "Test Substansi"
                             ) : router.pathname.includes("survey") ? (
-                              "Survey & LPJ"
+                              "Survey"
                             ) : router.pathname.includes("trivia") ? (
                               "Trivia"
                             ) : router.pathname.includes("test-subtansi") ? (
@@ -385,7 +391,7 @@ const Header = () => {
                               </Fragment>
                             ) : router.pathname.includes("form-lpj") ? (
                               <>
-                                Survey & LPJ
+                                LPJ
                                 <span className="mx-3">&gt;</span>
                                 <span className={styles.breadCrumbName}>
                                   Form LPJ
@@ -407,7 +413,8 @@ const Header = () => {
                             ></i>
                           </div>
                           <div className="p-1">
-                            {thisDay} , <span id="jam">{jam}</span>
+                            {thisDay} {moment().format("ll")} ,{" "}
+                            <span id="jam">{jam}</span>
                           </div>
                         </div>
                       </Col>
@@ -577,7 +584,7 @@ const Header = () => {
                     {router.pathname.includes("substansi")
                       ? "Test Substansi"
                       : router.pathname.includes("survey")
-                      ? "Survey & LPJ"
+                      ? "Survey"
                       : router.pathname.includes("trivia")
                       ? "Trivia"
                       : router.pathname.includes("test-subtansi")

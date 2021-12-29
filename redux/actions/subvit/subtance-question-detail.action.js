@@ -63,7 +63,7 @@ export const getAllSubtanceQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -130,12 +130,12 @@ export const getDashboardSubvit =
       if (page_survey) link = link.concat(`page_survey=${page_survey}`);
       if (page_substansi)
         link = link.concat(`&page_substansi=${page_substansi}`);
-      if (page_trivia) link = link.concat(`&page_triva=${page_trivia}`);
+      if (page_trivia) link = link.concat(`&page_trivia=${page_trivia}`);
 
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -154,7 +154,7 @@ export const getDashboardSubvit =
   };
 
 export const newSubtanceQuestionDetail =
-  (subtanceDetailData, token) => async (dispatch) => {
+  (subtanceDetailData, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_SUBTANCE_QUESTION_DETAIL_REQUEST,
@@ -163,6 +163,7 @@ export const newSubtanceQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -222,7 +223,7 @@ export const detailSubtanceQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
-          Permission: tokenPermission,
+          Permission: tokenPermission || "",
         },
       };
 
@@ -244,46 +245,48 @@ export const detailSubtanceQuestionDetail =
     }
   };
 
-export const deleteSubtanceQuestionDetail = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_SUBTANCE_QUESTION_DETAIL_REQUEST });
+export const deleteSubtanceQuestionDetail =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_SUBTANCE_QUESTION_DETAIL_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_SUBVIT +
-        `api/subtance-question-bank-details/${id}`,
-      config
-    );
+      const { data } = await axios.delete(
+        process.env.END_POINT_API_SUBVIT +
+          `api/subtance-question-bank-details/${id}`,
+        config
+      );
 
-    dispatch({
-      type: DELETE_SUBTANCE_QUESTION_DETAIL_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_SUBTANCE_QUESTION_DETAIL_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DELETE_SUBTANCE_QUESTION_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_SUBTANCE_QUESTION_DETAIL_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const updateSubtanceQuestionDetail =
-  (id, dataBankSoal, token) => async (dispatch) => {
+  (id, dataBankSoal, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({ type: UPDATE_SUBTANCE_QUESTION_DETAIL_REQUEST });
 
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
-
-      const { data } = await axios.put(
+      const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT +
           `api/subtance-question-bank-details/${id}`,
         dataBankSoal,
@@ -303,7 +306,7 @@ export const updateSubtanceQuestionDetail =
   };
 
 export const importFileSubtanceQuestionDetail =
-  (subtanceDetailFile, token) => async (dispatch) => {
+  (subtanceDetailFile, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_REQUEST,
@@ -312,6 +315,7 @@ export const importFileSubtanceQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -335,7 +339,7 @@ export const importFileSubtanceQuestionDetail =
   };
 
 export const importImagesSubtanceQuestionDetail =
-  (subtanceDetailImages, token) => async (dispatch) => {
+  (subtanceDetailImages, token, tokenPermission) => async (dispatch) => {
     try {
       dispatch({
         type: IMPORT_IMAGES_SUBTANCE_QUESTION_DETAIL_REQUEST,
@@ -344,6 +348,7 @@ export const importImagesSubtanceQuestionDetail =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 

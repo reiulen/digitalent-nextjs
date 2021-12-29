@@ -18,6 +18,7 @@ import {
 import { NEW_TRAINING_STEP1_RESET } from "../../../../../redux/types/pelatihan/training.type";
 
 import { putTrainingStep3 } from "../../../../../redux/actions/pelatihan/training.actions";
+import moment from "moment";
 
 const EditCommitmentStep3 = ({ token, propsStep }) => {
   const editorRef = useRef();
@@ -74,6 +75,9 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (commitment !== "1") {
+      simpleValidator.current.fields.deskripsi = true;
+    }
     if (simpleValidator.current.allValid()) {
       const dataStep3 = {
         komitmen: commitment,
@@ -93,14 +97,14 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
       data.kabupaten = data.kabupaten.label && data.kabupaten.label;
       data.level_pelatihan =
         data.level_pelatihan.label && data.level_pelatihan.label;
-      data.mitra = data.mitra.value && data.mitra.value + "";
+      data.mitra = data.mitra ? data.mitra.value + "" : "";
       data.penyelenggara = data.penyelenggara.label && data.penyelenggara.label;
       data.provinsi = data.provinsi.label && data.provinsi.label;
       data.zonasi_id = data.zonasi_id.label && data.zonasi_id.label;
-      data.tuna_daksa = data.tuna_daksa ? "1" : "0";
-      data.tuna_netra = data.tuna_netra ? "1" : "0";
-      data.tuna_rungu = data.tuna_rungu ? "1" : "0";
-      data.umum = data.umum ? "1" : "0";
+      // data.tuna_daksa = data.tuna_daksa ? "1" : "0";
+      // data.tuna_netra = data.tuna_netra ? "1" : "0";
+      // data.tuna_rungu = data.tuna_rungu ? "1" : "0";
+      // data.umum = data.umum ? "1" : "0";
       data.ketentuan_peserta = data.ketentuan_peserta ? "1" : "0";
       data.pendaftaran_mulai = moment(data.pendaftaran_mulai).format(
         "YYYY-MM-DD HH:mm:ss"
@@ -108,7 +112,9 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
       data.pendaftaran_selesai = moment(data.pendaftaran_selesai).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      data.pelatihan_mulai = moment(data.pelatihan_mulai).format("YYYY-MM-DD HH:mm:ss");
+      data.pelatihan_mulai = moment(data.pelatihan_mulai).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
       data.pelatihan_selesai = moment(data.pelatihan_selesai).format(
         "YYYY-MM-DD HH:mm:ss"
       );
@@ -119,107 +125,127 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Tolong isi data ydengan benar !",
+        text: "Tolong isi data dengan benar !",
       });
     }
   };
 
   return (
-    <div className="col-lg-12 order-1 px-0">
-      <div className="card card-custom card-stretch gutter-b">
-        <div className="card-body py-4">
-          <form onSubmit={submitHandler}>
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
-            <div className="form-group row mb-4">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Komitmen Peserta
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="commitment"
-                    className="form-check-input"
-                    value="1"
-                    checked={commitment === "1"}
-                    onClick={() => setCommitment("1")}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("komitmen")
-                    }
-                  />
-                  <label className="form-check-label">Ya</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="commitment"
-                    value="0"
-                    className="form-check-input"
-                    checked={commitment === "0"}
-                    onClick={() => {
-                      setCommitment("0");
-                    }}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("komitmen")
-                    }
-                  />
-                  <label className="form-check-label">Tidak</label>
-                </div>
-                {simpleValidator.current.message(
-                  "komitmen",
-                  commitment,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-            {commitment === "1" ? (
-              <div className="form-group mb-4">
-                <label className="col-form-label font-weight-bold">
-                  Input Deskripsi
+    <>
+      {loading && <LoadingPage loading={loading} />}
+      <div className="col-lg-12 order-1 px-0">
+        <div className="card card-custom card-stretch gutter-b">
+          <div className="card-body py-4">
+            <form onSubmit={submitHandler}>
+              <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
+              <div className="form-group row mb-4">
+                <label className="col-form-label font-weight-bold col-sm-2">
+                  Komitmen Peserta
                 </label>
-                <div className="ckeditor">
-                  {editorLoaded ? (
-                    <CKEditor
-                      editor={ClassicEditor}
-                      data={description}
-                      onReady={(editor) => {
-                        // You can store the "editor" and use when it is needed.
-                      }}
-                      onChange={(event, editor) => {
-                        const data = editor.getData();
-                        setDescription(data);
-                      }}
-                      config={{
-                        placeholder: "Silahkan Masukan Deskripsi Detail",
-                      }}
+                <div className="col-sm-10 my-auto">
+                  <div className="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      name="commitment"
+                      className="form-check-input"
+                      value="1"
+                      checked={commitment === "1"}
+                      onClick={() => setCommitment("1")}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("komitmen")
+                      }
                     />
-                  ) : (
-                    <p>Tunggu Sebentar</p>
+                    <label className="form-check-label">Ya</label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      name="commitment"
+                      value="0"
+                      className="form-check-input"
+                      checked={commitment === "0"}
+                      onClick={() => {
+                        setCommitment("0");
+                        setDescription("");
+                      }}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("komitmen")
+                      }
+                    />
+                    <label className="form-check-label">Tidak</label>
+                  </div>
+                  {simpleValidator.current.message(
+                    "komitmen",
+                    commitment,
+                    "required",
+                    { className: "text-danger" }
                   )}
                 </div>
               </div>
-            ) : (
-              ""
-            )}
-            <div className="form-group">
-              <div className="text-right">
-                <button
-                  className="btn btn-light-ghost-rounded-full mr-2"
-                  type="button"
-                  onClick={() => propsStep(2)}
-                >
-                  Batal
-                </button>
-                <button className="btn btn-primary-rounded-full" type="submit">
-                  Simpan & Lanjut
-                </button>
+              {commitment === "1" && (
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Input Deskripsi
+                  </label>
+                  {/* <div className="ckeditor">
+                    {editorLoaded ? (
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={description}
+                        onReady={(editor) => {
+                          // You can store the "editor" and use when it is needed.
+                        }}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          setDescription(data);
+                        }}
+                        config={{
+                          placeholder: "Silahkan Masukan Deskripsi Detail",
+                        }}
+                      />
+                    ) : (
+                      <p>Tunggu Sebentar</p>
+                    )}
+                  </div> */}
+                  <textarea
+                    className="form-control"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("deskripsi")
+                    }
+                    rows="10"
+                  />
+                  {simpleValidator.current.message(
+                    "deskripsi",
+                    description,
+                    "required",
+                    { className: "text-danger" }
+                  )}
+                </div>
+              )}
+              <div className="form-group">
+                <div className="text-right">
+                  {/* <button
+                    className="btn btn-light-ghost-rounded-full mr-2"
+                    type="button"
+                    onClick={() => propsStep(2)}
+                  >
+                    Kembali
+                  </button> */}
+                  <button
+                    className="btn btn-primary-rounded-full"
+                    type="submit"
+                  >
+                    Simpan & Lanjut
+                  </button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

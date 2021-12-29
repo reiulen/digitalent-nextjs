@@ -4,7 +4,7 @@ import StatistikProgres from "./statistik-progres.component";
 const ListCardInfo = ({ data }) => {
   return (
     <>
-      <div className="row mt-5">
+      <div className="row mt-5 ">
         {data.map((row, i) => (
           <StatistikProgres
             key={i}

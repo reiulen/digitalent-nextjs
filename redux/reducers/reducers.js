@@ -3,15 +3,17 @@ import { combineReducers } from "redux";
 // DASHBOARD KABADAN
 // DASHBOARD
 import {
+  digitalentTotalDataPendaftarReducer,
   digitalentTotalPenggunaReducer,
-  digitalentStatistikAkademiReducer,
-  digitalentStatistikMitraReducer,
+  digitalentStatistikAkademiPendaftarReducer,
+  digitalentStatistikAkademiPesertaReducer,
+  digitalentStatistikMitraPendaftarReducer,
+  digitalentStatistikMitraPesertaReducer,
   digitalentTablePendaftaranReducer,
   digitalentPesertaWilayahReducer,
-  digitalentProvinsiReducer,
-  digitalentUmurReducer,
-  digitalentJenisKelaminReducer,
-  digitalentPendidikanReducer,
+  digitalentProvinsiPesertaReducer,
+  digitalentProvinsiPendaftarReducer,
+  digitalentDataPribadiReducer,
 } from "./dashboard-kabadan/dashboard/digitalent.reducers";
 // DASHBOARD BEASISWA
 import {
@@ -28,6 +30,26 @@ import {
   beasiswaAlumniAwardeeReducer,
   beasiswaYearReducer,
 } from "./dashboard-kabadan/dashboard/beasiswa.reducers";
+// DASHBOARD SIMONAS
+import {
+  simonasCompanyTotalReducer,
+  simonasProjectTotalReducer,
+  simonasCompanyAmountReducer,
+  simonasProjectAmountReducer,
+  simonasApplierTotalReducer,
+  simonasApplierTotalActiveReducer,
+  simonasApplierAmountJobReducer,
+  simonasApplierAmountProjectReducer,
+  simonasApplierAgeReducer,
+  simonasApplierGenderReducer,
+  simonasApplierEducationJobReducer,
+  simonasApplierEducationProjectReducer,
+  simonasRegionApplierReducer,
+  simonasFilterYearReducer,
+  simonasFilterStatusReducer,
+  simonasProvinsiApplierReducer,
+  simonasProvinsiApplierRequiredReducer,
+} from "./dashboard-kabadan/dashboard/simonas.reducers";
 // DATA PESERTA
 import {
   allBeasiswaKandidatReducer,
@@ -160,6 +182,7 @@ import {
   deleteSurveyQuestionBanksReducer,
   updateSurveyQuestionBanksPublishReducer,
   allReportSurveyQuestionBanksReducer,
+  newCloneSurveyQuestionBanksReducer,
 } from "./subvit/survey-question.reducers";
 import {
   allSurveyQuestionDetailReducer,
@@ -182,6 +205,7 @@ import {
   updateTriviaQuestionReducer,
   deleteTriviaQuestionBanksReducer,
   updateTriviaQuestionBanksPublishReducer,
+  newCloneTriviaQuestionBanksReducer,
   allReportTriviaQuestionBanksReducer,
 } from "./subvit/trivia-question.reducers";
 import {
@@ -286,6 +310,7 @@ import {
   allAcademyListReducer,
   allListPelatihanReducer,
   updateStatusAdminReducer,
+  editAdminSiteReducer,
 } from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
@@ -302,6 +327,7 @@ import {
   detailGeneralReducer,
   newGeneralReducer,
   updateGeneralReducer,
+  allDataGeneralReducer,
 } from "./site-management/settings/general.reducers";
 // ============== zonasi ===============
 import {
@@ -337,7 +363,10 @@ import { allPromptReducer } from "./site-management/settings/pelatihan.reducers"
 
 // ============== dashboard ===============
 import { allDataZonasiReducer } from "./site-management/dashboard.reducers";
-import { allDataPesertaReducer } from "./site-management/dashboard-data-peserta.reducers";
+import {
+  allDataPesertaReducer,
+  allDataListZonasiReducer,
+} from "./site-management/dashboard-data-peserta.reducers";
 
 // End Site Management
 
@@ -430,6 +459,7 @@ import {
   updatePekerjaanReducer,
   getAsalSekolahReducer,
   getRefPekerjaanReducer,
+  updateStatusWizzardReducer,
 } from "./pelatihan/peserta/profile.reducers";
 
 import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
@@ -461,6 +491,8 @@ import {
   drowpdownFormBuilderReducers,
   drowpdownTempatLahirReducers,
   drowpdownYearReducers,
+  drowpdownHubunganReducers,
+  drowpdownStatusMenikahReducers,
 } from "./pelatihan/admin/function.reducers";
 import {
   allProvinsiReducer,
@@ -520,6 +552,7 @@ import {
   detailBerandaBeritaReducer,
   kategoriBerandaBeritaReducer,
   allTagBerandaBeritaReducer,
+  saveKategoriBerandaBeritaReducer,
 } from "../reducers/beranda/berita.reducers";
 
 // ========== video ========
@@ -537,6 +570,15 @@ import {
   allFaqContentReducer,
   kategoriBerandaFaqReducer,
 } from "../reducers/beranda/faq-content.reducers";
+
+// ========== testimoni ========
+import {
+	allBerandaTestimoniReducer,
+	detailBerandaTestimoniReducer,
+	kategoriBerandaTestimoniReducer,
+	allTagBerandaTestimoniReducer,
+	cekLulusPelatihanTestimoniReducer,
+} from "../reducers/beranda/testimoni.reducers";
 
 //END BERANDA
 
@@ -569,18 +611,30 @@ import {
 } from "./site-management/user/peserta-dts.reducers";
 import { TTEP12DataReducer } from "./sertifikat/TTE-P12.reducer";
 
+import { dropdownHelpdeskReducer } from "./beranda/helpdesk.reducer";
+
+import { CheckStatusSertifikatReducer } from "./beranda/check-sertifikat.reducer";
+import {
+  allOptionsAcademyCloneSertifikatReducer,
+  allOptionsThemeCloneSertifikatReducer,
+  allOptionsTrainingCloneSertifikatReducer,
+} from "./sertifikat/clone-sertifikat.reducer";
+
 const reducer = combineReducers({
   // DASHBOARD KABADAN
   // ============= DTS ============
   digitalentTotalPengguna: digitalentTotalPenggunaReducer,
-  digitalentStatistikAkademi: digitalentStatistikAkademiReducer,
-  digitalentStatistikMitra: digitalentStatistikMitraReducer,
+  digitalentTotalDataPendaftar: digitalentTotalDataPendaftarReducer,
+  digitalentStatistikAkademiPendaftar:
+    digitalentStatistikAkademiPendaftarReducer,
   digitalentTablePendaftaran: digitalentTablePendaftaranReducer,
   digitalentPesertaWilayah: digitalentPesertaWilayahReducer,
-  digitalentProvinsi: digitalentProvinsiReducer,
-  digitalentUmur: digitalentUmurReducer,
-  digitalentJenisKelamin: digitalentJenisKelaminReducer,
-  digitalentPendidikan: digitalentPendidikanReducer,
+  digitalentStatistikAkademiPeserta: digitalentStatistikAkademiPesertaReducer,
+  digitalentStatistikMitraPendaftar: digitalentStatistikMitraPendaftarReducer,
+  digitalentStatistikMitraPeserta: digitalentStatistikMitraPesertaReducer,
+  digitalentProvinsiPeserta: digitalentProvinsiPesertaReducer,
+  digitalentProvinsiPendaftar: digitalentProvinsiPendaftarReducer,
+  digitalentDataPribadi: digitalentDataPribadiReducer,
   // ============= BEASISWA ============
   beasiswaTotalPengguna: beasiswaTotalPenggunaReducer,
   beasiswaTotalPendaftar: beasiswaTotalPendaftarReducer,
@@ -600,6 +654,532 @@ const reducer = combineReducers({
   allSimonasKandidat: allSimonasKandidatReducer,
   allSimonasFilterCompany: allSimonasFilterCompanyReducer,
   allSimonasFilterStatus: allSimonasFilterStatusReducer,
+  simonasCompanyTotal: simonasCompanyTotalReducer,
+  simonasProjectTotal: simonasProjectTotalReducer,
+  simonasCompanyAmount: simonasCompanyAmountReducer,
+  simonasProjectAmount: simonasProjectAmountReducer,
+  simonasApplierTotal: simonasApplierTotalReducer,
+  simonasApplierTotalActive: simonasApplierTotalActiveReducer,
+  simonasApplierAmountJob: simonasApplierAmountJobReducer,
+  simonasApplierAmountProject: simonasApplierAmountProjectReducer,
+  simonasApplierAge: simonasApplierAgeReducer,
+  simonasApplierGender: simonasApplierGenderReducer,
+  simonasApplierEducationJob: simonasApplierEducationJobReducer,
+  simonasApplierEducationProject: simonasApplierEducationProjectReducer,
+  simonasRegionApplier: simonasRegionApplierReducer,
+  simonasFilterYear: simonasFilterYearReducer,
+  simonasFilterStatus: simonasFilterStatusReducer,
+  simonasProvinsiApplier: simonasProvinsiApplierReducer,
+  simonasProvinsiApplierRequired: simonasProvinsiApplierRequiredReducer,
+  // END DASHBOARD KABADAN
+
+  // PUBLIKASI
+  allArtikel: allArtikelReducer,
+  allArtikelsPeserta: allArtikelsPesertaReducer,
+  detailArtikelsPeserta: detailArtikelsPesertaReducer,
+  newArtikel: newArtikelReducer,
+  deleteArtikel: deleteArtikelReducer,
+  detailArtikel: detailArtikelReducer,
+  updatedArtikel: updateArtikelReducer,
+  cekLulusPelatihan: cekLulusPelatihanReducer,
+
+  allArtikelPeserta: allArtikelPesertaReducer,
+  newArtikelPeserta: newArtikelPesertaReducer,
+  deleteArtikelPeserta: deleteArtikelPesertaReducer,
+  detailArtikelPeserta: detailArtikelPesertaReducer,
+  updatedArtikelPeserta: updateArtikelPesertaReducer,
+
+  allBerita: allBeritaReducer,
+  newBerita: newBeritaReducer,
+  deleteBerita: deleteBeritaReducer,
+  detailBerita: detailBeritaReducer,
+  updatedBerita: updateBeritaReducer,
+
+  allImagetron: allImagetronReducer,
+  newImagetron: newImagetronReducer,
+  deleteImagetron: deleteImagetronReducer,
+  detailImagetron: detailImagetronReducer,
+  updatedImagetron: updateImagetronReducer,
+
+  allGaleri: allGaleriReducer,
+  newGaleri: newGaleriReducer,
+  detailGaleri: detailGaleriReducer,
+  deleteGaleri: deleteGaleriReducer,
+  updatedGaleri: updateGaleriReducer,
+  viewedGaleri: viewGaleriReducer,
+
+  allFaq: allFaqReducer,
+  newFaq: newFaqReducer,
+  paginationFaq: paginationFaqReducer,
+  deleteFaq: deleteFaqReducer,
+  detailFaq: detailFaqReducer,
+  updateFaq: updateFaqReducer,
+  updatePinFaq: updatePinFaqReducer,
+
+  allVideo: allVideoReducer,
+  newVideo: newVideoReducer,
+  deleteVideo: deleteVideoReducer,
+  detailVideo: detailVideoReducer,
+  updatedVideo: updateVideoReducer,
+  playedVideo: playVideoReducer,
+
+  allKategori: allKategoriReducer,
+  paginationKategori: paginationKategoriReducer,
+  newKategori: newKategoriReducer,
+  deleteKategori: deleteKategoriReducer,
+  detailKategori: detailKategoriReducer,
+  updateKategori: updateKategoriReducer,
+
+  allSettingPublikasi: allSettingPublikasiReducer,
+  updateSettingPublikasi: updateSettingPublikasiReducer,
+
+  allDashboardPublikasi: allDashboardPublikasiReducer,
+  allRoleAdminPublikasi: allRoleAdminPublikasiReducer,
+
+  allRolePermission: allRolePermissionReducer,
+
+  // allKategoriContent: kategoriVideoContentReducer,
+  // allTagContent: allTagReducer,
+  // playVideo: playVideoContentReducer,
+
+  // Subvit
+  // =============== substansi ==================
+  allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
+  permissionsSubvit: permissionsSubvitReducer,
+  newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
+  deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+  detailSubtanceQuestionBanks: detailSubtanceQuestionBanksReducer,
+  updateSubtanceQuestion: updateSubtanceQuestionReducer,
+  updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
+  allReportSubtanceQuestionBanks: allReportSubtanceQuestionBanksReducer,
+  newCloneSubtanceQuestionBanks: newCloneSubtanceQuestionBanksReducer,
+
+  allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
+  newSubtanceQuestionType: newSubtanceQuestionTypeReducer,
+  detailSubtanceQuestionType: detailSubtanceQuestionTypeReducer,
+  deleteSubtanceQuestionType: deleteSubtanceQuestionTypeReducer,
+  updateSubtanceQuestionType: updateSubtanceQuestionTypeReducer,
+
+  allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
+  randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
+
+  dashboardSubvit: getDashboardReducer,
+  postResultSubvit: postResultReducer,
+  newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+  detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
+  updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
+  deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
+  importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
+  importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
+  // =============== end substansi ==================
+
+  // =============== survey ==================
+  allSurveyQuestionBanks: allSurveyQuestionBanksReducer,
+  postResultSurveySubvit: postResultSurveyReducer,
+  newSurveyQuestionBanks: newSurveyQuestionBanksReducer,
+  deleteSurveyQuestionBanks: deleteSurveyQuestionBanksReducer,
+  detailSurveyQuestionBanks: detailSurveyQuestionBanksReducer,
+  updateSurveyQuestion: updateSurveyQuestionReducer,
+  updateSurveyQuestionBanksPublish: updateSurveyQuestionBanksPublishReducer,
+  allReportSurveyQuestionBanks: allReportSurveyQuestionBanksReducer,
+  randomSurvey: randomSurveyReducer,
+  allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
+  newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
+  deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
+  detailSurveyQuestionDetail: detailSurveyQuestionDetailReducer,
+  updateSurveyQuestionDetail: updateSurveyQuestionDetailReducer,
+  importFileSurveyQuestionDetail: importFileSurveyQuestionDetailReducer,
+  importImagesSurveyQuestionDetail: importImagesSurveyQuestionDetailReducer,
+  newCloneSurveyQuestionBanks: newCloneSurveyQuestionBanksReducer,
+  // =============== end substansi ==================
+
+  // =============== trivia ==================
+  randomTrivia: randomTriviaReducer,
+  postResultTriviaSubvit: postResultTriviaReducer,
+  allTriviaQuestionBanks: allTriviaQuestionBanksReducer,
+  newTriviaQuestionBanks: newTriviaQuestionBanksReducer,
+  deleteTriviaQuestionBanks: deleteTriviaQuestionBanksReducer,
+  detailTriviaQuestionBanks: detailTriviaQuestionBanksReducer,
+  updateTriviaQuestion: updateTriviaQuestionReducer,
+  updateTriviaQuestionBanksPublish: updateTriviaQuestionBanksPublishReducer,
+  newCloneTriviaQuestionBanks: newCloneTriviaQuestionBanksReducer,
+  allReportTriviaQuestionBanks: allReportTriviaQuestionBanksReducer,
+
+  allTriviaQuestionDetail: allTriviaQuestionDetailReducer,
+  newTriviaQuestionDetail: newTriviaQuestionDetailReducer,
+  deleteTriviaQuestionDetail: deleteTriviaQuestionDetailReducer,
+  detailTriviaQuestionDetail: detailTriviaQuestionDetailReducer,
+  updateTriviaQuestionDetail: updateTriviaQuestionDetailReducer,
+  importFileTriviaQuestionDetail: importFileTriviaQuestionDetailReducer,
+  importImagesTriviaQuestionDetail: importImagesTriviaQuestionDetailReducer,
+  // =============== end trivia ==================
+
+  // =============== sertifikat ==================
+  allCertificates: allSertifikatReducers,
+  newCertificates: newSertifikatReducer,
+  singleCertificate: singleSertifikatReducer,
+  detailCertificates: detailSertifikatReducer,
+  deleteCertificates: deleteSertifikatReducer,
+  updateCertificates: updateSertifikatReducer,
+  publishCertificate: publishedSertifikatReducer,
+  allParticipant: allPesertaReducers,
+  detailParticipant: detailPesertaReducer,
+  allAcademy: allAcademyOptionsReducer,
+  allTheme: allThemeOptionsReducer,
+  // =============== end sertifikat ==================
+
+  // PARTNERSHIP
+  // ================================= => admin
+  // kerjasama mitra
+  allMitra: allMitraReducer,
+  // category management kerjasama
+  allMKCooporation: allMKCooporationReducer,
+  // management kerjasama
+  allMK: allMCooporationReducerMK,
+  // tanda tangan
+  allTandaTangan: allTandaTanganReducer,
+  // dashboard
+  allDashboard: dashboardReducer,
+  // permission
+  partnershipPermissions: partnershipPermissionsReducer,
+
+  // ================================= => user
+  allCooperationUser: cooperationUserReducer,
+  allTandaTanganUser: allTandaTanganUserReducer,
+  allProvinsi: allProvinsiReducer,
+  allKota: allKotaReducer,
+  allFunctionls: reducerFunctionals,
+  allAuthentication: authenticationReducer,
+
+  // SITE MANAGEMENT
+  // ============ PAGE =======
+  allPage: allPageReducer,
+  deletePage: deletePageReducer,
+  newPage: newPageReducer,
+  detailPage: detailPageReducer,
+  updatePage: updatePageReducer,
+  listApi: listApiReducer,
+  listField: listFieldReducer,
+  listLog: listLogReducer,
+  // ============ PAGE =======
+  allProvincesSite: allProvincesSiteReducer,
+  allOptionReferenceSite: allOptionReferenceSiteReducer,
+  // ============ API =======
+  allApi: allApiReducer,
+  deleteApi: deleteApiReducer,
+  newApi: newApiReducer,
+  detailApi: detailApiReducer,
+  updateApi: updateApiReducer,
+  // ============ MITRA SITE =======
+  allMitraSite: allMitraSiteReducer,
+  newMitraSite: newMitraSiteReducer,
+  detailMitraSite: detailMitraSiteReducer,
+  updateMitraSite: updateMitraSiteReducer,
+  // ============ ADMIN SITE =======
+  allAdminSite: allAdminSiteReducer,
+  newAdminSite: newAdminSiteReducer,
+  updateAdminSite: updateAdminSiteReducer,
+  detailAdminSite: detailAdminSiteReducer,
+  deleteAdminSite: deleteAdminSiteReducer,
+  allUnitWorkList: allUnitWorkListReducer,
+  allRolesList: allRolesListReducer,
+  allAcademyList: allAcademyListReducer,
+  allListPelatihan: allListPelatihanReducer,
+  allListPelatihanByPeserta: allListPelatihanByPesertaReducer,
+  allListPelatihanPagination: allListPelatihanPaginationReducer,
+  editAdminSite: editAdminSiteReducer,
+
+  // ============ DATA REFERENCE =======
+  allDataReference: allDataReferenceReducer,
+  deleteDataReference: deleteDataReferenceReducer,
+  newDataReference: newDataReferenceReducer,
+  detailDataReference: detailDataReferenceReducer,
+  updateDataReference: updateDataReferenceReducer,
+  // ============ GENERAL =======
+  allGeneral: allGeneralReducer,
+  deleteGeneral: deleteGeneralReducer,
+  newGeneral: newGeneralReducer,
+  detailGeneral: detailGeneralReducer,
+  updateGeneral: updateGeneralReducer,
+  allDataGeneral: allDataGeneralReducer,
+  // ============ DATA ZONASI =======
+  allZonasi: allZonasiReducer,
+  deleteZonasi: deleteZonasiReducer,
+  newZonasi: newZonasiReducer,
+  detailZonasi: detailZonasiReducer,
+  updateZonasi: updateZonasiReducer,
+  // ============ UNIT WORK =======
+  allUnitWork: allUnitWorkReducer,
+  deleteUnitWork: deleteUnitWorkReducer,
+  newUnitWork: newUnitWorkReducer,
+  detailUnitWork: detailUnitWorkReducer,
+  updateUnitWork: updateUnitWorkReducer,
+  // ============ ROLE =======
+  allRoles: allRolesReducer,
+  newRoles: newRolesReducer,
+  detailRoles: detailRolesReducer,
+  updateRoles: updateRolesReducer,
+  deleteRoles: deleteRolesReducer,
+  allPermission: allPermissionReducer,
+  allSidebar: allSidebarReducer,
+  updateStatusAdmin: updateStatusAdminReducer,
+  // ============ PELATIHAN =======
+  allPrompt: allPromptReducer,
+  // ============ Dashboatd =======
+  allDataZonasi: allDataZonasiReducer,
+  allDataPeserta: allDataPesertaReducer,
+  allDataListZonasi: allDataListZonasiReducer,
+  // ============ Export Data =======
+  allExportData: allExportDataReducer,
+  detailExportData: detailExportDataReducer,
+  updateExportData: updateExportDataReducer,
+  deleteExportData: deleteExportDataReducer,
+  allListPeserta: allListPesertaReducer,
+  allDetailPeserta: allDetailPesertaReducer,
+  filterExportData: filterExportDataReducer,
+  // END SITE MANAGEMENT
+
+  //PELATIHAN
+  // ========== akademi ===========
+  allAcademy: allAcademyReducer,
+  newAcademy: newAcademyReducer,
+  detailAcademy: detailAcademyReducer,
+  updateAcademy: updateAcademyReducer,
+  deleteAcademy: deleteAcademyReducer,
+  // ========== tema ===========
+  allTheme: allThemeReducer,
+  newTheme: newThemeReducer,
+  detailTheme: detailThemeReducer,
+  updateTheme: updateThemeReducer,
+  deleteTheme: deleteThemeReducer,
+  // ========== pelatihan ===========
+  allTraining: allTrainingReducer,
+  cardTraining: cardTrainingReducer,
+  newTraining: newTrainingReducer,
+  deleteTraining: deleteTrainingReducer,
+  getEditTraining: getEditTrainingReducer,
+  getEditTraining2: getEditTraining2Reducer,
+  getEditTraining3: getEditTrainingReducer,
+  getFormLPJ: getFormLPJReducer,
+  newLPJ: newLPJReducer,
+  getFormEvidence: getFormEvidenceReducer,
+  cloneTraining: cloneTrainingReducer,
+  updateTraining: updateTrainingReducer,
+  // ========== review pelatihan ========
+  allListReview: allListReviewReducer,
+  cardReview: cardReviewReducer,
+  listRevisi: listRevisiReducer,
+  getReviewStep1: getReviewStep1Reducer,
+  getReviewStep2: getReviewStep2Reducer,
+  getReviewStep3: getReviewStep3Reducer,
+  getReviewStep4: getReviewStep4Reducer,
+  revisiReview: revisiReviewReducer,
+  tolakReview: tolakReviewReducer,
+
+  // ========== rekap pelatihan ========
+  allSummary: allSummaryReducer,
+  updateStatusPeserta: updateStatusPesertaReducer,
+  updateReminder: updateReminderReducer,
+  getAkademiByPelatihan: getAkademiByPelatihanReducer,
+  getPendaftaranPeserta: getPendaftaranPesertaReducer,
+  getStatusPendaftar: getStatusPendaftarReducer,
+  getReminderBerkas: getReminderBerkasReducer,
+  getDataPribadiRow: getDataPribadiRowReducer,
+  getRiwayatPelatihan: getRiwayatPelatihanReducer,
+  getBerkasPendaftaran: getBerkasPendaftaranReducer,
+  getFormKomitmen: getFormKomitmenReducer,
+  getFormLpj: getFormLpjReducer,
+
+  // =============== rpoert oelatihan ========
+  getDataReportTraining: getDataReportTrainingReducer,
+  detailReportTraining: detailReportTrainingReducer,
+
+  // ========== pendaftaran pelatihan ========
+  getFormBuilder: getFormBuilderReducer,
+  getPelatihan: getPelatihanReducer,
+  newPendaftaranPelatihan: newPendaftaranPelatihanReducer,
+  formRegister: formRegisterReducer,
+
+  getDataPribadi: getDataPribadiReducer,
+  trainingStep1: trainingStep1Reducer,
+  registrationStep2: registrationStep2Reducer,
+  commitmentStep3: commitmentStep3Reducer,
+
+  dashboardPeserta: dashboardPesertaReducer,
+
+  // ======= dropdown ==========
+  drowpdownAkademi: drowpdownAkademiReducers,
+  drowpdownTema: drowpdownTemaReducers,
+  drowpdownTemabyAkademi: drowpdownTemabyAkademiReducers,
+  drowpdownPelatihan: drowpdownPelatihanReducers,
+  drowpdownPelatihanbyTema: drowpdownPelatihanbyTemaReducers,
+  drowpdownAgama: drowpdownAgamaReducers,
+  drowpdownPendidikan: drowpdownPendidikanReducers,
+  drowpdownStatusPekerjaan: drowpdownStatusPekerjaanReducers,
+  drowpdownLevelPelatihan: drowpdownLevelPelatihanReducers,
+  drowpdownMitra: drowpdownMitraReducers,
+  drowpdownZonasi: drowpdownZonasiReducers,
+  drowpdownProvinsi: drowpdownProvinsiReducers,
+  drowpdownKabupaten: drowpdownKabupatenReducers,
+  drowpdownTempatLahir: drowpdownTempatLahirReducers,
+  drowpdownKabupatenDomisili: drowpdownKabupatenDomisiliReducers,
+  drowpdownProvinsiToDesa: drowpdownProvinsiToDesaReducers,
+  drowpdownKecamatanToDesa: drowpdownKecamatanToDesaReducers,
+  drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
+  drowpdownFormBuilder: drowpdownFormBuilderReducers,
+  updateStatus: updateStatusReducer,
+  drowpdownYear: drowpdownYearReducers,
+  drowpdownHubungan: drowpdownHubunganReducers,
+  drowpdownStatusMenikah: drowpdownStatusMenikahReducers,
+
+  // ========== profile peserta ========
+  dataAlamat: dataAlamatReducer,
+  dataPendidikan: dataPendidikanReducer,
+  dataKeterampilan: dataKeterampilanReducer,
+  dataPekerjaan: dataPekerjaanReducer,
+  updateDataPribadi: updateDataPribadiReducer,
+  updateAlamat: updateAlamatReducer,
+  updatePendidikan: updatePendidikanReducer,
+  updateKeterampilan: updateKeterampilanReducer,
+  updatePekerjaan: updatePekerjaanReducer,
+  getAsalSekolah: getAsalSekolahReducer,
+  getRefPekerjaan: getRefPekerjaanReducer,
+  //END PELATIHAN
+
+  //BERANDA
+  // ========== beranda ========
+  addNotifTema: addNotifTemaReducer,
+  allAkademi: allAkademiReducer,
+  allPenyelenggaraPeserta: allPenyelenggaraPesertaReducer,
+  allPenyelenggaraPage: allPenyelenggaraPageReducer,
+  allKotaPeserta: allKotaPesertaReducer,
+  temaByAkademi: temaByAkademiReducer,
+  pelatihanByTema: pelatihanByTemaReducer,
+  allPublikasiBeranda: allPublikasiBerandaReducer,
+  berandaFooter: berandaFooterReducer,
+  allTemaOriginal: allTemaOriginalReducer,
+  berandaFooterPeserta: berandaFooterPesertaReducer,
+
+  // ========== detail akademi ========
+  detailAkademi: detailAkademiReducer,
+  allPelatihan: allPelatihanReducer,
+
+  // ========== detail pelatihan ========
+  detailPelatihan: detailPelatihanReducer,
+  checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
+
+  // ========== artikel ========
+  allBerandaArtikel: allBerandaArtikelReducer,
+  detailBerandaArtikel: detailBerandaArtikelReducer,
+  kategoriBerandaArtikel: kategoriBerandaArtikelReducer,
+  allTagBerandaArtikel: allTagBerandaArtikelReducer,
+
+  // ========== galeri ========
+  allBerandaGaleri: allBerandaGaleriReducer,
+  detailBerandaGaleri: detailBerandaGaleriReducer,
+  kategoriBerandaGaleri: kategoriBerandaGaleriReducer,
+  allTagBerandaGaleri: allTagBerandaGaleriReducer,
+
+  // ========== berita ========
+  allBerandaBerita: allBerandaBeritaReducer,
+  detailBerandaBerita: detailBerandaBeritaReducer,
+  kategoriBerandaBerita: kategoriBerandaBeritaReducer,
+  allTagBerandaBerita: allTagBerandaBeritaReducer,
+  saveKategoriBerandaBerita: saveKategoriBerandaBeritaReducer,
+
+  // ========== video ========
+  allVideoContent: allVideoContentReducer,
+  detailBerandaVideo: detailBerandaVideoReducer,
+  kategoriVideoContent: kategoriVideoContentReducer,
+  allTagVideoContent: allTagVideoContentReducer,
+  playVideoContent: playVideoContentReducer,
+
+  // ========== faq ========
+  allFaqContent: allFaqContentReducer,
+  kategoriBerandaFaq: kategoriBerandaFaqReducer,
+
+  // ========== testimoni ======== 
+	allBerandaTestimoni : allBerandaTestimoniReducer,
+	detailBerandaTestimoni : detailBerandaTestimoniReducer,
+	kategoriBerandaTestimoni : kategoriBerandaTestimoniReducer,
+	allTagBerandaTestimoni : allTagBerandaTestimoniReducer,
+	cekLulusPelatihanTestimoni: cekLulusPelatihanTestimoniReducer,
+  //END BERANDA
+
+  // ========== Riwayat Pelatihan ========
+  getAllRiwayatPelatihanPeserta: getAllRiwayatPelatihanPesertaReducer,
+  getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,
+  allBeasiswa: allBeasiswaReducer,
+  allSimonas: allSimonasReducer,
+
+  // ========== Master Pelatihan ========
+  getAllMasterPelatihan: allMasterPelatihanListReducer,
+  deleteMasterPelatihan: deleteMasterPelatihanReducer,
+  getDetailMasterPelatihan: detailMasterPelatihanReducer,
+  getDetailMasterCopyEditPelatihan: detailMasterCopyEditPelatihanReducer,
+  newMasterPelatihan: newMasterTrainingReducer,
+  updateMasterPelatihan: updateMasterPelatihanReducer,
+  updateStatusMaster: updateStatusMasterReducer,
+
+  allBookmark: getAllBookmarkPesertaReducer,
+
+  adminPermission: adminPermissionReducer,
+  allPencarian: allPencarianReducer,
+
+  // TTE P12
+  TTEP12Data: TTEP12DataReducer,
+  sertifikatPeserta: sertifikatPesertaReducer,
+  dropdownHelpdesk: dropdownHelpdeskReducer,
+  // DASHBOARD KABADAN
+  // ============= DTS ============
+  digitalentTotalPengguna: digitalentTotalPenggunaReducer,
+  digitalentTotalDataPendaftar: digitalentTotalDataPendaftarReducer,
+  digitalentStatistikAkademiPendaftar:
+    digitalentStatistikAkademiPendaftarReducer,
+  digitalentTablePendaftaran: digitalentTablePendaftaranReducer,
+  digitalentPesertaWilayah: digitalentPesertaWilayahReducer,
+  digitalentStatistikAkademiPeserta: digitalentStatistikAkademiPesertaReducer,
+  digitalentStatistikMitraPendaftar: digitalentStatistikMitraPendaftarReducer,
+  digitalentStatistikMitraPeserta: digitalentStatistikMitraPesertaReducer,
+  digitalentProvinsiPeserta: digitalentProvinsiPesertaReducer,
+  digitalentProvinsiPendaftar: digitalentProvinsiPendaftarReducer,
+  digitalentDataPribadi: digitalentDataPribadiReducer,
+  // ============= BEASISWA ============
+  beasiswaTotalPengguna: beasiswaTotalPenggunaReducer,
+  beasiswaTotalPendaftar: beasiswaTotalPendaftarReducer,
+  beasiswaStatistikDalam: beasiswaStatistikDalamReducer,
+  beasiswaStatistikLuar: beasiswaStatistikLuarReducer,
+  beasiswaMapPendaftar: beasiswaMapPendaftarReducer,
+  beasiswaProvinsiPendaftar: beasiswaProvinsiPendaftarReducer,
+  beasiswaProvinsiAwardee: beasiswaProvinsiAwardeeReducer,
+  beasiswaUniversitasDalam: beasiswaUniversitasDalamReducer,
+  beasiswaUniversitasLuar: beasiswaUniversitasLuarReducer,
+  beasiswaAlumni: beasiswaAlumniReducer,
+  beasiswaAlumniAwardee: beasiswaAlumniAwardeeReducer,
+  allBeasiswaKandidat: allBeasiswaKandidatReducer,
+  allBeasiswaFilter: allBeasiswaFilterReducer,
+  beasiswaYear: beasiswaYearReducer,
+  // ============= SIMONAS ============
+  allSimonasKandidat: allSimonasKandidatReducer,
+  allSimonasFilterCompany: allSimonasFilterCompanyReducer,
+  allSimonasFilterStatus: allSimonasFilterStatusReducer,
+  simonasCompanyTotal: simonasCompanyTotalReducer,
+  simonasProjectTotal: simonasProjectTotalReducer,
+  simonasCompanyAmount: simonasCompanyAmountReducer,
+  simonasProjectAmount: simonasProjectAmountReducer,
+  simonasApplierTotal: simonasApplierTotalReducer,
+  simonasApplierTotalActive: simonasApplierTotalActiveReducer,
+  simonasApplierAmountJob: simonasApplierAmountJobReducer,
+  simonasApplierAmountProject: simonasApplierAmountProjectReducer,
+  simonasApplierAge: simonasApplierAgeReducer,
+  simonasApplierGender: simonasApplierGenderReducer,
+  simonasApplierEducationJob: simonasApplierEducationJobReducer,
+  simonasApplierEducationProject: simonasApplierEducationProjectReducer,
+  simonasRegionApplier: simonasRegionApplierReducer,
+  simonasFilterYear: simonasFilterYearReducer,
+  simonasFilterStatus: simonasFilterStatusReducer,
+  simonasProvinsiApplier: simonasProvinsiApplierReducer,
+  simonasProvinsiApplierRequired: simonasProvinsiApplierRequiredReducer,
   // END DASHBOARD KABADAN
 
   // PUBLIKASI
@@ -814,6 +1394,7 @@ const reducer = combineReducers({
   allListPelatihan: allListPelatihanReducer,
   allListPelatihanByPeserta: allListPelatihanByPesertaReducer,
   allListPelatihanPagination: allListPelatihanPaginationReducer,
+  editAdminSite: editAdminSiteReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
@@ -827,6 +1408,7 @@ const reducer = combineReducers({
   newGeneral: newGeneralReducer,
   detailGeneral: detailGeneralReducer,
   updateGeneral: updateGeneralReducer,
+  allDataGeneral: allDataGeneralReducer,
   // ============ DATA ZONASI =======
   allZonasi: allZonasiReducer,
   deleteZonasi: deleteZonasiReducer,
@@ -853,6 +1435,7 @@ const reducer = combineReducers({
   // ============ Dashboatd =======
   allDataZonasi: allDataZonasiReducer,
   allDataPeserta: allDataPesertaReducer,
+  allDataListZonasi: allDataListZonasiReducer,
   // ============ Export Data =======
   allExportData: allExportDataReducer,
   detailExportData: detailExportDataReducer,
@@ -953,6 +1536,8 @@ const reducer = combineReducers({
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
   drowpdownYear: drowpdownYearReducers,
+  drowpdownHubungan: drowpdownHubunganReducers,
+  drowpdownStatusMenikah: drowpdownStatusMenikahReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,
@@ -966,6 +1551,7 @@ const reducer = combineReducers({
   updatePekerjaan: updatePekerjaanReducer,
   getAsalSekolah: getAsalSekolahReducer,
   getRefPekerjaan: getRefPekerjaanReducer,
+  updateStatusWizzard: updateStatusWizzardReducer,
   //END PELATIHAN
 
   //BERANDA
@@ -1007,6 +1593,7 @@ const reducer = combineReducers({
   detailBerandaBerita: detailBerandaBeritaReducer,
   kategoriBerandaBerita: kategoriBerandaBeritaReducer,
   allTagBerandaBerita: allTagBerandaBeritaReducer,
+  saveKategoriBerandaBerita: saveKategoriBerandaBeritaReducer,
 
   // ========== video ========
   allVideoContent: allVideoContentReducer,
@@ -1043,6 +1630,515 @@ const reducer = combineReducers({
   // TTE P12
   TTEP12Data: TTEP12DataReducer,
   sertifikatPeserta: sertifikatPesertaReducer,
+  dropdownHelpdesk: dropdownHelpdeskReducer,
+  CheckStatusSertifikat: CheckStatusSertifikatReducer,
+  // DASHBOARD KABADAN
+  // ============= DTS ============
+  digitalentTotalPengguna: digitalentTotalPenggunaReducer,
+  digitalentTotalDataPendaftar: digitalentTotalDataPendaftarReducer,
+  digitalentStatistikAkademiPendaftar:
+    digitalentStatistikAkademiPendaftarReducer,
+  digitalentTablePendaftaran: digitalentTablePendaftaranReducer,
+  digitalentPesertaWilayah: digitalentPesertaWilayahReducer,
+  digitalentStatistikAkademiPeserta: digitalentStatistikAkademiPesertaReducer,
+  digitalentStatistikMitraPendaftar: digitalentStatistikMitraPendaftarReducer,
+  digitalentStatistikMitraPeserta: digitalentStatistikMitraPesertaReducer,
+  digitalentProvinsiPeserta: digitalentProvinsiPesertaReducer,
+  digitalentProvinsiPendaftar: digitalentProvinsiPendaftarReducer,
+  digitalentDataPribadi: digitalentDataPribadiReducer,
+  // ============= BEASISWA ============
+  beasiswaTotalPengguna: beasiswaTotalPenggunaReducer,
+  beasiswaTotalPendaftar: beasiswaTotalPendaftarReducer,
+  beasiswaStatistikDalam: beasiswaStatistikDalamReducer,
+  beasiswaStatistikLuar: beasiswaStatistikLuarReducer,
+  beasiswaMapPendaftar: beasiswaMapPendaftarReducer,
+  beasiswaProvinsiPendaftar: beasiswaProvinsiPendaftarReducer,
+  beasiswaProvinsiAwardee: beasiswaProvinsiAwardeeReducer,
+  beasiswaUniversitasDalam: beasiswaUniversitasDalamReducer,
+  beasiswaUniversitasLuar: beasiswaUniversitasLuarReducer,
+  beasiswaAlumni: beasiswaAlumniReducer,
+  beasiswaAlumniAwardee: beasiswaAlumniAwardeeReducer,
+  allBeasiswaKandidat: allBeasiswaKandidatReducer,
+  allBeasiswaFilter: allBeasiswaFilterReducer,
+  beasiswaYear: beasiswaYearReducer,
+  // ============= SIMONAS ============
+  allSimonasKandidat: allSimonasKandidatReducer,
+  allSimonasFilterCompany: allSimonasFilterCompanyReducer,
+  allSimonasFilterStatus: allSimonasFilterStatusReducer,
+  simonasCompanyTotal: simonasCompanyTotalReducer,
+  simonasProjectTotal: simonasProjectTotalReducer,
+  simonasCompanyAmount: simonasCompanyAmountReducer,
+  simonasProjectAmount: simonasProjectAmountReducer,
+  simonasApplierTotal: simonasApplierTotalReducer,
+  simonasApplierTotalActive: simonasApplierTotalActiveReducer,
+  simonasApplierAmountJob: simonasApplierAmountJobReducer,
+  simonasApplierAmountProject: simonasApplierAmountProjectReducer,
+  simonasApplierAge: simonasApplierAgeReducer,
+  simonasApplierGender: simonasApplierGenderReducer,
+  simonasApplierEducationJob: simonasApplierEducationJobReducer,
+  simonasApplierEducationProject: simonasApplierEducationProjectReducer,
+  simonasRegionApplier: simonasRegionApplierReducer,
+  simonasFilterYear: simonasFilterYearReducer,
+  simonasFilterStatus: simonasFilterStatusReducer,
+  simonasProvinsiApplier: simonasProvinsiApplierReducer,
+  simonasProvinsiApplierRequired: simonasProvinsiApplierRequiredReducer,
+  // END DASHBOARD KABADAN
+
+  // PUBLIKASI
+  allArtikel: allArtikelReducer,
+  allArtikelsPeserta: allArtikelsPesertaReducer,
+  detailArtikelsPeserta: detailArtikelsPesertaReducer,
+  newArtikel: newArtikelReducer,
+  deleteArtikel: deleteArtikelReducer,
+  detailArtikel: detailArtikelReducer,
+  updatedArtikel: updateArtikelReducer,
+  cekLulusPelatihan: cekLulusPelatihanReducer,
+
+  allArtikelPeserta: allArtikelPesertaReducer,
+  newArtikelPeserta: newArtikelPesertaReducer,
+  deleteArtikelPeserta: deleteArtikelPesertaReducer,
+  detailArtikelPeserta: detailArtikelPesertaReducer,
+  updatedArtikelPeserta: updateArtikelPesertaReducer,
+
+  allBerita: allBeritaReducer,
+  newBerita: newBeritaReducer,
+  deleteBerita: deleteBeritaReducer,
+  detailBerita: detailBeritaReducer,
+  updatedBerita: updateBeritaReducer,
+
+  allImagetron: allImagetronReducer,
+  newImagetron: newImagetronReducer,
+  deleteImagetron: deleteImagetronReducer,
+  detailImagetron: detailImagetronReducer,
+  updatedImagetron: updateImagetronReducer,
+
+  allGaleri: allGaleriReducer,
+  newGaleri: newGaleriReducer,
+  detailGaleri: detailGaleriReducer,
+  deleteGaleri: deleteGaleriReducer,
+  updatedGaleri: updateGaleriReducer,
+  viewedGaleri: viewGaleriReducer,
+
+  allFaq: allFaqReducer,
+  newFaq: newFaqReducer,
+  paginationFaq: paginationFaqReducer,
+  deleteFaq: deleteFaqReducer,
+  detailFaq: detailFaqReducer,
+  updateFaq: updateFaqReducer,
+  updatePinFaq: updatePinFaqReducer,
+
+  allVideo: allVideoReducer,
+  newVideo: newVideoReducer,
+  deleteVideo: deleteVideoReducer,
+  detailVideo: detailVideoReducer,
+  updatedVideo: updateVideoReducer,
+  playedVideo: playVideoReducer,
+
+  allKategori: allKategoriReducer,
+  paginationKategori: paginationKategoriReducer,
+  newKategori: newKategoriReducer,
+  deleteKategori: deleteKategoriReducer,
+  detailKategori: detailKategoriReducer,
+  updateKategori: updateKategoriReducer,
+
+  allSettingPublikasi: allSettingPublikasiReducer,
+  updateSettingPublikasi: updateSettingPublikasiReducer,
+
+  allDashboardPublikasi: allDashboardPublikasiReducer,
+  allRoleAdminPublikasi: allRoleAdminPublikasiReducer,
+
+  allRolePermission: allRolePermissionReducer,
+
+  // allKategoriContent: kategoriVideoContentReducer,
+  // allTagContent: allTagReducer,
+  // playVideo: playVideoContentReducer,
+
+  // Subvit
+  // =============== substansi ==================
+  allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
+  permissionsSubvit: permissionsSubvitReducer,
+  newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
+  deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+  detailSubtanceQuestionBanks: detailSubtanceQuestionBanksReducer,
+  updateSubtanceQuestion: updateSubtanceQuestionReducer,
+  updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
+  allReportSubtanceQuestionBanks: allReportSubtanceQuestionBanksReducer,
+  newCloneSubtanceQuestionBanks: newCloneSubtanceQuestionBanksReducer,
+
+  allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
+  newSubtanceQuestionType: newSubtanceQuestionTypeReducer,
+  detailSubtanceQuestionType: detailSubtanceQuestionTypeReducer,
+  deleteSubtanceQuestionType: deleteSubtanceQuestionTypeReducer,
+  updateSubtanceQuestionType: updateSubtanceQuestionTypeReducer,
+
+  allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
+  randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
+
+  dashboardSubvit: getDashboardReducer,
+  postResultSubvit: postResultReducer,
+  newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+  detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
+  updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
+  deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
+  importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
+  importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
+  // =============== end substansi ==================
+
+  // =============== survey ==================
+  allSurveyQuestionBanks: allSurveyQuestionBanksReducer,
+  postResultSurveySubvit: postResultSurveyReducer,
+  newSurveyQuestionBanks: newSurveyQuestionBanksReducer,
+  deleteSurveyQuestionBanks: deleteSurveyQuestionBanksReducer,
+  detailSurveyQuestionBanks: detailSurveyQuestionBanksReducer,
+  updateSurveyQuestion: updateSurveyQuestionReducer,
+  updateSurveyQuestionBanksPublish: updateSurveyQuestionBanksPublishReducer,
+  allReportSurveyQuestionBanks: allReportSurveyQuestionBanksReducer,
+  randomSurvey: randomSurveyReducer,
+  allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
+  newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
+  deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
+  detailSurveyQuestionDetail: detailSurveyQuestionDetailReducer,
+  updateSurveyQuestionDetail: updateSurveyQuestionDetailReducer,
+  importFileSurveyQuestionDetail: importFileSurveyQuestionDetailReducer,
+  importImagesSurveyQuestionDetail: importImagesSurveyQuestionDetailReducer,
+  // =============== end substansi ==================
+
+  // =============== trivia ==================
+  randomTrivia: randomTriviaReducer,
+  postResultTriviaSubvit: postResultTriviaReducer,
+  allTriviaQuestionBanks: allTriviaQuestionBanksReducer,
+  newTriviaQuestionBanks: newTriviaQuestionBanksReducer,
+  deleteTriviaQuestionBanks: deleteTriviaQuestionBanksReducer,
+  detailTriviaQuestionBanks: detailTriviaQuestionBanksReducer,
+  updateTriviaQuestion: updateTriviaQuestionReducer,
+  updateTriviaQuestionBanksPublish: updateTriviaQuestionBanksPublishReducer,
+  allReportTriviaQuestionBanks: allReportTriviaQuestionBanksReducer,
+
+  allTriviaQuestionDetail: allTriviaQuestionDetailReducer,
+  newTriviaQuestionDetail: newTriviaQuestionDetailReducer,
+  deleteTriviaQuestionDetail: deleteTriviaQuestionDetailReducer,
+  detailTriviaQuestionDetail: detailTriviaQuestionDetailReducer,
+  updateTriviaQuestionDetail: updateTriviaQuestionDetailReducer,
+  importFileTriviaQuestionDetail: importFileTriviaQuestionDetailReducer,
+  importImagesTriviaQuestionDetail: importImagesTriviaQuestionDetailReducer,
+  // =============== end trivia ==================
+
+  // =============== sertifikat ==================
+  allCertificates: allSertifikatReducers,
+  newCertificates: newSertifikatReducer,
+  singleCertificate: singleSertifikatReducer,
+  detailCertificates: detailSertifikatReducer,
+  deleteCertificates: deleteSertifikatReducer,
+  updateCertificates: updateSertifikatReducer,
+  publishCertificate: publishedSertifikatReducer,
+  allParticipant: allPesertaReducers,
+  detailParticipant: detailPesertaReducer,
+  allAcademy: allAcademyOptionsReducer,
+  allTheme: allThemeOptionsReducer,
+  // =============== end sertifikat ==================
+
+  // PARTNERSHIP
+  // ================================= => admin
+  // kerjasama mitra
+  allMitra: allMitraReducer,
+  // category management kerjasama
+  allMKCooporation: allMKCooporationReducer,
+  // management kerjasama
+  allMK: allMCooporationReducerMK,
+  // tanda tangan
+  allTandaTangan: allTandaTanganReducer,
+  // dashboard
+  allDashboard: dashboardReducer,
+  // permission
+  partnershipPermissions: partnershipPermissionsReducer,
+
+  // ================================= => user
+  allCooperationUser: cooperationUserReducer,
+  allTandaTanganUser: allTandaTanganUserReducer,
+  allProvinsi: allProvinsiReducer,
+  allKota: allKotaReducer,
+  allFunctionls: reducerFunctionals,
+  allAuthentication: authenticationReducer,
+
+  // SITE MANAGEMENT
+  // ============ PAGE =======
+  allPage: allPageReducer,
+  deletePage: deletePageReducer,
+  newPage: newPageReducer,
+  detailPage: detailPageReducer,
+  updatePage: updatePageReducer,
+  listApi: listApiReducer,
+  listField: listFieldReducer,
+  listLog: listLogReducer,
+  // ============ PAGE =======
+  allProvincesSite: allProvincesSiteReducer,
+  allOptionReferenceSite: allOptionReferenceSiteReducer,
+  // ============ API =======
+  allApi: allApiReducer,
+  deleteApi: deleteApiReducer,
+  newApi: newApiReducer,
+  detailApi: detailApiReducer,
+  updateApi: updateApiReducer,
+  // ============ MITRA SITE =======
+  allMitraSite: allMitraSiteReducer,
+  newMitraSite: newMitraSiteReducer,
+  detailMitraSite: detailMitraSiteReducer,
+  updateMitraSite: updateMitraSiteReducer,
+  // ============ ADMIN SITE =======
+  allAdminSite: allAdminSiteReducer,
+  newAdminSite: newAdminSiteReducer,
+  updateAdminSite: updateAdminSiteReducer,
+  detailAdminSite: detailAdminSiteReducer,
+  deleteAdminSite: deleteAdminSiteReducer,
+  allUnitWorkList: allUnitWorkListReducer,
+  allRolesList: allRolesListReducer,
+  allAcademyList: allAcademyListReducer,
+  allListPelatihan: allListPelatihanReducer,
+  allListPelatihanByPeserta: allListPelatihanByPesertaReducer,
+  allListPelatihanPagination: allListPelatihanPaginationReducer,
+  editAdminSite: editAdminSiteReducer,
+
+  // ============ DATA REFERENCE =======
+  allDataReference: allDataReferenceReducer,
+  deleteDataReference: deleteDataReferenceReducer,
+  newDataReference: newDataReferenceReducer,
+  detailDataReference: detailDataReferenceReducer,
+  updateDataReference: updateDataReferenceReducer,
+  // ============ GENERAL =======
+  allGeneral: allGeneralReducer,
+  deleteGeneral: deleteGeneralReducer,
+  newGeneral: newGeneralReducer,
+  detailGeneral: detailGeneralReducer,
+  updateGeneral: updateGeneralReducer,
+  allDataGeneral: allDataGeneralReducer,
+  // ============ DATA ZONASI =======
+  allZonasi: allZonasiReducer,
+  deleteZonasi: deleteZonasiReducer,
+  newZonasi: newZonasiReducer,
+  detailZonasi: detailZonasiReducer,
+  updateZonasi: updateZonasiReducer,
+  // ============ UNIT WORK =======
+  allUnitWork: allUnitWorkReducer,
+  deleteUnitWork: deleteUnitWorkReducer,
+  newUnitWork: newUnitWorkReducer,
+  detailUnitWork: detailUnitWorkReducer,
+  updateUnitWork: updateUnitWorkReducer,
+  // ============ ROLE =======
+  allRoles: allRolesReducer,
+  newRoles: newRolesReducer,
+  detailRoles: detailRolesReducer,
+  updateRoles: updateRolesReducer,
+  deleteRoles: deleteRolesReducer,
+  allPermission: allPermissionReducer,
+  allSidebar: allSidebarReducer,
+  updateStatusAdmin: updateStatusAdminReducer,
+  // ============ PELATIHAN =======
+  allPrompt: allPromptReducer,
+  // ============ Dashboatd =======
+  allDataZonasi: allDataZonasiReducer,
+  allDataPeserta: allDataPesertaReducer,
+  allDataListZonasi: allDataListZonasiReducer,
+  // ============ Export Data =======
+  allExportData: allExportDataReducer,
+  detailExportData: detailExportDataReducer,
+  updateExportData: updateExportDataReducer,
+  deleteExportData: deleteExportDataReducer,
+  allListPeserta: allListPesertaReducer,
+  allDetailPeserta: allDetailPesertaReducer,
+  filterExportData: filterExportDataReducer,
+  // END SITE MANAGEMENT
+
+  //PELATIHAN
+  // ========== akademi ===========
+  allAcademy: allAcademyReducer,
+  newAcademy: newAcademyReducer,
+  detailAcademy: detailAcademyReducer,
+  updateAcademy: updateAcademyReducer,
+  deleteAcademy: deleteAcademyReducer,
+  // ========== tema ===========
+  allTheme: allThemeReducer,
+  newTheme: newThemeReducer,
+  detailTheme: detailThemeReducer,
+  updateTheme: updateThemeReducer,
+  deleteTheme: deleteThemeReducer,
+  // ========== pelatihan ===========
+  allTraining: allTrainingReducer,
+  cardTraining: cardTrainingReducer,
+  newTraining: newTrainingReducer,
+  deleteTraining: deleteTrainingReducer,
+  getEditTraining: getEditTrainingReducer,
+  getEditTraining2: getEditTraining2Reducer,
+  getEditTraining3: getEditTrainingReducer,
+  getFormLPJ: getFormLPJReducer,
+  newLPJ: newLPJReducer,
+  getFormEvidence: getFormEvidenceReducer,
+  cloneTraining: cloneTrainingReducer,
+  updateTraining: updateTrainingReducer,
+  // ========== review pelatihan ========
+  allListReview: allListReviewReducer,
+  cardReview: cardReviewReducer,
+  listRevisi: listRevisiReducer,
+  getReviewStep1: getReviewStep1Reducer,
+  getReviewStep2: getReviewStep2Reducer,
+  getReviewStep3: getReviewStep3Reducer,
+  getReviewStep4: getReviewStep4Reducer,
+  revisiReview: revisiReviewReducer,
+  tolakReview: tolakReviewReducer,
+
+  // ========== rekap pelatihan ========
+  allSummary: allSummaryReducer,
+  updateStatusPeserta: updateStatusPesertaReducer,
+  updateReminder: updateReminderReducer,
+  getAkademiByPelatihan: getAkademiByPelatihanReducer,
+  getPendaftaranPeserta: getPendaftaranPesertaReducer,
+  getStatusPendaftar: getStatusPendaftarReducer,
+  getReminderBerkas: getReminderBerkasReducer,
+  getDataPribadiRow: getDataPribadiRowReducer,
+  getRiwayatPelatihan: getRiwayatPelatihanReducer,
+  getBerkasPendaftaran: getBerkasPendaftaranReducer,
+  getFormKomitmen: getFormKomitmenReducer,
+  getFormLpj: getFormLpjReducer,
+
+  // =============== rpoert oelatihan ========
+  getDataReportTraining: getDataReportTrainingReducer,
+  detailReportTraining: detailReportTrainingReducer,
+
+  // ========== pendaftaran pelatihan ========
+  getFormBuilder: getFormBuilderReducer,
+  getPelatihan: getPelatihanReducer,
+  newPendaftaranPelatihan: newPendaftaranPelatihanReducer,
+  formRegister: formRegisterReducer,
+
+  getDataPribadi: getDataPribadiReducer,
+  trainingStep1: trainingStep1Reducer,
+  registrationStep2: registrationStep2Reducer,
+  commitmentStep3: commitmentStep3Reducer,
+
+  dashboardPeserta: dashboardPesertaReducer,
+
+  // ======= dropdown ==========
+  drowpdownAkademi: drowpdownAkademiReducers,
+  drowpdownTema: drowpdownTemaReducers,
+  drowpdownTemabyAkademi: drowpdownTemabyAkademiReducers,
+  drowpdownPelatihan: drowpdownPelatihanReducers,
+  drowpdownPelatihanbyTema: drowpdownPelatihanbyTemaReducers,
+  drowpdownAgama: drowpdownAgamaReducers,
+  drowpdownPendidikan: drowpdownPendidikanReducers,
+  drowpdownStatusPekerjaan: drowpdownStatusPekerjaanReducers,
+  drowpdownLevelPelatihan: drowpdownLevelPelatihanReducers,
+  drowpdownMitra: drowpdownMitraReducers,
+  drowpdownZonasi: drowpdownZonasiReducers,
+  drowpdownProvinsi: drowpdownProvinsiReducers,
+  drowpdownKabupaten: drowpdownKabupatenReducers,
+  drowpdownTempatLahir: drowpdownTempatLahirReducers,
+  drowpdownKabupatenDomisili: drowpdownKabupatenDomisiliReducers,
+  drowpdownProvinsiToDesa: drowpdownProvinsiToDesaReducers,
+  drowpdownKecamatanToDesa: drowpdownKecamatanToDesaReducers,
+  drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
+  drowpdownFormBuilder: drowpdownFormBuilderReducers,
+  updateStatus: updateStatusReducer,
+  drowpdownYear: drowpdownYearReducers,
+  drowpdownHubungan: drowpdownHubunganReducers,
+  drowpdownStatusMenikah: drowpdownStatusMenikahReducers,
+
+  // ========== profile peserta ========
+  dataAlamat: dataAlamatReducer,
+  dataPendidikan: dataPendidikanReducer,
+  dataKeterampilan: dataKeterampilanReducer,
+  dataPekerjaan: dataPekerjaanReducer,
+  updateDataPribadi: updateDataPribadiReducer,
+  updateAlamat: updateAlamatReducer,
+  updatePendidikan: updatePendidikanReducer,
+  updateKeterampilan: updateKeterampilanReducer,
+  updatePekerjaan: updatePekerjaanReducer,
+  getAsalSekolah: getAsalSekolahReducer,
+  getRefPekerjaan: getRefPekerjaanReducer,
+  updateStatusWizzard: updateStatusWizzardReducer,
+  //END PELATIHAN
+
+  //BERANDA
+  // ========== beranda ========
+  addNotifTema: addNotifTemaReducer,
+  allAkademi: allAkademiReducer,
+  allPenyelenggaraPeserta: allPenyelenggaraPesertaReducer,
+  allPenyelenggaraPage: allPenyelenggaraPageReducer,
+  allKotaPeserta: allKotaPesertaReducer,
+  temaByAkademi: temaByAkademiReducer,
+  pelatihanByTema: pelatihanByTemaReducer,
+  allPublikasiBeranda: allPublikasiBerandaReducer,
+  berandaFooter: berandaFooterReducer,
+  allTemaOriginal: allTemaOriginalReducer,
+  berandaFooterPeserta: berandaFooterPesertaReducer,
+
+  // ========== detail akademi ========
+  detailAkademi: detailAkademiReducer,
+  allPelatihan: allPelatihanReducer,
+
+  // ========== detail pelatihan ========
+  detailPelatihan: detailPelatihanReducer,
+  checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
+
+  // ========== artikel ========
+  allBerandaArtikel: allBerandaArtikelReducer,
+  detailBerandaArtikel: detailBerandaArtikelReducer,
+  kategoriBerandaArtikel: kategoriBerandaArtikelReducer,
+  allTagBerandaArtikel: allTagBerandaArtikelReducer,
+
+  // ========== galeri ========
+  allBerandaGaleri: allBerandaGaleriReducer,
+  detailBerandaGaleri: detailBerandaGaleriReducer,
+  kategoriBerandaGaleri: kategoriBerandaGaleriReducer,
+  allTagBerandaGaleri: allTagBerandaGaleriReducer,
+
+  // ========== berita ========
+  allBerandaBerita: allBerandaBeritaReducer,
+  detailBerandaBerita: detailBerandaBeritaReducer,
+  kategoriBerandaBerita: kategoriBerandaBeritaReducer,
+  allTagBerandaBerita: allTagBerandaBeritaReducer,
+  saveKategoriBerandaBerita: saveKategoriBerandaBeritaReducer,
+
+  // ========== video ========
+  allVideoContent: allVideoContentReducer,
+  detailBerandaVideo: detailBerandaVideoReducer,
+  kategoriVideoContent: kategoriVideoContentReducer,
+  allTagVideoContent: allTagVideoContentReducer,
+  playVideoContent: playVideoContentReducer,
+
+  // ========== faq ========
+  allFaqContent: allFaqContentReducer,
+  kategoriBerandaFaq: kategoriBerandaFaqReducer,
+  //END BERANDA
+
+  // ========== Riwayat Pelatihan ========
+  getAllRiwayatPelatihanPeserta: getAllRiwayatPelatihanPesertaReducer,
+  getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,
+  allBeasiswa: allBeasiswaReducer,
+  allSimonas: allSimonasReducer,
+
+  // ========== Master Pelatihan ========
+  getAllMasterPelatihan: allMasterPelatihanListReducer,
+  deleteMasterPelatihan: deleteMasterPelatihanReducer,
+  getDetailMasterPelatihan: detailMasterPelatihanReducer,
+  getDetailMasterCopyEditPelatihan: detailMasterCopyEditPelatihanReducer,
+  newMasterPelatihan: newMasterTrainingReducer,
+  updateMasterPelatihan: updateMasterPelatihanReducer,
+  updateStatusMaster: updateStatusMasterReducer,
+
+  allBookmark: getAllBookmarkPesertaReducer,
+
+  adminPermission: adminPermissionReducer,
+  allPencarian: allPencarianReducer,
+
+  // TTE P12
+  TTEP12Data: TTEP12DataReducer,
+  sertifikatPeserta: sertifikatPesertaReducer,
+  dropdownHelpdesk: dropdownHelpdeskReducer,
+  CheckStatusSertifikat: CheckStatusSertifikatReducer,
+
+  //clone sertifikat
+  optionsAcademyCloneSertifikat: allOptionsAcademyCloneSertifikatReducer,
+  optionsThemeCloneSertifikat: allOptionsThemeCloneSertifikatReducer,
+  optionsTrainingCloneSertifikat: allOptionsTrainingCloneSertifikatReducer,
 });
 
 export default reducer;

@@ -1,16 +1,28 @@
+import dynamic from "next/dynamic";
 import Layout from "/components/templates/layout.component";
-import Report from "../../../../components/content/subvit/substansi/report";
+// import Report from "../../../../components/content/subvit/substansi/report";
 import { allReportSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+
+const Report = dynamic(
+  () => import("../../../../components/content/subvit/substansi/report"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ReportPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Report token={session.token} />
+        <Report token={session.token} tokenPermission={props.permission} />
       </div>
     </>
   );
@@ -20,14 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
-            permanent: false,
-          },
-        };
-      }
+
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {
@@ -55,7 +60,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Report Bank Soal Test Substansi - Subvit" },
+        props: {
+          session,
+          title: "Report Bank Soal Test Substansi - Subvit",
+          permission,
+        },
       };
     }
 );

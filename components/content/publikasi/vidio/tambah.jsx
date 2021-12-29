@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
+import moment from "moment";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from 'react-datepicker'
 
@@ -377,8 +378,8 @@ const TambahVidio = ({ token, id }) => {
                                             <option value="">Data Kosong</option>
                                         ) : (
                                             kategori &&
-                                            kategori.kategori &&
-                                            kategori.kategori.map((row) => {
+                                            kategori?.kategori &&
+                                            kategori?.kategori?.map((row) => {
                                                 return (
                                                     row.jenis_kategori == "Video" ?
                                                         <option key={row.id} value={row.id}>
@@ -427,7 +428,7 @@ const TambahVidio = ({ token, id }) => {
                             </div>
 
                             {
-                                role_permission.roles[0] !== "Super Admin" ? null
+                                role_permission?.roles[0] !== "Super Admin" ? null
                                     :
                                     <div className="form-group row">
                                         <label

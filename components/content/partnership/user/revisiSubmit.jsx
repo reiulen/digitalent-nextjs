@@ -5,6 +5,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const RevisiSubmit = ({token}) => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const RevisiSubmit = ({token}) => {
       cancelButtonColor: "#d33",
       cancelButtonText: "Tidak",
       confirmButtonText: "Ya",
-      dismissOnDestroy: false,
+      // dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
         let formData = new FormData();
@@ -51,6 +52,7 @@ const RevisiSubmit = ({token}) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                Permission: Cookies.get("token_permission")
               },
             }
           );
@@ -62,7 +64,7 @@ const RevisiSubmit = ({token}) => {
           
 
         } catch (error) {
-          Swal.fire("Gagal", `${error.response.data.message}`, "error")
+          Swal.fire("Gagal", `${error?.response?.data?.message}`, "error")
         }
       }
     });
@@ -80,49 +82,52 @@ const RevisiSubmit = ({token}) => {
   };
 
   useEffect(() => {
-    async function setDataSingle(id,version) {
-      try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/show-revisi/${id}/${version}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setTitle(data.data.title);
-      setDate(data.data.date);
-      setCooperationID(data.data.cooperation_category);
-      setPeriod(data.data.period);
-      setPeriodUnit(data.data.period_unit);
-      setAllCooperation(data.data.cooperation_category.data_content);
-      setNote(data.data.note);
-    } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error")
-    }
-    }
-
-    async function getLengthListCard(id) {
-      try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/card-review/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setLengthListCard(data.data.length - 1)
-    } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error")
-    }
-      
-    }
     setDataSingle(router.query.id,router.query.version);
     setInformation2(router.query.information2)
     getLengthListCard(router.query.id)
     setIndexCard(router.query.index)
   }, [router.query.id,router.query.version,router.query.information2,router.query.index,token]);
+
+  async function setDataSingle(id,version) {
+    try {
+    let { data } = await axios.get(
+      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/show-revisi/${id}/${version}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission")
+        },
+      }
+    );
+    setTitle(data.data.title);
+    setDate(data.data.date);
+    setCooperationID(data.data.cooperation_category);
+    setPeriod(data.data.period);
+    setPeriodUnit(data.data.period_unit);
+    setAllCooperation(data.data.cooperation_category.data_content);
+    setNote(data.data.note);
+  } catch (error) {
+    Swal.fire("Gagal", `${error.response.data.message}`, "error")
+  }
+  }
+
+  async function getLengthListCard(id) {
+    try {
+    let { data } = await axios.get(
+      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/card-review/${id}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          Permission: Cookies.get("token_permission")
+        },
+      }
+    );
+    setLengthListCard(data.data.length - 1)
+  } catch (error) {
+    Swal.fire("Gagal", `${error.response.data.message}`, "error")
+  }
+    
+  }
 
   return (
     <PageWrapper>
@@ -135,8 +140,7 @@ const RevisiSubmit = ({token}) => {
           <div className="card-body pt-0">
             <div className="row mt-8 mb-10 relative-progress">
               <div className="col-2 p-0">
-                <div className="progress-items">
-                  <div className="line-progress"></div>
+              <div className="progress-items">
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>

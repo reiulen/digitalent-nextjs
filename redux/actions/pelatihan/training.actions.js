@@ -83,6 +83,7 @@ import {
   FAIL_STATUS_PELATIHAN,
   GET_EDIT_DATA_TRAINING,
   GET_EDIT_DATA_TRAINING2,
+  REQUEST_EDIT_DATA_TRAINING2,
   GET_EDIT_DATA_TRAINING3,
   GET_FORM_LPJ,
   GET_FORM_EVIDENCE,
@@ -90,6 +91,7 @@ import {
 } from "../../types/pelatihan/training.type";
 
 import axios from "axios";
+import Swal from "sweetalert2";
 
 //ALL TRAINING
 export const getAllTraining =
@@ -104,8 +106,10 @@ export const getAllTraining =
     penyelenggara,
     akademi,
     tema,
+    status_publish,
     token,
-    whereIn = null
+    whereIn = null,
+    token_permission = ""
   ) =>
   async (dispatch) => {
     try {
@@ -127,11 +131,14 @@ export const getAllTraining =
       if (penyelenggara) link = link.concat(`&penyelenggara=${penyelenggara}`);
       if (akademi) link = link.concat(`&akademi=${akademi}`);
       if (tema) link = link.concat(`&tema=${tema}`);
+      if (status_publish)
+        link = link.concat(`&status_publish=${status_publish}`);
       if (whereIn) link = link.concat(`&WhereInPelatihan=${whereIn}`);
 
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -151,30 +158,32 @@ export const getAllTraining =
 //END ALL TRAINING
 
 //CARD TRAINING
-export const getCardTraining = (token) => async (dispatch) => {
-  try {
-    let link =
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/list-count`;
+export const getCardTraining =
+  (token, token_permission) => async (dispatch) => {
+    try {
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/list-count`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          // Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: CARD_TRAINING_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: CARD_TRAINING_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: CARD_TRAINING_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: CARD_TRAINING_FAIL,
+        payload: error,
+      });
+    }
+  };
 //END CARD REVIEW
 
 //DETAIL TRAINING
@@ -471,33 +480,35 @@ export const updateTrainingStep3 =
 //END UPDATE TRAINING
 
 //DELETE TRAINING
-export const deleteTraining = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_TRAINING_REQUEST });
+export const deleteTraining =
+  (id, token, token_permission) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_TRAINING_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        Permission: token_permission,
+      };
 
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_PELATIHAN +
-        `api/v1/pelatihan/pelatihan-delete?pelatian_id=${id}`,
-      config
-    );
+      const { data } = await axios.delete(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/pelatihan/pelatihan-delete?pelatian_id=${id}`,
+        config
+      );
 
-    dispatch({
-      type: DELETE_TRAINING_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_TRAINING_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DELETE_TRAINING_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_TRAINING_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 //END DELETE TRAINING
 
 //DETAIL LPJ
@@ -621,72 +632,77 @@ export const addEvidence = (dataEvidence, token) => async (dispatch) => {
 //END ADD EVIDENCE
 
 //CLONE TRAINING
-export const cloneTrainingAction = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: CLONE_TRAINING_REQUEST });
+export const cloneTrainingAction =
+  (id, token, token_permission) => async (dispatch) => {
+    try {
+      dispatch({ type: CLONE_TRAINING_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        Permission: token_permission,
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/clone-pelatihan`,
-      {
-        pelatian_id: parseInt(id),
-      },
-      config
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/pelatihan/clone-pelatihan`,
+        {
+          pelatian_id: parseInt(id),
+        },
+        config
+      );
 
-    dispatch({
-      type: CLONE_TRAINING_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: CLONE_TRAINING_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: CLONE_TRAINING_SUCCESS,
+        payload: data.status,
+      });
+    } catch (error) {
+      dispatch({
+        type: CLONE_TRAINING_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 //END CLONE TRAINING
 
 //UPDATE STATUS PUBLISH
-export const updateStatusPublish = (dataStatus, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: REQUEST_STATUS_PUBLISH,
-    });
+export const updateStatusPublish =
+  (dataStatus, token, token_permission) => async (dispatch) => {
+    try {
+      dispatch({
+        type: REQUEST_STATUS_PUBLISH,
+      });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        Permission: token_permission,
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN +
-        "api/v1/pelatihan/update-status-publish",
-      dataStatus,
-      config
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN +
+          "api/v1/pelatihan/update-status-publish",
+        dataStatus,
+        config
+      );
 
-    dispatch({
-      type: UPDATE_STATUS_PUBLISH,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: FAIL_STATUS_PUBLISH,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: UPDATE_STATUS_PUBLISH,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: FAIL_STATUS_PUBLISH,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 //UPDATE STATUS PELATIHAN
 export const updateStatusPelatihan =
-  (dataStatus, token) => async (dispatch) => {
+  (dataStatus, token, token_permission) => async (dispatch) => {
     try {
       dispatch({
         type: REQUEST_STATUS_PELATIHAN,
@@ -696,6 +712,7 @@ export const updateStatusPelatihan =
         headers: {
           Authorization: "Bearer " + token,
         },
+        Permission: token_permission,
       };
 
       const { data } = await axios.post(
@@ -749,6 +766,9 @@ export const getEditTrainingStep1 = (id, token) => async (dispatch) => {
 
 export const getEditTrainingStep2 = (id, token) => async (dispatch) => {
   try {
+    dispatch({
+      type: REQUEST_EDIT_DATA_TRAINING2,
+    });
     let link =
       process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-dua`;
 
@@ -824,6 +844,8 @@ export const putTrainingStep2 = (token, datas) => async (dispatch) => {
     };
 
     await axios.post(link, datas, config);
+
+    window.location.href = `/pelatihan/pelatihan/edit-pelatihan/edit-form-komitmen?id=${datas.Pelatian_id}`;
   } catch (error) {
     throw error;
   }

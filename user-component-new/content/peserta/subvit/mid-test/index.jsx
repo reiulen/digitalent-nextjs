@@ -38,8 +38,12 @@ const SubtansiUser = ({ token }) => {
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
+  const [zoom, setZoom] = useState(false);
+  const [zoomJawab, setZoomJawab] = useState(false);
+  const [imageClick, setImageClick] = useState("");
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
+  const [close, setClose] = useState(0);
 
   const [count, setCount] = useState(
     random_subtance_question_detail && random_subtance_question_detail.time_left
@@ -181,6 +185,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
+    setClose(1);
     const setData = {
       list: JSON.stringify(
         data.list_questions.map((item, index) => {
@@ -283,8 +288,21 @@ const SubtansiUser = ({ token }) => {
                         alt=""
                         width={150}
                         height={150}
+                        onClick={() => setZoom(true)}
                       />
                     </div>
+                    <Modal show={zoom} onHide={() => setZoom(false)}>
+                      <Image
+                        src={
+                          process.env.END_POINT_API_IMAGE_SUBVIT +
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question_image || defaultImage
+                        }
+                        alt=""
+                        width={400}
+                        height={800}
+                      />
+                    </Modal>
                     <div className="p-5">
                       {data &&
                         data.list_questions[parseInt(router.query.id) - 1]
@@ -316,8 +334,26 @@ const SubtansiUser = ({ token }) => {
                               alt=""
                               width={70}
                               height={70}
+                              onClick={() => setZoom(true)}
                             />
                           </div>
+                          <Modal
+                            show={zoomJawab}
+                            onHide={() => {
+                              setZoomJawab(false);
+                              setImageClick(item.image);
+                            }}
+                          >
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  imageClick || defaultImage
+                              }
+                              alt=""
+                              width={500}
+                              height={800}
+                            />
+                          </Modal>
                           <div
                             className="p-4"
                             style={{ width: "100%", height: "100%" }}
@@ -714,7 +750,11 @@ const SubtansiUser = ({ token }) => {
             >
               Batal
             </Button>
-            <Button onClick={handlePage} className={styles.btnMulai}>
+            <Button
+              onClick={handlePage}
+              className={styles.btnMulai}
+              disabled={close === 1}
+            >
               Selesai
             </Button>
           </div>

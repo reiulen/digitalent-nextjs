@@ -20,7 +20,7 @@ import StepInput from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
 import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
-const StepTwo = ({ token }) => {
+const StepTwo = ({ token, tokenPermission }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -50,15 +50,15 @@ const StepTwo = ({ token }) => {
   }, [dispatch, error, success, router]);
 
   const [startDate, setStartDate] = useState(
-    subtance.start_at ? new Date(subtance.start_at) : new Date(Date.now())
+    subtance?.start_at ? new Date(subtance.start_at) : new Date(Date.now())
   );
   const [endDate, setEndDate] = useState(
-    subtance.end_at ? new Date(subtance.end_at) : new Date(Date.now())
+    subtance?.end_at ? new Date(subtance.end_at) : new Date(Date.now())
   );
-  const [duration, setDuration] = useState(subtance.duration);
-  const [jumlah_soal, setJumlahSoal] = useState(subtance.questions_to_share);
-  const [passing_grade, setPassingGrade] = useState(subtance.passing_grade);
-  const [status, setStatus] = useState(subtance.status || false);
+  const [duration, setDuration] = useState(subtance?.duration);
+  const [jumlah_soal, setJumlahSoal] = useState(subtance?.questions_to_share);
+  const [passing_grade, setPassingGrade] = useState(subtance?.passing_grade);
+  const [status, setStatus] = useState(subtance?.status || 0);
   const [, forceUpdate] = useState();
 
   const saveDraft = () => {
@@ -77,14 +77,12 @@ const StepTwo = ({ token }) => {
       };
 
       dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
+      localStorage.removeItem("clone1");
+      localStorage.removeItem("clone3");
+      localStorage.removeItem("clone");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -101,19 +99,18 @@ const StepTwo = ({ token }) => {
         end_at,
         duration,
         passing_grade,
-        status: false,
+        status: status,
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
+      dispatch(
+        updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
+      );
+      localStorage.removeItem("clone1");
+      localStorage.removeItem("clone3");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
     }
   };
 
@@ -172,11 +169,34 @@ const StepTwo = ({ token }) => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="3"></StepInput>
+          <StepInput step="4"></StepInput>
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Publish Soal Cloning</h2>
+            <h2 className="card-title h2 text-dark">
+              Publish Hasil Clone Soal Test Substansi
+            </h2>
           </div>
           <div className="card-body pt-0">
+            <h4 className="mt-2">
+              <b>{subtance?.training?.name}</b>
+            </h4>
+            <table>
+              <tr>
+                <td>Tanggal Pendaftaran &nbsp;</td>
+                <td>: &nbsp;</td>
+                <td>
+                  {subtance?.pendaftaran_mulai} &nbsp; s.d. &nbsp;
+                  {subtance?.pendaftaran_selesai}{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>Tanggal Pelatihan </td>
+                <td> : </td>{" "}
+                <td>
+                  {subtance?.pelatihan_mulai} &nbsp; s.d. &nbsp;{" "}
+                  {subtance?.pelatihan_selesai}{" "}
+                </td>
+              </tr>
+            </table>
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
@@ -335,7 +355,7 @@ const StepTwo = ({ token }) => {
                       type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
-                      placeholder="80.00"
+                      placeholder="80"
                       value={passing_grade}
                       onChange={(e) => handlePassingGrade(e.target.value)}
                       onBlur={() =>
@@ -374,18 +394,18 @@ const StepTwo = ({ token }) => {
                     id=""
                     className="form-control"
                     value={status}
-                    disabled
                     onChange={(e) => setStatus(e.target.value)}
                     onBlur={(e) => {
                       setStatus(e.target.value);
                       simpleValidator.current.showMessageFor("status");
                     }}
                   >
-                    <option value={false}> Draft </option>
+                    <option value={1}> Publish </option>
+                    <option value={0}> Draft </option>
                   </select>
                   {simpleValidator.current.message(
                     "status",
-                    passing_grade,
+                    status,
                     "required",
                     { className: "text-danger" }
                   )}
@@ -394,6 +414,17 @@ const StepTwo = ({ token }) => {
 
               <div className="row">
                 <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
+                  <button
+                    className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    type="button"
+                    onClick={() => {
+                      router.push(
+                        `/subvit/substansi/clone/step-3?id=${router.query.id}`
+                      );
+                    }}
+                  >
+                    Kembali
+                  </button>
                   <div className="float-right ">
                     <div className={styles.foldResponsive}>
                       <button
@@ -405,7 +436,16 @@ const StepTwo = ({ token }) => {
                       </button>
                     </div>
                     <div className={`${styles.normalBtn} row`}>
-                      <div className="col-xs-6"></div>
+                      <div className="col-xs-6">
+                        {" "}
+                        <button
+                          className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                          type="button"
+                          onClick={onSubmit}
+                        >
+                          Simpan & Lanjut
+                        </button>
+                      </div>
                       <div className="col-xs-6">
                         <button
                           className={` btn btn-primary-rounded-full`}

@@ -2,14 +2,15 @@ import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../../components/template/Footer.component";
 import styles from "./formLpj.module.css";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { getBerandaFooter } from "../../../../redux/actions/beranda/beranda.actions";
 import moment from "moment";
 import "moment/locale/id";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import axios from "axios";
-
+import { useRouter } from "next/router";
 const FormLPJ = ({ token }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const { dataPribadi } = useSelector((state) => state.getDataPribadi);
@@ -18,6 +19,17 @@ const FormLPJ = ({ token }) => {
 
   const { pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
+  );
+
+  // let initial =
+
+  const [initial, setInitial] = useState(
+    dataLPJ?.map((item, index) => {
+      return {
+        ...item,
+        value: "0",
+      };
+    })
   );
 
   const [konfirmasi, setKonfirmasi] = useState("0");
@@ -38,8 +50,14 @@ const FormLPJ = ({ token }) => {
   };
 
   const handleLPJ = (e, i) => {
-    setIdx(i);
-    e.target.checked === true ? setValue("1") : setValue("0");
+    setInitial(
+      initial?.filter((it, id) => {
+        if (id == i) {
+          it.value = e.target.checked ? "1" : "0";
+        }
+        return it;
+      })
+    );
   };
 
   const handlePost = () => {
@@ -56,19 +74,34 @@ const FormLPJ = ({ token }) => {
       pelatian_id: dataTraining.id,
       menyetujui: konfirmasi,
       saran: saran,
-      form_lpj: dataLPJ.map((item, index) => {
-        if (index === idx) {
-          return { ...item, value: value };
-        } else {
-          return { ...item, value: "0" };
-        }
-      }),
+      form_lpj: initial,
     };
 
-    axios
-      .post(link, setData, config)
-      .then((res) => SweatAlert("Berhasil", res.data.data.message, "success"))
-      .catch((err) => SweatAlert("Gagal", err.response.data.message, "error"));
+    Swal.fire({
+      title: "Apakah Anda Yakin ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Iya",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post(link, setData, config)
+          .then((res) => {
+            SweatAlert("Berhasil", res.data.data.message, "success");
+            router.push("/peserta/riwayat-pelatihan");
+          })
+          .catch((err) => {
+            SweatAlert("Gagal", err.response.data.message, "error");
+          });
+      }
+    });
+  };
+
+  const handleBack = () => {
+    router.push("/peserta/riwayat-pelatihan");
   };
 
   return (
@@ -172,26 +205,37 @@ const FormLPJ = ({ token }) => {
             </Row>
             <hr />
             <h1 className={styles.subTitle}>Pelaksanaan Kegiatan</h1>
+
             <table>
               <tr>
                 <td className={styles.tableLabel}>No</td>
                 <td
                   className={styles.tableLabel}
-                  style={{ textAlign: "center" }}
+                  style={{
+                    textAlign: "left",
+                    width: "100%",
+                    paddingLeft: "40px",
+                  }}
                 >
                   Uraian
                 </td>
                 <td className={styles.tableLabel}>Checklist</td>
               </tr>
               {dataLPJ &&
-                dataLPJ.map((item, index) => {
+                dataLPJ?.map((item, index) => {
                   return (
                     <>
                       <tr>
                         <td className={styles.numberTable}>{index + 1}</td>
-                        <td className={styles.contentTable}>{item.name}</td>
+                        <td
+                          className={styles.contentTable}
+                          style={{ paddingLeft: "40px" }}
+                        >
+                          {item.name}
+                        </td>
                         <td className={styles.checkbox}>
                           <input
+                            name={index}
                             type="checkbox"
                             onChange={(event) => handleLPJ(event, index)}
                           />
@@ -201,6 +245,7 @@ const FormLPJ = ({ token }) => {
                   );
                 })}
             </table>
+
             <hr />
             <h1 className={styles.subTitle}>
               Saran/Rekomendasi Pelaksanaan Kegiatan
@@ -231,13 +276,23 @@ const FormLPJ = ({ token }) => {
               </table>
             </p>
             <div style={{ textAlign: "right" }}>
-              <Button className={styles.btnBack} variant="link">
+              <Button
+                className={styles.btnBack}
+                variant="link"
+                onClick={handleBack}
+              >
                 Kembali
               </Button>
               <Button
                 className={styles.btnSend}
                 onClick={handlePost}
                 disabled={konfirmasi !== "1" || saran === ""}
+                style={{
+                  cursor:
+                    konfirmasi !== "1" || saran === ""
+                      ? "not-allowed"
+                      : "pointer",
+                }}
               >
                 Kirim
               </Button>

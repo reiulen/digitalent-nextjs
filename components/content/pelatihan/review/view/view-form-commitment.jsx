@@ -16,10 +16,14 @@ import {
   REVISI_REVIEW_RESET,
   TOLAK_REVIEW_RESET,
 } from "../../../../../redux/types/pelatihan/review.type";
+import Cookies from "js-cookie";
+import ViewStep3Component from "../../training/components/view-training/view-step3.component";
+import Swal from "sweetalert2";
 
 const ViewFormCommitment = ({ token }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const token_permission = Cookies.get("token_permission");
 
   const [note, setNote] = useState("");
   const [noteSend, setNoteSend] = useState("");
@@ -94,7 +98,7 @@ const ViewFormCommitment = ({ token }) => {
       pelatian_id: parseInt(id),
       revisi: noteSend,
     };
-    dispatch(revisiReviewPelatihan(data, token));
+    dispatch(revisiReviewPelatihan(data, token, token_permission));
   };
 
   const handleTolak = () => {
@@ -102,7 +106,20 @@ const ViewFormCommitment = ({ token }) => {
       pelatian_id: parseInt(id),
       status: "ditolak",
     };
-    dispatch(tolakReviewPelatihan(data, token));
+    Swal.fire({
+      title: "Apakah anda yakin?",
+      text: "Menolak pelatihan ini",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yakin",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(tolakReviewPelatihan(data, token, token_permission));
+      }
+    });
   };
 
   const handleSetuju = () => {
@@ -110,7 +127,20 @@ const ViewFormCommitment = ({ token }) => {
       pelatian_id: parseInt(id),
       status: "disetujui",
     };
-    dispatch(tolakReviewPelatihan(data, token));
+    Swal.fire({
+      title: "Apakah anda yakin?",
+      text: "Menyetujui pelatihan ini",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yakin",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(tolakReviewPelatihan(data, token, token_permission));
+      }
+    });
   };
 
   const handleResetError = () => {
@@ -135,31 +165,7 @@ const ViewFormCommitment = ({ token }) => {
         {loading && <LoadingPage loading={loading} />}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
-
-            <div className="row">
-              <div className="col-md-12">
-                <p className="text-neutral-body mb-2 fz-14">Komitmen Peserta</p>
-                <p className="text-dark">
-                  {komitmenPeserta === "1" ? "Ya" : "Tidak"}
-                </p>
-              </div>
-              {komitmenPeserta === "1" && (
-                <div className="col-md-12">
-                  <p className="text-neutral-body mb-2 fz-14">Form Komitmen</p>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: formKomitmen,
-                    }}
-                    style={{ overflowWrap: "break-word" }}
-                  ></div>
-                  {/* <textarea rows="6" className="form-control" disabled>
-                    {formKomitmen}
-                  </textarea> */}
-                </div>
-              )}
-            </div>
-
+            <ViewStep3Component review={review} />
             <div className="form-group my-5 pb-5">
               <div className="float-left mb-5">
                 <button
