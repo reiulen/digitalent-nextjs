@@ -26,8 +26,8 @@ const Tambah = ({ token }) => {
   const drowpdownProvinsi = useSelector((state) => state.allProvincesSite);
   let tempOptionsProvinsi = drowpdownProvinsi?.data;
 
-  const [nameZonation, setNameZonation] = useState(detailZonasi.data.data.name);
-  const [status, setStatus] = useState(detailZonasi.data.data.status);
+  const [nameZonation, setNameZonation] = useState(detailZonasi.data?.data.name);
+  const [status, setStatus] = useState(detailZonasi.data?.data.status);
   const [defaultValueKabputen, setDefaultValueKabputen] = useState([]);
   const [defaultValueProvinces, setDefaultValueProvinces] = useState([]);
   const [prov, setProv] = useState(false);
@@ -44,7 +44,7 @@ const Tambah = ({ token }) => {
   const [idProvinsi, setIdProvinsi] = useState("");
   // value for option list dinamic
   const [formInput, setFormInput] = useState(
-    detailZonasi.data.data.data.map((items) => {
+    detailZonasi.data?.data.data.map((items) => {
       return {
         provinsi: [{ label: items.provinsi, value: items.provinsi }],
         kabupaten: items.kota_kabupaten,
@@ -56,14 +56,14 @@ const Tambah = ({ token }) => {
   );
   // value to send api
   const [valueSend, setValueSend] = useState(
-    detailZonasi.data.data.data.map((items) => {
+    detailZonasi.data?.data.data.map((items) => {
       return { ...items, provinsi_old: items.provinsi };
     })
   );
   
 
   let province = provincesOption.filter((item) => {
-    return !formInput.some((filter) => {
+    return !formInput?.some((filter) => {
       return item.label === filter.prov;
     });
   });

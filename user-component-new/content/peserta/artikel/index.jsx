@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
 import moment from "moment";
+import Cookies from 'js-cookie'
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 
 import {
@@ -21,9 +22,10 @@ import {
 	getAllArtikelsPeserta,
 } from "../../../../redux/actions/publikasi/artikel.actions";
 
-const Dashboard = ({ session, success, permission }) => {
+const Dashboard = ({ session, success }) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const permission = Cookies.get("token_permission")
 
 	const allArtikelsPeserta = useSelector((state) => state.allArtikelsPeserta);
 	const deleteArtikel = useSelector((state) => state.deleteArtikel);

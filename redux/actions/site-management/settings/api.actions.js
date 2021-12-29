@@ -37,7 +37,7 @@ import {
 
 import axios from "axios";
 
-export const getAllApi = (token) => async (dispatch, getState) => {
+export const getAllApi = (token, tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: API_REQUEST });
 
@@ -57,6 +57,7 @@ export const getAllApi = (token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission,
         },
       }
     );
@@ -72,19 +73,20 @@ export const getAllApi = (token) => async (dispatch, getState) => {
   }
 };
 
-export const deleteApis = (id, token) => async (dispatch) => {
+export const deleteApis = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_API_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
     const { data } = await axios.delete(
       process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-api/delete/${id}`,
+      `api/setting-api/delete/${id}`,
       config
     );
 
@@ -99,7 +101,7 @@ export const deleteApis = (id, token) => async (dispatch) => {
   }
 };
 
-export const postApi = (sendData, token) => {
+export const postApi = (sendData, token, tokenPermission) => {
   return async (dispatch) => {
     try {
       dispatch({
@@ -111,6 +113,7 @@ export const postApi = (sendData, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );
@@ -148,7 +151,7 @@ export const limitCooporation = (value) => {
   };
 };
 
-export const getListApi = (token) => async (dispatch) => {
+export const getListApi = (token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: GET_LIST_API_REQUEST });
     const { data } = await axios.get(
@@ -156,6 +159,7 @@ export const getListApi = (token) => async (dispatch) => {
       {
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission,
         },
       }
     );
@@ -170,7 +174,7 @@ export const getListApi = (token) => async (dispatch) => {
     });
   }
 };
-export const getListField = (id, token) => async (dispatch) => {
+export const getListField = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: GET_LIST_FIELD_REQUEST });
 
@@ -179,6 +183,7 @@ export const getListField = (id, token) => async (dispatch) => {
       {
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission,
         },
       }
     );
@@ -204,7 +209,7 @@ export const getListField = (id, token) => async (dispatch) => {
   }
 };
 
-export const getDetailApi = (id, token) => async (dispatch) => {
+export const getDetailApi = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: DETAIL_API_REQUEST,
@@ -212,12 +217,13 @@ export const getDetailApi = (id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
-    
+
     let link =
-    process.env.END_POINT_API_SITE_MANAGEMENT +
-    `api/setting-api/detail/${id}`;
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+      `api/setting-api/detail/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -233,7 +239,7 @@ export const getDetailApi = (id, token) => async (dispatch) => {
   }
 };
 
-export const getDetailLog = (id, token) => async (dispatch, getState) => {
+export const getDetailLog = (id, token, tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: DETAIL_LOG_API_REQUEST });
 
@@ -257,6 +263,7 @@ export const getDetailLog = (id, token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission,
         },
       }
     );
@@ -280,7 +287,7 @@ export const changeDates = (from, to) => {
   };
 };
 
-export const exportFileCSV = (token, id) => {
+export const exportFileCSV = (token, id, tokenPermission) => {
   return async () => {
     try {
       // type=csv
@@ -289,6 +296,7 @@ export const exportFileCSV = (token, id) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );
