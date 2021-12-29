@@ -7,6 +7,7 @@ import Select from "react-select";
 import styles from "../../../../../styles/previewGaleri.module.css";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from "js-cookie";
 
 import {
   postViaFilter,
@@ -124,7 +125,8 @@ export default function SUBM(props) {
                   : false,
                 emailSubject,
                 emailContent,
-                `via ${via}`
+                `via ${via}`,
+                Cookies.get("token_permission")
               )
             );
           });
@@ -156,7 +158,8 @@ export default function SUBM(props) {
                   : false,
                 emailSubject,
                 emailContent,
-                `via ${via}`
+                `via ${via}`,
+                Cookies.get("token_permission")
               )
             );
           });

@@ -129,11 +129,7 @@ export const getDetailsExportData =
   };
 
 export const postFilterExportData =
-<<<<<<< HEAD
   (token, datas, page = 1, limit = 5, tokenPermission) =>
-=======
-  (token, datas, page = 1, limit = 5, name = "") =>
->>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
   async (dispatch) => {
     try {
       dispatch({
