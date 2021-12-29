@@ -58,10 +58,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      const token_permission = req.cookies.token_permission;
 
       await store.dispatch(getRegistrationStep2());
       await store.dispatch(
-        getAllDataReference(session.user.user.data.token, true)
+        getAllDataReference(
+          session.user.user.data.token,
+          true,
+          token_permission
+        )
       );
 
       return {

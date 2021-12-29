@@ -65,7 +65,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       await store.dispatch(
-        getOptionsAcademyCloneSertifikat(session.user.user.data.token)
+        getOptionsAcademyCloneSertifikat(
+          session.user.user.data.token,
+          token_permission
+        )
       );
 
       await store.dispatch(getAllPermission(session.user.user.data.token));

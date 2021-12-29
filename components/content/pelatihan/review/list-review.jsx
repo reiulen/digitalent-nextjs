@@ -115,7 +115,7 @@ const ListReview = ({ token }) => {
   ];
 
   useEffect(() => {
-    dispatch(dropdownTemabyAkademi(academy?.value, token));
+    dispatch(dropdownTemabyAkademi(academy?.value, token, token_permission));
     const filterPermission = permission?.permissions?.filter((item) =>
       item.includes("pelatihan")
     );
@@ -213,7 +213,7 @@ const ListReview = ({ token }) => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setPage(1);
     dispatch(
       getAllListReview(
@@ -426,25 +426,24 @@ const ListReview = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-4 col-xl-4">
                   <div className="position-relative overflow-hidden mt-3 mb-2">
-                    <form onSubmit={e => handleSearch(e)}>
-
-                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                    <input
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                      onClick={e => handleSearch(e)}
-                    >
-                      Cari
-                    </button>
+                    <form onSubmit={(e) => handleSearch(e)}>
+                      <i className="ri-search-line left-center-absolute ml-2"></i>
+                      <input
+                        type="text"
+                        className="form-control pl-10"
+                        placeholder="Ketik disini untuk Pencarian..."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                      <button
+                        className="btn bg-blue-primary text-white right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                        }}
+                        onClick={(e) => handleSearch(e)}
+                      >
+                        Cari
+                      </button>
                     </form>
                   </div>
                 </div>
@@ -480,7 +479,9 @@ const ListReview = ({ token }) => {
                         <th className="text-center">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
-                        <th>Jadwal Pendaftaran <br /> Jadwal Pelatihan</th>
+                        <th>
+                          Jadwal Pendaftaran <br /> Jadwal Pelatihan
+                        </th>
                         <th>Kuota</th>
                         <th>Status</th>
                         <th>Revisi</th>
@@ -489,8 +490,8 @@ const ListReview = ({ token }) => {
                     </thead>
                     <tbody>
                       {!review ||
-                        (review && review.list === null) ||
-                        review.list.length === 0 ? (
+                      (review && review.list === null) ||
+                      review.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Kosong
                         </td>
@@ -572,19 +573,19 @@ const ListReview = ({ token }) => {
                                   {listPermission.includes(
                                     "pelatihan.review_pelatihan.view"
                                   ) && (
-                                      <Link
-                                        href={`/pelatihan/review-pelatihan/view-pelatihan/${row.id}`}
+                                    <Link
+                                      href={`/pelatihan/review-pelatihan/view-pelatihan/${row.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Detail"
                                       >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Detail"
-                                        >
-                                          <i className="ri-eye-fill text-white p-0"></i>
-                                        </a>
-                                      </Link>
-                                    )}
+                                        <i className="ri-eye-fill text-white p-0"></i>
+                                      </a>
+                                    </Link>
+                                  )}
                                 </div>
                               )}
                             </td>
