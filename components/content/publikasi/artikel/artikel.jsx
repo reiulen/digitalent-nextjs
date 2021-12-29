@@ -23,6 +23,7 @@ import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from 'js-cookie'
 
 import {
   deleteArtikel,
@@ -31,9 +32,10 @@ import {
 
 import { DELETE_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
 
-const Artikel = ({ token, permission }) => {
+const Artikel = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const {
     loading: allLoading,

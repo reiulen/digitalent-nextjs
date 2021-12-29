@@ -18,11 +18,13 @@ import { NEW_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
+import Cookies from 'js-cookie'
 
-const TambahVidio = ({ token, id, permission }) => {
+const TambahVidio = ({ token, id }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false)

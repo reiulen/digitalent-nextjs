@@ -18,11 +18,13 @@ import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.act
 import { NEW_ARTIKEL_PESERTA_RESET } from "../../../../redux/types/publikasi/artikel-peserta.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
+import Cookies from 'js-cookie'
 
-const TambahArtikel = ({ token, permission }) => {
+const TambahArtikel = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const [editorLoaded, setEditorLoaded] = useState(false);
