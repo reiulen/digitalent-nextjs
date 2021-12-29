@@ -379,6 +379,7 @@ const ListTraining = ({ token }) => {
     setTheme(null);
     setStatusSubstansi(null);
     setStatusPelatihan(null);
+    setStatusPublish(null);
     setDateRegister([null, null]);
     setDatePelaksanaan([null, null]);
     setShowModal(false);

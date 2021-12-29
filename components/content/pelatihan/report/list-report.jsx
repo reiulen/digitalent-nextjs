@@ -369,13 +369,13 @@ const ListReport = ({ token }) => {
                           dispatch(
                             listsReportTraining(
                               token,
+                              token_permission,
                               page,
                               limit,
                               search,
                               penyelenggara.label,
                               academy.label,
-                              theme.label,
-                              token_permission
+                              theme.label
                             )
                           );
                         }}
@@ -437,13 +437,13 @@ const ListReport = ({ token }) => {
                         dispatch(
                           listsReportTraining(
                             token,
+                            token_permission,
                             e,
                             limit,
                             search,
                             penyelenggara.label,
                             academy.label,
-                            theme.label,
-                            token_permission
+                            theme.label
                           )
                         );
                       }}
@@ -473,13 +473,13 @@ const ListReport = ({ token }) => {
                             dispatch(
                               listsReportTraining(
                                 token,
+                                token_permission,
                                 page,
                                 e.target.value,
                                 search,
                                 penyelenggara.label,
                                 academy.label,
-                                theme.label,
-                                token_permission
+                                theme.label
                               )
                             );
                           }}
