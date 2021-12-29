@@ -47,7 +47,11 @@ const ListSurvey = ({ token, tokenPermission }) => {
   const [open, setOpen] = useState(true);
   useEffect(() => {
     localStorage.removeItem("step1");
+    localStorage.removeItem("step2");
     localStorage.removeItem("clone1");
+    localStorage.removeItem("clone3");
+    localStorage.removeItem("method");
+    localStorage.removeItem("clone");
     localStorage.removeItem("id_survey");
     if (isDeleted) {
       dispatch({

@@ -537,7 +537,7 @@ export default function SUBM(props) {
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Tahun</h3>
 
-                  <div style={{ zIndex: "4", position: "relative" }}>
+                  <div style={{ zIndex: "20", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
@@ -559,7 +559,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Akademi</h3>
-                  <div style={{ zIndex: "4", position: "relative" }}>
+                  <div style={{ zIndex: "19", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
@@ -588,11 +588,11 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Tema</h3>
-                  <div style={{ zIndex: "3", position: "relative" }}>
+                  <div style={{ zIndex: "18", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
-                      placeholder="Pilih Akademi"
+                      placeholder="Pilih Tema"
                       isMulti
                       isDisabled={
                         disableAkademi === true || disableAkademi === ""
@@ -617,11 +617,11 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-6">
                   <h3 className="judul">Penyelenggara</h3>
-                  <div style={{ zIndex: "3", position: "relative" }}>
+                  <div style={{ zIndex: "15", position: "relative" }}>
                     <Select
                       className={`basic-single`}
                       classNamePrefix="select"
-                      placeholder="Pilih Akademi"
+                      placeholder="Pilih Penyelenggara"
                       isMulti
                       isDisabled={disableTema === true || disableTema === ""}
                       isLoading={false}
@@ -644,7 +644,7 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-12">
                   <h3 className="judul">Pelatihan</h3>
-                  <div style={{ zIndex: "3", position: "relative" }}>
+                  <div style={{ zIndex: "14", position: "relative" }}>
                     <Select
                       placeholder="Pilih Pelatihan"
                       options={trainingOpt}
@@ -726,10 +726,10 @@ export default function SUBM(props) {
                   <h3 className="judul">Status Peserta</h3>
                   <div
                     className=""
-                    style={{ zIndex: "2", position: "relative" }}
+                    style={{ zIndex: "13", position: "relative" }}
                   >
                     <Select
-                      placeholder="Pilih Status Administrasi"
+                      placeholder="Pilih Status Peserta"
                       options={optionsStatus}
                       isMulti
                       onChange={(e) => {
@@ -790,7 +790,7 @@ export default function SUBM(props) {
               <h3 className="mb-4 judul">Status Peserta</h3>
               <div
                 className="mr-4"
-                style={{ zIndex: "1", position: "relative" }}
+                style={{ zIndex: "10", position: "relative" }}
               >
                 <Select
                   placeholder="PILIH STATUS PESERTA"
@@ -867,7 +867,7 @@ export default function SUBM(props) {
           </div>
           <div className="form-group mr-4">
             <h3 className="judul">Konten Email</h3>
-            <div style={{ zIndex: "0", position: "relative" }}>
+            <div style={{ zIndex: "2", position: "relative" }}>
               <CKEditor
                 editor={ClassicEditor}
                 data={emailContent}
@@ -888,13 +888,13 @@ export default function SUBM(props) {
                 onClick={() => {
                   setVia("template");
                   setTitle("");
-                  setYear("");
-                  setAcademy("");
-                  setTheme("");
-                  setOrganizer("");
-                  setTraining("");
-                  setProfileStatus("");
-                  setSelectionStatus("");
+                  setYear([])
+                  setAcademy([])
+                  setTheme([])
+                  setOrganizer([])
+                  setTraining([])
+                  setProfileStatus([])
+                  setSelectionStatus([])
                   setParticipantSelectionStatusUpdate(0);
                   setStatus("");
                   setBroadcastEmailSendNotification(0);
@@ -902,6 +902,11 @@ export default function SUBM(props) {
                   setEmailContent("");
                   setFile("");
                   setLink("");
+                  setSelectedTraining([])
+                  setDisableOption(true)
+                  setDisableAkademi(true)
+                  setDisableTema(true)
+                  setDisablePenyelenggara(true)
                 }}
               >
                 Reset

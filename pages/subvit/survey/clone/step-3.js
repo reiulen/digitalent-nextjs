@@ -7,9 +7,10 @@ import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.ac
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import { getAllSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { getAllSurveyQuestionDetail } from "../../../../redux/actions/subvit/survey-question-detail.action";
 
 const StepFour = dynamic(
-  () => import("../../../../components/content/subvit/survey/clone/step-four"),
+  () => import("../../../../components/content/subvit/survey/clone/step-two"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -44,7 +45,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       const permission = req.cookies.token_permission;
+      await store.dispatch(
+        getAllSurveyQuestionDetail(
+          query.id,
+          query.page,
 
+          query.limit,
+          query.keyword,
+
+          session.user.user.data.token,
+          permission
+        )
+      );
       await store.dispatch(
         dropdownAkademi(session.user.user.data.token, permission)
       );
