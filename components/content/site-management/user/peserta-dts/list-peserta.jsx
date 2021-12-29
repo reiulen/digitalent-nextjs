@@ -11,9 +11,14 @@ import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import AlertBar from "../../../partnership/components/BarAlert";
+<<<<<<< HEAD
+import { getAllListsPeserta } from "../../../../../redux/actions/site-management/user/peserta-dts";
+import Cookies from "js-cookie";
+=======
 import stylesPag from "../../../../../styles/pagination.module.css";
 import { getAllListsPeserta, deletePesertaDts } from "../../../../../redux/actions/site-management/user/peserta-dts";
 import Swal from "sweetalert2";
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -214,8 +219,14 @@ const Table = ({ token }) => {
                             type="button"
                             onClick={() => {
                               setPage(1);
+<<<<<<< HEAD
+                              dispatch(
+                                getAllListsPeserta(token, limit, 1, search, Cookies.get("token_permission"))
+                              );
+=======
                               setLimit(5);
                               dispatch(getAllListsPeserta(token, 5, 1, search));
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
                             }}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
@@ -258,6 +269,55 @@ const Table = ({ token }) => {
                 </table>
               </div>
 
+<<<<<<< HEAD
+              <div className="row px-4">
+                <div
+                  className="table-pagination table-pagination pagination-custom col-12 col-md-6"
+                  style={{ width: "max-content" }}
+                >
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={allListPeserta?.data?.data?.perPage}
+                    totalItemsCount={allListPeserta?.data?.data?.total}
+                    pageRangeDisplayed={2}
+                    onChange={(e) => {
+                      setPage(e);
+                      dispatch(getAllListsPeserta(token, limit, e, search, Cookies.get("token_permission")));
+                    }}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+
+                <div className="table-total ml-auto mr-4">
+                  <div className="row mt-4">
+                    <div className="col-4 mr-0 p-0">
+                      <select
+                        className="form-control pr-2 cursor-pointer"
+                        id="exampleFormControlSelect2"
+                        value={limit}
+                        onChange={(e) => {
+                          setLimit(e.target.value);
+                          dispatch(
+                            getAllListsPeserta(
+                              token,
+                              e.target.value,
+                              page,
+                              search,
+                              Cookies.get("token_permission")
+                            )
+                          );
+                        }}
+                        style={{
+                          width: "63px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+=======
               <div className="row">
                 {allListPeserta?.data?.data?.total >= 5 ? (
                   <>
@@ -274,6 +334,7 @@ const Table = ({ token }) => {
                         onChange={(e) => {
                           setPage(e);
                           dispatch(getAllListsPeserta(token, limit, e, search));
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
                         }}
                         nextPageText={">"}
                         prevPageText={"<"}

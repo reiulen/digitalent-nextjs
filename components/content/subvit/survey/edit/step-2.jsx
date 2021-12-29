@@ -141,6 +141,18 @@ const StepTwo = ({ token, tokenPermission }) => {
     setStatus(e.target.value);
   };
 
+  const handleDuration = (e) => {
+    e.target.value = Math.max(
+      Number(e.target.min),
+      Math.min(Number(e.target.max), Number(e.target.value))
+    );
+    if (e.target.value < 30) {
+      setDuration(e.target.value);
+    } else {
+      setDuration(e.target.value);
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -332,13 +344,14 @@ const StepTwo = ({ token, tokenPermission }) => {
                           e.target.value === "" ||
                           helperRegexNumber.test(e.target.value)
                         ) {
-                          setDuration(e.target.value);
+                          handleDuration(e);
                         }
                       }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
-                      min={1}
+                      min="0"
+                      max="360"
                     />
                     <div className="input-group-append bg-sedondary">
                       <span
