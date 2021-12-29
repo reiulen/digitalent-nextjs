@@ -79,9 +79,8 @@ const Dashboard = ({ session, success }) => {
 						<td className="align-middle">
 							{" "}
 							<span
-								className={`label label-inline label-light-${
-									item.publish === 1 ? "success" : "danger"
-								} font-weight-bold`}
+								className={`label label-inline label-light-${item.publish === 1 ? "success" : "danger"
+									} font-weight-bold`}
 							>
 								{item.publish === 1 ? "Publish" : "Unpublish"}
 							</span>
@@ -288,26 +287,32 @@ const Dashboard = ({ session, success }) => {
 						<div className="row align-items-center d-flex">
 							<div className="col-lg-5 col-xl-5 mb-4 px-10 ">
 								<div className="position-relative overflow-hidden mb-2 mt-3">
-									<i className="ri-search-line left-center-absolute ml-2"></i>
-									<input
-										type="text"
-										className="form-control pl-10"
-										placeholder="Ketik disini untuk Pencarian..."
-										value={keyword}
-										onChange={(e) => {
-											setKeyword(e.target.value);
-										}}
-									/>
-									<button
-										className="btn btn-primary text-white right-center-absolute"
-										style={{
-											borderTopLeftRadius: "0",
-											borderBottomLeftRadius: "0",
-										}}
-										onClick={handleSearch}
+									<form onSubmit={(e) => {
+										e.preventDefault();
+										handleSearch
+									}}
 									>
-										Cari
-									</button>
+										<i className="ri-search-line left-center-absolute ml-2"></i>
+										<input
+											type="text"
+											className="form-control pl-10"
+											placeholder="Ketik disini untuk Pencarian..."
+											value={keyword}
+											onChange={(e) => {
+												setKeyword(e.target.value);
+											}}
+										/>
+										<button
+											className="btn btn-primary text-white right-center-absolute"
+											style={{
+												borderTopLeftRadius: "0",
+												borderBottomLeftRadius: "0",
+											}}
+											onClick={handleSearch}
+										>
+											Cari
+										</button>
+									</form>
 								</div>
 							</div>
 

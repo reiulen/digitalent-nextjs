@@ -171,54 +171,6 @@ export default function SUBM(props) {
         setListYear(data.data.data);
       });
 
-    // axios
-    //   .get(
-    //     process.env.END_POINT_API_PELATIHAN +
-    //       `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${academy}`,
-    //     {
-    //       headers: {
-    //         authorization: `Bearer ${props.token}`,
-    //       },
-    //     }
-    //   )
-    //   .then((data) => {
-    //     setListTheme(data.data.data);
-    //   });
-
-    // axios
-    //   .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/academy`, {
-    //     headers: {
-    //       authorization: `Bearer ${props.token}`,
-    //     },
-    //   })
-    //   .then((data) => {
-    //     setListAcademy(data.data.data);
-    //   });
-
-    // axios
-    //   .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/organizer`, {
-    //     headers: {
-    //       authorization: `Bearer ${props.token}`,
-    //     },
-    //   })
-    //   .then((data) => {
-    //     setListOrganizer(data.data.data);
-    //   });
-
-    // axios
-    //   .get(
-    //     process.env.END_POINT_API_PELATIHAN +
-    //       `api/v1/pelatihan/dropdown-pelatihan-tema?id=${131}`,
-    //     {
-    //       headers: {
-    //         authorization: `Bearer ${props.token}`,
-    //       },
-    //     }
-    //   )
-    //   .then((data) => {
-    //     setListTraining(data.data.data);
-    //   });
-
     axios
       .get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/status-profile`,
@@ -382,38 +334,18 @@ export default function SUBM(props) {
 
   const listYears = listYear.map((items, index) => {
     return { label: items.value, value: items.value, id: items.id };
-    // return (
-    //   <option value={item.value} key={index}>
-    //     {item.value}
-    //   </option>
-    // );
   });
 
   const optAcademy = listAcademy?.map((items, index) => {
     return { label: items.label, value: items.label, akademi: items.label };
-    // return (
-    //   <option value={item.value} key={index} akademi={item.label}>
-    //     {item.label}
-    //   </option>
-    // );
   });
 
   const optTheme = listTheme?.map((items, index) => {
     return { label: items.label, value: items.label };
-    // return (
-    //   <option value={item.value} key={index}>
-    //     {item.label}
-    //   </option>
-    // );
   });
 
   const optOrganizer = listOrganizer?.map((items, index) => {
     return { label: items.label, value: items.label };
-    // return (
-    //   <option value={item.label} key={index}>
-    //     {item.label}
-    //   </option>
-    // );
   });
 
   const optTraining = listTraining?.map((item, index) => {
