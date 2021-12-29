@@ -8,6 +8,8 @@ import { getSession } from "next-auth/client";
 
 import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
+import { getEditTrainingStep3 } from "../../../../../redux/actions/pelatihan/training.actions";
+
 const EditCommitment = dynamic(
   () =>
     import(
@@ -44,6 +46,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getEditTrainingStep3(query.id, session.user.user.data.token)
+      );
 
       return {
         props: { session, title: "Edit Form Komitmen - Pelatihan" },

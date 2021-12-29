@@ -83,6 +83,7 @@ import {
   FAIL_STATUS_PELATIHAN,
   GET_EDIT_DATA_TRAINING,
   GET_EDIT_DATA_TRAINING2,
+  REQUEST_EDIT_DATA_TRAINING2,
   GET_EDIT_DATA_TRAINING3,
   GET_FORM_LPJ,
   GET_FORM_EVIDENCE,
@@ -765,6 +766,9 @@ export const getEditTrainingStep1 = (id, token) => async (dispatch) => {
 
 export const getEditTrainingStep2 = (id, token) => async (dispatch) => {
   try {
+    dispatch({
+      type: REQUEST_EDIT_DATA_TRAINING2,
+    });
     let link =
       process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-dua`;
 
@@ -840,6 +844,8 @@ export const putTrainingStep2 = (token, datas) => async (dispatch) => {
     };
 
     await axios.post(link, datas, config);
+
+    window.location.href = `/pelatihan/pelatihan/edit-pelatihan/edit-form-komitmen?id=${datas.Pelatian_id}`;
   } catch (error) {
     throw error;
   }

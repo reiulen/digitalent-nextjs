@@ -183,11 +183,15 @@ const DetailPelatihan = ({ session }) => {
                         url={`http://dts-dev.majapahit.id/detail/pelatihan/${pelatihan?.id}`}
                         quote={pelatihan?.name}
                       >
-                        <button className="btn btn-white roundedss-border mr-4">
+                        <button
+                          className="btn btn-white roundedss-border mr-4"
+                          disabled={pelatihan?.Status !== "Dibuka" && true}
+                        >
                           <IconShare />
                         </button>
                       </ShareOverlay>
                       <button
+                        disabled={pelatihan?.Status !== "Dibuka" && true}
                         className="btn btn-white roundedss-border"
                         onClick={() => {
                           if (!session) {

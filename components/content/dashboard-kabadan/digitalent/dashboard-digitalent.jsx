@@ -554,7 +554,9 @@ const DashboardDigitalent = ({ token }) => {
                         tablePendaftar.list.length > 0 &&
                         tablePendaftar.list.map((row, i) => (
                           <tr key={i}>
-                            <td>{i + 1}</td>
+                            <td>
+                              {i + 1 * (pageTablePendaftaran * 5) - (5 - 1)}
+                            </td>
                             <td>{row.akademi}</td>
                             <td>{row.mitra}</td>
                             <td>{row.tema}</td>
