@@ -124,7 +124,7 @@ const DetailDokumenKerjasama = ({ token }) => {
             let { data } = await axios.post(`${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal`, formData, {
               headers: {
                 authorization: `Bearer ${token}`,
-                Permission: Cookies.get("token_permission")
+                // Permission: Cookies.get("token_permission")
               },
             });
             router.push({

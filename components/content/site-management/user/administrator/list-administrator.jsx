@@ -22,6 +22,7 @@ import {
   updateStatusAdminSite,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
 import {} from "../../../../../redux/actions/site-management/role.actions";
+import Cookies from 'js-cookie'
 
 import {
   DETAIL_ADMIN_SITE_RESET,
@@ -59,18 +60,18 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteAdminSite(id, token));
+        dispatch(deleteAdminSite(id, token, Cookies.get("token_permission")));
       }
     });
   };
 
   useEffect(() => {
-    dispatch(getAllAdminSite(token));
+    dispatch(getAllAdminSite(token, Cookies.get("token_permission")));
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            dispatch(getAllAdminSite(token));
+            dispatch(getAllAdminSite(token, Cookies.get("token_permission")));
           }
         }
       );
@@ -79,7 +80,7 @@ const Table = ({ token }) => {
       Swal.fire("Berhasil ", "Status berhasil di update.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            dispatch(getAllAdminSite(token));
+            dispatch(getAllAdminSite(token, Cookies.get("token_permission")));
             dispatch({
               type: RESET_UPDATE_STATUS_REDUCER,
             });
@@ -109,8 +110,12 @@ const Table = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
+<<<<<<< HEAD
+            dispatch(getAllAdminSite(token, Cookies.get("token_permission")));
+=======
             dispatch(getAllAdminSite(token));
             window.location.reload();
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
           }
         }
       );
@@ -249,7 +254,8 @@ const Table = ({ token }) => {
                                         updateStatusAdminSite(
                                           items.id,
                                           token,
-                                          e.target.value
+                                          e.target.value,
+                                          Cookies.get("token_permission")
                                         )
                                       );
                                     }}

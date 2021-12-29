@@ -15,6 +15,7 @@ import {
   getAllListPelatihan,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from 'js-cookie'
 
 const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
@@ -254,6 +255,7 @@ const TambahApi = ({ token }) => {
                   {
                     headers: {
                       authorization: `Bearer ${token}`,
+                      "Permission": Cookies.get("token_permission")
                     },
                   }
                 );
@@ -298,6 +300,7 @@ const TambahApi = ({ token }) => {
                   {
                     headers: {
                       authorization: `Bearer ${token}`,
+                      "Permission": Cookies.get("token_permission")
                     },
                   }
                 );

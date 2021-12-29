@@ -13,8 +13,14 @@ import IconClose from "../../../../../components/assets/icon/Close";
 
 import { postMitraSite } from "../../../../../redux/actions/site-management/user/mitra-site.actions";
 
+<<<<<<< HEAD
+import styles from "../../../../../styles/sitemanagement/userMitra.module.css"
+import styles2 from "../../../../../styles/previewGaleri.module.css"
+import Cookies from 'js-cookie'
+=======
 import styles from "../../../../../styles/sitemanagement/userMitra.module.css";
 import styles2 from "../../../../../styles/previewGaleri.module.css";
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
 
 const TambahApi = ({ token }) => {
   const router = useRouter();
@@ -96,6 +102,7 @@ const TambahApi = ({ token }) => {
             {
               headers: {
                 authorization: `Bearer ${token}`,
+                "Permission" : Cookies.get("token_permission")
               },
             }
           );

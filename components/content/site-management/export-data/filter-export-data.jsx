@@ -24,6 +24,7 @@ import {
 } from "../../../../redux/actions/pelatihan/function.actions";
 import { postFilterExportData } from "../../../../redux/actions/site-management/export-data.actions";
 import { temaByAkademiReducer } from "../../../../redux/reducers/beranda/beranda.reducers";
+import Cookies from 'js-cookie'
 
 const UbahRole = ({ token, name }) => {
   let dispatch = useDispatch();
@@ -96,11 +97,15 @@ const UbahRole = ({ token, name }) => {
       kota: kota ? kota.label : "",
     };
 
+<<<<<<< HEAD
+    dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission")));
+=======
     if (datePelaksanaanEnd !== null) {
       dispatch(postFilterExportData(token, data));
     } else {
       Swal.fire("Oppss", "isi tanggal dengan benar", "error");
     }
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
   };
 
   const handleSubmit = (e) => {
@@ -117,6 +122,21 @@ const UbahRole = ({ token, name }) => {
       provinsi: provinsi ? provinsi.label : "",
       kota: kota ? kota.label : "",
     };
+<<<<<<< HEAD
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission")));
+      }
+    });
+=======
     if (datePelaksanaanEnd !== null) {
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -134,6 +154,7 @@ const UbahRole = ({ token, name }) => {
     } else {
       Swal.fire("Oppss", "isi tanggal dengan benar", "error");
     }
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
   };
 
   const listFilter =
@@ -361,6 +382,83 @@ const UbahRole = ({ token, name }) => {
                     <tbody>{listFilter}</tbody>
                   </table>
                 </div>
+<<<<<<< HEAD
+                <div className="row px-4">
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={filterExportData?.data?.data?.limit}
+                      totalItemsCount={filterExportData?.data?.data?.total_rows}
+                      pageRangeDisplayed={2}
+                      onChange={(e) => {
+                        setPage(e);
+                        const data = {
+                          button_type: 0,
+                          tahun: tahun ? tahun.label : "",
+                          akademi: akademi ? akademi.label : "",
+                          tema: tema ? tema.label : "",
+                          penyelenggara: penyelenggara ? penyelenggara.label : "",
+                          pelatihan: pelatihan ? pelatihan.label : "",
+                          provinsi: provinsi ? provinsi.label : "",
+                          kota: kota ? kota.label : "",
+                        };
+                    
+                        dispatch(postFilterExportData(token, data, e, limit, Cookies.get("token_permission")));
+                      }}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+
+                  <div className="table-total ml-auto mr-4">
+                    <div className="row mt-4">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control cursor-pointer pr-2"
+                          id="exampleFormControlSelect2"
+                          defaultValue=""
+                          style={{
+                            width: "63px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) => {
+                            setLimit(e.target.value);
+                            const data = {
+                              button_type: 0,
+                              tahun: tahun ? tahun.label : "",
+                              akademi: akademi ? akademi.label : "",
+                              tema: tema ? tema.label : "",
+                              penyelenggara: penyelenggara ? penyelenggara.label : "",
+                              pelatihan: pelatihan ? pelatihan.label : "",
+                              provinsi: provinsi ? provinsi.label : "",
+                              kota: kota ? kota.label : "",
+                            };
+                        
+                            dispatch(postFilterExportData(token, data, page, e.target.value, Cookies.get("token_permission")));
+                          }}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data {filterExportData?.data?.data?.total_rows} List Data
+                           
+                        </p>
+=======
                 {filterExportData?.data?.data?.total_rows > 5 && (
                   <div className="row px-4">
                     <div className="table-pagination">
@@ -463,6 +561,7 @@ const UbahRole = ({ token, name }) => {
                             {filterExportData?.data?.data?.total_rows} List Data
                           </p>
                         </div>
+>>>>>>> e2501ad03ffd611af2845cd2cbb4bd4ecc585293
                       </div>
                     </div>
                   </div>

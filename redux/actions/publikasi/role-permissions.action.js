@@ -8,7 +8,7 @@ import {
 
 import axios from "axios";
 
-export const getAllRolePermission = (token) =>
+export const getAllRolePermission = (token, permission) =>
   async (dispatch) => {
     try {
       dispatch({ type: ROLE_PERMISSION_REQUEST });
@@ -16,6 +16,7 @@ export const getAllRolePermission = (token) =>
       const config = {
         headers: {
           Authorization: 'Bearer ' + token,
+          "Permission": permission
         },
       };
 

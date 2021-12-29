@@ -16,6 +16,7 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { postRoles } from "../../../../redux/actions/site-management/role.actions";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from 'js-cookie'
 
 const TambahRole = ({ token }) => {
   let dispatch = useDispatch();
@@ -628,7 +629,7 @@ const TambahRole = ({ token }) => {
       }),
     };
     if (simpleValidator.current.allValid()) {
-      dispatch(postRoles(data, token));
+      dispatch(postRoles(data, token, Cookies.get("token_permission")));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
