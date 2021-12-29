@@ -78,6 +78,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       dispatch(updateSurveyQuestionBanksPublish(data, id, token));
       localStorage.removeItem("clone1");
       localStorage.removeItem("clone3");
+      localStorage.removeItem("clone");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -106,6 +107,7 @@ const StepTwo = ({ token, tokenPermission }) => {
       );
       localStorage.removeItem("clone1");
       localStorage.removeItem("clone3");
+      localStorage.removeItem("clone");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

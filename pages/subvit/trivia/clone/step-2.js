@@ -7,9 +7,10 @@ import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getAllTriviaQuestionDetail } from "../../../../redux/actions/subvit/trivia-question-detail.action";
+import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 const StepTwo = dynamic(
-  () => import("/components/content/subvit/trivia/clone/step-two"),
+  () => import("/components/content/subvit/trivia/clone/step-four.jsx"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -55,6 +56,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token,
           permission
         )
+      );
+
+      await store.dispatch(
+        dropdownAkademi(session.user.user.data.token, permission)
       );
       return {
         props: {
