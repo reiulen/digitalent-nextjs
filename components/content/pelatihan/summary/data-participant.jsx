@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 import Select from "react-select";
 import moment from "moment";
+import Cookies from "js-cookie";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import StepParticipantPelatihan from "../../../StepParticipantPelatihan";
@@ -40,6 +41,7 @@ import { useDispatch, useSelector } from "react-redux";
 const DataParticipant = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const token_permission = Cookies.get("token_permission");
 
   let { pelatihan_id, index } = router.query;
   index = Number(index);
@@ -218,13 +220,23 @@ const DataParticipant = ({ token }) => {
 
   useEffect(() => {
     if (peserta) {
-      dispatch(getDataPribadi(token, peserta.list[0].id));
-      dispatch(getReminderBerkas(token, peserta.list[0].id));
-      dispatch(getRiwayatPelatihan(token, peserta.list[0].id));
-      dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
-      dispatch(getFormKomitmen(token, peserta.list[0].id));
-      dispatch(getFormLpj(token, peserta.list[0].id));
-      dispatch(getEditTrainingStep1(peserta.list[0].pelatian_id, token));
+      dispatch(getDataPribadi(token, peserta.list[0].id, token_permission));
+      dispatch(getReminderBerkas(token, peserta.list[0].id, token_permission));
+      dispatch(
+        getRiwayatPelatihan(token, peserta.list[0].id, token_permission)
+      );
+      dispatch(
+        getBerkasPendaftaran(token, peserta.list[0].id, token_permission)
+      );
+      dispatch(getFormKomitmen(token, peserta.list[0].id, token_permission));
+      dispatch(getFormLpj(token, peserta.list[0].id, token_permission));
+      dispatch(
+        getEditTrainingStep1(
+          peserta.list[0].pelatian_id,
+          token,
+          token_permission
+        )
+      );
     }
 
     if (errorUpdateStatus) {
@@ -238,12 +250,16 @@ const DataParticipant = ({ token }) => {
     }
 
     if (successReminder) {
-      dispatch(getDataPribadi(token, peserta.list[0].id));
-      dispatch(getReminderBerkas(token, peserta.list[0].id));
-      dispatch(getRiwayatPelatihan(token, peserta.list[0].id));
-      dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
-      dispatch(getFormKomitmen(token, peserta.list[0].id));
-      dispatch(getFormLpj(token, peserta.list[0].id));
+      dispatch(getDataPribadi(token, peserta.list[0].id, token_permission));
+      dispatch(getReminderBerkas(token, peserta.list[0].id, token_permission));
+      dispatch(
+        getRiwayatPelatihan(token, peserta.list[0].id, token_permission)
+      );
+      dispatch(
+        getBerkasPendaftaran(token, peserta.list[0].id, token_permission)
+      );
+      dispatch(getFormKomitmen(token, peserta.list[0].id, token_permission));
+      dispatch(getFormLpj(token, peserta.list[0].id, token_permission));
       dispatch({ type: UPDATE_REMINDER_RESET });
     }
   }, [
@@ -257,12 +273,16 @@ const DataParticipant = ({ token }) => {
 
   useEffect(() => {
     if (successStatus) {
-      dispatch(getDataPribadi(token, peserta.list[0].id));
-      dispatch(getReminderBerkas(token, peserta.list[0].id));
-      dispatch(getRiwayatPelatihan(token, peserta.list[0].id));
-      dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
-      dispatch(getFormKomitmen(token, peserta.list[0].id));
-      dispatch(getFormLpj(token, peserta.list[0].id));
+      dispatch(getDataPribadi(token, peserta.list[0].id, token_permission));
+      dispatch(getReminderBerkas(token, peserta.list[0].id, token_permission));
+      dispatch(
+        getRiwayatPelatihan(token, peserta.list[0].id, token_permission)
+      );
+      dispatch(
+        getBerkasPendaftaran(token, peserta.list[0].id, token_permission)
+      );
+      dispatch(getFormKomitmen(token, peserta.list[0].id, token_permission));
+      dispatch(getFormLpj(token, peserta.list[0].id, token_permission));
       dispatch({ type: UPDATE_STATUS_RESET });
       Swal.fire({
         icon: "success",
@@ -311,7 +331,7 @@ const DataParticipant = ({ token }) => {
       administrasi,
     };
 
-    dispatch(updateStatusPeserta(data, token));
+    dispatch(updateStatusPeserta(data, token, token_permission));
   };
 
   const handleUpdateReminder = (type, value) => {
@@ -320,7 +340,7 @@ const DataParticipant = ({ token }) => {
       status: value ? "1" : "0",
       kolom: type,
     };
-    dispatch(updateReminder(data, token));
+    dispatch(updateReminder(data, token, token_permission));
   };
 
   const capitalizeFirstLetter = (string) => {

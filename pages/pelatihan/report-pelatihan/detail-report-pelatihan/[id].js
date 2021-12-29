@@ -49,6 +49,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDetailReportTraining(
           session.user.user.data.token,
           query.id,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           token_permission
         )
       );

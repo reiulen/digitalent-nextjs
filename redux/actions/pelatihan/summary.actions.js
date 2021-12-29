@@ -127,14 +127,14 @@ export const getAkademiByPelatihan =
 export const getPendaftaranPeserta =
   (
     token,
+    token_permission = "",
     pelatihanId,
     keyword = "",
     limit = 5,
     page = 1,
     administrasi = "",
     pelatihan = "",
-    subtansi = "",
-    token_permission = ""
+    subtansi = ""
   ) =>
   async (dispatch) => {
     try {
