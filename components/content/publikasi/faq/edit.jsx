@@ -237,7 +237,7 @@ const EditFaq = ({ token }) => {
 
                                     <div className="form-group">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jawaban</label>
-                                        <div className={`${styles.deskripsiTambah} col-sm-12`}>
+                                        <div className={`col-sm-12`}>
                                             <div className="ckeditor">
                                                 {editorLoaded ? (
                                                     <CKEditor
@@ -260,12 +260,14 @@ const EditFaq = ({ token }) => {
                                                 ) : (
                                                     <p>Tunggu Sebentar</p>
                                                 )}
-                                                {simpleValidator.current.message(
-                                                    "jawaban",
-                                                    jawaban,
-                                                    "required|min:100|max:7000",
-                                                    { className: "text-danger" }
-                                                )}
+                                                <div className={`${styles.validFaq}`}>
+                                                    {simpleValidator.current.message(
+                                                        "jawaban",
+                                                        jawaban,
+                                                        "required|min:100|max:7000",
+                                                        { className: "text-danger" }
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

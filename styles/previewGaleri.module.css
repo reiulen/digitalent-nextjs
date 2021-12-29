@@ -95,6 +95,12 @@
 
 .deskripsiTambah{
   margin-bottom: 70px;
+  position: relative;
+}
+
+.validQuill{
+  position: absolute;
+  top: 345px;
 }
 
 .btnKembali{
@@ -169,6 +175,10 @@
   .deskripsiTambah{
     margin-bottom: 90px;
   }
+  .validQuill{
+    position: absolute;
+    top: 370px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -194,6 +204,10 @@
   }
   .btnTambah {
     font-size: 12px;
+  }
+  .validQuill{
+    position: absolute;
+    top: 370px;
   }
 
   /* Modal Galeri HOMEPAGE */
@@ -269,6 +283,10 @@
   .deskripsiTambah{
     margin-bottom: 140px;
   }
+  .validQuill{
+    position: absolute;
+    top: 415px;
+  }
 
   /* Home Page Galeri */
 
@@ -299,6 +317,9 @@
   .deskripsiTambah{
     font-size: 8.5px;
     margin-bottom: 190px;
+  }
+  .validFaq{
+    font-size: 9px;
   }
   .tagStyle{
     font-size: 8.5px;
@@ -341,6 +362,10 @@
     min-width: 105px;
     width: 85px;
   }
+  .validQuill{
+    position: absolute;
+    top: 465px;
+  }
 }
 
 @media only screen and (max-width: 280px){
@@ -356,6 +381,9 @@
   .deskripsiTambah{
     font-size: 6.7px;
     margin-bottom: 210px;
+  }
+  .validFaq{
+    font-size: 9px;
   }
   .btnKembali{
     padding-top: 5px;
@@ -373,5 +401,9 @@
     font-size: 9px;
     min-width: 70px;
     width: 55px;
+  }
+  .validQuill{
+    position: absolute;
+    top: 490px;
   }
 }
