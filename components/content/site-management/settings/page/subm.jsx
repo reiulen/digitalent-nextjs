@@ -324,7 +324,7 @@ export default function SUBM(props) {
       return { ...item, value: item.value };
     });
     const datas = data.map((items) => {
-      return items.label;
+      return items.value;
     });
     setTraining(datas);
     setSelectedTraining(
@@ -420,6 +420,7 @@ export default function SUBM(props) {
       setNameFile(e.target.files[0].name);
     }
   };
+  console.log(listTraining)
 
   const trainingOpt = listTraining?.map((item, index) => {
     return {
