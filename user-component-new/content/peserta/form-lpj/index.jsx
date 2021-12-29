@@ -51,7 +51,7 @@ const FormLPJ = ({ token }) => {
 
   const handleLPJ = (e, i) => {
     setInitial(
-      initial.filter((it, id) => {
+      initial?.filter((it, id) => {
         if (id == i) {
           it.value = e.target.checked ? "1" : "0";
         }
@@ -93,9 +93,10 @@ const FormLPJ = ({ token }) => {
             SweatAlert("Berhasil", res.data.data.message, "success");
             router.push("/peserta/riwayat-pelatihan");
           })
-          .catch((err) =>
-            SweatAlert("Gagal", err.response.data.message, "error")
-          );
+          .catch((err) => {
+            console.log(err, "ini errornya");
+            SweatAlert("Gagal", err.response.data.message, "error");
+          });
       }
     });
   };

@@ -183,7 +183,15 @@ const CardPelatihanOpen = ({
                       if (!session) {
                         router.push("/peserta");
                       } else {
-                        handleBookmark(row);
+                        if (!session?.roles?.includes("user")) {
+                          SweatAlert(
+                            "Gagal",
+                            "Anda sedang login sebagai Admin",
+                            "error"
+                          );
+                        } else {
+                          handleBookmark(row);
+                        }
                       }
                     }}
                   ></i>

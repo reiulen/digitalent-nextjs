@@ -172,7 +172,15 @@ const CardPelatihanQuickView = ({
                         if (!session) {
                           router.push("/login");
                         } else {
-                          handleBookmark(row);
+                          if (!session?.roles?.includes("user")) {
+                            SweatAlert(
+                              "Gagal",
+                              "Anda sedang login sebagai Admin",
+                              "error"
+                            );
+                          } else {
+                            handleBookmark(row);
+                          }
                         }
                       }}
                     >
@@ -256,7 +264,20 @@ const CardPelatihanQuickView = ({
                   {row.status !== "Closed" ? (
                     <div className="col-6">
                       <button
-                        onClick={() => funcCheckPelatihan(row.id)}
+                        onClick={() => {
+                          if (!session) {
+                            return router.push("/login");
+                          }
+                          if (!session?.roles?.includes("user")) {
+                            SweatAlert(
+                              "Gagal",
+                              "Anda sedang login sebagai Admin",
+                              "error"
+                            );
+                          } else {
+                            funcCheckPelatihan(row.id);
+                          }
+                        }}
                         className="d-flex justify-content-center btn-primary btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100"
                       >
                         Daftar Pelatihan
