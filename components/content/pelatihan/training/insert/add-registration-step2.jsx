@@ -234,17 +234,19 @@ const AddRegistrationStep2 = ({ propsStep, dataOptions, token }) => {
     switch (viewForm) {
       case "0":
         return (
-          <FormManual
-            title={titleManual}
-            formBuilder={formBuilderManual}
-            funcTitle={(value) => setTitleManual(value)}
-            funcFormBuilder={(value) => setFormBuilderManual(value)}
-            funcModalShow={(value) => setModalShow(value)}
-            element={element}
-            size={size}
-            options={options}
-            dataOptions={dataOptions}
-          />
+          <>
+            <FormManual
+              title={titleManual}
+              formBuilder={formBuilderManual}
+              funcTitle={(value) => setTitleManual(value)}
+              funcFormBuilder={(value) => setFormBuilderManual(value)}
+              funcModalShow={(value) => setModalShow(value)}
+              element={element}
+              size={size}
+              options={options}
+              dataOptions={dataOptions}
+            />
+          </>
         );
         break;
       case "1":

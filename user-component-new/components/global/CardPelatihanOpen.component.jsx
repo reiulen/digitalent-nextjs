@@ -176,6 +176,13 @@ const CardPelatihanOpen = ({
                   variant="light"
                   disabled={row.status !== "Dibuka" && true}
                   className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
+                  onClick={() => {
+                    if (!session) {
+                      router.push("/peserta");
+                    } else {
+                      handleBookmark(row);
+                    }
+                  }}
                 >
                   <i
                     className={
@@ -185,13 +192,6 @@ const CardPelatihanOpen = ({
                     }
                     style={{
                       color: "#6C6C6C",
-                    }}
-                    onClick={() => {
-                      if (!session) {
-                        router.push("/peserta");
-                      } else {
-                        handleBookmark(row);
-                      }
                     }}
                   ></i>
                 </Button>
