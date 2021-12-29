@@ -24,13 +24,14 @@ import {
 
 import axios from "axios";
 
-export const getAllKategori = (token) => async dispatch => {
+export const getAllKategori = (token, permission) => async dispatch => {
     try {
         dispatch({ type: KATEGORI_REQUEST });
         let link = process.env.END_POINT_API_PUBLIKASI + `api/kategori`;
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
+                "Permission": permission
             },
         };
 
@@ -49,7 +50,7 @@ export const getAllKategori = (token) => async dispatch => {
 };
 
 export const paginationKategori =
-    (page = 1, keyword = "", limit = 5, publish = "", startdate = "", enddate = "", token) =>
+    (page = 1, keyword = "", limit = 5, publish = "", startdate = "", enddate = "", token, permission) =>
         async dispatch => {
             try {
                 dispatch({ type: PAGINATION_KATEGORI_REQUEST });
@@ -66,6 +67,7 @@ export const paginationKategori =
                 const config = {
                     headers: {
                         Authorization: "Bearer " + token,
+                        "Permission": permission
                     },
                 };
 
@@ -83,7 +85,7 @@ export const paginationKategori =
             }
         };
 
-export const getAllKategoriInput = (kategori, token) => async dispatch => {
+export const getAllKategoriInput = (kategori, token, permission) => async dispatch => {
     try {
         dispatch({ type: KATEGORI_REQUEST });
 
@@ -94,6 +96,7 @@ export const getAllKategoriInput = (kategori, token) => async dispatch => {
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
+                "Permission": permission
             },
         };
 
@@ -111,7 +114,7 @@ export const getAllKategoriInput = (kategori, token) => async dispatch => {
     }
 };
 
-export const newKategori = (kategoriData, token) => async dispatch => {
+export const newKategori = (kategoriData, token, permission) => async dispatch => {
     try {
         dispatch({
             type: NEW_KATEGORI_REQUEST,
@@ -120,6 +123,7 @@ export const newKategori = (kategoriData, token) => async dispatch => {
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
+                "Permission": permission
             },
         };
 
@@ -140,13 +144,14 @@ export const newKategori = (kategoriData, token) => async dispatch => {
     }
 };
 
-export const deleteKategori = (id, token) => async dispatch => {
+export const deleteKategori = (id, token, permission) => async dispatch => {
     try {
         dispatch({ type: DELETE_KATEGORI_REQUEST });
 
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
+                "Permission": permission
             },
         };
 
@@ -166,13 +171,14 @@ export const deleteKategori = (id, token) => async dispatch => {
     }
 };
 
-export const getDetailKategori = (id, token) => async dispatch => {
+export const getDetailKategori = (id, token, permission) => async dispatch => {
     try {
         dispatch({ type: DETAIL_KATEGORI_REQUEST });
 
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
+                "Permission": permission
             },
         };
 
@@ -192,13 +198,14 @@ export const getDetailKategori = (id, token) => async dispatch => {
     }
 };
 
-export const updateKategori = (kategori, id, token) => async dispatch => {
+export const updateKategori = (kategori, id, token, permission) => async dispatch => {
     try {
         dispatch({ type: UPDATE_KATEGORI_REQUEST });
 
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
+                "Permission": permission
             },
         };
 
