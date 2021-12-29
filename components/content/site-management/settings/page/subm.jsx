@@ -20,19 +20,11 @@ export default function SUBM(props) {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState([]);
   const [academy, setAcademy] = useState([]);
-<<<<<<< HEAD
-  const [theme, setTheme] = useState("");
-  const [organizer, setOrganizer] = useState("");
-  const [training, setTraining] = useState("");
-  const [profileStatus, setProfileStatus] = useState("");
-  const [selectionStatus, setSelectionStatus] = useState("");
-=======
   const [theme, setTheme] = useState([]);
   const [organizer, setOrganizer] = useState([]);
   const [training, setTraining] = useState([]);
   const [profileStatus, setProfileStatus] = useState([]);
   const [selectionStatus, setSelectionStatus] = useState([]);
->>>>>>> db67cd65a272ca56d8689750cb5110faa0147e62
   const [
     participantSelectionStatusUpdate,
     setParticipantSelectionStatusUpdate,
@@ -447,12 +439,6 @@ export default function SUBM(props) {
         }
       };
       reader.readAsDataURL(e.target.files[0]);
-<<<<<<< HEAD
-      setFile(e.target.files[0])
-      setNameFile(e.target.files[0].name);
-    }
-
-=======
       setFile(e.target.files[0]);
       setNameFile(e.target.files[0].name);
     }
@@ -485,7 +471,6 @@ export default function SUBM(props) {
         {e.icon}
       </div>
     );
->>>>>>> db67cd65a272ca56d8689750cb5110faa0147e62
   };
 
   return (
@@ -727,14 +712,6 @@ export default function SUBM(props) {
                 </div>
                 <div className="form-group col-xl-12">
                   <h3 className="judul">Pelatihan</h3>
-<<<<<<< HEAD
-                  <Select placeholder="Pilih Pelatihan" options={listTraining} onChange={e => {
-                    // setnamapelatihan(e.target.selectedOptions[0].innerText);
-                    setTraining(e?.label);
-                    setDisablePelatihan(false);
-                  }} required isDisabled={disablePenyelenggara === true ||
-                    disablePenyelenggara === ""} />
-=======
                   <div style={{ zIndex: "3", position: "relative" }}>
                     <Select
                       placeholder="Pilih Pelatihan"
@@ -756,7 +733,6 @@ export default function SUBM(props) {
                       getOptionLabel={(e) => formatLabel(e)}
                     />
                   </div>
->>>>>>> db67cd65a272ca56d8689750cb5110faa0147e62
 
                   {/* <select
                     className="form-control"
