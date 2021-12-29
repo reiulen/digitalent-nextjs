@@ -36,8 +36,8 @@ export const getAllAcademy =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -64,8 +64,8 @@ export const getDetailAcademy =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -93,8 +93,8 @@ export const newAcademy =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        // Permission: token_permission,
       };
 
       const { data } = await axios.post(
@@ -126,8 +126,8 @@ export const updateAcademy =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        // Permission: token_permission,
       };
 
       const { data } = await axios.post(
@@ -157,8 +157,8 @@ export const deleteAcademy =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.delete(

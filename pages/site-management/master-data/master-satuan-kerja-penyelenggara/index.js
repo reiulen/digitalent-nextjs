@@ -53,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   )
       // );
 
-      await store.dispatch(getAllUnitWork(session.user.user.data.token));
+      await store.dispatch(getAllUnitWork(session.user.user.data.token, req.cookies.token_permission));
 
       return {
         props: {

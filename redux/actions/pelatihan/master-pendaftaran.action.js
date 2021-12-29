@@ -54,8 +54,8 @@ export const getAllListMasterPelatihan =
         params,
         headers: {
           Authorization: `Bearer ${token}`,
+          Permission: token_permission,
         },
-        Permission: token_permission,
       };
 
       const { data } = await axios.get(link, config);
@@ -109,8 +109,8 @@ export const getDetailMasterPelatihan =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
+          Permission: token_permission,
         },
-        // Permission: token_permission,
       };
       const { data } = await axios.get(link, config);
 
@@ -126,7 +126,8 @@ export const getDetailMasterPelatihan =
   };
 
 export const getDetailMasterCopyEditPelatihan =
-  (id, token) => async (dispatch) => {
+  (id, token, token_permission = "") =>
+  async (dispatch) => {
     try {
       dispatch({ type: DETAIL_MASTER_TRAINING_COPY_EDIT_REQUEST });
       let link =
@@ -136,6 +137,7 @@ export const getDetailMasterCopyEditPelatihan =
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
+          Permission: token_permission,
         },
       };
       const { data } = await axios.get(link, config);
@@ -154,31 +156,34 @@ export const getDetailMasterCopyEditPelatihan =
     }
   };
 
-export const newMasterPelatihan = (id, formData, token) => async (dispatch) => {
-  try {
-    dispatch({ type: NEW_MASTER_TRAINING_REQUEST });
-    let link =
-      process.env.END_POINT_API_SERTIFIKAT +
-      `api/manage_certificates/store/${id}`;
+export const newMasterPelatihan =
+  (id, formData, token, token_permission = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: NEW_MASTER_TRAINING_REQUEST });
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT +
+        `api/manage_certificates/store/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token.token}`,
+          Permission: token_permission,
+        },
+      };
 
-    const { data } = await axios.post(link, formData, config);
+      const { data } = await axios.post(link, formData, config);
 
-    if (data) {
-      dispatch({ type: NEW_MASTER_TRAINING_SUCCESS, payload: data });
+      if (data) {
+        dispatch({ type: NEW_MASTER_TRAINING_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: NEW_MASTER_TRAINING_FAIL,
+        payload: error.response.data.message || error,
+      });
     }
-  } catch (error) {
-    dispatch({
-      type: NEW_MASTER_TRAINING_FAIL,
-      payload: error.response.data.message || error,
-    });
-  }
-};
+  };
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({

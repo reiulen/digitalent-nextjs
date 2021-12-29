@@ -29,48 +29,51 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
-export const getAllRoles = (token) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: ROLES_REQUEST });
+export const getAllRoles =
+  (token, tokenPermission) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: ROLES_REQUEST });
 
-    let pageState = getState().allRoles.page || 1;
-    let cariState = getState().allRoles.cari || "";
-    let limitState = getState().allRoles.limit || 5;
+      let pageState = getState().allRoles.page || 1;
+      let cariState = getState().allRoles.cari || "";
+      let limitState = getState().allRoles.limit || 5;
 
-    const params = {
-      page: pageState,
-      cari: cariState,
-      limit: limitState,
-    };
+      const params = {
+        page: pageState,
+        cari: cariState,
+        limit: limitState,
+      };
 
-    const { data } = await axios.get(
-      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
-      {
-        params,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
+      const { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
+        {
+          params,
+          headers: {
+            authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
+          },
+        }
+      );
 
-    dispatch({
-      type: ROLES_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ROLES_FAIL,
-    });
-  }
-};
+      dispatch({
+        type: ROLES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ROLES_FAIL,
+      });
+    }
+  };
 
-export const deleteRoles = (id, token) => async (dispatch) => {
+export const deleteRoles = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ROLES_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
@@ -90,7 +93,7 @@ export const deleteRoles = (id, token) => async (dispatch) => {
   }
 };
 
-export const postRoles = (sendData, token) => {
+export const postRoles = (sendData, token, tokenPermission) => {
   return async (dispatch) => {
     try {
       dispatch({
@@ -102,6 +105,7 @@ export const postRoles = (sendData, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );
@@ -119,17 +123,11 @@ export const postRoles = (sendData, token) => {
       }
     } catch (error) {
       if (error.message.includes("400")) {
-        Swal.fire(
-          "Oopss",
-          "Nama Role Sudah ada Sebelumnya !",
-          "error"
-        ).then(() => {});
-      }else{
-        Swal.fire(
-          "Oopss",
-          error.message,
-          "error"
-        ).then(() => {});
+        Swal.fire("Oopss", "Nama Role Sudah ada Sebelumnya !", "error").then(
+          () => {}
+        );
+      } else {
+        Swal.fire("Oopss", error.message, "error").then(() => {});
       }
       dispatch({
         type: POST_ROLES_FAIL,
@@ -138,32 +136,34 @@ export const postRoles = (sendData, token) => {
   };
 };
 
-export const getDetailRoles = (id, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: DETAIL_ROLES_REQUEST,
-    });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+export const getDetailRoles =
+  (id, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({
+        type: DETAIL_ROLES_REQUEST,
+      });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/detail/${id}`;
+      let link =
+        process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/detail/${id}`;
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_ROLES_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_ROLES_FAIL,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_ROLES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_ROLES_FAIL,
+      });
+    }
+  };
 
 export const getAllPermission = (token) => async (dispatch) => {
   try {
@@ -185,36 +185,38 @@ export const getAllPermission = (token) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const updateRoles = (sendData, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: UPDATE_ROLES_REQUEST,
-    });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+export const updateRoles =
+  (sendData, token, tokenPermission) => async (dispatch) => {
+    try {
+      dispatch({
+        type: UPDATE_ROLES_REQUEST,
+      });
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          Permission: tokenPermission,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/update`,
-      sendData,
-      config
-    );
-    Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
-      window.location = "/site-management/role";
-    });
+      const { data } = await axios.post(
+        process.env.END_POINT_API_SITE_MANAGEMENT + `/api/role/update`,
+        sendData,
+        config
+      );
+      Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+        window.location = "/site-management/role";
+      });
 
-    dispatch({
-      type: UPDATE_ROLES_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_ROLES_FAIL,
-    });
-  }
-};
+      dispatch({
+        type: UPDATE_ROLES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_ROLES_FAIL,
+      });
+    }
+  };
 
 export const getSidebar = (token) => async (dispatch) => {
   try {
@@ -231,7 +233,6 @@ export const getSidebar = (token) => async (dispatch) => {
     localStorage.setItem("sidebar", JSON.stringify(data.data.menu));
     localStorage.setItem("token-permission", data.data.tokenPermission);
     localStorage.setItem("permissions", data.data.permissions);
-
     Cookies.set("token_permission", data.data.tokenPermission);
     dispatch({
       type: GET_SIDEBAR,

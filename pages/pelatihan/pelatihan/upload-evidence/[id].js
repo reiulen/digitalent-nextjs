@@ -9,47 +9,53 @@ import { wrapper } from "../../../../redux/store";
 import { getFormEvidence } from "../../../../redux/actions/pelatihan/training.actions";
 
 const UploadEvidence = dynamic(
-	() =>
-		import("../../../../components/content/pelatihan/training/upload-evidence"),
-	{
-		loading: function loadingNow() {
-			return <LoadingSkeleton />;
-		},
-		ssr: false,
-	}
+  () =>
+    import("../../../../components/content/pelatihan/training/upload-evidence"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
 );
 
 export default function UploadEvidencePage(props) {
-	const session = props.session.user.user.data;
-	return (
-		<>
-			<div className="d-flex flex-column flex-root">
-				<UploadEvidence token={session.token} />
-			</div>
-		</>
-	);
+  const session = props.session.user.user.data;
+  return (
+    <>
+      <div className="d-flex flex-column flex-root">
+        <UploadEvidence token={session.token} />
+      </div>
+    </>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-	(store) =>
-		async ({ query, req }) => {
-			const session = await getSession({ req });
-			const middleware = middlewareAuthAdminSession(session);
-			if (!middleware.status) {
-				return {
-					redirect: {
-						destination: middleware.redirect,
-						permanent: false,
-					},
-				};
-			}
+  (store) =>
+    async ({ query, req }) => {
+      const session = await getSession({ req });
+      const middleware = middlewareAuthAdminSession(session);
+      const token_permission = req.cookies.token_permission;
 
-			await store.dispatch(
-				getFormEvidence(session.user.user.data.token, query.id)
-			);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
+            permanent: false,
+          },
+        };
+      }
 
-			return {
-				props: { session, title: "Upload Evidence - Pelatihan" },
-			};
-		}
+      await store.dispatch(
+        getFormEvidence(
+          session.user.user.data.token,
+          query.id,
+          token_permission
+        )
+      );
+
+      return {
+        props: { session, title: "Upload Evidence - Pelatihan" },
+      };
+    }
 );

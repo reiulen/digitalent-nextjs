@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 export const listsReportTraining =
   (
     token,
+    token_permission,
     page = 1,
     limit = 5,
     cari = "",
@@ -38,6 +39,7 @@ export const listsReportTraining =
         },
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -61,7 +63,8 @@ export const getDetailReportTraining =
     administrasi = "",
     substansi = "",
     sertifikat = "",
-    peserta = ""
+    peserta = "",
+    token_permission = ""
   ) =>
   async (dispatch) => {
     try {
@@ -82,6 +85,7 @@ export const getDetailReportTraining =
         },
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 
@@ -96,7 +100,8 @@ export const getDetailReportTraining =
   };
 
 export const uploadSertifikat =
-  (token, data, pelatian_id) => async (dispatch) => {
+  (token, data, pelatian_id, token_permission = "") =>
+  async (dispatch) => {
     try {
       let link =
         process.env.END_POINT_API_PELATIHAN +
@@ -106,6 +111,7 @@ export const uploadSertifikat =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: token_permission,
         },
       };
 

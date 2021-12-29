@@ -13,7 +13,7 @@ import { UPDATE_SETTING_RESET } from "../../../../redux/types/publikasi/setting.
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingTable from "../../../LoadingTable";
 
-const Pengaturan = ({ token }) => {
+const Pengaturan = ({ token, permission }) => {
     const dispatch = useDispatch()
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -75,7 +75,7 @@ const Pengaturan = ({ token }) => {
                     text: "Upload image minimal 1 MB !",
                 });
             } else {
-                dispatch(updateSettingImagePublikasi(upload_image, token))
+                dispatch(updateSettingImagePublikasi(upload_image, token, permission))
             }
         } else {
             simpleValidator.current.showMessages();
@@ -102,7 +102,7 @@ const Pengaturan = ({ token }) => {
                     text: "Upload imagetron minimal 1 MB !",
                 });
             } else {
-                dispatch(updateSettingImagetronPublikasi(upload_imagetron, token))
+                dispatch(updateSettingImagetronPublikasi(upload_imagetron, token, permission))
             }
         } else {
             simpleValidator.current.showMessages();
@@ -129,7 +129,7 @@ const Pengaturan = ({ token }) => {
                     text: "Batas slider minimal 1 !",
                 });
             } else {
-                dispatch(updateSettingSliderPublikasi(batas_slider, token))
+                dispatch(updateSettingSliderPublikasi(batas_slider, token, permission))
             }
 
         } else {
@@ -157,7 +157,7 @@ const Pengaturan = ({ token }) => {
                     text: "Max Faq minimal 1 !",
                 });
             } else {
-                dispatch(updateSettingFaqPublikasi(maxfaq, token))
+                dispatch(updateSettingFaqPublikasi(maxfaq, token, permission))
             }
 
         } else {

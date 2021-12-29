@@ -24,6 +24,7 @@ import {
 } from "../../../../redux/actions/pelatihan/function.actions";
 import { postFilterExportData } from "../../../../redux/actions/site-management/export-data.actions";
 import { temaByAkademiReducer } from "../../../../redux/reducers/beranda/beranda.reducers";
+import Cookies from 'js-cookie'
 
 const UbahRole = ({ token, name }) => {
   let dispatch = useDispatch();
@@ -96,11 +97,7 @@ const UbahRole = ({ token, name }) => {
       kota: kota ? kota.label : "",
     };
 
-    if (datePelaksanaanEnd !== null) {
-      dispatch(postFilterExportData(token, data));
-    } else {
-      Swal.fire("Oppss", "isi tanggal dengan benar", "error");
-    }
+    dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission")));
   };
 
   const handleSubmit = (e) => {
@@ -128,7 +125,7 @@ const UbahRole = ({ token, name }) => {
         cancelButtonText: "Batal",
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(postFilterExportData(token, data, null, null, name));
+          dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission")));
         }
       });
     } else {
@@ -391,7 +388,7 @@ const UbahRole = ({ token, name }) => {
                             kota: kota ? kota.label : "",
                           };
 
-                          dispatch(postFilterExportData(token, data, e, limit));
+                          dispatch(postFilterExportData(token, data, e, limit,Cookies.get("token_permission")));
                         }}
                         nextPageText={">"}
                         prevPageText={"<"}
@@ -442,7 +439,8 @@ const UbahRole = ({ token, name }) => {
                                   token,
                                   data,
                                   page,
-                                  e.target.value
+                                  e.target.value,
+                                  Cookies.get("token_permission")
                                 )
                               );
                             }}

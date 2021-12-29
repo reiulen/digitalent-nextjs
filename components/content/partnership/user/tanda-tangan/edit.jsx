@@ -97,7 +97,7 @@ const EditTandaTangan = ({ token }) => {
               {
                 headers: {
                   authorization: `Bearer ${token}`,
-                  Permission: Cookies.get ("token_permission")
+                  // Permission: Cookies.get ("token_permission")
                 },
               }
             );
@@ -137,7 +137,7 @@ const EditTandaTangan = ({ token }) => {
                 {
                   headers: {
                     authorization: `Bearer ${token}`,
-                    Permission: Cookies.get ("token_permission")
+                    // Permission: Cookies.get ("token_permission")
                   },
                 }
               );
@@ -172,7 +172,7 @@ const EditTandaTangan = ({ token }) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            Permission: Cookies.get ("token_permission")
+            // Permission: Cookies.get ("token_permission")
           },
         }
       );

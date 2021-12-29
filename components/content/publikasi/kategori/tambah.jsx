@@ -13,7 +13,7 @@ import { NEW_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.t
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahKategori = ({ token }) => {
+const TambahKategori = ({ token, permission }) => {
 
     const dispatch = useDispatch()
     const router = useRouter();
@@ -68,11 +68,11 @@ const TambahKategori = ({ token }) => {
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Ya !",
                 cancelButtonText: "Batal",
-              })
+            })
                 .then((result) => {
-                  if (result.isConfirmed) {
-                    dispatch(newKategori(data, token))
-                  }
+                    if (result.isConfirmed) {
+                        dispatch(newKategori(data, token, permission))
+                    }
                 });
 
         } else {

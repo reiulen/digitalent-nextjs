@@ -14,6 +14,7 @@ import AlertBar from "../../../partnership/components/BarAlert";
 import stylesPag from "../../../../../styles/pagination.module.css";
 import { getAllListsPeserta, deletePesertaDts } from "../../../../../redux/actions/site-management/user/peserta-dts";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -215,7 +216,7 @@ const Table = ({ token }) => {
                             onClick={() => {
                               setPage(1);
                               setLimit(5);
-                              dispatch(getAllListsPeserta(token, 5, 1, search));
+                              dispatch(getAllListsPeserta(token, 5, 1, search,Cookies.get("token_permission")));
                             }}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
@@ -273,7 +274,7 @@ const Table = ({ token }) => {
                         pageRangeDisplayed={2}
                         onChange={(e) => {
                           setPage(e);
-                          dispatch(getAllListsPeserta(token, limit, e, search));
+                          dispatch(getAllListsPeserta(token, limit, e, search, Cookies.get("token_permission")));
                         }}
                         nextPageText={">"}
                         prevPageText={"<"}

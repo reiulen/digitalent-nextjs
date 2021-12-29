@@ -15,6 +15,7 @@ import {
   getListAcademy,
   getAllListPelatihan,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
+import Cookies from 'js-cookie'
 
 const TambahApi = ({ token }) => {
   const router = useRouter();
@@ -160,6 +161,7 @@ const TambahApi = ({ token }) => {
                   {
                     headers: {
                       authorization: `Bearer ${token}`,
+                      "Permission": Cookies.get("token_permission")
                     },
                   }
                 );
@@ -202,6 +204,7 @@ const TambahApi = ({ token }) => {
                   {
                     headers: {
                       authorization: `Bearer ${token}`,
+                      "Permission": Cookies.get("token_permission")
                     },
                   }
                 );

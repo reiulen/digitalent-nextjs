@@ -21,7 +21,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditVideo = ({ token }) => {
+const EditVideo = ({ token, permission }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -191,7 +191,7 @@ const EditVideo = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateVideo(data, token));
+                                dispatch(updateVideo(data, token, permission));
                             }
                         });
                 } else {
@@ -222,7 +222,7 @@ const EditVideo = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateVideo(data, token));
+                                dispatch(updateVideo(data, token, permission));
                             }
                         });
                 }
@@ -258,7 +258,7 @@ const EditVideo = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateVideo(data, token));
+                                dispatch(updateVideo(data, token, permission));
                             }
                         });
 
@@ -289,7 +289,7 @@ const EditVideo = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                                dispatch(updateVideo(data, token));
+                                dispatch(updateVideo(data, token, permission));
                             }
                         });
                 }

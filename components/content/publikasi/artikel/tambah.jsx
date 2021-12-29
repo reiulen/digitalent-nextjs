@@ -24,7 +24,7 @@ import LoadingPage from "../../../LoadingPage";
 
 import { useQuill } from "react-quilljs";
 
-const TambahArtikel = ({ token, id }) => {
+const TambahArtikel = ({ token, id, permission }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -194,7 +194,7 @@ const TambahArtikel = ({ token, id }) => {
           cancelButtonText: "Batal",
         }).then((result) => {
           if (result.isConfirmed) {
-            dispatch(newArtikel(data, token));
+            dispatch(newArtikel(data, token, permission));
           }
         });
       } else {
@@ -221,7 +221,7 @@ const TambahArtikel = ({ token, id }) => {
           cancelButtonText: "Batal",
         }).then((result) => {
           if (result.isConfirmed) {
-            dispatch(newArtikel(data, token));
+            dispatch(newArtikel(data, token, permission));
           }
         });
       }

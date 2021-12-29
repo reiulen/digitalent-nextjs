@@ -53,7 +53,7 @@ const img = {
     height: '100%'
 };
 
-const TambahGaleri = ({ token, id }) => {
+const TambahGaleri = ({ token, id, permission }) => {
     const dispatch = useDispatch()
     const router = useRouter();
 
@@ -319,7 +319,7 @@ const TambahGaleri = ({ token, id }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(onCall(data, token))
+                        dispatch(onCall(data, token, permission))
                     }
                 });
         } else {
@@ -345,7 +345,7 @@ const TambahGaleri = ({ token, id }) => {
             })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        dispatch(onCall(data, token))
+                        dispatch(onCall(data, token, permission))
                     }
                 });
         }
