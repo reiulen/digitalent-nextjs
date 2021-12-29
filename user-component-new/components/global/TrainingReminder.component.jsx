@@ -107,7 +107,17 @@ const TrainingReminder = ({ session }) => {
         </div>
         <button
           className="btn btn-beranda-primary rounded-pill text-white fw-600 px-5 ml-4"
-          onClick={() => handleTemaNotif()}
+          onClick={() => {
+            if (!session) {
+              return router.push("/login");
+            } else {
+              if (!session?.roles?.includes("user")) {
+                SweatAlert("Gagal", "Anda sedang login sebagai Admin", "error");
+              } else {
+                handleTemaNotif();
+              }
+            }
+          }}
         >
           Buat
         </button>

@@ -610,7 +610,7 @@ const Beranda = ({ session }) => {
                                                           router.push("/login");
                                                         } else {
                                                           if (
-                                                            !session.roles.includes(
+                                                            !session?.roles?.includes(
                                                               "user"
                                                             )
                                                           ) {
@@ -875,7 +875,7 @@ const Beranda = ({ session }) => {
                                                         router.push("/login");
                                                       } else {
                                                         if (
-                                                          !session.roles.includes(
+                                                          !session?.roles?.includes(
                                                             "user"
                                                           )
                                                         ) {
@@ -1013,7 +1013,7 @@ const Beranda = ({ session }) => {
                                                     router.push("/login");
                                                   } else {
                                                     if (
-                                                      !session.roles.includes(
+                                                      !session?.roles?.includes(
                                                         "user"
                                                       )
                                                     ) {
