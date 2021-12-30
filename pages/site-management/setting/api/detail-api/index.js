@@ -44,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       await store.dispatch(
-        getDetailApi(query.id, session.user.user.data.token)
+        getDetailApi(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
       return {
         props: { session, title: "Detail Api - Site Management" },

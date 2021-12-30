@@ -24,8 +24,9 @@ import {
 } from "../../../../redux/types/publikasi/artikel.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
+import Cookies from 'js-cookie'
 
-const EditArtikel = ({ token, idUser, permission }) => {
+const EditArtikel = ({ token, idUser }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -232,7 +233,7 @@ const EditArtikel = ({ token, idUser, permission }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token, permission));
+              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
             }
           });
         } else {
@@ -261,7 +262,7 @@ const EditArtikel = ({ token, idUser, permission }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token, permission));
+              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
             }
           });
         }
@@ -295,7 +296,7 @@ const EditArtikel = ({ token, idUser, permission }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token, permission));
+              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
             }
           });
         } else {
@@ -324,7 +325,7 @@ const EditArtikel = ({ token, idUser, permission }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              dispatch(updateArtikel(data, token, permission));
+              dispatch(updateArtikel(data, token, Cookies.get("token_permission")));
             }
           });
         }

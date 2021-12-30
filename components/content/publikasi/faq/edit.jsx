@@ -17,13 +17,15 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
+import Cookies from 'js-cookie'
 
 import "../../../../styles/publikasi.module.css"
 
-const EditFaq = ({ token, permission }) => {
+const EditFaq = ({ token }) => {
     const editorRef = useRef();
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false);

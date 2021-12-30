@@ -26,7 +26,7 @@ import {
 
 import axios from "axios";
 
-export const getAllPage = (token) => async (dispatch, getState) => {
+export const getAllPage = (token, tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: PAGE_REQUEST });
 
@@ -46,6 +46,7 @@ export const getAllPage = (token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission,
         },
       }
     );
@@ -62,19 +63,20 @@ export const getAllPage = (token) => async (dispatch, getState) => {
   }
 };
 
-export const deletePage = (id, token) => async (dispatch) => {
+export const deletePage = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PAGE_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
     const { data } = await axios.delete(
       process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/delete/${id}`,
+      `api/setting-page/delete/${id}`,
       config
     );
 
@@ -90,7 +92,7 @@ export const deletePage = (id, token) => async (dispatch) => {
   }
 };
 
-export const postPage = (sendData, token) => {
+export const postPage = (sendData, token, tokenPermission) => {
   return async (dispatch) => {
     try {
       dispatch({
@@ -102,6 +104,7 @@ export const postPage = (sendData, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );
@@ -119,37 +122,38 @@ export const postPage = (sendData, token) => {
 };
 
 export const getDetailPages =
-  (id, token = "") =>
-  async (dispatch) => {
-    try {
-      dispatch({
-        type: DETAIL_PAGE_REQUEST,
-      });
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      };
+  (id, token = "", tokenPermission) =>
+    async (dispatch) => {
+      try {
+        dispatch({
+          type: DETAIL_PAGE_REQUEST,
+        });
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token,
+            Permission: tokenPermission,
+          },
+        };
 
-      let link =
-        process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/detail/${id}`;
+        let link =
+          process.env.END_POINT_API_SITE_MANAGEMENT +
+          `api/setting-page/detail/${id}`;
 
-      const { data } = await axios.get(link, config);
+        const { data } = await axios.get(link, config);
 
-      dispatch({
-        type: DETAIL_PAGE_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: DETAIL_PAGE_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+        dispatch({
+          type: DETAIL_PAGE_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: DETAIL_PAGE_FAIL,
+          payload: error.response.data.message,
+        });
+      }
+    };
 
-export const updatePage = (sendData, id, token) => async (dispatch) => {
+export const updatePage = (sendData, id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_PAGE_REQUEST,
@@ -157,12 +161,13 @@ export const updatePage = (sendData, id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
     const { data } = await axios.post(
       process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/update/${id}`,
+      `api/setting-page/update/${id}`,
       sendData,
       config
     );

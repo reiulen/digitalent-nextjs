@@ -54,7 +54,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // }
 
       await store.dispatch(
-        getDetailLog(query.id, session.user.user.data.token)
+        getDetailLog(query.id, session.user.user.data.token, req.cookies.token_permission)
       );
       return {
         props: { session, title: "Log API - Site Management" },

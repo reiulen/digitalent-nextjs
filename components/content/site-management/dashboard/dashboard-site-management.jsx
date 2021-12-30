@@ -55,6 +55,18 @@ const DashboardSiteManagement = ({ token, user }) => {
     dispatch(loadDataPeserta(token, typePeserta, pagePeserta, Cookies.get("token_permission")));
   }, [dispatch, token, type, pageZonasi, typePeserta, pagePeserta]);
 
+  useEffect(() => {
+	axios
+		.get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/zonasi-participant`, {
+			headers: {
+				authorization: `Bearer ${token}`,
+				"Permission": Cookies.get("token_permission")
+			},
+		})
+		.then((items) => {
+			setTotalZonasi(items.data.data.total);
+		});
+}, [dispatch, token, pageZonasi]);
 
 
 
@@ -360,10 +372,10 @@ const DashboardSiteManagement = ({ token, user }) => {
 												e.preventDefault();
 												if (pageZonasi === 1) {
 													setPageZonasi(pageZonasi);
-													dispatch(loadDataListZonasi(token, pageZonasi))
+													dispatch(loadDataListZonasi(token, pageZonasi, Cookies.get("token_permission")))
 												} else {
 													setPageZonasi(pageZonasi - 1);
-													dispatch(loadDataListZonasi(token, pageZonasi - 1))
+													dispatch(loadDataListZonasi(token, pageZonasi - 1,Cookies.get("token_permission")))
 												}
 											}}
 											style={{
@@ -387,10 +399,10 @@ const DashboardSiteManagement = ({ token, user }) => {
 													Math.ceil(totalZonasi / 5)
 												) {
 													setPageZonasi(pageZonasi);
-													dispatch(loadDataListZonasi(token, pageZonasi))
+													dispatch(loadDataListZonasi(token, pageZonasi,Cookies.get("token_permission")))
 												} else {
 													setPageZonasi(pageZonasi + 1);
-													dispatch(loadDataListZonasi(token, pageZonasi + 1))
+													dispatch(loadDataListZonasi(token, pageZonasi + 1, Cookies.get("token_permission")))
 												}
 											}}
 											style={{

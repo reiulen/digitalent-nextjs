@@ -21,12 +21,13 @@ import ButtonAction from '../../../ButtonAction'
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Cookies from 'js-cookie'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFaq, updatePinFaq, getAllFaqPagination } from '../../../../redux/actions/publikasi/faq.actions'
 import { DELETE_FAQ_RESET, UPDATE_PIN_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
-const Faq = ({ token, permission }) => {
+const Faq = ({ token }) => {
     const importSwitch = () => import("bootstrap-switch-button-react");
     const SwitchButton = dynamic(importSwitch, {
         ssr: false,
@@ -34,6 +35,7 @@ const Faq = ({ token, permission }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const { loading, error, faq } = useSelector(state => state.allFaq)
     const { paginateFaq } = useSelector(state => state.paginationFaq)

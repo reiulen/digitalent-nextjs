@@ -22,16 +22,18 @@ import ButtonNewTab from "../../../ButtonNewTab";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Cookies from 'js-cookie'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 
 import { DELETE_BERITA_RESET } from "../../../../redux/types/publikasi/berita.type";
 
-const Berita = ({ token, permission }) => {
+const Berita = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const {
         loading: allLoading,

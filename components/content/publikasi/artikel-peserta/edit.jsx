@@ -26,11 +26,13 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 import { useQuill } from "react-quilljs";
+import Cookies from 'js-cookie'
 
-const EditArtikel = ({ token, permission }) => {
+const EditArtikel = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const [editorLoaded, setEditorLoaded] = useState(false);

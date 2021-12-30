@@ -4,15 +4,16 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { putDataPrompt } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 import styles from "../../../../../styles/previewGaleri.module.css";
+import Cookies from "js-cookie";
 
 export default function Prompt(props) {
   const allPrompt = useSelector((state) => state.allPrompt);
 
   const [notification, setNotification] = useState(
-    allPrompt.notification.training_rules.notification[0]?.status
+    allPrompt.notification?.training_rules.notification[0]?.status
   );
   const [email, setEmail] = useState(
-    allPrompt.notification.training_rules.email[0]?.status
+    allPrompt.notification?.training_rules.email[0]?.status
   );
 
   let dispatch = useDispatch();
@@ -23,7 +24,9 @@ export default function Prompt(props) {
       putDataPrompt(
         props.token,
         notification === "1" || notification === true ? "1" : "0",
-        email === "1" || email === true ? "1" : "0"
+        email === "1" || email === true ? "1" : "0",
+        Cookies.get("token_permission")
+        
       )
     );
   };

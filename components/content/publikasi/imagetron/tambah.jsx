@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
-
+import Cookies from 'js-cookie'
 import styles from "../../../../styles/previewGaleri.module.css";
 
 import {
@@ -22,10 +22,11 @@ import { NEW_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahImagetron = ({ token, id, permission }) => {
+const TambahImagetron = ({ token, id }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
 
