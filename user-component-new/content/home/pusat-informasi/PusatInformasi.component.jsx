@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 import styles from "./pusatInformasi.module.css";
+import { Row, Col } from "react-bootstrap";
 
 import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
@@ -13,12 +14,27 @@ const PusatInformasi = () => {
       <BreadcrumbComponent
         data={[{ link: router.asPath, name: "Pusat Informasi" }]}
       />
+      <Row>
+        <Col md={12}>
+          <div className="mb-3 title-pelatihan">
+            <h1 className="fw-700 fz-40">Pusat Informasi</h1>
+
+            <div className="mt-5 mt-md-1">
+              <p className="mr-6 fz-18 text-muted fw-400">
+                Pusat Informasi untuk Panduan Test Substansi dan Hak & Kewajiban
+              </p>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
       <div>
         {/* content */}
-        <h1 className="fw-700 fz-40">Pusat Informasi</h1>
+
+        {/* <h1 className="fw-700 fz-40">Pusat Informasi</h1>
         <p className="mr-6 fz-18 text-muted fw-400">
           Pusat Informasi untuk Panduan Test Substansi dan Hak & Kewajiban
-        </p>
+        </p> */}
         <div className="border px-6 py-10 mt-10">
           <ul
             className="nav-tabs-customes nav nav-tabs"
@@ -59,7 +75,7 @@ const PusatInformasi = () => {
               role="tabpanel"
               aria-labelledby="panduan-tab"
             >
-              <div className="mt-8 list-pusat-informasi">
+              <div className="mt-8 list-pusat-informasi fw-400">
                 <ol className="pl-4 text-break">
                   <li>
                     Sebelum mengerjakan tes, harap perhatikan dan lakukan
@@ -146,7 +162,7 @@ const PusatInformasi = () => {
               role="tabpanel"
               aria-labelledby="hak-dan-kewajiban-tab"
             >
-              <div className="mt-8 list-pusat-informasi">
+              <div className="mt-8 list-pusat-informasi fw-400">
                 <p>
                   Untuk tujuan membantu memperlancar proses pelatihan, setiap
                   peserta diharapkan membaca informasi dan memahami tentang Hak

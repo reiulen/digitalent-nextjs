@@ -13,13 +13,15 @@ import { newArtikelPeserta } from "../../../../redux/actions/publikasi/artikel.a
 
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { useQuill } from "react-quilljs";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
-const TambahArtikelPeserta = ({ session, permission }) => {
+const TambahArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
@@ -259,7 +261,7 @@ const TambahArtikelPeserta = ({ session, permission }) => {
                         <p>Tunggu Sebentar</p>
                       )}
                     </div>
-                    <div className="mt-13">
+                    <div className={`${styles.validhomePage}`}>
                       {simpleValidator.current.message(
                         "isi artikel",
                         deskripsi,
@@ -270,7 +272,7 @@ const TambahArtikelPeserta = ({ session, permission }) => {
                   </div>
                 </div>
 
-                <div className="form-group">
+                <div className={`${styles.selectKategori} form-group`}>
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-2 col-form-label font-weight-bolder"

@@ -45,9 +45,7 @@ const EditCommitmentStep3 = ({ token, propsStep }) => {
   const [, forceUpdate] = useState();
 
   const [commitment, setCommitment] = useState(getEditTraining3.komitmen);
-  const [description, setDescription] = useState(
-    getEditTraining3.deskripsi_komitmen
-  );
+  const [description, setDescription] = useState(getEditTraining3.deskripsi);
 
   useEffect(() => {
     editorRef.current = {

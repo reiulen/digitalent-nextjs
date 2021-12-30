@@ -620,6 +620,7 @@ const ListReport = ({ token }) => {
               dispatch(
                 listsReportTraining(
                   token,
+                  token_permission,
                   1,
                   5,
                   "",
@@ -628,8 +629,7 @@ const ListReport = ({ token }) => {
                   null,
                   null,
                   null,
-                  null,
-                  token_permission
+                  null
                 )
               );
             }}
@@ -651,6 +651,7 @@ const ListReport = ({ token }) => {
               dispatch(
                 listsReportTraining(
                   token,
+                  token_permission,
                   page,
                   limit,
                   search,
@@ -661,8 +662,7 @@ const ListReport = ({ token }) => {
                   pelaksanaan[0] === "Invalid date"
                     ? ""
                     : pelaksanaan.join(","),
-                  statusPelatihan ? statusPelatihan.label : "",
-                  token_permission
+                  statusPelatihan ? statusPelatihan.label : ""
                 )
               );
             }}

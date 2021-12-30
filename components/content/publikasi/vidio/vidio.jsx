@@ -27,11 +27,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteVideo, playVideo, clearErrors, changeStatusCard, filterCard } from '../../../../redux/actions/publikasi/video.actions'
 import { DELETE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 import { viewGaleri } from '../../../../redux/actions/publikasi/galeri.actions';
+import Cookies from 'js-cookie'
 
-const Vidio = ({ token, permission }) => {
+const Vidio = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
+    const permission = Cookies.get("token_permission")
 
     const { loading: allLoading, error, video } = useSelector(state => state.allVideo)
     const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteVideo);

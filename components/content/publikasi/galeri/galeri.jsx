@@ -14,6 +14,7 @@ import { addDays } from "date-fns";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { Modal } from "react-bootstrap";
+import Cookies from 'js-cookie'
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
@@ -32,9 +33,10 @@ import {
 
 import { DELETE_GALERI_RESET } from "../../../../redux/types/publikasi/galeri.type";
 
-const Galeri = ({ token, permission }) => {
+const Galeri = ({ token }) => {
     const dispatch = useDispatch();
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const {
         loading: allLoading,

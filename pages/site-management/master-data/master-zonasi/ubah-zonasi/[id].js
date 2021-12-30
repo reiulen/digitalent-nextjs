@@ -45,9 +45,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(getAllOptionProvinces(session.user.user.data.token));
+      await store.dispatch(getAllOptionProvinces(session.user.user.data.token, req.cookies.token_permission));
       await store.dispatch(
-        getDetailZonasi(params.id, session.user.user.data.token)
+        getDetailZonasi(params.id, session.user.user.data.token, req.cookies.token_permission)
       );
 
       return {

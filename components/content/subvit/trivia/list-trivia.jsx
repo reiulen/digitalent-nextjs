@@ -189,7 +189,8 @@ const ListTrivia = ({ token, tokenPermission }) => {
         "",
 
         100,
-        token
+        token,
+        tokenPermission
       )
     );
     setViewSoal(true);

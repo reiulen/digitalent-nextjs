@@ -77,7 +77,9 @@ const StepThree = ({ token, tokenPermission }) => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
+      dispatch(
+        updateSubtanceQuestionBanksPublish(data, id, token, tokenPermission)
+      );
       localStorage.removeItem("method");
       localStorage.removeItem("step1");
       localStorage.removeItem("step2");

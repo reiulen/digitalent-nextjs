@@ -30,7 +30,7 @@ import {
 import axios from "axios";
 
 export const getAllGeneral =
-  (page = 1, cari = "", limit = 5, token) =>
+  (page = 1, cari = "", limit = 5, token, tokenPermission) =>
     async (dispatch) => {
       try {
         dispatch({ type: GENERAL_REQUEST });
@@ -43,6 +43,7 @@ export const getAllGeneral =
         const config = {
           headers: {
             Authorization: "Bearer " + token,
+            Permission: tokenPermission,
           },
         };
 
@@ -59,7 +60,7 @@ export const getAllGeneral =
       }
     };
 
-export const getDataGeneral = (token) =>
+export const getDataGeneral = (token, tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({ type: DATA_GENERAL_REQUEST });
@@ -70,6 +71,7 @@ export const getDataGeneral = (token) =>
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission,
         },
       };
 
@@ -87,13 +89,14 @@ export const getDataGeneral = (token) =>
     }
   };
 
-export const deleteGeneral = (id, token) => async (dispatch) => {
+export const deleteGeneral = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_GENERAL_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
@@ -115,7 +118,7 @@ export const deleteGeneral = (id, token) => async (dispatch) => {
   }
 };
 
-export const postGeneral = (sendData, token) => {
+export const postGeneral = (sendData, token, tokenPermission) => {
   return async (dispatch) => {
     try {
       dispatch({
@@ -127,6 +130,7 @@ export const postGeneral = (sendData, token) => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            Permission: tokenPermission,
           },
         }
       );
@@ -143,7 +147,7 @@ export const postGeneral = (sendData, token) => {
   };
 };
 
-export const getDetailGeneral = (id, token) => async (dispatch) => {
+export const getDetailGeneral = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: DETAIL_GENERAL_REQUEST,
@@ -151,6 +155,7 @@ export const getDetailGeneral = (id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 
@@ -172,7 +177,7 @@ export const getDetailGeneral = (id, token) => async (dispatch) => {
   }
 };
 
-export const updateGeneral = (sendData, id, token) => async (dispatch) => {
+export const updateGeneral = (sendData, id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_GENERAL_REQUEST,
@@ -180,6 +185,7 @@ export const updateGeneral = (sendData, id, token) => async (dispatch) => {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission,
       },
     };
 

@@ -19,11 +19,13 @@ import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/p
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 import { useQuill } from "react-quilljs";
+import Cookies from 'js-cookie'
 
-const EditBerita = ({ token, idUser, permission }) => {
+const EditBerita = ({ token, idUser }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false)
