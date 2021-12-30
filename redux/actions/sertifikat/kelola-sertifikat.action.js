@@ -178,9 +178,6 @@ export const newSertifikat =
         type: NEW_SERTIFIKAT_FAIL,
         payload: error?.response?.data?.message || error.message,
       });
-      console.log(error, "ini errornya");
-      console.log(error.response.data.message, "ini error response");
-      console.log(error.message, "ini error message");
     }
   };
 
