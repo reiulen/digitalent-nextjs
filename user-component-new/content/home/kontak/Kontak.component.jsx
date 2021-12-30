@@ -12,12 +12,25 @@ export default function Kontak() {
     <>
       <HomeWrapper>
         <BreadcrumbComponent data={[{ link: router.asPath, name: "Kontak" }]} />
-        <div className="mt-5">
+        <Row>
+          <Col md={12}>
+            <div className="mb-3 title-pelatihan">
+              <h1 className="fw-700 fz-40">Kontak</h1>
+
+              <div className="mt-5 mt-md-1">
+                <p className="mr-6 fz-18 text-muted fw-400">
+                  Layanan Pusat Informasi Digitalent Scholarship
+                </p>
+              </div>
+            </div>
+          </Col>
+        </Row>
+        {/* <div className="mt-5">
           <h1 className="fw-700 fz-40">Kontak</h1>
           <p className="mr-6 fz-18 text-muted fw-400">
             Layanan Pusat Informasi Digitalent Scholarship
           </p>
-        </div>
+        </div> */}
         <div className="my-10 w-100">
           <Card className="rounded-xl">
             <Row>

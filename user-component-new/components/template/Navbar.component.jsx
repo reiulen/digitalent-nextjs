@@ -186,10 +186,24 @@ const Navigationbar = ({ session }) => {
     getMenu();
   }, []);
 
-  const handlerLogout = () => {
-    Cookies.remove("id_tema");
-    Cookies.remove("id_pelatihan");
-    signOut();
+  const handlerLogout = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + session.token,
+      },
+    };
+    await axios
+      .get(process.env.END_POINT_API_PELATIHAN + "api/v1/auth/logout", config)
+      .then((res) => {
+        if (res.data.status) {
+          Cookies.remove("id_tema");
+          Cookies.remove("id_pelatihan");
+          signOut();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const [isNavOpen, setIsNavOpen] = useState(false);

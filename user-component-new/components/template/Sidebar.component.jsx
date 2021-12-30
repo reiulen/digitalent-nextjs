@@ -11,6 +11,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/client";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
   const router = useRouter();
@@ -94,6 +95,26 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
 
   const handleDropFalse = () => {
     setDrop(false);
+  };
+
+  const handleLogout = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + session.token,
+      },
+    };
+    await axios
+      .get(process.env.END_POINT_API_PELATIHAN + "api/v1/auth/logout", config)
+      .then((res) => {
+        if (res.data.status) {
+          Cookies.remove("id_tema");
+          Cookies.remove("id_pelatihan");
+          signOut();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -434,7 +455,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse, session }) => {
         <div
           className={styles.akunMenu}
           onClick={() => {
-            signOut();
+            handleLogout();
           }}
         >
           <div className="d-flex flex-row">
