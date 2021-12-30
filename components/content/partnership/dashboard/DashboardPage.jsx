@@ -304,11 +304,9 @@ export default function DashboardPage({ token }) {
               {
                 allDashboard && 
                 allDashboard.data_dashboard && 
-                allDashboard.data_dashboard.data && 
-                allDashboard.data_dashboard.data.cooperation_active && 
-                allDashboard.data_dashboard.data.cooperation_approved ?
-                  allDashboard?.data_dashboard?.data?.cooperation_active +
-                  allDashboard?.data_dashboard?.data?.cooperation_approved
+                allDashboard.data_dashboard.data ?
+                  allDashboard.data_dashboard.data.cooperation_active +
+                  allDashboard.data_dashboard.data.cooperation_approved
                 :
                   0
               }
@@ -411,11 +409,9 @@ export default function DashboardPage({ token }) {
               {
                 allDashboard &&
                 allDashboard.data_dashboard &&
-                allDashboard.data_dashboard.data &&
-                allDashboard.data_dashboard.data.cooperation_will_expired &&
-                allDashboard.data_dashboard.data.cooperation_rejected ?
-                  allDashboard?.data_dashboard?.data?.cooperation_will_expired +
-                  allDashboard?.data_dashboard?.data?.cooperation_rejected
+                allDashboard.data_dashboard.data ?
+                  allDashboard.data_dashboard.data.cooperation_will_expired +
+                  allDashboard.data_dashboard.data.cooperation_rejected
                 :
                   0
               }
@@ -426,16 +422,13 @@ export default function DashboardPage({ token }) {
               {
                 allDashboard &&
                 allDashboard.data_dashboard &&
-                allDashboard.data_dashboard.data &&
-                allDashboard.data_dashboard.data.cooperation_will_expired &&
-                allDashboard.data_dashboard.data.cooperation_rejected ?
-                  allDashboard?.data_dashboard?.data?.cooperation_will_expired +
-                  allDashboard?.data_dashboard?.data?.cooperation_rejected
+                allDashboard.data_dashboard.data ?
+                  allDashboard.data_dashboard.data.cooperation_will_expired +
+                  allDashboard.data_dashboard.data.cooperation_rejected
                 :
                   0
               }
               </span>
-
               <div className="col-12">
                 <ResponsiveContainer width="100%" height={350}>
                   <PieChart>
