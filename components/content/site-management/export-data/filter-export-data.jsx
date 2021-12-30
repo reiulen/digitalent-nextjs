@@ -97,7 +97,7 @@ const UbahRole = ({ token, name }) => {
       kota: kota ? kota.label : "",
     };
 
-    dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission")));
+    dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission"), name));
   };
 
   const handleSubmit = (e) => {
@@ -125,7 +125,7 @@ const UbahRole = ({ token, name }) => {
         cancelButtonText: "Batal",
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission")));
+          dispatch(postFilterExportData(token, data, null, null, Cookies.get("token_permission"), name));
         }
       });
     } else {

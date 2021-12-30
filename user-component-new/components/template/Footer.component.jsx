@@ -38,7 +38,8 @@ export default function Footer() {
         localStorage.setItem("footer", data.data.color[1].color);
         localStorage.setItem("footer_logo", data.data.footer_logo);
       }
-    } catch (error) {}
+    } catch (error) {
+    }
   };
 
   useEffect(() => {

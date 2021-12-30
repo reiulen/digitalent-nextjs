@@ -67,7 +67,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getAllArtikelsPeserta(session?.user.user.data.user.token, req.cookies.token_permission)
+        getAllArtikelsPeserta(session?.user.user.data.user.token, 1, 5, null, null, null, null, req.cookies.token_permission)
       );
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token, req.cookies.token_permission)

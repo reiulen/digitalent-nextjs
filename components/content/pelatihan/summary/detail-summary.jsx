@@ -78,14 +78,14 @@ const DetailSummary = ({ token }) => {
     dispatch(
       getPendaftaranPeserta(
         token,
+        token_permission,
         id,
         search,
         limit,
         pageNumber,
         "",
         "",
-        "",
-        token_permission
+        ""
       )
     );
   };
@@ -105,14 +105,14 @@ const DetailSummary = ({ token }) => {
     dispatch(
       getPendaftaranPeserta(
         token,
+        token_permission,
         id,
         search,
         limit,
         1,
         "",
         "",
-        "",
-        token_permission
+        ""
       )
     );
   };
@@ -123,14 +123,14 @@ const DetailSummary = ({ token }) => {
     dispatch(
       getPendaftaranPeserta(
         token,
+        token_permission,
         id,
         search,
         val,
         1,
         "",
         "",
-        "",
-        token_permission
+        ""
       )
     );
   };
@@ -139,14 +139,14 @@ const DetailSummary = ({ token }) => {
     dispatch(
       getPendaftaranPeserta(
         token,
+        token_permission,
         id,
         search,
         limit,
         1,
         statusBerkas === null ? "" : statusBerkas.value,
         statusPeserta === null ? "" : statusPeserta.value,
-        statusTesSubstansi === null ? "" : statusTesSubstansi.value,
-        token_permission
+        statusTesSubstansi === null ? "" : statusTesSubstansi.value
       )
     );
     setShowModal(false);
@@ -198,6 +198,8 @@ const DetailSummary = ({ token }) => {
     setStatusPeserta(null);
     setStatusTesSubstansi(null);
     setStatusBerkas(null);
+    dispatch(getPendaftaranPeserta(token, token_permission, id));
+    setShowModal(false);
   };
 
   return (

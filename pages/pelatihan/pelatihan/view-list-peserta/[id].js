@@ -70,14 +70,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getPendaftaranPeserta(
           session.user.user.data.token,
+          token_permission,
           params.id,
           "",
           "",
           "",
           "",
           "",
-          "",
-          token_permission
+          ""
         )
       );
 

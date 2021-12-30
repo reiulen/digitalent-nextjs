@@ -129,7 +129,7 @@ export const getDetailsExportData =
   };
 
 export const postFilterExportData =
-  (token, datas, page = 1, limit = 5, tokenPermission) =>
+  (token, datas, page = 1, limit = 5, tokenPermission, name) =>
   async (dispatch) => {
     try {
       dispatch({

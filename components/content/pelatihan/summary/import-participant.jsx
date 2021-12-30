@@ -24,24 +24,21 @@ const ImportParticipant = ({ token }) => {
   };
 
   const handleSelectFile = (e) => {
-    const type = ["application/vnd.ms-excel"];
+    const type = ["text/csv"];
     if (e.target.files[0]) {
-      if (e.target.files[0].size > 3000000) {
-        e.target.value = null;
-        SweatAlert("Oops...", "Data yang bisa dimasukkan hanya 3 MB", "error");
+      if (type.includes(e.target.files[0].type)) {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
       } else {
-        if (type.includes(e.target.files[0].type)) {
-          setFile(e.target.files[0]);
-          setFileName(e.target.files[0].name);
-        } else {
-          SweatAlert("Oops...", "File hanya boleh CSV", "error");
-        }
+        SweatAlert("Oops...", "File hanya boleh CSV", "error");
+        e.target.value = null;
       }
     }
   };
 
   const handleCloseFile = () => {
-    setFileName("");
+    document.getElementById("upload-file").value = null;
+    setFileName("Belum ada File");
     setFile("");
   };
 
@@ -124,7 +121,7 @@ const ImportParticipant = ({ token }) => {
                   <i className="ri-upload-2-line mr-2 mt-1 text-white"></i>
                   Upload
                 </button>
-                {fileName !== "Belum ada File" && (
+                {fileName && fileName !== "Belum ada File" && (
                   <div
                     className="alert alert-light alert-dismissible mt-3 w-50"
                     role="alert"
@@ -141,9 +138,7 @@ const ImportParticipant = ({ token }) => {
                     </button>
                   </div>
                 )}
-                <p className="mt-3 text-muted">
-                  Format Image(.csv) & Maximal 3MB
-                </p>
+                <p className="mt-3 text-muted">Format Image(.csv)</p>
                 <input
                   type="file"
                   name="gambar"
