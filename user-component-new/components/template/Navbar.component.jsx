@@ -70,7 +70,8 @@ const Navigationbar = ({ session }) => {
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
       console.log("Message received. ", payload.notification);
-      toast.info(payload.notification.title);
+      // toast.info(payload.notification.title);
+      GetNotifikasi();
       setAlertNotif(true);
     });
 
