@@ -259,7 +259,7 @@ const StepTwo = ({ token, tokenPermission }) => {
         answer_key,
       };
 
-      dispatch(newSubtanceQuestionDetail(data, token));
+      dispatch(newSubtanceQuestionDetail(data, token, tokenPermission));
       localStorage.removeItem("method");
       localStorage.removeItem("step2");
       handleResetForm();
@@ -336,7 +336,7 @@ const StepTwo = ({ token, tokenPermission }) => {
         localStorage.setItem("method", "entry" || metode);
       }
 
-      dispatch(newSubtanceQuestionDetail(data, token));
+      dispatch(newSubtanceQuestionDetail(data, token, tokenPermission));
     }
   };
 

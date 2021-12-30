@@ -50,17 +50,17 @@ const StepOne = ({ token, tokenPermission }) => {
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
   const [academyLabel, setAcademyLabel] = useState(
-    (survey.academy && survey.academy.name) || "Silahkan Pilih Akademi"
+    (survey?.academy && survey?.academy.name) || "Silahkan Pilih Akademi"
   );
   const [themeLabel, setThemeLabel] = useState(
-    (survey.theme && survey.theme.name) || "Silahkan Pilih Tema"
+    (survey?.theme && survey?.theme.name) || "Silahkan Pilih Tema"
   );
   const [trainingLabel, setTrainingLabel] = useState(
-    (survey.training && survey.training.name) || "Silahkan Pilih Pelatihan"
+    (survey?.training && survey?.training.name) || "Silahkan Pilih Pelatihan"
   );
-  const [academy_id, setAcademyId] = useState(survey && survey.academy_id);
-  const [theme_id, setThemeId] = useState(survey && survey.theme_id);
-  const [training_id, setTrainingId] = useState(survey && survey.training_id);
+  const [academy_id, setAcademyId] = useState(survey && survey?.academy_id);
+  const [theme_id, setThemeId] = useState(survey && survey?.theme_id);
+  const [training_id, setTrainingId] = useState(survey && survey?.training_id);
 
   useEffect(() => {
     dispatch(dropdownTemabyAkademi(academy_id, token, tokenPermission));

@@ -50,6 +50,7 @@ export const getAllTriviaQuestionBanks =
       let link =
         process.env.END_POINT_API_SUBVIT +
         `api/trivia-question-banks?page=${page}`;
+
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
 
