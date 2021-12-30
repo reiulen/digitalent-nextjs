@@ -26,6 +26,7 @@ export default function Prompt(props) {
         notification === "1" || notification === true ? "1" : "0",
         email === "1" || email === true ? "1" : "0",
         Cookies.get("token_permission")
+        
       )
     );
   };

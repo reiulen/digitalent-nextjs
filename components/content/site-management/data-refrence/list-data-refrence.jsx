@@ -31,7 +31,7 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(getAllDataReference(token, Cookies.get("token_permission")));
+    dispatch(getAllDataReference(token,null, Cookies.get("token_permission")));
   }, [
     dispatch,
     allDataReference.cari,

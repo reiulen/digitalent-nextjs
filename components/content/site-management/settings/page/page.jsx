@@ -19,11 +19,13 @@ import {
   limitCooporation,
 } from "../../../../../redux/actions/site-management/settings/page.actions";
 
+
 import { DELETE_PAGE_RESET } from "../../../../../redux/types/site-management/settings/page.type";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  
 
   const allPage = useSelector((state) => state.allPage);
   const {
