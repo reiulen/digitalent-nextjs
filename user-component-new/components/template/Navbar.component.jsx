@@ -139,6 +139,21 @@ const Navigationbar = ({ session }) => {
       .catch((err) => {});
   };
 
+  const ClearNotifikasi = async () => {
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN + "api/v1/auth/hapus-notifikasi",
+        {
+          headers: {
+            Authorization: `Bearer ${session.token}`,
+          },
+        }
+      )
+      .then((res) => {
+        GetNotifikasi();
+      });
+  };
+
   const getMenu = async (token) => {
     try {
       let { data } = await axios.get(
@@ -309,7 +324,7 @@ const Navigationbar = ({ session }) => {
                       setAlertNotif(false);
                     }}
                   ></i>
-                  {true && (
+                  {dataNotification?.length > 0 && (
                     <div
                       onClick={() => setNotification(!notification)}
                       className="position-absolute bg-danger rounded-full cursor-pointer d-flex justify-content-center align-items-center"
@@ -326,7 +341,7 @@ const Navigationbar = ({ session }) => {
                         className="text-white m-0 p-0"
                       >
                         {/* ANGKA NOTIFIKASI */}
-                        10
+                        {dataNotification?.length}
                       </div>
                     </div>
                   )}
@@ -343,6 +358,7 @@ const Navigationbar = ({ session }) => {
                           onClick={() => {
                             setNotification(!notification);
                             setAlertNotif(false);
+                            ClearNotifikasi();
                           }}
                           className="cursor-pointer"
                           style={{ width: "20px", height: "20px" }}
@@ -646,7 +662,7 @@ const Navigationbar = ({ session }) => {
                   className="ri-notification-4-line ri-2x  text-gray"
                 ></i>
               </a>
-              {true && (
+              {dataNotification?.length > 0 && (
                 <div
                   onClick={() => {
                     setNotification(!notification);
@@ -665,7 +681,7 @@ const Navigationbar = ({ session }) => {
                     className="text-white m-0 p-0"
                   >
                     {/* ANGKA NOTIFIKASI */}
-                    10
+                    {dataNotification?.length}
                   </div>
                 </div>
               )}
@@ -682,6 +698,7 @@ const Navigationbar = ({ session }) => {
                       onClick={() => {
                         setNotification(!notification);
                         setAlertNotif(false);
+                        ClearNotifikasi();
                       }}
                       className="cursor-pointer"
                     />
