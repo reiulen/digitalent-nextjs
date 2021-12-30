@@ -311,18 +311,26 @@ const Navigationbar = ({ session }) => {
                       setAlertNotif(false);
                     }}
                   ></i>
-                  {alertNotif && (
+                  {true && (
                     <div
                       onClick={() => setNotification(!notification)}
-                      className="position-absolute bg-danger rounded-full cursor-pointer"
+                      className="position-absolute bg-danger rounded-full cursor-pointer d-flex justify-content-center align-items-center"
                       style={{
-                        height: "15px",
-                        width: "15px",
+                        height: "18px",
+                        width: "18px",
                         right: "8px",
                         top: "5px",
                         border: "2px solid white",
                       }}
-                    ></div>
+                    >
+                      <div
+                        style={{ fontSize: "9px" }}
+                        className="text-white m-0 p-0"
+                      >
+                        {/* ANGKA NOTIFIKASI */}
+                        10
+                      </div>
+                    </div>
                   )}
                   {notification && (
                     <div
@@ -645,15 +653,23 @@ const Navigationbar = ({ session }) => {
                   onClick={() => {
                     setNotification(!notification);
                   }}
-                  className="position-absolute bg-danger rounded-full cursor-pointer"
+                  className="position-absolute bg-danger rounded-full cursor-pointer d-flex align-items-center justify-content-center"
                   style={{
-                    height: "15px",
-                    width: "15px",
+                    height: "18px",
+                    width: "18px",
                     right: "10px",
                     top: "5px",
-                    border: "2px solid white",
+                    border: "1px solid white",
                   }}
-                ></div>
+                >
+                  <div
+                    style={{ fontSize: "9px" }}
+                    className="text-white m-0 p-0"
+                  >
+                    {/* ANGKA NOTIFIKASI */}
+                    10
+                  </div>
+                </div>
               )}
               {notification && (
                 <div
