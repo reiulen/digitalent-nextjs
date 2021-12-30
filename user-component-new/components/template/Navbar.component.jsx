@@ -547,7 +547,7 @@ const Navigationbar = ({ session }) => {
                   </Col>
                   <Col
                     className={`p-0 m-0 ${
-                      menu?.length > 0 ? `h-350px` : "h-350px"
+                      menu?.length > 0 ? `h-400px` : "h-350px"
                     } overflow-auto ${style.scrollbar_navbar}`}
                   >
                     {navbarItems &&
