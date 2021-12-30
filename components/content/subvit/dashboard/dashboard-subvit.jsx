@@ -18,6 +18,7 @@ import {
   Tooltip,
 } from "recharts";
 import { useRouter } from "next/dist/client/router";
+import { kFormatter } from "../../../../utils/middleware/helper/index";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getDashboardSubvit } from "../../../../redux/actions/subvit/subtance-question-detail.action";
@@ -332,9 +333,11 @@ const DashbardSubvit = ({ token }) => {
                                 position="center"
                                 className={styles.labelChart}
                               >
-                                {dashboard_subvit &&
-                                  dashboard_subvit?.chart &&
-                                  dashboard_subvit?.chart[3].total}
+                                {kFormatter(
+                                  dashboard_subvit &&
+                                    dashboard_subvit?.chart &&
+                                    dashboard_subvit?.chart[3].total
+                                )}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -373,9 +376,11 @@ const DashbardSubvit = ({ token }) => {
                                 position="center"
                                 className={styles.labelChart}
                               >
-                                {dashboard_subvit &&
-                                  dashboard_subvit?.chart &&
-                                  dashboard_subvit?.chart[3].total}
+                                {kFormatter(
+                                  dashboard_subvit &&
+                                    dashboard_subvit?.chart &&
+                                    dashboard_subvit?.chart[3].total
+                                )}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -504,9 +509,11 @@ const DashbardSubvit = ({ token }) => {
                                 position="center"
                                 className={styles.labelChart}
                               >
-                                {dashboard_subvit &&
-                                  dashboard_subvit?.chart &&
-                                  dashboard_subvit?.chart[3].total}
+                                {kFormatter(
+                                  dashboard_subvit &&
+                                    dashboard_subvit?.chart &&
+                                    dashboard_subvit?.chart[3].total
+                                )}
                               </Label>
                             </Pie>
                           </PieChart>
@@ -545,9 +552,11 @@ const DashbardSubvit = ({ token }) => {
                                 position="center"
                                 className={styles.labelChart}
                               >
-                                {dashboard_subvit &&
-                                  dashboard_subvit?.chart &&
-                                  dashboard_subvit?.chart[3].total}
+                                {kFormatter(
+                                  dashboard_subvit &&
+                                    dashboard_subvit?.chart &&
+                                    dashboard_subvit?.chart[3].total
+                                )}
                               </Label>
                             </Pie>
                           </PieChart>
