@@ -122,7 +122,7 @@ export const postPage = (sendData, token, tokenPermission) => {
 };
 
 export const getDetailPages =
-  (id, token = "", tokenPermission) =>
+  (id, token = "") =>
     async (dispatch) => {
       try {
         dispatch({
@@ -131,7 +131,6 @@ export const getDetailPages =
         const config = {
           headers: {
             Authorization: "Bearer " + token,
-            Permission: tokenPermission,
           },
         };
 
