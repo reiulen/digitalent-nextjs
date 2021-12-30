@@ -18,6 +18,7 @@ import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import Image from "next/image";
 import { postPage, updatePage } from "../../../../../redux/actions/site-management/settings/page.actions";
+import Cookies from "js-cookie";
 
 const UbahPage = ({ token }) => {
   let dispatch = useDispatch();

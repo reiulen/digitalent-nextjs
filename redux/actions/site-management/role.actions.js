@@ -165,11 +165,12 @@ export const getDetailRoles =
     }
   };
 
-export const getAllPermission = (token) => async (dispatch) => {
+export const getAllPermission = (token, tokenPermission) => async (dispatch) => {
   try {
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission
       },
     };
 

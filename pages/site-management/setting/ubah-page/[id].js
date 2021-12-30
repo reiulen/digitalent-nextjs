@@ -44,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailPages(params.id, session.user.user.data.token)
+        getDetailPages(params.id, session.user.user.data.token, req.cookies.token_permission)
       );
       return {
         props: { session, title: "Ubah Page - Site Management" },

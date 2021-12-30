@@ -26,7 +26,7 @@ import {
 
 import axios from "axios";
 
-export const getAllPage = (token) => async (dispatch, getState) => {
+export const getAllPage = (token, tokenPermission) => async (dispatch, getState) => {
   try {
     dispatch({ type: PAGE_REQUEST });
 
@@ -46,6 +46,7 @@ export const getAllPage = (token) => async (dispatch, getState) => {
         params,
         headers: {
           authorization: `Bearer ${token}`,
+          Permission: tokenPermission
         },
       }
     );
@@ -62,13 +63,14 @@ export const getAllPage = (token) => async (dispatch, getState) => {
   }
 };
 
-export const deletePage = (id, token) => async (dispatch) => {
+export const deletePage = (id, token, tokenPermission) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PAGE_REQUEST });
 
     const config = {
       headers: {
         Authorization: "Bearer " + token,
+        Permission: tokenPermission
       },
     };
 
@@ -119,7 +121,7 @@ export const postPage = (sendData, token) => {
 };
 
 export const getDetailPages =
-  (id, token = "") =>
+  (id, token = "", tokenPermission) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -128,6 +130,7 @@ export const getDetailPages =
       const config = {
         headers: {
           Authorization: "Bearer " + token,
+          Permission: tokenPermission
         },
       };
 

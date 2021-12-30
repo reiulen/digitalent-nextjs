@@ -18,11 +18,14 @@ import {
   limitCooporation,
 } from "../../../../../redux/actions/site-management/settings/page.actions";
 
+
 import { DELETE_PAGE_RESET } from "../../../../../redux/types/site-management/settings/page.type";
+import Cookies from "js-cookie";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  
 
   const allPage = useSelector((state) => state.allPage);
   const {
@@ -53,13 +56,13 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deletePage(id, token));
+        dispatch(deletePage(id, token,Cookies.get("token_permission")));
       }
     });
   };
 
   useEffect(() => {
-    dispatch(getAllPage(token));
+    dispatch(getAllPage(token, Cookies.get("token_permission")));
   }, [dispatch, allPage.cari, allPage.page, allPage.limit, token]);
 
   useEffect(() => {

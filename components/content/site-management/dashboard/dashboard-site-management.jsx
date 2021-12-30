@@ -55,6 +55,18 @@ const DashboardSiteManagement = ({ token, user }) => {
     dispatch(loadDataPeserta(token, typePeserta, pagePeserta, Cookies.get("token_permission")));
   }, [dispatch, token, type, pageZonasi, typePeserta, pagePeserta]);
 
+  useEffect(() => {
+	axios
+		.get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/zonasi-participant`, {
+			headers: {
+				authorization: `Bearer ${token}`,
+				"Permission": Cookies.get("token_permission")
+			},
+		})
+		.then((items) => {
+			setTotalZonasi(items.data.data.total);
+		});
+}, [dispatch, token, pageZonasi]);
 
 
 
