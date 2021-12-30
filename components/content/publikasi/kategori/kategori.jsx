@@ -19,6 +19,7 @@ import LoadingTable from "../../../LoadingTable";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Cookies from 'js-cookie'
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -28,9 +29,10 @@ import {
 } from "../../../../redux/actions/publikasi/kategori.actions";
 import { DELETE_KATEGORI_RESET } from "../../../../redux/types/publikasi/kategori.type";
 
-const Kategori = ({ token, permission }) => {
+const Kategori = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const { loading, error, kategori } = useSelector(state => state.allKategori);
   const { paginateKategori } = useSelector(state => state.paginationKategori);

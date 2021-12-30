@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useDispatch } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 import styles from "../../../../../styles/previewGaleri.module.css";
 
@@ -26,7 +27,7 @@ export default function FileSize(props) {
       } else if (image > 20 || document > 20) {
         Swal.fire("Oops !", "Size Melebihi Ketentuan", "error");
       } else {
-        dispatch(postFileSize(props.token, image, document))
+        dispatch(postFileSize(props.token, image, document,Cookies.get("token_permission")))
       }
     } else {
       simpleValidator.current.showMessages();
@@ -43,6 +44,7 @@ export default function FileSize(props) {
     axios.get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-file-size`, {
       headers: {
         authorization: `Bearer ${props.token}`,
+        Permission: Cookies.get("token_permission")
       },
     }).then(response => {
       setImage(response.data.data.training_rules.image[0].size)

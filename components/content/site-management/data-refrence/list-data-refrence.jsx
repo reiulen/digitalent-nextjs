@@ -145,12 +145,12 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allDataReference.data.list_reference.length === 0 ? (
+                      {allDataReference.data?.list_reference.length === 0 ? (
                         <td className="align-middle text-center" colSpan="4">
                           Data kosong
                         </td>
                       ) : (
-                        allDataReference.data.list_reference.map(
+                        allDataReference.data?.list_reference.map(
                           (items, index) => {
                             return (
                               <tr key={index}>
@@ -258,13 +258,13 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              {allDataReference.data.total > 5 && (
+              {allDataReference.data?.total > 5 && (
                 <div className="row px-4">
                   <div className="table-pagination paginate-cs">
                     <Pagination
                       activePage={allDataReference.page}
-                      itemsCountPerPage={allDataReference.data.perPage}
-                      totalItemsCount={allDataReference.data.total}
+                      itemsCountPerPage={allDataReference.data?.perPage}
+                      totalItemsCount={allDataReference.data?.total}
                       pageRangeDisplayed={2}
                       onChange={(page) => dispatch(setPage(page))}
                       nextPageText={">"}
@@ -305,7 +305,7 @@ const Table = ({ token }) => {
                           style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                         >
                           Total Data{" "}
-                          {allDataReference.data && allDataReference.data.total}{" "}
+                          {allDataReference.data && allDataReference.data?.total}{" "}
                           List Data
                         </p>
                       </div>

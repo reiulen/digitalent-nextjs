@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import DatePicker from 'react-datepicker'
 import { TagsInput } from "react-tag-input-component";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
@@ -19,10 +20,11 @@ import { NEW_IMAGETRON_RESET, UPDATE_IMAGETRON_RESET } from '../../../../redux/t
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
 
-const EditImagetron = ({ token, idUser, permission }) => {
+const EditImagetron = ({ token, idUser }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
+    const permission = Cookies.get("token_permission")
 
     const importSwitch = () => import('bootstrap-switch-button-react')
 

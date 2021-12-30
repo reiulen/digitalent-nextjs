@@ -14,13 +14,15 @@ import DatePicker from "react-datepicker";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { Container } from "react-bootstrap";
 import { useQuill } from "react-quilljs";
+import Cookies from 'js-cookie'
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
-const EditArtikelPeserta = ({ session, permission }) => {
+const EditArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const detailArtikelsPeserta = useSelector(
     (state) => state.detailArtikelsPeserta

@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "../../../../../styles/previewGaleri.module.css";
 import SimpleReactValidator from "simple-react-validator";
+import Cookies from 'js-cookie'
 
 import Swal from "sweetalert2";
 import Image from "next/image";
@@ -125,7 +126,7 @@ const UbahPage = ({ token }) => {
               },
             };
           }
-          dispatch(updatePage(sendData, pages.id, token));
+          dispatch(updatePage(sendData, pages.id, token, Cookies.get("token_permission")));
         }
       });
     } else {

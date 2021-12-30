@@ -21,13 +21,14 @@ import {
 import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
-
+import Cookies from 'js-cookie'
 import { useQuill } from "react-quilljs";
 
-const TambahArtikel = ({ token, id, permission }) => {
+const TambahArtikel = ({ token, id }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const permission = Cookies.get("token_permission")
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const [editorLoaded, setEditorLoaded] = useState(false);
